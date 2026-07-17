@@ -1,0 +1,10 @@
+[Cheats/LV 100 EXP]
+// Source: C8CFA4E1 PNACH public listing for Berwick Saga.
+// patch=1,EE,20224580,extended,24130064
+
+[Cheats/Gold 999999]
+// patch=1,EE,202918A8,extended,00000000
+// patch=1,EE,202918FC,extended,00000000
+
+[Cheats/Maximum Release Level]
+// patch=1,EE,1C82CB4C,extended,0456E7A7

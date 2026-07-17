@@ -1,0 +1,47 @@
+gametitle=Vampire Night SLUS-20221
+[Cheats/Infinite Health Player 1]
+// patch=1,EE,10493030,extended,00000009
+
+[Cheats/Infinite Ammo Player 1]
+// patch=1,EE,1049306C,extended,00000008
+
+[Cheats/Infinite Health Player 2]
+// patch=1,EE,10493378,extended,00000009
+
+[Cheats/Infinite Ammo Player 2]
+// patch=1,EE,104933B4,extended,00000008
+
+[Cheats/Infinite Credits]
+// patch=1,EE,10492DD4,extended,00000008
+
+[Cheats/Have All Items]
+// patch=1,EE,00494DDF,extended,00000063
+// patch=1,EE,40494DE0,extended,000D0001
+// patch=1,EE,63636363,extended,00000000
+
+[Cheats/Have All Misc Files]
+// patch=1,EE,10494EBE,extended,00000101
+// patch=1,EE,00494EE4,extended,00000001
+// patch=1,EE,40494EC0,extended,00090001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Item Files]
+// patch=1,EE,10494E8A,extended,00000101
+// patch=1,EE,10494EBC,extended,00000101
+// patch=1,EE,40494E8C,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Boss Files]
+// patch=1,EE,10494E7A,extended,00000101
+// patch=1,EE,10494E88,extended,00000101
+// patch=1,EE,40494E7C,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Enemy Files]
+// patch=1,EE,10494E78,extended,00000101
+// patch=1,EE,40494E6C,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Player Files]
+// patch=1,EE,40494E60,extended,00030001
+// patch=1,EE,01010101,extended,00000000

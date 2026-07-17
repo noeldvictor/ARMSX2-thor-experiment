@@ -1,0 +1,41 @@
+[Cheats/Infinite Health]
+// patch=1,EE,2037CAB8,extended,00000FA0
+// patch=1,EE,203A82A8,extended,00000FA0
+
+[Cheats/Infinite Stamina]
+// patch=1,EE,2037CAC0,extended,00002710
+// patch=1,EE,203A82A0,extended,00002710
+
+[Cheats/Mary Infinite Health]
+// patch=1,EE,2037CC74,extended,00000bb8
+
+[Cheats/Mary Infinite Stamina]
+// patch=1,EE,2037CC7C,extended,000032C8
+// patch=1,EE,203A82A0,extended,000032C8
+
+[Cheats/Abbey Infinite Health]
+// patch=1,EE,2037C8FC,extended,000009c4
+
+[Cheats/Abbey Infinite Stamina]
+// patch=1,EE,2037C904,extended,00001b58
+// patch=1,EE,203A82A0,extended,00001b58
+
+[Cheats/Abbey Infinite Bullets No Reload]
+// patch=1,EE,2037C9B4,extended,00060258
+
+[Cheats/Aleft Gauge 0]
+// patch=1,EE,1037C8B8,extended,00000000
+
+[Cheats/Enemy Does Not Attack]
+// patch=1,EE,20158910,extended,17E00011
+
+[Cheats/Some Materials 99]
+// patch=1,EE,1037C8EE,extended,01020304
+// patch=1,EE,1037C8F0,extended,00006363
+// patch=1,EE,0037C8F2,extended,00000063
+
+[Cheats/Debug Menu Hold L3+R3 while the game is first booting up Title, Opening, Ending, Demo, Menu, Tutorial, Process after Finish, Inside of the Shelter, Outside of the Shelter, Town, Outside of the Castle, Castle 1F, Castle 2F, Castle Underground, Forest, Underground Graveyard, Dock, Last Boss Battle, Character Act, Character System, Map System, Effect, Event, Character Acting Test, Memory card, Sound Test, Modeling Test, Everyone Test, Debug Main]
+// patch=1,EE,D03CEB82,extended,0000FFF9
+// patch=1,EE,201A4A48,extended,2404001C
+// patch=1,EE,D03CEB82,extended,0000FFFF
+// patch=1,EE,201A4A48,extended,8C24C4F8

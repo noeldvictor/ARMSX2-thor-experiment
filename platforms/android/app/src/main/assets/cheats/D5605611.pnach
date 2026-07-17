@@ -1,0 +1,45 @@
+[Cheats/Infinite Health & 1 Hit Death Enemies]
+// patch=1,EE,200C0220,extended,3C01004F
+// patch=1,EE,200C0224,extended,8C217858
+// patch=1,EE,200C0228,extended,50340001
+// patch=1,EE,200C022C,extended,27FFFFE8
+// patch=1,EE,200C0230,extended,03E00008
+// patch=1,EE,200C0234,extended,00000000
+// patch=1,EE,203CCB58,extended,0C030088
+// patch=1,EE,203CCBB0,extended,AE800040
+
+[Cheats/Infinite Armor]
+// patch=1,EE,200C0240,extended,3C01004F
+// patch=1,EE,200C0244,extended,8C217858
+// patch=1,EE,200C0248,extended,50350001
+// patch=1,EE,200C024C,extended,27FF0008
+// patch=1,EE,200C0250,extended,03E00008
+// patch=1,EE,200C0254,extended,44020000
+// patch=1,EE,20187980,extended,0C030090
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2013FC34,extended,00000000
+
+[Cheats/Take No Damage From Fire]
+// patch=1,EE,2048A1F0,extended,00000000
+
+[Cheats/Stop Timer]
+// patch=1,EE,20244FE4,extended,24003634
+
+[Cheats/Character Always Aims Gun Straight Ahead]
+// patch=1,EE,2024923C,extended,00000000
+
+[Cheats/No Recoil When Firing Weapons]
+// patch=1,EE,201CC724,extended,00000000
+
+[Cheats/Unlock Access All Equipment Equipment Modify]
+// patch=1,EE,20332B5C,extended,00000000
+
+[Cheats/Unlock Access All Levels Command Center]
+// patch=1,EE,20333030,extended,24020001
+
+[Cheats/Unlock Always Receive All Awards]
+// patch=1,EE,20332F90,extended,03E00008
+// patch=1,EE,20332F94,extended,24020001
+// patch=1,EE,20333B10,extended,03E00008
+// patch=1,EE,20333B14,extended,24020001

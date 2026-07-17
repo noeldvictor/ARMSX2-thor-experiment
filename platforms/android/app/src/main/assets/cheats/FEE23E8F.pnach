@@ -1,0 +1,14 @@
+[Cheats/Infinite Bouncer Points]
+// patch=1,EE,203DC068,extended,0001869F
+
+[Cheats/Sion Barzahd Infinite Health]
+// patch=1,EE,21D89F64,extended,0000012C
+
+[Cheats/Volt Krueger Infinite Health]
+// patch=1,EE,21D89FF4,extended,0000012C
+
+[Cheats/Kou Leifoh Infinite Health]
+// patch=1,EE,21D8A084,extended,0000012C:
+
+[Cheats/Unlock All Characters VS. Mode]
+// patch=1,EE,21D8CB40,extended,FFFFFFFF

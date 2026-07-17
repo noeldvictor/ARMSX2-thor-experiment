@@ -1,0 +1,21 @@
+[Cheats/Infinite HP in Battle Evann]
+// Source: PSX Datacenter SLUS-20417 raw codes; CRC 8C49435E is the user's NetherSX2 game CRC.
+// patch=1,EE,20BEFB1C,extended,000003E7
+
+[Cheats/Infinite HP in Battle Brandol]
+// patch=1,EE,20BEFE34,extended,000003E7
+
+[Cheats/Infinite HP in Battle Carmyne]
+// patch=1,EE,20BF014C,extended,000003E7
+
+[Cheats/Infinite SP in Battle Evann]
+// patch=1,EE,20BEFE2C,extended,000003E7
+
+[Cheats/Infinite SP in Battle Brandol]
+// patch=1,EE,20BEFE44,extended,000003E7
+
+[Cheats/Infinite SP in Battle Carmyne]
+// patch=1,EE,20BF015C,extended,000003E7
+
+[Cheats/Infinite Gold]
+// patch=1,EE,204ED7AC,extended,000F423F

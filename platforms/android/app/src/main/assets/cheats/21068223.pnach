@@ -1,0 +1,23 @@
+[Cheats/Max Yen]
+// patch=1,EE,204ACEF0,extended,0001869F
+
+[Cheats/Max Health]
+// patch=1,EE,10683270,extended,00002328
+
+[Cheats/Infinite Health]
+// patch=1,EE,10683272,extended,00002328
+
+[Cheats/Max Solar Energy]
+// patch=1,EE,004ACEF5,extended,0000000C
+
+[Cheats/Max Ink Pot]
+// patch=1,EE,204ACEE8,extended,00025800
+
+[Cheats/Max Ink Pot Capacity]
+// patch=1,EE,204ACEEC,extended,00025800
+
+[Cheats/Max Astral Pouch]
+// patch=1,EE,10683276,extended,00000320
+
+[Cheats/Have All Celestial Brush Techniques]
+// patch=1,EE,204F22A8,extended,FFFFFFFF

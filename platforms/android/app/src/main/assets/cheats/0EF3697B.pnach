@@ -1,0 +1,39 @@
+[Cheats/Max Money]
+// patch=1,EE,20659584,extended,0098967F
+
+[Cheats/Infinite HP Player 1 In Battle]
+// patch=1,EE,105EE94C,extended,000003E7
+// patch=1,EE,205F65C0,extended,03E703E7
+// patch=1,EE,105F65C8,extended,000003E7
+
+[Cheats/Max Guts Player 1 In Battle]
+// patch=1,EE,105EE95C,extended,00000063
+
+[Cheats/Player 1 Press L1+Select No HP Player 2 In Battle]
+// patch=1,EE,E002FBFE,extended,004ED402
+// patch=1,EE,105EF44C,extended,00000000
+// patch=1,EE,205F6674,extended,00000000
+
+[Cheats/Monster 1-5 Infinite Health]
+// patch=1,EE,1065B77A,extended,000003E7
+// patch=1,EE,1065C14E,extended,000003E7
+// patch=1,EE,1065D4F6,extended,000003E7
+// patch=1,EE,1065CB22,extended,000003E7
+// patch=1,EE,1065DECA,extended,000003E7
+
+[Cheats/Infinite Food Item Usage]
+// patch=1,EE,2027A3E0,extended,A2620000
+
+[Cheats/0 Food Item Usage]
+// patch=1,EE,2027A3E0,extended,00000000
+
+[Cheats/Unlock All Book with all monsters]
+// patch=1,EE,40659AE8,extended,014F0003
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock Fill Gadget Shop]
+// patch=1,EE,2065B580,extended,FFFFFFFF
+// patch=1,EE,2065B584,extended,FFFFFFFF
+// patch=1,EE,2065B588,extended,FFFFFFFF
+// patch=1,EE,1065B58C,extended,0000FFFF
+// patch=1,EE,0065B58E,extended,000000FF

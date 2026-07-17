@@ -1,0 +1,23 @@
+[Cheats/Infinite Health]
+// patch=1,EE,2089f9d8,extended,43480000
+// patch=1,EE,2089f9dc,extended,43480000
+
+[Cheats/Infinite Drachenmacht Bar]
+// patch=1,EE,2089f9e4,extended,43480000
+// patch=1,EE,2089f9e8,extended,43480000
+
+[Cheats/1 Hit Kill]
+// patch=1,EE,202F7888,extended,AC8000CC
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2022232C,extended,00000000
+
+[Cheats/Have All Weapons]
+// patch=1,EE,407de324,extended,003e000a
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Turn ABSOLUTE dates Final Wep 1]
+// patch=1,EE,007dec84,extended,00000001
+
+[Cheats/Turn INFINITY free Final Wep 2]
+// patch=1,EE,007decac,extended,00000001

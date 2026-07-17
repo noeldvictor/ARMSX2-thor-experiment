@@ -1,0 +1,25 @@
+[Cheats/Skip Videos]
+// Source: Emudesc E857CCF8.pnach thread for Suikoden V PAL SLES-54087.
+// patch=1,EE,002029F0,word,24020001
+
+[Cheats/Infinite Potch]
+// patch=1,EE,20A3BD10,extended,0098967F
+
+[Cheats/Training Does Not Use SP]
+// patch=1,EE,2036DE10,extended,00000000
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,202D3AFC,extended,240203E7
+// patch=1,EE,202D3B00,extended,A6020014
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,20AB324C,extended,00000000
+
+[Cheats/Quick AP Gain 100 Per Fight]
+// patch=1,EE,20AB3B78,extended,24020064
+
+[Cheats/Quick AP Gain 999 Per Fight]
+// patch=1,EE,20AB3B78,extended,240203E8
+
+[Cheats/Hyper Mode Press L2]
+// patch=1,EE,2036E048,extended,24020001

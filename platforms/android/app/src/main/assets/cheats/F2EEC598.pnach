@@ -1,0 +1,36 @@
+[Cheats/Max Money]
+// patch=1,EE,203FC3B8,extended,0098967F
+
+[Cheats/Character 1 Infinite & Max HP In Battle]
+// patch=1,EE,10417560,extended,0000270F
+// patch=1,EE,1041752C,extended,0000270F
+
+[Cheats/Character 1 Infinite & Max MP In Battle]
+// patch=1,EE,10417530,extended,0000270F
+// patch=1,EE,10417564,extended,0000270F
+
+[Cheats/Character 2 Infinite & Max HP In Battle]
+// patch=1,EE,104175DC,extended,0000270F
+// patch=1,EE,10417610,extended,0000270F
+
+[Cheats/Character 1 Infinite & Max MP In Battle]
+// patch=1,EE,104175E0,extended,0000270F
+// patch=1,EE,10417614,extended,0000270F
+
+[Cheats/Character 3 Infinite & Max HP In Battle]
+// patch=1,EE,1041768C,extended,0000270F
+// patch=1,EE,104176C0,extended,0000270F
+
+[Cheats/Character 3 Infinite & Max HP In Battle]
+// patch=1,EE,10417690,extended,0000270F
+// patch=1,EE,104176C4,extended,0000270F
+
+[Cheats/Save Anywhere Disable before cooking or talking in camp or game will crash]
+// patch=1,EE,10422D28,extended,00000001
+
+[Cheats/Save Anywhere Press R1+Circle Disable before cooking or talking in camp or game will crash]
+// patch=1,EE,D053CD02,extended,0000D7FF
+// patch=1,EE,10612CAC,extended,00000001
+
+[Cheats/No Random Battles]
+// patch=1,EE,102BC80E,extended,00001000

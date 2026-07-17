@@ -1,0 +1,50 @@
+[Cheats/Max Money]
+// patch=1,EE,20BAE7B8,extended,000F423F
+
+[Cheats/In Battle Infinite HP 9999]
+// patch=1,EE,200A0110,extended,2405270F
+// patch=1,EE,200A0114,extended,AC85002C
+
+[Cheats/In Battle Infinite SP]
+// patch=1,EE,200A0110,extended,2405270F
+// patch=1,EE,200A0118,extended,AC850030
+
+[Cheats/In Battle Max Infinite HP]
+// patch=1,EE,200A0110,extended,2405270F
+// patch=1,EE,200A011C,extended,AC850034
+// patch=1,EE,200A0120,extended,AC85002C
+
+[Cheats/In Battle Max Infinite SP]
+// patch=1,EE,200A0110,extended,2405270F
+// patch=1,EE,200A0124,extended,AC850038
+// patch=1,EE,200A0128,extended,AC850030
+
+[Cheats/Mission Timer Does not Increase]
+// patch=1,EE,001DDA98,extended,00000000
+
+[Cheats/Unlock All Extras]
+// patch=1,EE,40DDF430,extended,00340001
+// patch=1,EE,FFFFFFFF,extended,00000000
+// patch=1,EE,10DDF500,extended,0000FFFF
+// patch=1,EE,00DDF503,extended,00000002
+
+[Cheats/Have All Characters]
+// patch=1,EE,20EAA838,extended,00010000
+// patch=1,EE,20EAA83C,extended,00030002
+// patch=1,EE,20EAA840,extended,00050004
+// patch=1,EE,20EAA844,extended,00070006
+// patch=1,EE,20EAA848,extended,03020100
+// patch=1,EE,20EAA84C,extended,07060504
+// patch=1,EE,00EAA858,extended,00000008
+
+[Cheats/Enable Level Select Press Triangle in game to enter This is a level select option where you can select all of the maps in the game to warp to. This will display some debug info as well with the following code on. Pressing Start will pause the game and bring up more debug info.Press R2+Circle while inside a map to return to the level select option.]
+// patch=1,EE,201DD484,extended,0C06BCFB
+// patch=1,EE,2011DE18,extended,3C0200C2
+// patch=1,EE,2011DE1C,extended,84422348
+// patch=1,EE,201AF47C,extended,00021302
+// patch=1,EE,201AF480,extended,00000000
+// patch=1,EE,201AFD40,extended,00000000
+// patch=1,EE,D0C22348,extended,00002200
+// patch=1,EE,201AFEA0,extended,00000000
+// patch=1,EE,D0C22348,extended,00000000
+// patch=1,EE,201AFEA0,extended,1000FFA0

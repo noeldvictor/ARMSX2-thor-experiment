@@ -1,0 +1,17 @@
+[Cheats/Infinite Health]
+// patch=1,EE,11EC5F9C,extended,0000000F
+
+[Cheats/Infinite VFX Gauge]
+// patch=1,EE,11EC5F98,extended,000005DC
+
+[Cheats/Infinite Lives]
+// patch=1,EE,01EC5FA6,extended,00000063
+
+[Cheats/All Upgrades]
+// patch=1,EE,21EC5FA8,extended,000FFFFF
+
+[Cheats/Infinite Time-Timed Missions]
+// patch=1,EE,21EC7864,extended,470BC400
+
+[Cheats/Unlock All Difficulties]
+// patch=1,EE,01EC5F84,extended,0000000F

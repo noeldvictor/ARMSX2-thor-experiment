@@ -1,0 +1,47 @@
+[Cheats/Max Meseta]
+// patch=1,EE,202A6738,extended,3C1105F5
+// patch=1,EE,202A674C,extended,3625E0FF
+
+[Cheats/Infinite & Max HP Ethan]
+// patch=1,EE,21F30824,extended,0000270F
+// patch=1,EE,21F30828,extended,0000270F
+
+[Cheats/Infinite Weapon HP]
+// patch=1,EE,200C0240,extended,8601000E
+// patch=1,EE,200C0244,extended,080BE0E8
+// patch=1,EE,200C0248,extended,A601000C
+// patch=1,EE,202FBE74,extended,0C030090
+
+[Cheats/Max HP]
+// patch=1,EE,00432657,extended,000000AD
+// patch=1,EE,0043265C,extended,000000AD
+// patch=1,EE,0043263F,extended,000000AD
+
+[Cheats/Max All Status]
+// patch=1,EE,11B49344,extended,0000270F
+// patch=1,EE,11B49348,extended,0000FFFF
+// patch=1,EE,11B4934A,extended,0000FFFF
+// patch=1,EE,11B4934C,extended,0000FFFF
+// patch=1,EE,11B4934E,extended,0000FFFF
+// patch=1,EE,11B49350,extended,0000FFFF
+// patch=1,EE,11B49352,extended,0000FFFF
+// patch=1,EE,11B49354,extended,0000FFFF
+
+[Cheats/Infinite Time]
+// patch=1,EE,2086A1A0,extended,00000000
+
+[Cheats/Max Infinite HP]
+// patch=1,EE,200C0220,extended,2401270F
+// patch=1,EE,200C0224,extended,001018C0
+// patch=1,EE,200C0228,extended,00641821
+// patch=1,EE,200C022C,extended,AC610024
+// patch=1,EE,200C0230,extended,080E5A95
+// patch=1,EE,200C0234,extended,AC610028
+// patch=1,EE,20396A40,extended,08030088
+
+[Cheats/Max Weapon HP]
+// patch=1,EE,200C0250,extended,2401270F
+// patch=1,EE,200C0254,extended,A601000E
+// patch=1,EE,200C0258,extended,03E00008
+// patch=1,EE,200C025C,extended,8602000C
+// patch=1,EE,202FBE68,extended,0C030094

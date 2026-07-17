@@ -1,0 +1,21 @@
+[Cheats/Max Money]
+// patch=1,EE,2037BEAC,extended,000F423F
+
+[Cheats/Infinite HP Player 1 In Battle]
+// patch=1,EE,10374B20,extended,000003E7
+// patch=1,EE,10374B2A,extended,000003E7
+
+[Cheats/Max Power Player 1 In Battle]
+// patch=1,EE,10374B22,extended,000003E7
+
+[Cheats/Max Intelligence Player 1 In Battle]
+// patch=1,EE,10374B24,extended,000003E7
+
+[Cheats/Max Speed Player 1 In Battle]
+// patch=1,EE,10374B26,extended,000003E7
+
+[Cheats/Max Defense Player 1 In Battle]
+// patch=1,EE,10374B28,extended,000003E7
+
+[Cheats/No HP Player 2 In Battle]
+// patch=1,EE,10374E02,extended,00000000

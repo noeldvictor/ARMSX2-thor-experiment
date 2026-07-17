@@ -1,0 +1,24 @@
+[Cheats/Infinite Health]
+// patch=1,EE,200C2000,extended,C4A201D8
+// patch=1,EE,200C2004,extended,08097D16
+// patch=1,EE,200C2008,extended,E4A201CC
+// patch=1,EE,2025F450,extended,08030800
+
+[Cheats/Infinite Armor]
+// patch=1,EE,200C2010,extended,46000886
+// patch=1,EE,200C2014,extended,08097D25
+// patch=1,EE,200C2018,extended,E5C20078
+// patch=1,EE,2025F48C,extended,08030804
+
+[Cheats/Infinite Ammo No Reload]
+// patch=1,EE,202E83DC,extended,00000000
+// patch=1,EE,202E83B0,extended,00000000
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,202E83B0,extended,00000000
+
+[Cheats/Unlock All Levels, Characters And Cheats]
+// patch=1,EE,20306A38,extended,200EFFFF
+// patch=1,EE,20306A3C,extended,ADEE0BF4
+// patch=1,EE,203067A8,extended,200EFFFF
+// patch=1,EE,203067AC,extended,ADEE0BFC

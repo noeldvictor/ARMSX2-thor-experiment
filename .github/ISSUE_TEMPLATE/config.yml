@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Discord
-    url: https://discord.gg/KwAChKDctz
-    about: Get direct support and hang out with us.
+  - name: Fork this experiment
+    url: https://github.com/noeldvictor/ARMSX2-thor-experiment/fork
+    about: This personal AI-vibe-coded fork has no support queue. Fork it and make your own changes.

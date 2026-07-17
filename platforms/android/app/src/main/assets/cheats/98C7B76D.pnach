@@ -1,0 +1,31 @@
+[Cheats/Infinite HP Michelle]
+// patch=1,EE,204A8AB8,extended,42C80000
+
+[Cheats/Infinite HP]
+// patch=1,EE,204CF618,extended,447A0000
+// patch=1,EE,204CF610,extended,447A0000
+
+[Cheats/Infinite Booster]
+// patch=1,EE,204CF61C,extended,447A0000
+
+[Cheats/Max Total Gallons]
+// patch=1,EE,20616B2C,extended,05F5E0FF
+
+[Cheats/1 Hit Kill]
+// patch=1,EE,2013E8EC,extended,44800000
+// patch=1,EE,2026D894,extended,44800000
+
+[Cheats/Infinite All Combo Chips]
+// patch=1,EE,4061570C,extended,00030001
+// patch=1,EE,00090009,extended,00000000
+
+[Cheats/Max Booster All Booster Levels]
+// patch=1,EE,404CF6B8,extended,00070001
+// patch=1,EE,00000046,extended,00000000
+
+[Cheats/Unlock All Movies In Movie Viewer]
+// patch=1,EE,204CB5D0,extended,FFFFFFFF
+
+[Cheats/Unlock All Movies and Splatter Mode]
+// patch=1,EE,404CB5D0,extended,00040001
+// patch=1,EE,FFFFFFFF,extended,00000000

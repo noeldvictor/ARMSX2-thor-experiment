@@ -1,47 +1,57 @@
 # AGENTS.md
 
 ## Project Shape
-- ARMSX2 is primarily an Android app with a large native PCSX2-derived core under `app/src/main/cpp`.
-- The active game selector and emulator UI are native Android Java/XML in `app/src/main/java` and `app/src/main/res`.
-- The React Native files in `app_ui`, `App.js`, and related JS config are experimental and are only enabled with `-PenableRN=true`.
+- ARMSX2 is a cross-platform PCSX2-derived monorepo. Android lives under `platforms/android`.
+- The Android frontend is Kotlin/Compose under `platforms/android/app/src/main/java/com/armsx2`.
+- Java/JNI compatibility code is under `platforms/android/app/src/main/java/kr/co/iefriends/pcsx2`; the Android native bridge is `platforms/android/app/src/main/cpp/native-lib.cpp`.
+- Shared emulator code lives at the repository root, especially `pcsx2`, `common`, and `3rdparty`.
 
 ## Build And Verify
-- Use the Gradle wrapper from the repo root.
-- For Java/XML UI changes, prefer `./gradlew :app:compileDebugJavaWithJavac` or the Windows equivalent `.\gradlew.bat :app:compileDebugJavaWithJavac`.
-- A JDK is required. If Gradle reports `JAVA_HOME is not set and no 'java' command could be found`, install or point `JAVA_HOME` at a JDK before treating verification as a code failure.
-- Full APK builds are heavier because they can touch the native C++ core.
-- If a compile cannot run locally, still run `git diff --check` and parse touched XML resources to catch whitespace and resource syntax issues.
-- Do not add local signing keys, Discord credentials, generated `jniLibs`, `node_modules`, or other ignored build outputs.
+- Run the Android Gradle wrapper from `platforms/android`, not the repository root.
+- Use `.\gradlew.bat :app:compileGithubDebugKotlin` for focused Compose/Kotlin checks.
+- Use `.\gradlew.bat :app:assembleGithubDebug` for a sideloadable debug APK.
+- JDK 17 and the Android SDK/NDK are required. A known local JDK is `C:\Program Files\Microsoft\jdk-17.0.19.10-hotspot`.
+- On a fresh checkout, run `python app\src\main\cpp\3rdparty\shaderc\utils\git-sync-deps` from `platforms/android` before the first native build.
+- The native build also needs Cargo with the `aarch64-linux-android` Rust target. Keep the Windows `.cmd` NDK linker handling in librashader's CMake file.
+- The `github` flavor includes the storage access used by the personal sideload build; the `play` flavor intentionally does not.
+- Native changes trigger a much heavier CMake/NDK build. Always run `git diff --check`, even when a full native build is unavailable.
+- Do not add signing keys, local SDK paths, generated `.cxx` content, APKs, or other ignored build output.
 
 ## Local Tooling
-- Prefer `rg` for search when available. If the bundled Windows `rg.exe` is blocked, use `git grep` inside the repo.
-- PowerShell may not accept Unix-style `&&` command chaining in this environment. Run separate commands or use native PowerShell syntax.
-- Network access and SSH Git remotes are expected to work; this fork pushes to `git@github.com:noeldvictor/ARMSX2-thor-experiment.git`.
+- Prefer `rg` for search.
+- PowerShell may not accept Unix-style `&&`; run commands separately.
+- Network access and SSH Git remotes are expected. `origin` is `git@github.com:noeldvictor/ARMSX2-thor-experiment.git` and canonical `upstream` is `https://github.com/ARMSX2/ARMSX2.git`.
+- Use `adb devices` before deployment and install the newest `github/debug` APK with `adb install -r`.
 
 ## Git Workflow
-- Use only the repository default/mainline branch for work. In this clone, user references to `main` mean the current mainline branch, `master` (`origin/HEAD` points there).
-- Do not create or switch to `codex/...` or other feature branches unless the user explicitly asks for a branch.
-- After completing requested code or documentation changes, commit and push the branch unless the user explicitly asks not to.
-- Keep commit messages short and specific to the completed change.
+- Use only the default/mainline branch. In this clone, user references to `main` mean `master`.
+- Do not create or switch to feature branches unless explicitly requested.
+- Commit and push completed work unless the user explicitly asks not to.
+- Keep commit messages short and specific.
 
 ## Fork Identity
-- Treat this as the personal AYN Thor experiment fork, not upstream ARMSX2 branding.
-- README changes should keep the tone clear: vibe-coded with AI, personal use, unsupported, no stability guarantee, no issue/request queue, and fork-it-yourself friendly.
-- Do not add an APK/release section to `README.md` unless the user explicitly reverses that preference.
+- Treat this as the personal AYN Thor experiment fork, not official ARMSX2.
+- Keep the README explicit: vibe-coded with AI, personal use, unsupported, no stability guarantee, no issue/request queue, and fork-it-yourself friendly.
+- Do not add an APK download/release section to `README.md` unless the user reverses that preference.
+- Keep app-facing repository links pointed at `noeldvictor/ARMSX2-thor-experiment`; retain upstream and PCSX2 links only where attribution is clear.
 
-## Android UI Notes
-- Keep game-grid changes scoped to `MainActivity.java` and the `item_game*.xml` layouts unless navigation or settings behavior needs to move.
-- Cover art defaults to the xlenore PS2 covers raw GitHub template. Preserve user overrides, but blank cover-source preferences should fall back to the hardcoded default.
-- Cheat badges on game covers should represent real `.pnach` files in the app data `cheats` directory. Do not light these badges from widescreen, 60 FPS, compatibility, or other patch folders.
-- Individual cheat toggles are named PNACH sections. Keep them name-based and sourced from the active game's cheat list; do not mix in widescreen or 60 FPS patch metadata.
-- Bundled cheat PNACHs live under `app/src/main/assets/cheats` and are copied into the user's data-root `cheats` folder only when missing. Preserve user-edited existing PNACH files.
-- When cheat files are imported, refresh any cached PNACH index and notify the game adapter so cover badges update without restarting the app.
+## Android UI And Cheats
+- Follow the existing Compose components and controller-focus patterns.
+- Cover art defaults to xlenore's PS2/PS1 cover repositories. Preserve that hardcoded default.
+- Cover `CHEATS` badges must come only from real `.pnach` files in `<DataRoot>/cheats`; never infer them from widescreen, 60 FPS, compatibility, or patch folders.
+- `CheatPresenceIndex` owns cover-badge indexing. Invalidate it whenever PNACH files are imported, installed, or deleted.
+- `platforms/android/app/src/main/assets/cheats/index.tsv` maps bundled CRC filenames to serials and titles so cover badges work before a game is booted. Keep it synchronized with the bundled PNACH set.
+- Individual switches are named PNACH sections handled by `PatchManagerScreen`, `PatchManagerViewModel`, `PatchRepo`, and `NativeApp.setEnabledPatches`.
+- Bundled exact cheats live at `platforms/android/app/src/main/assets/cheats`. Keep their `patch=` lines commented so every cheat starts off and is enabled deliberately with its own switch.
+- Bundled assets copy into `<DataRoot>/cheats` only when missing. Never overwrite a user's edited PNACH.
+- This fork's cheat work is about gameplay cheats. Do not use widescreen or 60 FPS patch metadata as cheat state.
 
-## Native Core Notes
-- Treat `app/src/main/cpp/pcsx2` and third-party code as high-blast-radius. Keep edits small and verify with a native build when touching it.
-- Prefer existing JNI bridges in `NativeApp.java`/`main.cpp` over adding new cross-boundary APIs casually.
+## Native Core
+- Treat shared `pcsx2`, `common`, `3rdparty`, and `platforms/android/app/src/main/cpp` changes as high blast radius.
+- Prefer existing bridges in `NativeApp.java` and `native-lib.cpp` before adding JNI surface area.
+- Preserve upstream behavior when the refreshed Compose patch manager already covers a fork feature.
 
 ## Style
-- Match the existing Java style in nearby code, including defensive `try/catch` around optional Android platform calls.
-- Use Android resources for UI text and drawables.
-- Keep repo-wide refactors out of feature branches unless they are required for the change.
+- Match nearby Kotlin/Compose or C++ style.
+- Use Android resources for app-visible text when practical.
+- Keep changes scoped to the requested behavior; avoid unrelated monorepo refactors.

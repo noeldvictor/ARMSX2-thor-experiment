@@ -1,0 +1,53 @@
+[Cheats/Infinite Money]
+// patch=1,EE,20A9196C,extended,0098967F
+
+[Cheats/Infinite Dive Points]
+// patch=1,EE,20D33774,extended,000F423F
+
+[Cheats/Lyner Barsett Infinite HP]
+// patch=1,EE,10D20B02,extended,0000270F
+// patch=1,EE,10D20B06,extended,0000270F
+// patch=1,EE,10D20B22,extended,0000270F
+// patch=1,EE,10D20B2C,extended,0000270F
+
+[Cheats/Lyner Barset Infinite MP]
+// patch=1,EE,10D20B04,extended,0000270F
+
+[Cheats/Have All Field Actions]
+// patch=1,EE,00A91981,extended,00000001
+// patch=1,EE,10A91982,extended,00000101
+// patch=1,EE,10A91984,extended,00000101
+
+[Cheats/Have All Cards]
+// patch=1,EE,40D21E60,extended,00590001
+// patch=1,EE,04040404,extended,00000000
+// patch=1,EE,10D21E5E,extended,00000404
+// patch=1,EE,10D21FC4,extended,00000404
+
+[Cheats/No Random Battles]
+// patch=1,EE,20D25724,extended,00000032
+
+[Cheats/Unlock EXTRA on Title screen]
+// patch=1,EE,00C56B57,extended,00000007
+
+[Cheats/Unlock Everything in EXTRA]
+// patch=1,EE,40C565E0,extended,00A50001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00C56874,extended,00000001
+// patch=1,EE,40C568F4,extended,00970001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00C568F2,extended,00000001
+// patch=1,EE,40C56880,extended,00130001
+// patch=1,EE,04040404,extended,00000000
+// patch=1,EE,00C568CC,extended,00000004
+// patch=1,EE,00C5687F,extended,00000004
+// patch=1,EE,20C568EC,extended,0A646464
+// patch=1,EE,10C568F0,extended,00000A0A
+
+[Cheats/Enable Level Select press Triangle in-game to enter Once inside this menu, press R2+X to enter a map of your choice. Using this menu will also enable some extra debug options such as being able to view the coord]
+// patch=1,EE,201C223C,extended,0C0686D9
+// patch=1,EE,D0AF5CFC,extended,0000BDFF
+// patch=1,EE,201A1C08,extended,00000000
+// patch=1,EE,D0AF5CFC,extended,0000FFFF
+// patch=1,EE,201A1C08,extended,144F0005
+// patch=1,EE,201AFB00,extended,24020001

@@ -33,11 +33,11 @@ Screenshots are from a personal AYN Thor test device.
 - AYN Thor is the target device for layout, workflow, and sanity checks.
 - The game selector favors cover-first browsing and hardcoded xlenore PS2 cover defaults.
 - Cover cards show `CHEATS` only when real `.pnach` files exist in the selected ARMSX2 data root `cheats` folder.
-- Bundled real cheat PNACHs from the NetherSX2 patch collection are included under `app/src/main/assets/cheats` and copied only when missing.
+- Bundled real cheat PNACHs from the NetherSX2 patch collection are included under `platforms/android/app/src/main/assets/cheats` and copied only when missing.
 - Cheat controls are split by PNACH section so each cheat section can be toggled on its own.
 - Widescreen and 60 FPS patch metadata are intentionally not used for cheat badges or cheat switches.
-- The in-game drawer has Thor-friendly shortcuts for renderer changes, fast forward, game state, disc changes, imports, and cheat toggles.
-- The React Native experiment remains present, but the native Android Java/XML UI is the active path.
+- The Compose pause menu has Thor-friendly shortcuts for renderer changes, fast forward, game state, disc changes, imports, and individual cheat toggles.
+- The refreshed upstream Kotlin/Compose frontend and PCSX2-derived native core are the active path.
 
 ## What This Is Not
 
@@ -52,13 +52,15 @@ Screenshots are from a personal AYN Thor test device.
 From the repo root on Windows:
 
 ```powershell
-.\gradlew.bat :app:assembleUnrestrictedDebug
+Set-Location platforms\android
+.\gradlew.bat :app:assembleGithubDebug
 ```
 
-For a quicker Java/XML check:
+For a quicker Kotlin/Compose check:
 
 ```powershell
-.\gradlew.bat :app:compileDebugJavaWithJavac
+Set-Location platforms\android
+.\gradlew.bat :app:compileGithubDebugKotlin
 ```
 
 ## Credits

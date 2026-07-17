@@ -1,0 +1,69 @@
+[Cheats/Infinite Money]
+// patch=1,EE,104A7E00,extended,0000FFFF
+
+[Cheats/No Encounters]
+// patch=1,EE,204A7E0C,extended,00000000
+
+[Cheats/Infinite & Max HP Senel]
+// patch=1,EE,104A7EA8,extended,0000270F
+// patch=1,EE,104A7EC6,extended,0000270F
+
+[Cheats/Infinite & Max HP Will]
+// patch=1,EE,104A7EFC,extended,0000270F
+// patch=1,EE,104A7F1A,extended,0000270F
+
+[Cheats/Infinite & Max Hp Chloe]
+// patch=1,EE,104A7F50,extended,0000270F
+// patch=1,EE,104A7F6E,extended,0000270F
+
+[Cheats/Infinite & Max HP Norma]
+// patch=1,EE,104A7FA4,extended,0000270F
+// patch=1,EE,104A7FC2,extended,0000270F
+
+[Cheats/Infinite & Max HP Moses]
+// patch=1,EE,104A7FF8,extended,0000270F
+// patch=1,EE,104A8016,extended,0000270F
+
+[Cheats/Infinite & Max HP Jay]
+// patch=1,EE,104A804C,extended,0000270F
+// patch=1,EE,104A806A,extended,0000270F
+
+[Cheats/Infinite & Max HP Grune]
+// patch=1,EE,104A80A0,extended,0000270F
+// patch=1,EE,104A80BE,extended,0000270F
+
+[Cheats/Infinite & Max HP Shirley]
+// patch=1,EE,104A80F4,extended,0000270F
+// patch=1,EE,104A8112,extended,0000270F
+
+[Cheats/In Battle Enabler must Be On For The Following codes to work]
+// patch=1,EE,203702A0,extended,0C030800
+// patch=1,EE,200C2018,extended,03E00008
+
+[Cheats/Infinite HP In Battle]
+// patch=1,EE,200C2000,extended,4486F800
+// patch=1,EE,200C2004,extended,4680FFE0
+// patch=1,EE,200C2008,extended,E61F0024
+
+[Cheats/Infinite TP In Battle]
+// patch=1,EE,200C200C,extended,44876800
+// patch=1,EE,200C2010,extended,46806B60
+// patch=1,EE,200C2014,extended,E60D0028
+
+[Cheats/Instant Climax In Battle]
+// patch=1,EE,202E3704,extended,3E013F80
+// patch=1,EE,202E370C,extended,44810000
+
+[Cheats/All Technique & Skill max]
+// patch=1,EE,202916f8,extended,241900FF
+// patch=1,EE,202916fC,extended,A0790588
+// patch=1,EE,20291704,extended,0040180A
+// patch=1,EE,20291888,extended,241900FF
+// patch=1,EE,2029188C,extended,A0790588
+// patch=1,EE,20291890,extended,0040180A
+
+[Cheats/1 Hit to Kill L3 ON R3 OFF]
+// patch=1,EE,D04969DC,extended,0000FFFD
+// patch=1,EE,202a31e8,extended,70A510E8
+// patch=1,EE,D04969DC,extended,0000FFFB
+// patch=1,EE,202a31e8,extended,70A210E8

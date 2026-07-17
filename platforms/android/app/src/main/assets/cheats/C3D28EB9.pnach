@@ -1,0 +1,28 @@
+[Cheats/Max Cash]
+// patch=1,EE,20100D54,extended,05F5E0FF
+
+[Cheats/Max Soul Energy]
+// patch=1,EE,10100D52,extended,0000270F
+
+[Cheats/Infinite HP In Battle]
+// patch=1,EE,D04B46D4,extended,00000000
+// patch=1,EE,204B46D4,extended,3C0700D4
+
+[Cheats/Infinite MP In Battle]
+// patch=1,EE,D04B46F4,extended,00000000
+// patch=1,EE,204B46F4,extended,3C0700DC
+
+[Cheats/Infinite SP In Battle]
+// patch=1,EE,D04B4714,extended,00000000
+// patch=1,EE,204B4714,extended,A60700E2
+
+[Cheats/Save Anywhere]
+// patch=1,EE,00103EF6,extended,00000002
+
+[Cheats/Unlock All Monsters]
+// patch=1,EE,40101768,extended,00040001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,40100B14,extended,00040001
+// patch=1,EE,11111111,extended,00000000

@@ -1,0 +1,153 @@
+[Cheats/Max Money]
+// patch=1,EE,20100008,extended,0098967F
+
+[Cheats/Max Pedometer Steps]
+// patch=1,EE,101015F8,extended,0000FFFF
+
+[Cheats/Yuri Hyuga Infinite HP]
+// patch=1,EE,10100286,extended,000003E7
+// patch=1,EE,101002A0,extended,000003E7
+
+[Cheats/Yuri Hyuga Infinite MP]
+// patch=1,EE,10100288,extended,000003E7
+// patch=1,EE,101002A2,extended,000003E7
+
+[Cheats/Yuri Hyuga Infinite SP]
+// patch=1,EE,1010028A,extended,000003E7
+// patch=1,EE,101002A4,extended,000003E7
+
+[Cheats/Alice Elliot Infinite HP]
+// patch=1,EE,101002D6,extended,000003E7
+// patch=1,EE,101002F0,extended,000003E7
+
+[Cheats/Alice Ellio Infinite MP]
+// patch=1,EE,101002D8,extended,000003E7
+// patch=1,EE,101002F2,extended,000003E7
+
+[Cheats/Alice Ellio Infinite SP]
+// patch=1,EE,101002DA,extended,000003E7
+// patch=1,EE,101002F4,extended,000003E7
+
+[Cheats/Li Zhuzhen Infinite HP]
+// patch=1,EE,10100326,extended,000003E7
+// patch=1,EE,10100340,extended,000003E7
+
+[Cheats/Li Zhuzhen Infinite MP]
+// patch=1,EE,10100328,extended,000003E7
+// patch=1,EE,10100342,extended,000003E7
+
+[Cheats/Li Zhuzhen Infinite SP]
+// patch=1,EE,1010032A,extended,000003E7
+// patch=1,EE,10100344,extended,000003E7
+
+[Cheats/Margarete Gertrude Infinite HP]
+// patch=1,EE,10100376,extended,000003E7
+// patch=1,EE,10100390,extended,000003E7
+
+[Cheats/Margarete Gertrude Infinite MP]
+// patch=1,EE,10100378,extended,000003E7
+// patch=1,EE,10100392,extended,000003E7
+
+[Cheats/Margarete Gertrude Infinite SP]
+// patch=1,EE,1010037A,extended,000003E7
+// patch=1,EE,10100394,extended,000003E7
+
+[Cheats/Keith Valentine Infinite HP]
+// patch=1,EE,101003C6,extended,000003E7
+// patch=1,EE,101003E0,extended,000003E7
+
+[Cheats/Keith Valentine Infinite MP]
+// patch=1,EE,101003C8,extended,000003E7
+// patch=1,EE,101003E2,extended,000003E7
+
+[Cheats/Keith Valentine Infinite SP]
+// patch=1,EE,101003CA,extended,000003E7
+// patch=1,EE,101003E4,extended,000003E7
+
+[Cheats/Halley Brancket Infinite HP]
+// patch=1,EE,10100416,extended,000003E7
+// patch=1,EE,10100430,extended,000003E7
+
+[Cheats/Halley Brancket Infinite MP]
+// patch=1,EE,10100418,extended,000003E7
+// patch=1,EE,10100432,extended,000003E7
+
+[Cheats/Halley Brancket Infinite SP]
+// patch=1,EE,1010041A,extended,000003E7
+// patch=1,EE,10100434,extended,000003E7
+
+[Cheats/Roger Bacon Infinite HP]
+// patch=1,EE,10100466,extended,000003E7
+// patch=1,EE,10100480,extended,000003E7
+
+[Cheats/Roger Bacon Infinite MP]
+// patch=1,EE,10100468,extended,000003E7
+// patch=1,EE,10100482,extended,000003E7
+
+[Cheats/Roger Bacon Infinite SP]
+// patch=1,EE,1010046A,extended,000003E7
+// patch=1,EE,10100484,extended,000003E7
+
+[Cheats/Have All Items]
+// patch=1,EE,101000CE,extended,00006363
+// patch=1,EE,401000D0,extended,001F0001
+// patch=1,EE,63636363,extended,00000000
+// patch=1,EE,0010014D,extended,00000063
+
+[Cheats/Have All Valueables]
+// patch=1,EE,0010018F,extended,00000001
+// patch=1,EE,40100190,extended,000E0001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Souls]
+// patch=1,EE,101001CE,extended,00000101
+// patch=1,EE,401001D0,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,101001E0,extended,00000101
+
+[Cheats/Have All Armors]
+// patch=1,EE,101000B2,extended,00000101
+// patch=1,EE,401000B4,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,101000C8,extended,00000101
+
+[Cheats/Have All Weapons]
+// patch=1,EE,40100080,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,001000B0,extended,00000001
+
+[Cheats/All Books Mastered]
+// patch=1,EE,0090C02F,extended,000000D6
+// patch=1,EE,0090C033,extended,000000D6
+// patch=1,EE,0090C037,extended,000000D6
+// patch=1,EE,0090C03B,extended,000000D6
+
+[Cheats/All Gauntlets Mastered]
+// patch=1,EE,0090C01F,extended,000000D6
+// patch=1,EE,0090C023,extended,000000D6
+// patch=1,EE,0090C027,extended,000000D6
+// patch=1,EE,0090C02B,extended,000000D6
+
+[Cheats/All Pistols Mastered]
+// patch=1,EE,0090C04F,extended,000000D6
+// patch=1,EE,0090C053,extended,000000D6
+// patch=1,EE,0090C057,extended,000000D6
+// patch=1,EE,0090C05B,extended,000000D6
+
+[Cheats/All Slingshots Mastered]
+// patch=1,EE,0090C06F,extended,000000D6
+// patch=1,EE,0090C073,extended,000000D6
+// patch=1,EE,0090C077,extended,000000D6
+// patch=1,EE,0090C07B,extended,000000D6
+
+[Cheats/All Staff Weapons Mastered]
+// patch=1,EE,0090C03F,extended,000000D6
+// patch=1,EE,0090C043,extended,000000D6
+// patch=1,EE,0090C047,extended,000000D6
+// patch=1,EE,0090C04B,extended,000000D6
+
+[Cheats/All Swords Mastered]
+// patch=1,EE,0090C05F,extended,000000D6
+// patch=1,EE,0090C063,extended,000000D6
+// patch=1,EE,0090C067,extended,000000D6
+// patch=1,EE,0090C06B,extended,000000D6

@@ -1,0 +1,13 @@
+[Cheats/Infinite Health]
+// patch=1,EE,2023FCA4,extended,C44101A0
+// patch=1,EE,2023FCAC,extended,E441019C
+
+[Cheats/Infinite Armor]
+// patch=1,EE,203382FC,extended,C4620014
+// patch=1,EE,20338308,extended,E4620010
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,202DBCA0,extended,00000000
+
+[Cheats/Unlock Everything]
+// patch=1,EE,2059D6FC,extended,FFFFFFFF
