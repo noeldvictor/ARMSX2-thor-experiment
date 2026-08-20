@@ -99,6 +99,15 @@ namespace Achievements
 	/// Returns the RetroAchievements ID for the current game.
 	u32 GetGameID();
 
+	/// Computes the RetroAchievements hash for a disc image WITHOUT booting it, so a frontend can
+	/// identify a whole library against RA's game list. Returns an empty string if the image cannot
+	/// be read or carries no PS2 boot ELF.
+	///
+	/// Repoints the global CDVD at `image_path`, so it refuses to run while a VM is valid — doing it
+	/// anyway would pull the disc out from under the running game. Call from a background thread with
+	/// no VM active, as the game list scanner does.
+	std::string GetGameHashForImage(const std::string& image_path);
+
 	/// Returns true if the current game has any achievements or leaderboards.
 	bool HasAchievementsOrLeaderboards();
 
@@ -247,4 +256,21 @@ namespace Host
 
 	/// Called whenever hardcore mode is toggled.
 	void OnAchievementsHardcoreModeChanged(bool enabled);
+
+	/// Returns true when the platform renders RetroAchievements notifications through its
+	/// own native UI (for example the iOS SwiftUI toast). When this returns true the shared
+	/// core routes achievement notifications through OnAchievementNotification instead of
+	/// the ImGui FullscreenUI overlay. That also keeps the (invisible on such platforms)
+	/// FullscreenUI from being initialized, which would otherwise add per-frame render cost
+	/// for nothing.
+	bool HasNativeAchievementNotifications();
+
+	/// Presents a RetroAchievements notification natively. Only invoked when
+	/// HasNativeAchievementNotifications() returns true; desktop/Android frontends keep
+	/// using the ImGui overlay and never call this. `key` deduplicates against an in-flight
+	/// notification of the same kind, `duration` is in seconds, and `badge_path` may be
+	/// empty. May be called from any thread; implementations must copy the strings before
+	/// returning.
+	void OnAchievementNotification(const char* key, float duration, const char* title,
+		const char* message, const char* badge_path);
 } // namespace Host

@@ -74,7 +74,7 @@ OSDSettingsWidget::OSDSettingsWidget(SettingsWindow* settings_dialog, QWidget* p
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_ui.showVideoCapture, "EmuCore/GS", "OsdShowVideoCapture", true);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_ui.showInputRec, "EmuCore/GS", "OsdShowInputRec", true);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_ui.showTextureReplacements, "EmuCore/GS", "OsdShowTextureReplacements", false);
-	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_ui.warnAboutUnsafeSettings, "EmuCore", "OsdWarnAboutUnsafeSettings", true);
+	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_ui.warnAboutUnsafeSettings, "EmuCore", "WarnAboutUnsafeSettings", true);
 
 #ifndef _WIN32
 	// Currently DX12 only
@@ -136,8 +136,8 @@ OSDSettingsWidget::OSDSettingsWidget(SettingsWindow* settings_dialog, QWidget* p
 	dialog()->registerWidgetHelp(m_ui.showHardwareInfo, tr("Show Hardware Info"), tr("Unchecked"),
 		tr("Shows the current system CPU and GPU information."));
 
-	dialog()->registerWidgetHelp(m_ui.showVersion, tr("Show PCSX2 Version"), tr("Unchecked"),
-		tr("Shows the current PCSX2 version."));
+	dialog()->registerWidgetHelp(m_ui.showVersion, tr("Show ARMSX2 Version"), tr("Unchecked"),
+		tr("Shows the current ARMSX2 version."));
 
 	dialog()->registerWidgetHelp(m_ui.showSettings, tr("Show Settings"), tr("Unchecked"),
 		tr("Displays various settings and the current values of those settings in the bottom-right corner of the display."));

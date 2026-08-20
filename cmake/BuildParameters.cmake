@@ -7,11 +7,21 @@ include(GNUInstallDirs)
 # Misc option
 #-------------------------------------------------------------------------------
 option(ENABLE_TESTS "Enables building the unit tests" ON)
+option(ENABLE_RECOMPILER_TEST_HOOKS
+	"Compile harness hooks (recEeExecuteBlock, recEeIsBlockLinked, etc.) into the EE recompiler. Required by tests/ctest/core/recompilers; release builds should turn this off."
+	${ENABLE_TESTS})
 option(ENABLE_QT_UI "Enables building the PCSX2 Qt interface." ON)
 option(ENABLE_GSRUNNER "Enables building the GSRunner by default.  It can still be built with `make pcsx2-gsrunner` otherwise." OFF)
+option(ENABLE_VURUNNER "Enables building pcsx2-vurunner (headless VU microprogram replayer for codegen iteration). Requires ENABLE_RECOMPILER_TEST_HOOKS=ON." OFF)
+option(ENABLE_EERUNNER "Enables building pcsx2-eerunner (headless EE JIT-vs-interpreter divergence localizer) by default.  It can still be built with `make pcsx2-eerunner` otherwise." OFF)
+option(ENABLE_SDL_FRONTEND "Enables building the SDL3 / kmsdrm frontend (pcsx2-sdl) by default.  It can still be built with `make pcsx2-sdl` otherwise." OFF)
+option(ENABLE_LIBRETRO "Build the libretro core (pcsx2-libretro / armsx2_libretro.so). Opt-in: when OFF the subdirectory is not added at all, so it never gets built or installed alongside the Qt/SDL frontends. Reconfigure with -DENABLE_LIBRETRO=ON to build it." OFF)
 option(LTO_PCSX2_CORE "Enable LTO/IPO/LTCG on the subset of pcsx2 that benefits most from it but not anything else")
 option(USE_VTUNE "Plug VTUNE to profile GS JIT.")
+option(USE_PERF_JITDUMP "Emit Linux perf jitdump (jit-<pid>.dump) for recompiled JIT blocks; use with perf record/inject." OFF)
+option(USE_PERF_MAP "Emit simple /tmp/perf-<pid>.map symbol table for recompiled JIT blocks." OFF)
 option(PACKAGE_MODE "Use this option to ease packaging of PCSX2 (developer/distribution option)")
+set(ARMSX2_VERSION "" CACHE STRING "Reported version for builds without a git checkout")
 option(BUNDLE_EMOJI_FONT "Bundles Noto Color Emoji for systems whose system emoji font isn't usable by freetype" ON)
 option(POSITION_INDEPENDENT_CODE "Generate position-independent code. It is recommended that you leave this on." ON)
 
@@ -46,6 +56,7 @@ endif()
 # Compiler extra
 #-------------------------------------------------------------------------------
 option(USE_ASAN "Enable address sanitizer")
+option(USE_COVERAGE "Instrument the build with clang source-based coverage (-fprofile-instr-generate -fcoverage-mapping). Use with tools/coverage.sh; requires clang." OFF)
 
 #-------------------------------------------------------------------------------
 # if no build type is set, use Devel as default
@@ -123,9 +134,18 @@ elseif("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "arm64" OR "${CMAKE_SYSTEM_PROCESSOR
 		# Min spec is an M1
 		add_compile_options("-march=armv8.4-a" "-mcpu=apple-m1")
 	elseif(NOT MSVC)
-		# Require atomic rmw instructions. MSVC (and clang-cl) reject -march;
-		# their arm64 baseline already includes what we need.
-		add_compile_options("-march=armv8.1-a")
+		# Require atomic rmw instructions (LSE, ARMv8.1+). This is the upstream
+		# default and targets the broad arm64 ecosystem. MSVC (and clang-cl)
+		# reject -march; their arm64 baseline already includes what we need.
+		# In-order ARMv8.0 cores without LSE (e.g. Cortex-A53 handhelds, RK3562)
+		# must build with -march=armv8-a (+ -moutline-atomics) in CMAKE_CXX_FLAGS
+		# — LSE atomics fault on them. Only apply the v8.1 default when the user
+		# hasn't chosen an -march: add_compile_options lands AFTER CMAKE_CXX_FLAGS
+		# on the compile line, so unconditionally adding it here silently
+		# overrides any user -march (proven by a casal SIGILL on a real A53 device).
+		if(NOT CMAKE_CXX_FLAGS MATCHES "-march=")
+			add_compile_options("-march=armv8.1-a")
+		endif()
 	endif()
 
 	# If we're running on Linux, we need to detect the page/cache line size.
@@ -154,6 +174,31 @@ else()
 	message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
 endif()
 
+# The Qt debugger UI depends on KDDockWidgets. Handheld/ARM64 targets don't ship
+# the debugger, so default it off there to drop the dependency; on elsewhere to
+# match upstream. Only meaningful when ENABLE_QT_UI is on.
+if(ARCH_ARM64)
+	set(_ENABLE_QT_DEBUGGER_DEFAULT OFF)
+else()
+	set(_ENABLE_QT_DEBUGGER_DEFAULT ON)
+endif()
+option(ENABLE_QT_DEBUGGER "Build the Qt debugger UI (requires KDDockWidgets)." ${_ENABLE_QT_DEBUGGER_DEFAULT})
+
+# Mobile-GPU GameDB overlay. bin/resources-overlay/armsx2_overrides.yaml carries
+# GS/JIT tuning that is correct on tiler GPUs (Adreno/Mali/PowerVR) but would
+# regress a desktop/immediate-mode GPU. Android and iOS pack it via their own
+# asset build; on ARM64 Linux — where nearly every target is a Qualcomm/Mali
+# handheld (Rocknix/Batocera) or a Raspberry Pi tiler — ship it too, regardless
+# of frontend (both Qt and SDL Linux builds run on handhelds). Off on
+# x86/Windows/macOS. The GameDatabase override loader reads it from
+# EmuFolders::Resources and no-ops when it is absent, so this only gates the copy.
+if(ARCH_ARM64 AND UNIX AND NOT APPLE)
+	set(_ENABLE_MOBILE_GAMEDB_OVERLAY_DEFAULT ON)
+else()
+	set(_ENABLE_MOBILE_GAMEDB_OVERLAY_DEFAULT OFF)
+endif()
+option(ENABLE_MOBILE_GAMEDB_OVERLAY "Ship the mobile-GPU GameDB overlay next to the executable (ARM64 Linux handheld tilers). Default ON for ARM64 Linux, OFF elsewhere." ${_ENABLE_MOBILE_GAMEDB_OVERLAY_DEFAULT})
+
 # Require C++20.
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -179,6 +224,14 @@ else()
 	add_compile_options(
 		"$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>"
 	)
+	# GCC/Clang warn on every __fi (always_inline) function definition that lacks
+	# an explicit `inline` keyword. PCSX2 deliberately defines __fi without
+	# `inline` so that .cpp-defined __fi functions still emit a strong external
+	# symbol; adding `inline` to the macro globally breaks linkage for those. The
+	# attribute itself works correctly either way, so suppress the noise.
+	# Unconditional (not the GNU-only DEFAULT_WARNINGS entry below) because the
+	# primary toolchain here is Clang, which the GCC-gated list does not cover.
+	add_compile_options(-Wno-attributes)
 endif()
 
 set(CONFIG_REL_NO_DEB $<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>)
@@ -237,6 +290,22 @@ if(USE_VTUNE)
 	list(APPEND PCSX2_DEFS ENABLE_VTUNE)
 endif()
 
+if(USE_PERF_JITDUMP AND USE_PERF_MAP)
+	message(FATAL_ERROR "USE_PERF_JITDUMP and USE_PERF_MAP are mutually exclusive; pick one.")
+endif()
+if(USE_PERF_JITDUMP)
+	if(NOT UNIX OR APPLE)
+		message(FATAL_ERROR "USE_PERF_JITDUMP is Linux-only.")
+	endif()
+	list(APPEND PCSX2_DEFS ENABLE_PERF_JITDUMP)
+endif()
+if(USE_PERF_MAP)
+	if(NOT UNIX OR APPLE)
+		message(FATAL_ERROR "USE_PERF_MAP is Linux-only.")
+	endif()
+	list(APPEND PCSX2_DEFS ENABLE_PERF_MAP)
+endif()
+
 if(USE_OPENGL)
 	list(APPEND PCSX2_DEFS ENABLE_OPENGL)
 endif()
@@ -251,6 +320,10 @@ endif()
 
 if(WAYLAND_API)
 	list(APPEND PCSX2_DEFS WAYLAND_API)
+endif()
+
+if(ENABLE_SDL_FRONTEND)
+	list(APPEND PCSX2_DEFS ENABLE_SDL_FRONTEND)
 endif()
 
 # -Wno-attributes: "always_inline function might not be inlinable" <= real spam (thousand of warnings!!!)
@@ -286,6 +359,18 @@ if (USE_ASAN)
 	add_compile_options(-fsanitize=address)
 	add_link_options(-fsanitize=address)
 	list(APPEND PCSX2_DEFS ASAN_WORKAROUND)
+endif()
+
+if (USE_COVERAGE)
+	if(NOT USE_CLANG)
+		message(FATAL_ERROR "USE_COVERAGE requires clang (source-based coverage). Configure with the clang-coverage preset.")
+	endif()
+	# Instrument everything rather than just pcsx2/arm64: the emitters are reached
+	# through core and common call paths, and scoping the *report* (tools/coverage.sh
+	# passes -sources) is exact where scoping the *build* would silently drop
+	# counters for inline code that lives in headers outside the filter.
+	add_compile_options(-fprofile-instr-generate -fcoverage-mapping)
+	add_link_options(-fprofile-instr-generate)
 endif()
 
 if(USE_CLANG AND TIMETRACE)

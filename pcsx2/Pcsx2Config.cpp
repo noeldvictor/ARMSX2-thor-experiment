@@ -415,6 +415,9 @@ void Pcsx2Config::SpeedhackOptions::LoadSave(SettingsWrapper& wrap)
 Pcsx2Config::ProfilerOptions::ProfilerOptions()
 	: bitset(0xfffffffe)
 {
+	// Default OFF: perf jitdump is opt-in to avoid GB-scale dumps every play
+	// session on USE_PERF_JITDUMP builds.
+	EnablePerfDump = false;
 }
 
 void Pcsx2Config::ProfilerOptions::LoadSave(SettingsWrapper& wrap)
@@ -426,6 +429,7 @@ void Pcsx2Config::ProfilerOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitBool(RecBlocks_IOP);
 	SettingsWrapBitBool(RecBlocks_VU0);
 	SettingsWrapBitBool(RecBlocks_VU1);
+	SettingsWrapBitBool(EnablePerfDump);
 }
 
 bool Pcsx2Config::ProfilerOptions::operator!=(const ProfilerOptions& right) const
@@ -454,6 +458,7 @@ Pcsx2Config::RecompilerOptions::RecompilerOptions()
 	EnableVU1 = true;
 	EnableFastmem = true;
 	PauseOnTLBMiss = false;
+	EnableVUProgramCache = false; // default off; opt-in until the on-disk cache is validated on the target hardware
 
 	// vu and fpu clamping default to standard overflow.
 	vu0Overflow = true;
@@ -468,6 +473,8 @@ Pcsx2Config::RecompilerOptions::RecompilerOptions()
 	fpuOverflow = true;
 	//fpuExtraOverflow = false;
 	//fpuFullMode = false;
+	//fpuExactMode = false;
+	fpuGuardedAddSub = true; // PS2-accurate add/sub guard-bit emulation; opt-out for perf on titles verified not to need it.
 }
 
 void Pcsx2Config::RecompilerOptions::ApplySanityCheck()
@@ -480,12 +487,16 @@ void Pcsx2Config::RecompilerOptions::ApplySanityCheck()
 	if (fpuFullMode)
 		fpuIsRight = fpuOverflow && fpuExtraOverflow;
 
+	if (fpuExactMode)
+		fpuIsRight = fpuOverflow && fpuExtraOverflow && fpuFullMode;
+
 	if (!fpuIsRight)
 	{
 		// Values are wonky; assume the defaults.
 		fpuOverflow = RecompilerOptions().fpuOverflow;
 		fpuExtraOverflow = RecompilerOptions().fpuExtraOverflow;
 		fpuFullMode = RecompilerOptions().fpuFullMode;
+		fpuExactMode = RecompilerOptions().fpuExactMode;
 	}
 
 	bool vuIsOk = true;
@@ -532,6 +543,7 @@ void Pcsx2Config::RecompilerOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitBool(EnableVU1);
 	SettingsWrapBitBool(EnableFastmem);
 	SettingsWrapBitBool(PauseOnTLBMiss);
+	SettingsWrapBitBool(EnableVUProgramCache);
 
 	SettingsWrapBitBool(vu0Overflow);
 	SettingsWrapBitBool(vu0ExtraOverflow);
@@ -545,11 +557,13 @@ void Pcsx2Config::RecompilerOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitBool(fpuOverflow);
 	SettingsWrapBitBool(fpuExtraOverflow);
 	SettingsWrapBitBool(fpuFullMode);
+	SettingsWrapBitBool(fpuExactMode);
+	SettingsWrapBitBool(fpuGuardedAddSub);
 }
 
 u32 Pcsx2Config::RecompilerOptions::GetEEClampMode() const
 {
-	return fpuFullMode ? 3 : (fpuExtraOverflow ? 2 : (fpuOverflow ? 1 : 0));
+	return fpuExactMode ? 4 : (fpuFullMode ? 3 : (fpuExtraOverflow ? 2 : (fpuOverflow ? 1 : 0)));
 }
 
 void Pcsx2Config::RecompilerOptions::SetEEClampMode(u32 value)
@@ -557,6 +571,7 @@ void Pcsx2Config::RecompilerOptions::SetEEClampMode(u32 value)
 	fpuOverflow = (value >= 1);
 	fpuExtraOverflow = (value >= 2);
 	fpuFullMode = (value >= 3);
+	fpuExactMode = (value >= 4);
 }
 
 u32 Pcsx2Config::RecompilerOptions::GetVUClampMode() const
@@ -642,6 +657,10 @@ const char* Pcsx2Config::GSOptions::AspectRatioNames[(size_t)AspectRatioType::Ma
 	"4:3",
 	"16:9",
 	"10:7",
+	"21:9",
+	"20:9",
+	"19.5:9",
+	"Custom",
 	nullptr};
 
 const char* Pcsx2Config::GSOptions::FMVAspectRatioSwitchNames[(size_t)FMVAspectRatioSwitchType::MaxCount + 1] = {
@@ -650,6 +669,17 @@ const char* Pcsx2Config::GSOptions::FMVAspectRatioSwitchNames[(size_t)FMVAspectR
 	"4:3",
 	"16:9",
 	"10:7",
+	"21:9",
+	"20:9",
+	"19.5:9",
+	"Custom",
+	nullptr};
+
+const char* Pcsx2Config::GSOptions::DisplayRotationNames[(size_t)DisplayRotation::MaxCount + 1] = {
+	"0",
+	"90",
+	"180",
+	"270",
 	nullptr};
 
 const char* Pcsx2Config::GSOptions::BlendingLevelNames[] = {
@@ -721,7 +751,9 @@ Pcsx2Config::GSOptions::GSOptions()
 	UseBlitSwapChain = false;
 	DisableShaderCache = false;
 	DisableFramebufferFetch = false;
-	DisableVertexShaderExpand = false;	EnableAdrenoFramebufferFetch = false;
+	DisablePS2DepthQuantization = false;
+	DisableVertexShaderExpand = false;
+	EnableAdrenoFramebufferFetch = false;
 	ForceMaliFramebufferFetch = false;
 	SkipDuplicateFrames = true;
 	OsdMessagesPos = OsdOverlayPos::TopLeft;
@@ -760,6 +792,7 @@ Pcsx2Config::GSOptions::GSOptions()
 	HWROV = false;
 	HWROVLogging = false;
 	HWROVBarriersVK = false;
+	CoalesceRenderPasses = false;
 
 	ManualUserHacks = false;
 	UserHacks_AlignSpriteX = false;
@@ -802,6 +835,7 @@ bool Pcsx2Config::GSOptions::operator==(const GSOptions& right) const
 
 		OpEqu(AspectRatio) &&
 		OpEqu(FMVAspectRatioSwitch) &&
+		OpEqu(Rotation) &&
 
 		OptionsAreEqual(right));
 }
@@ -811,17 +845,22 @@ bool Pcsx2Config::GSOptions::OptionsAreEqual(const GSOptions& right) const
 	return (
 		OpEqu(bitsets[0]) &&
 		OpEqu(bitsets[1]) &&
+		// Pinning or unpinning changes what the GameDB is allowed to write, so it has to
+		// count as a settings change even when no hack value moved with it.
+		OpEqu(UserHackOverrides) &&
 
 		OpEqu(InterlaceMode) &&
 		OpEqu(LinearPresent) &&
 
 		OpEqu(StretchY) &&
+		OpEqu(CustomAspectRatio) &&
 		OpEqu(Crop[0]) &&
 		OpEqu(Crop[1]) &&
 		OpEqu(Crop[2]) &&
 		OpEqu(Crop[3]) &&
 
 		OpEqu(OsdScale) &&
+		OpEqu(OsdColor) &&
 		OpEqu(OsdMargin) &&
 		OpEqu(OsdFontPath) &&
 		OpEqu(OsdMessagesPos) &&
@@ -864,8 +903,10 @@ bool Pcsx2Config::GSOptions::OptionsAreEqual(const GSOptions& right) const
 		OpEqu(UserHacks_BilinearHack) &&
 		OpEqu(OverrideTextureBarriers) &&
 		OpEqu(DepthFeedbackMode) &&
+		OpEqu(BackThreadMode) &&
 
 		OpEqu(CAS_Sharpness) &&
+		OpEqu(FSR_Sharpness) &&
 		OpEqu(ShadeBoost_Brightness) &&
 		OpEqu(ShadeBoost_Contrast) &&
 		OpEqu(ShadeBoost_Saturation) &&
@@ -885,6 +926,12 @@ bool Pcsx2Config::GSOptions::OptionsAreEqual(const GSOptions& right) const
 
 		OpEqu(ShaderChainEnabled) &&
 		OpEqu(ShaderChainPreset) &&
+
+		OpEqu(LsfgEnabled) &&
+		OpEqu(LsfgMultiplier) &&
+		OpEqu(LsfgDllPath) &&
+		OpEqu(LsfgPerformance) &&
+		OpEqu(LsfgFlowScale) &&
 
 		OpEqu(CaptureContainer) &&
 		OpEqu(VideoCaptureCodec) &&
@@ -909,18 +956,56 @@ bool Pcsx2Config::GSOptions::operator!=(const GSOptions& right) const
 	return !operator==(right);
 }
 
+bool Pcsx2Config::GSOptions::IsRestartOption(const char* ini_key)
+{
+	// INI key names for the fields compared in RestartOptionsAreEqual below; keep the
+	// two in sync. Names match the field names except BackThreadMode, which is stored
+	// as "GSBackThreadMode".
+	static constexpr const char* keys[] = {
+		"Renderer",
+		"Adapter",
+		"UseDebugDevice",
+		"DebugLabels",
+		"UseBlitSwapChain",
+		"DisableShaderCache",
+		"DisableFramebufferFetch",
+		"DisablePS2DepthQuantization",
+		"DisableVertexShaderExpand",
+		"EnableAdrenoFramebufferFetch",
+		"ForceMaliFramebufferFetch",
+		"OverrideTextureBarriers",
+		"DepthFeedbackMode",
+		"GSBackThreadMode",
+		"HWAA1",
+		"ExclusiveFullscreenControl",
+	};
+
+	for (const char* key : keys)
+	{
+		if (StringUtil::Strcasecmp(key, ini_key) == 0)
+			return true;
+	}
+	return false;
+}
+
 bool Pcsx2Config::GSOptions::RestartOptionsAreEqual(const GSOptions& right) const
 {
 	return OpEqu(Renderer) &&
 		   OpEqu(Adapter) &&
 		   OpEqu(UseDebugDevice) &&
+		   // Selects the VK_EXT_debug_utils instance extension, which is fixed at
+		   // instance creation -- toggling it in place would silently do nothing.
+		   OpEqu(DebugLabels) &&
 		   OpEqu(UseBlitSwapChain) &&
 		   OpEqu(DisableShaderCache) &&
 		   OpEqu(DisableFramebufferFetch) &&
-		   OpEqu(DisableVertexShaderExpand) &&		   OpEqu(EnableAdrenoFramebufferFetch) &&
+		   OpEqu(DisablePS2DepthQuantization) &&
+		   OpEqu(DisableVertexShaderExpand) &&
+		   OpEqu(EnableAdrenoFramebufferFetch) &&
 		   OpEqu(ForceMaliFramebufferFetch) &&
 		   OpEqu(OverrideTextureBarriers) &&
 		   OpEqu(DepthFeedbackMode) &&
+		   OpEqu(BackThreadMode) &&
 		   OpEqu(HWAA1) &&
 		   OpEqu(ExclusiveFullscreenControl);
 }
@@ -944,12 +1029,14 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 
 	SettingsWrapEnumEx(AspectRatio, "AspectRatio", AspectRatioNames);
 	SettingsWrapEnumEx(FMVAspectRatioSwitch, "FMVAspectRatioSwitch", FMVAspectRatioSwitchNames);
+	SettingsWrapEnumEx(Rotation, "DisplayRotation", DisplayRotationNames);
 	SettingsWrapIntEnumEx(ScreenshotSize, "ScreenshotSize");
 	SettingsWrapIntEnumEx(ScreenshotFormat, "ScreenshotFormat");
 	SettingsWrapEntry(ScreenshotQuality);
 	SettingsWrapBitBoolEx(OrganizeSnapshotsByGame, "OrganizeScreenshotsByGame");
 	SettingsWrapBitBoolEx(OrganizeVideoCaptureByGame, "OrganizeVideoCaptureByGame");
 	SettingsWrapEntry(StretchY);
+	SettingsWrapEntry(CustomAspectRatio);
 	SettingsWrapEntryEx(Crop[0], "CropLeft");
 	SettingsWrapEntryEx(Crop[1], "CropTop");
 	SettingsWrapEntryEx(Crop[2], "CropRight");
@@ -963,10 +1050,14 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitBoolEx(PCRTCOverscan, "pcrtc_overscan");
 	SettingsWrapBitBool(IntegerScaling);
 	SettingsWrapBitBool(UseDebugDevice);
+	SettingsWrapBitBool(DebugLabels);
+	SettingsWrapBitBool(DumpDrawLog);
 	SettingsWrapBitBool(UseBlitSwapChain);
 	SettingsWrapBitBool(DisableShaderCache);
 	SettingsWrapBitBool(DisableFramebufferFetch);
-	SettingsWrapBitBool(DisableVertexShaderExpand);	SettingsWrapBitBool(EnableAdrenoFramebufferFetch);
+	SettingsWrapBitBool(DisablePS2DepthQuantization);
+	SettingsWrapBitBool(DisableVertexShaderExpand);
+	SettingsWrapBitBool(EnableAdrenoFramebufferFetch);
 	SettingsWrapBitBool(ForceMaliFramebufferFetch);
 	SettingsWrapBitBool(SkipDuplicateFrames);
 	SettingsWrapBitBool(OsdShowSpeed);
@@ -997,6 +1088,9 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitBoolEx(PreloadFrameWithGSData, "preload_frame_with_gs_data");
 	SettingsWrapBitBoolEx(Mipmap, "mipmap");
 	SettingsWrapBitBoolEx(ManualUserHacks, "UserHacks");
+	// Bit per GSUserHackOverride. Written by the frontend when someone changes one hack
+	// on purpose, not something to hand-edit.
+	SettingsWrapEntryEx(UserHackOverrides, "UserHackOverrides");
 	SettingsWrapBitBoolEx(UserHacks_AlignSpriteX, "UserHacks_align_sprite_X");
 	SettingsWrapIntEnumEx(UserHacks_AutoFlush, "UserHacks_AutoFlushLevel");
 	SettingsWrapBitBoolEx(UserHacks_CPUFBConversion, "UserHacks_CPU_FB_Conversion");
@@ -1044,6 +1138,7 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapIntEnumEx(InterlaceMode, "deinterlace_mode");
 
 	SettingsWrapEntry(OsdScale);
+	SettingsWrapEntry(OsdColor);
 	SettingsWrapEntry(OsdMargin);
 	SettingsWrapEntry(OsdFontPath);
 	SettingsWrapIntEnumEx(OsdMessagesPos, "OsdMessagesPos");
@@ -1059,6 +1154,7 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitBool(HWROV);
 	SettingsWrapBitBool(HWROVLogging);
 	SettingsWrapBitBool(HWROVBarriersVK);
+	SettingsWrapBitBool(CoalesceRenderPasses);
 	SettingsWrapIntEnumEx(AccurateBlendingUnit, "accurate_blending_unit");
 	SettingsWrapIntEnumEx(TextureFiltering, "filter");
 	SettingsWrapIntEnumEx(TexturePreloading, "texture_preloading");
@@ -1067,6 +1163,8 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapIntEnumEx(CASMode, "CASMode");
 	SettingsWrapIntEnumEx(Upscaler, "Upscaler");
 	SettingsWrapBitfieldEx(CAS_Sharpness, "CASSharpness");
+	// Bitfield, not Entry: FSR_Sharpness is a u8, same as CAS_Sharpness above.
+	SettingsWrapBitfieldEx(FSR_Sharpness, "FSRSharpness");
 	SettingsWrapBitfieldEx(Dithering, "dithering_ps2");
 	SettingsWrapBitfieldEx(MaxAnisotropy, "MaxAnisotropy");
 	SettingsWrapBitfieldEx(SWExtraThreads, "extrathreads");
@@ -1088,6 +1186,7 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapIntEnumEx(TriFilter, "TriFilter");
 	SettingsWrapBitfieldEx(OverrideTextureBarriers, "OverrideTextureBarriers");
 	SettingsWrapIntEnumEx(DepthFeedbackMode, "DepthFeedbackMode");
+	SettingsWrapIntEnumEx(BackThreadMode, "GSBackThreadMode");
 
 	SettingsWrapBitfield(ShadeBoost_Brightness);
 	SettingsWrapBitfield(ShadeBoost_Contrast);
@@ -1104,6 +1203,14 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 
 	SettingsWrapEntryEx(ShaderChainEnabled, "ShaderChainEnabled");
 	SettingsWrapEntryEx(ShaderChainPreset, "ShaderChainPreset");
+
+	SettingsWrapEntryEx(LsfgEnabled, "LsfgEnabled");
+	// Bitfield, not Entry: LsfgMultiplier is a u8, and the plain entry wrapper has no
+	// overload for one — the same reason CAS_Sharpness above uses it.
+	SettingsWrapBitfieldEx(LsfgMultiplier, "LsfgMultiplier");
+	SettingsWrapEntryEx(LsfgDllPath, "LsfgDllPath");
+	SettingsWrapEntryEx(LsfgPerformance, "LsfgPerformance");
+	SettingsWrapBitfieldEx(LsfgFlowScale, "LsfgFlowScale");
 
 	SettingsWrapEntryEx(CaptureContainer, "CaptureContainer");
 	SettingsWrapEntryEx(VideoCaptureCodec, "VideoCaptureCodec");
@@ -1139,38 +1246,71 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	}
 }
 
-void Pcsx2Config::GSOptions::MaskUserHacks()
+void Pcsx2Config::GSOptions::MaskUserHacks(bool respect_claims)
 {
 	if (ManualUserHacks)
 		return;
 
-	UserHacks_AlignSpriteX = false;
-	UserHacks_MergePPSprite = false;
-	UserHacks_ForceEvenSpritePosition = false;
-	UserHacks_NativePaletteDraw = false;
+	// A pinned hack is the player's answer, so it survives here and past the GameDB.
+	const auto keep = [this, respect_claims](GSUserHackOverride hack) {
+		return respect_claims && IsUserHackPinned(hack);
+	};
+
+	if (!keep(GSUserHackOverride::AlignSprite))
+		UserHacks_AlignSpriteX = false;
+	if (!keep(GSUserHackOverride::MergeSprite))
+		UserHacks_MergePPSprite = false;
+	if (!keep(GSUserHackOverride::ForceEvenSpritePosition))
+		UserHacks_ForceEvenSpritePosition = false;
+	if (!keep(GSUserHackOverride::NativePaletteDraw))
+		UserHacks_NativePaletteDraw = false;
+	if (!keep(GSUserHackOverride::HalfPixelOffset))
+		UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off;
+	if (!keep(GSUserHackOverride::RoundSprite))
+		UserHacks_RoundSprite = 0;
+	if (!keep(GSUserHackOverride::NativeScaling))
+		UserHacks_NativeScaling = GSNativeScaling::Off;
+	if (!keep(GSUserHackOverride::AutoFlush))
+		UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
+	if (!keep(GSUserHackOverride::TextureInsideRt))
+		UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
+	if (!keep(GSUserHackOverride::BilinearHack))
+		UserHacks_BilinearHack = GSBilinearDirtyMode::Automatic;
+	if (!keep(GSUserHackOverride::TextureOffsetX))
+		UserHacks_TCOffsetX = 0;
+	if (!keep(GSUserHackOverride::TextureOffsetY))
+		UserHacks_TCOffsetY = 0;
+	if (!keep(GSUserHackOverride::PreloadFrameData))
+		PreloadFrameWithGSData = false;
+	if (!keep(GSUserHackOverride::DisablePartialInvalidation))
+		UserHacks_DisablePartialInvalidation = false;
+
+	if (!keep(GSUserHackOverride::GPUPaletteConversion))
+		GPUPaletteConversion = false;
+	if (!keep(GSUserHackOverride::DisableDepthSupport))
+		UserHacks_DisableDepthSupport = false;
+	if (!keep(GSUserHackOverride::CPUFBConversion))
+		UserHacks_CPUFBConversion = false;
+	if (!keep(GSUserHackOverride::ReadTCOnClose))
+		UserHacks_ReadTCOnClose = false;
+	if (!keep(GSUserHackOverride::Limit24BitDepth))
+		UserHacks_Limit24BitDepth = GSLimit24BitDepth::Disabled;
+	if (!keep(GSUserHackOverride::EstimateTextureRegion))
+		UserHacks_EstimateTextureRegion = false;
+	if (!keep(GSUserHackOverride::DrawBuffering))
+		UserHacks_DrawBuffering = false;
+	if (!keep(GSUserHackOverride::CPUSpriteRenderBW))
+		UserHacks_CPUSpriteRenderBW = 0;
+	if (!keep(GSUserHackOverride::CPUSpriteRenderLevel))
+		UserHacks_CPUSpriteRenderLevel = 0;
+	if (!keep(GSUserHackOverride::CPUCLUTRender))
+		UserHacks_CPUCLUTRender = 0;
+	if (!keep(GSUserHackOverride::GPUTargetCLUT))
+		UserHacks_GPUTargetCLUTMode = GSGPUTargetCLUTMode::Disabled;
+
+	// No UI reaches these two, so there is nothing for a player to claim.
 	UserHacks_DisableSafeFeatures = false;
 	UserHacks_DisableRenderFixes = false;
-	UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off;
-	UserHacks_RoundSprite = 0;
-	UserHacks_NativeScaling = GSNativeScaling::Off;
-	UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
-	GPUPaletteConversion = false;
-	PreloadFrameWithGSData = false;
-	UserHacks_DisablePartialInvalidation = false;
-	UserHacks_DisableDepthSupport = false;
-	UserHacks_CPUFBConversion = false;
-	UserHacks_ReadTCOnClose = false;
-	UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
-	UserHacks_Limit24BitDepth = GSLimit24BitDepth::Disabled;
-	UserHacks_EstimateTextureRegion = false;
-	UserHacks_DrawBuffering = false;
-	UserHacks_TCOffsetX = 0;
-	UserHacks_TCOffsetY = 0;
-	UserHacks_CPUSpriteRenderBW = 0;
-	UserHacks_CPUSpriteRenderLevel = 0;
-	UserHacks_CPUCLUTRender = 0;
-	UserHacks_GPUTargetCLUTMode = GSGPUTargetCLUTMode::Disabled;
-	UserHacks_BilinearHack = GSBilinearDirtyMode::Automatic;
 	SkipDrawStart = 0;
 	SkipDrawEnd = 0;
 }
@@ -1180,6 +1320,42 @@ void Pcsx2Config::GSOptions::MaskUpscalingHacks()
 	if (UpscaleMultiplier > 1.0f)
 		return;
 
+	// Pins deliberately don't count here. At native res the renderer skips these anyway
+	// (GSRendererHW::Draw wants rt->GetScale() > 1), so honouring a pin would only leave
+	// GSConfig and the settings overlay claiming something that never runs.
+
+	// Say what gets turned off. The GameDB apply has already announced several of these as
+	// "Enabled GS Hardware Fix", and until this line existed nothing ever contradicted it --
+	// so a log read at face value overstated what was in force, and did exactly that during
+	// the Rogue Galaxy work. Naming only the fixes that were really on keeps repeat calls
+	// quiet too: after the first pass there is nothing left to clear, so a settings re-apply
+	// adds no noise. Fix names match the GameDB ones so the two lines can be read together.
+	std::string cleared;
+	const auto note = [&cleared](const char* name) {
+		fmt::format_to(std::back_inserter(cleared), "{}{}", cleared.empty() ? "" : ", ", name);
+	};
+
+	if (UserHacks_AlignSpriteX)
+		note("alignSprite");
+	if (UserHacks_MergePPSprite)
+		note("mergeSprite");
+	if (UserHacks_ForceEvenSpritePosition)
+		note("forceEvenSpritePosition");
+	if (UserHacks_BilinearHack != GSBilinearDirtyMode::Automatic)
+		note("bilinearUpscale");
+	if (UserHacks_NativePaletteDraw)
+		note("nativePaletteDraw");
+	if (UserHacks_HalfPixelOffset != GSHalfPixelOffset::Off)
+		note("halfPixelOffset");
+	if (UserHacks_RoundSprite != 0)
+		note("roundSprite");
+	if (UserHacks_NativeScaling != GSNativeScaling::Off)
+		note("nativeScaling");
+	if (UserHacks_TCOffsetX != 0)
+		note("textureOffsetX");
+	if (UserHacks_TCOffsetY != 0)
+		note("textureOffsetY");
+
 	UserHacks_AlignSpriteX = false;
 	UserHacks_MergePPSprite = false;
 	UserHacks_ForceEvenSpritePosition = false;
@@ -1190,6 +1366,9 @@ void Pcsx2Config::GSOptions::MaskUpscalingHacks()
 	UserHacks_NativeScaling = GSNativeScaling::Off;
 	UserHacks_TCOffsetX = 0;
 	UserHacks_TCOffsetY = 0;
+
+	if (!cleared.empty())
+		Console.WriteLn("GS: Native resolution, so these upscaling-only fixes do not apply and were turned off: %s", cleared.c_str());
 }
 
 bool Pcsx2Config::GSOptions::UseHardwareRenderer() const
@@ -1288,6 +1467,7 @@ void Pcsx2Config::SPU2Options::LoadSave(SettingsWrapper& wrap)
 		SettingsWrapEntry(StandardVolume);
 		SettingsWrapEntry(FastForwardVolume);
 		SettingsWrapEntry(OutputMuted);
+		SettingsWrapEntry(LightweightMode);
 		SettingsWrapParsedEnum(Backend, "Backend", &AudioStream::ParseBackendName, &AudioStream::GetBackendName);
 		SettingsWrapParsedEnum(SyncMode, "SyncMode", &ParseSyncMode, &GetSyncModeName);
 		SettingsWrapEntry(DriverName);
@@ -1307,6 +1487,7 @@ bool Pcsx2Config::SPU2Options::operator==(const SPU2Options& right) const
 		   OpEqu(StandardVolume) &&
 		   OpEqu(FastForwardVolume) &&
 		   OpEqu(OutputMuted) &&
+		   OpEqu(LightweightMode) &&
 		   OpEqu(Backend) &&
 		   OpEqu(StreamParameters) &&
 		   OpEqu(DriverName) &&
@@ -1319,6 +1500,7 @@ const char* Pcsx2Config::DEV9Options::NetApiNames[] = {
 	"PCAP Switched",
 	"TAP",
 	"Sockets",
+	"Local Link",
 	nullptr};
 
 const char* Pcsx2Config::DEV9Options::DnsModeNames[] = {
@@ -1341,6 +1523,11 @@ void Pcsx2Config::DEV9Options::LoadSave(SettingsWrapper& wrap)
 		SettingsWrapEntry(EthDevice);
 		SettingsWrapEntry(EthLogDHCP);
 		SettingsWrapEntry(EthLogDNS);
+		SettingsWrapEntry(LocalLinkHost);
+		SettingsWrapEntry(LocalLinkAddress);
+		SettingsWrapEntry(LocalLinkPort);
+		SettingsWrapEntry(LocalLinkPeerId);
+		SettingsWrapEntry(LocalLinkRoomCode);
 
 		SettingsWrapEntry(InterceptDHCP);
 
@@ -1435,6 +1622,11 @@ bool Pcsx2Config::DEV9Options::operator==(const DEV9Options& right) const
 		   OpEqu(EthDevice) &&
 		   OpEqu(EthLogDHCP) &&
 		   OpEqu(EthLogDNS) &&
+		   OpEqu(LocalLinkHost) &&
+		   OpEqu(LocalLinkAddress) &&
+		   OpEqu(LocalLinkPort) &&
+		   OpEqu(LocalLinkPeerId) &&
+		   OpEqu(LocalLinkRoomCode) &&
 
 		   OpEqu(InterceptDHCP) &&
 		   (*(int*)PS2IP == *(int*)right.PS2IP) &&
@@ -2231,7 +2423,7 @@ bool EmuFolders::SetDataDirectory(Error* error)
 		if (EmuConfig.CustomDataPath.empty())
 		{
 #if defined(_WIN32)
-			// On Windows, use My Documents\PCSX2 to match old installs.
+			// On Windows, use My Documents\ARMSX2.
 			PWSTR documents_directory;
 			if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &documents_directory)))
 			{
@@ -2240,7 +2432,7 @@ bool EmuFolders::SetDataDirectory(Error* error)
 				CoTaskMemFree(documents_directory);
 			}
 #elif defined(__linux__) || defined(__FreeBSD__)
-			// Use $XDG_CONFIG_HOME/PCSX2 if it exists.
+			// Use $XDG_CONFIG_HOME/ARMSX2 if it exists.
 			const char* xdg_config_home = getenv("XDG_CONFIG_HOME");
 			if (xdg_config_home && Path::IsAbsolute(xdg_config_home))
 			{
@@ -2248,7 +2440,7 @@ bool EmuFolders::SetDataDirectory(Error* error)
 			}
 			else
 			{
-				// Use ~/PCSX2 for non-XDG, and ~/.config/PCSX2 for XDG.
+				// Use ~/ARMSX2 for non-XDG, and ~/.config/ARMSX2 for XDG.
 				const char* home_dir = getenv("HOME");
 				if (home_dir)
 				{

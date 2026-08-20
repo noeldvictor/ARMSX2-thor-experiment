@@ -63,7 +63,95 @@ struct CoverThumbnailView: View {
             return
         }
 
-        image = await CoverThumbnailCache.shared.thumbnail(for: coverURL, signature: coverSignature, width: width, height: height, scale: scale)
+        let loadedImage = await CoverThumbnailCache.shared.thumbnail(
+            for: coverURL,
+            signature: coverSignature,
+            width: width,
+            height: height,
+            scale: scale
+        )
+        guard !Task.isCancelled else { return }
+        image = loadedImage
+    }
+}
+
+/// Bounds ImageIO work while allowing a complete visible row to decode at once.
+private actor CoverThumbnailDecodeLimiter {
+    private let maximumConcurrentDecodes: Int
+    private var activeDecodes = 0
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+    private var nextWaiterIndex = 0
+
+    init(maximumConcurrentDecodes: Int) {
+        self.maximumConcurrentDecodes = max(1, maximumConcurrentDecodes)
+    }
+
+    func acquire() async {
+        if activeDecodes < maximumConcurrentDecodes {
+            activeDecodes += 1
+            return
+        }
+        await withCheckedContinuation { continuation in
+            waiters.append(continuation)
+        }
+    }
+
+    func release() {
+        if nextWaiterIndex < waiters.count {
+            let continuation = waiters[nextWaiterIndex]
+            nextWaiterIndex += 1
+            continuation.resume()
+            return
+        }
+
+        waiters.removeAll(keepingCapacity: true)
+        nextWaiterIndex = 0
+        activeDecodes = max(0, activeDecodes - 1)
+    }
+}
+
+/// Shares identical in-flight thumbnail requests and runs unique decodes
+/// through a small utility-priority pool.
+private actor CoverThumbnailDecodeCoordinator {
+    static let shared = CoverThumbnailDecodeCoordinator()
+
+    private struct Request {
+        let token: UUID
+        let task: Task<UIImage?, Never>
+    }
+
+    private let limiter = CoverThumbnailDecodeLimiter(
+        maximumConcurrentDecodes: 6
+    )
+    private var requests: [String: Request] = [:]
+
+    func image(
+        for key: String,
+        decode: @escaping @Sendable () -> UIImage?
+    ) async -> UIImage? {
+        if let request = requests[key] {
+            return await request.task.value
+        }
+
+        let token = UUID()
+        let limiter = self.limiter
+        let task: Task<UIImage?, Never> = Task.detached(priority: .userInitiated) {
+            await limiter.acquire()
+            guard !Task.isCancelled else {
+                await limiter.release()
+                return nil
+            }
+            let image = decode()
+            await limiter.release()
+            return Task.isCancelled ? nil : image
+        }
+        requests[key] = Request(token: token, task: task)
+
+        let image = await task.value
+        if requests[key]?.token == token {
+            requests.removeValue(forKey: key)
+        }
+        return image
     }
 }
 
@@ -71,6 +159,9 @@ final class CoverThumbnailCache: @unchecked Sendable {
     static let shared = CoverThumbnailCache()
 
     private let cache = NSCache<NSString, UIImage>()
+    private let stateLock = NSLock()
+    private var generation: UInt64 = 0
+    private var acceptsImages = true
 
     private init() {
         cache.countLimit = 768
@@ -78,40 +169,117 @@ final class CoverThumbnailCache: @unchecked Sendable {
     }
 
     func cachedImage(for url: URL, signature: String?, width: CGFloat, height: CGFloat, scale: CGFloat) -> UIImage? {
-        cache.object(forKey: cacheKey(for: url, signature: signature, width: width, height: height, scale: scale))
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        guard acceptsImages else { return nil }
+        return cache.object(forKey: cacheKey(for: url, signature: signature, width: width, height: height, scale: scale))
+    }
+
+    /// Returns the selected card's already-decoded cover when possible. A user
+    /// can tap before CoverThumbnailView's asynchronous task finishes, so the
+    /// transition performs one bounded downsample rather than showing a
+    /// placeholder or cancelling the animation.
+    func imageForGameplayTransition(
+        for url: URL,
+        signature: String?,
+        width: CGFloat,
+        height: CGFloat,
+        scale: CGFloat
+    ) -> UIImage? {
+        if let cached = cachedImage(
+            for: url,
+            signature: signature,
+            width: width,
+            height: height,
+            scale: scale
+        ) {
+            return cached
+        }
+
+        let sourceOptions = [
+            kCGImageSourceShouldCache: false,
+        ] as CFDictionary
+        let thumbnailOptions = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceThumbnailMaxPixelSize:
+                max(1, Int(max(width, height) * scale)),
+        ] as CFDictionary
+
+        if let source = CGImageSourceCreateWithURL(
+            url as CFURL,
+            sourceOptions
+        ),
+           let cgImage = CGImageSourceCreateThumbnailAtIndex(
+            source,
+            0,
+            thumbnailOptions
+           ) {
+            return UIImage(cgImage: cgImage, scale: scale, orientation: .up)
+        }
+
+        return UIImage(contentsOfFile: url.path)
     }
 
     func thumbnail(for url: URL, signature: String?, width: CGFloat, height: CGFloat, scale: CGFloat) async -> UIImage? {
         let key = cacheKey(for: url, signature: signature, width: width, height: height, scale: scale)
-        if let cached = cache.object(forKey: key) {
-            return cached
+        guard let request = beginRequest(for: key) else { return nil }
+        if let cachedImage = request.cachedImage {
+            return cachedImage
         }
+        let requestGeneration = request.generation
 
         let path = url.path
         let maxPixelSize = max(1, Int(max(width, height) * scale))
-        let image = await Task.detached(priority: .utility) {
-            let sourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-            let thumbnailOptions = [
-                kCGImageSourceCreateThumbnailFromImageAlways: true,
-                kCGImageSourceCreateThumbnailWithTransform: true,
-                kCGImageSourceShouldCacheImmediately: true,
-                kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
-            ] as CFDictionary
-
-            guard let source = CGImageSourceCreateWithURL(url as CFURL, sourceOptions),
-                  let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, thumbnailOptions) else {
-                return UIImage(contentsOfFile: path)
-            }
-
-            return UIImage(cgImage: cgImage, scale: scale, orientation: .up)
-        }.value
-
-        if let image {
-            let cost = max(1, Int(image.size.width * image.scale * image.size.height * image.scale * 4))
-            cache.setObject(image, forKey: key, cost: cost)
+        let image = await CoverThumbnailDecodeCoordinator.shared.image(
+            for: key as String
+        ) {
+            Self.decodeThumbnail(
+                at: url,
+                path: path,
+                maxPixelSize: maxPixelSize,
+                scale: scale
+            )
         }
 
+        guard !Task.isCancelled, let image else { return nil }
+        let cost = max(1, Int(image.size.width * image.scale * image.size.height * image.scale * 4))
+        guard insert(image, for: key, cost: cost, generation: requestGeneration) else { return nil }
+
         return image
+    }
+
+    private static func decodeThumbnail(
+        at url: URL,
+        path: String,
+        maxPixelSize: Int,
+        scale: CGFloat
+    ) -> UIImage? {
+        guard !Task.isCancelled else { return nil }
+        let sourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+        let thumbnailOptions = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
+        ] as CFDictionary
+
+        guard let source = CGImageSourceCreateWithURL(
+            url as CFURL,
+            sourceOptions
+        ),
+              let cgImage = CGImageSourceCreateThumbnailAtIndex(
+                source,
+                0,
+                thumbnailOptions
+              ) else {
+            NSLog("[ARMSX2 iOS Covers] thumbnail decode failed %@", path)
+            return nil
+        }
+
+        guard !Task.isCancelled else { return nil }
+        return UIImage(cgImage: cgImage, scale: scale, orientation: .up)
     }
 
     static func signature(for url: URL?) -> String? {
@@ -120,6 +288,38 @@ final class CoverThumbnailCache: @unchecked Sendable {
         let modified = values?.contentModificationDate?.timeIntervalSince1970 ?? 0
         let size = values?.fileSize ?? 0
         return "\(url.path)|\(modified)|\(size)"
+    }
+
+    func activateForMenu() {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        if !acceptsImages {
+            generation &+= 1
+        }
+        acceptsImages = true
+    }
+
+    func releaseForGameplay() {
+        stateLock.lock()
+        generation &+= 1
+        acceptsImages = false
+        cache.removeAllObjects()
+        stateLock.unlock()
+    }
+
+    private func beginRequest(for key: NSString) -> (generation: UInt64, cachedImage: UIImage?)? {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        guard acceptsImages else { return nil }
+        return (generation, cache.object(forKey: key))
+    }
+
+    private func insert(_ image: UIImage, for key: NSString, cost: Int, generation requestGeneration: UInt64) -> Bool {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        guard acceptsImages, generation == requestGeneration else { return false }
+        cache.setObject(image, forKey: key, cost: cost)
+        return true
     }
 
     private func cacheKey(for url: URL, signature: String?, width: CGFloat, height: CGFloat, scale: CGFloat) -> NSString {

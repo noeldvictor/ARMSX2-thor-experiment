@@ -145,10 +145,10 @@ EmulationSettingsWidget::EmulationSettingsWidget(SettingsWindow* settings_dialog
 		   "the console's refresh rate is too far from the host's refresh rate. Users with variable refresh rate displays "
 		   "should disable this option."));
 	dialog()->registerWidgetHelp(m_ui.vsync, tr("Vertical Sync (VSync)"), tr("Unchecked"),
-		tr("Enable this option to match PCSX2's refresh rate with your current monitor or screen. VSync is automatically disabled when "
+		tr("Enable this option to match ARMSX2's refresh rate with your current monitor or screen. VSync is automatically disabled when "
 		   "it is not possible (e.g., running at non-100% speed)."));
 	dialog()->registerWidgetHelp(m_ui.useVSyncForTiming, tr("Use Host VSync Timing"), tr("Unchecked"),
-		tr("When synchronizing with the host refresh rate, this option disables PCSX2's internal frame timing and uses the host instead. "
+		tr("When synchronizing with the host refresh rate, this option disables ARMSX2's internal frame timing and uses the host instead. "
 		   "Can result in smoother frame pacing, <strong>but at the cost of increased input latency</strong>."));
 	dialog()->registerWidgetHelp(m_ui.skipPresentingDuplicateFrames, tr("Skip Presenting Duplicate Frames"), tr("Checked"),
 		tr("Detects when idle frames are being presented in 25/30fps games, and skips presenting those frames. The frame is still "
@@ -262,20 +262,14 @@ void EmulationSettingsWidget::onOptimalFramePacingChanged()
 	const QSignalBlocker sb(m_ui.maxFrameLatency);
 
 	std::optional<int> value;
-	bool optimal = false;
 	if (m_ui.optimalFramePacing->checkState() != Qt::PartiallyChecked)
-	{
-		optimal = m_ui.optimalFramePacing->isChecked();
-		value = optimal ? 0 : DEFAULT_FRAME_LATENCY;
-	}
-	else
-	{
-		value = dialog()->getEffectiveIntValue("EmuCore/GS", "VsyncQueueSize", DEFAULT_FRAME_LATENCY);
-		optimal = (value == 0);
-	}
+		value = m_ui.optimalFramePacing->isChecked() ? 0 : DEFAULT_FRAME_LATENCY;
+
+	const int latency = value.value_or(Host::GetBaseIntSettingValue("EmuCore/GS", "VsyncQueueSize", DEFAULT_FRAME_LATENCY));
+	const bool optimal = (latency == 0);
 
 	m_ui.maxFrameLatency->setMinimum(optimal ? 0 : 1);
-	m_ui.maxFrameLatency->setValue(optimal ? 0 : DEFAULT_FRAME_LATENCY);
+	m_ui.maxFrameLatency->setValue(latency);
 	m_ui.maxFrameLatency->setEnabled(!dialog()->isPerGameSettings() && !m_ui.optimalFramePacing->isChecked());
 
 	dialog()->setIntSettingValue("EmuCore/GS", "VsyncQueueSize", value);
@@ -300,7 +294,7 @@ void EmulationSettingsWidget::updateOptimalFramePacing()
 	}
 
 	m_ui.maxFrameLatency->setMinimum(optimal ? 0 : 1);
-	m_ui.maxFrameLatency->setValue(optimal ? 0 : value);
+	m_ui.maxFrameLatency->setValue(value);
 }
 
 void EmulationSettingsWidget::updateUseVSyncForTimingEnabled()

@@ -14,7 +14,7 @@
    <item>
     <widget class="QLabel" name="disclaimerLabel">
      <property name="text">
-      <string>Changing these options may cause games to become non-functional. Modify at your own risk, the PCSX2 team will not provide support for configurations with these settings changed.</string>
+      <string>Changing these options may cause games to become non-functional. Modify at your own risk, the ARMSX2 team will not provide support for configurations with these settings changed.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -127,6 +127,11 @@
           <string>Full</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Exact</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
@@ -177,6 +182,13 @@
          <widget class="QCheckBox" name="extraMemory">
           <property name="text">
            <string>Enable Extended RAM (Dev Console)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="eeFpuGuardedAddSub">
+          <property name="text">
+           <string>FPU Add/Sub Guard Bits</string>
           </property>
          </widget>
         </item>
@@ -555,6 +567,7 @@
   <tabstop>eeFastmem</tabstop>
   <tabstop>pauseOnTLBMiss</tabstop>
   <tabstop>extraMemory</tabstop>
+  <tabstop>eeFpuGuardedAddSub</tabstop>
   <tabstop>vu0RoundingMode</tabstop>
   <tabstop>vu0ClampMode</tabstop>
   <tabstop>vu1RoundingMode</tabstop>

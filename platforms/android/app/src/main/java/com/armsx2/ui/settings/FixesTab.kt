@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.armsx2.config.Settings
@@ -119,6 +124,46 @@ fun FixesTab(state: MutableState<Settings>) {
             description = str("fixes.integerScaling.desc"),
         ) { apply(s.copy(integerScaling = it)) }
         SettingsDivider()
+        // Display zoom (#383) — one AetherSX2-style slider that zooms into the picture, trimming
+        // every edge by the same amount so it fills more of the screen without distorting. At
+        // 100% it's off and the manual per-edge crops below apply instead; above 100% it takes
+        // over. Nicer than juggling the four crops for the common "just zoom in a bit" case.
+        IntSliderRow(
+            str("fixes.zoom.label"), s.displayZoom, 100, 150,
+            description = str("fixes.zoom.desc"),
+            valueFormatter = { "$it%" },
+            onReset = { apply(s.copy(displayZoom = 100)) },
+        ) { apply(s.copy(displayZoom = it)) }
+        SettingsDivider()
+        // Overscan crop (issue #293). Trims native PS2 pixels off each edge before aspect
+        // and integer scaling. Plenty of games leave garbage or a black band in the region
+        // a CRT's bezel would have covered; the core has always honoured GSConfig.Crop
+        // (GSRenderer.cpp) but Android never surfaced it. Native pixels, so the value means
+        // the same thing at any upscale multiplier. Ignored while Display Zoom is above 100%.
+        Text(
+            str("fixes.crop.header"),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+        )
+        IntSliderRow(
+            str("fixes.crop.left"), s.cropLeft, 0, 128,
+            onReset = { apply(s.copy(cropLeft = 0)) },
+        ) { apply(s.copy(cropLeft = it)) }
+        IntSliderRow(
+            str("fixes.crop.top"), s.cropTop, 0, 128,
+            onReset = { apply(s.copy(cropTop = 0)) },
+        ) { apply(s.copy(cropTop = it)) }
+        IntSliderRow(
+            str("fixes.crop.right"), s.cropRight, 0, 128,
+            onReset = { apply(s.copy(cropRight = 0)) },
+        ) { apply(s.copy(cropRight = it)) }
+        IntSliderRow(
+            str("fixes.crop.bottom"), s.cropBottom, 0, 128,
+            description = str("fixes.crop.desc"),
+            onReset = { apply(s.copy(cropBottom = 0)) },
+        ) { apply(s.copy(cropBottom = it)) }
+        SettingsDivider()
         SegmentedRow(
             label = str("fixes.dithering.label"),
             // "Force 32bit" (native Dithering==3) removes PS2 16-bit color banding — many
@@ -128,15 +173,6 @@ fun FixesTab(state: MutableState<Settings>) {
             description = str("fixes.dithering.desc"),
             onChange = { apply(s.copy(dithering = it)) },
         )
-        SettingsDivider()
-        // PCSX2's "Optimal Frame Pacing" checkbox = force the GS-thread frame queue to 0.
-        // On -> tightest pacing + lowest input latency; Off -> the default small queue (2),
-        // which is smoother on weaker devices at the cost of a little lag.
-        ToggleRow(
-            str("fixes.optimalFramePacing.label"),
-            s.vsyncQueueSize == 0,
-            description = str("fixes.optimalFramePacing.desc"),
-        ) { apply(s.copy(vsyncQueueSize = if (it) 0 else 2)) }
         }
 
         CollapsibleSection(str("fixes.section.upscaling")) {
@@ -416,9 +452,93 @@ fun FixesTab(state: MutableState<Settings>) {
             onChange = { apply(s.copy(swThreadsHeight = it)) },
         )
         }
+        SettingsDivider()
+        // GameDB fixes moved here from Performance: they are per-game compatibility switches the
+        // GameDB already applies automatically, so they belong with the other advanced knobs
+        // rather than in the tab people open to change speed settings.
+        CollapsibleSection(str("perf.gamedbFixes.title")) {
+            HelpText(str("perf.gamedbFixes.help"))
+            ToggleRow(str("perf.fix.skipBios"), s.enableFastBoot, description = str("perf.fix.skipBios.desc")) { apply(s.copy(enableFastBoot = it)) }
+            ToggleRow(str("perf.fix.gamedbFixes"), s.enableGameFixes, description = str("perf.fix.gamedbFixes.desc")) { apply(s.copy(enableGameFixes = it)) }
+            // Compatibility patches sat in the Patches screen under the name "Enable Patches",
+            // where nothing said they were the per-game COMPATIBILITY set PCSX2 ships — users
+            // read it as "turn patches on/off" and switched it off, or blamed it for a
+            // widescreen hack it never controlled. It is the same class of thing as the GameDB
+            // fixes above, so it belongs beside them. Widescreen / cheats / no-interlacing stay
+            // in the Patches screen; those really are patch choices.
+            ToggleRow(str("perf.fix.compatPatches"), s.enablePatches, description = str("perf.fix.compatPatches.desc")) { apply(s.copy(enablePatches = it)) }
+            ToggleRow(str("perf.fix.skipMpeg"), s.gamefixSkipMpeg, description = str("perf.fix.skipMpeg.desc")) { apply(s.copy(enableGameFixes = true, gamefixSkipMpeg = it)) }
+            if (s.gamefixSkipMpeg) HelpText(str("perf.fix.skipMpeg.warning"))
+            ToggleRow(str("perf.fix.fmvSoftware"), s.gamefixSoftwareRendererFmv, description = str("perf.fix.fmvSoftware.desc")) { apply(s.copy(enableGameFixes = true, gamefixSoftwareRendererFmv = it)) }
+            ToggleRow(str("perf.fix.eeTiming"), s.gamefixEETiming, description = str("perf.fix.eeTiming.desc")) { apply(s.copy(enableGameFixes = true, gamefixEETiming = it)) }
+            ToggleRow(str("perf.fix.instantDma"), s.gamefixInstantDma, description = str("perf.fix.instantDma.desc")) { apply(s.copy(enableGameFixes = true, gamefixInstantDma = it)) }
+            ToggleRow(str("perf.fix.blitFps"), s.gamefixBlitInternalFps, description = str("perf.fix.blitFps.desc")) { apply(s.copy(enableGameFixes = true, gamefixBlitInternalFps = it)) }
+            ToggleRow(str("perf.fix.ophFlag"), s.gamefixOphFlag, description = str("perf.fix.ophFlag.desc")) { apply(s.copy(enableGameFixes = true, gamefixOphFlag = it)) }
+            ToggleRow(str("perf.fix.gifFifo"), s.gamefixGifFifo, description = str("perf.fix.gifFifo.desc")) { apply(s.copy(enableGameFixes = true, gamefixGifFifo = it)) }
+            ToggleRow(str("perf.fix.dmaBusy"), s.gamefixDmaBusy, description = str("perf.fix.dmaBusy.desc")) { apply(s.copy(enableGameFixes = true, gamefixDmaBusy = it)) }
+            ToggleRow(str("perf.fix.vif1Stall"), s.gamefixVif1Stall, description = str("perf.fix.vif1Stall.desc")) { apply(s.copy(enableGameFixes = true, gamefixVif1Stall = it)) }
+            ToggleRow(str("perf.fix.iBit"), s.gamefixIbit, description = str("perf.fix.iBit.desc")) { apply(s.copy(enableGameFixes = true, gamefixIbit = it)) }
+            ToggleRow(str("perf.fix.fullVu0Sync"), s.gamefixFullVu0Sync, description = str("perf.fix.fullVu0Sync.desc")) { apply(s.copy(enableGameFixes = true, gamefixFullVu0Sync = it)) }
+            ToggleRow(str("perf.fix.vuAddSub"), s.gamefixVuAddSub, description = str("perf.fix.vuAddSub.desc")) { apply(s.copy(enableGameFixes = true, gamefixVuAddSub = it)) }
+            ToggleRow(str("perf.fix.vuOverflow"), s.gamefixVuOverflow, description = str("perf.fix.vuOverflow.desc")) { apply(s.copy(enableGameFixes = true, gamefixVuOverflow = it)) }
+            ToggleRow(str("perf.fix.extraXgkick"), s.gamefixXgkick, description = str("perf.fix.extraXgkick.desc")) { apply(s.copy(enableGameFixes = true, gamefixXgkick = it)) }
+            ToggleRow(str("perf.fix.goemonTlb"), s.gamefixGoemonTlb, description = str("perf.fix.goemonTlb.desc")) { apply(s.copy(enableGameFixes = true, gamefixGoemonTlb = it)) }
+            ToggleRow(str("perf.fix.vuSync"), s.gamefixVuSync, description = str("perf.fix.vuSync.desc")) { apply(s.copy(enableGameFixes = true, gamefixVuSync = it)) }
+        }
+        SettingsDivider()
+        RecompilerSection(state)
+        SettingsDivider()
+        PineSection(state)
         Spacer(Modifier.height(8.dp))
+    }
+}
+
+/** PINE, the IPC server external tools drive the emulator through. Lives beside the recompiler
+ *  switches because it is the same class of control: a developer tool that a player has no reason
+ *  to find, next to the other things you turn on to diagnose rather than to play.
+ *
+ *  The port is shown rather than edited. Changing it only matters when two emulators share a
+ *  machine, which does not happen on a handheld, and stating it is the part that is actually
+ *  needed — the listener is on loopback, so it does nothing until it is forwarded, and you cannot
+ *  forward a port you were not told. */
+@Composable
+private fun PineSection(state: MutableState<Settings>) {
+    val s = state.value
+    fun apply(updated: Settings) = InGameOverlay.saveSettings(updated)
+
+    CollapsibleSection(str("fixes.section.pine")) {
+        HelpText(str("fixes.section.pine.help"))
+        ToggleRow(
+            str("fixes.pine.enable"),
+            s.pineEnabled,
+            description = "${str("fixes.pine.enable.desc")} (127.0.0.1:${s.pineSlot})",
+        ) { apply(s.copy(pineEnabled = it)) }
+        if (s.pineEnabled) HelpText("adb forward tcp:${s.pineSlot} tcp:${s.pineSlot}")
     }
 }
 
 // CollapsibleSection now lives in SettingsWidgets.kt (shared by the Fixes / Pad /
 // Performance / Renderer tabs).
+
+/** The former standalone Recompiler tab, folded in as a section. Turning a recompiler off drops
+ *  that processor to an interpreter — correct but far slower — so it is a debugging control, not
+ *  something to browse past on the way to a speed setting. */
+@Composable
+private fun RecompilerSection(state: MutableState<Settings>) {
+    val settings = state.value
+    fun apply(updated: Settings) = InGameOverlay.saveSettings(updated)
+
+    CollapsibleSection(str("tab.recompiler")) {
+        Text(
+            str("jit.recompiler.warning"),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
+        )
+        ToggleRow("EE (R5900)", settings.recEE) { apply(settings.copy(recEE = it)) }
+        ToggleRow("IOP (R3000)", settings.recIOP) { apply(settings.copy(recIOP = it)) }
+        ToggleRow("VU0", settings.recVU0) { apply(settings.copy(recVU0 = it)) }
+        ToggleRow("VU1", settings.recVU1) { apply(settings.copy(recVU1 = it)) }
+        ToggleRow("Fastmem", settings.enableFastmem) { apply(settings.copy(enableFastmem = it)) }
+    }
+}

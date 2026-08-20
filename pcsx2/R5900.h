@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "EeFpuFormat.h"
+
 #include "common/Pcsx2Defs.h"
 
 #include <array>
@@ -149,18 +151,36 @@ union GPR_reg64 {
 	s8  SC[8];
 };
 
+/*	One EE FPR. The architectural register is 32 bits and the slot is 64: read
+	the word through Word(), write it through SetWord(). From eeClampMode 3 up a
+	slot holds the relocation of EeFpuFormat.h, below that the word in its low
+	half.
+*/
 union FPRreg {
-	float f;
-	u32 UL;
-	s32 SL;				// signed 32bit used for sign extension in interpreters.
+	double d;
+	u64 UD;
+
+	u32 Word() const { return g_eeFprSlotsRelocated ? eeFprNarrowBits(UD) : static_cast<u32>(UD); }
+	void SetWord(u32 word) { UD = g_eeFprSlotsRelocated ? eeFprWidenBits(word) : word; }
 };
 
 struct fpuRegisters {
-	FPRreg fpr[32];		// 32bit floating point registers
+	FPRreg fpr[32];		// 32 floating point registers
 	u32 fprc[32];		// 32bit floating point control registers
-	FPRreg ACC;			// 32 bit accumulator
+	FPRreg ACC;			// accumulator
 	u32 ACCflag;        // an internal accumulator overflow flag
 };
+
+/*	The FPU block as savestates carry it. The format is shared with upstream
+	and does not move.
+*/
+struct fpuRegistersWire {
+	u32 fpr[32];
+	u32 fprc[32];
+	u32 ACC;
+	u32 ACCflag;
+};
+static_assert(sizeof(fpuRegistersWire) == 264, "the savestate FPU block is 264 bytes");
 
 union PageMask_t
 {
@@ -255,10 +275,46 @@ struct tlbs
 
 #endif
 
+// COP2 macro-mode rec constants + scratch (arm64 EE recompiler; emitters in
+// iCOP2-arm64.cpp). Rec-private, NOT savestate-serialized; the constant
+// entries are (re)written by cop2RecWritePackConstants() at every
+// recResetRaw. denormStatusFlag is block-transient scratch: re-seeded from
+// VU0.VI[REG_STATUS_FLAG] by every flag-updating macro op before it is read.
+struct EeCop2RecState
+{
+	alignas(16) u32 maxFloat[4];      // +FLT_MAX per lane (clamp upper bound)
+	alignas(16) u32 minFloat[4];      // -FLT_MAX per lane (pre-negated lower bound)
+	alignas(16) u32 destMasks[16][4]; // per-XYZW lane-select masks (lane = ~0 if written)
+	alignas(16) u32 clipWeightPos[4]; // VCLIP positive per-lane clip-bit weights
+	u32 denormStatusFlag;             // denormalized status-flag scratch
+};
+
 struct cpuRegistersPack
 {
 	alignas(16) cpuRegisters cpuRegs;
 	alignas(16) fpuRegisters fpuRegs;
+
+	// EE call-ret shadow-stack ring (arm64 EE recompiler, EE_CALLRET_STACK;
+	// see iR5900-arm64.cpp). Lives in the pack so JIT block tails reach both
+	// fields with single [RSTATE, #imm] accesses. Prediction-only state: NOT
+	// savestate-serialized (Freeze(cpuRegs) covers cpuRegisters alone) and
+	// reset by recResetRaw. eeCallRetOff is a byte offset into the ring,
+	// 16-aligned, wrapped by the emitted And; u64 so JIT stores stay whole-
+	// register. x86 builds carry the 16 bytes and never touch them.
+	alignas(16) u64 eeCallRetBase;
+	u64 eeCallRetOff;
+
+	// COP2 macro-mode constants/scratch — in the pack for the same reason as
+	// the call-ret fields: one [RSTATE, #imm] instruction per access from
+	// emitted code, instead of a 3-insn absolute-address materialization per
+	// use (the JIT cache is too far from the data segment for adrp to reach).
+	// x86 builds carry the bytes and never touch them.
+	alignas(16) EeCop2RecState cop2Rec;
+
+	// {0,1,...,15}. QFSRV's TBL index is this ramp plus a broadcast sa, and
+	// it is here rather than in a literal for the same reason as the block
+	// above: one load against RSTATE instead of a per-site literal.
+	alignas(16) u8 byteRamp[16];
 };
 
 alignas(16) extern cpuRegistersPack _cpuRegistersPack;
@@ -280,6 +336,29 @@ extern cachedTlbs_t cachedTlbs;
 static cpuRegisters& cpuRegs = _cpuRegistersPack.cpuRegs;
 static fpuRegisters& fpuRegs = _cpuRegistersPack.fpuRegs;
 
+static __fi void fpuRegsToWire(fpuRegistersWire& wire)
+{
+	for (int i = 0; i < 32; i++)
+	{
+		wire.fpr[i] = fpuRegs.fpr[i].Word();
+		wire.fprc[i] = fpuRegs.fprc[i];
+	}
+	wire.ACC = fpuRegs.ACC.Word();
+	wire.ACCflag = fpuRegs.ACCflag;
+}
+
+static __fi void fpuRegsFromWire(const fpuRegistersWire& wire)
+{
+	for (int i = 0; i < 32; i++)
+	{
+		// Whole slot, so no upper half survives from the previous state.
+		fpuRegs.fpr[i].SetWord(wire.fpr[i]);
+		fpuRegs.fprc[i] = wire.fprc[i];
+	}
+	fpuRegs.ACC.SetWord(wire.ACC);
+	fpuRegs.ACCflag = wire.ACCflag;
+}
+
 extern bool eeEventTestIsActive;
 
 void intUpdateCPUCycles();
@@ -292,7 +371,6 @@ void intDoBranch(u32 target);
 
 // Interpret a single instruction at cpuRegs.pc (recompiler per-opcode fallback).
 // See the implementation in Interpreter.cpp for the contract.
-void intExecuteOneInst();
 
 // modules loaded at hardcoded addresses by the kernel
 const u32 EEKERNEL_START	= 0;

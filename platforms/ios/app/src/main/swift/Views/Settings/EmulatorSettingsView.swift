@@ -7,6 +7,22 @@ struct EmulatorSettingsView: View {
     @State private var settings = SettingsStore.shared
     @State private var stikDebugOpenFailed = false
     @State private var stikDebugOpenInProgress = false
+    // Cached rather than asked per redraw: the lookup takes the achievements lock, and
+    // this sits in a Form that rebuilds on every other row.
+    @State private var hardcoreBlocksCheats = false
+
+    /// Hardcore only clears EnableCheats in the running config, so the INI this row reads
+    /// still says on and the row lies. The write is dropped further down as well, without
+    /// a word, so turning it on looks like it worked until something reloads.
+    private var cheatsBinding: Binding<Bool> {
+        Binding(
+            get: { hardcoreBlocksCheats ? false : settings.enableCheats },
+            set: { newValue in
+                guard !hardcoreBlocksCheats else { return }
+                settings.enableCheats = newValue
+            }
+        )
+    }
 
     var body: some View {
         Form {
@@ -131,34 +147,7 @@ struct EmulatorSettingsView: View {
                 Toggle(settings.localized("Frame Limiter"), isOn: $settings.frameLimiterEnabled)
 
                 if settings.frameLimiterEnabled {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text(settings.localized("FPS Target"))
-                            Spacer()
-                            Text(Self.formatFPS(settings.targetFPS))
-                                .foregroundStyle(.secondary)
-                                .font(.callout.monospacedDigit())
-                        }
-
-                        Slider(
-                            value: $settings.targetFPS,
-                            in: SettingsStore.minTargetFPS...SettingsStore.maxTargetFPS,
-                            step: 1.0
-                        )
-
-                        HStack {
-                            Text(Self.formatFPS(SettingsStore.minTargetFPS))
-                            Spacer()
-                            Button(settings.localized("60 FPS")) {
-                                settings.targetFPS = SettingsStore.defaultTargetFPS
-                            }
-                            .buttonStyle(.borderless)
-                            Spacer()
-                            Text(Self.formatFPS(SettingsStore.maxTargetFPS))
-                        }
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(.secondary)
-                    }
+                    NumberRow(.targetFPS, value: $settings.targetFPS, settings: settings)
                 } else {
                     HStack {
                         Text(settings.localized("Speed Target"))
@@ -185,9 +174,40 @@ struct EmulatorSettingsView: View {
                         .font(.callout.monospacedDigit())
                 }
 
-                Text(settings.localized("FPS Target maps to PCSX2 Normal Speed: 60 FPS is normal NTSC timing, 30 FPS is about 50% speed, and higher values fast-forward. Turning the limiter OFF unlocks speed and can increase heat and battery drain."))
+                Text(settings.localized("The FPS Target changes display presentation without slowing CPU, audio, or game timing. Fast Forward remains a separate emulation-speed control."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
+            }
+
+            Section(settings.localized("Advanced Emulation")) {
+                Toggle(settings.localized("Emulation-Only Mode"), isOn: $settings.emulationOnlyModeEnabled)
+                Text(settings.localized("Automatically unloads the selected menus, controls, and optional services for the current emulation session."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                Group {
+                    NumberRow(.emulationOnlyModeTimer,
+                              value: $settings.emulationOnlyModeDelaySeconds, settings: settings)
+
+                    Toggle(
+                        settings.localized("Disable Cheats, Widescreen and Dynamic Patches"),
+                        isOn: $settings.emulationOnlyDisablePatches
+                    )
+                    Toggle(settings.localized("Disable PINE Server"), isOn: $settings.emulationOnlyDisablePINE)
+                    Toggle(settings.localized("Disable RetroAchievements"), isOn: $settings.emulationOnlyDisableRetroAchievements)
+                    Toggle(settings.localized("Disable PCSX2 Input Recording"), isOn: $settings.emulationOnlyDisableInputRecording)
+                    Toggle(settings.localized("Disable OSD and Performance Overlays"), isOn: $settings.emulationOnlyDisableOSD)
+                    Toggle(settings.localized("Disable Frame Pacing"), isOn: $settings.emulationOnlyDisableFramePacing)
+                    Toggle(settings.localized("Disable Virtual Control Layout"), isOn: $settings.emulationOnlyDisableVirtualControls)
+                    Toggle(settings.localized("Disable Quick Menu"), isOn: $settings.emulationOnlyDisableQuickMenu)
+                    Toggle(settings.localized("Clear Network Cache"), isOn: $settings.emulationOnlyClearNetworkCache)
+                }
+                .disabled(!settings.emulationOnlyModeEnabled)
+
+                Text(settings.localized("The timer starts after boot patches and replacement-texture startup complete. Discord Presence is always disabled. All visible cleanup switches default ON, preserving the existing maximum-performance behavior. Disable Frame Pacing stops the optional adaptive frame-time monitor; the core limiter and audio/video timing remain active. Turn a switch off to retain that resource. Without an external controller, the current Virtual Control Layout is retained automatically. Turn Disable Quick Menu off to keep the complete Quick Menu available."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .disabled(!settings.emulationOnlyModeEnabled)
             }
 
             Section {
@@ -217,7 +237,13 @@ struct EmulatorSettingsView: View {
                 Toggle(settings.localized("GameDB Core Fixes"), isOn: $settings.enableGameFixes)
                 Toggle(settings.localized("GameDB Graphics Fixes"), isOn: $settings.enableGameDBHardwareFixes)
                 Toggle(settings.localized("GameDB PNACH Patches"), isOn: $settings.enablePatches)
-                Toggle(settings.localized("Enable PNACH Cheats"), isOn: $settings.enableCheats)
+                Toggle(settings.localized("Enable PNACH Cheats"), isOn: cheatsBinding)
+                    .disabled(hardcoreBlocksCheats)
+                if hardcoreBlocksCheats {
+                    Text(settings.localized("Hardcore Mode is turning cheats off. Switch it off in RetroAchievements to use them again."))
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
                 Toggle(settings.localized("Widescreen Patches"), isOn: $settings.enableWidescreenPatches)
                 Toggle(settings.localized("No-Interlacing Patches"), isOn: $settings.enableNoInterlacingPatches)
 
@@ -294,11 +320,18 @@ struct EmulatorSettingsView: View {
         .navigationTitle(settings.localized("Emulator"))
         .navigationBarTitleDisplayMode(.inline)
         .dynamicTypeSize(...DynamicTypeSize.accessibility3)
+        .onAppear {
+            hardcoreBlocksCheats = PatchStore.hardcoreBlocksPnachContent()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ARMSX2RetroAchievementsStateChanged"))) { _ in
+            hardcoreBlocksCheats = PatchStore.hardcoreBlocksPnachContent()
+        }
     }
 
     private static func formatFPS(_ value: Float) -> String {
         String(format: "%.2f FPS", value)
     }
+
 
     /// Compact labeled picker over a fixed ordered option list (round/clamp modes).
     @ViewBuilder

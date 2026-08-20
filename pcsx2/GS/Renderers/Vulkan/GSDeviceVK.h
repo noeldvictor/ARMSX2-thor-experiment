@@ -39,21 +39,23 @@ public:
 		bool vk_ext_memory_budget : 1;
 		bool vk_ext_calibrated_timestamps : 1;
 		bool vk_ext_rasterization_order_attachment_access : 1;
+		bool vk_ext_roaa_depth : 1; ///< ROAA depth sub-feature (rasterizationOrderDepthAttachmentAccess); optional, often absent when color ROAA is present.
 		bool vk_ext_full_screen_exclusive : 1;
 		bool vk_ext_line_rasterization : 1;
 		bool vk_swapchain_maintenance1 : 1;
 		bool vk_swapchain_maintenance1_is_khr : 1;
+		bool vk_khr_push_descriptor : 1;
 		bool vk_khr_driver_properties : 1;
 		bool vk_khr_shader_non_semantic_info : 1;
 		bool vk_ext_attachment_feedback_loop_layout : 1;
 		bool vk_ext_fragment_shader_interlock : 1;
-		bool vk_khr_push_descriptor : 1;
 	};
 
 	// Global state accessors
 	__fi VkInstance GetVulkanInstance() const { return m_instance; }
 	__fi VkPhysicalDevice GetPhysicalDevice() const { return m_physical_device; }
 	__fi VkDevice GetDevice() const { return m_device; }
+	__fi VkQueue GetGraphicsQueue() const { return m_graphics_queue; }
 	__fi VmaAllocator GetAllocator() const { return m_allocator; }
 	__fi u32 GetGraphicsQueueFamilyIndex() const { return m_graphics_queue_family_index; }
 	__fi u32 GetPresentQueueFamilyIndex() const { return m_present_queue_family_index; }
@@ -83,6 +85,9 @@ public:
 	/// Returns true if running on an AMD GPU.
 	__fi bool IsDeviceAMD() const { return (m_device_properties.vendorID == 0x1002); }
 
+	/// Returns true if running on an Intel GPU (vendorID 0x8086).
+	__fi bool IsDeviceIntel() const { return (m_device_properties.vendorID == 0x8086u); }
+
 	/// Returns true if running on a Broadcom V3D GPU (vendorID 0x14E4) — i.e. the
 	/// Raspberry Pi's VideoCore under Mesa's V3DV, reached via the Linux arm64 build.
 	__fi bool IsDeviceBroadcom() const { return (m_device_properties.vendorID == 0x14E4u); }
@@ -104,6 +109,16 @@ public:
 	/// NOTE: 0x144D (Samsung) is unverified across driver revisions — a real Xclipse tester
 	/// must confirm this fires; if it reports a different vendorID the gate is simply inert.
 	__fi bool IsDeviceXclipse() const { return (m_device_properties.vendorID == 0x144Du); }
+
+	/// Returns true if running on an Apple GPU, under either MoltenVK or Asahi's Honeykrisp.
+	/// Unlike the checks above this gates on driverID, because Apple silicon does not report
+	/// Apple's vendorID on every driver — Honeykrisp reports Mesa's 0x10005, so a vendorID
+	/// check would silently miss it.
+	__fi bool IsDeviceAppleGPU() const
+	{
+		return (m_device_driver_properties.driverID == VK_DRIVER_ID_MOLTENVK ||
+				m_device_driver_properties.driverID == VK_DRIVER_ID_MESA_HONEYKRISP);
+	}
 
 	// Creates a simple render pass.
 	VkRenderPass GetRenderPass(VkFormat color_format, VkFormat depth_format,
@@ -127,6 +142,10 @@ public:
 	/// Allocates a descriptor set from the pool reserved for the current frame.
 	VkDescriptorSet AllocatePersistentDescriptorSet(VkDescriptorSetLayout set_layout);
 
+	/// Allocates a descriptor set from the current frame's per-frame pool (push descriptor fallback).
+	/// Returns VK_NULL_HANDLE on pool exhaustion after flushing the command buffer.
+	VkDescriptorSet AllocateDescriptorSetFromFramePool(VkDescriptorSetLayout set_layout);
+
 	/// Frees a descriptor set allocated from the global pool.
 	void FreePersistentDescriptorSet(VkDescriptorSet set);
 
@@ -136,7 +155,6 @@ public:
 	__fi bool UsePushDescriptors() const { return m_use_push_descriptors; }
 
 	/// Allocates a descriptor set from the current frame's reset-per-frame pool (non-push path only).
-	VkDescriptorSet AllocateFrameDescriptorSet(VkDescriptorSetLayout set_layout);
 
 	// Gets the fence that will be signaled when the currently executing command buffer is
 	// queued and executed. Do not wait for this fence before the buffer is executed.
@@ -347,6 +365,7 @@ private:
 	VkPhysicalDeviceProperties m_device_properties = {};
 	VkPhysicalDeviceDriverPropertiesKHR m_device_driver_properties = {};
 	OptionalExtensions m_optional_extensions = {};
+	bool m_colorclip_fallback_to_hdr = false;
 
 	u32 m_max_framebuffer_width = 0;
 	u32 m_max_framebuffer_height = 0;
@@ -430,6 +449,7 @@ public:
 		CONVERT_PUSH_CONSTANTS_SIZE = 96,
 
 		NUM_CAS_PIPELINES = 2,
+		NUM_FSR1_PIPELINES = 2, // [0] RCAS, [1] EASU
 	};
 	enum TFX_DESCRIPTOR_SET : u32
 	{
@@ -522,6 +542,9 @@ private:
 	VkDescriptorSetLayout m_cas_ds_layout = VK_NULL_HANDLE;
 	VkPipelineLayout m_cas_pipeline_layout = VK_NULL_HANDLE;
 	std::array<VkPipeline, NUM_CAS_PIPELINES> m_cas_pipelines = {};
+	VkDescriptorSetLayout m_fsr1_ds_layout = VK_NULL_HANDLE;
+	VkPipelineLayout m_fsr1_pipeline_layout = VK_NULL_HANDLE;
+	std::array<VkPipeline, NUM_FSR1_PIPELINES> m_fsr1_pipelines = {};
 	VkPipeline m_imgui_pipeline = VK_NULL_HANDLE;
 
 	GSHWDrawConfig::VSConstantBuffer m_vs_cb_cache;
@@ -554,10 +577,18 @@ private:
 	/// has to be re-fed regardless of whether the store changed.
 	u64 m_shader_param_generation = 0;
 	void DestroyShaderChain();
+	void ReleaseShaderChain() override { DestroyShaderChain(); }
 	void ApplyShaderChainParams();
 
 	bool DoCAS(
 		GSTexture* sTex, GSTexture* dTex, bool sharpen_only, const std::array<u32, NUM_CAS_CONSTANTS>& constants) final;
+
+	bool DoFSR1EASU(GSTexture* sTex, GSTexture* dTex, const std::array<u32, NUM_FSR1_CONSTANTS>& constants) final;
+	bool DoFSR1RCAS(GSTexture* sTex, GSTexture* dTex, const std::array<u32, NUM_FSR1_CONSTANTS>& constants) final;
+	/// Shared body of the two above: same layout, same push range, different pipeline and
+	/// different input-side synchronisation.
+	bool DoFSR1Pass(
+		GSTexture* sTex, GSTexture* dTex, bool easu_pass, const std::array<u32, NUM_FSR1_CONSTANTS>& constants);
 
 	VkSampler GetSampler(GSHWDrawConfig::SamplerSelector ss);
 	void ClearSamplerCache() final;
@@ -583,6 +614,7 @@ private:
 	bool CompileMergePipelines();
 	bool CompilePostProcessingPipelines();
 	bool CompileCASPipelines();
+	bool CompileFSR1Pipelines();
 
 	bool CompileImGuiPipeline();
 	void RenderImGui();
@@ -633,7 +665,7 @@ public:
 
 	void SetVSyncMode(GSVSyncMode mode, bool allow_present_throttle) override;
 
-	PresentResult BeginPresent(bool frame_skip) override;
+	PresentResult DoBeginPresent(bool frame_skip) override;
 	void EndPresent() override;
 	bool IsPresenting() const;
 
@@ -643,8 +675,13 @@ public:
 	bool SetGPUPipelineStatisticsEnabled(bool enabled) override;
 	GPUPipelineStatistics GetAndResetAccumulatedGPUPipelineStatistics() override;
 
+	void EnableExtendedStats(bool enabled) override;
+	std::vector<std::string> GetExtendedStats() const override;
+
 	void PushDebugGroup(const char* fmt, ...) override;
 	void PopDebugGroup() override;
+	void PushDrawLabel(const std::string_view label) override;
+	void PopDrawLabel() override;
 	void InsertDebugMessage(DebugMessageCategory category, const char* fmt, ...) override;
 
 	// Helpers and utility draws.
@@ -658,12 +695,13 @@ public:
 	void Draw(const GSHWDrawConfig& config, int offset, int count);
 
 	std::unique_ptr<GSDownloadTexture> CreateDownloadTexture(u32 width, u32 height, GSTexture::Format format) override;
+	void DoHintReadbackSource(GSTexture* tex) override;
 
-	void CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY) override;
+	void DoCopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY) override;
 
 	void PresentRect(GSTexture* sTex, const GSVector4& sRect, GSTexture* dTex, const GSVector4& dRect,
 		PresentShader shader, float shaderTime, Filter filter) override;
-	void DrawMultiStretchRects(
+	void DoDrawMultiStretchRects(
 		const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader) override;
 	void DoMultiStretchRects(const MultiStretchRect* rects, u32 num_rects, GSTextureVK* dTex, ShaderConvertSelector shader);
 
@@ -676,11 +714,11 @@ public:
 	void BlitRect(GSTexture* sTex, const GSVector4i& sRect, u32 sLevel, GSTexture* dTex, const GSVector4i& dRect,
 		u32 dLevel, Filter filter);
 
-	void UpdateCLUTTexture(
+	void DoUpdateCLUTTexture(
 		GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize) override;
-	void ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM,
+	void DoConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM,
 		GSTexture* dTex, u32 DBW, u32 DPSM) override;
-	void FilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect) override;
+	void DoFilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect) override;
 
 	void SetupDATE(GSTexture* rt, GSTexture* ds, SetDATM datm, const GSVector4i& bbox);
 	GSTextureVK* SetupPrimitiveTrackingDATE(GSHWDrawConfig& config);
@@ -701,7 +739,7 @@ public:
 	void SetVSPushConstants(u32 base_vertex, u32 base_index = 0, bool force_update = false);
 	bool BindDrawPipeline(const PipelineSelector& p);
 
-	void RenderHW(GSHWDrawConfig& config) override;
+	void DoRenderHW(GSHWDrawConfig& config) override;
 	void UpdateHWPipelineSelector(GSHWDrawConfig& config, PipelineSelector& pipe);
 	void UploadHWDrawVerticesAndIndices(GSHWDrawConfig& config);
 	VkImageMemoryBarrier GetColorBufferFeedbackBarrier(GSTextureVK* rt) const;
@@ -817,6 +855,34 @@ private:
 	VkFramebuffer m_current_framebuffer = VK_NULL_HANDLE;
 	VkRenderPass m_current_render_pass = VK_NULL_HANDLE;
 	GSVector4i m_current_render_pass_area = GSVector4i::zero();
+
+	// Mid-frame submission for readback-prone frames: when a game synchronously reads
+	// GS memory back (local->host TRXDIR), the readback fence-waits on everything
+	// recorded before it. Submitting accumulated work at render-pass boundaries lets
+	// the GPU execute concurrently with GS-thread recording, so that wait finds the
+	// work already complete (OutRun 2006 SD865: 3 sun-occlusion readbacks/frame cost
+	// ~8ms/frame stalled without this).
+	//
+	// Two independent quantities, counted in different units on purpose:
+	//   - the cadence, in render passes since the last submit, is how often we offer to
+	//     kick. Uniform across a frame, so no part of a frame is favoured.
+	//   - the arming window, in FRAMES since the last readback, is whether we bother at
+	//     all. Its only job is "a game that never reads back sees zero change", so it has
+	//     to decay in the unit the caller thinks in. It used to count render passes, which
+	//     made one fixed budget mean wildly different things per title: 128 passes is
+	//     ~3 frames of OutRun 2006 but only ~3/4 of a Rogue Galaxy frame, so RG had the
+	//     kick switch itself off partway through every frame at nobody's request.
+	// ~0u = no readback seen yet, window shut.
+	u32 m_render_passes_since_submit = 0;
+	u32 m_readback_frame = ~0u;
+
+	// Textures recently used as synchronous-readback sources (see DoHintReadbackSource).
+	// A draw INTO one of these is almost certainly the producer of the next readback,
+	// so DoRenderHW kicks the command buffer first: the queued backlog drains while the
+	// producing pass records, leaving the readback to wait on one small pass + copy
+	// instead of the whole backlog. Compared by pointer only, never dereferenced —
+	// a recycled allocation at worst causes one extra readback-window submit.
+	std::array<GSTexture*, 2> m_recent_readback_sources = {};
 
 	GSVector4i m_scissor = GSVector4i::zero();
 	VkViewport m_viewport = {0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};

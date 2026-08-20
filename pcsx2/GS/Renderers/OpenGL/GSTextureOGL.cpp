@@ -179,7 +179,7 @@ void* GSTextureOGL::GetNativeHandle() const
 	return reinterpret_cast<void*>(static_cast<uintptr_t>(m_texture_id));
 }
 
-bool GSTextureOGL::Update(const GSVector4i& r, const void* data, int pitch, int layer)
+bool GSTextureOGL::DoUpdate(const GSVector4i& r, const void* data, int pitch, int layer)
 {
 	pxAssert(!IsDepthStencil());
 
@@ -248,7 +248,7 @@ bool GSTextureOGL::Update(const GSVector4i& r, const void* data, int pitch, int 
 	return true;
 }
 
-bool GSTextureOGL::Map(GSMap& m, const GSVector4i* _r, int layer)
+bool GSTextureOGL::DoMap(GSMap& m, const GSVector4i* _r, int layer)
 {
 	if (layer >= m_mipmap_levels || IsCompressedFormat())
 		return false;
@@ -416,7 +416,7 @@ std::unique_ptr<GSDownloadTextureOGL> GSDownloadTextureOGL::Create(u32 width, u3
 	return ret;
 }
 
-void GSDownloadTextureOGL::CopyFromTexture(
+void GSDownloadTextureOGL::DoCopyFromTexture(
 	const GSVector4i& drc, GSTexture* stex, const GSVector4i& src, u32 src_level, bool use_transfer_pitch)
 {
 	GSTextureOGL* const glTex = static_cast<GSTextureOGL*>(stex);
@@ -468,6 +468,11 @@ void GSDownloadTextureOGL::CopyFromTexture(
 	}
 
 	glPixelStorei(GL_PACK_ROW_LENGTH, 0);
+
+	// Pack alignment is global context state and the value set above is per-format
+	// (1/2/4 by texel size), so leaving it behind hands the next reader that assumes
+	// the GL default a wrong row stride. Restore it alongside the row length.
+	glPixelStorei(GL_PACK_ALIGNMENT, 4);
 }
 
 bool GSDownloadTextureOGL::Map(const GSVector4i& read_rc)
@@ -492,6 +497,23 @@ void GSDownloadTextureOGL::Flush()
 	glClientWaitSync(m_sync, GL_SYNC_FLUSH_COMMANDS_BIT, GL_TIMEOUT_IGNORED);
 	glDeleteSync(m_sync);
 	m_sync = {};
+}
+
+bool GSDownloadTextureOGL::Poll()
+{
+	// No sync object means the readback already went through a CPU buffer synchronously.
+	if (!m_needs_flush || !m_sync)
+		return true;
+
+	// Zero timeout: this is a test, not a wait.
+	const GLenum result = glClientWaitSync(m_sync, GL_SYNC_FLUSH_COMMANDS_BIT, 0);
+	if (result != GL_ALREADY_SIGNALED && result != GL_CONDITION_SATISFIED)
+		return false;
+
+	m_needs_flush = false;
+	glDeleteSync(m_sync);
+	m_sync = {};
+	return true;
 }
 
 #ifdef PCSX2_DEVBUILD

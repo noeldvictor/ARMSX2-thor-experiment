@@ -16,6 +16,33 @@ GSTexture::GSTexture() = default;
 
 GSTexture::~GSTexture() = default;
 
+bool GSTexture::Update(const GSVector4i& r, const void* data, int pitch, int layer)
+{
+	// An upload only conflicts with a queued draw that reads or writes this very texture -
+	// and the overwhelming majority are into a source the queue has never seen, since the
+	// texture cache uploads into freshly pooled surfaces. Flushing for all of them was 15%
+	// of every flush on Dirge of Cerberus.
+	g_gs_device->FlushDeferredDrawsFor(this);
+	return DoUpdate(r, data, pitch, layer);
+}
+
+bool GSTexture::Map(GSMap& m, const GSVector4i* r, int layer)
+{
+	g_gs_device->FlushDeferredDrawsFor(this);
+	return DoMap(m, r, layer);
+}
+
+#if defined(PCSX2_DEBUG) || defined(PCSX2_DEVBUILD)
+
+void GSTexture::AssertNoQueuedObserver(const char* what) const
+{
+	// g_gs_device is null while the device itself is being torn down, which is also when
+	// the last textures are destroyed - there is no queue to violate at that point.
+	pxAssertMsg(!g_gs_device || !g_gs_device->DeferredDrawsWouldObserve(this), what);
+}
+
+#endif
+
 bool GSTexture::ValidateUsageAndFormat(Usage usage, Format format)
 {
 	if (IsDepthStencil(usage) && (usage & (Usage::ShaderWrite | Usage::RenderTarget)))
@@ -91,6 +118,7 @@ const char* GSTexture::GetFormatName(Format format)
 	{
 		default:
 			pxFailRel("Invalid texture format");
+			[[fallthrough]];
 		case Format::Invalid:      return "Invalid";
 		case Format::Color:        return "Color";
 		case Format::ColorHQ:      return "ColorHQ";
@@ -134,6 +162,7 @@ u32 GSTexture::GetCompressedBytesPerBlock(Format format)
 	{
 		default:
 			pxFailRel("Invalid texture format");
+			[[fallthrough]];
 		case Format::Invalid:      return 1;  // Invalid
 		case Format::Color:        return 4;  // Color/RGBA8
 		case Format::ColorHQ:      return 4;  // ColorHQ/RGB10A2
@@ -215,6 +244,11 @@ void GSTexture::GenerateMipmapsIfNeeded()
 		return;
 
 	m_needs_mipmaps_generated = false;
+
+	// Reads every level of the texture and writes the smaller ones, so it is an observation
+	// point like any other. Guarding the single non-virtual caller keeps the six backend
+	// GenerateMipmap() overrides untouched.
+	g_gs_device->FlushDeferredDrawsFor(this);
 	GenerateMipmap();
 }
 
@@ -226,6 +260,13 @@ GSDownloadTexture::GSDownloadTexture(u32 width, u32 height, GSTexture::Format fo
 }
 
 GSDownloadTexture::~GSDownloadTexture() = default;
+
+void GSDownloadTexture::CopyFromTexture(
+	const GSVector4i& drc, GSTexture* stex, const GSVector4i& src, u32 src_level, bool use_transfer_pitch)
+{
+	g_gs_device->FlushDeferredDraws();
+	DoCopyFromTexture(drc, stex, src, src_level, use_transfer_pitch);
+}
 
 u32 GSDownloadTexture::GetBufferSize(u32 width, u32 height, GSTexture::Format format, u32 pitch_align /* = 1 */)
 {

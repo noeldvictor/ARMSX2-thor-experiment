@@ -8,12 +8,9 @@ import SwiftUI
 /// In-game overlay design tokens. Scoped to overlays presented over gameplay (the pause menu and
 /// Per-Game Settings) — this is NOT a global app theme.
 ///
-/// The surfaces are a graphite/charcoal ladder (shell -> card -> elevated) so an overlay reads as a
-/// premium "console command deck" with clear grouping and depth, without going darker overall and
-/// without a pure-black-hole background. Chrome uses a controlled glass stack (SwiftUI Material
-/// under a graphite tint that wins the hue) so it reads as frosted glass without picking up muddy
-/// game colors; the gameplay scrim stays a plain tinted color and never uses Material. Blue is the
-/// accent only (never row titles); red is destructive only.
+/// The clear glass shell uses lightly tinted section cards for grouping while allowing paused
+/// gameplay to remain visible. The gameplay scrim stays a plain tinted color and never uses
+/// Material. Blue is the accent only (never row titles); red is destructive only.
 enum OverlayTheme {
     // MARK: Surfaces — opaque graphite ladder (darkest -> lightest)
 
@@ -68,10 +65,18 @@ enum OverlayTheme {
     // MARK: Glass — controlled frosted chrome (panel shell + cards; never the gameplay scrim)
 
     static let shellGlassTint: Double = 0.72
-    static let cardGlassTint: Double = 0.78
+    static let cardGlassTint: Double = 0.28
     static let glassTopHighlight = Color.white.opacity(0.10)
     static let cardTopHighlight = Color.white.opacity(0.07)
     static let cardShadow = Color.black.opacity(0.18)
+
+    // MARK: Row metrics — the icon column every overlay row shares
+
+    /// Icon column width. Every row title starts at `rowLabelInset` so they line up down the card.
+    static let rowIconWidth: CGFloat = 22
+    static let rowIconSpacing: CGFloat = 12
+    /// Where a row title starts. Use this to hang anything under a row, don't re-add the two.
+    static let rowLabelInset: CGFloat = rowIconWidth + rowIconSpacing
 }
 
 // MARK: - Overlay Components
@@ -110,18 +115,28 @@ private struct OverlayCompactKey: EnvironmentKey {
     static let defaultValue: Bool = false
 }
 
+private struct OverlayKeyboardOverlapKey: EnvironmentKey {
+    static let defaultValue: CGFloat = 0
+}
+
 extension EnvironmentValues {
     var overlayCompact: Bool {
         get { self[OverlayCompactKey.self] }
         set { self[OverlayCompactKey.self] = newValue }
     }
+
+    /// How much of the overlay card the keyboard covers. The panel insets itself by this,
+    /// since an inset applied out here would shrink the box it measures itself in.
+    var overlayKeyboardOverlap: CGFloat {
+        get { self[OverlayKeyboardOverlapKey.self] }
+        set { self[OverlayKeyboardOverlapKey.self] = newValue }
+    }
 }
 
-/// Opaque overlay shell content. Host this INSIDE `GameOverlayContainer` (which supplies the scrim,
-/// bounded card, corner clipping and shadow); the scaffold is the panel's CONTENT, not the card
-/// frame. It applies the graphite shell background, clamps Dynamic Type so oversized type cannot
-/// break the bounded card, and scopes the accent tint LOCALLY so children inherit the overlay
-/// accent without touching the global app tint. Header/footer are composed by the caller.
+/// Clear glass overlay shell content. Host this INSIDE `GameOverlayContainer` (which supplies the
+/// scrim, bounded card, corner clipping, and shadow); the scaffold is the panel's CONTENT, not the
+/// card frame. One shared glass surface avoids stacking a separate material renderer under every
+/// section. It also clamps Dynamic Type and scopes the accent tint locally.
 struct OverlayPanelScaffold<Content: View>: View {
     private let content: Content
 
@@ -133,7 +148,7 @@ struct OverlayPanelScaffold<Content: View>: View {
         content
             .dynamicTypeSize(...DynamicTypeSize.accessibility3)
             .tint(OverlayTheme.accent)
-            .background(OverlayFrostBackground())
+            .glassSurface(clear: true, cornerRadius: 26)
     }
 }
 
@@ -185,9 +200,9 @@ struct OverlaySectionCard<Content: View>: View {
 }
 
 /// Pinned overlay footer: a full-width primary action (Resume / Save) as a `borderedProminent`
-/// button tinted with the overlay accent, plus an optional secondary action, on the shell surface
-/// with a top hairline. Apply via `.safeAreaInset(edge: .bottom)`. Pass `compact: true` for the
-/// iPad / iPhone-landscape sizing; the default `.large` is the liked iPhone-portrait size.
+/// button tinted with the overlay accent, plus an optional secondary action. It inherits the
+/// scaffold's single glass surface and adds only a top hairline. Apply via
+/// `.safeAreaInset(edge: .bottom)`.
 struct OverlayFooter: View {
     private let primaryLabel: String
     private let primarySystemImage: String
@@ -233,7 +248,6 @@ struct OverlayFooter: View {
             .padding(.top, 8)
             .padding(.bottom, compact ? 10 : 14)
         }
-        .background(OverlayFrostBackground())
         .tint(OverlayTheme.accent)
     }
 }
@@ -287,12 +301,27 @@ struct OverlayHeader: View {
 
 // MARK: - Rows
 
+/// Puts a plain `Label` on the same icon column as the rows below, so an injected `Menu` lines up
+/// with the hand-built rows either side of it instead of using `Label`'s own narrower icon slot.
+struct OverlayRowLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: OverlayTheme.rowIconSpacing) {
+            configuration.icon
+                .frame(width: OverlayTheme.rowIconWidth)
+                .foregroundStyle(OverlayTheme.textSecondary)
+            configuration.title
+                .foregroundStyle(OverlayTheme.textPrimary)
+                .lineLimit(1)
+                .layoutPriority(1)
+        }
+    }
+}
+
 /// A fixed-min-height overlay action row that GUARANTEES the main label wins over a trailing
 /// value: the label gets `layoutPriority(1)` and the trailing value `layoutPriority(-1)` with tail
 /// truncation, so on a narrow width the trailing value elides first while the label stays intact.
 /// The label is never blue (`textPrimary`); red is used only when `isDestructive`.
 struct OverlayActionRow: View {
-    @Environment(\.overlayCompact) private var compact
     private let label: String
     private let systemImage: String?
     private let trailingValue: String?
@@ -315,10 +344,10 @@ struct OverlayActionRow: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 12) {
+            HStack(spacing: OverlayTheme.rowIconSpacing) {
                 if let systemImage {
                     Image(systemName: systemImage)
-                        .frame(width: 22)
+                        .frame(width: OverlayTheme.rowIconWidth)
                         .foregroundStyle(isDestructive ? OverlayTheme.destructive : OverlayTheme.textSecondary)
                 }
                 Text(label)
@@ -335,7 +364,7 @@ struct OverlayActionRow: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(minHeight: compact ? 38 : 44)
+            .frame(minHeight: 44)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -345,7 +374,6 @@ struct OverlayActionRow: View {
 /// A toggle row on the graphite card: graphite label + accent switch (accent comes from the
 /// scaffold's local `.tint`). Matches `OverlayActionRow` height so toggles and actions align.
 struct OverlayToggleRow: View {
-    @Environment(\.overlayCompact) private var compact
     private let label: String
     private let systemImage: String
     @Binding private var isOn: Bool
@@ -358,9 +386,9 @@ struct OverlayToggleRow: View {
 
     var body: some View {
         Toggle(isOn: $isOn) {
-            HStack(spacing: 12) {
+            HStack(spacing: OverlayTheme.rowIconSpacing) {
                 Image(systemName: systemImage)
-                    .frame(width: 22)
+                    .frame(width: OverlayTheme.rowIconWidth)
                     .foregroundStyle(OverlayTheme.textSecondary)
                 Text(label)
                     .foregroundStyle(OverlayTheme.textPrimary)
@@ -369,6 +397,6 @@ struct OverlayToggleRow: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(minHeight: compact ? 38 : 44)
+        .frame(minHeight: 44)
     }
 }

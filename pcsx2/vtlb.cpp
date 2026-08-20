@@ -35,10 +35,10 @@
 
 #include "GS/GSVector.h"
 
+#include <algorithm>
 #include <bit>
 #include <cstdlib>
 #include <map>
-#include <unordered_set>
 #include <unordered_map>
 
 #define FASTMEM_LOG(...)
@@ -88,13 +88,19 @@ static std::unique_ptr<SharedMemoryMappingArea> s_fastmem_area;
 static std::vector<u32> s_fastmem_virtual_mapping; // maps vaddr -> mainmem offset
 static std::unordered_multimap<u32, u32> s_fastmem_physical_mapping; // maps mainmem offset -> vaddr
 static std::unordered_map<uptr, LoadstoreBackpatchInfo> s_fastmem_backpatch_info;
-static std::unordered_set<u32> s_fastmem_faulting_pcs;
+static std::vector<u32> s_fastmem_faulting_pcs; // sorted; lookups via binary search
 
 // Sticky: the 4 GB fastmem area allocation failed on this device at least once.
 // Process-lifetime flag so LoadSettings's config reload can't silently re-enable
 // fastmem against a null base and crash the EE rec on its first load/store.
 static bool s_fastmem_area_unavailable = false;
-bool vtlb_FastmemAreaUnavailable() { return s_fastmem_area_unavailable; }
+bool vtlb_FastmemAreaUnavailable()
+{
+	// Settings can be reloaded after allocation. Treat any allocated VM without
+	// a reservation as unavailable so fastmem cannot be re-enabled against a
+	// null base, whether allocation failed or the area was intentionally omitted.
+	return s_fastmem_area_unavailable || (SysMemory::IsAllocated() && !s_fastmem_area);
+}
 
 vtlb_private::VTLBPhysical vtlb_private::VTLBPhysical::fromPointer(sptr ptr)
 {
@@ -532,7 +538,8 @@ static __ri void vtlb_Miss(u32 addr, u32 mode)
 	if (EmuConfig.Gamefixes.GoemonTlbHack)
 		GoemonTlbMissDebug();
 
-	// Hack to handle expected tlb miss by some games.
+	// Interpreter: raise the exception, then CancelInstruction stops the current
+	// instruction so the exception vector is dispatched immediately.
 	if (Cpu == &intCpu)
 	{
 		if (mode)
@@ -540,7 +547,6 @@ static __ri void vtlb_Miss(u32 addr, u32 mode)
 		else
 			cpuTlbMissR(addr, cpuRegs.branch);
 
-		// Exception handled. Current instruction need to be stopped
 		Cpu->CancelInstruction();
 		return;
 	}
@@ -555,6 +561,10 @@ static __ri void vtlb_Miss(u32 addr, u32 mode)
 		return;
 	}
 
+	// Recompilers: log and continue. Nothing diverts a block to the vector, so
+	// raising here would only latch Status.EXL, and cpuException skips the EPC
+	// write while EXL is set — every later exception would inherit this one's
+	// EPC.
 	static int spamStop = 0;
 	if (spamStop++ < 50 || IsDevBuild)
 		Console.Error(message);
@@ -733,6 +743,11 @@ __ri vtlbHandler vtlb_RegisterHandler(vtlbMemR8FP* r8, vtlbMemR16FP* r16, vtlbMe
 	vtlbHandler rv = vtlb_NewHandler();
 	vtlb_ReassignHandler(rv, r8, r16, r32, r64, r128, w8, w16, w32, w64, w128);
 	return rv;
+}
+
+bool vtlb_IsUnmappedHandlerID(vtlbHandler id)
+{
+	return id == UnmappedVirtHandler || id == UnmappedPhyHandler;
 }
 
 
@@ -1077,12 +1092,19 @@ bool vtlb_ResolveFastmemMapping(uptr* addr)
 
 bool vtlb_GetGuestAddress(uptr host_addr, u32* guest_addr)
 {
-	uptr fastmem_start = (uptr)vtlbdata.fastmem_base;
-	uptr fastmem_end = fastmem_start + 0xFFFFFFFFu;
-	if (host_addr < fastmem_start || host_addr > fastmem_end)
+	// Explicit unsigned bound rather than `fastmem_start + 0xFFFFFFFF` + a
+	// two-sided compare: that addition overflows a 64-bit uptr when the fastmem
+	// mapping lands within 4 GB of the top of the address space (exotic kernels /
+	// high-mmap allocators), wrapping fastmem_end below fastmem_start and silently
+	// rejecting every valid in-range address. Subtraction-first wraps a below-base
+	// host to a huge offset, so a single `offset >= FASTMEM_AREA_SIZE` check is
+	// overflow-proof regardless of base.
+	const uptr fastmem_start = (uptr)vtlbdata.fastmem_base;
+	const uptr offset = host_addr - fastmem_start;
+	if (offset >= FASTMEM_AREA_SIZE)
 		return false;
 
-	*guest_addr = static_cast<u32>(host_addr - fastmem_start);
+	*guest_addr = static_cast<u32>(offset);
 	return true;
 }
 
@@ -1156,14 +1178,16 @@ bool vtlb_BackpatchLoadStore(uptr code_address, uptr fault_address)
 	Cpu->Clear(info.guest_pc, 1);
 
 	// and store the pc in the faulting list, so that we don't emit another fastmem loadstore
-	s_fastmem_faulting_pcs.insert(info.guest_pc);
+	auto it = std::lower_bound(s_fastmem_faulting_pcs.begin(), s_fastmem_faulting_pcs.end(), info.guest_pc);
+	if (it == s_fastmem_faulting_pcs.end() || *it != info.guest_pc)
+		s_fastmem_faulting_pcs.insert(it, info.guest_pc);
 	s_fastmem_backpatch_info.erase(iter);
 	return true;
 }
 
 bool vtlb_IsFaultingPC(u32 guest_pc)
 {
-	return (s_fastmem_faulting_pcs.find(guest_pc) != s_fastmem_faulting_pcs.end());
+	return std::binary_search(s_fastmem_faulting_pcs.begin(), s_fastmem_faulting_pcs.end(), guest_pc);
 }
 
 //virtual mappings
@@ -1360,21 +1384,32 @@ bool vtlb_Core_Alloc()
 	vtlbdata.vmap = reinterpret_cast<VTLBVirtual*>(SysMemory::GetVTLBVirtualMap());
 
 	pxAssert(!s_fastmem_area);
-	s_fastmem_area = SharedMemoryMappingArea::Create(FASTMEM_AREA_SIZE);
-	if (!s_fastmem_area)
+	if (!SysMemory::HasCodeMemory())
 	{
-		// 4 GB virtual reservation can fail on devices with limited VA space
-		// (e.g. iPhone SE 2 with 4 GB RAM under LiveContainer). On iOS we
-		// continue without fastmem instead of aborting boot.
-#if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR
-		Console.Warning("Fastmem disabled: 4 GB virtual-address reservation failed; continuing without fastmem");
+		// Interpreter execution never emits fastmem accesses. Avoid reserving a
+		// 4 GB virtual address range that cannot improve the no-JIT backend.
 		vtlbdata.fastmem_base = 0;
 		EmuConfig.Cpu.Recompiler.EnableFastmem = false;
-		s_fastmem_area_unavailable = true;
+		Console.WriteLn("Fastmem disabled: executable code memory is unavailable");
+	}
+	else
+	{
+		s_fastmem_area = SharedMemoryMappingArea::Create(FASTMEM_AREA_SIZE);
+		if (!s_fastmem_area)
+		{
+			// 4 GB virtual reservation can fail on devices with limited VA space
+			// (e.g. iPhone SE 2 with 4 GB RAM under LiveContainer). On iOS we
+			// continue without fastmem instead of aborting boot.
+#if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR
+			Console.Warning("Fastmem disabled: 4 GB virtual-address reservation failed; continuing without fastmem");
+			vtlbdata.fastmem_base = 0;
+			EmuConfig.Cpu.Recompiler.EnableFastmem = false;
+			s_fastmem_area_unavailable = true;
 #else
-		Host::ReportErrorAsync("Error", "Failed to allocate fastmem area");
-		return false;
+			Host::ReportErrorAsync("Error", "Failed to allocate fastmem area");
+			return false;
 #endif
+		}
 	}
 
 	// Force-disable fastmem if explicitly requested via env var or INI.
@@ -1511,8 +1546,19 @@ void mmap_MarkCountedRamPage(u32 paddr)
 
 	paddr &= ~__pagemask;
 
+	// Same story as the fault handler: anything PSM resolves outside main RAM is
+	// ROM or VU memory, which is never under EE write protection, so there is
+	// nothing here to mark. Bounded the way mmap_GetRamPageInfo already does it.
+	// The old int also went negative for a pointer below Main and indexed
+	// backwards out of the array. No caller reaches either case today, they all
+	// come through mmap_GetRamPageInfo first, but it is a nasty thing to leave
+	// lying around for the next one.
 	uptr ptr = (uptr)PSM(paddr);
-	int rampage = (ptr - (uptr)eeMem->Main) >> __pageshift;
+	uptr rampage = ptr - (uptr)eeMem->Main;
+	if (!ptr || rampage >= Ps2MemSize::ExposedRam)
+		return;
+
+	rampage >>= __pageshift;
 
 	// Important: Update the ReverseRamMap here because TLB changes could alter the paddr
 	// mapping into eeMem->Main.
@@ -1529,7 +1575,8 @@ void mmap_MarkCountedRamPage(u32 paddr)
 
 	m_PageProtectInfo[rampage].Mode = ProtMode_Write;
 	HostSys::MemProtect(&eeMem->Main[rampage << __pageshift], __pagesize, PageAccess_ReadOnly());
-	vtlb_UpdateFastmemProtection(rampage << __pageshift, __pagesize, PageAccess_ReadOnly());
+	// Narrowing is safe, the bound above keeps this under ExposedRam.
+	vtlb_UpdateFastmemProtection(static_cast<u32>(rampage << __pageshift), __pagesize, PageAccess_ReadOnly());
 }
 
 // offset - offset of address relative to psM.
@@ -1562,9 +1609,16 @@ PageFaultHandler::HandlerResult PageFaultHandler::HandlePageFault(void* exceptio
 		// this was inside the fastmem area. check if it's a code page
 		// fprintf(stderr, "Fault on fastmem %p vaddr %08X\n", info.addr, vaddr);
 
+		// PSM resolves the whole physical map, not just main RAM, so a fault on
+		// VU memory or ROM arrives here with an offset way past the end of the
+		// table. Reading it is out of bounds, and if the aliased value happens to
+		// match ProtMode_Write we walk into mmap_ClearCpuBlock and write a
+		// ProtMode over whatever follows the array. The branch below has always
+		// had this check; this one never did.
 		uptr ptr = (uptr)PSM(vaddr);
 		uptr offset = (ptr - (uptr)eeMem->Main);
-		if (ptr && m_PageProtectInfo[offset >> __pageshift].Mode == ProtMode_Write)
+		if (ptr && offset < Ps2MemSize::ExposedRam &&
+			m_PageProtectInfo[offset >> __pageshift].Mode == ProtMode_Write)
 		{
 			// fprintf(stderr, "Not backpatching code write at %08X\n", vaddr);
 			mmap_ClearCpuBlock(offset);

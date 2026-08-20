@@ -6,21 +6,32 @@ import PhotosUI
 import UniformTypeIdentifiers
 import UIKit
 
+/// A constant id on purpose. The panel's body re-runs on every fingerprint change, and an
+/// item-bound sheet whose identity moved would rebuild the browser's search field under the
+/// keyboard, which is the tearing the global section documents at its own save sheet.
+private struct ShaderPresetBrowserRequest: Identifiable {
+    let id = "shader-preset-browser"
+}
+
 struct PerGameSettingsPanel: View {
     @Environment(\.dismiss) private var dismiss
     @State private var settings = SettingsStore.shared
     @State private var layoutPresets = PadLayoutPresetStore.shared
     @State private var skinLibrary = VPadSkinLibraryStore.shared
 
-    private enum PerGameSettingsCategory: CaseIterable, Identifiable {
-        case general, graphics, audio, cpu, pad, fixes, cheats, retroAchievements
+    private enum PerGameSettingsCategory: CaseIterable, Identifiable, Hashable {
+        case general, graphics, framePacing, audio, cpu, pad, fixes, cheats, retroAchievements
 
         var id: Self { self }
+
+        /// Everything the root form links to. General is the root, so it is not a link.
+        static var linked: [PerGameSettingsCategory] { allCases.filter { $0 != .general } }
 
         var titleKey: String {
             switch self {
             case .general: return "General"
             case .graphics: return "Graphics"
+            case .framePacing: return "Frame Pacing"
             case .audio: return "Audio"
             case .cpu: return "CPU & Speedhacks"
             case .pad: return "Virtual Pad"
@@ -34,6 +45,7 @@ struct PerGameSettingsPanel: View {
             switch self {
             case .general: return "slider.horizontal.3"
             case .graphics: return "paintbrush"
+            case .framePacing: return "speedometer"
             case .audio: return "speaker.wave.2"
             case .cpu: return "cpu"
             case .pad: return "gamecontroller"
@@ -44,7 +56,12 @@ struct PerGameSettingsPanel: View {
         }
     }
 
+    /// A compile-time fact, cached here so the Graphics tab never has to name the bridge.
+    private static let shaderChainSupported = ARMSX2Bridge.isShaderChainSupported()
+
     private static let useGlobalSentinel = -1
+    private static let upscaleUseGlobalSentinel: Float = -1.0
+    private static let aspectUseGlobalSentinel = ""
     private static let trilinearUseGlobalSentinel = Int(Int32.min)
     private static let eeCycleRateUseGlobalSentinel = Int(Int32.min)
     private static let fastBootUseGlobalSentinel = -1
@@ -55,22 +72,23 @@ struct PerGameSettingsPanel: View {
     let onDone: (() -> Void)?
     let savesToRunningGame: Bool
 
+    /// Zero in the library, where this is a sheet and the system does its own avoidance.
+    @Environment(\.overlayKeyboardOverlap) private var keyboardOverlap
+
     @State private var enabled: Bool
     @State private var upscaleMultiplier: Float
     @State private var aspectRatio: String
     @State private var textureFiltering: Int
-    @State private var hardwareMipmapping: Bool
+    /// Tri-state: useGlobalSentinel, 0 off, 1 on. Was a Bool, which had no room to say "inherit".
+    @State private var hardwareMipmapping: Int
     @State private var blendingAccuracy: Int
     @State private var interlaceMode: Int
     @State private var trilinearFiltering: Int
     @State private var halfPixelOffset: Int
     @State private var roundSprite: Int
-    @State private var alignSpriteOverride: Bool
-    @State private var alignSprite: Bool
-    @State private var mergeSpriteOverride: Bool
-    @State private var mergeSprite: Bool
-    @State private var wildArmsOffsetOverride: Bool
-    @State private var wildArmsOffset: Bool
+    @State private var alignSprite: Int
+    @State private var mergeSprite: Int
+    @State private var wildArmsOffset: Int
     @State private var textureOffsetXOverride: Bool
     @State private var textureOffsetX: Int
     @State private var textureOffsetYOverride: Bool
@@ -102,6 +120,7 @@ struct PerGameSettingsPanel: View {
     @State private var perGameFixes: [String: Int]
     @State private var perGameAAT: Int
     @State private var perGameTextureInsideRt: Int
+    @State private var perGameDisableDepth: Int
     @State private var perGameRenderer: Int
     @State private var perGameFXAA: Int
     @State private var perGameUpscaler: Int
@@ -122,6 +141,9 @@ struct PerGameSettingsPanel: View {
     @State private var perGameShadeBoostContrast: Int
     @State private var perGameShadeBoostSaturation: Int
     @State private var perGameShadeBoostGamma: Int
+    @State private var perGameShaderChain: Int
+    @State private var perGameShaderPresetRef: String
+    @State private var shaderPresetRequest: ShaderPresetBrowserRequest?
     @State private var perGameDithering: Int
     @State private var perGameFastForwardVolume: Int
     @State private var perGameIOP: Int
@@ -147,12 +169,20 @@ struct PerGameSettingsPanel: View {
     @State private var perGameSyncToHostRefresh: Int
     @State private var perGameBufferMS: Int
     @State private var perGameOutputLatencyMS: Int
+    // Frame Pacing per-game overrides (-1 = use global). Limiter state remains
+    // in Framerate/NominalScalar while presentation cadence has its own key.
+    @State private var perGameFramePacingPreset: Int
+    @State private var perGameFrameLimiter: Int
+    @State private var perGameTargetFPS: Float
     @State private var statusMessage: String?
     @State private var showCheatsManager = false
     @State private var showResetAllConfirmation = false
     @State private var showDiscardConfirmation = false
+    @State private var showFramePacingResetConfirmation = false
     @State private var savedFingerprint: String = ""
-    @State private var landscapeCategory: PerGameSettingsCategory = .general
+    /// Which section is open, shared by both layouts so rotating keeps your place. The
+    /// rail sets it directly, the portrait form through its path, where `.general` is root.
+    @State private var openCategory: PerGameSettingsCategory = .general
     @State private var raEnabledOverride: Int
     @State private var raHardcoreOverride: Int
 
@@ -179,21 +209,20 @@ struct PerGameSettingsPanel: View {
             crc: (info["crc"] as? String) ?? game.metadata["crc"]
         ))
         _hasGameSettingsIdentity = State(initialValue: !PadLayoutGameIdentity.normalizedCRC((info["crc"] as? String) ?? game.metadata["crc"]).isEmpty)
-        _upscaleMultiplier = State(initialValue: Self.floatValue(info["upscaleMultiplier"], defaultValue: 1.0))
-        _aspectRatio = State(initialValue: Self.normalizedAspect(info["aspectRatio"] as? String))
-        _textureFiltering = State(initialValue: Self.intValue(info["textureFiltering"], defaultValue: 2))
-        _hardwareMipmapping = State(initialValue: Self.boolValue(info["hardwareMipmapping"], defaultValue: true))
-        _blendingAccuracy = State(initialValue: Self.intValue(info["blendingAccuracy"], defaultValue: 1))
-        _interlaceMode = State(initialValue: Self.intValue(info["interlaceMode"], defaultValue: 7))
+        // Sentinel unless the file actually carries the key, so opening and saving the panel
+        // cannot invent an override.
+        _upscaleMultiplier = State(initialValue: Self.boolValue(info["hasUpscaleMultiplierOverride"], defaultValue: false) ? Self.floatValue(info["upscaleMultiplier"], defaultValue: 1.0) : Self.upscaleUseGlobalSentinel)
+        _aspectRatio = State(initialValue: Self.boolValue(info["hasAspectRatioOverride"], defaultValue: false) ? Self.normalizedAspect(info["aspectRatio"] as? String) : Self.aspectUseGlobalSentinel)
+        _textureFiltering = State(initialValue: Self.boolValue(info["hasTextureFilteringOverride"], defaultValue: false) ? Self.intValue(info["textureFiltering"], defaultValue: 2) : Self.useGlobalSentinel)
+        _hardwareMipmapping = State(initialValue: Self.boolValue(info["hasHardwareMipmappingOverride"], defaultValue: false) ? (Self.boolValue(info["hardwareMipmapping"], defaultValue: true) ? 1 : 0) : Self.useGlobalSentinel)
+        _blendingAccuracy = State(initialValue: Self.boolValue(info["hasBlendingAccuracyOverride"], defaultValue: false) ? Self.intValue(info["blendingAccuracy"], defaultValue: 1) : Self.useGlobalSentinel)
+        _interlaceMode = State(initialValue: Self.boolValue(info["hasInterlaceModeOverride"], defaultValue: false) ? Self.intValue(info["interlaceMode"], defaultValue: 0) : Self.useGlobalSentinel)
         _trilinearFiltering = State(initialValue: Self.boolValue(info["hasTrilinearFilteringOverride"], defaultValue: false) ? Self.intValue(info["trilinearFiltering"], defaultValue: -1) : Self.trilinearUseGlobalSentinel)
         _halfPixelOffset = State(initialValue: Self.boolValue(info["hasHalfPixelOffsetOverride"], defaultValue: false) ? Self.intValue(info["halfPixelOffset"], defaultValue: 0) : Self.useGlobalSentinel)
         _roundSprite = State(initialValue: Self.boolValue(info["hasRoundSpriteOverride"], defaultValue: false) ? Self.intValue(info["roundSprite"], defaultValue: 0) : Self.useGlobalSentinel)
-        _alignSpriteOverride = State(initialValue: Self.boolValue(info["hasAlignSpriteOverride"], defaultValue: false))
-        _alignSprite = State(initialValue: Self.boolValue(info["alignSprite"], defaultValue: false))
-        _mergeSpriteOverride = State(initialValue: Self.boolValue(info["hasMergeSpriteOverride"], defaultValue: false))
-        _mergeSprite = State(initialValue: Self.boolValue(info["mergeSprite"], defaultValue: false))
-        _wildArmsOffsetOverride = State(initialValue: Self.boolValue(info["hasWildArmsOffsetOverride"], defaultValue: false))
-        _wildArmsOffset = State(initialValue: Self.boolValue(info["wildArmsOffset"], defaultValue: false))
+        _alignSprite = State(initialValue: Self.boolValue(info["hasAlignSpriteOverride"], defaultValue: false) ? (Self.boolValue(info["alignSprite"], defaultValue: false) ? 1 : 0) : Self.useGlobalSentinel)
+        _mergeSprite = State(initialValue: Self.boolValue(info["hasMergeSpriteOverride"], defaultValue: false) ? (Self.boolValue(info["mergeSprite"], defaultValue: false) ? 1 : 0) : Self.useGlobalSentinel)
+        _wildArmsOffset = State(initialValue: Self.boolValue(info["hasWildArmsOffsetOverride"], defaultValue: false) ? (Self.boolValue(info["wildArmsOffset"], defaultValue: false) ? 1 : 0) : Self.useGlobalSentinel)
         _textureOffsetXOverride = State(initialValue: Self.boolValue(info["hasTextureOffsetXOverride"], defaultValue: false))
         _textureOffsetX = State(initialValue: Self.clampedTextureOffset(Self.intValue(info["textureOffsetX"], defaultValue: 0)))
         _textureOffsetYOverride = State(initialValue: Self.boolValue(info["hasTextureOffsetYOverride"], defaultValue: false))
@@ -243,6 +272,7 @@ struct PerGameSettingsPanel: View {
         _perGameAAT = State(initialValue: hasPerGameAAT ? Self.intValue(info["perGameAAT"], defaultValue: 0) : -1)
         let hasPerGameTextureInsideRt = Self.boolValue(info["hasPerGameTextureInsideRt"], defaultValue: false)
         _perGameTextureInsideRt = State(initialValue: hasPerGameTextureInsideRt ? Self.intValue(info["perGameTextureInsideRt"], defaultValue: 0) : -1)
+        _perGameDisableDepth = State(initialValue: Self.boolValue(info["hasPerGameDisableDepth"], defaultValue: false) ? (Self.boolValue(info["perGameDisableDepth"], defaultValue: false) ? 1 : 0) : Self.useGlobalSentinel)
         let hasPerGameRenderer = Self.boolValue(info["hasPerGameRenderer"], defaultValue: false)
         _perGameRenderer = State(initialValue: hasPerGameRenderer ? Self.intValue(info["perGameRenderer"], defaultValue: 17) : -1)
         let hasPerGameFXAA = Self.boolValue(info["hasPerGameFXAA"], defaultValue: false)
@@ -258,7 +288,7 @@ struct PerGameSettingsPanel: View {
         let hasPerGameMaxAnisotropy = Self.boolValue(info["hasPerGameMaxAnisotropy"], defaultValue: false)
         _perGameMaxAnisotropy = State(initialValue: hasPerGameMaxAnisotropy ? Self.intValue(info["perGameMaxAnisotropy"], defaultValue: 0) : -1)
         let hasPerGameCASSharpness = Self.boolValue(info["hasPerGameCASSharpness"], defaultValue: false)
-        _perGameCASSharpness = State(initialValue: hasPerGameCASSharpness ? Self.intValue(info["perGameCASSharpness"], defaultValue: 50) : -1)
+        _perGameCASSharpness = State(initialValue: hasPerGameCASSharpness ? SettingsStore.clamped(Self.intValue(info["perGameCASSharpness"], defaultValue: 50), to: SettingsStore.casSharpnessRange) : -1)
         let hasPerGamePCRTCOffsets = Self.boolValue(info["hasPerGamePCRTCOffsets"], defaultValue: false)
         _perGamePCRTCOffsets = State(initialValue: hasPerGamePCRTCOffsets ? Self.intValue(info["perGamePCRTCOffsets"], defaultValue: 0) : -1)
         let hasPerGameIntegerScaling = Self.boolValue(info["hasPerGameIntegerScaling"], defaultValue: false)
@@ -283,8 +313,10 @@ struct PerGameSettingsPanel: View {
         _perGameShadeBoostContrast = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "ShadeBoost_Contrast", globalDefault: 50, useCurrent: useCurrent, iso: perGameISO))
         _perGameShadeBoostSaturation = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "ShadeBoost_Saturation", globalDefault: 50, useCurrent: useCurrent, iso: perGameISO))
         _perGameShadeBoostGamma = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "ShadeBoost_Gamma", globalDefault: 50, useCurrent: useCurrent, iso: perGameISO))
+        _perGameShaderChain = State(initialValue: PerGameShaderSelection.loadedChain(useCurrent: useCurrent, iso: perGameISO))
+        _perGameShaderPresetRef = State(initialValue: PerGameShaderSelection.loadedPresetRef(useCurrent: useCurrent, iso: perGameISO))
         _perGameDithering = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "dithering_ps2", globalDefault: 2, useCurrent: useCurrent, iso: perGameISO))
-        _perGameFastForwardVolume = State(initialValue: Self.loadedPerGameInt("SPU2/Output", "FastForwardVolume", globalDefault: 100, useCurrent: useCurrent, iso: perGameISO))
+        _perGameFastForwardVolume = State(initialValue: Self.clampedPerGameInt(Self.loadedPerGameInt("SPU2/Output", "FastForwardVolume", globalDefault: 100, useCurrent: useCurrent, iso: perGameISO), to: SettingsStore.fastForwardVolumeRange))
         _perGameIOP = State(initialValue: Self.loadedPerGameBool("EmuCore/CPU/Recompiler", "EnableIOP", useCurrent: useCurrent, iso: perGameISO))
         _perGameVU0 = State(initialValue: Self.loadedPerGameBool("EmuCore/CPU/Recompiler", "EnableVU0", useCurrent: useCurrent, iso: perGameISO))
         _perGameVU1 = State(initialValue: Self.loadedPerGameBool("EmuCore/CPU/Recompiler", "EnableVU1", useCurrent: useCurrent, iso: perGameISO))
@@ -307,22 +339,29 @@ struct PerGameSettingsPanel: View {
         _perGameHWDownloadMode = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "HWDownloadMode", globalDefault: 0, useCurrent: useCurrent, iso: perGameISO))
         _perGameCPUCLUT = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "UserHacks_CPUCLUTRender", globalDefault: 0, useCurrent: useCurrent, iso: perGameISO))
         _perGameGPUTargetCLUT = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "UserHacks_GPUTargetCLUTMode", globalDefault: 0, useCurrent: useCurrent, iso: perGameISO))
-        _perGameVsyncQueue = State(initialValue: Self.loadedPerGameInt("EmuCore/GS", "VsyncQueueSize", globalDefault: 8, useCurrent: useCurrent, iso: perGameISO))
+        _perGameVsyncQueue = State(initialValue: Self.clampedPerGameInt(Self.loadedPerGameInt("EmuCore/GS", "VsyncQueueSize", globalDefault: 8, useCurrent: useCurrent, iso: perGameISO), to: SettingsStore.vsyncQueueRange))
         _perGameLoadTextureReplacements = State(initialValue: Self.loadedPerGameBool("EmuCore/GS", "LoadTextureReplacements", useCurrent: useCurrent, iso: perGameISO))
         _perGameLoadTextureReplacementsAsync = State(initialValue: Self.loadedPerGameBool("EmuCore/GS", "LoadTextureReplacementsAsync", useCurrent: useCurrent, iso: perGameISO))
         _perGamePrecacheTextureReplacements = State(initialValue: Self.loadedPerGameBool("EmuCore/GS", "PrecacheTextureReplacements", useCurrent: useCurrent, iso: perGameISO))
         _perGameSyncToHostRefresh = State(initialValue: Self.loadedPerGameBool("EmuCore/GS", "SyncToHostRefreshRate", useCurrent: useCurrent, iso: perGameISO))
-        _perGameBufferMS = State(initialValue: Self.loadedPerGameInt("SPU2/Output", "BufferMS", globalDefault: 50, useCurrent: useCurrent, iso: perGameISO))
-        _perGameOutputLatencyMS = State(initialValue: Self.loadedPerGameInt("SPU2/Output", "OutputLatencyMS", globalDefault: 20, useCurrent: useCurrent, iso: perGameISO))
+        _perGameBufferMS = State(initialValue: Self.clampedPerGameInt(Self.loadedPerGameInt("SPU2/Output", "BufferMS", globalDefault: 50, useCurrent: useCurrent, iso: perGameISO), to: SettingsStore.audioBufferMsRange))
+        _perGameOutputLatencyMS = State(initialValue: Self.clampedPerGameInt(Self.loadedPerGameInt("SPU2/Output", "OutputLatencyMS", globalDefault: 20, useCurrent: useCurrent, iso: perGameISO), to: SettingsStore.audioOutputLatencyMsRange))
+        let _globalFramePacingPreset = Int32(SettingsStore.shared.framePacingPreset.rawValue)
+        _perGameFramePacingPreset = State(initialValue: Self.loadedPerGameInt("ARMSX2iOS/FramePacing", "Preset", globalDefault: _globalFramePacingPreset, useCurrent: useCurrent, iso: perGameISO))
+        let _fpLimiter = Self.loadedPerGameFrameLimiter(useCurrent: useCurrent, iso: perGameISO)
+        _perGameFrameLimiter = State(initialValue: _fpLimiter.limiter)
+        _perGameTargetFPS = State(initialValue: _fpLimiter.fps)
         _raEnabledOverride = State(initialValue: Self.loadedPerGameBool("Achievements", "Enabled", useCurrent: useCurrent, iso: perGameISO))
         _raHardcoreOverride = State(initialValue: Self.loadedPerGameBool("Achievements", "ChallengeMode", useCurrent: useCurrent, iso: perGameISO))
         _savedFingerprint = State(initialValue: perGameFingerprint())
     }
 
     /// Encodes the current editable per-game state so Save can be gated on real changes.
+    /// Virtual Pad values are left out on purpose: that tab writes as you edit it, so
+    /// there is never anything of its own left for Save to commit.
     private func perGameFingerprint() -> String {
         let fixes = SettingsStore.gameFixOptions.map { "\($0.key):\(perGameFixes[$0.key] ?? -1)" }.joined(separator: ",")
-        return "\(enabled)|\(upscaleMultiplier)|\(aspectRatio)|\(textureFiltering)|\(hardwareMipmapping)|\(blendingAccuracy)|\(interlaceMode)|\(trilinearFiltering)|\(halfPixelOffset)|\(roundSprite)|\(alignSpriteOverride)|\(alignSprite)|\(mergeSpriteOverride)|\(mergeSprite)|\(wildArmsOffsetOverride)|\(wildArmsOffset)|\(textureOffsetXOverride)|\(textureOffsetX)|\(textureOffsetYOverride)|\(textureOffsetY)|\(skipDrawStartOverride)|\(skipDrawStart)|\(skipDrawEndOverride)|\(skipDrawEnd)|\(volumeOverride)|\(volumePercent)|\(eeCoreType)|\(mtvu)|\(eeCycleRate)|\(eeCycleSkip)|\(fastBoot)|\(enableCheats)|\(enablePatches)|\(enableGameFixes)|\(enableGameDBHardwareFixes)|\(perGameAAT)|\(perGameTextureInsideRt)|\(perGameRenderer)|\(perGameFXAA)|\(perGameUpscaler)|\(perGameShadeBoost)|\(perGameTVShader)|\(perGameCASMode)|\(perGameMaxAnisotropy)|\(perGameCASSharpness)|\(perGamePCRTCOffsets)|\(perGameIntegerScaling)|\(perGameSkipDupFrames)|\(perGamePCRTCOverscan)|\(perGamePCRTCAntiBlur)|\(perGameDisableInterlaceOffset)|\(perGameWidescreen)|\(perGameNoInterlace)|\(perGameShadeBoostBrightness)|\(perGameShadeBoostContrast)|\(perGameShadeBoostSaturation)|\(perGameShadeBoostGamma)|\(perGameDithering)|\(perGameFastForwardVolume)|\(perGameIOP)|\(perGameVU0)|\(perGameVU1)|\(perGameHWDownloadMode)|\(perGameCPUCLUT)|\(perGameGPUTargetCLUT)|\(perGameVsyncQueue)|\(perGameLoadTextureReplacements)|\(perGameLoadTextureReplacementsAsync)|\(perGamePrecacheTextureReplacements)|\(perGameSyncToHostRefresh)|\(perGameBufferMS)|\(perGameOutputLatencyMS)|\(perGameEEFpuRound)|\(perGameVU0Round)|\(perGameVU1Round)|\(perGameEEClamp)|\(perGameVUClamp)|\(raEnabledOverride)|\(raHardcoreOverride)|\(fixes)"
+        return "\(enabled)|\(upscaleMultiplier)|\(aspectRatio)|\(textureFiltering)|\(hardwareMipmapping)|\(blendingAccuracy)|\(interlaceMode)|\(trilinearFiltering)|\(halfPixelOffset)|\(roundSprite)|\(alignSprite)|\(mergeSprite)|\(wildArmsOffset)|\(textureOffsetXOverride)|\(textureOffsetX)|\(textureOffsetYOverride)|\(textureOffsetY)|\(skipDrawStartOverride)|\(skipDrawStart)|\(skipDrawEndOverride)|\(skipDrawEnd)|\(volumeOverride)|\(volumePercent)|\(eeCoreType)|\(mtvu)|\(eeCycleRate)|\(eeCycleSkip)|\(fastBoot)|\(enableCheats)|\(enablePatches)|\(enableGameFixes)|\(enableGameDBHardwareFixes)|\(perGameAAT)|\(perGameTextureInsideRt)|\(perGameDisableDepth)|\(perGameRenderer)|\(perGameFXAA)|\(perGameUpscaler)|\(perGameShadeBoost)|\(perGameTVShader)|\(perGameCASMode)|\(perGameMaxAnisotropy)|\(perGameCASSharpness)|\(perGamePCRTCOffsets)|\(perGameIntegerScaling)|\(perGameSkipDupFrames)|\(perGamePCRTCOverscan)|\(perGamePCRTCAntiBlur)|\(perGameDisableInterlaceOffset)|\(perGameWidescreen)|\(perGameNoInterlace)|\(perGameShadeBoostBrightness)|\(perGameShadeBoostContrast)|\(perGameShadeBoostSaturation)|\(perGameShadeBoostGamma)|\(perGameShaderChain)|\(perGameShaderPresetRef)|\(perGameDithering)|\(perGameFastForwardVolume)|\(perGameIOP)|\(perGameVU0)|\(perGameVU1)|\(perGameHWDownloadMode)|\(perGameCPUCLUT)|\(perGameGPUTargetCLUT)|\(perGameVsyncQueue)|\(perGameLoadTextureReplacements)|\(perGameLoadTextureReplacementsAsync)|\(perGamePrecacheTextureReplacements)|\(perGameSyncToHostRefresh)|\(perGameBufferMS)|\(perGameOutputLatencyMS)|\(perGameEEFpuRound)|\(perGameVU0Round)|\(perGameVU1Round)|\(perGameEEClamp)|\(perGameVUClamp)|\(raEnabledOverride)|\(raHardcoreOverride)|\(perGameFramePacingPreset)|\(perGameFrameLimiter)|\(perGameTargetFPS)|\(fixes)"
     }
 
     private var hasPendingChanges: Bool {
@@ -345,9 +384,24 @@ struct PerGameSettingsPanel: View {
 
     /// Clears every per-game override by disabling the master toggle and saving; the
     /// save path deletes all per-game keys so the global values apply on next boot.
+    /// Virtual Pad state isn't part of that path — layout and skin live in the preset
+    /// store, stick inversion is written as you edit it — so clear those by hand here.
     private func resetAllOverrides() {
+        if let padLayoutIdentity {
+            layoutPresets.clearVPadOverrides(for: padLayoutIdentity)
+        }
+        clearStickInversionOverrides()
         enabled = false
         save()
+    }
+
+    private func clearStickInversionOverrides() {
+        for key in SettingsStore.stickInversionKeys {
+            Self.clearPerGameValue("ARMSX2iOS/UI", key, useCurrent: savesToRunningGame, iso: game.bootName)
+        }
+        if savesToRunningGame {
+            settings.reloadStickInversionOverrides()
+        }
     }
 
     /// Whether OPH Flag Hack is effectively on for this game: a per-game override of 1, or
@@ -362,17 +416,16 @@ struct PerGameSettingsPanel: View {
 
     var body: some View {
         GeometryReader { geo in
-            // Use the landscape workbench (category rail + detail pane) whenever the
-            // overlay card is wider than it is tall. This covers both iPhone landscape
-            // (short, wide card) and iPad landscape (large, wide card). The previous
-            // `height < 500` guard kept iPad landscape on the portrait root form; that
-            // guard is removed so iPads get the same rail/detail workbench as iPhone
-            // landscape. Portrait cards (taller than wide) keep the NavigationStack form.
+            // Rail and detail pane on a wide card, NavigationStack form on a tall one.
             let useCompactSettingsLayout = geo.size.width > geo.size.height
             VStack(spacing: 0) {
                 settingsContent(useCompactLayout: useCompactSettingsLayout, availableWidth: geo.size.width)
                     .frame(maxHeight: .infinity)
                 saveCancelFooter(compact: useCompactSettingsLayout)
+            }
+            // Inside the reader, so a keyboard cannot flip the layout picked above.
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                Color.clear.frame(height: keyboardOverlap)
             }
         }
         .background(OverlayFrostBackground())
@@ -384,6 +437,17 @@ struct PerGameSettingsPanel: View {
                 onDismiss: { showPadLayoutEditor = false },
                 context: perGamePadLayoutEditorContext
             )
+        }
+        .sheet(item: $shaderPresetRequest) { _ in
+            NavigationStack {
+                ShaderPresetBrowserView(
+                    title: settings.localized("Shader Presets"),
+                    folder: nil,
+                    selectedToken: perGameShaderPresetRef,
+                    localized: { settings.localized($0) },
+                    onSelect: { perGameShaderPresetRef = $0 }
+                )
+            }
         }
         .fullScreenCover(isPresented: $showCheatsManager) {
             CheatsPatchesManagerView(
@@ -412,6 +476,30 @@ struct PerGameSettingsPanel: View {
         } message: {
             Text(settings.localized("You have unsaved per-game settings changes."))
         }
+        .confirmationDialog(settings.localized("Clear Per-Game Frame Pacing?"),
+                            isPresented: $showFramePacingResetConfirmation,
+                            titleVisibility: .visible) {
+            Button(settings.localized("Clear"), role: .destructive) {
+                perGameFramePacingPreset = -1
+                perGameFrameLimiter = -1
+                perGameTargetFPS = -1
+                perGameVsyncQueue = -1
+                perGameSyncToHostRefresh = -1
+                perGameBufferMS = -1
+                perGameOutputLatencyMS = -1
+            }
+            Button(settings.localized("Cancel"), role: .cancel) {}
+        } message: {
+            Text(settings.localized("This removes your overrides for this game. It will use your global Frame Pacing settings."))
+        }
+    }
+
+    /// The stack holds at most one page, so the path is `openCategory` as a list.
+    private var navigationPath: Binding<[PerGameSettingsCategory]> {
+        Binding(
+            get: { openCategory == .general ? [] : [openCategory] },
+            set: { openCategory = $0.last ?? .general }
+        )
     }
 
     @ViewBuilder
@@ -419,8 +507,9 @@ struct PerGameSettingsPanel: View {
         if useCompactLayout {
             landscapeSettingsSplit(availableWidth: availableWidth)
         } else {
-            NavigationStack {
+            NavigationStack(path: navigationPath) {
                 rootForm
+                    .navigationDestination(for: PerGameSettingsCategory.self, destination: detailContent)
                     .navigationTitle(settings.localized("Per-Game Settings"))
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbarBackground(OverlayTheme.shell, for: .navigationBar)
@@ -481,13 +570,13 @@ struct PerGameSettingsPanel: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 2) {
                 ForEach(PerGameSettingsCategory.allCases) { category in
-                    let selected = landscapeCategory == category
+                    let selected = openCategory == category
                     Button {
-                        landscapeCategory = category
+                        openCategory = category
                     } label: {
                         HStack(spacing: 10) {
                             Image(systemName: category.systemImage)
-                                .frame(width: 22)
+                                .frame(width: OverlayTheme.rowIconWidth)
                                 .foregroundStyle(selected ? OverlayTheme.accent : OverlayTheme.textSecondary)
                             Text(settings.localized(category.titleKey))
                                 .font(.callout)
@@ -513,20 +602,22 @@ struct PerGameSettingsPanel: View {
 
     @ViewBuilder
     private var detailPane: some View {
-        detailContent(for: landscapeCategory)
+        detailContent(openCategory)
             .pickerStyle(.menu)
     }
 
-    private func detailContent(for category: PerGameSettingsCategory) -> AnyView {
+    @ViewBuilder
+    private func detailContent(_ category: PerGameSettingsCategory) -> some View {
         switch category {
-        case .general:  return AnyView(generalTab)
-        case .graphics: return AnyView(graphicsTab)
-        case .audio:    return AnyView(audioTab)
-        case .cpu:      return AnyView(cpuTab)
-        case .pad:      return AnyView(padTab)
-        case .fixes:    return AnyView(fixesTab)
-        case .cheats:   return AnyView(cheatsTab)
-        case .retroAchievements: return AnyView(retroAchievementsTab)
+        case .general:  generalTab
+        case .graphics: graphicsTab
+        case .framePacing: framePacingTab
+        case .audio:    audioTab
+        case .cpu:      cpuTab
+        case .pad:      padTab
+        case .fixes:    fixesTab
+        case .cheats:   cheatsTab
+        case .retroAchievements: retroAchievementsTab
         }
     }
 
@@ -552,6 +643,7 @@ struct PerGameSettingsPanel: View {
             enableGameDBHardwareFixes: $enableGameDBHardwareFixes,
             trilinearUseGlobalSentinel: Self.trilinearUseGlobalSentinel,
             ophFlagHackEffective: ophFlagHackEffective,
+            perGameRenderer: $perGameRenderer,
             upscaleMultiplier: $upscaleMultiplier,
             aspectRatio: $aspectRatio,
             textureFiltering: $textureFiltering,
@@ -561,11 +653,8 @@ struct PerGameSettingsPanel: View {
             trilinearFiltering: $trilinearFiltering,
             halfPixelOffset: $halfPixelOffset,
             roundSprite: $roundSprite,
-            alignSpriteOverride: $alignSpriteOverride,
             alignSprite: $alignSprite,
-            mergeSpriteOverride: $mergeSpriteOverride,
             mergeSprite: $mergeSprite,
-            wildArmsOffsetOverride: $wildArmsOffsetOverride,
             wildArmsOffset: $wildArmsOffset,
             textureOffsetXOverride: $textureOffsetXOverride,
             textureOffsetX: $textureOffsetX,
@@ -582,6 +671,8 @@ struct PerGameSettingsPanel: View {
             perGameShadeBoostContrast: $perGameShadeBoostContrast,
             perGameShadeBoostSaturation: $perGameShadeBoostSaturation,
             perGameShadeBoostGamma: $perGameShadeBoostGamma,
+            perGameShaderChain: $perGameShaderChain,
+            perGameShaderPresetRef: $perGameShaderPresetRef,
             perGameDithering: $perGameDithering,
             perGameTVShader: $perGameTVShader,
             perGameCASMode: $perGameCASMode,
@@ -594,14 +685,15 @@ struct PerGameSettingsPanel: View {
             perGamePCRTCAntiBlur: $perGamePCRTCAntiBlur,
             perGameDisableInterlaceOffset: $perGameDisableInterlaceOffset,
             perGameHWDownloadMode: $perGameHWDownloadMode,
+            perGameDisableDepth: $perGameDisableDepth,
             perGameCPUCLUT: $perGameCPUCLUT,
             perGameGPUTargetCLUT: $perGameGPUTargetCLUT,
-            perGameVsyncQueue: $perGameVsyncQueue,
             perGameLoadTextureReplacements: $perGameLoadTextureReplacements,
             perGameLoadTextureReplacementsAsync: $perGameLoadTextureReplacementsAsync,
             perGamePrecacheTextureReplacements: $perGamePrecacheTextureReplacements,
-            perGameSyncToHostRefresh: $perGameSyncToHostRefresh,
             savesToRunningGame: savesToRunningGame,
+            shaderChainSupported: Self.shaderChainSupported,
+            onBrowseShaderPreset: { shaderPresetRequest = ShaderPresetBrowserRequest() },
             settings: settings
         )
     }
@@ -613,9 +705,22 @@ struct PerGameSettingsPanel: View {
             volumePercent: $volumePercent,
             globalVolumePercent: $globalVolumePercent,
             perGameFastForwardVolume: $perGameFastForwardVolume,
+            settings: settings
+        )
+    }
+
+    private var framePacingTab: some View {
+        FramePacingTab(
+            enabled: $enabled,
+            settings: settings,
+            perGameFramePacingPreset: $perGameFramePacingPreset,
+            perGameFrameLimiter: $perGameFrameLimiter,
+            perGameTargetFPS: $perGameTargetFPS,
+            perGameVsyncQueue: $perGameVsyncQueue,
+            perGameSyncToHostRefresh: $perGameSyncToHostRefresh,
             perGameBufferMS: $perGameBufferMS,
             perGameOutputLatencyMS: $perGameOutputLatencyMS,
-            settings: settings
+            showResetConfirmation: $showFramePacingResetConfirmation
         )
     }
 
@@ -657,14 +762,16 @@ struct PerGameSettingsPanel: View {
             padLayoutIdentity: $padLayoutIdentity,
             showPadLayoutEditor: $showPadLayoutEditor,
             layoutPresets: layoutPresets,
-            skinLibrary: skinLibrary
+            skinLibrary: skinLibrary,
+            savesToRunningGame: savesToRunningGame,
+            iso: game.bootName,
+            hasGameSettingsIdentity: hasGameSettingsIdentity
         )
     }
 
     private var fixesTab: some View {
         FixesTab(
             enabled: $enabled,
-            perGameRenderer: $perGameRenderer,
             perGameAAT: $perGameAAT,
             perGameTextureInsideRt: $perGameTextureInsideRt,
             perGameFixes: $perGameFixes,
@@ -697,118 +804,35 @@ struct PerGameSettingsPanel: View {
 
     private var rootForm: some View {
         Form {
-            identitySection
-            overridesSection
+            PerGameIdentitySection(
+                enabled: enabled,
+                displayName: displayName,
+                hasPendingChanges: hasPendingChanges,
+                savesToRunningGame: savesToRunningGame,
+                game: game,
+                settings: settings
+            )
+            PerGameOverridesSection(
+                enabled: $enabled,
+                showResetAllConfirmation: $showResetAllConfirmation,
+                hasGameSettingsIdentity: hasGameSettingsIdentity,
+                savesToRunningGame: savesToRunningGame,
+                settings: settings
+            )
             categoryLinksSection
-            statusSection
+            PerGameStatusSection(statusMessage: statusMessage, settings: settings)
         }
         .scrollContentBackground(.hidden)
     }
 
     @ViewBuilder
-    private var identitySection: some View {
-        Section {
-            HStack(spacing: 12) {
-                Image(systemName: enabled ? "slider.horizontal.3" : "power")
-                    .font(.title3)
-                    .foregroundStyle(enabled ? Color.accentColor : Color.secondary)
-                    .frame(width: 32, height: 32)
-                    .background(Color.accentColor.opacity(enabled ? 0.14 : 0), in: Circle())
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(displayName)
-                        .font(.headline)
-                        .lineLimit(2)
-                    if let serial = game.metadata["serial"], !serial.isEmpty {
-                        Text("\(serial)  ·  CRC \(PadLayoutGameIdentity.normalizedCRC(game.metadata["crc"] ?? ""))")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .textSelection(.enabled)
-                    }
-                    Text(hasPendingChanges
-                         ? (savesToRunningGame
-                            ? settings.localized("Unsaved changes — tap Save to apply now.")
-                            : settings.localized("Unsaved changes — Save to apply on next boot."))
-                         : settings.localized("No pending changes."))
-                        .font(.caption)
-                        .foregroundStyle(hasPendingChanges ? Color.accentColor : Color.secondary)
-                }
-            }
-            .padding(.vertical, 4)
-        }
-    }
-
-    @ViewBuilder
-    private var overridesSection: some View {
-        Section {
-            Toggle(settings.localized("Use Per-Game Overrides"), isOn: $enabled)
-            Text(settings.localized(savesToRunningGame
-                ? "Overrides are saved for this game only and apply when you save, while the game runs."
-                : "Overrides are saved for this game only and apply on the next boot of this title."))
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            if !hasGameSettingsIdentity {
-                Text(settings.localized("Start this game once before saving its settings."))
-                    .font(.caption)
-                    .foregroundStyle(OverlayTheme.warm)
-            }
-            Button(role: .destructive) {
-                showResetAllConfirmation = true
-            } label: {
-                Label(settings.localized("Reset All Overrides"), systemImage: "arrow.counterclockwise")
-            }
-            .disabled(!hasGameSettingsIdentity)
-        }
-    }
-
-    @ViewBuilder
     private var categoryLinksSection: some View {
         Section {
-            NavigationLink {
-                graphicsTab
-            } label: {
-                Label(settings.localized("Graphics"), systemImage: "paintbrush")
-            }
-            NavigationLink {
-                audioTab
-            } label: {
-                Label(settings.localized("Audio"), systemImage: "speaker.wave.2")
-            }
-            NavigationLink {
-                cpuTab
-            } label: {
-                Label(settings.localized("CPU & Speedhacks"), systemImage: "cpu")
-            }
-            NavigationLink {
-                padTab
-            } label: {
-                Label(settings.localized("Virtual Pad"), systemImage: "gamecontroller")
-            }
-            NavigationLink {
-                fixesTab
-            } label: {
-                Label(settings.localized("Fixes & Compatibility"), systemImage: "wrench.and.screwdriver")
-            }
-            NavigationLink {
-                cheatsTab
-            } label: {
-                Label(settings.localized("Cheats & Patches"), systemImage: "rectangle.stack.badge.plus")
-            }
-            NavigationLink {
-                retroAchievementsTab
-            } label: {
-                Label(settings.localized("RetroAchievements"), systemImage: "trophy")
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var statusSection: some View {
-        if let statusMessage {
-            Section {
-                Text(statusMessage)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+            // By value, so the path is the panel's own and the rail can agree with it.
+            ForEach(PerGameSettingsCategory.linked) { category in
+                NavigationLink(value: category) {
+                    Label(settings.localized(category.titleKey), systemImage: category.systemImage)
+                }
             }
         }
     }
@@ -897,6 +921,12 @@ struct PerGameSettingsPanel: View {
         return Int(ARMSX2Bridge.getPerGameINIInt(section, key: key, defaultValue: globalDefault, forISO: iso))
     }
 
+    /// Pin a loaded value to what its control can show. The sentinel is not a value, so it is
+    /// left alone; anything else has to fit or the stepper and the stored number disagree.
+    private static func clampedPerGameInt(_ value: Int, to range: ClosedRange<Int>) -> Int {
+        value == useGlobalSentinel ? value : SettingsStore.clamped(value, to: range)
+    }
+
     /// Reads a per-game bool override; returns -1 ("use global"), 0 (off), or 1 (on).
     private static func loadedPerGameBool(_ section: String, _ key: String, useCurrent: Bool, iso: String) -> Int {
         if useCurrent {
@@ -920,6 +950,73 @@ struct PerGameSettingsPanel: View {
             ARMSX2Bridge.setPerGameINIIntForCurrentGame(section, key: key, value: Int32(value))
         } else {
             ARMSX2Bridge.setPerGameINIInt(section, key: key, value: Int32(value), forISO: iso)
+        }
+    }
+
+    private static func setPerGameFloatValue(_ section: String, _ key: String, _ value: Float, useCurrent: Bool, iso: String) {
+        if useCurrent {
+            ARMSX2Bridge.setPerGameINIFloatForCurrentGame(section, key: key, value: value)
+        } else {
+            ARMSX2Bridge.setPerGameINIFloat(section, key: key, value: value, forISO: iso)
+        }
+    }
+
+    /// Reads independent per-game limiter and presentation-cadence overrides.
+    /// Legacy files are interpreted correctly until the native runtime or Save
+    /// migrates their encoded target into the dedicated cadence key.
+    private static func loadedPerGameFrameLimiter(useCurrent: Bool, iso: String) -> (limiter: Int, fps: Float) {
+        let scalarPresent: Bool
+        let scalar: Float
+        let targetPresent: Bool
+        let storedTarget: Float
+        if useCurrent {
+            scalarPresent = ARMSX2Bridge.hasPerGameINIValueForCurrentGame("Framerate", key: "NominalScalar")
+            scalar = scalarPresent ? ARMSX2Bridge.getPerGameINIFloatForCurrentGame("Framerate", key: "NominalScalar", defaultValue: 1.0) : 1.0
+            targetPresent = ARMSX2Bridge.hasPerGameINIValueForCurrentGame("ARMSX2iOS/FramePacing", key: "TargetFPS")
+            storedTarget = targetPresent ? ARMSX2Bridge.getPerGameINIFloatForCurrentGame("ARMSX2iOS/FramePacing", key: "TargetFPS", defaultValue: SettingsStore.defaultTargetFPS) : SettingsStore.defaultTargetFPS
+        } else {
+            scalarPresent = ARMSX2Bridge.hasPerGameINIValue("Framerate", key: "NominalScalar", forISO: iso)
+            scalar = scalarPresent ? ARMSX2Bridge.getPerGameINIFloat("Framerate", key: "NominalScalar", defaultValue: 1.0, forISO: iso) : 1.0
+            targetPresent = ARMSX2Bridge.hasPerGameINIValue("ARMSX2iOS/FramePacing", key: "TargetFPS", forISO: iso)
+            storedTarget = targetPresent ? ARMSX2Bridge.getPerGameINIFloat("ARMSX2iOS/FramePacing", key: "TargetFPS", defaultValue: SettingsStore.defaultTargetFPS, forISO: iso) : SettingsStore.defaultTargetFPS
+        }
+
+        let limiter = scalarPresent ? (SettingsStore.frameLimiterEnabled(fromNominalScalar: scalar) ? 1 : 0) : -1
+        if targetPresent {
+            let fps = min(
+                max((storedTarget * 1_000.0).rounded() / 1_000.0, SettingsStore.minTargetFPS),
+                SettingsStore.maxTargetFPS)
+            return (limiter, fps)
+        }
+
+        // Older per-game files stored target/base directly in NominalScalar.
+        if scalarPresent, limiter == 1, abs(scalar - 1.0) >= 0.002 {
+            let legacyFPS = SettingsStore.targetFPS(
+                fromNominalScalar: scalar,
+                baseFramerate: SettingsStore.shared.ntscFramerate)
+            return (limiter, max(legacyFPS, SettingsStore.minTargetFPS))
+        }
+        return (limiter, -1.0)
+    }
+
+    /// Writes limiter state and presentation cadence independently so either
+    /// picker can continue inheriting its global value.
+    private static func savePerGameFrameLimiter(preset: Int, limiter: Int, targetFPS: Float, enabled: Bool, useCurrent: Bool, iso: String) {
+        if enabled, let named = FramePacingPreset(rawValue: preset), let v = SettingsStore.framePacingPresetTable[named] {
+            setPerGameFloatValue("Framerate", "NominalScalar", SettingsStore.nominalScalarForFrameLimiter(enabled: v.frameLimiterEnabled), useCurrent: useCurrent, iso: iso)
+            setPerGameFloatValue("ARMSX2iOS/FramePacing", "TargetFPS", Float(v.targetFPS), useCurrent: useCurrent, iso: iso)
+            return
+        }
+
+        if enabled, limiter != -1 {
+            setPerGameFloatValue("Framerate", "NominalScalar", SettingsStore.nominalScalarForFrameLimiter(enabled: limiter == 1), useCurrent: useCurrent, iso: iso)
+        } else {
+            clearPerGameValue("Framerate", "NominalScalar", useCurrent: useCurrent, iso: iso)
+        }
+        if enabled, targetFPS >= SettingsStore.minTargetFPS {
+            setPerGameFloatValue("ARMSX2iOS/FramePacing", "TargetFPS", targetFPS, useCurrent: useCurrent, iso: iso)
+        } else {
+            clearPerGameValue("ARMSX2iOS/FramePacing", "TargetFPS", useCurrent: useCurrent, iso: iso)
         }
     }
 
@@ -994,18 +1091,15 @@ struct PerGameSettingsPanel: View {
                 upscaleMultiplier: upscaleMultiplier,
                 aspectRatio: aspectRatio,
                 textureFiltering: Int32(textureFiltering),
-                hardwareMipmapping: hardwareMipmapping,
+                hardwareMipmapping: Int32(hardwareMipmapping),
                 blendingAccuracy: Int32(blendingAccuracy),
                 interlaceMode: Int32(interlaceMode),
                 trilinearFiltering: Int32(trilinearFiltering),
                 halfPixelOffset: Int32(halfPixelOffset),
                 roundSprite: Int32(roundSprite),
-                alignSpriteOverride: alignSpriteOverride,
-                alignSprite: alignSprite,
-                mergeSpriteOverride: mergeSpriteOverride,
-                mergeSprite: mergeSprite,
-                wildArmsOffsetOverride: wildArmsOffsetOverride,
-                wildArmsOffset: wildArmsOffset,
+                alignSprite: Int32(alignSprite),
+                mergeSprite: Int32(mergeSprite),
+                wildArmsOffset: Int32(wildArmsOffset),
                 textureOffsetXOverride: textureOffsetXOverride,
                 textureOffsetX: Int32(textureOffsetX),
                 textureOffsetYOverride: textureOffsetYOverride,
@@ -1034,18 +1128,15 @@ struct PerGameSettingsPanel: View {
                 upscaleMultiplier: upscaleMultiplier,
                 aspectRatio: aspectRatio,
                 textureFiltering: Int32(textureFiltering),
-                hardwareMipmapping: hardwareMipmapping,
+                hardwareMipmapping: Int32(hardwareMipmapping),
                 blendingAccuracy: Int32(blendingAccuracy),
                 interlaceMode: Int32(interlaceMode),
                 trilinearFiltering: Int32(trilinearFiltering),
                 halfPixelOffset: Int32(halfPixelOffset),
                 roundSprite: Int32(roundSprite),
-                alignSpriteOverride: alignSpriteOverride,
-                alignSprite: alignSprite,
-                mergeSpriteOverride: mergeSpriteOverride,
-                mergeSprite: mergeSprite,
-                wildArmsOffsetOverride: wildArmsOffsetOverride,
-                wildArmsOffset: wildArmsOffset,
+                alignSprite: Int32(alignSprite),
+                mergeSprite: Int32(mergeSprite),
+                wildArmsOffset: Int32(wildArmsOffset),
                 textureOffsetXOverride: textureOffsetXOverride,
                 textureOffsetX: Int32(textureOffsetX),
                 textureOffsetYOverride: textureOffsetYOverride,
@@ -1097,15 +1188,16 @@ struct PerGameSettingsPanel: View {
         } else {
             Self.clearPerGameValue("EmuCore/GS", "UserHacks_TextureInsideRt", useCurrent: useCurrent, iso: iso)
         }
-        // Renderer is a boot-time choice — switching Metal↔Software mid-game would
-        // require recreating the GS device, which PCSX2's GSreopen does support but
-        // not from the per-game INI write path. Write the file only (bypassing the
-        // live-apply ForCurrentGame variant) so it takes effect on next boot.
-        let rendererIso = game.bootName
-        if enabled && perGameRenderer != -1 {
-            ARMSX2Bridge.setPerGameINIInt("EmuCore/GS", key: "Renderer", value: Int32(perGameRenderer), forISO: rendererIso)
+        if enabled && perGameDisableDepth != -1 {
+            Self.setPerGameBoolValue("EmuCore/GS", "UserHacks_DisableDepthSupport", perGameDisableDepth == 1, useCurrent: useCurrent, iso: iso)
         } else {
-            ARMSX2Bridge.deletePerGameINIValue("EmuCore/GS", key: "Renderer", forISO: rendererIso)
+            Self.clearPerGameValue("EmuCore/GS", "UserHacks_DisableDepthSupport", useCurrent: useCurrent, iso: iso)
+        }
+        // The core keeps a running game on its booted renderer, so this applies next boot.
+        if enabled && perGameRenderer != -1 {
+            Self.setPerGameIntValue("EmuCore/GS", "Renderer", perGameRenderer, useCurrent: useCurrent, iso: iso)
+        } else {
+            Self.clearPerGameValue("EmuCore/GS", "Renderer", useCurrent: useCurrent, iso: iso)
         }
         if enabled && perGameFXAA != -1 {
             Self.setPerGameBoolValue("EmuCore/GS", "fxaa", perGameFXAA == 1, useCurrent: useCurrent, iso: iso)
@@ -1208,6 +1300,12 @@ struct PerGameSettingsPanel: View {
         } else {
             Self.clearPerGameValue("EmuCore/GS", "dithering_ps2", useCurrent: useCurrent, iso: iso)
         }
+        // All three shader keys go through the one type that knows what each state means.
+        if enabled && perGameShaderChain != -1 {
+            PerGameShaderSelection.write(chain: perGameShaderChain, presetRef: perGameShaderPresetRef, useCurrent: useCurrent, iso: iso)
+        } else {
+            PerGameShaderSelection.clear(useCurrent: useCurrent, iso: iso)
+        }
         if enabled && perGameFastForwardVolume != -1 {
             Self.setPerGameIntValue("SPU2/Output", "FastForwardVolume", perGameFastForwardVolume, useCurrent: useCurrent, iso: iso)
         } else {
@@ -1278,6 +1376,23 @@ struct PerGameSettingsPanel: View {
         } else {
             Self.clearPerGameValue("SPU2/Output", "OutputLatencyMS", useCurrent: useCurrent, iso: iso)
         }
+        if enabled && perGameFramePacingPreset != -1 {
+            Self.setPerGameIntValue("ARMSX2iOS/FramePacing", "Preset", perGameFramePacingPreset, useCurrent: useCurrent, iso: iso)
+        } else {
+            Self.clearPerGameValue("ARMSX2iOS/FramePacing", "Preset", useCurrent: useCurrent, iso: iso)
+        }
+        // Cascade a named preset's own keys. Use Global and .custom both miss the
+        // table and fall through. After the individual writes on purpose, so the
+        // preset's profile wins over stale per-game picker state.
+        if enabled, let preset = FramePacingPreset(rawValue: perGameFramePacingPreset),
+           let values = SettingsStore.framePacingPresetTable[preset] {
+            Self.setPerGameIntValue("EmuCore/GS", "VsyncQueueSize", values.vsyncQueueSize, useCurrent: useCurrent, iso: iso)
+            Self.setPerGameIntValue("SPU2/Output", "OutputLatencyMS", values.audioOutputLatencyMs, useCurrent: useCurrent, iso: iso)
+            Self.setPerGameIntValue("SPU2/Output", "BufferMS", values.audioBufferMs, useCurrent: useCurrent, iso: iso)
+            Self.setPerGameBoolValue("EmuCore/GS", "SyncToHostRefreshRate", values.syncToHostRefresh, useCurrent: useCurrent, iso: iso)
+        }
+        // Limiter state and presentation cadence are independent per-game overrides.
+        Self.savePerGameFrameLimiter(preset: perGameFramePacingPreset, limiter: perGameFrameLimiter, targetFPS: perGameTargetFPS, enabled: enabled, useCurrent: useCurrent, iso: iso)
         if enabled && eeCycleSkip != -1 {
             Self.setPerGameIntValue("EmuCore/Speedhacks", "EECycleSkip", eeCycleSkip, useCurrent: useCurrent, iso: iso)
         } else {

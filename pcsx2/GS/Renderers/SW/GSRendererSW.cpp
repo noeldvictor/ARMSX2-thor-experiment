@@ -724,7 +724,7 @@ void GSRendererSW::Sync(int reason)
 
 	if constexpr (LOG)
 	{
-		fprintf(s_fp, "sync n=%lld r=%d t=%" PRIu64 " p=%d %c\n", s_n, reason, t, pixels, t > 10000000 ? '*' : ' ');
+		fprintf(s_fp, "sync n=%" PRIu64 " r=%d t=%" PRIu64 " p=%d %c\n", s_n, reason, t, pixels, t > 10000000 ? '*' : ' ');
 		fflush(s_fp);
 	}
 
@@ -1669,7 +1669,7 @@ void GSRendererSW::SharedData::UpdateSource()
 		}
 	}
 
-	if (GSConfig.SaveTexture && GSConfig.ShouldDump(s_n, g_perfmon.GetFrame()))
+	if (GSConfig.SaveTexture && GSConfig.ShouldDump(g_gs_renderer->s_n, g_perfmon.GetFrame()))
 	{
 		const u64 frame = g_perfmon.GetFrame();
 

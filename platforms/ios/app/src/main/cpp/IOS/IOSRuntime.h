@@ -77,7 +77,17 @@ extern std::deque<std::shared_ptr<CPUThreadTask>> s_cpuTasks;
 void ARMSX2DrainCPUThreadTasks();
 
 extern "C" void ARMSX2_PostRetroAchievementsStateChanged(void);
+// Posts a RetroAchievements toast to the SwiftUI layer. `duration` is the on-screen
+// time in seconds (<= 0 falls back to the SwiftUI default). Safe to call from any thread.
+extern "C" void ARMSX2_PostRetroAchievementsNotification(const char* title, const char* message,
+	const char* badgePath, float duration);
 extern "C" void ARMSX2_PostRuntimeMenuStateChanged(void);
+// Recomputes the active presentation cap from the layered global/per-game
+// settings. Call on the CPU thread after a game-settings layer changes.
+extern "C" void ARMSX2_ApplyEffectivePresentFPSCap(void);
+// Snapshots the upscaling hacks the running game ended up with, after the masks and
+// the GameDB have had their say. CPU thread only, since it reads EmuConfig.
+extern "C" void ARMSX2_CaptureGraphicsHackState(void);
 // Runtime telemetry gate (env-gated, cached).
 bool ARMSX2IOSRuntimeTelemetryEnabled();
 
@@ -121,6 +131,8 @@ inline constexpr bool ARMSX2IOSRetroAchievementsHardcoreAvailable = true;
 class SettingsInterface;
 void ARMSX2EnsureIOSSpeedhackDefaults(SettingsInterface* si, const char* reason);
 bool ARMSX2RepairIOSARM64JITSettings(SettingsInterface* si, const char* reason);
+// Clears the blend deinterlace that older builds stamped into per-game files. Runs once.
+void ARMSX2MigratePerGameDeinterlaceBlend(SettingsInterface* si);
 void ARMSX2MigrateJITScriptProtocolForIOS(SettingsInterface* si, const char* reason);
 void ARMSX2IOSSanitizeFolderSettings(SettingsInterface* si, const std::string& dataRoot,
                                      const char* reason);

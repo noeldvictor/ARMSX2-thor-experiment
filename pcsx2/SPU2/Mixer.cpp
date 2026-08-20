@@ -162,9 +162,9 @@ static __forceinline s32 ApplyVolume(s32 data, s32 volume)
 }
 
 #if defined(__aarch64__)
-// NEON helper: lanewise (volume * data) >> 15 on s32x2. Bit-exact with the
-// scalar mul + asr 15 — narrow the s64 product to s32 first (matching the
-// scalar's implicit s32 truncation) then arithmetic-shift right 15.
+// NEON helper: lanewise `(volume * data) >> 15` on s32x2. Bit-exact with the
+// scalar code's `mul w*, w*` + `asr 15` — narrow the s64 product to s32 first
+// (matching scalar's implicit s32 truncation) then arithmetic-shift right 15.
 static __forceinline int32x2_t ApplyVolumeStereoNEON(int32x2_t data, int32x2_t volume)
 {
 	const int64x2_t prod = vmull_s32(data, volume);
@@ -191,6 +191,9 @@ static __forceinline StereoOut32 ApplyVolume(const StereoOut32& data, const V_Vo
 static __forceinline StereoOut32 ApplyVolume(const StereoOut32& data, const V_VolumeSlideLR& volume)
 {
 #if defined(__aarch64__)
+	// V_VolumeSlide is 12 bytes; .Value is the s32 at offset 8 (Reg_VOL u16 + pad,
+	// then u32 Counter, then s32 Value). Build {Left.Value, Right.Value} via two
+	// scalar loads — cheaper than a gather, no aliasing constraints.
 	static_assert(sizeof(V_VolumeSlide) == 12, "V_VolumeSlide layout assumed by NEON ApplyVolume");
 	const int32x2_t d = vld1_s32(&data.Left);
 	const int32x2_t v = { volume.Left.Value, volume.Right.Value };
@@ -466,7 +469,7 @@ static __forceinline void MixCoreVoices(VoiceMixSet& dest, const uint coreidx)
 	for (uint voiceidx = 0; voiceidx < V_Core::NumVoices; ++voiceidx)
 	{
 		const StereoOut32 VVal(MixVoice(coreidx, voiceidx));
-		const int32x2_t lr = vld1_s32(&VVal.Left);
+		const int32x2_t lr   = vld1_s32(&VVal.Left);
 		const int32x4_t vval = vcombine_s32(lr, lr);
 		const int32x4_t gate = vld1q_s32(&thiscore.VoiceGates[voiceidx].DryL);
 		accum = vaddq_s32(accum, vandq_s32(vval, gate));
@@ -553,6 +556,13 @@ static __forceinline StereoOut32 MixCore(const uint coreidx, const VoiceMixSet& 
 	TW.Right += Voices.Wet.Right & thiscore.WetGate.SndR;
 	TW.Left += Ext.Left & thiscore.WetGate.ExtL;
 	TW.Right += Ext.Right & thiscore.WetGate.ExtR;
+
+	// Lightweight audio mode (low-end Android CPU lever): keep wet-routed voices
+	// audible but skip the considerably heavier SPU2 reverb pipeline (the
+	// ReverbDownsample/Upsample FIR resamplers + comb/all-pass network in
+	// DoReverb). Trades all echo/spatial reverb for CPU; off by default.
+	if (EmuConfig.SPU2.LightweightMode)
+		return TD + TW;
 
 #ifdef PCSX2_DEVBUILD
 	WaveDump::WriteCore(thiscore.Index, CoreSrc_PreReverb, TW);

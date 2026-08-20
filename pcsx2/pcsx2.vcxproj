@@ -310,6 +310,7 @@
     <ClCompile Include="SPU2\wavedump_wav.cpp" />
     <ClCompile Include="SPU2\RegTable.cpp" />
     <ClCompile Include="SPU2\spu2freeze.cpp" />
+    <ClCompile Include="SPU2\spu2freeze-legacy.cpp" />
     <ClCompile Include="SPU2\spu2sys.cpp" />
     <ClCompile Include="SPU2\ADSR.cpp" />
     <ClCompile Include="SPU2\Mixer.cpp" />
@@ -349,6 +350,11 @@
     </ClCompile>
     <ClCompile Include="GS\GSDump.cpp" />
     <ClCompile Include="GS\Renderers\Common\GSFunctionMap.cpp" />
+    <ClCompile Include="GS\Renderers\Common\GSGPUDriverProfile.cpp" />
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfile.cpp" />
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfileMali.cpp" />
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfileAdreno.cpp" />
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfilePowerVR.cpp" />
     <ClCompile Include="GS\Renderers\HW\GSHwHack.cpp" />
     <ClCompile Include="GS\GSLocalMemory.cpp" />
     <ClCompile Include="GS\GSLocalMemoryMultiISA.cpp" />
@@ -416,6 +422,7 @@
     <ClCompile Include="windows\Optimus.cpp" />
     <ClCompile Include="Pcsx2Config.cpp" />
     <ClCompile Include="SaveState.cpp" />
+    <ClCompile Include="SaveStateLegacy.cpp" />
     <ClCompile Include="SourceLog.cpp" />
     <ClCompile Include="Elfheader.cpp" />
     <ClCompile Include="CDVD\InputIsoFile.cpp" />
@@ -792,6 +799,8 @@
     <ClInclude Include="GS\GSDump.h" />
     <ClInclude Include="GS\Renderers\Common\GSFastList.h" />
     <ClInclude Include="GS\Renderers\Common\GSFunctionMap.h" />
+    <ClInclude Include="GS\Renderers\Common\GSGPUProfile.h" />
+    <ClInclude Include="GS\Renderers\Common\GSGPUProfilePrivate.h" />
     <ClInclude Include="GS\GSLocalMemory.h" />
     <ClInclude Include="GS\GSLzma.h" />
     <ClInclude Include="GS\GSPerfMon.h" />
@@ -877,6 +886,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="SaveState.h" />
+    <ClInclude Include="SaveStateLegacy.h" />
     <ClInclude Include="Counters.h" />
     <ClInclude Include="Dmac.h" />
     <ClInclude Include="Hardware.h" />

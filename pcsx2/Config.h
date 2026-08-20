@@ -228,6 +228,22 @@ enum class AspectRatioType : u8
 	R4_3,
 	R16_9,
 	R10_7,
+	// Ultrawide. Only meaningful with a widescreen/ultrawide patch applied -- without one the
+	// game still renders 4:3 content and this just crops or pillarboxes it. Requested for fold
+	// and tablet users, DeX, and phones driving a 21:9 display, who otherwise had to use
+	// Stretch and accept the distortion.
+	R21_9,
+	// 20:9 is the real panel ratio of most modern phones, which 21:9 only approximates -- close
+	// enough to leave thin black bars. Appended rather than slotted in next to R21_9 on purpose:
+	// these values are persisted as raw ints in the ini and in the Android prefs, so inserting
+	// mid-enum would silently repoint every saved 21:9 config at a different ratio.
+	R20_9,
+	// 19.5:9 — the other common modern phone ratio (many Xiaomi/Samsung panels). Appended, not
+	// slotted next to R20_9, for the same persisted-raw-int reason documented above.
+	R19_5_9,
+	// User-entered ratio (GSOptions::CustomAspectRatio). Last on purpose: it is the catch-all for
+	// panels none of the fixed entries match, and appending keeps every persisted index stable.
+	Custom,
 	MaxCount
 };
 
@@ -238,6 +254,28 @@ enum class FMVAspectRatioSwitchType : u8
 	R4_3,
 	R16_9,
 	R10_7,
+	// Ultrawide. Only meaningful with a widescreen/ultrawide patch applied -- without one the
+	// game still renders 4:3 content and this just crops or pillarboxes it. Requested for fold
+	// and tablet users, DeX, and phones driving a 21:9 display, who otherwise had to use
+	// Stretch and accept the distortion.
+	R21_9,
+	// See AspectRatioType::R20_9 -- appended for the same persisted-index reason.
+	R20_9,
+	R19_5_9,
+	Custom,
+	MaxCount
+};
+
+// Display rotation applied at present time. Useful for handhelds whose panel
+// is mounted in one orientation but the user wants the game in another.
+// Rotation is applied to the *final* swapchain blit only; internal GS
+// coordinates and aspect-ratio math run in the unrotated frame.
+enum class DisplayRotation : u8
+{
+	Rot0,
+	Rot90,
+	Rot180,
+	Rot270,
 	MaxCount
 };
 
@@ -402,8 +440,33 @@ enum class GSHardwareDownloadMode : u8
 	EnabledForceFull,
 	NoReadbacks,
 	Unsynchronized,
-	Disabled
+	Disabled,
+	// Appended for wire compatibility (HWDownloadMode is stored as a raw int in the ini and
+	// in GameDB). NOTE: because of that, this enum is NO LONGER ordered by "how much readback
+	// happens" — never use relational comparisons on it. Use the predicates below instead.
+	Asynchronous
 };
+
+/// True when the mode performs a real GPU->CPU readback of render targets into local memory.
+/// (Asynchronous does the same download, just without making the EE thread wait for it.)
+constexpr bool IsHardwareDownloadReadbackEnabled(GSHardwareDownloadMode mode)
+{
+	return mode == GSHardwareDownloadMode::Enabled ||
+	       mode == GSHardwareDownloadMode::EnabledForceFull ||
+	       mode == GSHardwareDownloadMode::Asynchronous;
+}
+
+/// True when the EE thread services the readback itself instead of waiting on the GS thread.
+/// Both modes therefore need the GS thread synchronized around anything that reopens the
+/// renderer underneath them. NOTE: this says nothing about *what* gets read — Unsynchronized
+/// takes live local memory, Asynchronous takes the mutex-guarded CPU shadow — so it is not the
+/// right question to ask about the pipelined front-object split, which cares only about live
+/// reads. GS.cpp tests that directly.
+constexpr bool IsHardwareDownloadEEThreadRead(GSHardwareDownloadMode mode)
+{
+	return mode == GSHardwareDownloadMode::Unsynchronized ||
+	       mode == GSHardwareDownloadMode::Asynchronous;
+}
 
 enum class GSCASMode : u8
 {
@@ -416,6 +479,9 @@ enum class GSUpscaler : u8
 {
 	Off,           ///< Plain bilinear present-time stretch (default).
 	MetalFXSpatial, ///< Apple MetalFX spatial upscaler (Metal backend, macOS 13+).
+	// Appended rather than inserted: this enum is persisted as an integer, so renumbering
+	// MetalFXSpatial would silently re-point every existing config at a different upscaler.
+	FSR1,          ///< AMD FidelityFX Super Resolution 1 (EASU + RCAS compute passes, Vulkan).
 };
 
 enum class GSHWAutoFlushLevel : u8
@@ -475,12 +541,59 @@ enum class GSNativeScaling : u8
 	MaxCount
 };
 
+// A hack the player set on purpose. Normally the GameDB gets the last word on these
+// unless manual hacks are on, which is all or nothing: switching one hack off throws
+// away every automatic fix the game had. Pinning one keeps the rest.
+enum class GSUserHackOverride : u8
+{
+	AlignSprite,
+	MergeSprite,
+	RoundSprite,
+	HalfPixelOffset,
+	ForceEvenSpritePosition,
+	NativeScaling,
+	NativePaletteDraw,
+	BilinearHack,
+	TextureOffsetX,
+	AutoFlush,
+	TextureInsideRt,
+	// Appended rather than slotted in next to X, so a mask already written to an INI keeps
+	// meaning what it meant. Everything below follows the same rule: append only.
+	TextureOffsetY,
+	PreloadFrameData,
+	DisablePartialInvalidation,
+	GPUPaletteConversion,
+	DisableDepthSupport,
+	CPUFBConversion,
+	ReadTCOnClose,
+	Limit24BitDepth,
+	EstimateTextureRegion,
+	DrawBuffering,
+	CPUSpriteRenderBW,
+	CPUSpriteRenderLevel,
+	CPUCLUTRender,
+	GPUTargetCLUT,
+	MaxCount
+};
+
 enum class GSDepthFeedbackMode : u8
 {
 	None      = 0,
 	Auto      = 1,
 	Depth     = 2,
 	DepthAsRT = 3,
+};
+
+// GV-7 GS front/back split. Off = today's single-threaded path with no record
+// round-trip; InlineRecords = build + execute every record on the calling
+// thread (the GV7-0 shape — validation / bisect rung); Lockstep = back thread
+// runs but the front drains after every record; Pipelined = the real thing.
+enum class GSBackThreadMode : u8
+{
+	Off           = 0,
+	InlineRecords = 1,
+	Lockstep      = 2,
+	Pipelined     = 3,
 };
 
 enum class AchievementOverlayPosition : u8
@@ -618,7 +731,8 @@ struct Pcsx2Config
 			RecBlocks_EE : 1, // Enables per-block profiling for the EE recompiler [unimplemented]
 			RecBlocks_IOP : 1, // Enables per-block profiling for the IOP recompiler [unimplemented]
 			RecBlocks_VU0 : 1, // Enables per-block profiling for the VU0 recompiler [unimplemented]
-			RecBlocks_VU1 : 1; // Enables per-block profiling for the VU1 recompiler [unimplemented]
+			RecBlocks_VU1 : 1, // Enables per-block profiling for the VU1 recompiler [unimplemented]
+			EnablePerfDump : 1; // Linux: write JIT blocks to perf jitdump (USE_PERF_JITDUMP build only).
 		BITFIELD_END
 
 		// Default is Disabled, with all recs enabled underneath.
@@ -654,7 +768,9 @@ struct Pcsx2Config
 		bool
 			fpuOverflow : 1,
 			fpuExtraOverflow : 1,
-			fpuFullMode : 1;
+			fpuFullMode : 1,
+			fpuExactMode : 1,
+			fpuGuardedAddSub : 1; // EE FPU add/sub guard-bit emulation (single-precision fast path). ON by default — the PS2-accurate behavior. Opt-OUT globally via INI for EE-FPU-heavy titles verified to render fine without it (each ADD.S/SUB.S then costs one op instead of the guard sequence). Independent of the clamp tiers: Full mode runs the DOUBLE path, which guards unconditionally regardless of this bit.
 
 		bool
 			EnableEECache : 1;
@@ -662,6 +778,12 @@ struct Pcsx2Config
 			EnableFastmem : 1;
 		bool
 			PauseOnTLBMiss : 1;
+
+		// Cache compiled VU micro-programs to disk and reload them across
+		// sessions to cut recompilation stutter on later runs. arm64-only;
+		// no-op on x86.
+		bool
+			EnableVUProgramCache : 1;
 		BITFIELD_END
 
 		RecompilerOptions();
@@ -708,6 +830,7 @@ struct Pcsx2Config
 	{
 		static const char* AspectRatioNames[];
 		static const char* FMVAspectRatioSwitchNames[];
+		static const char* DisplayRotationNames[];
 		static const char* BlendingLevelNames[];
 		static const char* CaptureContainers[];
 
@@ -768,11 +891,19 @@ struct Pcsx2Config
 					IntegerScaling : 1,
 					UseDebugDevice : 1,
 					UseDebugBlend : 1,
+					// Emit per-draw graphics-debugger labels describing the PS2 state.
+					// Deliberately separate from UseDebugDevice, which also installs the
+					// validation layer and so makes any capture perf-meaningless.
+					DebugLabels : 1,
+					// Record the per-draw ledger (GSDrawLog). Attribution only -- it is
+					// not free, so never leave it on for one arm of an A/B.
+					DumpDrawLog : 1,
 					UseBlitSwapChain : 1,
 					DisableShaderCache : 1,
 					DisableFramebufferFetch : 1,
 					EnableAdrenoFramebufferFetch : 1,
 					ForceMaliFramebufferFetch : 1,
+					DisablePS2DepthQuantization : 1,
 					DisableVertexShaderExpand : 1,
 					SkipDuplicateFrames : 1,
 					OsdShowSpeed : 1,
@@ -807,6 +938,11 @@ struct Pcsx2Config
 					HWROV : 1,
 					HWROVLogging : 1,
 					HWROVBarriersVK : 1,
+					// Hold hardware draws back so consecutive draws to the same target
+					// share one render pass (GSPassScheduler). Aimed at tiling GPUs,
+					// where every pass boundary is a full tile load and store. Hot-
+					// appliable: turning it off just stops deferring.
+					CoalesceRenderPasses : 1,
 					ManualUserHacks : 1,
 					UserHacks_AlignSpriteX : 1,
 					UserHacks_CPUFBConversion : 1,
@@ -858,13 +994,20 @@ struct Pcsx2Config
 
 		AspectRatioType AspectRatio = DEFAULT_ASPECT_RATIO;
 		FMVAspectRatioSwitchType FMVAspectRatioSwitch = DEFAULT_FMV_ASPECT_RATIO;
+		DisplayRotation Rotation = DisplayRotation::Rot0;
 		GSInterlaceMode InterlaceMode = DEFAULT_INTERLACE_MODE;
 		GSPostBilinearMode LinearPresent = DEFAULT_BILINEAR_FILTERING_MODE;
 
 		float StretchY = 100.0f;
+		/// Width/height for AspectRatioType::Custom. Stored as a ratio, not W and H separately, so
+		/// anything can be expressed (2.1666 for 19.5:9, 1.85 for a film ratio) without a second key.
+		float CustomAspectRatio = 16.0f / 9.0f;
 		int Crop[4] = {};
 
 		float OsdScale = DEFAULT_OSD_SCALE;
+		/// OSD text colour as 0xRRGGBB. 0 keeps the classic white, so existing installs and
+		/// every non-Android frontend are untouched unless the user picks a colour.
+		u32 OsdColor = 0;
 		float OsdMargin = DEFAULT_OSD_MARGIN;
 		std::string OsdFontPath;
 		OsdOverlayPos OsdMessagesPos = DEFAULT_OSD_MESSAGE_POS;
@@ -905,6 +1048,7 @@ struct Pcsx2Config
 		TriFiltering TriFilter = DEFAULT_TRILINEAR_FILTERING_MODE;
 		s8 OverrideTextureBarriers = -1;
 		GSDepthFeedbackMode DepthFeedbackMode = GSDepthFeedbackMode::Auto;
+		GSBackThreadMode BackThreadMode = GSBackThreadMode::Off;
 
 		// RetroArch (.slangp) shader chain, applied at present after ShadeBoost/FXAA via
 		// librashader. Disabled or an empty preset skips the chain entirely (zero cost),
@@ -912,7 +1056,26 @@ struct Pcsx2Config
 		bool ShaderChainEnabled = false;
 		std::string ShaderChainPreset;
 
+		// LSFG — Lossless Scaling frame generation, inserted into the Vulkan present path.
+		// Off unless the user both enables it AND supplies their own Lossless.dll: the
+		// interpolation shaders are read out of that file at runtime and nothing about them
+		// ships with ARMSX2. Vulkan + Adreno 7xx and newer only, and compiled out entirely
+		// in the play flavour, so every one of these is inert in a build without it.
+		bool LsfgEnabled = false;
+		u8 LsfgMultiplier = 2; // frames displayed per rendered frame: 2 = one interpolated
+		std::string LsfgDllPath;
+		// LSFG 3.1p, a lighter shader family than 3.1. Default on: this runs on a phone GPU
+		// that is already presenting the game, and the cheaper pipeline is what makes the
+		// feature pay for itself there. Falls back to 3.1 when the user's DLL predates 3.1p.
+		bool LsfgPerformance = true;
+		// Optical-flow resolution, as a percentage of the presented image (25..100). Lower is
+		// cheaper and blurrier. Handed to the library as a DIVISOR — see GSLsfg.cpp.
+		u8 LsfgFlowScale = 100;
+
 		u8 CAS_Sharpness = 50;
+		// FSR1's RCAS pass, 0..100. Mapped to AMD's "stops" scale in GSDevice::FSR1Upscale,
+		// where 0 stops is maximum sharpening - it is not the same curve as CAS_Sharpness.
+		u8 FSR_Sharpness = 50;
 		u8 ShadeBoost_Brightness = DEFAULT_SHADEBOOST_BRIGHTNESS;
 		u8 ShadeBoost_Contrast = DEFAULT_SHADEBOOST_CONTRAST;
 		u8 ShadeBoost_Saturation = DEFAULT_SHADEBOOST_SATURATION;
@@ -950,12 +1113,30 @@ struct Pcsx2Config
 		std::string HWDumpDirectory;
 		std::string SWDumpDirectory;
 
+		/// Hacks the player set deliberately, one bit per GSUserHackOverride. Kept out of
+		/// the bitfield union above on purpose: that packing is what OptionsAreEqual
+		/// compares wholesale, and this is not a hack value, it is who owns one.
+		u32 UserHackOverrides = 0;
+
 		GSOptions();
 
 		void LoadSave(SettingsWrapper& wrap);
 
-		/// Sets user hack values to defaults when user hacks are not enabled.
-		void MaskUserHacks();
+		bool IsUserHackPinned(GSUserHackOverride hack) const
+		{
+			return (UserHackOverrides & (1u << static_cast<u32>(hack))) != 0;
+		}
+
+		void SetUserHackPinned(GSUserHackOverride hack, bool pinned)
+		{
+			const u32 bit = 1u << static_cast<u32>(hack);
+			UserHackOverrides = pinned ? (UserHackOverrides | bit) : (UserHackOverrides & ~bit);
+		}
+
+		/// Sets user hack values to defaults when user hacks are not enabled. Hacks the
+		/// player claimed survive, unless the caller is stripping for safety rather than
+		/// preference, in which case pass false.
+		void MaskUserHacks(bool respect_claims = true);
 
 		/// Sets user hack values to defaults when upscaling is not enabled.
 		void MaskUpscalingHacks();
@@ -966,6 +1147,11 @@ struct Pcsx2Config
 		/// Returns false if the compared to the old settings, we need to reopen GS.
 		/// (i.e. renderer change, swap chain mode change, etc.)
 		bool RestartOptionsAreEqual(const GSOptions& right) const;
+
+		/// Whether changing this INI key forces a GS device teardown, i.e. whether it is
+		/// one of the fields RestartOptionsAreEqual compares. Lets a caller mutating a
+		/// setting by name report the cost without diffing two whole configs.
+		static bool IsRestartOption(const char* ini_key);
 
 		/// Returns false if any options need to be applied to the MTGS.
 		bool OptionsAreEqual(const GSOptions& right) const;
@@ -1019,6 +1205,8 @@ struct Pcsx2Config
 		u32 StandardVolume = 100;
 		u32 FastForwardVolume = 100;
 		bool OutputMuted = false;
+		// Low-end Android lever: skip the SPU2 reverb pipeline in MixCore. Off by default.
+		bool LightweightMode = false;
 
 		AudioBackend Backend = DEFAULT_BACKEND;
 		SPU2SyncMode SyncMode = DEFAULT_SYNC_MODE;
@@ -1046,6 +1234,7 @@ struct Pcsx2Config
 			PCAP_Switched = 2,
 			TAP = 3,
 			Sockets = 4,
+			LocalLink = 5,
 		};
 		static const char* NetApiNames[];
 
@@ -1073,6 +1262,11 @@ struct Pcsx2Config
 		std::string EthDevice;
 		bool EthLogDHCP{false};
 		bool EthLogDNS{false};
+		bool LocalLinkHost{false};
+		std::string LocalLinkAddress;
+		u32 LocalLinkPort{19072};
+		u32 LocalLinkPeerId{1};
+		std::string LocalLinkRoomCode;
 
 		bool InterceptDHCP{false};
 		u8 PS2IP[4]{};
@@ -1108,6 +1302,10 @@ struct Pcsx2Config
 	{
 		BITFIELD32()
 		bool
+			// No reader: eeMulRound (FPU.cpp) and emitDefectiveFmul
+			// (iFPUd-arm64.cpp) model the multiplier defect this patched one
+			// product of. The bit stays because its GamefixId indexes
+			// vu_capture's on-disk gamefix mask.
 			FpuMulHack : 1, // Tales of Destiny hangs.
 			GoemonTlbHack : 1, // Gomeon tlb miss hack. The game need to access unmapped virtual address. Instead to handle it as exception, tlb are preloaded at startup
 			SoftwareRendererFMVHack : 1, // Switches to software renderer for FMVs
@@ -1525,7 +1723,6 @@ namespace EmuFolders
 
 //------------ SPECIAL GAME FIXES!!! ---------------
 #define CHECK_VUADDSUBHACK (EmuConfig.Gamefixes.VuAddSubHack) // Special Fix for Tri-ace games, they use an encryption algorithm that requires VU addi opcode to be bit-accurate.
-#define CHECK_FPUMULHACK (EmuConfig.Gamefixes.FpuMulHack) // Special Fix for Tales of Destiny hangs.
 #define CHECK_XGKICKHACK (EmuConfig.Gamefixes.XgKickHack) // Special Fix for Erementar Gerad, adds more delay to VU XGkick instructions. Corrects the color of some graphics.
 #define CHECK_EETIMINGHACK (EmuConfig.Gamefixes.EETimingHack) // Fix all scheduled events to happen in 1 cycle.
 #define CHECK_INSTANTDMAHACK (EmuConfig.Gamefixes.InstantDMAHack) // Attempt to finish DMA's instantly, useful for games which rely on cache emulation.
@@ -1547,7 +1744,9 @@ namespace EmuFolders
 #define CHECK_FPU_OVERFLOW (EmuConfig.Cpu.Recompiler.fpuOverflow)
 #define CHECK_FPU_EXTRA_OVERFLOW (EmuConfig.Cpu.Recompiler.fpuExtraOverflow) // If enabled, Operands are checked for infinities before being used in the FPU recs
 #define CHECK_FPU_EXTRA_FLAGS 1 // Always enabled now // Sets D/I flags on FPU instructions
-#define CHECK_FPU_FULL (EmuConfig.Cpu.Recompiler.fpuFullMode)
+#define CHECK_FPU_FULL (EmuConfig.Cpu.Recompiler.fpuFullMode) // GameDB eeClampMode >= 3: the EE FPU's arithmetic is iFPUd's, computed in double over a relocated FPR file. Below it the single-precision fast path in iFPU-arm64.cpp runs.
+#define CHECK_FPU_EXACT (EmuConfig.Cpu.Recompiler.fpuExactMode) // GameDB eeClampMode 4: mode 3 plus the rest of the EE multiplier's one-ULP deficit, at emitDefectiveFmul (iFPUd-arm64.cpp).
+#define CHECK_FPU_GUARDED (EmuConfig.Cpu.Recompiler.fpuGuardedAddSub) // If enabled (default), add/sub emulate the PS2 FPU's missing mantissa guard bits on the single-precision fast path. Disable only for EE-heavy titles confirmed not to need it.
 
 //------------ EE Recompiler defines - Comment to disable a recompiler ---------------
 

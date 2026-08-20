@@ -39,8 +39,9 @@ public:
 	/// Flushes the code cache, forcing everything to be recompiled.
 	void ResetCodeCache();
 
-	/// Populates function pointers. If this returns false, we ran out of code space.
-	bool SetupDraw(GSRasterizerData& data);
+	/// Populates function pointers. If this returns false, we either ran out of code space, or
+	/// allow_compile was false and something still needed generating.
+	bool SetupDraw(GSRasterizerData& data, bool allow_compile);
 
 	/// Draw pre-calculations, computed per-thread.
 	static void BeginDraw(const GSRasterizerData& data, GSScanlineLocalData& local);
@@ -51,12 +52,17 @@ public:
 	void UpdateDrawStats(u64 frame, u64 ticks, int actual, int total, int prims);
 	void PrintStats();
 
+	/// The C++ rasteriser, taken whenever there is no code memory to compile into.
+	/// Public because it is already handed out as a raw function pointer by
+	/// SetupDraw, and because it has to be callable beside the generated code for
+	/// anything to check the two against each other.
+	static void CSetupPrim(const GSVertexSW* vertex, const u16* index, const GSVertexSW& dscan, GSScanlineLocalData& local);
+	static void CDrawScanline(int pixels, int left, int top, const GSVertexSW& scan, GSScanlineLocalData& local);
+
 private:
 	GSCodeGeneratorFunctionMap<GSSetupPrimCodeGenerator, u64, SetupPrimPtr> m_sp_map;
 	GSCodeGeneratorFunctionMap<GSDrawScanlineCodeGenerator, u64, DrawScanlinePtr> m_ds_map;
 
-	static void CSetupPrim(const GSVertexSW* vertex, const u16* index, const GSVertexSW& dscan, GSScanlineLocalData& local);
-	static void CDrawScanline(int pixels, int left, int top, const GSVertexSW& scan, GSScanlineLocalData& local);
 	static void CDrawEdge(int pixels, int left, int top, const GSVertexSW& scan, GSScanlineLocalData& local);
 	__ri static void CDrawScanline(int pixels, int left, int top, const GSVertexSW& scan, GSScanlineLocalData& local, GSScanlineSelector sel);
 };

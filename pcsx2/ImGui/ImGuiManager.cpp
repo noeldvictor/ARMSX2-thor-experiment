@@ -30,6 +30,7 @@
 #include "imgui_internal.h"
 #include "common/Image.h"
 
+#include <atomic>
 #include <chrono>
 #include <cmath>
 #include <deque>
@@ -92,6 +93,11 @@ static std::vector<u8> s_icon_pf_font_data;
 
 static float s_window_width;
 static float s_window_height;
+// Written by whichever thread owns the window's layout, read by the GS thread while it draws.
+static std::atomic<float> s_osd_inset_left{0.0f};
+static std::atomic<float> s_osd_inset_top{0.0f};
+static std::atomic<float> s_osd_inset_right{0.0f};
+static std::atomic<float> s_osd_inset_bottom{0.0f};
 static Common::Timer s_last_render_time;
 
 // cached copies of WantCaptureKeyboard/Mouse, used to know when to dispatch events
@@ -184,8 +190,11 @@ bool ImGuiManager::Initialize()
 	g.ConfigNavWindowingKeyPrev = ImGuiKey_None;
 	g.ConfigNavWindowingWithGamepad = false;
 
-	s_window_width = static_cast<float>(g_gs_device->GetWindowWidth());
-	s_window_height = static_cast<float>(g_gs_device->GetWindowHeight());
+	{
+		const GSVector2i pres = g_gs_device->GetPresentationSize();
+		s_window_width = static_cast<float>(pres.x);
+		s_window_height = static_cast<float>(pres.y);
+	}
 	io.DisplayFramebufferScale = ImVec2(1, 1); // We already scale things ourselves, this would double-apply scaling
 	io.DisplaySize = ImVec2(s_window_width, s_window_height);
 
@@ -259,11 +268,12 @@ float ImGuiManager::GetWindowHeight()
 
 void ImGuiManager::WindowResized()
 {
-	const u32 new_width = g_gs_device ? g_gs_device->GetWindowWidth() : 0;
-	const u32 new_height = g_gs_device ? g_gs_device->GetWindowHeight() : 0;
+	GSVector2i new_size{};
+	if (g_gs_device)
+		new_size = g_gs_device->GetPresentationSize();
 
-	s_window_width = static_cast<float>(new_width);
-	s_window_height = static_cast<float>(new_height);
+	s_window_width = static_cast<float>(new_size.x);
+	s_window_height = static_cast<float>(new_size.y);
 	ImGui::GetIO().DisplaySize = ImVec2(s_window_width, s_window_height);
 
 	// Scale might have changed as a result of window resize.
@@ -281,7 +291,24 @@ void ImGuiManager::RequestScaleUpdate()
 
 void ImGuiManager::SetOSDSafeAreaInsets(float left, float top, float right, float bottom)
 {
-	// Stub — iOS uses this for rounded-corner OSD clearance. Full implementation in Phase 5.
+	// Already in physical pixels — the caller multiplies by the content scale — so these add
+	// straight onto margin without a conversion.
+	s_osd_inset_left.store(left, std::memory_order_relaxed);
+	s_osd_inset_top.store(top, std::memory_order_relaxed);
+	s_osd_inset_right.store(right, std::memory_order_relaxed);
+	s_osd_inset_bottom.store(bottom, std::memory_order_relaxed);
+}
+
+void ImGuiManager::GetOSDSafeAreaInsets(float* left, float* top, float* right, float* bottom)
+{
+	if (left)
+		*left = s_osd_inset_left.load(std::memory_order_relaxed);
+	if (top)
+		*top = s_osd_inset_top.load(std::memory_order_relaxed);
+	if (right)
+		*right = s_osd_inset_right.load(std::memory_order_relaxed);
+	if (bottom)
+		*bottom = s_osd_inset_bottom.load(std::memory_order_relaxed);
 }
 
 void ImGuiManager::ReloadFonts()
@@ -963,18 +990,25 @@ void ImGuiManager::DrawOSDMessages(Common::Timer::Value current_time)
 	const float font_size = GetFontSizeStandard();
 	const float scale = s_global_scale;
 	const float spacing = std::ceil(5.0f * scale);
-	const float margin = std::ceil(GSConfig.OsdMargin * scale);
+	const float base_margin = std::ceil(GSConfig.OsdMargin * scale);
+	// Same clearance the performance overlay gets — messages land in the same corners, so a notch
+	// covers them just as readily.
+	const float inset_left = s_osd_inset_left.load(std::memory_order_relaxed);
+	const float inset_right = s_osd_inset_right.load(std::memory_order_relaxed);
+	const float margin = base_margin + std::max(inset_left, inset_right);
+	const float top_margin = base_margin + s_osd_inset_top.load(std::memory_order_relaxed);
+	const float bottom_margin = base_margin + s_osd_inset_bottom.load(std::memory_order_relaxed);
 	const float padding = std::ceil(8.0f * scale);
 	const float rounding = std::ceil(5.0f * scale);
 	const float max_width = s_window_width - (margin + padding) * 2.0f;
 
-	float position_y = margin;
+	float position_y = top_margin;
 	switch (GSConfig.OsdMessagesPos)
 	{
 		case OsdOverlayPos::TopLeft:
 		case OsdOverlayPos::TopCenter:
 		case OsdOverlayPos::TopRight:
-			position_y = margin;
+			position_y = top_margin;
 			break;
 
 		case OsdOverlayPos::CenterLeft:
@@ -987,12 +1021,12 @@ void ImGuiManager::DrawOSDMessages(Common::Timer::Value current_time)
 		case OsdOverlayPos::BottomCenter:
 		case OsdOverlayPos::BottomRight:
 			// For bottom positions, start from the bottom and let messages stack upward
-			position_y = s_window_height - margin;
+			position_y = s_window_height - bottom_margin;
 			break;
 
 		case OsdOverlayPos::None:
 		default:
-			position_y = margin;
+			position_y = top_margin;
 			break;
 	}
 
@@ -1100,16 +1134,36 @@ void ImGuiManager::RenderOSD()
 	// acquire for IO.MousePos.
 	std::atomic_thread_fence(std::memory_order_acquire);
 
-	// Don't draw OSD when we're just running big picture.
-	if (VMManager::HasValidVM())
-		RenderOverlays();
-
 	const Common::Timer::Value current_time = Common::Timer::GetCurrentValue();
 	AcquirePendingOSDMessages(current_time);
-	DrawOSDMessages(current_time);
+
+	if (!FullscreenUI::HasActiveWindow())
+	{
+		// Don't draw OSD when we're just running big picture.
+		if (VMManager::HasValidVM())
+			RenderOverlays();
+
+		DrawOSDMessages(current_time);
+	}
 
 	// Cursors are always last.
 	DrawSoftwareCursors();
+}
+
+bool ImGuiManager::HasPresentableOverlayContent()
+{
+	// Posted messages can be pushed from any thread, so this one read needs the lock. Active
+	// messages and the FullscreenUI state below are GS-thread-only and are read without it — this
+	// runs on the GS thread (from the present path), the same thread that drains and draws them.
+	{
+		std::unique_lock<std::mutex> lock(s_osd_messages_lock);
+		if (!s_osd_posted_messages.empty())
+			return true;
+	}
+	if (!s_osd_active_messages.empty())
+		return true;
+
+	return FullscreenUI::HasActiveWindow() || ImGuiFullscreen::HasActiveNotifications();
 }
 
 float ImGuiManager::GetGlobalScale()

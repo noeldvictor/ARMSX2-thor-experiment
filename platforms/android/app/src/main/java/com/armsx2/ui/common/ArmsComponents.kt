@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -30,6 +31,7 @@ import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -59,6 +61,8 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -67,6 +71,7 @@ import androidx.compose.ui.unit.sp
 import com.armsx2.R
 import com.armsx2.ui.theme.ArmsBlue
 import com.armsx2.ui.theme.ArmsCyan
+import com.armsx2.ui.settings.controllerFocusable
 
 @Composable
 fun ArmsBackdrop(
@@ -145,17 +150,34 @@ fun ArmsTopBar(
 ) {
     val statusBarPadding = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
     val navBarPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    // Also clear a top/centre display cutout (punch-hole camera). In portrait on a tall panel the
+    // status bar can be hidden or shorter than the camera, so statusBars alone leaves the pill riding
+    // up under the lens; take the larger of the two so the top bar always sits clear of it.
+    // (#Isshin — S24 Ultra portrait.) Landscape/no-cutout devices see no change (cutout top is 0).
+    val cutoutTop = WindowInsets.displayCutout.asPaddingValues().calculateTopPadding()
+    val topInset = maxOf(statusBarPadding, cutoutTop)
+    // On a custom bar colour the theme's onSurface can be unreadable (white text on yellow), so
+    // pick black or white by the colour's own luminance. Null = no custom colour, theme unchanged.
+    val customBar = com.armsx2.ui.theme.LibraryChromePreferences.barColor.value.takeIf { it != 0 }
+    val barContentColor = customBar?.let {
+        val lum = (0.299 * android.graphics.Color.red(it) +
+            0.587 * android.graphics.Color.green(it) +
+            0.114 * android.graphics.Color.blue(it)) / 255.0
+        if (lum > 0.6) Color(0xFF101317) else Color.White
+    }
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
                 start = horizontalPadding,
                 end = horizontalPadding,
-                top = if (bottomEdge) 4.dp else statusBarPadding + 8.dp,
+                top = if (bottomEdge) 4.dp else topInset + 8.dp,
                 bottom = if (bottomEdge) navBarPadding + 8.dp else 4.dp,
             ),
         shape = RoundedCornerShape(26.dp),
-        color = MaterialTheme.colorScheme.surface,
+        // Custom bar colour when set, otherwise the theme surface (unchanged default).
+        color = com.armsx2.ui.theme.LibraryChromePreferences.barColor.value
+            .takeIf { it != 0 }?.let { Color(it) } ?: MaterialTheme.colorScheme.surface,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.38f)),
         tonalElevation = 0.dp,
         shadowElevation = 5.dp,
@@ -169,7 +191,7 @@ fun ArmsTopBar(
             Column(Modifier.weight(1f)) {
                 Text(
                     title,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = barContentColor ?: MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
@@ -178,7 +200,8 @@ fun ArmsTopBar(
                 if (!subtitle.isNullOrBlank()) {
                     Text(
                         text = subtitle,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = barContentColor?.copy(alpha = 0.78f)
+                            ?: MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -226,6 +249,10 @@ fun RoundAction(
     buttonShape: Shape = CircleShape,
     subtleFrame: Boolean = false,
     glyphColor: Color? = null,
+    /** Register this action with the controller-nav registry under this id so a pad can reach it.
+     *  Opt-in (null = today's touch-only behaviour): these live in top bars, and registering every
+     *  one of them app-wide would reshuffle the nav order of screens that are already tuned. */
+    controllerId: String? = null,
 ) {
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
@@ -252,6 +279,12 @@ fun RoundAction(
         modifier = Modifier
             .size(buttonSize)
             .semantics { contentDescription = description }
+            .then(
+                if (controllerId != null)
+                    Modifier.controllerFocusable(controllerId, buttonShape as? RoundedCornerShape
+                        ?: RoundedCornerShape(50), onConfirm = onClick)
+                else Modifier,
+            )
             .focusable(interactionSource = interaction),
         shape = buttonShape,
         color = actionColor,
@@ -259,6 +292,12 @@ fun RoundAction(
     ) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
+                // Empirical nudge. Font metrics alone don't land these glyphs on the optical
+                // centre: arrows and symbols like ← ↺ ⌕ carry no descender, so their ink sits
+                // above the baseline-derived box centre and they read low once the box itself is
+                // centred. Removing the font padding (below) fixes the box; this fixes the ink.
+                // Tuned against the back arrow, which is the most-looked-at of the set.
+                modifier = Modifier.offset(y = (-1.5).dp),
                 text = glyph,
                 color = glyphColor
                     ?: if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface,
@@ -268,6 +307,13 @@ fun RoundAction(
                     else -> 22.sp
                 },
                 fontWeight = FontWeight.Bold,
+                // The Box centres the text's LAYOUT BOX, but Android pads that box with the
+                // font's full ascent/descent by default, so a glyph with no descender (←, ↑, ⌕)
+                // doesn't land where the eye expects. Dropping the font padding is the part of
+                // this that is unambiguously right. A first attempt also added
+                // LineHeightStyle(Center + Trim.Both) on top, which overshot and pushed the
+                // arrow BELOW centre — trimming the leading and re-centring double-corrects.
+                style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false)),
             )
         }
     }
@@ -300,39 +346,41 @@ fun StatusChip(text: String, color: Color = MaterialTheme.colorScheme.primary) {
     }
 }
 
+/** Tappable search bar — deliberately NOT an editable TextField, so it never summons the Android
+ *  system IME. Tapping it (or the controller's A on the Search zone) opens the app's own D-pad +
+ *  touch keyboard (LibraryKeyboard), which owns and edits the query. Shows the current query, or
+ *  the placeholder when empty; mirrors the old field's look (rounded, leading ⌕, selected border). */
 @Composable
 fun SearchField(
     value: String,
-    onValueChange: (String) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
-    focusRequester: FocusRequester? = null,
     selected: Boolean = false,
 ) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier
-            .height(56.dp)
-            .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
-            .then(
-                if (selected) {
-                    Modifier.border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(18.dp))
-                } else {
-                    Modifier
-                },
-            ),
-        singleLine = true,
-        placeholder = { Text(placeholder) },
-        leadingIcon = { Text("⌕", fontSize = 21.sp, fontWeight = FontWeight.Bold) },
+    Surface(
+        onClick = onClick,
+        modifier = modifier.height(56.dp),
         shape = RoundedCornerShape(18.dp),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-        ),
-    )
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        border = if (selected) BorderStroke(2.dp, MaterialTheme.colorScheme.primary) else null,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text("⌕", fontSize = 21.sp, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.width(12.dp))
+            Text(
+                text = value.ifEmpty { placeholder },
+                color = if (value.isEmpty()) MaterialTheme.colorScheme.onSurfaceVariant
+                else MaterialTheme.colorScheme.onSurface,
+                fontSize = 16.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
 }
 
 @Composable

@@ -144,6 +144,7 @@ namespace FullscreenUI
 	{
 		None,
 		Landing,
+		Setup,
 		StartGame,
 		Exit,
 		GameList,
@@ -231,6 +232,7 @@ namespace FullscreenUI
 
 	inline MainWindowType s_current_main_window = MainWindowType::None;
 	inline PauseSubMenu s_current_pause_submenu = PauseSubMenu::None;
+	inline u32 s_setup_wizard_step = 0;
 	inline bool s_initialized = false;
 	inline bool s_tried_to_initialize = false;
 	inline bool s_pause_menu_was_open = false;
@@ -280,6 +282,11 @@ namespace FullscreenUI
 	// Landing
 	//////////////////////////////////////////////////////////////////////////
 	void SwitchToLanding();
+	void SwitchToSetup();
+	void DrawSetupWindow();
+	bool ShouldShowSetupWizard();
+	void CompleteSetupWizard();
+	void DrawSearchDirectoriesList();
 	ImGuiFullscreen::FileSelectorFilters GetOpenFileFilters();
 	ImGuiFullscreen::FileSelectorFilters GetDiscImageFilters();
 	ImGuiFullscreen::FileSelectorFilters GetAudioFileFilters();
@@ -368,6 +375,9 @@ namespace FullscreenUI
 	inline std::unordered_map<std::string, std::string> s_cover_image_map;
 	inline std::vector<const GameList::Entry*> s_game_list_sorted_entries;
 	inline GameListView s_game_list_view = GameListView::Grid;
+
+	// Cached list of unsorted game list entries; used to detect changes and re-sort when needed
+	inline std::vector<const GameList::Entry*> s_last_unsorted_entries;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Background

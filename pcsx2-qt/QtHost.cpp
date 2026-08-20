@@ -2,7 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 #include "AutoUpdaterDialog.h"
+#ifdef ENABLE_QT_DEBUGGER
 #include "Debugger/DebuggerWindow.h"
+#endif
+#include "DebugTools/DebugInterface.h"
 #include "DisplayWidget.h"
 #include "GameList/GameListWidget.h"
 #include "LogWindow.h"
@@ -1008,6 +1011,11 @@ void EmuThread::updatePerformanceMetrics(bool force)
 				              .arg(PerformanceMetrics::GetCPUThreadUsage(), 0, 'f', 0)
 				              .arg(PerformanceMetrics::GetGSThreadUsage(), 0, 'f', 0);
 			}
+
+			// The GS figure above is the MTGS thread alone; under GSBackThreadMode >= Lockstep
+			// roughly half the GS work runs on a second thread this line would otherwise hide.
+			if (PerformanceMetrics::HasGSBackThread())
+				gs_stat += tr(" | GSB: %1%").arg(PerformanceMetrics::GetGSBackThreadUsage(), 0, 'f', 0);
 		}
 
 		QMetaObject::invokeMethod(g_main_window, "setStatusVerboseText", Qt::QueuedConnection, Q_ARG(const QString&, gs_stat));
@@ -1068,27 +1076,15 @@ void EmuThread::updatePerformanceMetrics(bool force)
 
 		if (gpu_usage != m_last_gpu_usage || force)
 		{
-			QString text;
-			if (gpu_usage == 0)
-				text = tr("GPU: N/A");
-			else
-				text = tr("GPU: %1%").arg(gpu_usage, 0, 'f', 0);
-
 			QMetaObject::invokeMethod(g_main_window, "setStatusGPUText", Qt::QueuedConnection,
-				Q_ARG(const QString&, text));
+				Q_ARG(const QString&, tr("GPU: %1%").arg(gpu_usage, 0, 'f', 0)));
 			m_last_gpu_usage = gpu_usage;
 		}
 
 		if (gfps != m_last_game_fps || force)
 		{
-			QString text;
-			if (gfps == 0)
-				text = tr("FPS: N/A");
-			else
-				text = tr("FPS: %1").arg(gfps, 0, 'f', 0);
-
 			QMetaObject::invokeMethod(g_main_window, "setStatusFPSText", Qt::QueuedConnection,
-				Q_ARG(const QString&, text));
+				Q_ARG(const QString&, gfps == 0 ? tr("FPS: N/A") : tr("FPS: %1").arg(gfps, 0, 'f', 0)));
 			m_last_game_fps = gfps;
 		}
 
@@ -1154,6 +1150,9 @@ void Host::OnAchievementsLoginSuccess(const char* username, u32 points, u32 sc_p
 
 	emit g_emu_thread->statusMessage(message);
 }
+
+bool Host::HasNativeAchievementNotifications() { return false; }
+void Host::OnAchievementNotification(const char*, float, const char*, const char*, const char*) {}
 
 void Host::OnAchievementsRefreshed()
 {
@@ -1267,7 +1266,7 @@ void Host::RunOnGSThread(std::function<void()> function)
 
 void Host::RefreshGameListAsync(bool invalidate_cache)
 {
-	QMetaObject::invokeMethod(g_main_window, "refreshGameList", Qt::QueuedConnection, Q_ARG(bool, invalidate_cache));
+	QMetaObject::invokeMethod(g_main_window, "refreshGameList", Qt::QueuedConnection, Q_ARG(bool, invalidate_cache), Q_ARG(bool, true));
 }
 
 void Host::CancelGameListRefresh()
@@ -2516,9 +2515,14 @@ int main(int argc, char* argv[])
 	QtHost::HookSignals();
 	EmuThread::start();
 
-	// Optionally run setup wizard.
+	// Optionally run setup wizard. When launching straight into Big Picture mode (controller-only
+	// / couch play), skip the mouse-and-keyboard Qt wizard and let the controller-navigable
+	// setup flow in FullscreenUI handle first-time configuration instead. The "SetupWizardIncomplete"
+	// flag is left set so FullscreenUI picks it up on startup.
+	const bool start_big_picture_mode = s_start_big_picture_mode || Host::GetBaseBoolSettingValue("UI", "StartBigPictureMode", false);
+
 	int result;
-	if (s_run_setup_wizard && !QtHost::RunSetupWizard())
+	if (s_run_setup_wizard && !start_big_picture_mode && !QtHost::RunSetupWizard())
 	{
 		result = EXIT_FAILURE;
 		goto shutdown_and_exit;
@@ -2544,13 +2548,19 @@ int main(int argc, char* argv[])
 
 	// Initialize big picture mode if requested by command line or settings.
 	// As CLI arguments are baked-in, they're tracked separately from settings which can be changed during runtime.
-	if (s_start_big_picture_mode || Host::GetBaseBoolSettingValue("UI", "StartBigPictureMode", false))
+	if (start_big_picture_mode)
 		g_emu_thread->startFullscreenUI(s_start_fullscreen || Host::GetBaseBoolSettingValue("UI", "StartFullscreen", false));
 
-	if (s_boot_and_debug || DebuggerWindow::shouldShowOnStartup())
+	if (s_boot_and_debug
+#ifdef ENABLE_QT_DEBUGGER
+		|| DebuggerWindow::shouldShowOnStartup()
+#endif
+	)
 	{
 		DebugInterface::setPauseOnEntry(s_boot_and_debug);
+#ifdef ENABLE_QT_DEBUGGER
 		g_main_window->openDebugger();
+#endif
 	}
 
 	// Skip the update check if we're booting a game directly.

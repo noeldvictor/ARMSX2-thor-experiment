@@ -9,40 +9,8 @@ struct AudioSettingsView: View {
     var body: some View {
         Form {
             Section {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text(settings.localized("Emulator Volume"))
-                        Spacer()
-                        Text(Self.formatPercent(settings.emulatorVolumePercent))
-                            .foregroundStyle(.secondary)
-                            .font(.callout.monospacedDigit())
-                    }
-
-                    Slider(
-                        value: Binding(
-                            get: { Double(settings.emulatorVolumePercent) },
-                            set: { settings.emulatorVolumePercent = Int($0.rounded()) }
-                        ),
-                        in: 0...150,
-                        step: 1
-                    )
-                    .accessibilityLabel(settings.localized("Emulator Volume"))
-                    .accessibilityValue(Self.formatPercent(settings.emulatorVolumePercent))
-                    .accessibilityHint(settings.localized("Adjusts emulator game audio without changing iOS system volume or other apps."))
-
-                    HStack {
-                        Text("0%")
-                        Spacer()
-                        Button(settings.localized("Reset")) {
-                            settings.emulatorVolumePercent = SettingsStore.defaultEmulatorVolumePercent
-                        }
-                        .buttonStyle(.borderless)
-                        Spacer()
-                        Text("150%")
-                    }
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
-                }
+                NumberRow(.emulatorVolume, value: $settings.emulatorVolumePercent,
+                          settings: settings)
 
                 Text(settings.localized("Controls emulator and game audio only. iOS system volume and other apps stay separate."))
                     .font(.caption)
@@ -57,9 +25,11 @@ struct AudioSettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
-                intSliderRow("Buffer Size", value: $settings.audioBufferMs, range: 10...200, suffix: " ms", defaultValue: 50)
-                intSliderRow("Output Latency", value: $settings.audioOutputLatencyMs, range: 5...200, suffix: " ms", defaultValue: 20)
-                intSliderRow("Fast-Forward Volume", value: $settings.audioFastForwardVolume, range: 0...200, suffix: "%", defaultValue: 100)
+                NumberRow(.audioBufferMs, value: $settings.audioBufferMs, settings: settings)
+                NumberRow(.audioOutputLatencyMs, value: $settings.audioOutputLatencyMs,
+                          settings: settings)
+                NumberRow(.fastForwardVolume, value: $settings.audioFastForwardVolume,
+                          settings: settings)
 
                 Text(settings.localized("Lower buffer or latency reduces lag but can cause crackling. Fast-forward volume is a percentage of normal volume used while fast-forwarding."))
                     .font(.caption)
@@ -81,37 +51,5 @@ struct AudioSettingsView: View {
         }
         .navigationTitle(settings.localized("Audio"))
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private static func formatPercent(_ value: Int) -> String {
-        "\(SettingsStore.clampedEmulatorVolumePercent(value))%"
-    }
-
-    /// Labeled integer slider with displayed value, range labels, and a reset button.
-    @ViewBuilder
-    private func intSliderRow(_ title: String, value: Binding<Int>, range: ClosedRange<Int>, suffix: String, defaultValue: Int) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(settings.localized(title))
-                Spacer()
-                Text("\(value.wrappedValue)\(suffix)")
-                    .foregroundStyle(.secondary)
-                    .font(.callout.monospacedDigit())
-            }
-            Slider(value: Binding(
-                get: { Double(value.wrappedValue) },
-                set: { value.wrappedValue = Int($0.rounded()) }
-            ), in: Double(range.lowerBound)...Double(range.upperBound))
-            HStack {
-                Text("\(range.lowerBound)\(suffix)")
-                Spacer()
-                Button(settings.localized("Reset")) { value.wrappedValue = defaultValue }
-                    .buttonStyle(.borderless)
-                Spacer()
-                Text("\(range.upperBound)\(suffix)")
-            }
-            .font(.caption.monospacedDigit())
-            .foregroundStyle(.secondary)
-        }
     }
 }

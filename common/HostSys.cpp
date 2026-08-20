@@ -4,6 +4,7 @@
 #include "HostSys.h"
 #include "Console.h"
 #include "VectorIntrin.h"
+#include "fmt/format.h"
 
 #ifndef __APPLE__
 #include "cpuinfo.h"
@@ -51,10 +52,10 @@ static void MultiPause()
 
 static u32 MeasurePauseTime()
 {
-	// GetCPUTicks may have resolution as low as 1µs
-	// One call to MultiPause could take anywhere from 20ns (fast Haswell) to 400ns (slow Skylake)
-	// We want a measurement of reasonable resolution, but don't want to take too long
-	// So start at a fairly small number and increase it if it's too fast
+	// A tick isn't a fixed time unit (see GetCPUTicks()), so this loop works in raw
+	// ticks and only converts to ns once it has enough. One MultiPause takes 20ns on
+	// a fast Haswell, 400ns on a slow Skylake, 83ns for the eight isb on a Cortex-A78C.
+	// Start small and double the batch until the tick delta clears 100.
 	for (int testcnt = 64; true; testcnt *= 2)
 	{
 		u64 start = GetCPUTicks();
@@ -102,6 +103,64 @@ u32 ShortSpin()
 	return time;
 }
 
+#if defined(ARCH_ARM64) && !defined(_MSC_VER)
+// Stop executing until another core stores to `word`, using the local exclusive
+// monitor as the watchpoint: LDAXR arms it, and the store that clears it raises
+// the event WFE is waiting on. A store landing between the LDAXR and the WFE
+// clears the monitor too, so the wake cannot be missed.
+//
+// WFE is not a yield or a kernel block: the thread stays runnable, so a
+// co-resident thread is preempted exactly as it was against the isb spin
+// (measured: it keeps ~50% of its throughput either way, against 100% when
+// the waiter blocks in a futex instead).
+//
+// The SEVL/WFE pair comes first because the event register is one sticky bit:
+// anything that cleared the monitor earlier leaves it set, and the WFE below
+// would then return without parking. SEVL sets it, the first WFE consumes it.
+//
+// Nothing clears the monitor on the way out, deliberately. Clearing it is
+// itself a wake-up event, so a CLREX here would set the event register for the
+// next iteration and the loop would stop parking altogether — on a Cortex-A78C
+// waiting on a poster 100µs away, 3.5 wake-ups per wait as written against 6708
+// with a CLREX added. Linux's arm64 __cmpwait omits it for the same reason.
+//
+// A monitor that never fires is a latency cost, not a hang: WFE also wakes on
+// the periodic event stream, every ~33µs on this host.
+static void MonitoredWait(const std::atomic<s32>& word, s32 expected)
+{
+	s32 seen;
+	__asm__ __volatile__(
+		"sevl\n"
+		"wfe\n"
+		"ldaxr %w0, [%1]\n"
+		"cmp   %w0, %w2\n"
+		"b.ne  1f\n"
+		"wfe\n"
+		"1:\n"
+		: "=&r"(seen)
+		: "r"(&word), "r"(expected)
+		: "cc", "memory");
+	(void)seen;
+}
+#endif
+
+u32 ShortSpinOn(const std::atomic<s32>& word, s32 expected)
+{
+#if defined(ARCH_ARM64) && !defined(_MSC_VER)
+	const u64 start = GetCPUTicks();
+	MonitoredWait(word, expected);
+	// Charge unmeasurably short waits as one tick, not zero: the caller
+	// accumulates this against SPIN_TIME_NS, and a zero would stall that count
+	// forever.
+	const u64 elapsed = std::max<u64>(GetCPUTicks() - start, 1);
+	return static_cast<u32>((elapsed * 1000000000) / GetTickFrequency());
+#else
+	(void)word;
+	(void)expected;
+	return ShortSpin();
+#endif
+}
+
 static u32 GetSpinTime()
 {
 	if (char* req = getenv("WAIT_SPIN_MICROSECONDS"))
@@ -146,6 +205,82 @@ void AbortWithMessage(const char* msg)
 
 #ifndef __APPLE__
 // MacOS version is in DarwinMisc
+
+#ifdef __aarch64__
+// cpuinfo library often returns empty/unknown names on ARM Linux.
+// Fall back to reading MIDR fields from /proc/cpuinfo.
+static std::string DetectArmCPUName()
+{
+	FILE* f = fopen("/proc/cpuinfo", "r");
+	if (!f)
+		return {};
+
+	u32 implementer = 0, part = 0;
+	char line[256];
+	while (fgets(line, sizeof(line), f))
+	{
+		if (sscanf(line, "CPU implementer : %x", &implementer) == 1)
+			continue;
+		if (sscanf(line, "CPU part : %x", &part) == 1)
+			break; // got both from first core
+	}
+	fclose(f);
+
+	// Map common implementer+part to names
+	if (implementer == 0x41) // ARM Ltd
+	{
+		switch (part)
+		{
+			case 0xd03: return "ARM Cortex-A53";
+			case 0xd04: return "ARM Cortex-A35";
+			case 0xd05: return "ARM Cortex-A55";
+			case 0xd07: return "ARM Cortex-A57";
+			case 0xd08: return "ARM Cortex-A72";
+			case 0xd09: return "ARM Cortex-A73";
+			case 0xd0a: return "ARM Cortex-A75";
+			case 0xd0b: return "ARM Cortex-A76";
+			case 0xd0c: return "ARM Neoverse N1";
+			case 0xd0d: return "ARM Cortex-A77";
+			case 0xd40: return "ARM Neoverse V1";
+			case 0xd41: return "ARM Cortex-A78";
+			case 0xd44: return "ARM Cortex-X1";
+			case 0xd46: return "ARM Cortex-A510";
+			case 0xd47: return "ARM Cortex-A710";
+			case 0xd48: return "ARM Cortex-X2";
+			case 0xd4d: return "ARM Cortex-A715";
+			case 0xd4e: return "ARM Cortex-X3";
+			case 0xd80: return "ARM Cortex-A520";
+			case 0xd81: return "ARM Cortex-A720";
+			case 0xd82: return "ARM Cortex-X4";
+		}
+	}
+	else if (implementer == 0x51) // Qualcomm
+	{
+		switch (part)
+		{
+			case 0x802: return "Qualcomm Kryo 385 Gold";
+			case 0x803: return "Qualcomm Kryo 385 Silver";
+			case 0xc00: return "Qualcomm Falkor";
+			case 0x001: return "Qualcomm Oryon";
+		}
+	}
+	else if (implementer == 0x61) // Apple
+	{
+		switch (part)
+		{
+			case 0x022: return "Apple M1 Icestorm";
+			case 0x023: return "Apple M1 Firestorm";
+			case 0x032: return "Apple M2 Blizzard";
+			case 0x033: return "Apple M2 Avalanche";
+		}
+	}
+
+	if (implementer != 0 && part != 0)
+		return fmt::format("ARM (impl 0x{:02X} part 0x{:03X})", implementer, part);
+	return {};
+}
+#endif
+
 static CPUInfo CalcCPUInfo()
 {
 	CPUInfo out;
@@ -168,6 +303,17 @@ static CPUInfo CalcCPUInfo()
 			out.name = manuf;
 	}
 #endif
+
+#ifdef __aarch64__
+	// cpuinfo often returns empty/unknown on ARM Linux — use MIDR fallback
+	if (out.name.empty() || out.name.find("Unknown") != std::string::npos || out.name == "unknown")
+	{
+		std::string arm_name = DetectArmCPUName();
+		if (!arm_name.empty())
+			out.name = std::move(arm_name);
+	}
+#endif
+
 
 	out.num_threads = cpuinfo_get_processors_count();
 	out.num_clusters = cpuinfo_get_clusters_count();

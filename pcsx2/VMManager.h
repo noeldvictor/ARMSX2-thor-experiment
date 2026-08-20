@@ -70,6 +70,19 @@ namespace VMManager
 {
 	/// The number of usable save state slots.
 	static constexpr s32 NUM_SAVE_STATE_SLOTS = 10;
+	static constexpr u32 EMULATION_ONLY_RELEASE_PATCHES = (1u << 0);
+	static constexpr u32 EMULATION_ONLY_RELEASE_DISCORD_PRESENCE = (1u << 1);
+	static constexpr u32 EMULATION_ONLY_RELEASE_PINE = (1u << 2);
+	static constexpr u32 EMULATION_ONLY_RELEASE_ACHIEVEMENTS = (1u << 3);
+	static constexpr u32 EMULATION_ONLY_RELEASE_INPUT_RECORDING = (1u << 4);
+	static constexpr u32 EMULATION_ONLY_RELEASE_OSD = (1u << 5);
+	static constexpr u32 EMULATION_ONLY_RELEASE_ALL =
+		EMULATION_ONLY_RELEASE_PATCHES |
+		EMULATION_ONLY_RELEASE_DISCORD_PRESENCE |
+		EMULATION_ONLY_RELEASE_PINE |
+		EMULATION_ONLY_RELEASE_ACHIEVEMENTS |
+		EMULATION_ONLY_RELEASE_INPUT_RECORDING |
+		EMULATION_ONLY_RELEASE_OSD;
 
 	/// The stack size to use for threads running recompilers
 	static constexpr std::size_t EMU_THREAD_STACK_SIZE = 2 * 1024 * 1024; // µVU likes recursion
@@ -147,6 +160,20 @@ namespace VMManager
 
 	/// Reloads game patches.
 	void ReloadPatches(bool reload_files, bool reload_enabled_list, bool verbose, bool verbose_if_changed);
+
+	/// Stops and releases optional runtime services while preserving the active VM,
+	/// renderer, audio, storage devices, networking devices, and controller input.
+	void ReleaseNonEssentialRuntimeResources(u32 release_flags);
+
+	/// Returns true after optional resources have been released for the current VM session.
+	bool IsEmulationOnlyMode();
+
+	/// Marks the active game's boot patches as applied. iOS waits for this and texture
+	/// replacement startup before automatically entering emulation-only mode.
+	void NotifyBootPatchesApplied();
+
+	/// Marks the active game's replacement-texture map/precache startup as complete.
+	void NotifyTextureReplacementStartupComplete();
 
 	/// Reloads input sources.
 	void ReloadInputSources();
@@ -299,6 +326,13 @@ namespace VMManager
 
 		/// Cleans up common host state, called on the CPU thread.
 		void CPUThreadShutdown();
+
+		/// Whether the caller is the CPU thread, i.e. the thread that ran CPUThreadInitialize().
+		/// The CPU thread owns EmuConfig and is the sole producer into the MTGS ring, so most core
+		/// mutation is only legal from it — everything else must marshal via Host::RunOnCPUThread()
+		/// (or Host::RunOnGSThread(), which chains through it). Returns true when no CPU thread is
+		/// registered, so startup/teardown and CPU-thread-less test harnesses stay unencumbered.
+		bool IsOnCPUThread();
 
 		/// Android: affinity mask of the performance ("big") CPU cluster hosting the
 		/// EE/VU/GS threads, so adjacent helper threads (e.g. the Oboe audio callback)

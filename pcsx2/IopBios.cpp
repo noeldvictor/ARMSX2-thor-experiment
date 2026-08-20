@@ -83,8 +83,9 @@ static std::string hostRoot;
 
 void Hle_SetHostRoot(const char* bootFilename)
 {
-	hostRoot = Path::ToNativePath(Path::GetDirectory(bootFilename));
-	Console.WriteLn("HLE Host: Set 'host:' root path to: %s\n", hostRoot.c_str());
+	std::string path = Path::RealPath(bootFilename);
+	hostRoot = Path::ToNativePath(Path::GetDirectory(path));
+	Console.WriteLn("HLE Host: Set 'host:' root path to: %s", hostRoot.c_str());
 }
 
 void Hle_ClearHostRoot()
@@ -863,7 +864,7 @@ namespace R3000A
 				v0 = file->read(buf.get(), count);
 
 				[[likely]]
-				if (v0 >= 0 && iopMemSafeWriteBytes(data, buf.get(), v0))
+				if (static_cast<s32>(v0) >= 0 && iopMemSafeWriteBytes(data, buf.get(), v0))
 				{
 					psxCpu->Clear(data, (v0 + 3) / 4);
 				}

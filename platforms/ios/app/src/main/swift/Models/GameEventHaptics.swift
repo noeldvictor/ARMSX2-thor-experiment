@@ -7,8 +7,8 @@ import UIKit
 @MainActor
 final class GameEventHaptics {
     static let shared = GameEventHaptics()
-    private let heavyGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    private let mediumGenerator = UIImpactFeedbackGenerator(style: .medium)
+    private var heavyGenerator: UIImpactFeedbackGenerator?
+    private var mediumGenerator: UIImpactFeedbackGenerator?
     private var lastFire = Date.distantPast
     private var hapticsEnabled = true
 
@@ -26,10 +26,45 @@ final class GameEventHaptics {
         guard now.timeIntervalSince(lastFire) > 0.05 else { return }
         lastFire = now
 
-        let intensity = max(Float(large), Float(small)) / Float(UInt16.max)
+        // The heavy motor is the only one with a speed. The PS2 buzzer is on or off,
+        // so taking the larger of the two used to pin this to full every time a game
+        // so much as touched it.
+        let intensity = large > 0
+            ? Float(large) / Float(UInt16.max)
+            : 0.55
         // Heavy motor (large) dominates; fall back to medium for small-only rumble.
-        let generator = large > 0 ? heavyGenerator : mediumGenerator
-        generator.impactOccurred(intensity: CGFloat(max(0.3, min(1.0, intensity))))
+        let generator: UIImpactFeedbackGenerator
+        if large > 0 {
+            if let heavyGenerator {
+                generator = heavyGenerator
+            } else {
+                let created = UIImpactFeedbackGenerator(style: .heavy)
+                heavyGenerator = created
+                generator = created
+            }
+        } else if let mediumGenerator {
+            generator = mediumGenerator
+        } else {
+            let created = UIImpactFeedbackGenerator(style: .medium)
+            mediumGenerator = created
+            generator = created
+        }
+        // No floor. It used to be 0.3, which flattened every weak rumble onto the same
+        // knock as a medium one. This path is only reached on hardware with no taptic
+        // engine to run the continuous one, so it is a fallback rather than the norm.
+        generator.impactOccurred(intensity: CGFloat(min(1.0, intensity)))
+    }
+
+    func prepareForGameplaySession() {
+        refreshEnabled()
+    }
+
+    /// Drops the cached generators. trigger() builds them again on demand, so this is a
+    /// resource release and not an off switch: rumble after this still gets through.
+    func releaseForEmulationOnlyMode() {
+        heavyGenerator = nil
+        mediumGenerator = nil
+        lastFire = .distantPast
     }
 
     /// Refresh the enabled flag when the user changes the HapticFeedback setting.

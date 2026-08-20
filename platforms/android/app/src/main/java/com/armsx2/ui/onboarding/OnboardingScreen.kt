@@ -31,7 +31,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -241,11 +240,11 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = viewModel()) {
     }
 
     state.error?.let { message ->
-        AlertDialog(
-            onDismissRequest = viewModel::dismissError,
-            title = { Text(str("setup.welcome.heading")) },
-            text = { Text(message) },
-            confirmButton = { TextButton(onClick = viewModel::dismissError) { Text(str("action.ok")) } },
+        com.armsx2.ui.common.NotifyOverlay(
+            title = str("setup.welcome.heading"),
+            message = message,
+            onDismiss = viewModel::dismissError,
+            idPrefix = "setup.error",
         )
     }
 }
@@ -715,7 +714,16 @@ private fun NavigationBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (page > 0) {
-            TextButton(onClick = onBack, enabled = !busy) { Text(str("action.back")) }
+            // Filled, matching the primary action's height and corner radius. As a bare TextButton
+            // it read as body text next to a solid button, so on the folder steps people missed it.
+            // Tonal rather than primary keeps the forward action the obvious one.
+            Button(
+                onClick = onBack,
+                enabled = !busy,
+                modifier = Modifier.defaultMinSize(minHeight = 56.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.filledTonalButtonColors(),
+            ) { Text(str("action.back")) }
         } else {
             Text(
                 str("setup.welcome.subheading"),
@@ -735,7 +743,9 @@ private fun NavigationBar(
                 CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
                 Spacer(Modifier.width(8.dp))
             }
-            Text(if (page == setupStepKeys.lastIndex) str("setup.button.letsGo") else str("action.confirm"), fontWeight = FontWeight.Bold)
+            // "Next", not "Confirm": the welcome page literally says "Hit Next to get started", and
+            // these steps advance a wizard rather than commit anything. Reported by Rei Ayanami.
+            Text(if (page == setupStepKeys.lastIndex) str("setup.button.letsGo") else str("setup.button.next"), fontWeight = FontWeight.Bold)
         }
     }
 }

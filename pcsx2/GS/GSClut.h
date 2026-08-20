@@ -78,6 +78,7 @@ class alignas(32) GSClut final : public GSAlignedClass<32>
 	static void WriteCLUT_T32_I4_CSM1(const u32* RESTRICT src, u16* RESTRICT clut);
 	static void WriteCLUT_T16_I8_CSM1(const u16* RESTRICT src, u16* RESTRICT clut);
 	static void WriteCLUT_T16_I4_CSM1(const u16* RESTRICT src, u16* RESTRICT clut);
+	static void ReadCLUT_T32_I4_Swizzled(const u16* RESTRICT clut, u32* RESTRICT dst);
 	static void ReadCLUT_T32_I8(const u16* RESTRICT clut, u32* RESTRICT dst, int offset);
 	static void ReadCLUT_T32_I4(const u16* RESTRICT clut, u32* RESTRICT dst);
 	//static void ReadCLUT_T32_I4(const u16* RESTRICT clut, u32* RESTRICT dst32, u64* RESTRICT dst64);
@@ -118,7 +119,10 @@ public:
 	void SetNextCLUTTEX0(u64 CBP);
 	bool CanLoadCLUT(const GIFRegTEX0& TEX0, const bool update_CBP = false);
 	bool WriteTest(const GIFRegTEX0& TEX0, const GIFRegTEXCLUT& TEXCLUT);
-	void Write(const GIFRegTEX0& TEX0, const GIFRegTEXCLUT& TEXCLUT);
+	// GV-7 split of the old Write(): the decision state update (front side)
+	// and the palette load from local memory (back-executable).
+	void WriteDecision(const GIFRegTEX0& TEX0, const GIFRegTEXCLUT& TEXCLUT);
+	void WriteLoad(const GIFRegTEX0& TEX0, const GIFRegTEXCLUT& TEXCLUT);
 	//void Read(const GIFRegTEX0& TEX0);
 	void Read32(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA);
 	void GetAlphaMinMax32(int& amin, int& amax);

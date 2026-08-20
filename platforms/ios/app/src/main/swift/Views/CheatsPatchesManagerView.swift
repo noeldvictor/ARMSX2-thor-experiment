@@ -23,6 +23,7 @@ struct CheatsPatchesManagerView: View {
     @State private var pendingRemoval: InstalledFileRemoval?
     @State private var pendingEntryRemoval: PatchEntry?
     @State private var showAdvanced = false
+    @State private var downloadTask: Task<Void, Never>?
     @Environment(\.dismiss) private var dismiss
 
     init(
@@ -55,6 +56,19 @@ struct CheatsPatchesManagerView: View {
                                 .foregroundStyle(.orange)
                         }
                     }
+                } else if PatchStore.hardcorePendingRestart() {
+                    // This screen used to claim everything was blocked the moment Hardcore was
+                    // switched on. It is not: Hardcore arms on a boot, and until then the
+                    // entries below carry on working.
+                    Section {
+                        Label {
+                            Text("Hardcore Mode is switched on but has not taken hold yet. Anything enabled here still works until you boot a game, and will stop then.")
+                                .fixedSize(horizontal: false, vertical: true)
+                        } icon: {
+                            Image(systemName: "clock.badge.exclamationmark")
+                                .foregroundStyle(.orange)
+                        }
+                    }
                 }
                 installedSection
                 availableSection
@@ -72,6 +86,10 @@ struct CheatsPatchesManagerView: View {
                 reload()
                 patchSourcesDraft = store.patchDatabaseURLTemplates
                 cheatSourcesDraft = store.cheatDatabaseURLTemplates
+            }
+            .onDisappear {
+                downloadTask?.cancel()
+                downloadTask = nil
             }
             .sheet(isPresented: $showImportPicker) {
                 ImportDocumentPicker(
@@ -443,7 +461,7 @@ struct CheatsPatchesManagerView: View {
             if store.hasConfiguredPatchDatabase {
                 Button {
                     store.dismissMessage()
-                    Task { await store.downloadFromDatabase(forISO: isoName, asCheat: false) }
+                    startDatabaseDownload(asCheat: false)
                 } label: {
                     Label(
                         hasDatabasePatch ? "Reinstall Patches" : "Download Patches",
@@ -461,7 +479,7 @@ struct CheatsPatchesManagerView: View {
             if store.hasConfiguredCheatDatabase {
                 Button {
                     store.dismissMessage()
-                    Task { await store.downloadFromDatabase(forISO: isoName, asCheat: true) }
+                    startDatabaseDownload(asCheat: true)
                 } label: {
                     Label(
                         hasDatabaseCheat ? "Reinstall Cheats" : "Download Cheats",
@@ -495,6 +513,13 @@ struct CheatsPatchesManagerView: View {
 
     private var hasDatabaseCheat: Bool {
         store.installed.contains { $0.source == .database && $0.isCheat }
+    }
+
+    private func startDatabaseDownload(asCheat: Bool) {
+        downloadTask?.cancel()
+        downloadTask = Task {
+            await store.downloadFromDatabase(forISO: isoName, asCheat: asCheat)
+        }
     }
 
     // MARK: - Import

@@ -3,8 +3,20 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
+import UIKit
 
 struct BIOSListView: View {
+    let embeddedInMenuNavigation: Bool
+    let ownsEmbeddedMenuToolbar: Bool
+
+    init(
+        embeddedInMenuNavigation: Bool = false,
+        ownsEmbeddedMenuToolbar: Bool = true
+    ) {
+        self.embeddedInMenuNavigation = embeddedInMenuNavigation
+        self.ownsEmbeddedMenuToolbar = ownsEmbeddedMenuToolbar
+    }
+
     @State private var bioses: [ARMSX2BIOSInfo] = []
     @State private var defaultBIOS: String = ""
     @State private var settings = SettingsStore.shared
@@ -12,29 +24,123 @@ struct BIOSListView: View {
     @State private var showBIOSImporter = false
     @State private var showBIOSCompatibilityImporter = false
     @State private var showBIOSReplacementAlert = false
+    @State private var showRestartAlert = false
     @State private var pendingBIOSImportURLs: [URL] = []
     @State private var existingBIOSImportFileNames: [String] = []
+    @State private var hasLoadedBIOSes = false
+    @State private var BIOSRefreshPending = true
+    @State private var BIOSRefreshTask: Task<Void, Never>?
+    @State private var appState = AppState.shared
+    @Environment(\.menuTabIsActive) private var menuTabIsActive
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+    private var backgroundConfigured: Bool {
+        settings.hasCustomBackground && settings.backgroundEnabledInBIOS
+    }
+
+    private var backgroundActive: Bool {
+        backgroundConfigured
+    }
+
+    private var showsPageOwnedLargeTitle: Bool {
+        embeddedInMenuNavigation
+            && verticalSizeClass != .compact
+            && UIDevice.current.userInterfaceIdiom == .phone
+    }
 
     var body: some View {
-        NavigationStack {
-            Group {
+        OptionalMenuNavigationStack(embedded: embeddedInMenuNavigation) {
+            ZStack {
+                if backgroundConfigured {
+                    MenuBackgroundLayer(isActive: menuTabIsActive)
+                }
+
                 if bioses.isEmpty {
-                    emptyState
+                    GeometryReader { geometry in
+                        ScrollView {
+                            VStack(spacing: 0) {
+                                if showsPageOwnedLargeTitle {
+                                    EmbeddedMenuLargeTitle(
+                                        title: settings.localized("BIOS")
+                                    )
+                                }
+
+                                emptyState
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        minHeight: max(
+                                            0,
+                                            geometry.size.height
+                                                - (showsPageOwnedLargeTitle ? 64 : 0)
+                                        ),
+                                        alignment: .center
+                                    )
+                                    // Align the BIOS icon with the Games
+                                    // empty-state icon in compact height.
+                                    .offset(
+                                        y: verticalSizeClass == .compact ? -32 : 0
+                                    )
+                            }
+                        }
+                        .contentMargins(.top, 0, for: .scrollContent)
+                        .scrollBounceBehavior(.always)
+                    }
                 } else {
                     List {
-                        ForEach(bioses, id: \.self) { bios in
+                        if showsPageOwnedLargeTitle {
+                            EmbeddedMenuLargeTitle(
+                                title: settings.localized("BIOS")
+                            )
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+                        }
+
+                        ForEach(bioses, id: \.filePath) { bios in
                             biosRow(bios)
+                                .gameCardTintMenuBackgroundListRow(backgroundActive)
                         }
                     }
+                    .contentMargins(.top, 0, for: .scrollContent)
+                    .scrollContentBackground(backgroundActive ? .hidden : .automatic)
+                    .scrollBounceBehavior(.always)
 #if targetEnvironment(macCatalyst)
                     .listStyle(.inset)
 #endif
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationTitle(settings.localized("BIOS"))
+            .stableMenuContentGlassContainer()
+            .clearNavigationContainerBackground()
+            .optionalMenuNavigationChrome(
+                title: settings.localized("BIOS"),
+                backgroundHidden: backgroundActive,
+                embedded: embeddedInMenuNavigation
+            )
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                if !embeddedInMenuNavigation || ownsEmbeddedMenuToolbar {
+                ToolbarItem(id: "menu.bootBIOS", placement: .topBarLeading) {
+                    Button {
+                        if appState.runningGameName == "BIOS" {
+                            appState.returnToGame()
+                        } else if appState.runningGameName != nil {
+                            showRestartAlert = true
+                        } else {
+                            appState.bootBIOSOnly()
+                        }
+                    } label: {
+                        Text(settings.localized("Boot BIOS"))
+                            .font(.callout.weight(.semibold))
+                            .foregroundStyle(.blue)
+                            .lineLimit(1)
+                            .fixedSize(horizontal: true, vertical: false)
+                            .padding(.horizontal, 8)
+                            .frame(minHeight: 36)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(settings.localized("Boot BIOS"))
+                }
+                ToolbarItem(id: "menu.import", placement: .topBarTrailing) {
                     Menu {
                         Button {
                             presentMenuPanel("bios_import") {
@@ -54,13 +160,18 @@ struct BIOSListView: View {
                         }
                     } label: {
                         Image(systemName: "plus")
+                            .foregroundStyle(.blue)
                     }
+                    .buttonStyle(.plain)
                     .accessibilityLabel(settings.localized("Import BIOS"))
                 }
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(id: "menu.refresh", placement: .topBarTrailing) {
                     Button { loadBIOSes() } label: {
                         Image(systemName: "arrow.clockwise")
+                            .foregroundStyle(.blue)
                     }
+                    .buttonStyle(.plain)
+                }
                 }
             }
             .sheet(isPresented: $showBIOSImporter) {
@@ -93,8 +204,40 @@ struct BIOSListView: View {
             } message: {
                 Text(FileImportHandler.replacementConfirmationMessage(for: existingBIOSImportFileNames))
             }
+            .alert(settings.localized("Restart VM?"), isPresented: $showRestartAlert) {
+                Button(settings.localized("Cancel"), role: .cancel) {}
+                Button(settings.localized("Restart"), role: .destructive) {
+                    appState.shutdownAndBootBIOS()
+                }
+            } message: {
+                Text(
+                    "\(settings.localized("VM is currently running."))\n" +
+                    "\(settings.localized("Shut down and start")) " +
+                    "\(settings.localized("Boot BIOS"))?"
+                )
+            }
         }
-        .onAppear { loadBIOSes() }
+        .onAppear {
+            if menuTabIsActive {
+                scheduleBIOSRefresh(after: .milliseconds(0))
+            }
+        }
+        .onChange(of: menuTabIsActive) { _, isActive in
+            guard isActive, BIOSRefreshPending || !hasLoadedBIOSes else {
+                return
+            }
+            scheduleBIOSRefresh(after: .milliseconds(0))
+        }
+        .onReceive(NotificationCenter.default.publisher(for: InitialContentBootstrap.didChangeNotification)) { _ in
+            BIOSRefreshPending = true
+            if menuTabIsActive {
+                scheduleBIOSRefresh(after: .milliseconds(120))
+            }
+        }
+        .onDisappear {
+            BIOSRefreshTask?.cancel()
+            BIOSRefreshTask = nil
+        }
     }
 
     private func presentMenuPanel(_ name: String, _ action: @escaping () -> Void) {
@@ -163,7 +306,13 @@ struct BIOSListView: View {
                 NSLog("[ARMSX2 iOS BIOS] opening primary BIOS picker from empty state")
                 showBIOSImporter = true
             } label: {
-                Label(settings.localized("Import BIOS"), systemImage: "plus")
+                Label {
+                    Text(settings.localized("Import BIOS"))
+                } icon: {
+                    Image(systemName: "plus")
+                        .symbolRenderingMode(.monochrome)
+                        .foregroundStyle(.white)
+                }
             }
             .buttonStyle(.borderedProminent)
             Text(settings.localized("If one picker refuses to select your .bin/.rom file, try the other."))
@@ -172,7 +321,7 @@ struct BIOSListView: View {
                 .multilineTextAlignment(.center)
         }
         .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, minHeight: 240)
     }
 
     private func handleBIOSPickerResult(_ result: Result<[URL], Error>, source: String) {
@@ -235,8 +384,46 @@ struct BIOSListView: View {
     }
 
     private func loadBIOSes() {
-        bioses = ARMSX2Bridge.availableBIOSInfos()
-        defaultBIOS = ARMSX2Bridge.defaultBIOSName()
+        let loadedBIOSes = ARMSX2Bridge.availableBIOSInfos()
+        let loadedDefaultBIOS = ARMSX2Bridge.defaultBIOSName()
+        if !BIOSListsMatch(bioses, loadedBIOSes) {
+            bioses = loadedBIOSes
+        }
+        if defaultBIOS != loadedDefaultBIOS {
+            defaultBIOS = loadedDefaultBIOS
+        }
+        hasLoadedBIOSes = true
+        BIOSRefreshPending = false
+    }
+
+    /// Coalesces bootstrap notifications and avoids opening every BIOS file
+    /// while the retained BIOS page is hidden behind another tab.
+    private func scheduleBIOSRefresh(after delay: Duration) {
+        BIOSRefreshTask?.cancel()
+        BIOSRefreshTask = Task { @MainActor in
+            try? await Task.sleep(for: delay)
+            guard !Task.isCancelled, menuTabIsActive else {
+                BIOSRefreshPending = true
+                return
+            }
+            loadBIOSes()
+            BIOSRefreshTask = nil
+        }
+    }
+
+    private func BIOSListsMatch(
+        _ first: [ARMSX2BIOSInfo],
+        _ second: [ARMSX2BIOSInfo]
+    ) -> Bool {
+        guard first.count == second.count else { return false }
+        return zip(first, second).allSatisfy { lhs, rhs in
+            lhs.filePath == rhs.filePath
+                && lhs.fileName == rhs.fileName
+                && lhs.valid == rhs.valid
+                && lhs.regionName == rhs.regionName
+                && lhs.countryCode == rhs.countryCode
+                && lhs.descriptionText == rhs.descriptionText
+        }
     }
 
     private func nonBootableImportGuidance(for urls: [URL]) -> String? {
@@ -263,22 +450,34 @@ struct BIOSListView: View {
         return "\(fileMessage)\nNo bootable PS2 BIOS was found. Import a valid PS2 BIOS dump before starting games."
     }
 
+    @ViewBuilder
     private func regionBadge(for bios: ARMSX2BIOSInfo) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Color(.secondarySystemGroupedBackground))
+        if backgroundActive {
+            badgeContent(for: bios)
                 .frame(width: 44, height: 44)
-
-            if let flag = flagEmoji(for: bios.countryCode) {
-                Text(flag)
-                    .font(.title2)
-            } else {
-                Image(systemName: "globe")
-                    .font(.title3)
-                    .foregroundStyle(.secondary)
-            }
+                .glassSurface(clear: true, cornerRadius: 12)
+                .accessibilityLabel(bios.valid ? "\(bios.regionName) BIOS" : settings.localized("Not a boot BIOS"))
+        } else {
+            badgeContent(for: bios)
+                .frame(width: 44, height: 44)
+                .background(
+                    Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+                )
+                .accessibilityLabel(bios.valid ? "\(bios.regionName) BIOS" : settings.localized("Not a boot BIOS"))
         }
-        .accessibilityLabel(bios.valid ? "\(bios.regionName) BIOS" : settings.localized("Not a boot BIOS"))
+    }
+
+    @ViewBuilder
+    private func badgeContent(for bios: ARMSX2BIOSInfo) -> some View {
+        if let flag = flagEmoji(for: bios.countryCode) {
+            Text(flag)
+                .font(.title2)
+        } else {
+            Image(systemName: "globe")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+        }
     }
 
     private func flagEmoji(for countryCode: String) -> String? {

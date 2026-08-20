@@ -1,5 +1,9 @@
 add_pcsx2_test(core_test
+	ee_fpu_regfile_tests.cpp
+	ee_clamp_mode_tests.cpp
+	ee_fpu_reloc_tests.cpp
 	patch_tests.cpp
+	savestate_legacy_tests.cpp
 	MockMemoryInterface.h
 	StubHost.cpp
 )
@@ -8,6 +12,20 @@ if(ARCH_ARM64)
 	# Phase 0.6: ARM64 JIT toolchain smoke test (emit + execute ARM64 code).
 	target_sources(core_test PRIVATE arm64_emit_test.cpp)
 endif()
+
+# The recompiler differential-test harness drives the arm64 JIT through
+# arm64-only entry points (recEeExecuteBlock, recEeIsBlockLinked) and the
+# arm64 microVU persist API, so it only builds on ARCH_ARM64.
+if(ARCH_ARM64)
+	add_subdirectory(recompilers)
+endif()
+
+# GS vertex front-end kernel oracle (arch-neutral).
+add_subdirectory(gs)
+
+# IPU colour-conversion oracle (arch-neutral: each host tests its own path).
+add_subdirectory(ipu)
+
 
 set(multi_isa_sources
 	GS/swizzle_test_main.cpp

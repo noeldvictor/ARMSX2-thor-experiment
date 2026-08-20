@@ -185,6 +185,7 @@ PAPX-90020:
     estimateTextureRegion: 1 # Improves performance and reduces hash cache size.
     halfPixelOffset: 2 # Aligns post effects.
     nativeScaling: 1 # Fixes post effects.
+    textureInsideRT: 1 # Fixes post shuffles.
 PAPX-90201:
   name: "ファンタビジョン [体験版]"
   name-sort: "ふぁんたびじょん [たいけんばん]"
@@ -2469,8 +2470,8 @@ SCAJ-20181:
 SCAJ-20182:
   name: "Tales of Destiny"
   region: "NTSC-Unk"
-  gameFixes:
-    - FpuMulHack
+  clampModes:
+    eeClampMode: 3 # Hangs otherwise: it needs the EE multiplier's one-ULP deficit, which the single-precision tier does not model.
 SCAJ-20183:
   name: "ワイルドアームズ ザ フィフスヴァンガード"
   name-sort: "わいるどあーむず ざ ふぃふすゔぁんがーど"
@@ -2516,8 +2517,8 @@ SCAJ-20192:
 SCAJ-20193:
   name: "Tales of Destiny [Director's Cut] [Premium Box]"
   region: "NTSC-C-J"
-  gameFixes:
-    - FpuMulHack
+  clampModes:
+    eeClampMode: 3 # Hangs otherwise: it needs the EE multiplier's one-ULP deficit, which the single-precision tier does not model.
 SCAJ-20194:
   name: "Minna no Golf 4 [PlayStation2 the Best]"
   region: "NTSC-Unk"
@@ -7966,8 +7967,8 @@ SCKA-20100:
   name: "테일즈 오브 데스티니" # Undumped on ReDump as of 2025-08-28
   name-en: "Tales of Destiny"
   region: "NTSC-K"
-  gameFixes:
-    - FpuMulHack
+  clampModes:
+    eeClampMode: 3 # Hangs otherwise: it needs the EE multiplier's one-ULP deficit, which the single-precision tier does not model.
 SCKA-20101:
   name: "성검전설 4"
   name-en: "Seiken Densetsu 4"
@@ -8068,8 +8069,8 @@ SCKA-20119:
   name: "테일즈 오브 데스티니 디렉터즈컷 [Premium Box]" # Undumped on ReDump as of 2025-08-28
   name-en: "Tales of Destiny - Director's Cut [Premium Box]"
   region: "NTSC-K"
-  gameFixes:
-    - FpuMulHack
+  clampModes:
+    eeClampMode: 3 # Hangs otherwise: it needs the EE multiplier's one-ULP deficit, which the single-precision tier does not model.
 SCKA-20120:
   name: "라쳇 & 클랭크 - 공구들고 바캉스" # Undumped on ReDump as of 2025-08-28
   name-en: "Ratchet & Clank - Vacation with Tools" # Ratchet & Clank - Size Matters
@@ -9118,6 +9119,7 @@ SCPS-15064:
     estimateTextureRegion: 1 # Improves performance and reduces hash cache size.
     halfPixelOffset: 2 # Aligns post effects.
     nativeScaling: 1 # Fixes post effects.
+    textureInsideRT: 1 # Fixes post shuffles.
   patches:
     A5768F53:
       content: |-
@@ -15145,6 +15147,14 @@ SLES-50276:
   name: "The Gift"
   name-sort: "Gift, The"
   region: "PAL-E"
+  patches:
+    CC76CD02:
+      content: |-
+        // Sound RPC races because of shared send/receive buffers with badly
+        // placed wait loop, fix by forcing all sound rpc to be synchronous.
+        // Ideal fix would be moving the rpc wait loop though.
+        author=Ziemas
+        patch=0,EE,002159e0,word,00000000
 SLES-50277:
   name: "Red Faction"
   region: "PAL-E"
@@ -24979,6 +24989,10 @@ SLES-53869:
   name: "Crazy Frog Racer"
   region: "PAL-M5"
   compat: 5
+  gsHWFixes:
+    deinterlace: 9 # Game requires AdaptiveBFF de-interlacing.
+    halfPixelOffset: 5 # Aligns shadows.
+    nativeScaling: 1 # Aligns post-processing.
 SLES-53870:
   name: "Devil Kings"
   region: "PAL-M5"
@@ -25663,6 +25677,7 @@ SLES-54138:
     preloadFrameData: 1 # Fixes menu graphics.
     autoFlush: 1 # Fixes motion blur.
     minimumBlendingLevel: 2 # Improves post effects.
+    limit24BitDepth: 2 # Fixes icon brightness.
 SLES-54139:
   name: "Earache - Extreme Metal Racing"
   region: "PAL-E"
@@ -26319,6 +26334,7 @@ SLES-54335:
     preloadFrameData: 1 # Fixes menu graphics.
     autoFlush: 1 # Fixes motion blur.
     minimumBlendingLevel: 2 # Improves post effects.
+    limit24BitDepth: 2 # Fixes icon brightness.
 SLES-54336:
   name: "Lumines Plus"
   region: "PAL-M5"
@@ -32430,6 +32446,10 @@ SLKA-25255:
   name-sort: "Mobile Suit Gundam Seed - Kkeunnaji Anneun Naeillo"
   name-en: "Mobile Suit Gundam Seed - Never Ending Tomorrow"
   region: "NTSC-K"
+SLKA-25256:
+  name: "UEFA 챔피언스 리그 2006-2007"
+  name-en: "UEFA Champions League 2006-2007"
+  region: "NTSC-K"
 SLKA-25257:
   name: "풍운　막말전" # Undumped on ReDump as of 2025-08-28
   name-en: "Fu-un Bakumatsu-den"
@@ -32659,7 +32679,7 @@ SLKA-25299:
 SLKA-25300:
   name: "디지털 데빌 사가: 아바탈 튜너 [Special Package]"
   name-en: "Digital Devil Saga - Avatar Tuner [Special Package]"
-  region: "NTSC-J-K"
+  region: "NTSC-K"
   compat: 5
   gameFixes:
     - EETimingHack
@@ -61753,8 +61773,8 @@ SLPS-25715:
   name-sort: "ているず おぶ ですてぃにー"
   name-en: "Tales of Destiny"
   region: "NTSC-J"
-  gameFixes:
-    - FpuMulHack
+  clampModes:
+    eeClampMode: 3 # Hangs otherwise: it needs the EE multiplier's one-ULP deficit, which the single-precision tier does not model.
 SLPS-25716:
   name: "デジモンセイバーズ アナザーミッション"
   name-sort: "でじもんせいばーず あなざーみっしょん"
@@ -62540,8 +62560,8 @@ SLPS-25841:
   name-sort: "ているず おぶ ですてぃにー でぃれくたーずかっと [ぷれみあむBOX]"
   name-en: "Tales of Destiny [Director's Cut] [Premium Box]"
   region: "NTSC-J"
-  gameFixes:
-    - FpuMulHack
+  clampModes:
+    eeClampMode: 3 # Hangs otherwise: it needs the EE multiplier's one-ULP deficit, which the single-precision tier does not model.
   memcardFilters: # Allows import of non-DC Tales of Destiny data.
     - "SLPS-25841"
     - "SLPS-25842"
@@ -62551,9 +62571,9 @@ SLPS-25842:
   name-sort: "ているず おぶ ですてぃにー でぃれくたーずかっと"
   name-en: "Tales of Destiny [Director's Cut]"
   region: "NTSC-J"
+  clampModes:
+    eeClampMode: 3 # Hangs otherwise: it needs the EE multiplier's one-ULP deficit, which the single-precision tier does not model.
   compat: 5
-  gameFixes:
-    - FpuMulHack
   memcardFilters:
     - "SLPS-25841"
     - "SLPS-25842"
@@ -64194,6 +64214,9 @@ SLPS-73270:
   name-sort: "すーぱーろぼっとたいせんZ [PlayStation2 the Best]"
   name-en: "Super Robot Taisen Z [PlayStation2 the Best]"
   region: "NTSC-J"
+  memcardFilters:
+    - "SLPS-73270"
+    - "SLPS-25887"
 SLPS-73401:
   name: "はじめの一歩 VICTORIOUS BOXERS ～CHAMPIONSHIP VERSION～ [PlayStation2 the Best]"
   name-sort: "はじめのいっぽ VICTORIOUS BOXERS CHAMPIONSHIP VERSION [PlayStation2 the Best]"
@@ -71850,6 +71873,7 @@ SLUS-21344:
     preloadFrameData: 1 # Fixes menu graphics.
     autoFlush: 1 # Fixes motion blur.
     minimumBlendingLevel: 2 # Improves post effects.
+    limit24BitDepth: 2 # Fixes icon brightness.
 SLUS-21345:
   name: "Grandia III [Disc 2 of 2]"
   region: "NTSC-U"
@@ -75412,6 +75436,7 @@ SLUS-28061:
     preloadFrameData: 1 # Fixes menu graphics.
     autoFlush: 1 # Fixes motion blur.
     minimumBlendingLevel: 2 # Improves post effects.
+    limit24BitDepth: 2 # Fixes icon brightness.
 SLUS-28062:
   name: "Dance Factory [Trade Demo]"
   region: "NTSC-U"
@@ -76198,6 +76223,7 @@ SLUS-29188:
     preloadFrameData: 1 # Fixes menu graphics.
     autoFlush: 1 # Fixes motion blur.
     minimumBlendingLevel: 2 # Improves post effects.
+    limit24BitDepth: 2 # Fixes icon brightness.
 SLUS-29189:
   name: "FIFA World Cup - Germany 2006 [Demo]"
   region: "NTSC-U"

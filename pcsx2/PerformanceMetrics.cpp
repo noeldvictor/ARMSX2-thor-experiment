@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 #include <chrono>
+#include <cstdio>
+#include <mutex>
 #include <vector>
 
+#include "common/Console.h"
 #include "common/Timer.h"
 #include "common/Threading.h"
 
@@ -14,6 +17,16 @@
 #include "MTGS.h"
 #include "MTVU.h"
 #include "VMManager.h"
+
+#if defined(__ANDROID__)
+#include <algorithm>
+#include <cstdint>
+#include <mutex>
+#include <string>
+#include <dlfcn.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+#endif
 
 static const float UPDATE_INTERVAL = 0.5f;
 
@@ -30,6 +43,15 @@ static u32 s_unskipped_frames_since_last_update = 0;
 static Common::Timer s_last_update_time;
 static Common::Timer s_last_frame_time;
 
+// Session perf logging: a rolling emulog line every ~30s of presented
+// frames, and a whole-session average at shutdown (LogSessionSummary).
+// Gives every -logfile run a durable framerate record. Wall-clock based:
+// paused time dilutes the session average but not the rolling lines.
+static const float LOG_INTERVAL = 30.0f;
+static Common::Timer s_session_timer;
+static float s_log_accum_time = 0.0f;
+static u32 s_log_accum_frames = 0;
+
 // frame number, updated by the GS thread
 static u64 s_frame_number = 0;
 
@@ -41,14 +63,134 @@ static u32 s_gs_privileged_register_writes_since_last_update = 0;
 static Threading::ThreadHandle s_cpu_thread_handle;
 static u64 s_last_cpu_time = 0;
 static u64 s_last_gs_time = 0;
+static u64 s_last_gs_back_time = 0;
 static u64 s_last_vu_time = 0;
 static u64 s_last_capture_time = 0;
 static u64 s_last_ticks = 0;
+
+// The GS back thread registers itself from its own entry point and is cleared from the MTGS
+// thread after the join, so unlike every other handle here this one is written by a thread
+// other than the one sampling it. Handle and running total are therefore both owned by the
+// mutex, which is taken twice a second at most.
+static std::mutex s_gs_back_thread_mutex;
+static Threading::ThreadHandle s_gs_back_thread_handle;
+
+/// CPU time consumed by the back thread since the last call, in Threading tick units.
+/// A thread that started or stopped inside the window contributes only the part of it that
+/// the handle was installed for; the alternative is a u64 subtraction that wraps into a
+/// nonsense percentage on the first window after a GSreopen.
+static u64 SampleGSBackThreadCPUTime()
+{
+	std::unique_lock lock(s_gs_back_thread_mutex);
+	const u64 now = s_gs_back_thread_handle ? s_gs_back_thread_handle.GetCPUTime() : s_last_gs_back_time;
+	const u64 delta = (now > s_last_gs_back_time) ? (now - s_last_gs_back_time) : 0;
+	s_last_gs_back_time = now;
+	return delta;
+}
+
+#if defined(__ANDROID__)
+// ---- Android ADPF (PerformanceHintManager) ---------------------------------
+// Tells the OS "these threads produce a frame every N ns, clock them to hit it."
+// PS2 emulation is bursty and latency-sensitive, so Android's DVFS governor
+// routinely under-clocks the CPU/GPU under it; ADPF is the purpose-built fix.
+// Symbols are resolved at runtime from libandroid.so so the app still loads on
+// pre-API-33 devices (there the session is never created — everything no-ops).
+struct AdpfApi
+{
+	void* (*getManager)() = nullptr;
+	void* (*createSession)(void*, const int32_t*, size_t, int64_t) = nullptr;
+	int (*updateTarget)(void*, int64_t) = nullptr;
+	int (*reportActual)(void*, int64_t) = nullptr;
+	void (*closeSession)(void*) = nullptr;
+	bool tried = false;
+
+	bool Available()
+	{
+		if (!tried)
+		{
+			tried = true;
+			if (void* lib = dlopen("libandroid.so", RTLD_NOW | RTLD_LOCAL))
+			{
+				getManager = reinterpret_cast<decltype(getManager)>(dlsym(lib, "APerformanceHint_getManager"));
+				createSession = reinterpret_cast<decltype(createSession)>(dlsym(lib, "APerformanceHint_createSession"));
+				updateTarget = reinterpret_cast<decltype(updateTarget)>(dlsym(lib, "APerformanceHint_updateTargetWorkDuration"));
+				reportActual = reinterpret_cast<decltype(reportActual)>(dlsym(lib, "APerformanceHint_reportActualWorkDuration"));
+				closeSession = reinterpret_cast<decltype(closeSession)>(dlsym(lib, "APerformanceHint_closeSession"));
+			}
+		}
+		return getManager && createSession && updateTarget && reportActual && closeSession;
+	}
+};
+
+static std::mutex s_adpf_mutex;
+static AdpfApi s_adpf;
+static std::vector<int32_t> s_adpf_tids;
+static void* s_adpf_manager = nullptr;
+static void* s_adpf_session = nullptr;
+static bool s_adpf_enabled = false; // experimental, opt-in
+static bool s_adpf_create_failed = false;
+static bool s_adpf_report_warned = false;
+static bool s_adpf_paused = false; // reporting suspended (unlimited/vsync/interrupted), edge-logged
+static int64_t s_adpf_target_ns = 0;
+static Common::Timer::Value s_adpf_work_start = 0; // start of the current active-work period (0 = none)
+
+// The frame deadline in ns: emulated refresh scaled by the limiter's target speed, so turbo /
+// slow-motion move the deadline correctly. Returns 0 when there is no finite deadline (Unlimited,
+// GetTargetSpeed()==0), so the caller pauses ADPF rather than feeding a bogus/inf target.
+static int64_t AdpfTargetNs()
+{
+	const double fps = VMManager::GetFrameRate() * static_cast<double>(VMManager::GetTargetSpeed());
+	return (fps > 1.0) ? static_cast<int64_t>(1.0e9 / fps) : 0;
+}
+
+// Must hold s_adpf_mutex. Creates the session once a perf thread has registered and a finite
+// deadline exists, and LOGS the real outcome — so "ACTIVE" means a session genuinely exists,
+// not merely that the user flipped the toggle.
+static void AdpfEnsureSession()
+{
+	if (s_adpf_session || s_adpf_create_failed || !s_adpf_enabled || s_adpf_tids.empty())
+		return;
+	if (!s_adpf.Available())
+	{
+		s_adpf_create_failed = true; // pre-API-33 / no libandroid; stop retrying
+		Console.WriteLn("ADPF: PerformanceHintManager symbols unavailable (needs Android 13+) — clock hint inactive.");
+		return;
+	}
+	if (!s_adpf_manager)
+		s_adpf_manager = s_adpf.getManager();
+	if (!s_adpf_manager)
+	{
+		s_adpf_create_failed = true;
+		Console.WriteLn("ADPF: getManager() returned null — clock hint inactive.");
+		return;
+	}
+	const int64_t target = AdpfTargetNs();
+	if (target <= 0)
+		return; // no finite deadline yet (Unlimited / VM not paced); retry once one exists
+	s_adpf_session = s_adpf.createSession(s_adpf_manager, s_adpf_tids.data(), s_adpf_tids.size(), target);
+	if (!s_adpf_session)
+	{
+		s_adpf_create_failed = true;
+		Console.Warning("ADPF: createSession() over %zu threads failed — clock hint inactive.", s_adpf_tids.size());
+		return;
+	}
+	s_adpf_target_ns = target;
+	s_adpf_report_warned = false;
+	s_adpf_paused = false;
+	std::string tid_list;
+	for (size_t i = 0; i < s_adpf_tids.size(); i++)
+		tid_list += (i ? "," : "") + std::to_string(s_adpf_tids[i]);
+	Console.WriteLn("ADPF: session ACTIVE over %zu threads [tids %s], deadline %.2f ms.", s_adpf_tids.size(),
+		tid_list.c_str(), static_cast<double>(target) / 1.0e6);
+}
+#endif // __ANDROID__
 
 static double s_cpu_thread_usage = 0.0f;
 static double s_cpu_thread_time = 0.0f;
 static float s_gs_thread_usage = 0.0f;
 static float s_gs_thread_time = 0.0f;
+static float s_gs_back_thread_usage = 0.0f;
+static float s_gs_back_thread_time = 0.0f;
 static float s_vu_thread_usage = 0.0f;
 static float s_vu_thread_time = 0.0f;
 static float s_capture_thread_usage = 0.0f;
@@ -67,6 +209,7 @@ struct GSSWThreadStats
 std::vector<GSSWThreadStats> s_gs_sw_threads;
 
 static float s_average_gpu_time = 0.0f;
+static float s_last_gpu_time = 0.0f;
 static float s_accumulated_gpu_time = 0.0f;
 static float s_gpu_usage = 0.0f;
 static u32 s_presents_since_last_update = 0;
@@ -90,18 +233,35 @@ void PerformanceMetrics::Clear()
 	s_cpu_thread_time = 0.0f;
 	s_gs_thread_usage = 0.0f;
 	s_gs_thread_time = 0.0f;
+	s_gs_back_thread_usage = 0.0f;
+	s_gs_back_thread_time = 0.0f;
 	s_vu_thread_usage = 0.0f;
 	s_vu_thread_time = 0.0f;
 	s_capture_thread_usage = 0.0f;
 	s_capture_thread_time = 0.0f;
 
 	s_average_gpu_time = 0.0f;
+	s_last_gpu_time = 0.0f;
 	s_gpu_usage = 0.0f;
 
 	s_frame_number = 0;
 
+	s_session_timer.Reset();
+	s_log_accum_time = 0.0f;
+	s_log_accum_frames = 0;
+
 	s_frame_time_history.fill(0.0f);
 	s_frame_time_history_pos = 0;
+}
+
+void PerformanceMetrics::LogSessionSummary()
+{
+	const double elapsed = s_session_timer.GetTimeSeconds();
+	if (s_frame_number == 0 || elapsed < 1.0)
+		return;
+	Console.WriteLn("PerfLog session: %llu frames in %.1fs wall = %.2f fps average",
+		static_cast<unsigned long long>(s_frame_number), elapsed,
+		static_cast<double>(s_frame_number) / elapsed);
 }
 
 void PerformanceMetrics::Reset()
@@ -122,6 +282,7 @@ void PerformanceMetrics::Reset()
 
 	s_last_cpu_time = s_cpu_thread_handle.GetCPUTime();
 	s_last_gs_time = MTGS::GetThreadHandle().GetCPUTime();
+	SampleGSBackThreadCPUTime(); // rebases the running total; the delta is deliberately dropped
 	s_last_vu_time = THREAD_VU1 ? vu1Thread.GetThreadHandle().GetCPUTime() : 0;
 	s_last_ticks = GetCPUTicks();
 	s_last_capture_time = GSCapture::IsCapturing() ? GSCapture::GetEncoderThreadHandle().GetCPUTime() : 0;
@@ -199,6 +360,7 @@ void PerformanceMetrics::Update(bool gs_register_write, bool fb_blit, bool is_sk
 
 	const u64 cpu_time = s_cpu_thread_handle.GetCPUTime();
 	const u64 gs_time = MTGS::GetThreadHandle().GetCPUTime();
+	const u64 gs_back_delta = SampleGSBackThreadCPUTime();
 	const u64 vu_time = THREAD_VU1 ? vu1Thread.GetThreadHandle().GetCPUTime() : 0;
 	const u64 capture_time = GSCapture::IsCapturing() ? GSCapture::GetEncoderThreadHandle().GetCPUTime() : 0;
 
@@ -213,10 +375,12 @@ void PerformanceMetrics::Update(bool gs_register_write, bool fb_blit, bool is_sk
 
 	s_cpu_thread_usage = static_cast<double>(cpu_delta) * pct_divider;
 	s_gs_thread_usage = static_cast<double>(gs_delta) * pct_divider;
+	s_gs_back_thread_usage = static_cast<double>(gs_back_delta) * pct_divider;
 	s_vu_thread_usage = static_cast<double>(vu_delta) * pct_divider;
 	s_capture_thread_usage = static_cast<double>(capture_delta) * pct_divider;
 	s_cpu_thread_time = static_cast<double>(cpu_delta) * time_divider;
 	s_gs_thread_time = static_cast<double>(gs_delta) * time_divider;
+	s_gs_back_thread_time = static_cast<double>(gs_back_delta) * time_divider;
 	s_vu_thread_time = static_cast<double>(vu_delta) * time_divider;
 	s_capture_thread_time = static_cast<double>(capture_delta) * time_divider;
 
@@ -229,6 +393,25 @@ void PerformanceMetrics::Update(bool gs_register_write, bool fb_blit, bool is_sk
 		thread.time = static_cast<double>(delta) * time_divider;
 	}
 
+	// Rolling perf log (uses this window's frame count before it resets).
+	s_log_accum_time += time;
+	s_log_accum_frames += s_frames_since_last_update;
+	if (s_log_accum_time >= LOG_INTERVAL)
+	{
+		// The back thread only exists under GSBackThreadMode >= Lockstep, so the field is
+		// omitted rather than logged as a permanent 0% in the default configuration.
+		char gs_back[32] = {};
+		if (HasGSBackThread())
+			std::snprintf(gs_back, sizeof(gs_back), " GSB %.0f%%", s_gs_back_thread_usage);
+
+		Console.WriteLn("PerfLog: %.1f fps | EE %.0f%% GS %.0f%%%s VU %.0f%% GPU %.0f%% | frame %llu",
+			static_cast<float>(s_log_accum_frames) / s_log_accum_time, s_cpu_thread_usage,
+			s_gs_thread_usage, gs_back, s_vu_thread_usage, s_gpu_usage,
+			static_cast<unsigned long long>(s_frame_number));
+		s_log_accum_time = 0.0f;
+		s_log_accum_frames = 0;
+	}
+
 	s_frames_since_last_update = 0;
 	s_unskipped_frames_since_last_update = 0;
 	s_presents_since_last_update = 0;
@@ -238,6 +421,7 @@ void PerformanceMetrics::Update(bool gs_register_write, bool fb_blit, bool is_sk
 
 void PerformanceMetrics::OnGPUPresent(float gpu_time, u64 vs_invocations, u64 ps_invocations)
 {
+	s_last_gpu_time = gpu_time;
 	s_accumulated_gpu_time += gpu_time;
 	s_accumulated_gpu_vs_invocations += vs_invocations;
 	s_accumulated_gpu_ps_invocations += ps_invocations;
@@ -250,6 +434,127 @@ void PerformanceMetrics::SetCPUThread(Threading::ThreadHandle thread)
 	s_cpu_thread_handle = std::move(thread);
 }
 
+void PerformanceMetrics::AdpfRegisterCallingThread()
+{
+#if defined(__ANDROID__)
+	const int32_t tid = static_cast<int32_t>(syscall(SYS_gettid));
+	std::lock_guard<std::mutex> lock(s_adpf_mutex);
+	if (std::find(s_adpf_tids.begin(), s_adpf_tids.end(), tid) != s_adpf_tids.end())
+		return;
+	s_adpf_tids.push_back(tid);
+	// The session's thread list is fixed at creation, so a newly-registered thread
+	// means the current session is missing it — drop it and let the next frame
+	// recreate it over the full set.
+	if (s_adpf_session)
+	{
+		s_adpf.closeSession(s_adpf_session);
+		s_adpf_session = nullptr;
+	}
+	s_adpf_create_failed = false;
+#endif
+}
+
+void PerformanceMetrics::AdpfSetEnabled(bool enabled)
+{
+#if defined(__ANDROID__)
+	std::lock_guard<std::mutex> lock(s_adpf_mutex);
+	if (s_adpf_enabled == enabled)
+		return;
+	s_adpf_enabled = enabled;
+	if (!enabled && s_adpf_session)
+	{
+		s_adpf.closeSession(s_adpf_session);
+		s_adpf_session = nullptr;
+	}
+	if (enabled)
+		s_adpf_create_failed = false; // allow the next frame to recreate
+#else
+	(void)enabled;
+#endif
+}
+
+void PerformanceMetrics::AdpfShutdown()
+{
+#if defined(__ANDROID__)
+	std::lock_guard<std::mutex> lock(s_adpf_mutex);
+	if (s_adpf_session)
+	{
+		s_adpf.closeSession(s_adpf_session);
+		s_adpf_session = nullptr;
+	}
+	s_adpf_tids.clear();
+	s_adpf_create_failed = false;
+	s_adpf_work_start = 0;
+#endif
+}
+
+void PerformanceMetrics::AdpfOnFrameWorkComplete()
+{
+#if defined(__ANDROID__)
+	// Sampled at Throttle() entry — the instant the frame's active CPU work finished, before the
+	// limiter sleep — so (now - work_start) excludes the deliberate limiter sleep. It is NOT pure
+	// CPU compute: the EE can still block behind a full MTGS queue that is itself stalled on
+	// presentation, so some present-wait can leak in. Acceptable for a first experiment, and a far
+	// better approximation of ADPF's "last workload cycle" than the present interval.
+	const Common::Timer::Value now = Common::Timer::GetCurrentValue();
+	std::lock_guard<std::mutex> lock(s_adpf_mutex);
+	if (!s_adpf_enabled)
+		return;
+	AdpfEnsureSession();
+	if (!s_adpf_session || s_adpf_work_start == 0)
+		return;
+	const int64_t target = AdpfTargetNs();
+	if (target > 0 && target != s_adpf_target_ns)
+	{
+		s_adpf.updateTarget(s_adpf_session, target);
+		s_adpf_target_ns = target;
+	}
+	const int64_t work_ns = static_cast<int64_t>(Common::Timer::ConvertValueToSeconds(now - s_adpf_work_start) * 1.0e9);
+	// Drop absurd outliers (savestate load, renderer recreation, debugger stall): a period several
+	// times the deadline is not a real frame and would spam a spurious max-frequency demand.
+	if (work_ns <= 0 || (s_adpf_target_ns > 0 && work_ns > s_adpf_target_ns * 4))
+		return;
+	if (s_adpf_paused)
+	{
+		Console.WriteLn("ADPF: reporting resumed.");
+		s_adpf_paused = false;
+	}
+	const int ret = s_adpf.reportActual(s_adpf_session, work_ns);
+	if (ret != 0 && !s_adpf_report_warned)
+	{
+		s_adpf_report_warned = true;
+		Console.Warning("ADPF: reportActualWorkDuration returned %d — driver is ignoring the hint.", ret);
+	}
+#endif
+}
+
+void PerformanceMetrics::AdpfBeginFrameWork()
+{
+#if defined(__ANDROID__)
+	// Opens a work period at the post-sleep instant (Throttle exit), so the deliberate limiter
+	// sleep is excluded from the next reported duration.
+	const Common::Timer::Value now = Common::Timer::GetCurrentValue();
+	std::lock_guard<std::mutex> lock(s_adpf_mutex);
+	s_adpf_work_start = now;
+#endif
+}
+
+void PerformanceMetrics::AdpfPauseFrameWork()
+{
+#if defined(__ANDROID__)
+	// Not frame-limiting (unlimited / host-vsync / interrupted) — invalidate the period so no
+	// wall-time-with-wait duration is reported, and edge-log so a tester never sees "ACTIVE" while
+	// nothing is actually being submitted.
+	std::lock_guard<std::mutex> lock(s_adpf_mutex);
+	if (s_adpf_session && !s_adpf_paused)
+	{
+		Console.WriteLn("ADPF: reporting paused (unlimited / host-vsync / interrupted) — no durations submitted.");
+		s_adpf_paused = true;
+	}
+	s_adpf_work_start = 0;
+#endif
+}
+
 void PerformanceMetrics::SetGSSWThreadCount(u32 count)
 {
 	s_gs_sw_threads.clear();
@@ -260,6 +565,15 @@ void PerformanceMetrics::SetGSSWThread(u32 index, Threading::ThreadHandle thread
 {
 	s_gs_sw_threads[index].last_cpu_time = thread ? thread.GetCPUTime() : 0;
 	s_gs_sw_threads[index].handle = std::move(thread);
+}
+
+void PerformanceMetrics::SetGSBackThread(Threading::ThreadHandle thread)
+{
+	std::unique_lock lock(s_gs_back_thread_mutex);
+	// Rebase off the incoming handle, so the first window after a GSreopen respawn measures
+	// this thread's time rather than its difference against the retired thread's total.
+	s_last_gs_back_time = thread ? thread.GetCPUTime() : 0;
+	s_gs_back_thread_handle = std::move(thread);
 }
 
 u64 PerformanceMetrics::GetFrameNumber()
@@ -327,6 +641,22 @@ float PerformanceMetrics::GetGSThreadAverageTime()
 	return s_gs_thread_time;
 }
 
+bool PerformanceMetrics::HasGSBackThread()
+{
+	std::unique_lock lock(s_gs_back_thread_mutex);
+	return static_cast<bool>(s_gs_back_thread_handle);
+}
+
+float PerformanceMetrics::GetGSBackThreadUsage()
+{
+	return s_gs_back_thread_usage;
+}
+
+float PerformanceMetrics::GetGSBackThreadAverageTime()
+{
+	return s_gs_back_thread_time;
+}
+
 float PerformanceMetrics::GetVUThreadUsage()
 {
 	return s_vu_thread_usage;
@@ -370,6 +700,11 @@ float PerformanceMetrics::GetGPUUsage()
 float PerformanceMetrics::GetGPUAverageTime()
 {
 	return s_average_gpu_time;
+}
+
+float PerformanceMetrics::GetLastGPUTime()
+{
+	return s_last_gpu_time;
 }
 
 double PerformanceMetrics::GetGPUAverageVSInvocations()

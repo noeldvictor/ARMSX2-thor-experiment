@@ -168,6 +168,14 @@ namespace ImGuiFullscreen
 	static constexpr float NOTIFICATION_FADE_IN_TIME = 0.2f;
 	static constexpr float NOTIFICATION_FADE_OUT_TIME = 0.8f;
 
+	// How many notifications may be on screen at once, and the least time between two of them
+	// appearing. Finishing a game submits every leaderboard at once — Final Fantasy XII posted six
+	// in a single frame — and with every one starting immediately they arrived as a wall that
+	// covered the screen and pushed the actual achievement unlock out of sight before it could be
+	// read. Anything past the limit now waits its turn instead of stacking.
+	static constexpr u32 MAX_VISIBLE_NOTIFICATIONS = 3;
+	static constexpr float NOTIFICATION_STAGGER_TIME = 0.4f;
+
 	struct Notification
 	{
 		std::string key;
@@ -971,22 +979,10 @@ InputLayout ImGuiFullscreen::GetGamepadLayout()
 static InputLayout GetEffectiveGlyphLayout()
 {
 	const InputLayout preferred_layout = InputManager::GetGamepadIconPreference();
-	if (preferred_layout == InputLayout::Xbox || preferred_layout == InputLayout::Playstation || preferred_layout == InputLayout::Nintendo)
+	if (preferred_layout != InputLayout::Unknown)
 		return preferred_layout;
 
-	const InputLayout detected_layout = ImGuiFullscreen::GetGamepadLayout();
-	switch (detected_layout)
-	{
-		case InputLayout::Playstation:
-			return InputLayout::Playstation;
-		case InputLayout::Xbox:
-			return InputLayout::Xbox;
-		case InputLayout::Nintendo:
-			return InputLayout::Nintendo;
-		case InputLayout::Unknown:
-		default:
-			return InputLayout::Playstation;
-	}
+	return ImGuiFullscreen::GetGamepadLayout();
 }
 
 ImGuiFullscreen::GamepadGlyphs ImGuiFullscreen::GetGamepadGlyphs()
@@ -994,16 +990,17 @@ ImGuiFullscreen::GamepadGlyphs ImGuiFullscreen::GetGamepadGlyphs()
 	const InputLayout layout = GetEffectiveGlyphLayout();
 	const bool xbox = (layout == InputLayout::Xbox);
 	const bool nintendo = (layout == InputLayout::Nintendo);
+	const bool unknown = (layout == InputLayout::Unknown || layout == InputLayout::Generic);
 	return {
-		nintendo ? ICON_PF_BUTTON_B : (xbox ? ICON_PF_BUTTON_A : ICON_PF_BUTTON_CROSS),
-		nintendo ? ICON_PF_BUTTON_A : (xbox ? ICON_PF_BUTTON_B : ICON_PF_BUTTON_CIRCLE),
-		nintendo ? ICON_PF_BUTTON_Y : (xbox ? ICON_PF_BUTTON_X : ICON_PF_BUTTON_SQUARE),
-		nintendo ? ICON_PF_BUTTON_X : (xbox ? ICON_PF_BUTTON_Y : ICON_PF_BUTTON_TRIANGLE),
+		unknown ? ICON_PF_BUTTON_DOWN_A : (nintendo ? ICON_PF_BUTTON_B : (xbox ? ICON_PF_BUTTON_A : ICON_PF_BUTTON_CROSS)),
+		unknown ? ICON_PF_BUTTON_RIGHT_B : (nintendo ? ICON_PF_BUTTON_A : (xbox ? ICON_PF_BUTTON_B : ICON_PF_BUTTON_CIRCLE)),
+		unknown ? ICON_PF_BUTTON_LEFT_X : (nintendo ? ICON_PF_BUTTON_Y : (xbox ? ICON_PF_BUTTON_X : ICON_PF_BUTTON_SQUARE)),
+		unknown ? ICON_PF_BUTTON_UP_Y : (nintendo ? ICON_PF_BUTTON_X : (xbox ? ICON_PF_BUTTON_Y : ICON_PF_BUTTON_TRIANGLE)),
 		xbox ? ICON_PF_XBOX_DPAD : ICON_PF_DPAD,
 		xbox ? ICON_PF_XBOX_DPAD_LEFT_RIGHT : ICON_PF_DPAD_LEFT_RIGHT,
 		xbox ? ICON_PF_XBOX_DPAD_UP_DOWN : ICON_PF_DPAD_UP_DOWN,
-		nintendo ? ICON_PF_MINUS : (xbox ? ICON_PF_SHARE_CAPTURE : ICON_PF_SELECT_SHARE),
-		nintendo ? ICON_PF_PLUS : (xbox ? ICON_PF_BURGER_MENU : ICON_PF_START),
+		nintendo ? ICON_PF_MINUS : ((xbox || unknown) ? ICON_PF_SHARE_CAPTURE : ICON_PF_SELECT_SHARE),
+		nintendo ? ICON_PF_PLUS : ((xbox || unknown) ? ICON_PF_BURGER_MENU : ICON_PF_START),
 	};
 }
 
@@ -3119,13 +3116,38 @@ void ImGuiFullscreen::AddNotification(std::string key, float duration, std::stri
 				it->text = std::move(text);
 				it->badge_path = std::move(image_path);
 
-				// Don't fade it in again
-				const float time_passed =
-					static_cast<float>(Common::Timer::ConvertValueToSeconds(current_time - it->start_time));
-				it->start_time =
-					current_time - Common::Timer::ConvertSecondsToValue(std::min(time_passed, NOTIFICATION_FADE_IN_TIME));
+				// Don't fade it in again -- but only if it is actually on screen. A replacement for
+				// a notification that is still QUEUED must keep its scheduled start: the elapsed
+				// time would be negative there, and Timer::Value is unsigned, so subtracting it
+				// would wrap and fling the notification years into the future.
+				if (it->start_time <= current_time)
+				{
+					const float time_passed =
+						static_cast<float>(Common::Timer::ConvertValueToSeconds(current_time - it->start_time));
+					it->start_time =
+						current_time - Common::Timer::ConvertSecondsToValue(std::min(time_passed, NOTIFICATION_FADE_IN_TIME));
+				}
 				return;
 			}
+		}
+	}
+
+	// Work out when this one is allowed to appear, rather than starting it now.
+	//
+	// Two constraints: it waits until at most MAX_VISIBLE_NOTIFICATIONS - 1 others are still on
+	// screen, and it never appears in the same instant as the one before it. A burst therefore
+	// arrives as a readable sequence instead of a wall.
+	Common::Timer::Value start_time = current_time;
+	if (!s_notifications.empty())
+	{
+		const Notification& previous = s_notifications.back();
+		start_time = std::max(start_time, previous.start_time + Common::Timer::ConvertSecondsToValue(NOTIFICATION_STAGGER_TIME));
+
+		if (s_notifications.size() >= MAX_VISIBLE_NOTIFICATIONS)
+		{
+			// The oldest one that still has to clear before there is room for this.
+			const Notification& blocker = s_notifications[s_notifications.size() - MAX_VISIBLE_NOTIFICATIONS];
+			start_time = std::max(start_time, blocker.start_time + Common::Timer::ConvertSecondsToValue(blocker.duration));
 		}
 	}
 
@@ -3135,8 +3157,8 @@ void ImGuiFullscreen::AddNotification(std::string key, float duration, std::stri
 	notif.title = std::move(title);
 	notif.text = std::move(text);
 	notif.badge_path = std::move(image_path);
-	notif.start_time = current_time;
-	notif.move_time = current_time;
+	notif.start_time = start_time;
+	notif.move_time = start_time;
 	notif.target_y = -1.0f;
 	notif.last_y = -1.0f;
 	s_notifications.push_back(std::move(notif));
@@ -3145,6 +3167,11 @@ void ImGuiFullscreen::AddNotification(std::string key, float duration, std::stri
 void ImGuiFullscreen::ClearNotifications()
 {
 	s_notifications.clear();
+}
+
+bool ImGuiFullscreen::HasActiveNotifications()
+{
+	return !s_notifications.empty();
 }
 
 void ImGuiFullscreen::DrawNotifications(ImVec2& position, float spacing)
@@ -3162,8 +3189,6 @@ void ImGuiFullscreen::DrawNotifications(ImVec2& position, float spacing)
 	const float badge_size = ImGuiFullscreen::LayoutScale(48.0f);
 	const float min_width = ImGuiFullscreen::LayoutScale(200.0f);
 	const float max_width = ImGuiFullscreen::LayoutScale(800.0f);
-	const float max_text_width = max_width - badge_size - (horizontal_padding * 2.0f) - horizontal_spacing;
-	const float min_height = (vertical_padding * 2.0f) + badge_size;
 	const float shadow_size = ImGuiFullscreen::LayoutScale(4.0f);
 	const float rounding = ImGuiFullscreen::LayoutScale(4.0f);
 
@@ -3178,6 +3203,15 @@ void ImGuiFullscreen::DrawNotifications(ImVec2& position, float spacing)
 	for (u32 index = 0; index < static_cast<u32>(s_notifications.size());)
 	{
 		Notification& notif = s_notifications[index];
+		if (notif.start_time > current_time)
+		{
+			// Still queued behind the ones ahead of it. Not drawn, not laid out, and not aged —
+			// its duration only begins when it actually appears, so a queued notification is not
+			// quietly expiring while it waits.
+			index++;
+			continue;
+		}
+
 		const float time_passed = static_cast<float>(Common::Timer::ConvertValueToSeconds(current_time - notif.start_time));
 		if (time_passed >= notif.duration)
 		{
@@ -3185,13 +3219,19 @@ void ImGuiFullscreen::DrawNotifications(ImVec2& position, float spacing)
 			continue;
 		}
 
+		const bool has_badge = !notif.badge_path.empty();
+		const float effective_badge_size = has_badge ? badge_size : 0.0f;
+		const float effective_badge_spacing = has_badge ? horizontal_spacing : 0.0f;
+		const float max_text_width = max_width - effective_badge_size - (horizontal_padding * 2.0f) - effective_badge_spacing;
+		const float min_height = (vertical_padding * 2.0f) + effective_badge_size;
+
 		const ImVec2 title_size(title_font.first->CalcTextSizeA(title_font.second, max_text_width, max_text_width,
 			notif.title.c_str(), notif.title.c_str() + notif.title.size()));
 
 		const ImVec2 text_size(text_font.first->CalcTextSizeA(text_font.second, max_text_width, max_text_width,
 			notif.text.c_str(), notif.text.c_str() + notif.text.size()));
 
-		const float box_width = std::max((horizontal_padding * 2.0f) + badge_size + horizontal_spacing +
+		const float box_width = std::max((horizontal_padding * 2.0f) + effective_badge_size + effective_badge_spacing +
 											 ImCeil(std::max(title_size.x, text_size.x)),
 			min_width);
 		const float box_height =
@@ -3268,10 +3308,10 @@ void ImGuiFullscreen::DrawNotifications(ImVec2& position, float spacing)
 		dl->AddRect(box_min, box_max, border_color, rounding, ImDrawFlags_RoundCornersAll, ImGuiFullscreen::LayoutScale(1.0f));
 #endif
 
-		const ImVec2 badge_min(box_min.x + horizontal_padding, box_min.y + vertical_padding);
-		const ImVec2 badge_max(badge_min.x + badge_size, badge_min.y + badge_size);
-		if (!notif.badge_path.empty())
+		if (has_badge)
 		{
+			const ImVec2 badge_min(box_min.x + horizontal_padding, box_min.y + (box_height - badge_size) * 0.5f);
+			const ImVec2 badge_max(badge_min.x + badge_size, badge_min.y + badge_size);
 			GSTexture* tex = GetCachedTexture(notif.badge_path.c_str());
 			if (tex)
 			{
@@ -3280,14 +3320,14 @@ void ImGuiFullscreen::DrawNotifications(ImVec2& position, float spacing)
 			}
 		}
 
-		const ImVec2 title_min(badge_max.x + horizontal_spacing, box_min.y + vertical_padding);
+		const ImVec2 title_min(box_min.x + horizontal_padding + effective_badge_size + effective_badge_spacing, box_min.y + vertical_padding);
 		const ImVec2 title_max(title_min.x + title_size.x, title_min.y + title_size.y);
 		const u32 title_col = (toast_title_color & ~IM_COL32_A_MASK) | (opacity << IM_COL32_A_SHIFT);
 		const u32 text_shadow_col = IM_COL32(0, 0, 0, (64u * opacity) / 255u);
 		AddTextWithShadow(dl, title_font, title_min, title_col, notif.title.c_str(), notif.title.c_str() + notif.title.size(), max_text_width,
 			nullptr, text_shadow_col);
 
-		const ImVec2 text_min(badge_max.x + horizontal_spacing, title_max.y + vertical_spacing);
+		const ImVec2 text_min(title_min.x, title_max.y + vertical_spacing);
 		const ImVec2 text_max(text_min.x + text_size.x, text_min.y + text_size.y);
 		const u32 text_col = (toast_text_color & ~IM_COL32_A_MASK) | (opacity << IM_COL32_A_SHIFT);
 		AddTextWithShadow(dl, text_font, text_min, text_col, notif.text.c_str(), notif.text.c_str() + notif.text.size(), max_text_width,
@@ -3336,15 +3376,17 @@ void ImGuiFullscreen::DrawToast()
 	const float padding = LayoutScale(20.0f);
 	const float total_padding = padding * 2.0f;
 	const float margin = LayoutScale(20.0f + (s_fullscreen_footer_text.empty() ? 0.0f : LAYOUT_FOOTER_HEIGHT));
-	const float spacing = s_toast_title.empty() ? 0.0f : LayoutScale(10.0f);
+	const float spacing = (s_toast_title.empty() || s_toast_message.empty()) ? 0.0f : LayoutScale(10.0f);
 	const ImVec2 display_size(ImGui::GetIO().DisplaySize);
 	const ImVec2 title_size(s_toast_title.empty() ? ImVec2(0.0f, 0.0f) :
 													title_font.first->CalcTextSizeA(title_font.second, FLT_MAX, max_width,
 														s_toast_title.c_str(), s_toast_title.c_str() + s_toast_title.length()));
+	const float max_message_width = std::max(LayoutScale(100.0f), max_width - (s_toast_title.empty() ? 0.0f : (title_size.x + spacing)));
 	const ImVec2 message_size(s_toast_message.empty() ? ImVec2(0.0f, 0.0f) :
-														message_font.first->CalcTextSizeA(message_font.second, FLT_MAX, max_width,
+														message_font.first->CalcTextSizeA(message_font.second, FLT_MAX, max_message_width,
 															s_toast_message.c_str(), s_toast_message.c_str() + s_toast_message.length()));
-	const ImVec2 comb_size(std::max(title_size.x, message_size.x), title_size.y + spacing + message_size.y);
+	const ImVec2 comb_size(s_toast_title.empty() ? message_size.x : (title_size.x + spacing + message_size.x),
+		std::max(title_size.y, message_size.y));
 
 	const ImVec2 box_size(comb_size.x + total_padding, comb_size.y + total_padding);
 	const ImVec2 box_pos((display_size.x - box_size.x) * 0.5f, (display_size.y - margin - box_size.y));
@@ -3354,19 +3396,18 @@ void ImGuiFullscreen::DrawToast()
 	const u32 shadow_col = IM_COL32(0, 0, 0, static_cast<int>(64.0f * alpha));
 	if (!s_toast_title.empty())
 	{
-		const float offset = (comb_size.x - title_size.x) * 0.5f;
-		const ImVec2 title_pos = box_pos + ImVec2(offset + padding, padding);
+		const ImVec2 title_pos = box_pos + ImVec2(padding, padding + (comb_size.y - title_size.y) * 0.5f);
 		AddTextWithShadow(dl, title_font, title_pos,
 			ImGui::GetColorU32(ModAlpha(UIPrimaryTextColor, alpha)), s_toast_title.c_str(), s_toast_title.c_str() + s_toast_title.length(),
 			max_width, nullptr, shadow_col);
 	}
 	if (!s_toast_message.empty())
 	{
-		const float offset = (comb_size.x - message_size.x) * 0.5f;
-		const ImVec2 message_pos = box_pos + ImVec2(offset + padding, padding + spacing + title_size.y);
+		const float title_offset = s_toast_title.empty() ? 0.0f : (title_size.x + spacing);
+		const ImVec2 message_pos = box_pos + ImVec2(padding + title_offset, padding + (comb_size.y - message_size.y) * 0.5f);
 		AddTextWithShadow(dl, message_font, message_pos,
 			ImGui::GetColorU32(ModAlpha(UIPrimaryTextColor, alpha)), s_toast_message.c_str(),
-			s_toast_message.c_str() + s_toast_message.length(), max_width, nullptr, shadow_col);
+			s_toast_message.c_str() + s_toast_message.length(), max_message_width, nullptr, shadow_col);
 	}
 }
 

@@ -47,12 +47,9 @@ extern void vtlb_Shutdown();
 extern void vtlb_Reset();
 extern void vtlb_ResetFastmem();
 
-// True once the 4 GB fastmem area allocation has failed on this device. Stays
-// set for the process lifetime so callers that re-read EnableFastmem from the
-// INI (e.g. LoadSettings on settings reload) can re-apply the disable instead
-// of re-enabling fastmem against a null base and crashing on the first EE
-// load/store. On low-VA devices (e.g. iPhone SE 2, 4 GB RAM) the 4 GB
-// PROT_NONE reservation can fail with ENOMEM.
+// True when the active VM has no 4 GB fastmem reservation, or once reserving
+// it has failed on this device. Callers use this after settings reloads to
+// prevent enabling fastmem against a null base.
 extern bool vtlb_FastmemAreaUnavailable();
 
 extern vtlbHandler vtlb_NewHandler();
@@ -66,6 +63,13 @@ extern void vtlb_ReassignHandler( vtlbHandler rv,
 	vtlbMemR8FP* r8,vtlbMemR16FP* r16,vtlbMemR32FP* r32,vtlbMemR64FP* r64,vtlbMemR128FP* r128,
 	vtlbMemW8FP* w8,vtlbMemW16FP* w16,vtlbMemW32FP* w32,vtlbMemW64FP* w64,vtlbMemW128FP* w128
 );
+
+// True if the handler id is one of the two unmapped-page handlers
+// (UnmappedVirtHandler / UnmappedPhyHandler), whose access paths run
+// vtlb_Miss. Recompilers use this to decide whether a compile-time resolved
+// handler call needs cpuRegs.pc flushed first: vtlb_Miss reads it, and under
+// the interpreter derives EPC from it, while a hardware handler never does.
+extern bool vtlb_IsUnmappedHandlerID(vtlbHandler id);
 
 
 extern void vtlb_MapHandler(vtlbHandler handler,u32 start,u32 size);
@@ -91,13 +95,39 @@ extern bool vtlb_IsFaultingPC(u32 guest_pc);
 
 //Memory functions
 
-template< typename DataType >
-extern DataType vtlb_memRead(u32 mem);
-extern RETURNS_R128 vtlb_memRead128(u32 mem);
+// On arm64, the EE JIT keeps guest values live in caller-saved host
+// registers across its vtlb slow paths (the EE-SRA x12/x13 pins; see
+// iR5900-arm64.h). preserve_most makes these dispatchers preserve x9-x15,
+// so the fastmem backpatch thunk and inline softmem slow paths need no
+// pin spill/reload around their calls. Cost lands inside the callee
+// (a prologue/epilogue x9-x15 save) — MMIO-dispatch-only, never on the
+// direct-RAM fast path. Return/argument registers are unaffected, so
+// C++ callers (interpreter memory ops) behave identically.
+#ifdef ARCH_ARM64
+#if defined(__has_attribute) && __has_attribute(preserve_most)
+#define VTLB_PRESERVE_MOST __attribute__((preserve_most))
+#else
+// Hard requirement, not an optimization: the arm64 recompiler emits calls to
+// these dispatchers assuming the preserve_most contract (x9-x15 spared) and
+// skips pin spill/reload around them (recVTLB-arm64.cpp, RecStubs.cpp). A
+// compiler that drops the attribute (GCC warns and ignores unknown
+// attributes; MSVC has no equivalent) would build a binary whose emitted
+// code silently corrupts the EE pin registers at every MMIO slow path.
+// Build arm64 targets with clang (works for linux, windows-msvc, android,
+// and apple targets) until a no-preserve_most emitter fallback exists.
+#error "ARCH_ARM64 requires a compiler with __attribute__((preserve_most)) - build with clang"
+#endif
+#else
+#define VTLB_PRESERVE_MOST
+#endif
 
 template< typename DataType >
-extern void vtlb_memWrite(u32 mem, DataType value);
-extern void TAKES_R128 vtlb_memWrite128(u32 mem, r128 value);
+extern DataType VTLB_PRESERVE_MOST vtlb_memRead(u32 mem);
+extern RETURNS_R128 VTLB_PRESERVE_MOST vtlb_memRead128(u32 mem);
+
+template< typename DataType >
+extern void VTLB_PRESERVE_MOST vtlb_memWrite(u32 mem, DataType value);
+extern void TAKES_R128 VTLB_PRESERVE_MOST vtlb_memWrite128(u32 mem, r128 value);
 
 // "Safe" variants of vtlb, designed for external tools.
 // These routines only access the various RAM, and will not call handlers
@@ -129,7 +159,10 @@ namespace vtlb_private
 	static const uint VTLB_PAGE_MASK = 4095;
 	static const uint VTLB_PAGE_SIZE = 4096;
 
-	static const uint VTLB_PMAP_SZ		= _1mb * 512;
+	// Physical map covers 1GB to include RAM mirrors at 0x20000000 (uncached)
+	// and 0x30000000 (uncached & accelerated) used by BIOS InitRDRAM.
+	// 1GB is sufficient for all known PS2 mappings.
+	static const uint VTLB_PMAP_SZ		= _1mb * 1024;
 	static const uint VTLB_PMAP_ITEMS	= VTLB_PMAP_SZ / VTLB_PAGE_SIZE;
 	static const uint VTLB_VMAP_ITEMS	= _4gb / VTLB_PAGE_SIZE;
 
@@ -197,7 +230,7 @@ namespace vtlb_private
 		// third indexer -- 128 possible handlers!
 		void* RWFT[5][2][VTLB_HANDLER_ITEMS];
 
-		VTLBPhysical pmap[VTLB_PMAP_ITEMS]; //512KB // PS2 physical to x86 physical
+		VTLBPhysical pmap[VTLB_PMAP_ITEMS]; //2MB (VTLB_PMAP_ITEMS * sizeof(VTLBPhysical)) // PS2 physical to host physical
 
 		VTLBVirtual* vmap;                //4MB (allocated by vtlb_init) // PS2 virtual to x86 physical
 

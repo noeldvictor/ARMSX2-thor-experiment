@@ -603,7 +603,7 @@ bool GSDevice11::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 	}
 
 	// 1x1 dummy texture.
-	const GSTexture::Usage null_usage = m_uav_texture ? GSTexture::ShaderWriteTarget : GSTexture::Feedback;
+	const GSTexture::Usage null_usage = m_uav_texture ? GSTexture::ShaderWriteTarget : GSTexture::FeedbackTarget;
 	m_null_texture = CreateSurface(null_usage, 1, 1, 1, GSTexture::Format::Color);
 	if (!m_null_texture)
 		return false;
@@ -703,6 +703,10 @@ void GSDevice11::SetFeatures(IDXGIAdapter1* adapter)
 {
 	// Check these first as others depend on them.
 	m_features.multidraw_fb_copy = GSConfig.OverrideTextureBarriers != 0;
+	// D3D11 has no render passes, so the RT copy that serves a feedback read costs a copy and
+	// nothing else. This is the one backend where the renderer may add a feedback read to a draw
+	// that did not ask for one. See the flag's declaration.
+	m_features.cheap_rt_feedback_read = m_features.multidraw_fb_copy;
 	m_features.vs_expand = (!GSConfig.DisableVertexShaderExpand && m_feature_level >= D3D_FEATURE_LEVEL_11_0);
 
 	// Check all three formats, since the feature means any can be used.
@@ -1061,7 +1065,7 @@ bool GSDevice11::SupportsExclusiveFullscreen() const
 	return true;
 }
 
-GSDevice::PresentResult GSDevice11::BeginPresent(bool frame_skip)
+GSDevice::PresentResult GSDevice11::DoBeginPresent(bool frame_skip)
 {
 	if (frame_skip || !m_swap_chain)
 		return PresentResult::FrameSkipped;
@@ -1114,7 +1118,7 @@ void GSDevice11::EndPresent()
 {
 	RenderImGui();
 
-	// See note in BeginPresent() for why it's conditional on vsync-off.
+	// See note in DoBeginPresent() for why it's conditional on vsync-off.
 	if (m_vsync_mode != GSVSyncMode::FIFO && m_gpu_timing_enabled)
 		PopTimestampQuery();
 
@@ -1167,7 +1171,7 @@ void GSDevice11::DestroyTimestampQueries()
 	m_read_timestamp_query = 0;
 	m_write_timestamp_query = 0;
 	m_waiting_timestamp_queries = 0;
-	m_timestamp_query_started = 0;
+	m_timestamp_query_started = false;
 }
 
 void GSDevice11::PopTimestampQuery()
@@ -1286,13 +1290,13 @@ void GSDevice11::DestroyPipelineStatisticsQueries()
 		return;
 
 	if (m_pipeline_statistics_query_started)
-		m_ctx->End(m_pipeline_statistics_queries[m_write_timestamp_query].get());
+		m_ctx->End(m_pipeline_statistics_queries[m_write_pipeline_statistics_query].get());
 
-	m_timestamp_queries = {};
-	m_read_timestamp_query = 0;
-	m_write_timestamp_query = 0;
-	m_waiting_timestamp_queries = 0;
-	m_timestamp_query_started = 0;
+	m_pipeline_statistics_queries = {};
+	m_read_pipeline_statistics_query = 0;
+	m_write_pipeline_statistics_query = 0;
+	m_waiting_pipeline_statistics_queries = 0;
+	m_pipeline_statistics_query_started = false;
 }
 
 void GSDevice11::PopPipelineStatisticsQuery()
@@ -1510,12 +1514,12 @@ std::unique_ptr<GSDownloadTexture> GSDevice11::CreateDownloadTexture(u32 width, 
 	return GSDownloadTexture11::Create(width, height, format);
 }
 
-void GSDevice11::CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY)
+void GSDevice11::DoCopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY)
 {
 	// Empty rect, abort copy.
 	if (r.rempty())
 	{
-		GL_INS("D3D11: CopyRect rect empty.");
+		GL_INS("D3D11: DoCopyRect rect empty.");
 		return;
 	}
 
@@ -1526,7 +1530,7 @@ void GSDevice11::CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r,
 	// Sizes must match for full depth copies when no partial copies are supported.
 	if (sTex->IsDepthStencil() && !src_dst_rect_match)
 	{
-		GL_INS("D3D11: CopyRect rect mismatch for full depth copy.");
+		GL_INS("D3D11: DoCopyRect rect mismatch for full depth copy.");
 		return;
 	}
 
@@ -1713,7 +1717,7 @@ void GSDevice11::PresentRect(GSTexture* sTex, const GSVector4& sRect, GSTexture*
 	DrawPrimitive();
 }
 
-void GSDevice11::UpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize)
+void GSDevice11::DoUpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize)
 {
 	// match merge cb
 	struct alignas(16) Uniforms
@@ -1731,7 +1735,7 @@ void GSDevice11::UpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u
 	DoStretchRect(sTex, GSVector4::zero(), dTex, dRect, GetConvertShader(shader), m_merge.cb.get(), nullptr, Nearest);
 }
 
-void GSDevice11::ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM)
+void GSDevice11::DoConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM)
 {
 	// match merge cb
 	struct alignas(16) Uniforms
@@ -1750,7 +1754,7 @@ void GSDevice11::ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offs
 	DoStretchRect(sTex, GSVector4::zero(), dTex, dRect, GetConvertShader(shader), m_merge.cb.get(), nullptr, Nearest);
 }
 
-void GSDevice11::FilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect)
+void GSDevice11::DoFilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect)
 {
 	struct alignas(16) Uniforms
 	{
@@ -1770,7 +1774,7 @@ void GSDevice11::FilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32
 	DoStretchRect(sTex, GSVector4::zero(), dTex, dRect, GetConvertShader(shader), m_merge.cb.get(), nullptr, Nearest);
 }
 
-void GSDevice11::DrawMultiStretchRects(const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader)
+void GSDevice11::DoDrawMultiStretchRects(const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader)
 {
 	shader = shader.SetMask(); // Mask is handled separately from program.
 
@@ -2075,6 +2079,7 @@ void GSDevice11::SetupPS(const PSSelector& sel, const GSHWDrawConfig::PSConstant
 		sm.AddMacro("PS_TEX_IS_FB", sel.tex_is_fb);
 		sm.AddMacro("PS_NO_COLOR", sel.no_color);
 		sm.AddMacro("PS_NO_COLOR1", sel.no_color1);
+		sm.AddMacro("PS_BLEND_FACTOR_IN_ALPHA", sel.blend_factor_in_alpha);
 		sm.AddMacro("PS_ZTST", sel.ztst);
 		sm.AddMacro("PS_AA1", static_cast<u32>(sel.aa1));
 		sm.AddMacro("PS_ABE", sel.abe);
@@ -3045,7 +3050,7 @@ D3D_SHADER_MACRO* GSDevice11::ShaderMacro::GetPtr()
 	return (D3D_SHADER_MACRO*)mout.data();
 }
 
-void GSDevice11::RenderHW(GSHWDrawConfig& config)
+void GSDevice11::DoRenderHW(GSHWDrawConfig& config)
 {
 	const GSVector2i rtsize = (config.rt ? config.rt : config.ds)->GetSize();
 	GSTexture* colclip_rt = g_gs_device->GetColorClipTexture();
@@ -3306,14 +3311,14 @@ void GSDevice11::FeedbackCopyAndBind(const GSHWDrawConfig& config,
 {
 	if (rt_clone)
 	{
-		CopyRect(rt, rt_clone, copyarea, copyarea.left, copyarea.top);
+		DoCopyRect(rt, rt_clone, copyarea, copyarea.left, copyarea.top);
 		PSSetShaderResource(2, rt_clone);
 		if (config.tex_hazard == GSHWDrawConfig::TEX_HAZARD_RT)
 			PSSetShaderResource(0, rt_clone);
 	}
 	if (ds_clone)
 	{
-		CopyRect(ds, ds_clone, copyarea, copyarea.left, copyarea.top);
+		DoCopyRect(ds, ds_clone, copyarea, copyarea.left, copyarea.top);
 		PSSetShaderResource(4, ds_clone);
 		if (config.tex_hazard == GSHWDrawConfig::TEX_HAZARD_DEPTH)
 			PSSetShaderResource(0, ds_clone);

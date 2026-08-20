@@ -107,6 +107,30 @@ object ControllerSkinStore {
         )) put(k, "ic_controller_${k}_button.png")
         put("analog_base", "ic_controller_analog_base.png")
         put("analog_stick", "ic_controller_analog_stick.png")
+        // Per-side stick art. Packs that draw the two sticks differently (an "L"/"R"
+        // marking is the common case) ship these, and they must stay SEPARATE: folding
+        // both onto the single analog_stick slot made the two imports overwrite each
+        // other, so whichever landed last was drawn under BOTH sticks — the reported
+        // "left stick looks the same as the right one". A pack shipping only the old
+        // single image still works: the overlay falls back to analog_base/analog_stick.
+        put("analog_base_left", "ic_controller_analog_base_left.png")
+        put("analog_base_right", "ic_controller_analog_base_right.png")
+        put("analog_stick_left", "ic_controller_analog_stick_left.png")
+        put("analog_stick_right", "ic_controller_analog_stick_right.png")
+        // The four macro buttons. A macro can already fire any pad input -- including L-Stick
+        // Left/Right -- so a racing layout of steer/steer/brake/accelerate was buildable, but the
+        // buttons were stuck with the generic M1-M4 artwork because there was no skin slot for
+        // them. Reported by David, who reasonably tried "ic_controller_m1_button.png" and got
+        // silence. Both spellings are accepted below.
+        for (i in 1..4) put("macro$i", "ic_controller_macro${i}_button.png")
+    }
+
+    /** Spellings people actually ship, mapped to the canonical key. */
+    private val FILE_ALIASES: Map<String, String> = buildMap {
+        for (i in 1..4) {
+            put("m$i", "macro$i")
+            put("macro_$i", "macro$i")
+        }
     }
     /** Canonical logical key for an incoming image filename, accepting BOTH the
      *  bundled iOS scheme (`ic_controller_<key>_button.png`) AND the bare names
@@ -117,18 +141,20 @@ object ControllerSkinStore {
     private fun keyForFilename(name: String): String? {
         val n = name.substringAfterLast('/').substringAfterLast('\\').lowercase()
         if (n.startsWith("._") || !n.endsWith(".png")) return null
-        var core = n.removeSuffix(".png").removePrefix("ic_controller_").removeSuffix("_button")
-        // Newer skin packs split the analog thumb into per-side images
-        // (ic_controller_analog_stick_left/right.png). The overlay renders a single
-        // thumb for both sticks, so fold both onto the one analog_stick slot (whichever
-        // the pack ships — they're normally identical). analog_base + the older single
-        // ic_controller_analog_stick.png keep working unchanged.
-        if (core == "analog_stick_left" || core == "analog_stick_right") core = "analog_stick"
-        return if (FILE.containsKey(core)) core else null
+        // Note the d-pad's own "left"/"right" keys are distinct from the sticks'
+        // "analog_stick_left"/"analog_stick_right" — the prefix keeps them apart.
+        val core = n.removeSuffix(".png").removePrefix("ic_controller_").removeSuffix("_button")
+        val canonical = FILE_ALIASES[core] ?: core
+        return if (FILE.containsKey(canonical)) canonical else null
     }
 
     // Import caps (generous but bounded — phone storage).
-    private const val MAX_IMAGES = 24
+    //
+    // Must stay ABOVE the number of keys in FILE, with headroom. There are 28 (16 buttons, 8
+    // analog, 4 macro) and this used to sit at 24, so a complete pack would have had its last
+    // few images dropped on import with no error — the images simply would not appear. Adding a
+    // skin slot means checking this number.
+    private const val MAX_IMAGES = 40
     private const val MAX_IMAGE_BYTES = 8L * 1024 * 1024
 
     private fun root(ctx: Context): File = File(ctx.filesDir, "controllerskins").apply { mkdirs() }
@@ -212,6 +238,41 @@ object ControllerSkinStore {
 
     private fun clearCache() = synchronized(cache) { cache.clear() }
 
+    /** Longest edge a decoded skin image is kept at. An on-screen button never draws
+     *  larger than a few hundred px even on a high-DPI tablet, so decoding a pack's
+     *  full-resolution art (packs ship 1024–2048px PNGs) wastes memory AND frame time:
+     *  every button's bitmap is uploaded and sampled each frame, so ~15 full-res images
+     *  turn the menu and pad into a slideshow the moment a heavy skin is picked. Sampling
+     *  down to this on decode is the fix — the on-screen size is unchanged, the per-frame
+     *  cost drops by the square of the ratio. */
+    private const val MAX_DECODE_PX = 640
+
+    /** inSampleSize (a power of two) that brings the larger of [w]/[h] at or under
+     *  [MAX_DECODE_PX]. BitmapFactory only honours powers of two, so this rounds down to
+     *  one — a 2048px source decodes at 512 (sample 4), never above the cap. */
+    private fun sampleSizeFor(w: Int, h: Int): Int {
+        var sample = 1
+        var longest = maxOf(w, h)
+        while (longest / 2 >= MAX_DECODE_PX) {
+            sample *= 2
+            longest /= 2
+        }
+        return sample
+    }
+
+    /** Decode [key]'s image for the active skin, downsampled to [MAX_DECODE_PX]. Two-pass:
+     *  read the bounds (inJustDecodeBounds), then decode with the computed sample size.
+     *  [openBounds]/[openFull] return a fresh stream each — a decode consumes its stream. */
+    private fun decodeDownsampled(openBounds: () -> java.io.InputStream?, openFull: () -> java.io.InputStream?): ImageBitmap? {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        runCatching { openBounds()?.use { BitmapFactory.decodeStream(it, null, bounds) } }
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
+        val opts = BitmapFactory.Options().apply { inSampleSize = sampleSizeFor(bounds.outWidth, bounds.outHeight) }
+        return runCatching {
+            openFull()?.use { BitmapFactory.decodeStream(it, null, opts)?.asImageBitmap() }
+        }.getOrNull()
+    }
+
     /** ImageBitmap for [key] from the active skin, or null to use the built-in. */
     fun bitmapForKey(ctx: Context, key: String): ImageBitmap? {
         ensureLoaded(ctx)
@@ -222,15 +283,14 @@ object ControllerSkinStore {
         val builtin = builtinFor(id)
         val bmp = if (builtin != null) {
             // Bundled skin: decode straight from app assets.
-            runCatching {
-                ctx.assets.open("${builtin.assetDir}/$fname").use {
-                    BitmapFactory.decodeStream(it)?.asImageBitmap()
-                }
-            }.getOrNull()
+            decodeDownsampled(
+                { runCatching { ctx.assets.open("${builtin.assetDir}/$fname") }.getOrNull() },
+                { runCatching { ctx.assets.open("${builtin.assetDir}/$fname") }.getOrNull() },
+            )
         } else {
             val f = File(File(root(ctx), id), fname)
             if (f.isFile)
-                runCatching { BitmapFactory.decodeFile(f.absolutePath)?.asImageBitmap() }.getOrNull()
+                decodeDownsampled({ f.inputStream() }, { f.inputStream() })
             else null
         }
         synchronized(cache) { cache[ck] = bmp }
@@ -270,11 +330,25 @@ object ControllerSkinStore {
     fun importFromZip(ctx: Context, zipUri: Uri): String? {
         val raw = DocumentFile.fromSingleUri(ctx, zipUri)?.name
             ?.removeSuffix(".zip")?.removeSuffix(".ZIP") ?: "skin"
-        val id = newId(ctx, raw)
+        return importZip(ctx, raw) { ctx.contentResolver.openInputStream(zipUri) }
+    }
+
+    /** Import a .zip already on local disk under an explicit [displayName] — the
+     *  download path ([com.armsx2.SkinRepo]).
+     *
+     *  Separate from [importFromZip] because that one resolves its name through
+     *  DocumentFile.fromSingleUri, which expects a `content://` URI and yields null
+     *  for the `file://` of a downloaded temp — every downloaded skin would land as
+     *  "skin", "skin_1", "skin_2". The repo already knows the real name, so pass it. */
+    fun importFromZipFile(ctx: Context, zip: File, displayName: String): String? =
+        importZip(ctx, displayName) { zip.inputStream() }
+
+    private fun importZip(ctx: Context, rawName: String, open: () -> java.io.InputStream?): String? {
+        val id = newId(ctx, rawName)
         val tmp = File(root(ctx), "$id.tmp").apply { deleteRecursively(); mkdirs() }
         var count = 0
         runCatching {
-            ctx.contentResolver.openInputStream(zipUri)?.use { stream ->
+            open()?.use { stream ->
                 ZipInputStream(stream).use { zin ->
                     while (true) {
                         val e = zin.nextEntry ?: break

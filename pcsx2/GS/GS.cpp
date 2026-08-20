@@ -17,8 +17,11 @@
 #include "Input/InputManager.h"
 #include "MTGS.h"
 #include "pcsx2/GS.h"
+#include "GS/Renderers/Null/GSDeviceNone.h"
 #include "GS/Renderers/Null/GSRendererNull.h"
 #include "GS/Renderers/HW/GSRendererHW.h"
+#include "GS/Renderers/HW/GSHwHack.h"
+#include "GS/Renderers/HW/GSDrawLog.h"
 #include "GS/Renderers/HW/GSTextureReplacements.h"
 #include "VMManager.h"
 
@@ -44,6 +47,7 @@
 
 #include "common/Console.h"
 #include "common/FileSystem.h"
+#include "common/HostSys.h"
 #include "common/Path.h"
 #include "common/SmallString.h"
 #include "common/StringUtil.h"
@@ -83,6 +87,11 @@ static RenderAPI GetAPIForRenderer(GSRendererType renderer)
 {
 	switch (renderer)
 	{
+		// Null renderer pairs with the deviceless None host device — headless runs
+		// (eerunner A/B, CI) must not require a working Vulkan/GL context.
+		case GSRendererType::Null:
+			return RenderAPI::None;
+
 		case GSRendererType::OGL:
 			return RenderAPI::OpenGL;
 
@@ -114,6 +123,10 @@ static bool OpenGSDevice(GSRendererType renderer, bool clear_state_on_fail, bool
 	const RenderAPI new_api = GetAPIForRenderer(renderer);
 	switch (new_api)
 	{
+		case RenderAPI::None:
+			g_gs_device = std::make_unique<GSDeviceNone>();
+			break;
+
 #ifdef _WIN32
 		case RenderAPI::D3D11:
 			g_gs_device = std::make_unique<GSDevice11>();
@@ -167,7 +180,7 @@ static bool OpenGSDevice(GSRendererType renderer, bool clear_state_on_fail, bool
 
 	if (!g_gs_device->SetGPUTimingEnabled(true))
 		GSConfig.OsdShowGPU = false;
-	if (!g_gs_device->SetGPUPipelineStatisticsEnabled(true))
+	if (GSConfig.OsdShowGPUStats && !g_gs_device->SetGPUPipelineStatisticsEnabled(true))
 		GSConfig.OsdShowGPUStats = false;
 
 	Console.WriteLn(Color_StrongGreen, "%s Graphics Driver Info:", GSDevice::RenderAPIToString(new_api));
@@ -230,6 +243,17 @@ static void ApplyAndroidGameDBOverrides()
 }
 #endif
 
+// GV7-1d-ii: the front parser object of the two-object split (GSState.h).
+// Non-null only when GSBackThreadMode::Pipelined engaged; all GIF-parse entry
+// points below route to it, while draw/present/TC stay on g_gs_renderer.
+std::unique_ptr<GSFrontState> g_gs_front;
+
+// The object GIF data, parse-side resets, readbacks, and savestates route to.
+static __fi GSState* GSParseTarget()
+{
+	return g_gs_front ? static_cast<GSState*>(g_gs_front.get()) : static_cast<GSState*>(g_gs_renderer.get());
+}
+
 static bool OpenGSRenderer(GSRendererType renderer, u8* basemem)
 {
 	// Must be done first, initialization routines in GSState use GSIsHardwareRenderer().
@@ -254,6 +278,44 @@ static bool OpenGSRenderer(GSRendererType renderer, u8* basemem)
 	g_gs_renderer->SetRegsMem(basemem);
 	g_gs_renderer->ResetPCRTC();
 	g_gs_renderer->UpdateRenderFixes();
+
+	// GV7-1d-ii: instantiate the front parser only when the back thread really
+	// engaged (the renderer ctor falls back to inline records on a non-Vulkan
+	// HW device). An EE-thread read of *live* local memory forces single-object
+	// (lockstep) — see below for why that is not every EE-thread read.
+	if (GSConfig.BackThreadMode == GSBackThreadMode::Pipelined && g_gs_renderer->IsBackThreadRunning())
+	{
+		// Which thread performs the readback is the wrong question here; what it reads is the
+		// right one. Unsynchronized takes GS local memory directly, with no lock and no drain,
+		// so a queued back thread leaves it arbitrarily far behind what the EE expects.
+		// Asynchronous instead takes the CPU shadow under m_async_readback_mutex, and that
+		// mutex is the synchronization point: the shadow only moves when the GS thread
+		// publishes a completed GPU download, never when a record is queued or executed. Queue
+		// depth therefore cannot change what the EE sees, and every shadow accessor already
+		// routes through m_mem_target, so a front object reaches the back's authoritative copy.
+		//
+		// The one exception is a shadow that never came up — ReadLocalMemoryUnsync then falls
+		// back to live local memory, which is exactly the Unsynchronized hazard, now against a
+		// concurrently drawing back thread. The renderer is already constructed at this point,
+		// so its shadow state is the thing to ask.
+		const bool ee_thread_reads_live_memory =
+			GSConfig.HWDownloadMode == GSHardwareDownloadMode::Unsynchronized ||
+			(GSConfig.HWDownloadMode == GSHardwareDownloadMode::Asynchronous &&
+				!g_gs_renderer->IsAsyncReadbackReady());
+
+		if (ee_thread_reads_live_memory && GSConfig.UseHardwareRenderer())
+		{
+			Console.Warning("GS: pipelined mode is unsupported with EE-thread reads of live GS memory — running lockstep.");
+		}
+		else
+		{
+			g_gs_front = std::make_unique<GSFrontState>(g_gs_renderer.get());
+			g_gs_front->SetRegsMem(basemem);
+			g_gs_front->ResetPCRTC();
+			Console.WriteLn("GS: front parser object active (two-object split, pipelined).");
+		}
+	}
+
 	g_perfmon.Reset();
 	return true;
 }
@@ -262,6 +324,10 @@ static void CloseGSRenderer()
 {
 	GSTextureReplacements::Shutdown();
 
+	// The front must go first: its destructor drains the shared channel, and
+	// the back object owns that channel and the pooled arrays.
+	g_gs_front.reset();
+
 	if (g_gs_renderer)
 	{
 		g_gs_renderer->Destroy();
@@ -269,12 +335,39 @@ static void CloseGSRenderer()
 	}
 }
 
+// GV7-2, same hazard GSUpdateConfig documents: the back thread executes draws
+// against g_gs_device, so mutating that device from the MTGS thread — swapchain
+// resize, window recreate, vsync change — races it. Drain first. The front only
+// parses on this thread, so one drain up front quiesces the back thread for the
+// whole call. No-op when the back thread is off (the default), and g_gs_renderer
+// can legitimately be null while g_gs_device exists: the device is created first.
+static void DrainBackQueueBeforeDeviceMutation()
+{
+	if (g_gs_renderer)
+		g_gs_renderer->DrainBackQueue();
+}
+
 bool GSreopen(bool recreate_device, bool recreate_renderer, GSRendererType new_renderer,
 	std::optional<const Pcsx2Config::GSOptions*> old_config)
 {
 	Console.WriteLn("Reopening GS with %s device", recreate_device ? "new" : "existing");
 
-	g_gs_renderer->Flush(GSState::GSFlushReason::GSREOPEN);
+	GSParseTarget()->Flush(GSState::GSFlushReason::GSREOPEN);
+
+	// The Flush above only flushes FRONT parse state — it queues the resulting
+	// draw, it does not execute it. Everything below then hands the back thread's
+	// textures to the shredder: the device-loss arm purges the texture cache and
+	// the device pool outright, and the readback arm reads the texture cache. So
+	// drain between the two.
+	//
+	// This is safe on the device-loss path, which is the one that looks alarming.
+	// The back thread cannot be wedged in the driver here: BeginPresent only
+	// reports DeviceLost off m_last_submit_failed, i.e. the driver has ALREADY
+	// declared the loss, and post-loss calls return VK_ERROR_DEVICE_LOST rather
+	// than blocking. Nor is there a backlog to chew through — SubmitVsync drains
+	// before ExecVsyncRecord and present never queues, so the queue is empty on
+	// entry and the Flush above is the only producer.
+	DrainBackQueueBeforeDeviceMutation();
 
 	if (recreate_device && !recreate_renderer)
 	{
@@ -304,7 +397,7 @@ bool GSreopen(bool recreate_device, bool recreate_renderer, GSRendererType new_r
 	std::unique_ptr<u8[]> fd_data;
 	if (recreate_renderer)
 	{
-		if (g_gs_renderer->Freeze(&fd, true) != 0)
+		if (GSParseTarget()->Freeze(&fd, true) != 0)
 		{
 			Console.Error("(GSreopen) Failed to get GS freeze size");
 			return false;
@@ -312,7 +405,7 @@ bool GSreopen(bool recreate_device, bool recreate_renderer, GSRendererType new_r
 
 		fd_data = std::make_unique<u8[]>(fd.size);
 		fd.data = fd_data.get();
-		if (g_gs_renderer->Freeze(&fd, false) != 0)
+		if (GSParseTarget()->Freeze(&fd, false) != 0)
 		{
 			Console.Error("(GSreopen) Failed to freeze GS");
 			return false;
@@ -360,7 +453,7 @@ bool GSreopen(bool recreate_device, bool recreate_renderer, GSRendererType new_r
 			return false;
 		}
 
-		if (g_gs_renderer->Defrost(&fd) != 0)
+		if (GSParseTarget()->Defrost(&fd) != 0)
 		{
 			Console.Error("(GSreopen) Failed to defrost");
 			return false;
@@ -416,6 +509,11 @@ void GSclose()
 
 void GSreset(bool hardware_reset)
 {
+	// Front first: its Reset flushes pending buffered draws into records; the
+	// back's Reset then drains (executing them, like serial pre-reset draws)
+	// before resetting memory/TC.
+	if (g_gs_front)
+		g_gs_front->Reset(hardware_reset);
 	g_gs_renderer->Reset(hardware_reset);
 
 	// Restart video capture if it's been started.
@@ -432,44 +530,44 @@ void GSreset(bool hardware_reset)
 
 void GSgifSoftReset(u32 mask)
 {
-	g_gs_renderer->SoftReset(mask);
+	GSParseTarget()->SoftReset(mask);
 }
 
 void GSwriteCSR(u32 csr)
 {
-	g_gs_renderer->WriteCSR(csr);
+	GSParseTarget()->WriteCSR(csr);
 }
 
 void GSInitAndReadFIFO(u8* mem, u32 size)
 {
 	GL_PERF("Init and read FIFO %u qwc", size);
-	g_gs_renderer->InitReadFIFO(mem, size);
-	g_gs_renderer->ReadFIFO(mem, size);
+	GSParseTarget()->InitReadFIFO(mem, size);
+	GSParseTarget()->ReadFIFO(mem, size);
 }
 
 void GSReadLocalMemoryUnsync(u8* mem, u32 qwc, u64 BITBLITBUF, u64 TRXPOS, u64 TRXREG)
 {
-	g_gs_renderer->ReadLocalMemoryUnsync(mem, qwc, GIFRegBITBLTBUF{BITBLITBUF}, GIFRegTRXPOS{TRXPOS}, GIFRegTRXREG{TRXREG});
+	GSParseTarget()->ReadLocalMemoryUnsync(mem, qwc, GIFRegBITBLTBUF{BITBLITBUF}, GIFRegTRXPOS{TRXPOS}, GIFRegTRXREG{TRXREG});
 }
 
 void GSgifTransfer(const u8* mem, u32 size)
 {
-	g_gs_renderer->Transfer<3>(mem, size);
+	GSParseTarget()->Transfer<3>(mem, size);
 }
 
 void GSgifTransfer1(u8* mem, u32 addr)
 {
-	g_gs_renderer->Transfer<0>(const_cast<u8*>(mem) + addr, (0x4000 - addr) / 16);
+	GSParseTarget()->Transfer<0>(const_cast<u8*>(mem) + addr, (0x4000 - addr) / 16);
 }
 
 void GSgifTransfer2(u8* mem, u32 size)
 {
-	g_gs_renderer->Transfer<1>(const_cast<u8*>(mem), size);
+	GSParseTarget()->Transfer<1>(const_cast<u8*>(mem), size);
 }
 
 void GSgifTransfer3(u8* mem, u32 size)
 {
-	g_gs_renderer->Transfer<2>(const_cast<u8*>(mem), size);
+	GSParseTarget()->Transfer<2>(const_cast<u8*>(mem), size);
 }
 
 // Manual frameskip target (Android). Set from the UI thread via the JNI
@@ -485,32 +583,43 @@ u32 GSGetManualFrameSkip()
 	return s_manual_frameskip.load(std::memory_order_relaxed);
 }
 
-// Max presented-FPS cap (Android). Caps the DISPLAY frame rate without slowing
-// emulation — read on the GS thread in GSRenderer::VSync, which drops a present
-// only when ahead of the target interval (adaptive, no over-skip). 0 = off.
-// s_max_present_fps is the cap value (for the OSD label); s_max_present_interval
-// is the vsync-aligned minimum present spacing in CPU ticks, computed in
-// native-lib setFpsCap where the native refresh is known, so display rates snap
-// to whole vsync multiples (60/30/20/15…) and hold steady at the boundary.
+// Caps display presentation without slowing emulation. The interval controls the
+// exact cadence while milli-FPS preserves fractional targets for the OSD.
 static std::atomic<u32> s_max_present_fps{0};
+static std::atomic<u32> s_max_present_milli_fps{0};
 static std::atomic<u64> s_max_present_interval{0};
+static std::atomic<bool> s_present_cap_render_skip{false};
 // Fast-forward (Turbo) bypasses the present cap so the speed-up is visible. Set
 // from the limiter-mode JNI (Turbo → true, anything else → false) and read on
 // the GS thread in GSRenderer::VSync. Unlimited (frame-limit-off steady state)
 // deliberately does NOT set this — there the present cap is still wanted.
 static std::atomic<bool> s_present_cap_suspended{false};
-void GSSetMaxPresentFps(u32 fps, u64 present_interval)
+void GSSetMaxPresentFps(u32 fps, u64 present_interval, u32 milli_fps)
 {
 	s_max_present_fps.store(fps, std::memory_order_relaxed);
+	s_max_present_milli_fps.store(present_interval == 0 ? 0 : (milli_fps != 0 ? milli_fps : fps * 1000),
+		std::memory_order_relaxed);
 	s_max_present_interval.store(present_interval, std::memory_order_relaxed);
 }
 u32 GSGetMaxPresentFps()
 {
 	return s_max_present_fps.load(std::memory_order_relaxed);
 }
+u32 GSGetMaxPresentMilliFps()
+{
+	return s_max_present_milli_fps.load(std::memory_order_relaxed);
+}
 u64 GSGetMaxPresentInterval()
 {
 	return s_max_present_interval.load(std::memory_order_relaxed);
+}
+void GSSetPresentCapRenderSkip(bool enabled)
+{
+	s_present_cap_render_skip.store(enabled, std::memory_order_relaxed);
+}
+bool GSGetPresentCapRenderSkip()
+{
+	return s_present_cap_render_skip.load(std::memory_order_relaxed);
 }
 void GSSetPresentCapSuspended(bool suspended)
 {
@@ -524,29 +633,36 @@ bool GSGetPresentCapSuspended()
 void GSvsync(u32 field, bool registers_written)
 {
 	// Update this here because we need to check if the pending draw affects the current frame, so our regs need to be updated.
-	g_gs_renderer->PCRTCDisplays.SetVideoMode(g_gs_renderer->GetVideoMode());
-	g_gs_renderer->PCRTCDisplays.EnableDisplays(g_gs_renderer->m_regs->PMODE, g_gs_renderer->m_regs->SMODE2, g_gs_renderer->isReallyInterlaced());
-	g_gs_renderer->PCRTCDisplays.SetRects(0, g_gs_renderer->m_regs->DISP[0].DISPLAY, g_gs_renderer->m_regs->DISP[0].DISPFB);
-	g_gs_renderer->PCRTCDisplays.SetRects(1, g_gs_renderer->m_regs->DISP[1].DISPLAY, g_gs_renderer->m_regs->DISP[1].DISPFB);
-	g_gs_renderer->PCRTCDisplays.CheckSameSource();
-	g_gs_renderer->PCRTCDisplays.CalculateDisplayOffset(g_gs_renderer->m_scanmask_used);
-	g_gs_renderer->PCRTCDisplays.CalculateFramebufferOffset(g_gs_renderer->m_scanmask_used, g_gs_renderer->m_regs->DISP[0].DISPFB, g_gs_renderer->m_regs->DISP[1].DISPFB);
+	GSState* const front = GSParseTarget();
+	front->PCRTCDisplays.SetVideoMode(front->GetVideoMode());
+	front->PCRTCDisplays.EnableDisplays(front->m_regs->PMODE, front->m_regs->SMODE2, front->isReallyInterlaced());
+	front->PCRTCDisplays.SetRects(0, front->m_regs->DISP[0].DISPLAY, front->m_regs->DISP[0].DISPFB);
+	front->PCRTCDisplays.SetRects(1, front->m_regs->DISP[1].DISPLAY, front->m_regs->DISP[1].DISPFB);
+	front->PCRTCDisplays.CheckSameSource();
+	front->PCRTCDisplays.CalculateDisplayOffset(front->m_scanmask_used);
+	front->PCRTCDisplays.CalculateFramebufferOffset(front->m_scanmask_used, front->m_regs->DISP[0].DISPFB, front->m_regs->DISP[1].DISPFB);
+
+	// The PCRTC record must precede the vsync-flushed draw records — those draws
+	// see the fresh display state, mid-frame draws saw the previous frame's.
+	front->SubmitPcrtcSync();
 
 	// Do not move the flush into the VSync() method. It's here because EE transfers
 	// get cleared in HW VSync, and may be needed for a buffered draw (FFX FMVs).
-	g_gs_renderer->Flush(GSState::VSYNC);
-	g_gs_renderer->VSync(field, registers_written, g_gs_renderer->IsIdleFrame());
+	front->Flush(GSState::VSYNC);
+	g_gs_renderer->SubmitVsync(field, registers_written);
+	if (g_gs_front)
+		g_gs_front->MirrorPostVsyncState();
 }
 
 int GSfreeze(FreezeAction mode, freezeData* data)
 {
 	if (mode == FreezeAction::Save)
 	{
-		return g_gs_renderer->Freeze(data, false);
+		return GSParseTarget()->Freeze(data, false);
 	}
 	else if (mode == FreezeAction::Size)
 	{
-		return g_gs_renderer->Freeze(data, true);
+		return GSParseTarget()->Freeze(data, true);
 	}
 	else // if (mode == FreezeAction::Load)
 	{
@@ -560,20 +676,29 @@ int GSfreeze(FreezeAction mode, freezeData* data)
 		if (GSCapture::IsCapturing())
 			GSCapture::Flush();
 
-		return g_gs_renderer->Defrost(data);
+		return GSParseTarget()->Defrost(data);
 	}
 }
 
-void GSQueueSnapshot(const std::string& path, u32 gsdump_frames)
+bool GSQueueSnapshot(const std::string& path, u32 gsdump_frames)
 {
-	if (g_gs_renderer)
-		g_gs_renderer->QueueSnapshot(path, gsdump_frames);
+	return g_gs_renderer && g_gs_renderer->QueueSnapshot(path, gsdump_frames);
 }
 
 void GSStopGSDump()
 {
 	if (g_gs_renderer)
 		g_gs_renderer->StopGSDump();
+}
+
+bool GSIsDumpRecording()
+{
+	return g_gs_renderer && g_gs_renderer->IsDumpRecording();
+}
+
+bool GSHasFrontParser()
+{
+	return static_cast<bool>(g_gs_front);
 }
 
 bool GSBeginCapture(std::string filename)
@@ -592,6 +717,18 @@ void GSEndCapture()
 
 void GSPresentCurrentFrame()
 {
+	// Presenting records into the device's command buffer and begins a render pass, so it is a
+	// device mutation exactly like the four sites above -- this was the one that did not drain.
+	//
+	// It matters most while PAUSED. MTGS's idle loop re-presents the frame on a spin whenever the
+	// VM is not Running (MTGS.cpp, the s_run_idle_flag branch), so the moment the user pauses, this
+	// runs concurrently with a back thread that may still be executing queued draws. Both then call
+	// vkCmdBeginRenderPass on the same VkCommandBuffer, which Vulkan requires the caller to
+	// externally synchronize; Adreno's driver faults inside vkCmdBeginRenderPass rather than
+	// erroring, and both threads abort. Reproduced on an Adreno 740 by pausing with the GS back
+	// thread enabled.
+	DrainBackQueueBeforeDeviceMutation();
+
 	g_gs_renderer->PresentCurrentFrame();
 }
 
@@ -609,7 +746,10 @@ void GSThrottlePresentation()
 void GSGameChanged()
 {
 	if (GSIsHardwareRenderer())
+	{
+		GSHwHack::ResetState();
 		GSTextureReplacements::GameChanged();
+	}
 
 	if (!VMManager::HasValidVM() && GSCapture::IsCapturing())
 		GSCapture::EndCapture();
@@ -623,12 +763,16 @@ bool GSHasDisplayWindow()
 
 void GSResizeDisplayWindow(u32 width, u32 height, float scale)
 {
+	DrainBackQueueBeforeDeviceMutation();
+
 	g_gs_device->ResizeWindow(width, height, scale);
 	ImGuiManager::WindowResized();
 }
 
 void GSUpdateDisplayWindow()
 {
+	DrainBackQueueBeforeDeviceMutation();
+
 	if (!g_gs_device->UpdateWindow())
 	{
 		Host::ReportErrorAsync("Error", TRANSLATE_SV("GS", "Failed to change window after update. The log may contain more information."));
@@ -647,6 +791,9 @@ void GSSetVSyncMode(GSVSyncMode mode, bool allow_present_throttle)
 	}};
 	Console.WriteLnFmt(Color_StrongCyan, "Setting vsync mode: {}{}", modes[static_cast<size_t>(mode)],
 		allow_present_throttle ? " (throttle allowed)" : "");
+
+	DrainBackQueueBeforeDeviceMutation();
+
 	g_gs_device->SetVSyncMode(mode, allow_present_throttle);
 }
 
@@ -888,6 +1035,12 @@ void GSUpdateConfig(const Pcsx2Config::GSOptions& new_config)
 	if (!g_gs_renderer)
 		return;
 
+	// GV7-2: everything below mutates renderer/device state the back thread may
+	// be reading mid-draw (settings, ImGui font textures, TC purges). The front
+	// only parses on this (MTGS) thread, so a single drain up front quiesces the
+	// back thread for the whole apply.
+	g_gs_renderer->DrainBackQueue();
+
 	// Handle OSD scale changes by pushing a window resize through.
 	if (new_config.OsdScale != old_config.OsdScale)
 		ImGuiManager::RequestScaleUpdate();
@@ -927,6 +1080,8 @@ void GSUpdateConfig(const Pcsx2Config::GSOptions& new_config)
 
 	// renderer-specific options (e.g. auto flush, TC offset)
 	g_gs_renderer->UpdateSettings(old_config);
+	if (g_gs_front)
+		g_gs_front->UpdateSettings(old_config);
 
 	// reload texture cache when trilinear filtering or TC options change
 	if (
@@ -941,7 +1096,22 @@ void GSUpdateConfig(const Pcsx2Config::GSOptions& new_config)
 		GSConfig.UserHacks_TextureInsideRt != old_config.UserHacks_TextureInsideRt ||
 		GSConfig.UserHacks_CPUSpriteRenderBW != old_config.UserHacks_CPUSpriteRenderBW ||
 		GSConfig.UserHacks_CPUCLUTRender != old_config.UserHacks_CPUCLUTRender ||
-		GSConfig.UserHacks_GPUTargetCLUTMode != old_config.UserHacks_GPUTargetCLUTMode)
+		GSConfig.UserHacks_GPUTargetCLUTMode != old_config.UserHacks_GPUTargetCLUTMode ||
+		// The geometry hacks below all outlive the draw, because what they move ends up
+		// baked into a cached target: native scaling swaps a target's texture for a
+		// downscaled one and pins m_scale to 1, the rest shift vertices or texture
+		// coordinates on the way in. Switch one off and a target the game doesn't redraw
+		// keeps the old pixels — that's the ghosting people report as a stuck setting.
+		GSConfig.UserHacks_NativeScaling != old_config.UserHacks_NativeScaling ||
+		GSConfig.UserHacks_AlignSpriteX != old_config.UserHacks_AlignSpriteX ||
+		GSConfig.UserHacks_MergePPSprite != old_config.UserHacks_MergePPSprite ||
+		GSConfig.UserHacks_RoundSprite != old_config.UserHacks_RoundSprite ||
+		GSConfig.UserHacks_HalfPixelOffset != old_config.UserHacks_HalfPixelOffset ||
+		GSConfig.UserHacks_ForceEvenSpritePosition != old_config.UserHacks_ForceEvenSpritePosition ||
+		GSConfig.UserHacks_NativePaletteDraw != old_config.UserHacks_NativePaletteDraw ||
+		GSConfig.UserHacks_BilinearHack != old_config.UserHacks_BilinearHack ||
+		GSConfig.UserHacks_TCOffsetX != old_config.UserHacks_TCOffsetX ||
+		GSConfig.UserHacks_TCOffsetY != old_config.UserHacks_TCOffsetY)
 	{
 		if (GSConfig.UserHacks_ReadTCOnClose)
 			g_gs_renderer->ReadbackTextureCache();
@@ -964,6 +1134,24 @@ void GSUpdateConfig(const Pcsx2Config::GSOptions& new_config)
 		GSConfig.DumpReplaceableTextures != old_config.DumpReplaceableTextures)
 	{
 		g_gs_renderer->PurgeTextureCache(true, false, true);
+	}
+
+	// Per-draw ledger. Writing on the true->false edge means a live capture is just
+	// "turn it on, play the slow bit, turn it off" -- both edges drivable over PINE.
+	if (GSConfig.DumpDrawLog != old_config.DumpDrawLog)
+	{
+		if (GSConfig.DumpDrawLog)
+		{
+			GSDrawLog::Reset();
+			GSDrawLog::Start();
+			Console.WriteLn("GSDrawLog: recording started.");
+		}
+		else
+		{
+			GSDrawLog::Stop();
+			if (GSDrawLog::GetRecordCount() > 0)
+				GSDrawLog::WriteCSV(Path::Combine(EmuFolders::Logs, "gs_drawlog.csv"));
+		}
 	}
 
 	if (GSConfig.OsdShowGPU && !old_config.OsdShowGPU)
@@ -1008,14 +1196,13 @@ bool GSSaveSnapshotToMemory(u32 window_width, u32 window_height, bool apply_aspe
 
 #ifdef _WIN32
 
-static HANDLE s_fh = NULL;
-
 void* GSAllocateWrappedMemory(size_t size, size_t repeat)
 {
-	pxAssertRel(!s_fh, "Has no file mapping");
-
-	s_fh = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, size, nullptr);
-	if (s_fh == NULL)
+	// No static handle: the mapped views keep the section alive, so the handle
+	// closes before returning and multiple wrapped allocations can coexist
+	// (the GV7 two-object split runs two GSStates, each with a wrapped vm).
+	const HANDLE fh = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, size, nullptr);
+	if (fh == NULL)
 	{
 		Console.Error("Failed to create file mapping of size %zu. WIN API ERROR:%u", size, GetLastError());
 		return nullptr;
@@ -1034,7 +1221,7 @@ void* GSAllocateWrappedMemory(size_t size, size_t repeat)
 			// Everything except the last needs the placeholders split to map over them. Then map the same file over the region.
 			u8* addr = base + i * size;
 			if ((i != (repeat - 1) && !VirtualFreeEx(GetCurrentProcess(), addr, size, MEM_RELEASE | MEM_PRESERVE_PLACEHOLDER)) ||
-				!MapViewOfFile3(s_fh, GetCurrentProcess(), addr, 0, size, MEM_REPLACE_PLACEHOLDER, PAGE_READWRITE, nullptr, 0))
+				!MapViewOfFile3(fh, GetCurrentProcess(), addr, 0, size, MEM_REPLACE_PLACEHOLDER, PAGE_READWRITE, nullptr, 0))
 			{
 				Console.Error("Failed to map repeat %zu of size %zu.", i, size);
 				okay = false;
@@ -1047,6 +1234,7 @@ void* GSAllocateWrappedMemory(size_t size, size_t repeat)
 		if (okay)
 		{
 			DbgCon.WriteLn("fifo_alloc(): Mapped %zu repeats of %zu bytes at %p.", repeat, size, base);
+			CloseHandle(fh);
 			return base;
 		}
 
@@ -1054,15 +1242,12 @@ void* GSAllocateWrappedMemory(size_t size, size_t repeat)
 	}
 
 	Console.Error("Failed to reserve VA space of size %zu. WIN API ERROR:%u", size, GetLastError());
-	CloseHandle(s_fh);
-	s_fh = NULL;
+	CloseHandle(fh);
 	return nullptr;
 }
 
 void GSFreeWrappedMemory(void* ptr, size_t size, size_t repeat)
 {
-	pxAssertRel(s_fh, "Has a file mapping");
-
 	for (size_t i = 0; i < repeat; i++)
 	{
 		u8* addr = (u8*)ptr + i * size;
@@ -1070,7 +1255,6 @@ void GSFreeWrappedMemory(void* ptr, size_t size, size_t repeat)
 	}
 
 	VirtualFreeEx(GetCurrentProcess(), ptr, 0, MEM_RELEASE);
-	s_fh = NULL;
 }
 
 #else
@@ -1079,65 +1263,47 @@ void GSFreeWrappedMemory(void* ptr, size_t size, size_t repeat)
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#if defined(__ANDROID__)
-#include <sys/syscall.h>
-#include <android/sharedmem.h>
-#endif
-
-static int s_shm_fd = -1;
 
 void* GSAllocateWrappedMemory(size_t size, size_t repeat)
 {
-	pxAssert(s_shm_fd == -1);
-
-	const char* file_name = "/GS.mem";
-#if defined(__ANDROID__)
-	s_shm_fd = static_cast<int>(syscall(__NR_memfd_create, "GS.mem", 0));
-	if (s_shm_fd == -1)
+	// No static fd: the mappings keep the shm object alive, so the descriptor
+	// closes before returning and multiple wrapped allocations can coexist
+	// (the GV7 two-object split runs two GSStates, each with a wrapped vm).
+	// Creation routes through HostSys::CreateSharedMemory so iOS gets the
+	// file-backed fallback (the bare shm_open the prior implementation used
+	// is rejected by the iOS sandbox); the helper unlinks the name (or uses
+	// memfd) immediately, so coexisting allocations never collide on it, and
+	// it ftruncates to the requested size before returning.
+	const std::string file_name = HostSys::GetFileMappingName("GS.mem");
+	void* const handle = HostSys::CreateSharedMemory(file_name.c_str(), repeat * size);
+	if (!handle)
 	{
-		fprintf(stderr, "Failed to create memfd due to %s\n", strerror(errno));
+		std::fprintf(stderr,
+			"GSAllocateWrappedMemory: HostSys::CreateSharedMemory failed "
+			"(size=%zu repeat=%zu total=%zu)\n",
+			size, repeat, repeat * size);
 		return nullptr;
 	}
-#else
-	s_shm_fd = shm_open(file_name, O_RDWR | O_CREAT | O_EXCL, 0600);
-	if (s_shm_fd != -1)
-	{
-		shm_unlink(file_name); // file is deleted but descriptor is still open
-	}
-	else
-	{
-		fprintf(stderr, "Failed to open %s due to %s\n", file_name, strerror(errno));
-		return nullptr;
-	}
-#endif
+	const int fd = static_cast<int>(reinterpret_cast<intptr_t>(handle));
 
-	if (ftruncate(s_shm_fd, repeat * size) < 0)
-		fprintf(stderr, "Failed to reserve memory due to %s\n", strerror(errno));
-
-	void* fifo = mmap(nullptr, size * repeat, PROT_READ | PROT_WRITE, MAP_SHARED, s_shm_fd, 0);
+	void* fifo = mmap(nullptr, size * repeat, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
 	for (size_t i = 1; i < repeat; i++)
 	{
 		void* base = (u8*)fifo + size * i;
-		u8* next = (u8*)mmap(base, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, s_shm_fd, 0);
+		u8* next = (u8*)mmap(base, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, fd, 0);
 		if (next != base)
 			fprintf(stderr, "Fail to mmap contiguous segment\n");
 	}
+
+	close(fd);
 
 	return fifo;
 }
 
 void GSFreeWrappedMemory(void* ptr, size_t size, size_t repeat)
 {
-	pxAssert(s_shm_fd >= 0);
-
-	if (s_shm_fd < 0)
-		return;
-
 	munmap(ptr, size * repeat);
-
-	close(s_shm_fd);
-	s_shm_fd = -1;
 }
 
 #endif

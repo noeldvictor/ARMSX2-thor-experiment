@@ -57,6 +57,13 @@ typedef NS_ENUM(NSInteger, ARMSX2PadButton) {
 @property (nonatomic, assign) BOOL valid;
 @end
 
+@interface ARMSX2RetroAchievementsToastInfo : NSObject
+@property (nonatomic, copy, nonnull) NSString *title;
+@property (nonatomic, copy, nonnull) NSString *message;
+@property (nonatomic, copy, nonnull) NSString *badgePath;
+@property (nonatomic, assign) NSTimeInterval duration;
+@end
+
 typedef void (^ARMSX2SaveStateCompletion)(BOOL success);
 typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonnull message);
 
@@ -88,6 +95,7 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
 + (nonnull NSString *)buildVersion;
 + (BOOL)isJITAvailable;
 + (BOOL)isNoJITFallbackActive;
++ (BOOL)isIdleVMPrewarmResolved;
 + (nonnull NSArray<NSURL *> *)extractControllerSkinArchiveAtURL:(nonnull NSURL *)archiveURL
                                                     toDirectory:(nonnull NSURL *)destinationDirectory
     NS_SWIFT_NAME(extractControllerSkinArchive(at:to:));
@@ -99,6 +107,13 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
                                                     toDirectory:(nonnull NSURL *)destinationDirectory
     NS_SWIFT_NAME(extractSkinPackageArchive(at:to:));
 
+// Preserves the archive tree, so each .slangp still resolves its stages by relative path.
+// Empty with `error` set on failure; count the returned .slangp URLs to tell a real pack.
++ (nonnull NSArray<NSURL *> *)extractShaderPackArchiveAtURL:(nonnull NSURL *)archiveURL
+                                                toDirectory:(nonnull NSURL *)destinationDirectory
+                                                      error:(NSError * _Nullable * _Nullable)error
+    NS_SWIFT_NAME(extractShaderPackArchive(at:to:error:));
+
 // Extracts the first .ps2 file from a ZIP into the memory-card directory.
 + (nullable NSString *)extractMemoryCardArchiveAtURL:(nonnull NSURL *)archiveURL
     NS_SWIFT_NAME(extractMemoryCardArchive(at:));
@@ -107,6 +122,10 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
 + (void)setPerformanceOverlayVisible:(BOOL)visible;
 + (BOOL)isPerformanceOverlayVisible;
 + (void)applyOsdPreset:(int)preset;  // 0=off, 1=simple, 2=detail, 3=full
+
+// Permanently releases the selected optional runtime resources for the current VM session.
++ (void)releaseNonEmulationResources:(NSUInteger)releaseFlags;
++ (BOOL)isEmulationOnlyModeActive;
 
 // Accessibility: structured device stats for the VoiceOver HUD mirror.
 + (nonnull NSDictionary<NSString *, id> *)deviceStatsForAccessibility;
@@ -133,18 +152,15 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
              upscaleMultiplier:(float)upscaleMultiplier
                    aspectRatio:(nonnull NSString *)aspectRatio
               textureFiltering:(int)textureFiltering
-            hardwareMipmapping:(BOOL)hardwareMipmapping
+            hardwareMipmapping:(int)hardwareMipmapping
               blendingAccuracy:(int)blendingAccuracy
                interlaceMode:(int)interlaceMode
         trilinearFiltering:(int)trilinearFiltering
           halfPixelOffset:(int)halfPixelOffset
               roundSprite:(int)roundSprite
-      alignSpriteOverride:(BOOL)alignSpriteOverride
-              alignSprite:(BOOL)alignSprite
-      mergeSpriteOverride:(BOOL)mergeSpriteOverride
-              mergeSprite:(BOOL)mergeSprite
-    wildArmsOffsetOverride:(BOOL)wildArmsOffsetOverride
-           wildArmsOffset:(BOOL)wildArmsOffset
+              alignSprite:(int)alignSprite
+              mergeSprite:(int)mergeSprite
+           wildArmsOffset:(int)wildArmsOffset
     textureOffsetXOverride:(BOOL)textureOffsetXOverride
            textureOffsetX:(int)textureOffsetX
     textureOffsetYOverride:(BOOL)textureOffsetYOverride
@@ -165,23 +181,20 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
                  enablePatches:(BOOL)enablePatches
               enableGameFixes:(BOOL)enableGameFixes
     enableGameDBHardwareFixes:(BOOL)enableGameDBHardwareFixes
-    NS_SWIFT_NAME(setGameSettings(forISO:enabled:upscaleMultiplier:aspectRatio:textureFiltering:hardwareMipmapping:blendingAccuracy:interlaceMode:trilinearFiltering:halfPixelOffset:roundSprite:alignSpriteOverride:alignSprite:mergeSpriteOverride:mergeSprite:wildArmsOffsetOverride:wildArmsOffset:textureOffsetXOverride:textureOffsetX:textureOffsetYOverride:textureOffsetY:skipDrawStartOverride:skipDrawStart:skipDrawEndOverride:skipDrawEnd:volumeOverride:volumePercent:eeCoreType:mtvu:eeCycleRateOverride:eeCycleRate:fastBootOverride:fastBoot:enableCheats:enablePatches:enableGameFixes:enableGameDBHardwareFixes:));
+    NS_SWIFT_NAME(setGameSettings(forISO:enabled:upscaleMultiplier:aspectRatio:textureFiltering:hardwareMipmapping:blendingAccuracy:interlaceMode:trilinearFiltering:halfPixelOffset:roundSprite:alignSprite:mergeSprite:wildArmsOffset:textureOffsetXOverride:textureOffsetX:textureOffsetYOverride:textureOffsetY:skipDrawStartOverride:skipDrawStart:skipDrawEndOverride:skipDrawEnd:volumeOverride:volumePercent:eeCoreType:mtvu:eeCycleRateOverride:eeCycleRate:fastBootOverride:fastBoot:enableCheats:enablePatches:enableGameFixes:enableGameDBHardwareFixes:));
 + (void)setGameSettingsForCurrentGameWithEnabled:(BOOL)enabled
                                upscaleMultiplier:(float)upscaleMultiplier
                                      aspectRatio:(nonnull NSString *)aspectRatio
                                 textureFiltering:(int)textureFiltering
-                              hardwareMipmapping:(BOOL)hardwareMipmapping
+                              hardwareMipmapping:(int)hardwareMipmapping
                                 blendingAccuracy:(int)blendingAccuracy
                                    interlaceMode:(int)interlaceMode
                               trilinearFiltering:(int)trilinearFiltering
                                  halfPixelOffset:(int)halfPixelOffset
                                      roundSprite:(int)roundSprite
-                             alignSpriteOverride:(BOOL)alignSpriteOverride
-                                     alignSprite:(BOOL)alignSprite
-                             mergeSpriteOverride:(BOOL)mergeSpriteOverride
-                                     mergeSprite:(BOOL)mergeSprite
-                           wildArmsOffsetOverride:(BOOL)wildArmsOffsetOverride
-                                  wildArmsOffset:(BOOL)wildArmsOffset
+                                     alignSprite:(int)alignSprite
+                                     mergeSprite:(int)mergeSprite
+                                  wildArmsOffset:(int)wildArmsOffset
                            textureOffsetXOverride:(BOOL)textureOffsetXOverride
                                   textureOffsetX:(int)textureOffsetX
                            textureOffsetYOverride:(BOOL)textureOffsetYOverride
@@ -202,7 +215,7 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
                                    enablePatches:(BOOL)enablePatches
                                  enableGameFixes:(BOOL)enableGameFixes
                       enableGameDBHardwareFixes:(BOOL)enableGameDBHardwareFixes
-    NS_SWIFT_NAME(setGameSettingsForCurrentGame(enabled:upscaleMultiplier:aspectRatio:textureFiltering:hardwareMipmapping:blendingAccuracy:interlaceMode:trilinearFiltering:halfPixelOffset:roundSprite:alignSpriteOverride:alignSprite:mergeSpriteOverride:mergeSprite:wildArmsOffsetOverride:wildArmsOffset:textureOffsetXOverride:textureOffsetX:textureOffsetYOverride:textureOffsetY:skipDrawStartOverride:skipDrawStart:skipDrawEndOverride:skipDrawEnd:volumeOverride:volumePercent:eeCoreType:mtvu:eeCycleRateOverride:eeCycleRate:fastBootOverride:fastBoot:enableCheats:enablePatches:enableGameFixes:enableGameDBHardwareFixes:));
+    NS_SWIFT_NAME(setGameSettingsForCurrentGame(enabled:upscaleMultiplier:aspectRatio:textureFiltering:hardwareMipmapping:blendingAccuracy:interlaceMode:trilinearFiltering:halfPixelOffset:roundSprite:alignSprite:mergeSprite:wildArmsOffset:textureOffsetXOverride:textureOffsetX:textureOffsetYOverride:textureOffsetY:skipDrawStartOverride:skipDrawStart:skipDrawEndOverride:skipDrawEnd:volumeOverride:volumePercent:eeCoreType:mtvu:eeCycleRateOverride:eeCycleRate:fastBootOverride:fastBoot:enableCheats:enablePatches:enableGameFixes:enableGameDBHardwareFixes:));
 + (nullable NSString *)linkedDiscPathForELF:(nonnull NSString *)elfName NS_SWIFT_NAME(linkedDiscPath(forELF:));
 + (void)setLinkedDiscPath:(nullable NSString *)discPath forELF:(nonnull NSString *)elfName NS_SWIFT_NAME(setLinkedDiscPath(_:forELF:));
 + (nonnull NSString *)clearCacheForISO:(nonnull NSString *)isoName NS_SWIFT_NAME(clearCache(forISO:));
@@ -238,10 +251,40 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
 + (void)applyGraphicsSettingsNow;
 + (void)flushINISettings;
 
+// What the running game is actually using for each upscaling hack, keyed by INI key.
+// Each entry has "effective", "reason" (ARMSX2GraphicsHackReason) and "pinned". The
+// masks and the GameDB sit between the INI and the renderer, so this is the only way
+// the settings screen can tell whether a toggle did anything. Refreshed on the
+// ARMSX2GraphicsHackStateChanged notification.
++ (nonnull NSDictionary<NSString *, id> *)graphicsHackState;
++ (void)setGraphicsHackPinned:(nonnull NSString *)iniKey pinned:(BOOL)pinned NS_SWIFT_NAME(setGraphicsHackPinned(_:pinned:));
+
+// Frame-time history (read-only). frameTimeHistory wraps
+// PerformanceMetrics::GetFrameTimeHistory() (a thread-safe read of the
+// 150-sample ring buffer) and frameTimeHistoryPos returns its current write
+// cursor. Used by the adaptive-resolution controller to read the freshest
+// samples before the cursor.
++ (nonnull NSArray<NSNumber *> *)frameTimeHistory;
++ (NSUInteger)frameTimeHistoryPos;
+
 // MetalFX Spatial upscaler availability probe. Returns YES only on iOS 16+ with
 // a device GPU that reports MetalFX support (NO on the simulator and unsupported
 // hardware). Used by the settings UI to hide the Upscaler option where unusable.
 + (BOOL)isMetalFXSupported;
+
+// Whether this build was compiled with librashader. Not a runtime probe: without cargo
+// the chain is compiled out, and the settings UI leaves the shader section out with it.
++ (BOOL)isShaderChainSupported;
+
+// The tweakable parameters a .slangp preset declares, as a JSON array of objects carrying
+// name, description, initial, minimum, maximum and step, in the author's declaration order.
+// nil when this build has no librashader or the preset will not load; "[]" for a preset that
+// declares none. Blocking file work — never call it on the main thread.
++ (nullable NSString *)shaderPresetParametersAtPath:(nonnull NSString *)path NS_SWIFT_NAME(shaderPresetParameters(atPath:));
+
+// Queues parameter values for the chain built from preset. The GS thread applies them before
+// its next frame, so this is how a value change reaches a running chain.
++ (void)setShaderChainParameters:(nonnull NSDictionary<NSString *, NSNumber *> *)params forPreset:(nonnull NSString *)preset NS_SWIFT_NAME(setShaderChainParameters(_:forPreset:));
 
 // Per-game INI access — reads/writes the per-game INI file
 // (EmuFolders::GameSettings/<serial>_<crc>.ini) used by the game-settings and
@@ -249,19 +292,34 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
 + (BOOL)hasPerGameINIValue:(nonnull NSString *)section key:(nonnull NSString *)key forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(hasPerGameINIValue(_:key:forISO:));
 + (int)getPerGameINIInt:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(int)def forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(getPerGameINIInt(_:key:defaultValue:forISO:));
 + (BOOL)getPerGameINIBool:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(BOOL)def forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(getPerGameINIBool(_:key:defaultValue:forISO:));
++ (float)getPerGameINIFloat:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(float)def forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(getPerGameINIFloat(_:key:defaultValue:forISO:));
++ (nonnull NSString *)getPerGameINIString:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(nonnull NSString *)def forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(getPerGameINIString(_:key:defaultValue:forISO:));
 + (void)setPerGameINIInt:(nonnull NSString *)section key:(nonnull NSString *)key value:(int)value forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(setPerGameINIInt(_:key:value:forISO:));
 + (void)setPerGameINIBool:(nonnull NSString *)section key:(nonnull NSString *)key value:(BOOL)value forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(setPerGameINIBool(_:key:value:forISO:));
++ (void)setPerGameINIFloat:(nonnull NSString *)section key:(nonnull NSString *)key value:(float)value forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(setPerGameINIFloat(_:key:value:forISO:));
++ (void)setPerGameINIString:(nonnull NSString *)section key:(nonnull NSString *)key value:(nonnull NSString *)value forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(setPerGameINIString(_:key:value:forISO:));
 + (void)deletePerGameINIValue:(nonnull NSString *)section key:(nonnull NSString *)key forISO:(nonnull NSString *)isoName NS_SWIFT_NAME(deletePerGameINIValue(_:key:forISO:));
 + (BOOL)hasPerGameINIValueForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key NS_SWIFT_NAME(hasPerGameINIValueForCurrentGame(_:key:));
 + (int)getPerGameINIIntForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(int)def NS_SWIFT_NAME(getPerGameINIIntForCurrentGame(_:key:defaultValue:));
 + (BOOL)getPerGameINIBoolForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(BOOL)def NS_SWIFT_NAME(getPerGameINIBoolForCurrentGame(_:key:defaultValue:));
++ (float)getPerGameINIFloatForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(float)def NS_SWIFT_NAME(getPerGameINIFloatForCurrentGame(_:key:defaultValue:));
++ (nonnull NSString *)getPerGameINIStringForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key defaultValue:(nonnull NSString *)def NS_SWIFT_NAME(getPerGameINIStringForCurrentGame(_:key:defaultValue:));
 + (void)setPerGameINIIntForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key value:(int)value NS_SWIFT_NAME(setPerGameINIIntForCurrentGame(_:key:value:));
 + (void)setPerGameINIBoolForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key value:(BOOL)value NS_SWIFT_NAME(setPerGameINIBoolForCurrentGame(_:key:value:));
++ (void)setPerGameINIFloatForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key value:(float)value NS_SWIFT_NAME(setPerGameINIFloatForCurrentGame(_:key:value:));
++ (void)setPerGameINIStringForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key value:(nonnull NSString *)value NS_SWIFT_NAME(setPerGameINIStringForCurrentGame(_:key:value:));
 + (void)deletePerGameINIValueForCurrentGame:(nonnull NSString *)section key:(nonnull NSString *)key NS_SWIFT_NAME(deletePerGameINIValueForCurrentGame(_:key:));
+
+// Identity the accessors above key on, or "" when there isn't one. The current-game
+// variant only reads VM state; the ISO variant opens the disc image, so keep it
+// off render paths.
++ (nonnull NSString *)perGameIdentityKeyForCurrentGame;
++ (nonnull NSString *)perGameIdentityKeyForISO:(nonnull NSString *)isoName NS_SWIFT_NAME(perGameIdentityKey(forISO:));
 
 // Runtime speed control
 + (int)limiterMode;
 + (void)setLimiterMode:(int)mode;
++ (void)setPresentFPSCap:(float)fps NS_SWIFT_NAME(setPresentFPSCap(_:));
 
 // Compatibility Lab
 + (BOOL)getJITBisectFlag:(nonnull NSString *)key defaultValue:(BOOL)def;
@@ -328,7 +386,7 @@ typedef void (^ARMSX2RetroAchievementsCompletion)(BOOL success, NSString * _Nonn
 // RetroAchievements
 + (nonnull NSDictionary<NSString *, id> *)retroAchievementsState;
 + (nonnull NSArray<NSDictionary<NSString *, id> *> *)retroAchievementsForCurrentGame;
-+ (nullable NSDictionary<NSString *, id> *)consumePendingRetroAchievementsNotification;
++ (nullable ARMSX2RetroAchievementsToastInfo *)consumePendingRetroAchievementsNotification;
 + (BOOL)isRetroAchievementsHardcoreActive;
 + (void)setRetroAchievementsEnabled:(BOOL)enabled;
 + (void)setRetroAchievementsHardcore:(BOOL)enabled;

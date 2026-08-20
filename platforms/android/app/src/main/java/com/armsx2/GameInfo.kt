@@ -4,6 +4,7 @@ import com.armsx2.runtime.MainActivityRuntime
 
 import android.content.Context
 import android.net.Uri
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import java.io.File
 
@@ -20,6 +21,80 @@ object CoverArtStyle {
     fun set(value: Boolean) {
         use3d.value = value
         MainActivityRuntime.prefs.edit().putBoolean(KEY, value).apply()
+    }
+}
+
+/**
+ * Show the romanised title for games whose real title isn't English (issue #338).
+ *
+ * Default OFF = show each game under its own name, which for a Japanese release is the
+ * Japanese one. That's the GameDB's curated title and it matches desktop, whose
+ * `GetTitle(force_en = false)` does the same. On, the library reads the `name-en` the
+ * database carries for exactly these games.
+ *
+ * Only affects titles the DATABASE provides — a game that isn't in the DB keeps its
+ * filename-derived name either way, because there's nothing to translate it to.
+ */
+object EnglishTitles {
+    private const val KEY = "library.englishTitles"
+    val enabled = mutableStateOf(false)
+    fun load() { enabled.value = MainActivityRuntime.prefs.getBoolean(KEY, false) }
+    fun set(value: Boolean) {
+        enabled.value = value
+        MainActivityRuntime.prefs.edit().putBoolean(KEY, value).apply()
+    }
+}
+
+/**
+ * Per-game display-name overrides. Modded discs routinely report a garbage internal title —
+ * "UN6 A35" for a Naruto Ultimate Ninja 5 mod, "5" for a Tekken 6 one — and the GameDB can't
+ * correct them, because the serial still belongs to the base game it was built from. The user
+ * pins a readable name here and the library shows it wherever the parsed title would appear.
+ *
+ * Keyed by [GameInfo.settingsKey], the same identity per-game settings use, so a renamed game
+ * keeps its name across a re-scan. [enabled] gates the whole feature, so the real titles can be
+ * brought back for a look without discarding any overrides.
+ */
+object CustomNames {
+    private const val KEY_ENABLED = "library.customNames"
+    private const val KEY_PREFIX = "library.customName."
+
+    val enabled = mutableStateOf(true)
+
+    /** Bumped on every edit. Read inside [nameFor] so a rename recomposes the library:
+     *  the names themselves live in prefs, which Compose cannot observe on its own. */
+    val version = mutableIntStateOf(0)
+
+    fun load() { enabled.value = MainActivityRuntime.prefs.getBoolean(KEY_ENABLED, true) }
+
+    fun set(value: Boolean) {
+        enabled.value = value
+        MainActivityRuntime.prefs.edit().putBoolean(KEY_ENABLED, value).apply()
+        version.intValue++
+    }
+
+    /** The override to DISPLAY for [key] — null when unset, blank, or the feature is off. */
+    fun nameFor(key: String?): String? {
+        version.intValue // subscribe: see [version]
+        if (!enabled.value || key.isNullOrBlank()) return null
+        return stored(key)
+    }
+
+    /** The stored override regardless of [enabled] — the editor must show what's saved even
+     *  while the feature is toggled off, or turning it off would look like data loss. */
+    fun stored(key: String?): String? {
+        if (key.isNullOrBlank()) return null
+        return MainActivityRuntime.prefs.getString(KEY_PREFIX + key, null)?.takeIf { it.isNotBlank() }
+    }
+
+    /** Blank or null clears the override and restores the parsed title. */
+    fun setName(key: String?, name: String?) {
+        if (key.isNullOrBlank()) return
+        val trimmed = name?.trim()
+        MainActivityRuntime.prefs.edit().apply {
+            if (trimmed.isNullOrEmpty()) remove(KEY_PREFIX + key) else putString(KEY_PREFIX + key, trimmed)
+        }.apply()
+        version.intValue++
     }
 }
 
@@ -169,8 +244,48 @@ data class GameInfo(
     val compatibility: Int = 0,    // 0..5 (TODO: pull from gamedb)
     val extension: String = "",    // upper-case container ext, e.g. "ISO", "CHD"
     val platform: GamePlatform = GamePlatform.PS2,
+    /** GameDB `name-sort` — the title's sort key. For a Japanese game this is the kana
+     *  reading, which is the only way the list sorts the way a Japanese reader expects:
+     *  sorting the kanji sorts by codepoint, which is meaningless. Empty when the DB has
+     *  no separate key (most non-JP games), or when the title came from the filename. */
+    val titleSort: String = "",
+    /** GameDB `name-en` — the romanised title, present only where the original isn't
+     *  English. Its presence is exactly how we know [title] is non-English. */
+    val titleEn: String = "",
 ) {
-    val coverUrl: String? get() = serial?.let { s ->
+    /** The title to show. Mirrors GameList.h's `GetTitle(force_en)`: the original unless
+     *  English is asked for AND a separate English title exists. */
+    /** A user override wins over both the parsed and the English title — it exists precisely
+     *  because those are wrong for this disc (see [CustomNames]). */
+    fun displayTitle(forceEn: Boolean): String =
+        CustomNames.nameFor(settingsKey)
+            ?: if (forceEn && titleEn.isNotEmpty()) titleEn else title
+
+    /** The key to sort by. Mirrors GameList.h's `GetTitleSort(force_en)`, including the
+     *  subtlety it documents: when a separate English title exists, [titleSort] is in the
+     *  WRONG language for an English list, so the English title has to sort itself. */
+    fun sortKey(forceEn: Boolean): String = when {
+        // A renamed game sorts under the name the user actually sees; otherwise it files
+        // itself under the garbage title they renamed it to get away from ("UN6 A35" landing
+        // under U instead of N for Naruto).
+        !CustomNames.nameFor(settingsKey).isNullOrBlank() -> CustomNames.nameFor(settingsKey)!!
+        forceEn && titleEn.isNotEmpty() -> titleEn
+        titleSort.isNotEmpty() -> titleSort
+        else -> title
+    }
+    val coverUrl: String? get() = serial?.let { rawSerial ->
+        // Cover Region: swap in the equivalent release's serial when the user asked for another
+        // region's artwork. Falls back to this disc's own serial whenever there's no counterpart,
+        // so an unmatched game looks exactly as it does today.
+        coverUrlFor(CoverRegionIndex.coverSerialFor(rawSerial) ?: rawSerial)
+    }
+
+    /** This disc's OWN cover, ignoring the Cover Region choice. The card falls back to it when the
+     *  regional cover 404s — not every game has art for every region in the cover repo, and losing
+     *  a cover you previously had is worse than simply not getting the regional one. */
+    val discCoverUrl: String? get() = serial?.let { coverUrlFor(it) }
+
+    private fun coverUrlFor(s: String): String {
         val repo = when (platform) {
             GamePlatform.PS2 -> "ps2-covers"
             GamePlatform.PS1 -> "psx-covers"
@@ -178,7 +293,7 @@ data class GameInfo(
         // 3D cases live under covers/3d/*.png; flat 2D scans under
         // covers/default/*.jpg. Coil decodes by content, so the extension
         // mismatch on the cached file is fine.
-        if (CoverArtStyle.use3d.value)
+        return if (CoverArtStyle.use3d.value)
             "https://raw.githubusercontent.com/xlenore/$repo/main/covers/3d/$s.png"
         else
             "https://raw.githubusercontent.com/xlenore/$repo/main/covers/default/$s.jpg"

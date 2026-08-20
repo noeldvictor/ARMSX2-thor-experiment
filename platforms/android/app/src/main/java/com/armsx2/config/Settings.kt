@@ -3,6 +3,7 @@ package com.armsx2.config
 import com.armsx2.ShaderParams
 import com.armsx2.config.Settings.Companion.emitSink
 import com.armsx2.config.Settings.Companion.merge
+import com.armsx2.runtime.MainActivityRuntime
 import kr.co.iefriends.pcsx2.NativeApp
 import org.json.JSONArray
 import org.json.JSONObject
@@ -68,8 +69,15 @@ data class Settings(
     val eeCycleRate: Int = 0,
     /** EmuCore/Speedhacks/EECycleSkip — 0..3. 0 = no skip. */
     val eeCycleSkip: Int = 0,
-    /** EE/FPU clamp mode — 0 None / 1 Normal / 2 Extra / 3 Full (PCSX2 default Normal).
-     *  Unpacks to EmuCore/CPU/Recompiler fpuOverflow/fpuExtraOverflow/fpuFullMode. */
+    /** EE/FPU clamp mode — 0 None / 1 Normal / 2 Extra / 3 Full / 4 Exact
+     *  (PCSX2 default Normal). Unpacks to EmuCore/CPU/Recompiler
+     *  fpuOverflow/fpuExtraOverflow/fpuFullMode/fpuExactMode.
+     *  4 is Full plus the rest of the EE multiplier's one-ULP deficit and a
+     *  divide/sqrt/rsqrt that runs the unit's own recurrence out of line, so it
+     *  costs a call per divide. ⚠️ The GameDB overwrites this whole tier for any
+     *  title carrying an eeClampMode entry, and an entry below 4 CLEARS the
+     *  exact bit — so on those titles the choice is inert unless game fixes are
+     *  off. Keep any bound in the pickers in sync with this list. */
     val eeClampMode: Int = 1,
     /** VU clamp mode — 0 None / 1 Normal / 2 Extra / 3 Extra+Sign (PCSX2 default Normal).
      *  Unpacks to vu0/vu1 Overflow/ExtraOverflow/SignOverflow. */
@@ -145,6 +153,17 @@ data class Settings(
      *  CPU-bound devices; default off uses the scalar reference (unchanged
      *  audio). Applied on the next game boot/reset. */
     val spu2NeonReverb: Boolean = false,
+    /** SPU2/Output/AndroidOpenSLES — opt-in legacy OpenSL ES audio path (Oboe)
+     *  instead of AAudio. Slightly higher latency, but Android doesn't reclaim
+     *  the idle stream, so pause/resume (and fast-forward toggling through the
+     *  menu) never triggers the ~1s stream rebuild. Applies live (stream
+     *  reconfigures). Default off = AAudio low-latency. */
+    val audioOpenSLES: Boolean = false,
+    /** SPU2/Output/LightweightMode — low-end audio lever: skip the SPU2 reverb
+     *  pipeline (all echo/spatial reverb) in the mixer. Frees CPU on devices that
+     *  can't keep up even with NEON reverb; default off = full reverb. Applies
+     *  live (read per-sample in MixCore). */
+    val spu2LightweightMix: Boolean = false,
 
     // ---- EmuCore — patches / cheats ----
     /** EmuCore/EnablePatches — game-compatibility patches (default on). */
@@ -155,11 +174,28 @@ data class Settings(
     val enableWideScreenPatches: Boolean = false,
     /** EmuCore/EnableNoInterlacingPatches — no-interlacing patches. */
     val enableNoInterlacingPatches: Boolean = false,
-    /** EmuCore/EnableFastBoot — skip BIOS splash and boot straight to the game. */
-    val enableFastBoot: Boolean = false,
+    /** EmuCore/EnableFastBoot — skip BIOS splash and boot straight to the game.
+     *
+     *  Default ON: "how do I skip the boot animation" is one of the most-asked questions in the
+     *  Discord, and desktop PCSX2 fast-boots by default too. Only fresh installs are affected —
+     *  the saved JSON always carries this key, so anyone who already has a value keeps it rather
+     *  than having their boot behaviour changed under them by an update. */
+    val enableFastBoot: Boolean = true,
     /** EmuCore/HostFs — host: filesystem access in the VM, for ELF/homebrew and mods
      *  (e.g. modded Persona 3 FES). Per-game capable; applies on the next game boot. */
     val hostFs: Boolean = false,
+    /** EmuCore/EnablePINE — the IPC server external tools drive the emulator through
+     *  (read/write guest memory, savestates, GS dumps). On Android it listens on loopback
+     *  TCP, so it is reachable from a workstation only after `adb forward`; nothing outside
+     *  the device can see it. Off by default: it is a debugging tool, and a listening socket
+     *  a player did not ask for should not exist. */
+    val pineEnabled: Boolean = false,
+    /** EmuCore/PINESlot — the port [pineEnabled] listens on. Deliberately has no UI row: the
+     *  only reason to move it is running two emulators at once, which does not happen on a
+     *  handheld, and a free-entry port field is a support burden for a knob nobody turns.
+     *  Kept in the model anyway so the toggle's description can state the real port rather
+     *  than assuming the default. Editable in the INI for the rare case that needs it. */
+    val pineSlot: Int = 28011,
     /** EmuCore/EnableGameFixes — master switch that lets the GameDB apply each game's
      *  curated compatibility gamefixes (e.g. VuAddSubHack, SkipMPEGHack). Defaults TRUE
      *  to match upstream PCSX2 (Pcsx2Config.cpp EnableGameFixes = true) and trak's Mac:
@@ -178,8 +214,6 @@ data class Settings(
     val gamefixInstantDma: Boolean = false,
     /** EmuCore/Gamefixes/BlitInternalFPSHack. */
     val gamefixBlitInternalFps: Boolean = false,
-    /** EmuCore/Gamefixes/FpuMulHack — Tales of Destiny. */
-    val gamefixFpuMul: Boolean = false,
     /** EmuCore/Gamefixes/OPHFlagHack — Bleach Blade Battlers. */
     val gamefixOphFlag: Boolean = false,
     /** EmuCore/Gamefixes/GIFFIFOHack — emulate the GIF FIFO (Test Drive Unlimited). */
@@ -241,6 +275,12 @@ data class Settings(
      * per-primitive barrier fallback. A few proprietary Adreno drivers show stale-ROAA
      * read artifacts — turn this off in the Renderer tab if so. Applies on game restart. */
     val adrenoFbFetch: Boolean = true,
+    /** EmuCore/GS/CoalesceRenderPasses — group consecutive draws to the same target into a
+     * single render pass. Aimed squarely at tiling GPUs (every Android GPU), where each pass
+     * boundary costs a full tile load and store; rendering output is unchanged. Default off,
+     * matching upstream, because it is new. bmd only wired this into the desktop UI, so
+     * without this it would be unreachable on the platform it was written for. */
+    val coalesceRenderPasses: Boolean = false,
     /** EmuCore/GS/ForceMaliFramebufferFetch — re-enable the Vulkan framebuffer-fetch
      * (ROAA) path on MediaTek Mali / Mali-G57, where it is force-disabled because those
      * drivers return zero/stale destination colour through ROAA (black or missing
@@ -262,6 +302,10 @@ data class Settings(
     val useAngleOpenGL: Boolean = false,
     /** EmuCore/GS/OverrideTextureBarriers — -1 Auto / 0 Off / 1 On. */
     val overrideTextureBarriers: Int = -1,
+    /** EmuCore/GS/GSBackThreadMode — GV7 GS front/back thread split.
+     * 0 Off (single-threaded), 1 Inline, 2 Lockstep, 3 Pipelined (fastest).
+     * Defaults to Off (opt-in); a per-game override can raise it. Restart-required. */
+    val gsBackThreadMode: Int = 0,
     /** EmuCore/GS/DisableVertexShaderExpand — force CPU vertex expansion. Renderer-init; restart to apply. */
     val disableVertexShaderExpand: Boolean = false,
     /** EmuCore/GS/UseBlitSwapChain — blit present model instead of flip. Renderer-init; restart to apply. */
@@ -282,10 +326,30 @@ data class Settings(
     val spinCpuReadbacks: Boolean = false,
     /** EmuCore/GS/IntegerScaling — integer pixel scaling for the presented image. Default off. */
     val integerScaling: Boolean = false,
+    /** EmuCore/GS/CropLeft|Top|Right|Bottom — overscan crop in native PS2 pixels, trimmed
+     *  from the presented image before aspect/integer scaling. Many PS2 titles render
+     *  garbage or a black band in the overscan area that a TV would have hidden; the core
+     *  has always supported this (GSRenderer.cpp) but Android never exposed it (issue #293). */
+    val cropLeft: Int = 0,
+    val cropTop: Int = 0,
+    val cropRight: Int = 0,
+    val cropBottom: Int = 0,
+    /** Display zoom, 100-150% (#383). An AetherSX2-style single "zoom" slider: rather than the
+     *  four fiddly per-edge crops (which distort when set unevenly), this trims all four edges by
+     *  the SAME fraction, so the image scales up into the frame without changing aspect. App-side
+     *  only (no native key) — it's converted to symmetric CropLeft/Top/Right/Bottom in writeIni,
+     *  overriding the manual crops while > 100. */
+    val displayZoom: Int = 100,
     /** EmuCore/GS/dithering_ps2 — 0 Off / 1 Scaled / 2 Unscaled / 3 Force 32bit. PCSX2 default Unscaled. */
     val dithering: Int = 2,
     /** EmuCore/GS/VsyncQueueSize — frames the GS thread may queue (0-3). PCSX2 default 2. */
     val vsyncQueueSize: Int = 2,
+    // Output-surface scaling. App-side (no EmuCore key) but PER-GAME scoped: a heavy
+    // game can render its output smaller while the library and lighter games stay
+    // sharp. Were global-only prefs until #-Duda reported that changing them in Game
+    // scope also moved Global — there was no per-game copy to write.
+    val hwScaler: Int = 0,                       // 0 = screen, else 448*n short side
+    val screenResOverride: String = "auto",      // "auto" | "2560x1440" | "1920x1080" | "1280x720"
     /** EmuCore/GS/autoflush_sw — software-renderer auto-flush. PCSX2 default on. */
     val autoFlushSw: Boolean = true,
     /** EmuCore/GS/mipmap — software-renderer mipmapping. PCSX2 default on. */
@@ -296,12 +360,16 @@ data class Settings(
     val swThreadsHeight: Int = 4,
 
     /** EmuCore/GS/AspectRatio:
-     *  0 Stretch · 1 Auto 4:3/3:2 · 2 4:3 · 3 16:9 · 4 10:7. */
+     *  0 Stretch · 1 Auto 4:3/3:2 · 2 4:3 · 3 16:9 · 4 10:7 · 5 21:9 · 6 20:9 · 7 19.5:9 · 8 Custom.
+     *  Indices are persisted, so append new ratios — never insert. */
     val aspectRatio: Int = 1,
     /** EmuCore/GS/FMVAspectRatioSwitch — aspect ratio used ONLY while an FMV/MPEG is
      *  playing (restores [aspectRatio] when it ends). 0 Off (no override) · 1 Auto
-     *  4:3/3:2 · 2 4:3 · 3 16:9 · 4 10:7. Default Off. */
+     *  4:3/3:2 · 2 4:3 · 3 16:9 · 4 10:7 · 5 21:9 · 6 20:9 · 7 19.5:9 · 8 Custom. Default Off. */
     val fmvAspectRatio: Int = 0,
+    /** EmuCore/GS/CustomAspectRatio — width/height used when [aspectRatio] is 8 (Custom).
+     *  A ratio rather than separate W/H so any value is expressible; clamped 0.5..5.0 natively. */
+    val customAspectRatio: Float = 16f / 9f,
     /** Host graphics API: "auto" / "opengl" / "vulkan" / "software". Applied via
      *  the renderer JNI helpers on (re)launch; per-game so each title can pick its
      *  own backend. Seeded from the legacy global "renderer" pref on first load. */
@@ -310,6 +378,38 @@ data class Settings(
      *  the GS upscale helper; per-game so each title keeps its own. Seeded from the
      *  legacy global "upscaleFloat" pref on first load. */
     val upscaleFloat: Float = 1.0f,
+    /** Installed custom Vulkan GPU driver id to pin (e.g. a Turnip build). "" = system
+     *  driver. Applied at (re)launch via CustomDriver.applyToNative in
+     *  MainActivityRuntime.applyRendererPrefs; per-game so a title can pin the driver it
+     *  needs. Seeded from the legacy global "customDriverId" pref on first load. */
+    val customDriverId: String = "",
+    /** Android activity screen orientation: 0 Use Device Setting · 1 Landscape · 2 Portrait
+     *  · 3 Auto-Rotate. Applied via MainActivityRuntime.applyEmulationOrientation, resolved
+     *  per-game at game boot (global in the library/menus). Seeded from the legacy global
+     *  "ui.orientation" pref on first load. */
+    val orientation: Int = 0,
+    /** GitHub #375: in PORTRAIT, top-align the render (true, default) instead of vertical-
+     *  centering (false), so the bottom is free for touch controls. Applied live via
+     *  NativeApp.setPortraitRenderTop; only affects a portrait window. */
+    val portraitRenderTop: Boolean = true,
+    /** In LANDSCAPE, top-align the render instead of vertical-centering (default). Foldables and
+     *  clamshell controllers (Backbone-style) open the screen downward, so a centred image sits
+     *  too low. Applied live via NativeApp.setLandscapeRenderTop; only affects a landscape window. */
+    val landscapeRenderTop: Boolean = false,
+    /** Auto Progressive Scan: hold Triangle+Cross on port 1 through the boot sequence, which is
+     *  the real-console combo a number of PS2 titles probe to offer 480p progressive output
+     *  (Tekken 4, several Criterion games). Purely a synthetic pad hold — no core setting — so it
+     *  only does anything on games that implement the prompt. Per-game because the same combo is
+     *  a normal input elsewhere, and titles that ignore the prompt gain nothing from holding it. */
+    val autoProgressiveScan: Boolean = false,
+    /** Affinity Control Mode (EXPERIMENTAL, default 0 = off). 0 Disabled · 1 EE>VU>GS ·
+     *  2 EE>GS>VU · 3 VU>EE>GS · 4 VU>GS>EE · 5 GS>EE>VU · 6 GS>VU>EE · 7 Performance Cores.
+     *  Pushed to native via NativeApp.setAffinityMode before runVMThread and consumed by
+     *  VMManager::SetEmuThreadAffinities, so it applies on the next boot. Per-game because the
+     *  best placement is workload-dependent: GS-bound titles want the GS thread on the prime
+     *  core, VU-bound ones want VU left free to float there. Off is still the recommended
+     *  default — Android's EAS scheduler usually beats hand-pinning. */
+    val affinityMode: Int = 0,
     /** EmuCore/GS FramerateNTSC — the emulated PS2 vsync rate for NTSC games
      *  (PCSX2 default 59.94). Lowering it slows the game's target rate; raising it
      *  speeds it up. Mirrors NetherSX2's "Framerate For NTSC". */
@@ -323,8 +423,24 @@ data class Settings(
     // ---- DEV9 — PS2 HDD / Ethernet ----
     /** DEV9/Eth/EthEnable — PS2 network adapter. */
     val dev9EthEnable: Boolean = false,
-    /** DEV9/Eth/EthApi — "Sockets" is the usable Android backend. */
+    /** DEV9/Eth/EthApi — "Sockets" for internet play, "Local Link" for device-to-device LAN. */
     val dev9EthApi: String = "Sockets",
+    // ---- Local Link (EthApi = "Local Link") -------------------------------------------------
+    // Bridges the emulated PS2 Ethernet frames between devices over UDP on the local network, so
+    // games with native System Link / LAN support see each other as if on one switch. Each device
+    // runs its own VM — this is NOT netplay, and it does nothing for online-only or i.Link titles.
+    /** DEV9/Eth/LocalLinkHost — true = this device relays for the session; false = it joins one. */
+    val localLinkHost: Boolean = false,
+    /** DEV9/Eth/LocalLinkAddress — the host's LAN IPv4, entered on joining devices only. */
+    val localLinkAddress: String = "",
+    /** DEV9/Eth/LocalLinkPort — UDP port; must match on every device (no negotiation). */
+    val localLinkPort: Int = 19072,
+    /** DEV9/Eth/LocalLinkPeerId — 1 for the host, 2+ for each guest. Must be unique per device;
+     *  duplicate ids collide because the peer id is what derives the emulated MAC and IP. */
+    val localLinkPeerId: Int = 1,
+    /** DEV9/Eth/LocalLinkRoomCode — shared 4-12 char code that keys the packet authentication.
+     *  Prevents crosstalk between sessions on the same Wi-Fi; it is NOT strong security. */
+    val localLinkRoomCode: String = "",
     /** DEV9/Eth/EthDevice — "Auto" lets the sockets backend choose. */
     val dev9EthDevice: String = "Auto",
     /** DEV9/Eth/EthLogDHCP — logs DHCP packets for network debugging. */
@@ -438,7 +554,10 @@ data class Settings(
      *  0 Off · 1 Partial · 2 Full. */
     val texturePreloading: Int = 2,
     /** EmuCore/GS/HWDownloadMode — GSHardwareDownloadMode:
-     *  0 Accurate · 1 Force Full · 2 No Readbacks · 3 Unsync · 4 Disabled. */
+     *  0 Accurate · 1 Force Full · 2 No Readbacks · 3 Unsync · 4 Disabled · 5 Asynchronous.
+     *  ★ 5 (Asynchronous) is EXPERIMENTAL: a non-blocking GPU→CPU readback pipeline, so the EE
+     *  thread never stalls on the GS thread. Note the enum stops being ordered at 5 — never write
+     *  `mode > n` comparisons against it. Keep the clamp in applyTo in sync with this list. */
     val hardwareDownloadMode: Int = 0,
     /** EmuCore/GS/TVShader — CRT / TV shader preset. */
     val tvShader: Int = 0,
@@ -455,6 +574,24 @@ data class Settings(
      *  off regardless of the flag, and it's a no-op if this build has no librashader. */
     val shaderChainEnabled: Boolean = false,
     val shaderChainPreset: String = "",
+    /** EmuCore/GS/LsfgEnabled + /LsfgMultiplier + /LsfgDllPath — LSFG frame generation,
+     *  inserted into the Vulkan present path. Off unless the user both enables it AND
+     *  supplies their own Lossless.dll: the interpolation shaders are read out of that
+     *  file at runtime and nothing about them ships with ARMSX2. Vulkan + Adreno 7xx and
+     *  newer only, and absent entirely from the Play build. [lsfgMultiplier] is frames
+     *  DISPLAYED per frame rendered, so 2 means one interpolated frame between each pair. */
+    val lsfgEnabled: Boolean = false,
+    val lsfgMultiplier: Int = 2,
+    val lsfgDllPath: String = "",
+    /** EmuCore/GS/LsfgPerformance — LSFG 3.1p, a lighter shader family than 3.1. On by default:
+     *  this runs on a phone GPU that is already busy presenting the game, and the cheaper
+     *  pipeline is what makes frame generation pay for itself there. Falls back to 3.1 by itself
+     *  when the user's Lossless.dll predates 3.1p. */
+    val lsfgPerformance: Boolean = true,
+    /** EmuCore/GS/LsfgFlowScale — optical-flow resolution, as a PERCENTAGE of the presented
+     *  image (25..100). Lower is cheaper and blurrier. The native side inverts it: the library
+     *  takes a divisor, so 25% becomes 4.0. See GSLsfg.cpp. */
+    val lsfgFlowScale: Int = 100,
     /** Tweaked shader parameters, as `preset path -> (parameter name -> value)`.
      *
      *  Sparse: a parameter the user hasn't touched is simply absent, and the author's own
@@ -470,6 +607,13 @@ data class Settings(
     val casMode: Int = 0,
     /** EmuCore/GS/CASSharpness — sharpening strength 0..100 (%). */
     val casSharpness: Int = 50,
+    /** EmuCore/GS/Upscaler — GSUpscaler: 0 Off / 1 MetalFX (Apple only) / 2 FSR1.
+     *  1 is unreachable from this UI; the values are the core enum's, and it is persisted
+     *  as an integer, so they must not be renumbered to close the gap. */
+    val upscaler: Int = 0,
+    /** EmuCore/GS/FSRSharpness — FSR1 RCAS strength 0..100 (%). Separate from casSharpness:
+     *  RCAS runs on a different curve, so the two sliders are not interchangeable. */
+    val fsrSharpness: Int = 50,
     /** EmuCore/GS/LoadTextureReplacements. */
     val loadTextureReplacements: Boolean = false,
     /** EmuCore/GS/LoadTextureReplacementsAsync. */
@@ -485,8 +629,12 @@ data class Settings(
     // Disabling GPU also stops the GPU timing queries (real perf win).
     /** EmuCore/GS/OsdShowFPS. */
     val osdShowFps: Boolean = false,
-    /** EmuCore/GS/OsdScale — size of on-screen messages/stats, percent (25–500, 100 = normal). */
-    val osdScale: Int = 100,
+    /** EmuCore/GS/OsdScale — size of on-screen messages/stats, percent (25–500, 100 = PCSX2's
+     *  normal). Defaults to 65: at 100 the stats block dominates a handheld screen, and 65 matches
+     *  the size NetherSX2 ships. Saves still on the old 100 default are migrated once (ConfigStore). */
+    val osdScale: Int = 65,
+    /** EmuCore/GS/OsdColor — OSD text colour as 0xRRGGBB. 0 = default white. */
+    val osdColor: Int = 0,
     /** EmuCore/GS/VsyncEnable — sync presentation to the display refresh (less
      *  tearing/smoother, slightly higher latency). Applies on game restart. */
     val vsyncEnable: Boolean = false,
@@ -613,6 +761,10 @@ data class Settings(
         put("EmuCore/CPU/Recompiler", "fpuOverflow", "bool", (eeClampMode >= 1).toString())
         put("EmuCore/CPU/Recompiler", "fpuExtraOverflow", "bool", (eeClampMode >= 2).toString())
         put("EmuCore/CPU/Recompiler", "fpuFullMode", "bool", (eeClampMode >= 3).toString())
+        // The four are cumulative and emucore validates them as such: an
+        // inconsistent set is silently reset to defaults on load rather than
+        // rejected, so all four go out together or none of them mean anything.
+        put("EmuCore/CPU/Recompiler", "fpuExactMode", "bool", (eeClampMode >= 4).toString())
         for (vu in arrayOf("vu0", "vu1")) {
             put("EmuCore/CPU/Recompiler", "${vu}Overflow", "bool", (vuClampMode >= 1).toString())
             put("EmuCore/CPU/Recompiler", "${vu}ExtraOverflow", "bool", (vuClampMode >= 2).toString())
@@ -633,7 +785,22 @@ data class Settings(
         // takes effect immediately. 0 = Nominal (capped at native rate),
         // 3 = Unlimited.
         put("EmuCore/GS", "FrameLimitEnable", "bool", frameLimitEnable.toString())
-        if (emitSink == null) NativeApp.speedhackLimitermode(if (frameLimitEnable) 0 else 3)
+        // Preserve an active fast-forward / slow-down latch, exactly as the in-game overlay's
+        // own frame-limit path does (MainActivityRuntime). Forcing 0/3 unconditionally here
+        // clobbered Turbo on ANY settings apply while fast-forward was engaged — and since
+        // fastForwardToggleActive stayed true, the UI kept reporting "Fast Forward ON" with
+        // the emulator back at nominal speed. Frame-limit-off masked the bug: that path IS
+        // mode 3, so re-asserting it changed nothing, which is why users saw "frame limit off
+        // fast-forwards but fast-forward doesn't".
+        if (emitSink == null) {
+            NativeApp.speedhackLimitermode(
+                when {
+                    MainActivityRuntime.fastForwardToggleActive -> MainActivityRuntime.ffLimiterMode()
+                    MainActivityRuntime.slowDownToggleActive -> 2
+                    else -> if (frameLimitEnable) 0 else 3
+                }
+            )
+        }
         // Framerate/NominalScalar — custom speed / FPS cap as a fraction of
         // native. commitSettings → ApplySettings → CheckForEmulationSpeedConfigChanges
         // → UpdateTargetSpeed picks this up live. Clamp mirrors emucore's
@@ -650,6 +817,8 @@ data class Settings(
         // Manual frameskip (0..5) — present 1 of every (N+1) frames. Held as a
         // GS-thread global, applied live; no persisted EmuCore key needed.
         if (emitSink == null) NativeApp.setFrameSkip(frameSkip.coerceIn(0, 5))
+        if (emitSink == null) NativeApp.setPortraitRenderTop(portraitRenderTop)
+        if (emitSink == null) NativeApp.setLandscapeRenderTop(landscapeRenderTop)
         // Audio (SPU2). Volume/mute are live native setters; the rest are written
         // to the base layer and applied on commit (SPU2 stream reconfigure).
         if (emitSink == null) NativeApp.setAudioVolume(audioVolume.coerceIn(0, 200))
@@ -662,6 +831,11 @@ data class Settings(
         // Opt-in NEON reverb FIR (ARM64). Read by SPU2::InternalReset on the
         // next game boot; default off = scalar reference (unchanged audio).
         put("SPU2", "NeonReverbSIMD", "bool", spu2NeonReverb.toString())
+        // Opt-in OpenSL ES output (Oboe). Lives in the SPU2/Output StreamParameters,
+        // so ApplySettings → CheckForConfigChanges recreates the stream on toggle.
+        put("SPU2/Output", "AndroidOpenSLES", "bool", audioOpenSLES.toString())
+        // Lightweight mix (skip reverb) — read live in MixCore via EmuConfig.SPU2.
+        put("SPU2/Output", "LightweightMode", "bool", spu2LightweightMix.toString())
         // Patches / cheats (EmuCore). Reloaded by ApplySettings →
         // CheckForPatchConfigChanges; widescreen/no-interlacing take effect on
         // the next boot for most games.
@@ -671,13 +845,16 @@ data class Settings(
         put("EmuCore", "EnableNoInterlacingPatches", "bool", enableNoInterlacingPatches.toString())
         put("EmuCore", "EnableFastBoot", "bool", enableFastBoot.toString())
         put("EmuCore", "HostFs", "bool", hostFs.toString())
+        // VMManager::ReloadPINE compares these against the live server and starts, stops or
+        // rebinds it, so a commit is enough — no game restart.
+        put("EmuCore", "EnablePINE", "bool", pineEnabled.toString())
+        put("EmuCore", "PINESlot", "int", pineSlot.toString())
         put("EmuCore", "EnableGameFixes", "bool", enableGameFixes.toString())
         put("EmuCore/Gamefixes", "SoftwareRendererFMVHack", "bool", gamefixSoftwareRendererFmv.toString())
         put("EmuCore/Gamefixes", "SkipMPEGHack", "bool", gamefixSkipMpeg.toString())
         put("EmuCore/Gamefixes", "EETimingHack", "bool", gamefixEETiming.toString())
         put("EmuCore/Gamefixes", "InstantDMAHack", "bool", gamefixInstantDma.toString())
         put("EmuCore/Gamefixes", "BlitInternalFPSHack", "bool", gamefixBlitInternalFps.toString())
-        put("EmuCore/Gamefixes", "FpuMulHack", "bool", gamefixFpuMul.toString())
         put("EmuCore/Gamefixes", "OPHFlagHack", "bool", gamefixOphFlag.toString())
         put("EmuCore/Gamefixes", "GIFFIFOHack", "bool", gamefixGifFifo.toString())
         put("EmuCore/Gamefixes", "DMABusyHack", "bool", gamefixDmaBusy.toString())
@@ -699,6 +876,11 @@ data class Settings(
         // made from the in-game overlay are persisted for the next boot.
         put("DEV9/Eth", "EthEnable", "bool", dev9EthEnable.toString())
         put("DEV9/Eth", "EthApi", "string", dev9EthApi)
+        put("DEV9/Eth", "LocalLinkHost", "bool", localLinkHost.toString())
+        put("DEV9/Eth", "LocalLinkAddress", "string", localLinkAddress)
+        put("DEV9/Eth", "LocalLinkPort", "int", localLinkPort.coerceIn(1, 65535).toString())
+        put("DEV9/Eth", "LocalLinkPeerId", "int", localLinkPeerId.coerceIn(1, 65533).toString())
+        put("DEV9/Eth", "LocalLinkRoomCode", "string", localLinkRoomCode)
         put("DEV9/Eth", "EthDevice", "string", dev9EthDevice.ifEmpty { "Auto" })
         put("DEV9/Eth", "EthLogDHCP", "bool", dev9EthLogDhcp.toString())
         put("DEV9/Eth", "EthLogDNS", "bool", dev9EthLogDns.toString())
@@ -758,8 +940,11 @@ data class Settings(
         if (emitSink != null) return
         // Live convenience pokes. Harmless when the GS is closed; commitSettings()
         // below performs the authoritative apply for a cold start / restart.
-        NativeApp.setAspectRatio(aspectRatio.coerceIn(0, 4))
-        NativeApp.setFmvAspectRatio(fmvAspectRatio.coerceIn(0, 4))
+        // 0..5 — the upper bound is the LAST aspect index, so adding a ratio means widening this
+        // too. Left at 4 it silently sent 10:7 to the core no matter what the picker showed, which
+        // is the worst version of this bug: the UI looks correct and nothing happens.
+        NativeApp.setAspectRatio(aspectRatio.coerceIn(0, 8))
+        NativeApp.setFmvAspectRatio(fmvAspectRatio.coerceIn(0, 8))
         NativeApp.renderTvShader(tvShader.coerceIn(0, 7))
         NativeApp.renderShadeBoost(
             shadeBoost,
@@ -770,6 +955,7 @@ data class Settings(
         )
         NativeApp.osdShowFPS(osdShowFps)
         NativeApp.osdSetScale(osdScale.toFloat())
+        NativeApp.osdSetColor(osdColor)
         NativeApp.osdShowVPS(osdShowVps)
         NativeApp.osdShowSpeed(osdShowSpeed)
         NativeApp.osdShowCPU(osdShowCpu)
@@ -810,14 +996,18 @@ data class Settings(
         fun floatAt(key: String): Float? = ini[key]?.toFloatOrNull()
         fun strAt(key: String): String? = ini[key]
 
-        // EE/FPU clamp (0 None / 1 Normal / 2 Extra / 3 Full) is packed by applyTo into
-        // three cumulative bool keys (fpuOverflow>=1, fpuExtraOverflow>=2, fpuFullMode>=3).
+        // EE/FPU clamp (0 None / 1 Normal / 2 Extra / 3 Full / 4 Exact) is packed by
+        // applyTo into four cumulative bool keys (fpuOverflow>=1, fpuExtraOverflow>=2,
+        // fpuFullMode>=3, fpuExactMode>=4). Read them back highest-first, and treat the
+        // exact key's absence as an older core rather than as mode 3 — a build without it
+        // never wrote the key, and inferring 3 there would silently demote the setting.
         val eeClamp = run {
             val fo = boolAt("EmuCore/CPU/Recompiler/fpuOverflow")
             val fe = boolAt("EmuCore/CPU/Recompiler/fpuExtraOverflow")
             val ff = boolAt("EmuCore/CPU/Recompiler/fpuFullMode")
-            if (fo == null && fe == null && ff == null) this.eeClampMode
-            else if (ff == true) 3 else if (fe == true) 2 else if (fo == true) 1 else 0
+            val fx = boolAt("EmuCore/CPU/Recompiler/fpuExactMode")
+            if (fo == null && fe == null && ff == null && fx == null) this.eeClampMode
+            else if (fx == true) 4 else if (ff == true) 3 else if (fe == true) 2 else if (fo == true) 1 else 0
         }
         // VU clamp (0 None / 1 Normal / 2 Extra / 3 Extra+Sign) — same packing on vu0*
         // (applyTo writes vu0 and vu1 identically, so reading vu0 recovers the mode).
@@ -868,6 +1058,8 @@ data class Settings(
             audioOutputLatencyMs = intAt("SPU2/Output/OutputLatencyMS") ?: this.audioOutputLatencyMs,
             audioFastForwardVolume = intAt("SPU2/Output/FastForwardVolume") ?: this.audioFastForwardVolume,
             spu2NeonReverb = boolAt("SPU2/NeonReverbSIMD") ?: this.spu2NeonReverb,
+            audioOpenSLES = boolAt("SPU2/Output/AndroidOpenSLES") ?: this.audioOpenSLES,
+            spu2LightweightMix = boolAt("SPU2/Output/LightweightMode") ?: this.spu2LightweightMix,
             // ---- EmuCore patches / cheats ----
             enablePatches = boolAt("EmuCore/EnablePatches") ?: this.enablePatches,
             enableCheats = boolAt("EmuCore/EnableCheats") ?: this.enableCheats,
@@ -875,6 +1067,8 @@ data class Settings(
             enableNoInterlacingPatches = boolAt("EmuCore/EnableNoInterlacingPatches") ?: this.enableNoInterlacingPatches,
             enableFastBoot = boolAt("EmuCore/EnableFastBoot") ?: this.enableFastBoot,
             hostFs = boolAt("EmuCore/HostFs") ?: this.hostFs,
+            pineEnabled = boolAt("EmuCore/EnablePINE") ?: this.pineEnabled,
+            pineSlot = intAt("EmuCore/PINESlot") ?: this.pineSlot,
             enableGameFixes = boolAt("EmuCore/EnableGameFixes") ?: this.enableGameFixes,
             // ---- EmuCore/Gamefixes ----
             gamefixSoftwareRendererFmv = boolAt("EmuCore/Gamefixes/SoftwareRendererFMVHack") ?: this.gamefixSoftwareRendererFmv,
@@ -882,7 +1076,6 @@ data class Settings(
             gamefixEETiming = boolAt("EmuCore/Gamefixes/EETimingHack") ?: this.gamefixEETiming,
             gamefixInstantDma = boolAt("EmuCore/Gamefixes/InstantDMAHack") ?: this.gamefixInstantDma,
             gamefixBlitInternalFps = boolAt("EmuCore/Gamefixes/BlitInternalFPSHack") ?: this.gamefixBlitInternalFps,
-            gamefixFpuMul = boolAt("EmuCore/Gamefixes/FpuMulHack") ?: this.gamefixFpuMul,
             gamefixOphFlag = boolAt("EmuCore/Gamefixes/OPHFlagHack") ?: this.gamefixOphFlag,
             gamefixGifFifo = boolAt("EmuCore/Gamefixes/GIFFIFOHack") ?: this.gamefixGifFifo,
             gamefixDmaBusy = boolAt("EmuCore/Gamefixes/DMABusyHack") ?: this.gamefixDmaBusy,
@@ -901,6 +1094,11 @@ data class Settings(
             // ---- DEV9 — Ethernet / HDD ----
             dev9EthEnable = boolAt("DEV9/Eth/EthEnable") ?: this.dev9EthEnable,
             dev9EthApi = strAt("DEV9/Eth/EthApi") ?: this.dev9EthApi,
+            localLinkHost = boolAt("DEV9/Eth/LocalLinkHost") ?: this.localLinkHost,
+            localLinkAddress = strAt("DEV9/Eth/LocalLinkAddress") ?: this.localLinkAddress,
+            localLinkPort = intAt("DEV9/Eth/LocalLinkPort") ?: this.localLinkPort,
+            localLinkPeerId = intAt("DEV9/Eth/LocalLinkPeerId") ?: this.localLinkPeerId,
+            localLinkRoomCode = strAt("DEV9/Eth/LocalLinkRoomCode") ?: this.localLinkRoomCode,
             dev9EthDevice = strAt("DEV9/Eth/EthDevice") ?: this.dev9EthDevice,
             dev9EthLogDhcp = boolAt("DEV9/Eth/EthLogDHCP") ?: this.dev9EthLogDhcp,
             dev9EthLogDns = boolAt("DEV9/Eth/EthLogDNS") ?: this.dev9EthLogDns,
@@ -951,12 +1149,17 @@ data class Settings(
             vu1InlineDrainTestPipes = boolAt("EmuCore/CPU/Recompiler/Vu1InlineDrainTestPipes") ?: this.vu1InlineDrainTestPipes,
             vu1FmacInstanceRouting = boolAt("EmuCore/CPU/Recompiler/Vu1FmacInstanceRouting") ?: this.vu1FmacInstanceRouting,
             // ---- EmuCore/GS (writeGsToNative). Aspect/FMV/gpuProfile stored as names. ----
+            customAspectRatio = floatAt("EmuCore/GS/CustomAspectRatio") ?: this.customAspectRatio,
             aspectRatio = when (strAt("EmuCore/GS/AspectRatio")) {
                 "Stretch" -> 0
                 "Auto 4:3/3:2" -> 1
                 "4:3" -> 2
                 "16:9" -> 3
                 "10:7" -> 4
+                "21:9" -> 5
+                "20:9" -> 6
+                "19.5:9" -> 7
+                "Custom" -> 8
                 else -> this.aspectRatio
             },
             fmvAspectRatio = when (strAt("EmuCore/GS/FMVAspectRatioSwitch")) {
@@ -965,6 +1168,10 @@ data class Settings(
                 "4:3" -> 2
                 "16:9" -> 3
                 "10:7" -> 4
+                "21:9" -> 5
+                "20:9" -> 6
+                "19.5:9" -> 7
+                "Custom" -> 8
                 else -> this.fmvAspectRatio
             },
             deinterlaceMode = intAt("EmuCore/GS/deinterlace_mode") ?: this.deinterlaceMode,
@@ -985,6 +1192,11 @@ data class Settings(
             fxaa = boolAt("EmuCore/GS/fxaa") ?: this.fxaa,
             shaderChainEnabled = boolAt("EmuCore/GS/ShaderChainEnabled") ?: this.shaderChainEnabled,
             shaderChainPreset = strAt("EmuCore/GS/ShaderChainPreset") ?: this.shaderChainPreset,
+            lsfgEnabled = boolAt("EmuCore/GS/LsfgEnabled") ?: this.lsfgEnabled,
+            lsfgMultiplier = intAt("EmuCore/GS/LsfgMultiplier") ?: this.lsfgMultiplier,
+            lsfgDllPath = strAt("EmuCore/GS/LsfgDllPath") ?: this.lsfgDllPath,
+            lsfgPerformance = boolAt("EmuCore/GS/LsfgPerformance") ?: this.lsfgPerformance,
+            lsfgFlowScale = intAt("EmuCore/GS/LsfgFlowScale") ?: this.lsfgFlowScale,
             shaderChainParams = strAt("EmuCore/GS/ShaderChainParams")?.let { raw ->
                 // Hand-editable file, so a malformed blob is a real possibility: keep the
                 // rest of the recovered settings rather than throwing the lot away.
@@ -992,6 +1204,8 @@ data class Settings(
             } ?: this.shaderChainParams,
             casMode = intAt("EmuCore/GS/CASMode") ?: this.casMode,
             casSharpness = intAt("EmuCore/GS/CASSharpness") ?: this.casSharpness,
+            upscaler = intAt("EmuCore/GS/Upscaler") ?: this.upscaler,
+            fsrSharpness = intAt("EmuCore/GS/FSRSharpness") ?: this.fsrSharpness,
             loadTextureReplacements = boolAt("EmuCore/GS/LoadTextureReplacements") ?: this.loadTextureReplacements,
             loadTextureReplacementsAsync = boolAt("EmuCore/GS/LoadTextureReplacementsAsync") ?: this.loadTextureReplacementsAsync,
             precacheTextureReplacements = boolAt("EmuCore/GS/PrecacheTextureReplacements") ?: this.precacheTextureReplacements,
@@ -999,6 +1213,7 @@ data class Settings(
             osdShowTextureReplacements = boolAt("EmuCore/GS/OsdShowTextureReplacements") ?: this.osdShowTextureReplacements,
             osdShowFps = boolAt("EmuCore/GS/OsdShowFPS") ?: this.osdShowFps,
             osdScale = intAt("EmuCore/GS/OsdScale") ?: this.osdScale,
+            osdColor = intAt("EmuCore/GS/OsdColor") ?: this.osdColor,
             vsyncEnable = boolAt("EmuCore/GS/VsyncEnable") ?: this.vsyncEnable,
             osdShowVps = boolAt("EmuCore/GS/OsdShowVPS") ?: this.osdShowVps,
             osdShowSpeed = boolAt("EmuCore/GS/OsdShowSpeed") ?: this.osdShowSpeed,
@@ -1023,9 +1238,11 @@ data class Settings(
             hwRov = boolAt("EmuCore/GS/HWROV") ?: this.hwRov,
             hwAa1 = boolAt("EmuCore/GS/HWAA1") ?: this.hwAa1,
             adrenoFbFetch = boolAt("EmuCore/GS/EnableAdrenoFramebufferFetch") ?: this.adrenoFbFetch,
+            coalesceRenderPasses = boolAt("EmuCore/GS/CoalesceRenderPasses") ?: this.coalesceRenderPasses,
             forceMaliFbFetch = boolAt("EmuCore/GS/ForceMaliFramebufferFetch") ?: this.forceMaliFbFetch,
             useAngleOpenGL = boolAt("EmuCore/GS/AndroidUseAngleOpenGL") ?: this.useAngleOpenGL,
             overrideTextureBarriers = intAt("EmuCore/GS/OverrideTextureBarriers") ?: this.overrideTextureBarriers,
+            gsBackThreadMode = intAt("EmuCore/GS/GSBackThreadMode") ?: this.gsBackThreadMode,
             disableVertexShaderExpand = boolAt("EmuCore/GS/DisableVertexShaderExpand") ?: this.disableVertexShaderExpand,
             useBlitSwapChain = boolAt("EmuCore/GS/UseBlitSwapChain") ?: this.useBlitSwapChain,
             disableShaderCache = boolAt("EmuCore/GS/DisableShaderCache") ?: this.disableShaderCache,
@@ -1034,6 +1251,10 @@ data class Settings(
             spinGpuReadbacks = boolAt("EmuCore/GS/HWSpinGPUForReadbacks") ?: this.spinGpuReadbacks,
             spinCpuReadbacks = boolAt("EmuCore/GS/HWSpinCPUForReadbacks") ?: this.spinCpuReadbacks,
             integerScaling = boolAt("EmuCore/GS/IntegerScaling") ?: this.integerScaling,
+            cropLeft = intAt("EmuCore/GS/CropLeft") ?: this.cropLeft,
+            cropTop = intAt("EmuCore/GS/CropTop") ?: this.cropTop,
+            cropRight = intAt("EmuCore/GS/CropRight") ?: this.cropRight,
+            cropBottom = intAt("EmuCore/GS/CropBottom") ?: this.cropBottom,
             dithering = intAt("EmuCore/GS/dithering_ps2") ?: this.dithering,
             vsyncQueueSize = intAt("EmuCore/GS/VsyncQueueSize") ?: this.vsyncQueueSize,
             autoFlushSw = boolAt("EmuCore/GS/autoflush_sw") ?: this.autoFlushSw,
@@ -1094,7 +1315,7 @@ data class Settings(
      *  running game already reflects the change live, so the native commit does
      *  not reload — the INI applies as the game layer on the next boot. No-op
      *  when no VM is running. */
-    fun writeGameSettingsIni(global: Settings) {
+    fun writeGameSettingsIni(global: Settings, serial: String? = null) {
         // Baseline: global's persisted keys. applyTo early-returns before the
         // live pokes/commit while emitSink is set, so nothing touches the VM.
         val baseline = HashMap<String, String>()
@@ -1104,7 +1325,12 @@ data class Settings(
         } finally {
             emitSink = null
         }
-        if (!NativeApp.gameIniBeginWrite()) return
+        // With a running VM the target is the current game (gameIniBeginWrite). With no VM — a
+        // per-game Reset done from the library — pass [serial] to locate the file directly; false
+        // there means no stale override file exists, so there is nothing to rewrite.
+        val began = if (serial == null) NativeApp.gameIniBeginWrite()
+                    else NativeApp.gameIniBeginWriteForSerial(serial)
+        if (!began) return
         // Effective pass: stream only the keys that differ from the baseline.
         emitSink = { section, key, _, value ->
             if (baseline["$section$key"] != value)
@@ -1124,22 +1350,31 @@ data class Settings(
      *  [applyGsLive] (running VM). Keep the key list in sync with
      *  Pcsx2Config::GSOptions::LoadSave. */
     private fun writeGsToNative() {
-        val aspectRatioName = when (aspectRatio.coerceIn(0, 4)) {
+        val aspectRatioName = when (aspectRatio.coerceIn(0, 8)) {
             0 -> "Stretch"
             2 -> "4:3"
             3 -> "16:9"
             4 -> "10:7"
+            5 -> "21:9"
+            6 -> "20:9"
+            7 -> "19.5:9"
+            8 -> "Custom"
             else -> "Auto 4:3/3:2"
         }
         put("EmuCore/GS", "AspectRatio", "string", aspectRatioName)
-        val fmvAspectRatioName = when (fmvAspectRatio.coerceIn(0, 4)) {
+        val fmvAspectRatioName = when (fmvAspectRatio.coerceIn(0, 8)) {
             1 -> "Auto 4:3/3:2"
             2 -> "4:3"
             3 -> "16:9"
             4 -> "10:7"
+            5 -> "21:9"
+            6 -> "20:9"
+            7 -> "19.5:9"
+            8 -> "Custom"
             else -> "Off"
         }
         put("EmuCore/GS", "FMVAspectRatioSwitch", "string", fmvAspectRatioName)
+        put("EmuCore/GS", "CustomAspectRatio", "float", customAspectRatio.coerceIn(0.5f, 5.0f).toString())
         put("EmuCore/GS", "deinterlace_mode", "int", deinterlaceMode.coerceIn(0, 9).toString())
         put("EmuCore/GS", "FramerateNTSC", "float", framerateNtsc.toString())
         put("EmuCore/GS", "FrameratePAL", "float", frameratePal.toString())
@@ -1148,7 +1383,10 @@ data class Settings(
         put("EmuCore/GS", "filter", "int", textureFiltering.toString())
         put("EmuCore/GS", "linear_present_mode", "int", displayBilinear.coerceIn(0, 2).toString())
         put("EmuCore/GS", "texture_preloading", "int", texturePreloading.toString())
-        put("EmuCore/GS", "HWDownloadMode", "int", hardwareDownloadMode.coerceIn(0, 4).toString())
+        // Upper bound MUST match the highest GSHardwareDownloadMode value (now 5 = Asynchronous).
+        // This clamp silently swallowed anything above it, so a new mode would have looked like it
+        // simply did nothing — the same failure shape that cost hours on the DEV9 hunt.
+        put("EmuCore/GS", "HWDownloadMode", "int", hardwareDownloadMode.coerceIn(0, 5).toString())
         put("EmuCore/GS", "TVShader", "int", tvShader.coerceIn(0, 7).toString())
         put("EmuCore/GS", "ShadeBoost", "bool", shadeBoost.toString())
         put("EmuCore/GS", "ShadeBoost_Brightness", "int", shadeBoostBrightness.coerceIn(1, 100).toString())
@@ -1158,6 +1396,13 @@ data class Settings(
         put("EmuCore/GS", "fxaa", "bool", fxaa.toString())
         put("EmuCore/GS", "ShaderChainEnabled", "bool", shaderChainEnabled.toString())
         put("EmuCore/GS", "ShaderChainPreset", "string", shaderChainPreset)
+        put("EmuCore/GS", "LsfgEnabled", "bool", lsfgEnabled.toString())
+        put("EmuCore/GS", "LsfgMultiplier", "int", lsfgMultiplier.toString())
+        put("EmuCore/GS", "LsfgDllPath", "string", lsfgDllPath)
+        put("EmuCore/GS", "LsfgPerformance", "bool", lsfgPerformance.toString())
+        // Clamped to the same 25..100 the native side enforces. A value outside it would be
+        // coerced there anyway, and the two disagreeing is how a slider ends up looking stuck.
+        put("EmuCore/GS", "LsfgFlowScale", "int", lsfgFlowScale.coerceIn(25, 100).toString())
         // Parameter overrides, as one opaque JSON blob. Nothing in emucore reads this key —
         // there is no GSConfig field behind it, and the live values reach the renderer via
         // the push below, not through here. It is written so the map survives the same
@@ -1174,6 +1419,10 @@ data class Settings(
             ShaderParams.push(shaderChainPreset, shaderChainParams[shaderChainPreset].orEmpty())
         put("EmuCore/GS", "CASMode", "int", casMode.coerceIn(0, 2).toString())
         put("EmuCore/GS", "CASSharpness", "int", casSharpness.coerceIn(0, 100).toString())
+        // Upper bound is UPSCALER_FSR1, not the count of options this UI shows — clamping to
+        // the visible choices would silently rewrite FSR1 back to Off.
+        put("EmuCore/GS", "Upscaler", "int", upscaler.coerceIn(UPSCALER_OFF, UPSCALER_FSR1).toString())
+        put("EmuCore/GS", "FSRSharpness", "int", fsrSharpness.coerceIn(0, 100).toString())
         put("EmuCore/GS", "LoadTextureReplacements", "bool", loadTextureReplacements.toString())
         put("EmuCore/GS", "LoadTextureReplacementsAsync", "bool", loadTextureReplacementsAsync.toString())
         put("EmuCore/GS", "PrecacheTextureReplacements", "bool", precacheTextureReplacements.toString())
@@ -1181,6 +1430,7 @@ data class Settings(
         put("EmuCore/GS", "OsdShowTextureReplacements", "bool", osdShowTextureReplacements.toString())
         put("EmuCore/GS", "OsdShowFPS", "bool", osdShowFps.toString())
         put("EmuCore/GS", "OsdScale", "int", osdScale.coerceIn(25, 500).toString())
+        put("EmuCore/GS", "OsdColor", "int", (osdColor and 0xFFFFFF).toString())
         put("EmuCore/GS", "VsyncEnable", "bool", vsyncEnable.toString())
         put("EmuCore/GS", "OsdShowVPS", "bool", osdShowVps.toString())
         put("EmuCore/GS", "OsdShowSpeed", "bool", osdShowSpeed.toString())
@@ -1205,12 +1455,14 @@ data class Settings(
         put("EmuCore/GS", "HWROV", "bool", hwRov.toString())
         put("EmuCore/GS", "HWAA1", "bool", hwAa1.toString())
         put("EmuCore/GS", "EnableAdrenoFramebufferFetch", "bool", adrenoFbFetch.toString())
+        put("EmuCore/GS", "CoalesceRenderPasses", "bool", coalesceRenderPasses.toString())
         put("EmuCore/GS", "ForceMaliFramebufferFetch", "bool", forceMaliFbFetch.toString())
         // Parity write (native reads the ARMSX2_ANGLE_EGL_LIBRARY env var set by
         // MainActivityRuntime.applyAngleEnv, not this key) — kept so the config file
         // reflects the toggle.
         put("EmuCore/GS", "AndroidUseAngleOpenGL", "bool", useAngleOpenGL.toString())
         put("EmuCore/GS", "OverrideTextureBarriers", "int", overrideTextureBarriers.coerceIn(-1, 1).toString())
+        put("EmuCore/GS", "GSBackThreadMode", "int", gsBackThreadMode.coerceIn(0, 3).toString())
         put("EmuCore/GS", "DisableVertexShaderExpand", "bool", disableVertexShaderExpand.toString())
         put("EmuCore/GS", "UseBlitSwapChain", "bool", useBlitSwapChain.toString())
         put("EmuCore/GS", "DisableShaderCache", "bool", disableShaderCache.toString())
@@ -1219,6 +1471,21 @@ data class Settings(
         put("EmuCore/GS", "HWSpinGPUForReadbacks", "bool", spinGpuReadbacks.toString())
         put("EmuCore/GS", "HWSpinCPUForReadbacks", "bool", spinCpuReadbacks.toString())
         put("EmuCore/GS", "IntegerScaling", "bool", integerScaling.toString())
+        // Display zoom (#383) overrides the manual crops while active: trim every edge by the
+        // same fraction so the picture scales up without distortion. Nominal 640x448 native
+        // frame; the zoom factor is what matters visually, so an approximate frame size is fine.
+        // (1 - 100/Z)/2 is the per-edge fraction that leaves 1/Z of the image visible, centred.
+        val zoom = displayZoom.coerceIn(100, 150)
+        val zCropX = if (zoom > 100) ((640.0 * (1.0 - 100.0 / zoom)) / 2.0).toInt() else -1
+        val zCropY = if (zoom > 100) ((448.0 * (1.0 - 100.0 / zoom)) / 2.0).toInt() else -1
+        val effLeft = if (zCropX >= 0) zCropX else cropLeft
+        val effRight = if (zCropX >= 0) zCropX else cropRight
+        val effTop = if (zCropY >= 0) zCropY else cropTop
+        val effBottom = if (zCropY >= 0) zCropY else cropBottom
+        put("EmuCore/GS", "CropLeft", "int", effLeft.coerceIn(0, 640).toString())
+        put("EmuCore/GS", "CropTop", "int", effTop.coerceIn(0, 640).toString())
+        put("EmuCore/GS", "CropRight", "int", effRight.coerceIn(0, 640).toString())
+        put("EmuCore/GS", "CropBottom", "int", effBottom.coerceIn(0, 640).toString())
         put("EmuCore/GS", "dithering_ps2", "int", dithering.coerceIn(0, 3).toString())
         put("EmuCore/GS", "VsyncQueueSize", "int", vsyncQueueSize.coerceIn(0, 3).toString())
         put("EmuCore/GS", "autoflush_sw", "bool", autoFlushSw.toString())
@@ -1320,8 +1587,15 @@ data class Settings(
             shadeBoostSaturation != other.shadeBoostSaturation ||
             shadeBoostGamma != other.shadeBoostGamma ||
             fxaa != other.fxaa ||
+            lsfgEnabled != other.lsfgEnabled ||
+            lsfgMultiplier != other.lsfgMultiplier ||
+            lsfgDllPath != other.lsfgDllPath ||
+            lsfgPerformance != other.lsfgPerformance ||
+            lsfgFlowScale != other.lsfgFlowScale ||
             casMode != other.casMode ||
             casSharpness != other.casSharpness ||
+            upscaler != other.upscaler ||
+            fsrSharpness != other.fsrSharpness ||
             accurateBlendingUnit != other.accurateBlendingUnit ||
             hwMipmap != other.hwMipmap ||
             triFilter != other.triFilter ||
@@ -1392,8 +1666,16 @@ data class Settings(
         put("audioOutputLatencyMs", audioOutputLatencyMs)
         put("audioFastForwardVolume", audioFastForwardVolume)
         put("spu2NeonReverb", spu2NeonReverb)
+        put("audioOpenSLES", audioOpenSLES)
+        put("spu2LightweightMix", spu2LightweightMix)
         put("renderer", renderer)
         put("upscaleFloat", upscaleFloat.toDouble())
+        put("customDriverId", customDriverId)
+        put("orientation", orientation)
+        put("portraitRenderTop", portraitRenderTop)
+        put("landscapeRenderTop", landscapeRenderTop)
+        put("autoProgressiveScan", autoProgressiveScan)
+        put("affinityMode", affinityMode)
         put("framerateNtsc", framerateNtsc.toDouble())
         put("frameratePal", frameratePal.toDouble())
         put("enablePatches", enablePatches)
@@ -1402,13 +1684,14 @@ data class Settings(
         put("enableNoInterlacingPatches", enableNoInterlacingPatches)
         put("enableFastBoot", enableFastBoot)
         put("hostFs", hostFs)
+        put("pineEnabled", pineEnabled)
+        put("pineSlot", pineSlot)
         put("enableGameFixes", enableGameFixes)
         put("gamefixSoftwareRendererFmv", gamefixSoftwareRendererFmv)
         put("gamefixSkipMpeg", gamefixSkipMpeg)
         put("gamefixEETiming", gamefixEETiming)
         put("gamefixInstantDma", gamefixInstantDma)
         put("gamefixBlitInternalFps", gamefixBlitInternalFps)
-        put("gamefixFpuMul", gamefixFpuMul)
         put("gamefixOphFlag", gamefixOphFlag)
         put("gamefixGifFifo", gamefixGifFifo)
         put("gamefixDmaBusy", gamefixDmaBusy)
@@ -1433,9 +1716,11 @@ data class Settings(
         put("hwRov", hwRov)
         put("hwAa1", hwAa1)
         put("adrenoFbFetch", adrenoFbFetch)
+        put("coalesceRenderPasses", coalesceRenderPasses)
         put("forceMaliFbFetch", forceMaliFbFetch)
         put("useAngleOpenGL", useAngleOpenGL)
         put("overrideTextureBarriers", overrideTextureBarriers)
+        put("gsBackThreadMode", gsBackThreadMode)
         put("disableVertexShaderExpand", disableVertexShaderExpand)
         put("useBlitSwapChain", useBlitSwapChain)
         put("disableShaderCache", disableShaderCache)
@@ -1445,17 +1730,30 @@ data class Settings(
         put("spinGpuReadbacks", spinGpuReadbacks)
         put("spinCpuReadbacks", spinCpuReadbacks)
         put("integerScaling", integerScaling)
+        put("cropLeft", cropLeft)
+        put("displayZoom", displayZoom)
+        put("cropTop", cropTop)
+        put("cropRight", cropRight)
+        put("cropBottom", cropBottom)
         put("dithering", dithering)
         put("vsyncQueueSize", vsyncQueueSize)
+        put("hwScaler", hwScaler)
+        put("screenResOverride", screenResOverride)
         put("autoFlushSw", autoFlushSw)
         put("mipmapSw", mipmapSw)
         put("swThreads", swThreads)
         put("swThreadsHeight", swThreadsHeight)
         put("aspectRatio", aspectRatio)
         put("fmvAspectRatio", fmvAspectRatio)
+        put("customAspectRatio", customAspectRatio.toDouble())
         put("deinterlaceMode", deinterlaceMode)
         put("dev9EthEnable", dev9EthEnable)
         put("dev9EthApi", dev9EthApi)
+        put("localLinkHost", localLinkHost)
+        put("localLinkAddress", localLinkAddress)
+        put("localLinkPort", localLinkPort)
+        put("localLinkPeerId", localLinkPeerId)
+        put("localLinkRoomCode", localLinkRoomCode)
         put("dev9EthDevice", dev9EthDevice)
         put("dev9EthLogDhcp", dev9EthLogDhcp)
         put("dev9EthLogDns", dev9EthLogDns)
@@ -1511,8 +1809,18 @@ data class Settings(
         put("shaderChainEnabled", shaderChainEnabled)
         put("shaderChainPreset", shaderChainPreset)
         put("shaderChainParams", shaderChainParamsToJson(shaderChainParams))
+        // These five were missing from the JSON round-trip entirely, which IS the persistence
+        // format — so every LSFG choice, the imported DLL path included, was thrown away the
+        // moment the app was restarted.
+        put("lsfgEnabled", lsfgEnabled)
+        put("lsfgMultiplier", lsfgMultiplier)
+        put("lsfgDllPath", lsfgDllPath)
+        put("lsfgPerformance", lsfgPerformance)
+        put("lsfgFlowScale", lsfgFlowScale)
         put("casMode", casMode)
         put("casSharpness", casSharpness)
+        put("upscaler", upscaler)
+        put("fsrSharpness", fsrSharpness)
         put("loadTextureReplacements", loadTextureReplacements)
         put("loadTextureReplacementsAsync", loadTextureReplacementsAsync)
         put("precacheTextureReplacements", precacheTextureReplacements)
@@ -1520,6 +1828,7 @@ data class Settings(
         put("osdShowTextureReplacements", osdShowTextureReplacements)
         put("osdShowFps", osdShowFps)
         put("osdScale", osdScale)
+        put("osdColor", osdColor)
         put("vsyncEnable", vsyncEnable)
         put("osdShowVps", osdShowVps)
         put("osdShowSpeed", osdShowSpeed)
@@ -1575,6 +1884,12 @@ data class Settings(
         @JvmStatic
         internal var emitSink: ((String, String, String, String) -> Unit)? = null
 
+        /** [upscaler] values, straight from the core's GSUpscaler. Named because 1 is Apple's
+         *  MetalFX and never appears in this UI, so FSR1's value (2) does NOT line up with its
+         *  position in any Android picker — writing the picker index would select MetalFX. */
+        const val UPSCALER_OFF = 0
+        const val UPSCALER_FSR1 = 2
+
         /** One-tap "Low-End" performance snapshot applied on top of [base].
          *  Only cheap, safe-for-most levers that already exist as fields:
          *    - accurate_blending_unit = Minimum (0)   — cheapest blend path
@@ -1629,8 +1944,16 @@ data class Settings(
                 audioOutputLatencyMs = json.optInt("audioOutputLatencyMs", def.audioOutputLatencyMs),
                 audioFastForwardVolume = json.optInt("audioFastForwardVolume", def.audioFastForwardVolume),
                 spu2NeonReverb = json.optBoolean("spu2NeonReverb", def.spu2NeonReverb),
+                audioOpenSLES = json.optBoolean("audioOpenSLES", def.audioOpenSLES),
+                spu2LightweightMix = json.optBoolean("spu2LightweightMix", def.spu2LightweightMix),
                 renderer = json.optString("renderer", def.renderer),
                 upscaleFloat = json.optDouble("upscaleFloat", def.upscaleFloat.toDouble()).toFloat(),
+                customDriverId = json.optString("customDriverId", def.customDriverId),
+                orientation = json.optInt("orientation", def.orientation),
+                portraitRenderTop = json.optBoolean("portraitRenderTop", def.portraitRenderTop),
+                landscapeRenderTop = json.optBoolean("landscapeRenderTop", def.landscapeRenderTop),
+                autoProgressiveScan = json.optBoolean("autoProgressiveScan", def.autoProgressiveScan),
+                affinityMode = json.optInt("affinityMode", def.affinityMode),
                 framerateNtsc = json.optDouble("framerateNtsc", def.framerateNtsc.toDouble()).toFloat(),
                 frameratePal = json.optDouble("frameratePal", def.frameratePal.toDouble()).toFloat(),
                 enablePatches = json.optBoolean("enablePatches", def.enablePatches),
@@ -1639,13 +1962,14 @@ data class Settings(
                 enableNoInterlacingPatches = json.optBoolean("enableNoInterlacingPatches", def.enableNoInterlacingPatches),
                 enableFastBoot = json.optBoolean("enableFastBoot", def.enableFastBoot),
                 hostFs = json.optBoolean("hostFs", def.hostFs),
+                pineEnabled = json.optBoolean("pineEnabled", def.pineEnabled),
+                pineSlot = json.optInt("pineSlot", def.pineSlot),
                 enableGameFixes = json.optBoolean("enableGameFixes", def.enableGameFixes),
                 gamefixSoftwareRendererFmv = json.optBoolean("gamefixSoftwareRendererFmv", def.gamefixSoftwareRendererFmv),
                 gamefixSkipMpeg = json.optBoolean("gamefixSkipMpeg", def.gamefixSkipMpeg),
                 gamefixEETiming = json.optBoolean("gamefixEETiming", def.gamefixEETiming),
                 gamefixInstantDma = json.optBoolean("gamefixInstantDma", def.gamefixInstantDma),
                 gamefixBlitInternalFps = json.optBoolean("gamefixBlitInternalFps", def.gamefixBlitInternalFps),
-                gamefixFpuMul = json.optBoolean("gamefixFpuMul", def.gamefixFpuMul),
                 gamefixOphFlag = json.optBoolean("gamefixOphFlag", def.gamefixOphFlag),
                 gamefixGifFifo = json.optBoolean("gamefixGifFifo", def.gamefixGifFifo),
                 gamefixDmaBusy = json.optBoolean("gamefixDmaBusy", def.gamefixDmaBusy),
@@ -1671,9 +1995,11 @@ data class Settings(
                 hwAa1 = json.optBoolean("hwAa1", def.hwAa1),
                 hwAat = false,
                 adrenoFbFetch = json.optBoolean("adrenoFbFetch", def.adrenoFbFetch),
+                coalesceRenderPasses = json.optBoolean("coalesceRenderPasses", def.coalesceRenderPasses),
                 forceMaliFbFetch = json.optBoolean("forceMaliFbFetch", def.forceMaliFbFetch),
                 useAngleOpenGL = json.optBoolean("useAngleOpenGL", def.useAngleOpenGL),
                 overrideTextureBarriers = json.optInt("overrideTextureBarriers", def.overrideTextureBarriers),
+                gsBackThreadMode = json.optInt("gsBackThreadMode", def.gsBackThreadMode),
                 disableVertexShaderExpand = json.optBoolean("disableVertexShaderExpand", def.disableVertexShaderExpand),
                 useBlitSwapChain = json.optBoolean("useBlitSwapChain", def.useBlitSwapChain),
                 disableShaderCache = json.optBoolean("disableShaderCache", def.disableShaderCache),
@@ -1686,17 +2012,30 @@ data class Settings(
                 spinGpuReadbacks = json.optBoolean("spinGpuReadbacks", def.spinGpuReadbacks),
                 spinCpuReadbacks = json.optBoolean("spinCpuReadbacks", def.spinCpuReadbacks),
                 integerScaling = json.optBoolean("integerScaling", def.integerScaling),
+                cropLeft = json.optInt("cropLeft", def.cropLeft),
+                displayZoom = json.optInt("displayZoom", def.displayZoom),
+                cropTop = json.optInt("cropTop", def.cropTop),
+                cropRight = json.optInt("cropRight", def.cropRight),
+                cropBottom = json.optInt("cropBottom", def.cropBottom),
                 dithering = json.optInt("dithering", def.dithering),
                 vsyncQueueSize = json.optInt("vsyncQueueSize", def.vsyncQueueSize),
+                hwScaler = json.optInt("hwScaler", def.hwScaler),
+                screenResOverride = json.optString("screenResOverride", def.screenResOverride).ifEmpty { def.screenResOverride },
                 autoFlushSw = json.optBoolean("autoFlushSw", def.autoFlushSw),
                 mipmapSw = json.optBoolean("mipmapSw", def.mipmapSw),
                 swThreads = json.optInt("swThreads", def.swThreads),
                 swThreadsHeight = json.optInt("swThreadsHeight", def.swThreadsHeight),
                 aspectRatio = json.optInt("aspectRatio", def.aspectRatio),
                 fmvAspectRatio = json.optInt("fmvAspectRatio", def.fmvAspectRatio),
+                customAspectRatio = json.optDouble("customAspectRatio", def.customAspectRatio.toDouble()).toFloat(),
                 deinterlaceMode = json.optInt("deinterlaceMode", def.deinterlaceMode),
                 dev9EthEnable = json.optBoolean("dev9EthEnable", def.dev9EthEnable),
                 dev9EthApi = json.optString("dev9EthApi", def.dev9EthApi).ifEmpty { def.dev9EthApi },
+                localLinkHost = json.optBoolean("localLinkHost", def.localLinkHost),
+                localLinkAddress = json.optString("localLinkAddress", def.localLinkAddress),
+                localLinkPort = json.optInt("localLinkPort", def.localLinkPort),
+                localLinkPeerId = json.optInt("localLinkPeerId", def.localLinkPeerId),
+                localLinkRoomCode = json.optString("localLinkRoomCode", def.localLinkRoomCode),
                 dev9EthDevice = json.optString("dev9EthDevice", def.dev9EthDevice).ifEmpty { def.dev9EthDevice },
                 dev9EthLogDhcp = json.optBoolean("dev9EthLogDhcp", def.dev9EthLogDhcp),
                 dev9EthLogDns = json.optBoolean("dev9EthLogDns", def.dev9EthLogDns),
@@ -1759,8 +2098,15 @@ data class Settings(
                 shaderChainPreset = json.optString("shaderChainPreset", def.shaderChainPreset),
                 shaderChainParams = json.optJSONObject("shaderChainParams")
                     ?.let { shaderChainParamsFromJson(it) } ?: def.shaderChainParams,
+                lsfgEnabled = json.optBoolean("lsfgEnabled", def.lsfgEnabled),
+                lsfgMultiplier = json.optInt("lsfgMultiplier", def.lsfgMultiplier),
+                lsfgDllPath = json.optString("lsfgDllPath", def.lsfgDllPath),
+                lsfgPerformance = json.optBoolean("lsfgPerformance", def.lsfgPerformance),
+                lsfgFlowScale = json.optInt("lsfgFlowScale", def.lsfgFlowScale),
                 casMode = json.optInt("casMode", def.casMode),
                 casSharpness = json.optInt("casSharpness", def.casSharpness),
+                upscaler = json.optInt("upscaler", def.upscaler),
+                fsrSharpness = json.optInt("fsrSharpness", def.fsrSharpness),
                 loadTextureReplacements = json.optBoolean("loadTextureReplacements", def.loadTextureReplacements),
                 loadTextureReplacementsAsync = json.optBoolean("loadTextureReplacementsAsync", def.loadTextureReplacementsAsync),
                 precacheTextureReplacements = json.optBoolean("precacheTextureReplacements", def.precacheTextureReplacements),
@@ -1768,6 +2114,7 @@ data class Settings(
                 osdShowTextureReplacements = json.optBoolean("osdShowTextureReplacements", def.osdShowTextureReplacements),
                 osdShowFps = json.optBoolean("osdShowFps", def.osdShowFps),
                 osdScale = json.optInt("osdScale", def.osdScale),
+                osdColor = json.optInt("osdColor", def.osdColor),
                 vsyncEnable = json.optBoolean("vsyncEnable", def.vsyncEnable),
                 osdShowVps = json.optBoolean("osdShowVps", def.osdShowVps),
                 osdShowSpeed = json.optBoolean("osdShowSpeed", def.osdShowSpeed),
@@ -1852,8 +2199,16 @@ data class Settings(
             if (current.audioOutputLatencyMs != base.audioOutputLatencyMs) j.put("audioOutputLatencyMs", current.audioOutputLatencyMs)
             if (current.audioFastForwardVolume != base.audioFastForwardVolume) j.put("audioFastForwardVolume", current.audioFastForwardVolume)
             if (current.spu2NeonReverb != base.spu2NeonReverb) j.put("spu2NeonReverb", current.spu2NeonReverb)
+            if (current.audioOpenSLES != base.audioOpenSLES) j.put("audioOpenSLES", current.audioOpenSLES)
+            if (current.spu2LightweightMix != base.spu2LightweightMix) j.put("spu2LightweightMix", current.spu2LightweightMix)
             if (current.renderer != base.renderer) j.put("renderer", current.renderer)
             if (current.upscaleFloat != base.upscaleFloat) j.put("upscaleFloat", current.upscaleFloat.toDouble())
+            if (current.customDriverId != base.customDriverId) j.put("customDriverId", current.customDriverId)
+            if (current.orientation != base.orientation) j.put("orientation", current.orientation)
+            if (current.portraitRenderTop != base.portraitRenderTop) j.put("portraitRenderTop", current.portraitRenderTop)
+            if (current.landscapeRenderTop != base.landscapeRenderTop) j.put("landscapeRenderTop", current.landscapeRenderTop)
+            if (current.autoProgressiveScan != base.autoProgressiveScan) j.put("autoProgressiveScan", current.autoProgressiveScan)
+            if (current.affinityMode != base.affinityMode) j.put("affinityMode", current.affinityMode)
             if (current.framerateNtsc != base.framerateNtsc) j.put("framerateNtsc", current.framerateNtsc.toDouble())
             if (current.frameratePal != base.frameratePal) j.put("frameratePal", current.frameratePal.toDouble())
             if (current.enablePatches != base.enablePatches) j.put("enablePatches", current.enablePatches)
@@ -1868,7 +2223,6 @@ data class Settings(
             if (current.gamefixEETiming != base.gamefixEETiming) j.put("gamefixEETiming", current.gamefixEETiming)
             if (current.gamefixInstantDma != base.gamefixInstantDma) j.put("gamefixInstantDma", current.gamefixInstantDma)
             if (current.gamefixBlitInternalFps != base.gamefixBlitInternalFps) j.put("gamefixBlitInternalFps", current.gamefixBlitInternalFps)
-            if (current.gamefixFpuMul        != base.gamefixFpuMul)        j.put("gamefixFpuMul", current.gamefixFpuMul)
             if (current.gamefixOphFlag       != base.gamefixOphFlag)       j.put("gamefixOphFlag", current.gamefixOphFlag)
             if (current.gamefixGifFifo       != base.gamefixGifFifo)       j.put("gamefixGifFifo", current.gamefixGifFifo)
             if (current.gamefixDmaBusy       != base.gamefixDmaBusy)       j.put("gamefixDmaBusy", current.gamefixDmaBusy)
@@ -1893,9 +2247,11 @@ data class Settings(
             if (current.hwRov != base.hwRov) j.put("hwRov", current.hwRov)
             if (current.hwAa1 != base.hwAa1) j.put("hwAa1", current.hwAa1)
             if (current.adrenoFbFetch != base.adrenoFbFetch) j.put("adrenoFbFetch", current.adrenoFbFetch)
+            if (current.coalesceRenderPasses != base.coalesceRenderPasses) j.put("coalesceRenderPasses", current.coalesceRenderPasses)
             if (current.forceMaliFbFetch != base.forceMaliFbFetch) j.put("forceMaliFbFetch", current.forceMaliFbFetch)
             if (current.useAngleOpenGL != base.useAngleOpenGL) j.put("useAngleOpenGL", current.useAngleOpenGL)
             if (current.overrideTextureBarriers != base.overrideTextureBarriers) j.put("overrideTextureBarriers", current.overrideTextureBarriers)
+            if (current.gsBackThreadMode != base.gsBackThreadMode) j.put("gsBackThreadMode", current.gsBackThreadMode)
             if (current.disableVertexShaderExpand != base.disableVertexShaderExpand) j.put("disableVertexShaderExpand", current.disableVertexShaderExpand)
             if (current.useBlitSwapChain     != base.useBlitSwapChain)     j.put("useBlitSwapChain", current.useBlitSwapChain)
             if (current.disableShaderCache   != base.disableShaderCache)   j.put("disableShaderCache", current.disableShaderCache)
@@ -1905,17 +2261,30 @@ data class Settings(
             if (current.spinGpuReadbacks     != base.spinGpuReadbacks)     j.put("spinGpuReadbacks", current.spinGpuReadbacks)
             if (current.spinCpuReadbacks     != base.spinCpuReadbacks)     j.put("spinCpuReadbacks", current.spinCpuReadbacks)
             if (current.integerScaling       != base.integerScaling)       j.put("integerScaling", current.integerScaling)
+            if (current.cropLeft             != base.cropLeft)             j.put("cropLeft", current.cropLeft)
+            if (current.displayZoom          != base.displayZoom)          j.put("displayZoom", current.displayZoom)
+            if (current.cropTop              != base.cropTop)              j.put("cropTop", current.cropTop)
+            if (current.cropRight            != base.cropRight)            j.put("cropRight", current.cropRight)
+            if (current.cropBottom           != base.cropBottom)           j.put("cropBottom", current.cropBottom)
             if (current.dithering            != base.dithering)            j.put("dithering", current.dithering)
             if (current.vsyncQueueSize       != base.vsyncQueueSize)       j.put("vsyncQueueSize", current.vsyncQueueSize)
+            if (current.hwScaler             != base.hwScaler)             j.put("hwScaler", current.hwScaler)
+            if (current.screenResOverride    != base.screenResOverride)    j.put("screenResOverride", current.screenResOverride)
             if (current.autoFlushSw          != base.autoFlushSw)          j.put("autoFlushSw", current.autoFlushSw)
             if (current.mipmapSw             != base.mipmapSw)             j.put("mipmapSw", current.mipmapSw)
             if (current.swThreads            != base.swThreads)            j.put("swThreads", current.swThreads)
             if (current.swThreadsHeight      != base.swThreadsHeight)      j.put("swThreadsHeight", current.swThreadsHeight)
             if (current.aspectRatio         != base.aspectRatio)         j.put("aspectRatio", current.aspectRatio)
             if (current.fmvAspectRatio      != base.fmvAspectRatio)      j.put("fmvAspectRatio", current.fmvAspectRatio)
+            if (current.customAspectRatio   != base.customAspectRatio)   j.put("customAspectRatio", current.customAspectRatio.toDouble())
             if (current.deinterlaceMode     != base.deinterlaceMode)     j.put("deinterlaceMode", current.deinterlaceMode)
             if (current.dev9EthEnable       != base.dev9EthEnable)       j.put("dev9EthEnable", current.dev9EthEnable)
             if (current.dev9EthApi          != base.dev9EthApi)          j.put("dev9EthApi", current.dev9EthApi)
+            if (current.localLinkHost != base.localLinkHost) j.put("localLinkHost", current.localLinkHost)
+            if (current.localLinkAddress != base.localLinkAddress) j.put("localLinkAddress", current.localLinkAddress)
+            if (current.localLinkPort != base.localLinkPort) j.put("localLinkPort", current.localLinkPort)
+            if (current.localLinkPeerId != base.localLinkPeerId) j.put("localLinkPeerId", current.localLinkPeerId)
+            if (current.localLinkRoomCode != base.localLinkRoomCode) j.put("localLinkRoomCode", current.localLinkRoomCode)
             if (current.dev9EthDevice       != base.dev9EthDevice)       j.put("dev9EthDevice", current.dev9EthDevice)
             if (current.dev9EthLogDhcp      != base.dev9EthLogDhcp)      j.put("dev9EthLogDhcp", current.dev9EthLogDhcp)
             if (current.dev9EthLogDns       != base.dev9EthLogDns)       j.put("dev9EthLogDns", current.dev9EthLogDns)
@@ -1973,8 +2342,15 @@ data class Settings(
             if (current.shaderChainEnabled  != base.shaderChainEnabled)  j.put("shaderChainEnabled", current.shaderChainEnabled)
             if (current.shaderChainPreset   != base.shaderChainPreset)   j.put("shaderChainPreset", current.shaderChainPreset)
             if (current.shaderChainParams   != base.shaderChainParams)   j.put("shaderChainParams", shaderChainParamsToJson(current.shaderChainParams))
+            if (current.lsfgEnabled         != base.lsfgEnabled)         j.put("lsfgEnabled", current.lsfgEnabled)
+            if (current.lsfgMultiplier      != base.lsfgMultiplier)      j.put("lsfgMultiplier", current.lsfgMultiplier)
+            if (current.lsfgDllPath         != base.lsfgDllPath)         j.put("lsfgDllPath", current.lsfgDllPath)
+            if (current.lsfgPerformance     != base.lsfgPerformance)     j.put("lsfgPerformance", current.lsfgPerformance)
+            if (current.lsfgFlowScale       != base.lsfgFlowScale)       j.put("lsfgFlowScale", current.lsfgFlowScale)
             if (current.casMode             != base.casMode)             j.put("casMode", current.casMode)
             if (current.casSharpness        != base.casSharpness)        j.put("casSharpness", current.casSharpness)
+            if (current.upscaler            != base.upscaler)            j.put("upscaler", current.upscaler)
+            if (current.fsrSharpness        != base.fsrSharpness)        j.put("fsrSharpness", current.fsrSharpness)
             if (current.loadTextureReplacements != base.loadTextureReplacements) j.put("loadTextureReplacements", current.loadTextureReplacements)
             if (current.loadTextureReplacementsAsync != base.loadTextureReplacementsAsync) j.put("loadTextureReplacementsAsync", current.loadTextureReplacementsAsync)
             if (current.precacheTextureReplacements != base.precacheTextureReplacements) j.put("precacheTextureReplacements", current.precacheTextureReplacements)
@@ -1982,6 +2358,7 @@ data class Settings(
             if (current.osdShowTextureReplacements != base.osdShowTextureReplacements) j.put("osdShowTextureReplacements", current.osdShowTextureReplacements)
             if (current.osdShowFps != base.osdShowFps) j.put("osdShowFps", current.osdShowFps)
             if (current.osdScale != base.osdScale) j.put("osdScale", current.osdScale)
+            if (current.osdColor != base.osdColor) j.put("osdColor", current.osdColor)
             if (current.vsyncEnable != base.vsyncEnable) j.put("vsyncEnable", current.vsyncEnable)
             if (current.osdShowVps != base.osdShowVps) j.put("osdShowVps", current.osdShowVps)
             if (current.osdShowSpeed != base.osdShowSpeed) j.put("osdShowSpeed", current.osdShowSpeed)
@@ -2056,8 +2433,16 @@ data class Settings(
             audioOutputLatencyMs = if (overrides.has("audioOutputLatencyMs")) overrides.getInt("audioOutputLatencyMs") else base.audioOutputLatencyMs,
             audioFastForwardVolume = if (overrides.has("audioFastForwardVolume")) overrides.getInt("audioFastForwardVolume") else base.audioFastForwardVolume,
             spu2NeonReverb = if (overrides.has("spu2NeonReverb")) overrides.getBoolean("spu2NeonReverb") else base.spu2NeonReverb,
+            audioOpenSLES = if (overrides.has("audioOpenSLES")) overrides.getBoolean("audioOpenSLES") else base.audioOpenSLES,
+            spu2LightweightMix = if (overrides.has("spu2LightweightMix")) overrides.getBoolean("spu2LightweightMix") else base.spu2LightweightMix,
             renderer = if (overrides.has("renderer")) overrides.getString("renderer") else base.renderer,
             upscaleFloat = if (overrides.has("upscaleFloat")) overrides.getDouble("upscaleFloat").toFloat() else base.upscaleFloat,
+            customDriverId = if (overrides.has("customDriverId")) overrides.getString("customDriverId") else base.customDriverId,
+            orientation = if (overrides.has("orientation")) overrides.getInt("orientation") else base.orientation,
+            portraitRenderTop = if (overrides.has("portraitRenderTop")) overrides.getBoolean("portraitRenderTop") else base.portraitRenderTop,
+            landscapeRenderTop = if (overrides.has("landscapeRenderTop")) overrides.getBoolean("landscapeRenderTop") else base.landscapeRenderTop,
+            autoProgressiveScan = if (overrides.has("autoProgressiveScan")) overrides.getBoolean("autoProgressiveScan") else base.autoProgressiveScan,
+            affinityMode = if (overrides.has("affinityMode")) overrides.getInt("affinityMode") else base.affinityMode,
             framerateNtsc = if (overrides.has("framerateNtsc")) overrides.getDouble("framerateNtsc").toFloat() else base.framerateNtsc,
             frameratePal = if (overrides.has("frameratePal")) overrides.getDouble("frameratePal").toFloat() else base.frameratePal,
             enablePatches = if (overrides.has("enablePatches")) overrides.getBoolean("enablePatches") else base.enablePatches,
@@ -2066,13 +2451,19 @@ data class Settings(
             enableNoInterlacingPatches = if (overrides.has("enableNoInterlacingPatches")) overrides.getBoolean("enableNoInterlacingPatches") else base.enableNoInterlacingPatches,
             enableFastBoot = if (overrides.has("enableFastBoot")) overrides.getBoolean("enableFastBoot") else base.enableFastBoot,
             hostFs = if (overrides.has("hostFs")) overrides.getBoolean("hostFs") else base.hostFs,
+            // Always the global value: PINE is one server for the process, so "this game runs
+            // with PINE on" is not a thing that can be true. Deliberately absent from the diff
+            // above too, so a per-game file never acquires the key -- but it still has to be
+            // listed HERE, because this is a full constructor and an omitted field silently
+            // resets to the default rather than inheriting from base.
+            pineEnabled = base.pineEnabled,
+            pineSlot = base.pineSlot,
             enableGameFixes = if (overrides.has("enableGameFixes")) overrides.getBoolean("enableGameFixes") else base.enableGameFixes,
             gamefixSoftwareRendererFmv = if (overrides.has("gamefixSoftwareRendererFmv")) overrides.getBoolean("gamefixSoftwareRendererFmv") else base.gamefixSoftwareRendererFmv,
             gamefixSkipMpeg = if (overrides.has("gamefixSkipMpeg")) overrides.getBoolean("gamefixSkipMpeg") else base.gamefixSkipMpeg,
             gamefixEETiming = if (overrides.has("gamefixEETiming")) overrides.getBoolean("gamefixEETiming") else base.gamefixEETiming,
             gamefixInstantDma = if (overrides.has("gamefixInstantDma")) overrides.getBoolean("gamefixInstantDma") else base.gamefixInstantDma,
             gamefixBlitInternalFps = if (overrides.has("gamefixBlitInternalFps")) overrides.getBoolean("gamefixBlitInternalFps") else base.gamefixBlitInternalFps,
-            gamefixFpuMul = if (overrides.has("gamefixFpuMul")) overrides.getBoolean("gamefixFpuMul") else base.gamefixFpuMul,
             gamefixOphFlag = if (overrides.has("gamefixOphFlag")) overrides.getBoolean("gamefixOphFlag") else base.gamefixOphFlag,
             gamefixGifFifo = if (overrides.has("gamefixGifFifo")) overrides.getBoolean("gamefixGifFifo") else base.gamefixGifFifo,
             gamefixDmaBusy = if (overrides.has("gamefixDmaBusy")) overrides.getBoolean("gamefixDmaBusy") else base.gamefixDmaBusy,
@@ -2098,9 +2489,11 @@ data class Settings(
             hwAa1 = if (overrides.has("hwAa1")) overrides.getBoolean("hwAa1") else base.hwAa1,
             hwAat = false,
             adrenoFbFetch = if (overrides.has("adrenoFbFetch")) overrides.getBoolean("adrenoFbFetch") else base.adrenoFbFetch,
+            coalesceRenderPasses = if (overrides.has("coalesceRenderPasses")) overrides.getBoolean("coalesceRenderPasses") else base.coalesceRenderPasses,
             forceMaliFbFetch = if (overrides.has("forceMaliFbFetch")) overrides.getBoolean("forceMaliFbFetch") else base.forceMaliFbFetch,
             useAngleOpenGL = if (overrides.has("useAngleOpenGL")) overrides.getBoolean("useAngleOpenGL") else base.useAngleOpenGL,
             overrideTextureBarriers = if (overrides.has("overrideTextureBarriers")) overrides.getInt("overrideTextureBarriers") else base.overrideTextureBarriers,
+            gsBackThreadMode = if (overrides.has("gsBackThreadMode")) overrides.getInt("gsBackThreadMode") else base.gsBackThreadMode,
             disableVertexShaderExpand = if (overrides.has("disableVertexShaderExpand")) overrides.getBoolean("disableVertexShaderExpand") else base.disableVertexShaderExpand,
             useBlitSwapChain = if (overrides.has("useBlitSwapChain")) overrides.getBoolean("useBlitSwapChain") else base.useBlitSwapChain,
             disableShaderCache = if (overrides.has("disableShaderCache")) overrides.getBoolean("disableShaderCache") else base.disableShaderCache,
@@ -2114,17 +2507,30 @@ data class Settings(
             spinGpuReadbacks = if (overrides.has("spinGpuReadbacks")) overrides.getBoolean("spinGpuReadbacks") else base.spinGpuReadbacks,
             spinCpuReadbacks = if (overrides.has("spinCpuReadbacks")) overrides.getBoolean("spinCpuReadbacks") else base.spinCpuReadbacks,
             integerScaling = if (overrides.has("integerScaling")) overrides.getBoolean("integerScaling") else base.integerScaling,
+            cropLeft = if (overrides.has("cropLeft")) overrides.getInt("cropLeft") else base.cropLeft,
+            displayZoom = if (overrides.has("displayZoom")) overrides.getInt("displayZoom") else base.displayZoom,
+            cropTop = if (overrides.has("cropTop")) overrides.getInt("cropTop") else base.cropTop,
+            cropRight = if (overrides.has("cropRight")) overrides.getInt("cropRight") else base.cropRight,
+            cropBottom = if (overrides.has("cropBottom")) overrides.getInt("cropBottom") else base.cropBottom,
             dithering = if (overrides.has("dithering")) overrides.getInt("dithering") else base.dithering,
             vsyncQueueSize = if (overrides.has("vsyncQueueSize")) overrides.getInt("vsyncQueueSize") else base.vsyncQueueSize,
+            hwScaler = if (overrides.has("hwScaler")) overrides.getInt("hwScaler") else base.hwScaler,
+            screenResOverride = if (overrides.has("screenResOverride")) overrides.getString("screenResOverride") else base.screenResOverride,
             autoFlushSw = if (overrides.has("autoFlushSw")) overrides.getBoolean("autoFlushSw") else base.autoFlushSw,
             mipmapSw = if (overrides.has("mipmapSw")) overrides.getBoolean("mipmapSw") else base.mipmapSw,
             swThreads = if (overrides.has("swThreads")) overrides.getInt("swThreads") else base.swThreads,
             swThreadsHeight = if (overrides.has("swThreadsHeight")) overrides.getInt("swThreadsHeight") else base.swThreadsHeight,
             aspectRatio = if (overrides.has("aspectRatio")) overrides.getInt("aspectRatio") else base.aspectRatio,
             fmvAspectRatio = if (overrides.has("fmvAspectRatio")) overrides.getInt("fmvAspectRatio") else base.fmvAspectRatio,
+            customAspectRatio = if (overrides.has("customAspectRatio")) overrides.getDouble("customAspectRatio").toFloat() else base.customAspectRatio,
             deinterlaceMode = if (overrides.has("deinterlaceMode")) overrides.getInt("deinterlaceMode") else base.deinterlaceMode,
             dev9EthEnable = if (overrides.has("dev9EthEnable")) overrides.getBoolean("dev9EthEnable") else base.dev9EthEnable,
             dev9EthApi = if (overrides.has("dev9EthApi")) overrides.getString("dev9EthApi").ifEmpty { base.dev9EthApi } else base.dev9EthApi,
+            localLinkHost = if (overrides.has("localLinkHost")) overrides.getBoolean("localLinkHost") else base.localLinkHost,
+            localLinkAddress = if (overrides.has("localLinkAddress")) overrides.getString("localLinkAddress") else base.localLinkAddress,
+            localLinkPort = if (overrides.has("localLinkPort")) overrides.getInt("localLinkPort") else base.localLinkPort,
+            localLinkPeerId = if (overrides.has("localLinkPeerId")) overrides.getInt("localLinkPeerId") else base.localLinkPeerId,
+            localLinkRoomCode = if (overrides.has("localLinkRoomCode")) overrides.getString("localLinkRoomCode") else base.localLinkRoomCode,
             dev9EthDevice = if (overrides.has("dev9EthDevice")) overrides.getString("dev9EthDevice").ifEmpty { base.dev9EthDevice } else base.dev9EthDevice,
             dev9EthLogDhcp = if (overrides.has("dev9EthLogDhcp")) overrides.getBoolean("dev9EthLogDhcp") else base.dev9EthLogDhcp,
             dev9EthLogDns = if (overrides.has("dev9EthLogDns")) overrides.getBoolean("dev9EthLogDns") else base.dev9EthLogDns,
@@ -2197,8 +2603,15 @@ data class Settings(
             shaderChainParams = if (overrides.has("shaderChainParams")) {
                 shaderChainParamsFromJson(overrides.optJSONObject("shaderChainParams"))
             } else base.shaderChainParams,
+            lsfgEnabled = if (overrides.has("lsfgEnabled")) overrides.getBoolean("lsfgEnabled") else base.lsfgEnabled,
+            lsfgMultiplier = if (overrides.has("lsfgMultiplier")) overrides.getInt("lsfgMultiplier") else base.lsfgMultiplier,
+            lsfgDllPath = if (overrides.has("lsfgDllPath")) overrides.getString("lsfgDllPath") else base.lsfgDllPath,
+            lsfgPerformance = if (overrides.has("lsfgPerformance")) overrides.getBoolean("lsfgPerformance") else base.lsfgPerformance,
+            lsfgFlowScale = if (overrides.has("lsfgFlowScale")) overrides.getInt("lsfgFlowScale") else base.lsfgFlowScale,
             casMode = if (overrides.has("casMode")) overrides.getInt("casMode") else base.casMode,
             casSharpness = if (overrides.has("casSharpness")) overrides.getInt("casSharpness") else base.casSharpness,
+            upscaler = if (overrides.has("upscaler")) overrides.getInt("upscaler") else base.upscaler,
+            fsrSharpness = if (overrides.has("fsrSharpness")) overrides.getInt("fsrSharpness") else base.fsrSharpness,
             loadTextureReplacements = if (overrides.has("loadTextureReplacements")) overrides.getBoolean("loadTextureReplacements") else base.loadTextureReplacements,
             loadTextureReplacementsAsync = if (overrides.has("loadTextureReplacementsAsync")) overrides.getBoolean("loadTextureReplacementsAsync") else base.loadTextureReplacementsAsync,
             precacheTextureReplacements = if (overrides.has("precacheTextureReplacements")) overrides.getBoolean("precacheTextureReplacements") else base.precacheTextureReplacements,
@@ -2206,6 +2619,7 @@ data class Settings(
             osdShowTextureReplacements = if (overrides.has("osdShowTextureReplacements")) overrides.getBoolean("osdShowTextureReplacements") else base.osdShowTextureReplacements,
             osdShowFps = if (overrides.has("osdShowFps")) overrides.getBoolean("osdShowFps") else base.osdShowFps,
             osdScale = if (overrides.has("osdScale")) overrides.getInt("osdScale") else base.osdScale,
+            osdColor = if (overrides.has("osdColor")) overrides.getInt("osdColor") else base.osdColor,
             vsyncEnable = if (overrides.has("vsyncEnable")) overrides.getBoolean("vsyncEnable") else base.vsyncEnable,
             osdShowVps = if (overrides.has("osdShowVps")) overrides.getBoolean("osdShowVps") else base.osdShowVps,
             osdShowSpeed = if (overrides.has("osdShowSpeed")) overrides.getBoolean("osdShowSpeed") else base.osdShowSpeed,

@@ -15,6 +15,8 @@
 #include "common/HashCombine.h"
 #include "common/SmallString.h"
 
+#include <atomic>
+
 #include "fmt/format.h"
 
 #include <cinttypes>
@@ -71,13 +73,19 @@ void GSTextureCache::ReadbackAll()
 	for (int type = 0; type < 2; type++)
 	{
 		for (auto t : m_dst[type])
-			Read(t, t->m_drawn_since_read);
+		{
+			// Callers (CSR reset, savestate freeze, renderer swap) consume local memory
+			// straight after this, so these reads can never be deferred to a later frame.
+			Read(t, t->m_drawn_since_read, true);
+		}
 	}
 }
 
 void GSTextureCache::RemoveAll(bool sources, bool targets, bool hash_cache)
 {
 	InvalidateTemporaryZ();
+	if (targets)
+		DiscardPendingDownloads();
 
 	if (sources || targets)
 	{
@@ -430,7 +438,14 @@ GSVector4i GSTextureCache::TranslateAlignedRectByPage(u32 tbp, u32 tebp, u32 tbw
 				// The width is mismatched to the page.
 				if (!is_invalidation && GSConfig.UserHacks_TextureInsideRt < GSTextureInRtMode::MergeTargets)
 				{
-					DevCon.Warning("Uneven pages mess up sbp %x dbp %x spgw %d dpgw %d src fmt %d dst fmt %d src_rect %d, %d, %d, %d draw %lld", sbp, tbp, src_pgw, dst_pgw, spsm, tpsm, in_rect.x, in_rect.y, in_rect.z, in_rect.w, GSState::s_n);
+					// Rate-limited: on render-target churn this fires thousands of times/second (Rogue Galaxy:
+						// 5000+ per session) and a synchronous log per hit is itself a cost that drowns the log.
+						// Lock-free geometric backoff — atomic, not a plain static, since the TC can be reached
+						// off the GS back thread under pipelined GS. Each emitted line carries the running total.
+						static std::atomic<u64> s_uneven_hits{0};
+						const u64 uneven_n = s_uneven_hits.fetch_add(1, std::memory_order_relaxed) + 1;
+						if ((uneven_n & (uneven_n - 1)) == 0)
+							DevCon.Warning("Uneven pages mess up (#%llu) sbp %x dbp %x spgw %d dpgw %d src fmt %d dst fmt %d src_rect %d, %d, %d, %d draw %lld", uneven_n, sbp, tbp, src_pgw, dst_pgw, spsm, tpsm, in_rect.x, in_rect.y, in_rect.z, in_rect.w, GSRendererHW::GetInstance()->s_n);
 					return GSVector4i::zero();
 				}
 
@@ -573,7 +588,11 @@ GSVector4i GSTextureCache::TranslateAlignedRectByPage(u32 tbp, u32 tebp, u32 tbw
 				// Results won't be square, if it's not invalidation, it's a texture, which is problematic to translate, so let's not (FIFA 2005).
 				if (!is_invalidation)
 				{
-					DevCon.Warning("Uneven pages mess up sbp %x dbp %x spgw %d dpgw %d", sbp, tbp, src_pgw, dst_pgw);
+					// Rate-limited (see the sibling site above): lock-free geometric backoff.
+					static std::atomic<u64> s_uneven_hits2{0};
+					const u64 n = s_uneven_hits2.fetch_add(1, std::memory_order_relaxed) + 1;
+					if ((n & (n - 1)) == 0)
+						DevCon.Warning("Uneven pages mess up (#%llu) sbp %x dbp %x spgw %d dpgw %d", n, sbp, tbp, src_pgw, dst_pgw);
 					return GSVector4i::zero();
 				}
 
@@ -1423,7 +1442,7 @@ GSTextureCache::Source* GSTextureCache::LookupSource(const bool is_color, const 
 				// Also is we have already found a target which we had to offset in to by using a region or exact address,
 				// it's probable that's more correct than being inside (Tomb Raider Legends + Project Snowblind)
 				// Vakyrie Profile 2 also has some in draws which get done on a different target due to a slight offset, so we need to make sure we have the newer one.
-				if (!overlaps || (found_t && (GSState::s_n - dst->m_last_draw) < (GSState::s_n - t->m_last_draw)))
+				if (!overlaps || (found_t && (GSRendererHW::GetInstance()->s_n - dst->m_last_draw) < (GSRendererHW::GetInstance()->s_n - t->m_last_draw)))
 					continue;
 
 				// If the BP is offset in to a page and the format does not match, trying to match up the correct position is very difficult since we don't swizzle.
@@ -1735,7 +1754,7 @@ GSTextureCache::Source* GSTextureCache::LookupSource(const bool is_color, const 
 						match = false;
 
 					// Different swizzle, different width, and dirty, so probably not what we want.
-					//	DevCon.Warning("Expected %x Got %x shuffle %d draw %d", psm, t_psm, possible_shuffle, GSState::s_n);
+					//	DevCon.Warning("Expected %x Got %x shuffle %d draw %d", psm, t_psm, possible_shuffle, GSRendererHW::GetInstance()->s_n);
 					if (match)
 					{
 						// It is a complex to convert the code in shader. As a reference, let's do it on the CPU,
@@ -1750,7 +1769,9 @@ GSTextureCache::Source* GSTextureCache::LookupSource(const bool is_color, const 
 							{
 								t->UnscaleRTAlpha();
 
-								Read(t, t->m_drawn_since_read);
+								// The CPU conversion below consumes local memory immediately, so
+								// this one cannot be deferred to a later frame.
+								Read(t, t->m_drawn_since_read, true);
 
 								t->m_drawn_since_read = GSVector4i::zero();
 							}
@@ -1883,7 +1904,7 @@ GSTextureCache::Source* GSTextureCache::LookupSource(const bool is_color, const 
 						// If the sizing is completely wrong on the frame vs the source when reading from alpha then it's likely the target has 2 different sizes for rgb and alpha.
 						// This is just changing the target width for the rect translation, it has no bearing on the actual source read or the target itself.
 						// Hitman Blood Money is an example of this in the theatre.
-						const u32 rt_tbw = (possible_shuffle || bw == 1 || GSUtil::GetChannelMask(psm) != 0x8 || frame.FBW <= bw || frame.FBW == t->m_TEX0.TBW || bw == t->m_TEX0.TBW) ? t->m_TEX0.TBW : frame.FBW;
+						rt_tbw = (possible_shuffle || bw == 1 || GSUtil::GetChannelMask(psm) != 0x8 || frame.FBW <= bw || frame.FBW == t->m_TEX0.TBW || bw == t->m_TEX0.TBW) ? t->m_TEX0.TBW : frame.FBW;
 
 						const bool can_translate = CanTranslate(adj_bp, bw, src_psm, new_rect, t->m_TEX0.TBP0, t->m_TEX0.PSM, rt_tbw);
 						if (can_translate)
@@ -2150,6 +2171,10 @@ GSTextureCache::Source* GSTextureCache::LookupSource(const bool is_color, const 
 
 	if (!src)
 	{
+		// A Source has to be built: upload + swizzle. This is the expensive outcome.
+		g_perfmon.Put(GSPerfMon::TCSourceMiss, 1);
+		g_perfmon.Put(dst ? GSPerfMon::TCTargetHit : GSPerfMon::TCTargetMiss, 1);
+
 #ifdef ENABLE_OGL_DEBUG
 		if (dst)
 		{
@@ -2225,6 +2250,8 @@ GSTextureCache::Source* GSTextureCache::LookupSource(const bool is_color, const 
 	}
 	else
 	{
+		g_perfmon.Put(GSPerfMon::TCSourceHit, 1);
+
 		GL_CACHE("TC: src hit: (0x%x, 0x%x, %s)",
 			TEX0.TBP0, psm_s.pal > 0 ? TEX0.CBP : 0,
 			GSUtil::GetPSMName(TEX0.PSM));
@@ -2365,7 +2392,7 @@ void GSTextureCache::CombineAlignedInsideTargets(Target* target, GSTextureCache:
 							const bool valid_color = t->m_valid_rgb;
 							const bool valid_alpha = (t->m_valid_alpha_high || t->m_valid_alpha_low) && (GSUtil::GetChannelMask(t->m_TEX0.PSM) & 0x8);
 
-							GL_CACHE("Combining %x-%x in to %x-%x draw %lld", t->m_TEX0.TBP0, t->m_end_block, target->m_TEX0.TBP0, target->m_end_block, GSState::s_n);
+							GL_CACHE("Combining %x-%x in to %x-%x draw %lld", t->m_TEX0.TBP0, t->m_end_block, target->m_TEX0.TBP0, target->m_end_block, GSRendererHW::GetInstance()->s_n);
 
 							if (target->m_type == RenderTarget)
 							{
@@ -2463,7 +2490,7 @@ GSTextureCache::Target* GSTextureCache::LookupDrawTarget(GIFRegTEX0 TEX0, const 
 			{
 				bool can_use = true;
 
-				if (new_dst && ((GSState::s_n - new_dst->m_last_draw) < (GSState::s_n - t->m_last_draw) && new_dst->m_TEX0.TBP0 <= bp))
+				if (new_dst && ((GSRendererHW::GetInstance()->s_n - new_dst->m_last_draw) < (GSRendererHW::GetInstance()->s_n - t->m_last_draw) && new_dst->m_TEX0.TBP0 <= bp))
 				{
 					DevCon.Warning("Ignoring target at %x as one at %x is newer", t->m_TEX0.TBP0, new_dst->m_TEX0.TBP0);
 					i++;
@@ -2580,21 +2607,30 @@ GSTextureCache::Target* GSTextureCache::LookupDrawTarget(GIFRegTEX0 TEX0, const 
 			{
 				// Some games misuse the scissor so it ends up valid 1 pixel over, which causes hell for us. So check if it still overlaps without the extra pixel.
 				const GSVector4i adjusted_valid = GSVector4i(t->m_valid.x, t->m_valid.y, std::min(t->m_valid.z, static_cast<int>(t->m_TEX0.TBW) * 64), t->m_valid.w - 1);
-				const u32 adjusted_endblock = GSLocalMemory::GetEndBlockAddress(t->m_TEX0.TBP0, t->m_TEX0.TBW, t->m_TEX0.PSM, adjusted_valid);
+				u32 adjusted_endblock = GSLocalMemory::GetUnwrappedEndBlockAddress(t->m_TEX0.TBP0, t->m_TEX0.TBW, t->m_TEX0.PSM, adjusted_valid);
 				if (adjusted_endblock <= bp)
 				{
 					i++;
 					continue;
 				}
+				const GSVector4i adjusted_rect = GSVector4i(min_rect.x, min_rect.y, std::min(min_rect.z, static_cast<int>(t->m_TEX0.TBW) * 64), min_rect.w - 1);
+				// Also check the offset from the bp to the current request to see if it overlaps the begining of the selected target.
+				adjusted_endblock = GSLocalMemory::GetUnwrappedEndBlockAddress(TEX0.TBP0, TEX0.TBW, TEX0.PSM, adjusted_rect);
+				if (adjusted_endblock <= t->m_TEX0.TBP0)
+				{
+					i++;
+					continue;
+				}
+
 				const GSLocalMemory::psm_t& s_psm = GSLocalMemory::m_psm[TEX0.PSM];
 				const u32 widthpage_offset = (std::abs(static_cast<int>(bp - t->m_TEX0.TBP0)) >> 5) % std::max(t->m_TEX0.TBW, 1U);
 				const bool is_aligned_ok = widthpage_offset == 0 || ((min_rect.width() <= static_cast<int>((t->m_TEX0.TBW - widthpage_offset) * 64) && (t->m_TEX0.TBW == TEX0.TBW || TEX0.TBW == 1)) && bp >= t->m_TEX0.TBP0);
-				const bool no_target_or_newer = (!new_dst || ((GSState::s_n - new_dst->m_last_draw) < (GSState::s_n - t->m_last_draw)));
+				const bool no_target_or_newer = (!new_dst || ((GSRendererHW::GetInstance()->s_n - new_dst->m_last_draw) < (GSRendererHW::GetInstance()->s_n - t->m_last_draw)));
 				const bool width_match = (t->m_TEX0.TBW == TEX0.TBW || (TEX0.TBW == 1 && draw_rect.w <= GSLocalMemory::m_psm[t->m_TEX0.PSM].pgs.y));
 				const bool ds_offset = !ds || offset != 0;
 				const bool is_double_buffer = TEX0.TBP0 == ((((t->m_end_block + 1) - t->m_TEX0.TBP0) / 2) + t->m_TEX0.TBP0);
 				const bool source_match = src && src->m_TEX0.TBP0 <= bp && src->m_end_block > bp && src->m_TEX0.TBW == TEX0.TBW && src->m_from_target && src->m_from_target == t && t->Inside(bp, TEX0.TBW, TEX0.PSM, min_rect);
-				const bool was_used_last_draw = t->m_last_draw == (GSState::s_n - 1);
+				const bool was_used_last_draw = t->m_last_draw == (GSRendererHW::GetInstance()->s_n - 1);
 				// if it's a shuffle, some games tend to offset back by a page, such as Tomb Raider, for no disernable reason, but it then causes problems.
 				// This can also happen horizontally (Catwoman moves everything one page left with shuffles), but this is too messy to deal with right now.
 				const bool overlaps = t->Overlaps(bp, TEX0.TBW, TEX0.PSM, min_rect) || (is_shuffle && src && GSLocalMemory::m_psm[src->m_TEX0.PSM].bpp == 8 && t->Overlaps(bp, TEX0.TBW, TEX0.PSM, min_rect + GSVector4i(0, 0, 0, s_psm.pgs.y - (min_rect.w & (s_psm.pgs.y - 1)))));
@@ -2612,7 +2648,7 @@ GSTextureCache::Target* GSTextureCache::LookupDrawTarget(GIFRegTEX0 TEX0, const 
 					}
 
 					// I know what you're thinking, and I hate the guy who wrote it too (me). Project Snowblind, Tomb Raider etc decide to offset where they're drawing using a channel shuffle, and this gets messy, so best just to kill the old target.
-					if (is_shuffle && src && src->m_TEX0.PSM == PSMT8 && GSRendererHW::GetInstance()->m_context->FRAME.FBW == 1 && t->m_last_draw != (GSState::s_n - 1) && src->m_from_target && (src->m_from_target->m_TEX0.TBP0 == src->m_TEX0.TBP0 || (((src->m_TEX0.TBP0 - src->m_from_target->m_TEX0.TBP0) >> 5) % std::max(src->m_from_target->m_TEX0.TBW, 1U) == 0)) && widthpage_offset && src->m_from_target != t)
+					if (is_shuffle && src && src->m_TEX0.PSM == PSMT8 && GSRendererHW::GetInstance()->m_context->FRAME.FBW == 1 && t->m_last_draw != (GSRendererHW::GetInstance()->s_n - 1) && src->m_from_target && (src->m_from_target->m_TEX0.TBP0 == src->m_TEX0.TBP0 || (((src->m_TEX0.TBP0 - src->m_from_target->m_TEX0.TBP0) >> 5) % std::max(src->m_from_target->m_TEX0.TBW, 1U) == 0)) && widthpage_offset && src->m_from_target != t)
 					{
 						if (iteration == 0)
 						{
@@ -2671,7 +2707,7 @@ GSTextureCache::Target* GSTextureCache::LookupDrawTarget(GIFRegTEX0 TEX0, const 
 					const bool all_dirty = dirty_rect.eq(t->m_valid);
 
 
-					if (!is_shuffle && !dirty_rect.rempty() && (!preserve_alpha && !preserve_rgb) && (GSState::s_n - 3) > t->m_last_draw)
+					if (!is_shuffle && !dirty_rect.rempty() && (!preserve_alpha && !preserve_rgb) && (GSRendererHW::GetInstance()->s_n - 3) > t->m_last_draw)
 					{
 						GL_INS("TC: Deleting RT BP 0x%x BW %d PSM %s due to dirty areas not preserved (Likely change in target)", t->m_TEX0.TBP0, t->m_TEX0.TBW, GSUtil::GetPSMName(t->m_TEX0.PSM));
 						InvalidateSourcesFromTarget(t);
@@ -2681,7 +2717,7 @@ GSTextureCache::Target* GSTextureCache::LookupDrawTarget(GIFRegTEX0 TEX0, const 
 						continue;
 					}
 
-					if (!all_dirty && ((translated_rect.w <= t->m_valid.w) || widthpage_offset == 0 || (GSState::s_n - 3) <= t->m_last_draw))
+					if (!all_dirty && ((translated_rect.w <= t->m_valid.w) || widthpage_offset == 0 || (GSRendererHW::GetInstance()->s_n - 3) <= t->m_last_draw))
 					{
 						if (TEX0.TBW == t->m_TEX0.TBW && !is_shuffle && widthpage_offset == 0 && ((min_rect.w + 63) / 64) > 1)
 						{
@@ -2699,7 +2735,7 @@ GSTextureCache::Target* GSTextureCache::LookupDrawTarget(GIFRegTEX0 TEX0, const 
 							}
 						}
 
-						//DevCon.Warning("Here draw %d wanted %x PSM %x got %x PSM %x offset of %d pages width %d pages draw width %d", GSState::s_n, bp, TEX0.PSM, t->m_TEX0.TBP0, t->m_TEX0.PSM, (bp - t->m_TEX0.TBP0) >> 5, t->m_TEX0.TBW, draw_rect.width());
+						//DevCon.Warning("Here draw %d wanted %x PSM %x got %x PSM %x offset of %d pages width %d pages draw width %d", GSRendererHW::GetInstance()->s_n, bp, TEX0.PSM, t->m_TEX0.TBP0, t->m_TEX0.PSM, (bp - t->m_TEX0.TBP0) >> 5, t->m_TEX0.TBW, draw_rect.width());
 						new_dst = t;
 						new_dst->m_32_bits_fmt |= (psm_s.bpp != 16);
 
@@ -2754,7 +2790,7 @@ GSTextureCache::Target* GSTextureCache::LookupDrawTarget(GIFRegTEX0 TEX0, const 
 						t->m_texture = nullptr;
 					}
 
-					GL_CACHE("TC: Deleting Z draw %d", GSState::s_n);
+					GL_CACHE("TC: Deleting Z draw %d", GSRendererHW::GetInstance()->s_n);
 					InvalidateSourcesFromTarget(t);
 					i = rev_list.erase(i);
 					delete t;
@@ -3374,7 +3410,7 @@ GSTextureCache::Target* GSTextureCache::CreateTarget(GIFRegTEX0 TEX0, const GSVe
 
 	dst->readbacks_since_draw = 0;
 
-	dst->m_last_draw = GSState::s_n;
+	dst->m_last_draw = GSRendererHW::GetInstance()->s_n;
 
 	if (dst->m_dirty.empty() && GSLocalMemory::m_psm[TEX0.PSM].depth == 0 && (GSUtil::GetChannelMask(TEX0.PSM) & 0x8))
 		dst->m_rt_alpha_scale = true;
@@ -3483,8 +3519,8 @@ bool GSTextureCache::PreloadTarget(GIFRegTEX0 TEX0, const GSVector2i& size, cons
 						// When the write covers the entire target, don't bother checking any earlier writes.
 						if (iter->blit.DBP <= TEX0.TBP0 && transfer_end >= rect_end)
 						{
-							// If it was a clear draw then we can use that as our target size.
-							if (iter->transfer_type == GSRendererHW::GetInstance()->EEGS_TransferType::Clear && iter->blit.DBP == TEX0.TBP0 && iter->blit.DPSM == TEX0.PSM)
+							// If it was an exact upload then we can assume this the target size.
+							if (iter->blit.DBP == TEX0.TBP0 && iter->blit.DBW == TEX0.TBW && iter->blit.DPSM == TEX0.PSM)
 								dst->UpdateValidity(iter->rect);
 
 							// Some games clear RT and Z at the same time, only erase if it's specifically this target.
@@ -3520,7 +3556,7 @@ bool GSTextureCache::PreloadTarget(GIFRegTEX0 TEX0, const GSVector2i& size, cons
 
 				for (auto iter = transfers.rbegin(); iter != transfers.rend(); ++iter)
 				{
-					if (iter->draw < (GSState::s_n - 1))
+					if (iter->draw < (GSRendererHW::GetInstance()->s_n - 1))
 						break;
 
 					if (iter->transfer_type == GSRendererHW::GetInstance()->EEGS_TransferType::Clear && iter->blit.DBP == TEX0.TBP0 && iter->blit.DBW == TEX0.TBW)
@@ -3751,7 +3787,7 @@ bool GSTextureCache::PreloadTarget(GIFRegTEX0 TEX0, const GSVector2i& size, cons
 					if (texture_height > dst->m_unscaled_size.y && !dst->ResizeTexture(dst->m_unscaled_size.x, texture_height, true))
 					{
 						// Resize failed, probably ran out of VRAM, better luck next time. Fall back to CPU.
-						DevCon.Warning("Failed to resize target on preload? Draw %lld", GSState::s_n);
+						DevCon.Warning("Failed to resize target on preload? Draw %lld", GSRendererHW::GetInstance()->s_n);
 						i++;
 						continue;
 					}
@@ -3877,9 +3913,13 @@ bool GSTextureCache::PreloadTarget(GIFRegTEX0 TEX0, const GSVector2i& size, cons
 						}
 
 						const int height_adjust = ((((dst_end_block + 31) - old_dst->m_TEX0.TBP0) >> 5) / std::max(old_dst->m_TEX0.TBW, 1U)) * GSLocalMemory::m_psm[old_dst->m_TEX0.PSM].pgs.y;
-						bool delete_target = true;
 
-						if (height_adjust < old_dst->m_unscaled_size.y)
+						// If it's only a partial overlap, we don't want to change the TBP, it needs to be on a page boundary, we can just lump it.
+						const GSVector4i dst_valid_rounded = GSVector4i(dst_valid.x, dst_valid.y, dst_valid.z, dst_valid.w & ~(GSLocalMemory::m_psm[dst->m_TEX0.PSM].pgs.y - 1));
+						const u32 dst_end_block_rounded = GSLocalMemory::GetEndBlockAddress(dst->m_TEX0.TBP0, dst->m_TEX0.TBW, dst->m_TEX0.PSM, dst_valid_rounded) + 1;
+						bool delete_target = (static_cast<int>(dst_end_block_rounded - old_dst->m_TEX0.TBP0) / 16) >= 1;
+
+						if (height_adjust < old_dst->m_unscaled_size.y && delete_target)
 						{
 							old_dst->m_TEX0.TBP0 = GSLocalMemory::GetStartBlockAddress(old_dst->m_TEX0.TBP0, old_dst->m_TEX0.TBW, old_dst->m_TEX0.PSM, GSVector4i(0, height_adjust, old_dst->m_valid.z, old_dst->m_valid.w));
 							old_dst->m_valid.w -= height_adjust;
@@ -4001,7 +4041,7 @@ GSTextureCache::Target* GSTextureCache::LookupDisplayTarget(GIFRegTEX0 TEX0, con
 			// Make sure the target is inside the texture
 			if (t->m_TEX0.TBP0 <= bp_adj && bp_adj <= t->UnwrappedEndBlock() && (half_buffer_match || t->Inside(bp_adj, TEX0.TBW, TEX0.PSM, GSVector4i::loadh(size))))
 			{
-				if (dst && (GSState::s_n - dst->m_last_draw) < (GSState::s_n - t->m_last_draw))
+				if (dst && (GSRendererHW::GetInstance()->s_n - dst->m_last_draw) < (GSRendererHW::GetInstance()->s_n - t->m_last_draw))
 					continue;
 
 				if (TEX0.TBW != t->m_TEX0.TBW && t->m_TEX0.TBW > 1 && t->m_age > 0)
@@ -4465,6 +4505,142 @@ bool GSTextureCache::PrepareDownloadTexture(u32 width, u32 height, GSTexture::Fo
 	return true;
 }
 
+void GSTextureCache::ApplyPendingDownload(PendingDownload& download)
+{
+	// An EE upload or a local->local move issued after this GPU copy is authoritative for
+	// those pages. Don't let the delayed result roll them back to an older frame.
+	if (!g_gs_renderer->AreAsyncReadbackPagesCurrent(
+			download.page_generations, download.tex0, download.target_rect))
+	{
+		return;
+	}
+
+	if (!download.texture->Map(download.read_rect))
+		return;
+
+	const GIFRegTEX0& TEX0 = download.tex0;
+	const u8* bits = download.texture->GetMapPointer();
+	const u32 pitch = download.texture->GetMapPitch();
+
+	// Mirrors the synchronous write-back in Read(), including our CPU RGB5A1 pack.
+	std::vector<u16> packed;
+	if (download.cpu_convert_rgb5a1)
+	{
+		const u32 w = static_cast<u32>(download.read_rect.z);
+		const u32 h = static_cast<u32>(download.read_rect.w);
+		packed.resize(static_cast<size_t>(w) * h);
+		for (u32 y = 0; y < h; y++)
+		{
+			const u32* src_px = reinterpret_cast<const u32*>(bits + y * pitch);
+			u16* dst_px = &packed[static_cast<size_t>(y) * w];
+			for (u32 x = 0; x < w; x++)
+			{
+				const u32 c = src_px[x];
+				dst_px[x] = static_cast<u16>(
+					((c >> 3) & 0x001Fu) | ((c >> 6) & 0x03E0u) | ((c >> 9) & 0x7C00u) | ((c >> 16) & 0x8000u));
+			}
+		}
+	}
+
+	// Publish the complete result atomically into the EE-facing shadow. This is a CPU-only
+	// lock around the swizzle/copy and never turns into a GPU wait.
+	{
+		GSLocalMemory& local_mem = g_gs_renderer->GetAsyncReadbackMemory();
+		const std::lock_guard lock(g_gs_renderer->GetAsyncReadbackMutex());
+		const GSOffset off = local_mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM);
+		switch (TEX0.PSM)
+		{
+			case PSMCT32:
+			case PSMZ32:
+			case PSMCT24:
+			case PSMZ24:
+				local_mem.WritePixel32(const_cast<u8*>(bits), pitch, off, download.target_rect, download.write_mask);
+				break;
+			case PSMCT16:
+			case PSMCT16S:
+			case PSMZ16:
+			case PSMZ16S:
+				if (download.cpu_convert_rgb5a1)
+				{
+					local_mem.WritePixel16(reinterpret_cast<u8*>(packed.data()),
+						static_cast<u32>(download.read_rect.z) * sizeof(u16), off, download.target_rect);
+				}
+				else
+				{
+					local_mem.WritePixel16(const_cast<u8*>(bits), pitch, off, download.target_rect);
+				}
+				break;
+			default:
+				Console.Error("TC: Unknown PSM %u on asynchronous readback", TEX0.PSM);
+				break;
+		}
+
+		g_gs_renderer->MarkAsyncReadbackPagesWrittenLocked(TEX0, download.target_rect);
+	}
+
+	download.texture->Unmap();
+}
+
+void GSTextureCache::ProcessPendingDownloads()
+{
+	if (m_pending_downloads.empty())
+		return;
+
+	// Publish only on VSync. If several snapshots of the same range completed during one
+	// frame, skip the intermediate versions and expose only the newest one.
+	const u64 current_frame = static_cast<u64>(g_perfmon.GetFrame());
+	// While the queue is saturated Read() is dropping every new snapshot, so retire at least
+	// the head unconditionally. Without this, a backend with no real Poll() (or a frame
+	// counter that got reset under us) could wedge the pipeline permanently.
+	const bool force_head = m_pending_downloads.size() >= MAX_PENDING_DOWNLOADS;
+	size_t ready_count = 0;
+	for (PendingDownload& download : m_pending_downloads)
+	{
+		const bool force = force_head && ready_count == 0;
+		const u64 age = current_frame >= download.queued_frame ? current_frame - download.queued_frame : 0;
+		const bool visibility_query = download.target_rect.width() == 1 && download.target_rect.height() == 1;
+		if (visibility_query && age < VISIBILITY_QUERY_LATENCY_FRAMES && !force)
+			break;
+
+		if (!download.texture->Poll())
+		{
+			if (age < MAX_PENDING_DOWNLOAD_FRAMES && !force)
+				break;
+
+			// Backend can't test completion (or the GPU is badly behind): retire it here on
+			// the GS thread rather than stalling the pipeline forever.
+			download.texture->Flush();
+		}
+		ready_count++;
+	}
+
+	while (ready_count > 0)
+	{
+		PendingDownload& download = m_pending_downloads.front();
+		const bool has_newer_snapshot = std::any_of(
+			std::next(m_pending_downloads.begin()),
+			std::next(m_pending_downloads.begin(), static_cast<ptrdiff_t>(ready_count)),
+			[&download](const PendingDownload& newer) {
+				return newer.tex0.U64 == download.tex0.U64 && newer.target_rect.eq(download.target_rect);
+			});
+
+		if (!has_newer_snapshot)
+			ApplyPendingDownload(download);
+
+		std::unique_ptr<GSDownloadTexture> completed_texture = std::move(download.texture);
+		m_pending_downloads.pop_front();
+		if (completed_texture && m_async_download_texture_pool.size() < MAX_PENDING_DOWNLOADS)
+			m_async_download_texture_pool.push_back(std::move(completed_texture));
+		ready_count--;
+	}
+}
+
+void GSTextureCache::DiscardPendingDownloads()
+{
+	m_pending_downloads.clear();
+	m_async_download_texture_pool.clear();
+}
+
 /*void GSTextureCache::InvalidateContainedTargets(u32 start_bp, u32 end_bp, u32 write_psm, u32 write_bw)
 {
 	const bool preserve_alpha = (GSLocalMemory::m_psm[write_psm].trbpp == 24);
@@ -4553,7 +4729,17 @@ void GSTextureCache::InvalidateContainedTargets(u32 start_bp, u32 end_bp, u32 wr
 				const u32 end_width = write_bw * 64;
 				const u32 end_height = ((end_page_offset / std::max(write_bw, 1U)) * GSLocalMemory::m_psm[write_psm].pgs.y) + GSLocalMemory::m_psm[write_psm].pgs.y;
 				const GSVector4i r = GSVector4i(0, 0, end_width, end_height);
-				const GSVector4i invalidate_r = TranslateAlignedRectByPage(t, start_bp, write_psm, write_bw, r, false).rintersect(t->m_valid); // it is invalidation but we need a real rect.
+				// ★ is_invalidation=TRUE. This used to pass false with the comment "it is invalidation
+				// but we need a real rect" — but when the source and destination page widths differ
+				// there IS no real rect: the source region is a staircase in destination space, so
+				// TranslateAlignedRectByPage bails and returns zero(). An empty invalidate_r then
+				// makes AddDirtyRectTarget below a no-op (a GS memory clear silently fails to
+				// invalidate the target it overlaps) and, when the dirty rect misses, lets control
+				// fall through to the delete path — destroying a target that was never read back.
+				// Passing true takes the conservative whole-row band instead: a SUPERSET, which is
+				// exactly what dirtying wants, and strictly safer than deleting. This is also the
+				// dominant emitter of the "Uneven pages mess up" spam.
+				const GSVector4i invalidate_r = TranslateAlignedRectByPage(t, start_bp, write_psm, write_bw, r, true).rintersect(t->m_valid);
 
 				if (offset == 0 || dirty_rect.rempty() || !dirty_rect.rintersect(invalidate_r).rempty())
 				{
@@ -4921,7 +5107,8 @@ void GSTextureCache::InvalidateVideoMem(const GSOffset& off, const GSVector4i& r
 // Goal: retrive the data from the GPU to the GS memory.
 // Called each time you want to read from the GS memory.
 // full_flush is set when it's a Local->Local stransfer and both src and destination are the same.
-void GSTextureCache::InvalidateLocalMem(const GSOffset& off, const GSVector4i& r, bool full_flush)
+void GSTextureCache::InvalidateLocalMem(
+	const GSOffset& off, const GSVector4i& r, bool full_flush, bool force_synchronous)
 {
 	const u32 bp = off.bp();
 	const u32 psm = off.psm();
@@ -4941,7 +5128,7 @@ void GSTextureCache::InvalidateLocalMem(const GSOffset& off, const GSVector4i& r
 	// Could be reading Z24/32 back as CT32 (Gundam Battle Assault 3)
 	if (GSLocalMemory::m_psm[psm].bpp >= 16)
 	{
-		if (GSConfig.HWDownloadMode > GSHardwareDownloadMode::EnabledForceFull)
+		if (!IsHardwareDownloadReadbackEnabled(GSConfig.HWDownloadMode))
 		{
 			DevCon.Error("TC: Skipping depth readback of %ux%u @ %u,%u", r.width(), r.height(), r.left, r.top);
 			return;
@@ -5050,7 +5237,7 @@ void GSTextureCache::InvalidateLocalMem(const GSOffset& off, const GSVector4i& r
 					if (t->m_TEX0.TBP0 == bp && !dirty_rect.rintersect(targetr).rempty())
 						t->Update();
 
-					Read(t, draw_rect);
+					Read(t, draw_rect, force_synchronous);
 
 					if (draw_rect.rintersect(t->m_drawn_since_read).eq(t->m_drawn_since_read))
 						t->m_drawn_since_read = GSVector4i::zero();
@@ -5211,7 +5398,7 @@ void GSTextureCache::InvalidateLocalMem(const GSOffset& off, const GSVector4i& r
 					}
 				}
 
-				if (GSConfig.HWDownloadMode > GSHardwareDownloadMode::EnabledForceFull)
+				if (!IsHardwareDownloadReadbackEnabled(GSConfig.HWDownloadMode))
 				{
 					DevCon.Error("TC: Skipping depth readback of %ux%u @ %u,%u", targetr.width(), targetr.height(), targetr.left, targetr.top);
 					continue;
@@ -5221,7 +5408,7 @@ void GSTextureCache::InvalidateLocalMem(const GSOffset& off, const GSVector4i& r
 				if (exact_bp && !dirty_rect.rintersect(targetr).rempty())
 					t->Update();
 
-				Read(t, targetr);
+				Read(t, targetr, force_synchronous);
 
 				// Try to cut down how much we read next, if we can.
 				// Fatal Frame reads in vertical strips, SOCOM 2 does horizontal, so we can handle that below.
@@ -5437,7 +5624,7 @@ bool GSTextureCache::Move(u32 SBP, u32 SBW, u32 SPSM, int sx, int sy, u32 DBP, u
 	// Make sure the copy doesn't go out of bounds (it shouldn't).
 	if ((scaled_dx + scaled_w) > dst->m_texture->GetWidth() || (scaled_dy + scaled_h) > dst->m_texture->GetHeight())
 		return false;
-	GL_CACHE("TC: HW Move after draw %lld 0x%x[BW:%u PSM:%s] to 0x%x[BW:%u PSM:%s] <%d,%d->%d,%d> -> <%d,%d->%d,%d>", GSState::s_n, SBP, SBW,
+	GL_CACHE("TC: HW Move after draw %lld 0x%x[BW:%u PSM:%s] to 0x%x[BW:%u PSM:%s] <%d,%d->%d,%d> -> <%d,%d->%d,%d>", GSRendererHW::GetInstance()->s_n, SBP, SBW,
 		GSUtil::GetPSMName(SPSM), DBP, DBW, GSUtil::GetPSMName(DPSM), sx, sy, sx + w, sy + h, dx, dy, dx + w, dy + h);
 
 	const bool cover_whole_target = dst->m_type == RenderTarget && GSVector4i(dx, dy, dx + w, dy + h).rintersect(dst->m_valid).eq(dst->m_valid);
@@ -5859,7 +6046,7 @@ GSVector2i GSTextureCache::GetTargetSize(u32 bp, u32 fbw, u32 psm, s32 min_width
 		}
 	}
 
-	DbgCon.WriteLn("TC: New size at %x %u %u: %ux%u draw %lld", bp, fbw, psm, min_width, min_height, GSState::s_n);
+	DbgCon.WriteLn("TC: New size at %x %u %u: %ux%u draw %lld", bp, fbw, psm, min_width, min_height, GSRendererHW::GetInstance()->s_n);
 	m_target_heights.push_front(search);
 	return GSVector2i(min_width, min_height);
 }
@@ -7036,6 +7223,7 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	if (it != m_hash_cache.end())
 	{
 		// super easy, cache hit. remove paltex if it's a replacement texture.
+		g_perfmon.Put(GSPerfMon::HashCacheHit, 1);
 		GL_CACHE("TC: HC Hit: %" PRIx64 " %" PRIx64 " R-%ux%u", key.TEX0Hash, key.CLUTHash, key.region_width, key.region_height);
 		HashCacheEntry* entry = &it->second;
 		paltex &= (entry->texture->GetFormat() == GSTexture::Format::UNorm8);
@@ -7044,6 +7232,7 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	}
 
 	// cache miss.
+	g_perfmon.Put(GSPerfMon::HashCacheMiss, 1);
 	GL_CACHE("TC: HC Miss: %" PRIx64 " %" PRIx64 " R-%ux%u", key.TEX0Hash, key.CLUTHash, key.region_width, key.region_height);
 
 	// check for a replacement texture with the full clut key
@@ -7215,8 +7404,7 @@ GSTextureCache::Target* GSTextureCache::Target::Create(GIFRegTEX0 TEX0, int w, i
 
 	const int scaled_w = static_cast<int>(std::ceil(static_cast<float>(w) * scale));
 	const int scaled_h = static_cast<int>(std::ceil(static_cast<float>(h) * scale));
-	GSTexture::Usage usage = type == RenderTarget ? GSTexture::FeedbackTarget :
-	                         (g_gs_device->Features().depth_feedback ? GSTexture::FeedbackDepth : GSTexture::DepthStencil);
+	GSTexture::Usage usage = type == RenderTarget ? GSTexture::FeedbackTarget : g_gs_device->GetDepthStencilUsage();
 	GSTexture::Format format = type == RenderTarget ? GSTexture::Format::Color : GSTexture::Format::DepthStencil;
 	GSTexture* texture = g_gs_device->FetchSurface(usage, scaled_w, scaled_h, 1, format, clear, PreferReusedLabelledTexture());
 	if (!texture)
@@ -7325,7 +7513,7 @@ std::shared_ptr<GSTextureCache::Palette> GSTextureCache::LookupPaletteObject(con
 	return m_palette_map.LookupPalette(clut, pal, need_gs_texture);
 }
 
-void GSTextureCache::Read(Target* t, const GSVector4i& r)
+void GSTextureCache::Read(Target* t, const GSVector4i& r, bool force_synchronous)
 {
 	if ((!t->m_dirty.empty() && !t->m_dirty.GetTotalRect(t->m_TEX0, t->m_unscaled_size).rintersect(r).rempty()) || r.width() == 0 || r.height() == 0)
 		return;
@@ -7393,10 +7581,67 @@ void GSTextureCache::Read(Target* t, const GSVector4i& r)
 
 	const GSVector4 src(GSVector4(r) * GSVector4(t->m_scale) / GSVector4(t->m_texture->GetSize()).xyxy());
 	const GSVector4i drc(0, 0, r.width(), r.height());
-	const bool direct_read = t->m_type == RenderTarget && t->m_scale == 1.0f && ps_shader == ShaderConvert::COPY;
+
+	// A 16-bit color readback at native scale doesn't need the GPU format-convert pass:
+	// copy the RGBA8 target directly and pack to RGB5A1 on the CPU below. The StretchRect
+	// pass otherwise sits inside the synchronous readback window (submit -> fence wait),
+	// where a whole extra render pass costs far more than packing a small rect on the CPU
+	// (games that read back every frame pay it 3+ times per frame, e.g. OutRun 2006).
+	const bool cpu_convert_rgb5a1 = ps_shader == ShaderConvert::RGB5A1_TO_16_BITS &&
+		t->m_type == RenderTarget && t->m_scale == 1.0f &&
+		t->m_texture->GetFormat() == GSTexture::Format::Color;
+	if (cpu_convert_rgb5a1)
+	{
+		fmt = GSTexture::Format::Color;
+		dltex = &m_color_download_texture;
+	}
+
+	const bool direct_read =
+		(t->m_type == RenderTarget && t->m_scale == 1.0f && ps_shader == ShaderConvert::COPY) || cpu_convert_rgb5a1;
+
+	// GSHardwareDownloadMode::Asynchronous: issue the copy into a throwaway staging texture
+	// and retire it at a later VSync, so nothing here ever waits on a fence.
+	const bool asynchronous = !force_synchronous &&
+		GSConfig.HWDownloadMode == GSHardwareDownloadMode::Asynchronous &&
+		g_gs_renderer->IsAsyncReadbackReady();
+	std::unique_ptr<GSDownloadTexture> asynchronous_dltex;
+	if (asynchronous)
+	{
+		if (m_pending_downloads.size() >= MAX_PENDING_DOWNLOADS)
+		{
+			// Keep the already-issued copies alive until their fences complete: dropping an
+			// incoming snapshot is safer than destroying an in-flight staging allocation, and
+			// it must never degrade back into a blocking readback when the GPU falls behind.
+			return;
+		}
+
+		// Only recycle a staging texture of the same format — PrepareDownloadTexture() sizes
+		// but does not re-format, so a mismatched buffer would be read with the wrong pitch.
+		for (auto it = m_async_download_texture_pool.begin(); it != m_async_download_texture_pool.end(); ++it)
+		{
+			if ((*it)->GetFormat() != fmt)
+				continue;
+
+			asynchronous_dltex = std::move(*it);
+			m_async_download_texture_pool.erase(it);
+			break;
+		}
+
+		dltex = &asynchronous_dltex;
+	}
 
 	if (!PrepareDownloadTexture(drc.z, drc.w, fmt, dltex))
 		return;
+
+	// PrepareDownloadTexture() reports success even when CreateDownloadTexture() returned
+	// null (it null-checks the pointer-to-unique_ptr, not the unique_ptr). Don't let that
+	// put a null texture into the pending queue, where Poll() would dereference it.
+	if (asynchronous && !asynchronous_dltex)
+		return;
+
+	// Per-frame readback patterns (occlusion tests etc.) redraw the same target before
+	// each read; let the backend schedule submissions around the next producing draw.
+	g_gs_device->HintReadbackSource(t->m_texture);
 
 	if (direct_read)
 	{
@@ -7418,33 +7663,84 @@ void GSTextureCache::Read(Target* t, const GSVector4i& r)
 		}
 	}
 
+	if (asynchronous)
+	{
+		m_pending_downloads.push_back({std::move(asynchronous_dltex), TEX0, drc, r, write_mask,
+			static_cast<u64>(g_perfmon.GetFrame()), cpu_convert_rgb5a1,
+			g_gs_renderer->CaptureAsyncReadbackPageGenerations()});
+		return;
+	}
+
 	dltex->get()->Flush();
 	if (!dltex->get()->Map(drc))
 		return;
 
 	// Why does WritePixelNN() not take a const pointer?
-	const GSOffset off = g_gs_renderer->m_mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM);
 	u8* bits = const_cast<u8*>(dltex->get()->GetMapPointer());
 	const u32 pitch = dltex->get()->GetMapPitch();
 
-	switch (TEX0.PSM)
+	std::vector<u16> packed;
+	if (cpu_convert_rgb5a1)
 	{
-		case PSMCT32:
-		case PSMZ32:
-		case PSMCT24:
-		case PSMZ24:
-			g_gs_renderer->m_mem.WritePixel32(bits, pitch, off, r, write_mask);
-			break;
-		case PSMCT16:
-		case PSMCT16S:
-		case PSMZ16:
-		case PSMZ16S:
-			g_gs_renderer->m_mem.WritePixel16(bits, pitch, off, r);
-			break;
+		// Bit-identical to ps_convert_rgb5a1_16bits: the shader truncates each
+		// unorm channel back to its byte and packs (r&0xF8)>>3 | (g&0xF8)<<2 |
+		// (b&0xF8)<<7 | (a&0x80)<<8; here c already holds those bytes.
+		const u32 w = static_cast<u32>(drc.z);
+		const u32 h = static_cast<u32>(drc.w);
+		packed.resize(static_cast<size_t>(w) * h);
+		for (u32 y = 0; y < h; y++)
+		{
+			const u32* src_px = reinterpret_cast<const u32*>(bits + y * pitch);
+			u16* dst_px = &packed[static_cast<size_t>(y) * w];
+			for (u32 x = 0; x < w; x++)
+			{
+				const u32 c = src_px[x];
+				dst_px[x] = static_cast<u16>(
+					((c >> 3) & 0x001Fu) | ((c >> 6) & 0x03E0u) | ((c >> 9) & 0x7C00u) | ((c >> 16) & 0x8000u));
+			}
+		}
+	}
 
-		default:
-			Console.Error("Unknown PSM %u on Read", TEX0.PSM);
-			break;
+	const auto write_download = [&](GSLocalMemory& local_mem) {
+		const GSOffset off = local_mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM);
+		switch (TEX0.PSM)
+		{
+			case PSMCT32:
+			case PSMZ32:
+			case PSMCT24:
+			case PSMZ24:
+				local_mem.WritePixel32(bits, pitch, off, r, write_mask);
+				break;
+			case PSMCT16:
+			case PSMCT16S:
+			case PSMZ16:
+			case PSMZ16S:
+				if (cpu_convert_rgb5a1)
+				{
+					local_mem.WritePixel16(reinterpret_cast<u8*>(packed.data()),
+						static_cast<u32>(drc.z) * sizeof(u16), off, r);
+				}
+				else
+				{
+					local_mem.WritePixel16(bits, pitch, off, r);
+				}
+				break;
+
+			default:
+				Console.Error("Unknown PSM %u on Read", TEX0.PSM);
+				break;
+		}
+	};
+
+	write_download(g_gs_renderer->m_mem);
+
+	// A forced-synchronous read under Asynchronous mode is authoritative too: publish it and
+	// bump the page generations so an older in-flight download can't overwrite it later.
+	if (GSConfig.HWDownloadMode == GSHardwareDownloadMode::Asynchronous && g_gs_renderer->IsAsyncReadbackReady())
+	{
+		const std::lock_guard lock(g_gs_renderer->GetAsyncReadbackMutex());
+		write_download(g_gs_renderer->GetAsyncReadbackMemory());
+		g_gs_renderer->MarkAsyncReadbackPagesWrittenLocked(TEX0, r);
 	}
 
 	dltex->get()->Unmap();

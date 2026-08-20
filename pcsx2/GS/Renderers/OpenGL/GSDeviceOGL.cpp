@@ -4,8 +4,10 @@
 #include "GS/Renderers/OpenGL/GLContext.h"
 #include "GS/Renderers/OpenGL/GSDeviceOGL.h"
 #include "GS/Renderers/OpenGL/GLState.h"
+#include "GS/Renderers/Common/GSFramebufferFetchPolicy.h"
 #include "GS/Renderers/Common/GSGPUProfile.h"
 #include "GS/GSState.h"
+#include "GS/Renderers/Common/GSRenderer.h"
 #include "GS/GSGL.h"
 #include "GS/GSPerfMon.h"
 #include "GS/GSUtil.h"
@@ -782,11 +784,16 @@ bool GSDeviceOGL::CheckFeatures()
 
 	bool vendor_id_mali = false;
 	bool vendor_id_adreno = false;
+	bool vendor_id_apple = false;
 
 	const char* vendor_raw = (const char*)glGetString(GL_VENDOR);
 	const char* renderer_raw = (const char*)glGetString(GL_RENDERER);
+	const char* gl_version_raw = (const char*)glGetString(GL_VERSION);
 	const char* vendor_str = vendor_raw ? vendor_raw : "";
 	const char* renderer_str = renderer_raw ? renderer_raw : "";
+	// GL_VERSION is the only place the GLES stack names its own build ("OpenGL ES 3.2 v1.r44p1-...",
+	// "... V@0502", "... build 1.9@4850625"), so it is what the driver-profile resolver parses.
+	const char* gl_version_str = gl_version_raw ? gl_version_raw : "";
 
 	if (std::strstr(vendor_str, "Advanced Micro Devices") || std::strstr(vendor_str, "ATI Technologies Inc.") ||
 		std::strstr(vendor_str, "ATI"))
@@ -815,6 +822,18 @@ bool GSDeviceOGL::CheckFeatures()
 		Console.WriteLn(Color_Cyan, "GL: Qualcomm Adreno GPU detected.");
 		vendor_id_adreno = true;
 	}
+	// Matched on the renderer, not the vendor: Apple silicon reports the vendor of whoever
+	// wrote the driver ("Mesa" under Asahi, "Apple Inc." on macOS), while an Intel Mac reports
+	// vendor "Apple Inc." with an AMD or Intel GPU. The renderer names the actual GPU.
+	//
+	// Apple silicon is a TBDR, but it is not a mobile-vendor part and must not inherit their
+	// workarounds — detected explicitly so it resolves to its own profile instead of falling
+	// through to the old not-Mali-therefore-Adreno guess.
+	else if (std::strstr(renderer_str, "Apple"))
+	{
+		Console.WriteLn(Color_StrongCyan, "GL: Apple GPU detected.");
+		vendor_id_apple = true;
+	}
 
 #if defined(__ANDROID__)
 	// ANGLE (GLES-on-Vulkan) reports the underlying GPU in GL_RENDERER, e.g.
@@ -824,21 +843,50 @@ bool GSDeviceOGL::CheckFeatures()
 	// regressed FPS on Mali-G615). The Mali-G77 crash under ANGLE was NOT these hacks but stale
 	// program binaries from the native driver being fed to ANGLE's glProgramBinary(); that is
 	// fixed at the source in GLShaderCache (driver-keyed cache), so no per-GPU profile gating here.
-	const GpuProfileSelection profile_selection =
-		GpuProfileDetector::Resolve(GSConfig.AndroidGpuProfileOverride, vendor_str, renderer_str);
+	//
+	// The driver context below feeds the driver-bug database (ported from EmuCoreX/sashkinbro with
+	// his approval). GL has no equivalent of VkPhysicalDeviceDriverProperties, so the renderer and
+	// version strings are all the identity there is; the resolver parses the vendor-specific build
+	// tag out of them. Nothing here changes behaviour on its own — every workaround it can turn on
+	// is off unless a rule matches this exact driver.
+	MobileDriverContext driver_context;
+	driver_context.api = MobileGpuApi::OpenGL;
+	driver_context.driver_name = renderer_str;
+	driver_context.api_version_string = gl_version_str;
+	const GpuProfileSelection profile_selection = GpuProfileDetector::Resolve(
+		GSConfig.AndroidGpuProfileOverride, vendor_str, renderer_str, driver_context);
 	SetRuntimeGPUProfile(profile_selection.runtime_profile);
 	SetMobileGPUIdentity(profile_selection.gpu);
 	SetMobileGSTuning(profile_selection.gs_tuning);
+	SetMobileDriverProfile(profile_selection.driver);
 	SetMediaTekSoC(profile_selection.is_mediatek_soc);
-	Console.WriteLn("GL: GPU profile override='%s' resolved='%s'.",
+	Console.WriteLn("GL: GPU profile override='%s' resolved='%s' driver='%s' version=%u.%u.%u.%u "
+					"rules=%u bugs=%016llx workarounds=%016llx.",
 		GpuProfileDetector::OverrideToConfigString(profile_selection.override_mode),
-		GpuProfileDetector::RuntimeProfileToString(profile_selection.runtime_profile));
+		GpuProfileDetector::RuntimeProfileToString(profile_selection.runtime_profile),
+		GpuProfileDetector::DriverToString(profile_selection.driver.driver),
+		static_cast<unsigned>(profile_selection.driver.version.major),
+		static_cast<unsigned>(profile_selection.driver.version.minor),
+		static_cast<unsigned>(profile_selection.driver.version.patch),
+		static_cast<unsigned>(profile_selection.driver.version.build),
+		static_cast<unsigned>(profile_selection.driver.matched_rule_count),
+		static_cast<unsigned long long>(profile_selection.driver.bugs),
+		static_cast<unsigned long long>(profile_selection.driver.workarounds));
 	DevCon.WriteLn("GL: GPU profile hints: %s", profile_selection.hints.c_str());
 	bool use_mali_profile = IsMaliGPUProfile();
 	bool use_adreno_profile = IsAdrenoGPUProfile();
 	bool use_powervr_profile = IsPowerVRGPUProfile();
 #else
-	SetRuntimeGPUProfile(vendor_id_mali ? RuntimeGpuProfile::Mali : RuntimeGpuProfile::Adreno);
+	// ★ Was `vendor_id_mali ? Mali : Adreno`, which claimed ADRENO for every non-Mali desktop GPU —
+	// NVIDIA, AMD, Intel and Apple Silicon all identified as Adreno. The locals below were already
+	// correct (real per-vendor detection), so only the member misfired, which is why it hid: it
+	// surfaced as Adreno-only workarounds engaging on an M2 (reported by bmd: "GL: Adreno - routing
+	// depth feedback through the depth sampler"). Mirror the locals instead of guessing, and fall
+	// back to Unknown — desktop GPUs are not tilers and want none of the mobile vendor paths.
+	SetRuntimeGPUProfile(vendor_id_mali    ? RuntimeGpuProfile::Mali :
+						 vendor_id_adreno  ? RuntimeGpuProfile::Adreno :
+						 vendor_id_apple   ? RuntimeGpuProfile::Apple :
+											 RuntimeGpuProfile::Unknown);
 	bool use_mali_profile = vendor_id_mali;
 	bool use_adreno_profile = vendor_id_adreno;
 	bool use_powervr_profile = false;
@@ -857,7 +905,7 @@ bool GSDeviceOGL::CheckFeatures()
 
 	// Log extension string for debugging purposes.
 	Console.WriteLn(fmt::format("GL_VENDOR: {}", reinterpret_cast<const char*>(glGetString(GL_VENDOR))));
-	Console.WriteLn(fmt::format("GL_VERSION: {}", reinterpret_cast<const char*>(glGetString(GL_VERSION))));
+	Console.WriteLn(fmt::format("GL_VERSION: {}", gl_version_str));
 	Console.WriteLn(fmt::format("GL_RENDERER: {}", reinterpret_cast<const char*>(glGetString(GL_RENDERER))));
 	Console.WriteLn(fmt::format(
 		"GL_SHADING_LANGUAGE_VERSION: {}", reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION))));
@@ -987,18 +1035,64 @@ bool GSDeviceOGL::CheckFeatures()
 	m_features.broken_point_sampler = false;
 	m_features.primitive_id = true;
 
+	// Apple GPUs miscompare depth written from the shader (the PS2 32-bit Z floor) against the
+	// fixed-function interpolation a later read-only pass tests with, so a GEQUAL retest of the
+	// same geometry drops out along shared triangle edges and the layer underneath shows through
+	// as pinpoints -- God of War II's Athena statue, and dark walls in Black. Reproduces here
+	// identically under GL and Vulkan (748 stray pixels either way), so it is the GPU, not the
+	// API. See the matching gate in GSDeviceVK::CheckFeatures for the measurements. Mali is
+	// deliberately not included: the Vulkan path opts it out for early-ZS, but that has not been
+	// tested on a Mali GL driver.
+	m_features.no_ps2_z_quantization = GSConfig.DisablePS2DepthQuantization || vendor_id_apple;
+
 	// GLES may omit dual-source blending (GL_EXT/ARB_blend_func_extended); desktop GL always has it.
 	// When absent, GSRendererHW emulates SRC1 blend equations in-shader per-draw rather than forcing
 	// a global high blending-accuracy level (Mali no longer needs Blending=Max). From sashkinbro/EmuCoreX.
 	m_features.dual_source_blend =
 		!m_is_gles || GLAD_GL_EXT_blend_func_extended || GLAD_GL_ARB_blend_func_extended;
 
-	m_features.framebuffer_fetch = (GLAD_GL_ARM_shader_framebuffer_fetch || GLAD_GL_EXT_shader_framebuffer_fetch);
-	if (m_features.framebuffer_fetch && GSConfig.DisableFramebufferFetch)
+	// The framebuffer-fetch decision is made ONCE, here, by DecideGLFramebufferFetch (see
+	// GSFramebufferFetchPolicy.h for why it is a separate pure function). Nothing below may write
+	// m_features.framebuffer_fetch -- read `fbfetch` instead if you need to know what was decided.
+	//
+	// Which drivers cannot survive the in-tile read is a fact about the DRIVER, so it lives in the
+	// driver-bug database with the rest of them rather than in a substring test here.
+	// UseRenderTargetCopyForFeedback is the same workaround the Vulkan backend keys its RT-copy
+	// fallback on -- fetch and the texture barrier are two spellings of one in-tile read, so a
+	// driver that fails the read fails both, and one bit answers for both APIs. Note that no GL
+	// rule sets it today: the r44p1 GL rule was deliberately lifted (2.6.6.4 field evidence beat
+	// the MGS3 corruption report -- the full account sits above the GL rules in
+	// GSGPUDriverProfile.cpp), while r44p1's Vulkan rule remains because there the read is a
+	// device loss, and on Vulkan the RT copy is an ordinary image copy rather than a tile flush.
+	//
+	// This replaced a hand-rolled search for "r44p1" in GL_VERSION. The database matches a PARSED
+	// driver revision instead, which is what lets a rule say "exactly r44p1" rather than "contains
+	// r44p1" -- and what would let the next bad blob be a table row. gs_gpu_driver_profile_tests
+	// pins the real device string through the resolver, because a rule that silently matches
+	// nothing would put the device straight back on the faulting path with no diagnostic.
+	const bool fbfetch_driver_blocklisted =
+		GetMobileDriverProfile().UsesWorkaround(DriverWorkaround::UseRenderTargetCopyForFeedback);
+	const GSFramebufferFetchDecision fbfetch = DecideGLFramebufferFetch(GLAD_GL_ARM_shader_framebuffer_fetch,
+		GLAD_GL_EXT_shader_framebuffer_fetch, GLAD_GL_EXT_shader_pixel_local_storage, fbfetch_driver_blocklisted,
+		GSConfig.DisableFramebufferFetch, use_mali_profile);
+	m_features.framebuffer_fetch = fbfetch.enabled;
+	// Whether fetch also orders overlapping primitives within one draw is a property of the
+	// extension, not of the API: ARM's guarantees it by spec and EXT's does not (see
+	// FbFetchOrdersOverlappingPrims). Blanket-false here is what put every Mali device on a
+	// per-primitive split draw for overlapping blends in 2.6.6.5.
+	m_features.framebuffer_fetch_orders_overlap = FbFetchOrdersOverlappingPrims(fbfetch.backend);
+
+	switch (fbfetch.veto)
 	{
-		Host::AddOSDMessage(
-			"Framebuffer fetch was found but is disabled. This will reduce performance.", Host::OSD_ERROR_DURATION);
-		m_features.framebuffer_fetch = false;
+		case GSFramebufferFetchVeto::DriverBlocklist:
+			Console.WriteLn("Mali r44p1: disabling framebuffer fetch (GL context-lost workaround; matches the Vulkan gate).");
+			break;
+		case GSFramebufferFetchVeto::UserSetting:
+			Host::AddOSDMessage(
+				"Framebuffer fetch was found but is disabled. This will reduce performance.", Host::OSD_ERROR_DURATION);
+			break;
+		default:
+			break;
 	}
 
 	if (GSConfig.OverrideTextureBarriers == 0)
@@ -1019,7 +1113,27 @@ bool GSDeviceOGL::CheckFeatures()
 		m_features.multidraw_fb_copy = false;
 	}
 	else
+	{
 		m_features.texture_barrier = m_features.framebuffer_fetch || GLAD_GL_ARB_texture_barrier || GLAD_GL_NV_texture_barrier;
+
+		// Pick the blend fallback's shape now that we know whether there is a barrier. GLES always
+		// arrives here with multidraw_fb_copy set (there is no ARB/NV texture barrier), and on a
+		// device where fetch is also off -- the r44p1 blocklist, the user's setting, or simply no
+		// fetch extension -- that leaves the per-primitive render-target copy as the blend path,
+		// which on a tiler means a tile flush and resolve per primitive group. See
+		// GLUsesPerPrimitiveFbCopy for the measurement; the short version is 0.33 fps.
+		//
+		// Only the auto path decides this. Both OverrideTextureBarriers branches above already
+		// clear the flag themselves, and Force Disabled in particular must keep clearing it on
+		// desktop too -- the user asked for no barriers, not for a different kind of copy.
+		m_features.multidraw_fb_copy = GLUsesPerPrimitiveFbCopy(m_features.texture_barrier, m_is_gles);
+		if (!m_features.texture_barrier && !m_features.multidraw_fb_copy)
+		{
+			Console.WriteLn("GL: no texture barrier and no framebuffer fetch — accurate blending reads the "
+							"render target from a per-draw copy (the per-primitive copy costs a tile flush "
+							"per primitive on a tiler).");
+		}
+	}
 
 	m_features.provoking_vertex_last = true;
 	m_features.dxt_textures = GLAD_GL_EXT_texture_compression_s3tc;
@@ -1070,6 +1184,16 @@ bool GSDeviceOGL::CheckFeatures()
 	if (use_mali_profile || use_adreno_profile || use_powervr_profile)
 		m_features.prefer_new_textures = true;
 
+#if defined(__ANDROID__)
+	// Narrows the profile-driven choice above with the per-model tuning; deliberately an
+	// AND rather than an assignment, so a part whose table entry says "reuse" cannot turn
+	// preference back on for a profile that did not want it. sashkinbro/EmuCoreX.
+	m_features.prefer_new_textures &= GetMobileGSTuning().prefer_new_textures;
+	// See the matching note in GSDeviceVK::CheckFeatures: the forced downgrade of Texture
+	// Preloading to Partial is gone. It overrode an explicit user setting, applied to every
+	// unrecognised GPU via the conservative fallback, and depended on device-recreation ordering.
+#endif
+
 	if (use_mali_profile)
 	{
 		// Mali path prefers ARM_shader_framebuffer_fetch (gl_LastFragColorARM) because
@@ -1077,15 +1201,23 @@ bool GSDeviceOGL::CheckFeatures()
 		// device was force-overridden to Mali but lacks ARM fbfetch (rare but
 		// possible), demote to PowerVR profile which uses the same EXT/PLS path the
 		// catch-all default uses.
-		if (GLAD_GL_ARM_shader_framebuffer_fetch)
+		//
+		// ⚠️ This block must NOT re-enable framebuffer fetch, and nothing here may write
+		// m_features.framebuffer_fetch. It used to set it unconditionally true off the raw
+		// GLAD_GL_ARM_shader_framebuffer_fetch extension rather than the decision made ~100 lines
+		// above, which resurrected fetch after both the r44p1 driver guard and the user's
+		// DisableFramebufferFetch setting -- so on Mali GL there was no way to turn fetch off at
+		// all. Demotion stays keyed on the extension because that is what it has always meant (a
+		// Mali profile that cannot reach the ARM shader path is on the wrong profile), but fetch
+		// being switched off is a blend-path choice, not a reason to change profile.
+		if (!fbfetch.demote_mali_to_powervr)
 		{
 			Console.WriteLn(Color_Yellow, "GL: Applying Mali-specific optimizations for tile-based rendering.");
-			m_features.framebuffer_fetch = true;
-			if (GSConfig.OverrideTextureBarriers == -1)
-			{
-				m_features.texture_barrier = m_features.framebuffer_fetch;
+			// texture_barrier already reflects the fetch decision: on GLES the ARB/NV barrier
+			// extensions are absent, so the Auto branch above resolves to exactly
+			// framebuffer_fetch. Nothing left to override here -- only to report.
+			if (m_features.framebuffer_fetch && GSConfig.OverrideTextureBarriers == -1)
 				Console.WriteLn("GL: Mali optimization - using ARM framebuffer fetch over texture barriers.");
-			}
 		}
 		else
 		{
@@ -1140,29 +1272,25 @@ bool GSDeviceOGL::CheckFeatures()
 	}
 
 	{
-		const bool has_arm_fetch = GLAD_GL_ARM_shader_framebuffer_fetch;
-		const bool has_ext_fetch = GLAD_GL_EXT_shader_framebuffer_fetch;
-		const bool has_pls_fetch = GLAD_GL_EXT_shader_pixel_local_storage;
 		Console.WriteLn("GL: Framebuffer fetch extension caps: arm=%d ext=%d pls=%d.",
-			has_arm_fetch ? 1 : 0, has_ext_fetch ? 1 : 0, has_pls_fetch ? 1 : 0);
+			GLAD_GL_ARM_shader_framebuffer_fetch ? 1 : 0, GLAD_GL_EXT_shader_framebuffer_fetch ? 1 : 0,
+			GLAD_GL_EXT_shader_pixel_local_storage ? 1 : 0);
 
 		const char* active_profile_name = use_mali_profile ? "Mali" :
 			(use_powervr_profile ? "PowerVR" :
 			(use_adreno_profile ? "Adreno" : "Generic"));
-		const char* active_fetch_backend = "None";
-		if (m_features.framebuffer_fetch)
-		{
-			if (use_mali_profile)
-				active_fetch_backend = "ARM";
-			else if (has_ext_fetch || has_pls_fetch)
-				active_fetch_backend = "EXT/PLS";
-			else if (has_arm_fetch)
-				active_fetch_backend = "ARM";
-		}
-		Console.WriteLn("GL: Active framebuffer fetch backend (%s profile): %s.", active_profile_name, active_fetch_backend);
-
-		if (use_mali_profile && !has_arm_fetch)
-			Console.Warning("GL: Mali profile selected but ARM framebuffer fetch is unavailable; using non-fetch fallback.");
+		const char* active_fetch_backend =
+			(fbfetch.backend == GSFramebufferFetchBackend::ARM) ? "ARM" :
+			((fbfetch.backend == GSFramebufferFetchBackend::EXT) ? "EXT/PLS" : "None");
+		// The reason rides on the same line as the verdict, deliberately: the resurrection bug
+		// this policy replaced printed "disabling framebuffer fetch" and "backend: ARM" a tenth of
+		// a millisecond apart, and neither line said what had decided it.
+		const char* fetch_veto_reason =
+			(fbfetch.veto == GSFramebufferFetchVeto::NoExtension) ? " (no fetch extension)" :
+			((fbfetch.veto == GSFramebufferFetchVeto::DriverBlocklist) ? " (blocked for this driver build)" :
+			((fbfetch.veto == GSFramebufferFetchVeto::UserSetting) ? " (disabled in settings)" : ""));
+		Console.WriteLn("GL: Active framebuffer fetch backend (%s profile): %s%s.", active_profile_name,
+			active_fetch_backend, fetch_veto_reason);
 	}
 
 	if (GLAD_GL_ARB_shader_storage_buffer_object)
@@ -1277,8 +1405,11 @@ void GSDeviceOGL::DestroyResources()
 	m_vertex_push_constants_stream_buffer.reset();
 
 	glBindVertexArray(0);
-	if (m_expand_ibo != 0)
-		glDeleteVertexArrays(1, &m_expand_ibo);
+	// Delete the expand VAO here (not m_expand_ibo, which is a buffer object and is
+	// correctly freed with glDeleteBuffers below). The old code deleted m_expand_ibo
+	// as a VAO — a no-op — so m_expand_vao leaked on every device teardown/recreate.
+	if (m_expand_vao != 0)
+		glDeleteVertexArrays(1, &m_expand_vao);
 	if (m_vao != 0)
 		glDeleteVertexArrays(1, &m_vao);
 	if (m_dummy_vao != 0)
@@ -1373,7 +1504,7 @@ std::string GSDeviceOGL::GetDriverInfo() const
 		"OpenGL Context:\n{}\n{} {}\nGLSL: {}", gl_version, gl_vendor, gl_renderer, gl_shading_language_version);
 }
 
-GSDevice::PresentResult GSDeviceOGL::BeginPresent(bool frame_skip)
+GSDevice::PresentResult GSDeviceOGL::DoBeginPresent(bool frame_skip)
 {
 	if (frame_skip || m_window_info.type == WindowInfo::Type::Surfaceless)
 		return PresentResult::FrameSkipped;
@@ -1640,7 +1771,7 @@ bool GSDeviceOGL::SetGPUPipelineStatisticsEnabled(bool enabled)
 	else
 		DestroyPipelineStatisticsQueries();
 
-	return true;
+	return (enabled == m_gpu_pipeline_statistics_enabled);
 }
 
 void GSDeviceOGL::DrawPrimitive()
@@ -1993,6 +2124,21 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 	header += fmt::format("#define GPU_PROFILE_POWERVR {}\n", IsPowerVRGPUProfile() ? 1 : 0);
 	header += fmt::format("#define HAS_ARM_DEPTH_FETCH {}\n", m_arm_depth_fetch ? 1 : 0);
 
+	// Shader-compiler workarounds from the driver-bug database (ported from EmuCoreX/sashkinbro
+	// with his approval). Each one is off unless a rule matched this exact driver, so the emitted
+	// GLSL is byte-identical to before on anything the database does not know about.
+	//
+	// ScalarizeVectorBitwiseAnd additionally keeps the pre-existing IsMaliGPUProfile() gate: this
+	// tree has scalarized vector ANDs on every Mali GL profile since the original fix, including
+	// Mali reached through ANGLE or Panfrost where the database resolves a non-ARM driver and would
+	// otherwise match nothing. Widening only, never narrowing — nobody loses a fix they had.
+	header += fmt::format("#define DRIVER_SCALARIZE_VECTOR_BITWISE_AND {}\n",
+		(UsesMobileDriverWorkaround(DriverWorkaround::ScalarizeVectorBitwiseAnd) || IsMaliGPUProfile()) ? 1 : 0);
+	header += fmt::format("#define DRIVER_REWRITE_BOOLEAN_NEGATION {}\n",
+		UsesMobileDriverWorkaround(DriverWorkaround::RewriteBooleanNegation) ? 1 : 0);
+	header += fmt::format("#define DRIVER_STORE_BITWISE_NEGATION_IN_TEMPORARY {}\n",
+		UsesMobileDriverWorkaround(DriverWorkaround::StoreBitwiseNegationInTemporary) ? 1 : 0);
+
 	if (GLAD_GL_ARB_conservative_depth)
 	{
 		header += "#extension GL_ARB_conservative_depth : enable\n";
@@ -2048,6 +2194,66 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 	}
 
 	header += macro;
+
+	// Emitted last, after every #extension directive above: GLSL requires those to precede any
+	// non-preprocessor token, and these are real function definitions. The bodies come straight
+	// from EmuCoreX so the .glsl call sites stay identical between the two trees.
+	header += R"(
+bool gpu_boolean_not(bool value)
+{
+#if DRIVER_REWRITE_BOOLEAN_NEGATION
+	return value == false;
+#else
+	return !value;
+#endif
+}
+
+uvec2 gpu_bitwise_and(uvec2 a, uvec2 b)
+{
+#if DRIVER_SCALARIZE_VECTOR_BITWISE_AND
+	return uvec2(a.x & b.x, a.y & b.y);
+#else
+	return a & b;
+#endif
+}
+
+uvec3 gpu_bitwise_and(uvec3 a, uvec3 b)
+{
+#if DRIVER_SCALARIZE_VECTOR_BITWISE_AND
+	return uvec3(a.x & b.x, a.y & b.y, a.z & b.z);
+#else
+	return a & b;
+#endif
+}
+
+uvec4 gpu_bitwise_and(uvec4 a, uvec4 b)
+{
+#if DRIVER_SCALARIZE_VECTOR_BITWISE_AND
+	return uvec4(a.x & b.x, a.y & b.y, a.z & b.z, a.w & b.w);
+#else
+	return a & b;
+#endif
+}
+
+ivec3 gpu_bitwise_and(ivec3 a, ivec3 b)
+{
+#if DRIVER_SCALARIZE_VECTOR_BITWISE_AND
+	return ivec3(a.x & b.x, a.y & b.y, a.z & b.z);
+#else
+	return a & b;
+#endif
+}
+
+uvec4 gpu_bitwise_not(uvec4 value)
+{
+#if DRIVER_STORE_BITWISE_NEGATION_IN_TEMPORARY
+	uvec4 result = ~value;
+	return result;
+#else
+	return ~value;
+#endif
+}
+)";
 
 	return header;
 }
@@ -2126,6 +2332,7 @@ std::string GSDeviceOGL::GetPSSource(const PSSelector& sel)
 		+ fmt::format("#define PS_SCANMSK {}\n", sel.scanmsk)
 		+ fmt::format("#define PS_NO_COLOR {}\n", sel.no_color)
 		+ fmt::format("#define PS_NO_COLOR1 {}\n", sel.no_color1)
+		+ fmt::format("#define PS_BLEND_FACTOR_IN_ALPHA {}\n", sel.blend_factor_in_alpha)
 		+ fmt::format("#define PS_ZTST {}\n", sel.ztst)
 		+ fmt::format("#define PS_AA1 {}\n", static_cast<u32>(sel.aa1))
 		+ fmt::format("#define PS_ABE {}\n", sel.abe)
@@ -2166,12 +2373,12 @@ void GSDeviceOGL::BlitRect(GSTexture* sTex, const GSVector4i& r, const GSVector2
 }
 
 // Copy a sub part of a texture into another
-void GSDeviceOGL::CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY)
+void GSDeviceOGL::DoCopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY)
 {
 	// Empty rect, abort copy.
 	if (r.rempty())
 	{
-		GL_INS("GL: CopyRect rect empty.");
+		GL_INS("GL: DoCopyRect rect empty.");
 		return;
 	}
 
@@ -2191,7 +2398,7 @@ void GSDeviceOGL::CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r
 	}
 
 	g_perfmon.Put(GSPerfMon::TextureCopies, 1);
-	GL_PUSH("CopyRect from %d to %d", sid, did);
+	GL_PUSH("DoCopyRect from %d to %d", sid, did);
 
 	// Commit destination clear if partially overwritten (color only).
 	if (dTex->GetState() == GSTexture::State::Cleared && !full_draw_copy)
@@ -2332,7 +2539,7 @@ void GSDeviceOGL::PresentRect(GSTexture* sTex, const GSVector4& sRect, GSTexture
 	DrawStretchRect(flip_sr, dRect, ds);
 }
 
-void GSDeviceOGL::UpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize)
+void GSDeviceOGL::DoUpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize)
 {
 	CommitClear(sTex, false);
 
@@ -2354,7 +2561,7 @@ void GSDeviceOGL::UpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, 
 	DrawStretchRect(GSVector4::zero(), dRect, dTex->GetSize());
 }
 
-void GSDeviceOGL::ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM)
+void GSDeviceOGL::DoConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM)
 {
 	CommitClear(sTex, false);
 
@@ -2378,7 +2585,7 @@ void GSDeviceOGL::ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 off
 	DrawStretchRect(GSVector4::zero(), dRect, dTex->GetSize());
 }
 
-void GSDeviceOGL::FilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect)
+void GSDeviceOGL::DoFilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect)
 {
 	CommitClear(sTex, false);
 
@@ -2428,7 +2635,7 @@ void GSDeviceOGL::DrawStretchRect(const GSVector4& sRect, const GSVector4& dRect
 	DrawPrimitive();
 }
 
-void GSDeviceOGL::DrawMultiStretchRects(
+void GSDeviceOGL::DoDrawMultiStretchRects(
 	const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader)
 {
 	shader = shader.SetMask(); // Mask is handled separately from program.
@@ -3095,6 +3302,11 @@ bool GSDeviceOGL::DoCAS(GSTexture* sTex, GSTexture* dTex, bool sharpen_only, con
 	const int dispatchY = (dTex->GetHeight() + (threadGroupWorkRegionDim - 1)) / threadGroupWorkRegionDim;
 	glDispatchCompute(dispatchX, dispatchY, 1);
 
+	// dTex is written through an image binding, but the caller turns straight around and
+	// samples it for the present blit. Image stores are incoherent without an explicit
+	// barrier, so the fetch is otherwise free to observe the pre-dispatch contents.
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_TEXTURE_FETCH_BARRIER_BIT);
+
 	return true;
 }
 
@@ -3480,7 +3692,7 @@ static constexpr std::array<GLenum, 3> s_gl_blend_ops = { {
 } };
 // clang-format on
 
-void GSDeviceOGL::RenderHW(GSHWDrawConfig& config)
+void GSDeviceOGL::DoRenderHW(GSHWDrawConfig& config)
 {
 	if (!GLState::scissor.eq(config.scissor))
 	{
@@ -3851,14 +4063,14 @@ void GSDeviceOGL::FeedbackCopyAndBind(const GSHWDrawConfig& config,
 {
 	if (rt_clone)
 	{
-		CopyRect(rt, rt_clone, copyarea, copyarea.left, copyarea.top);
+		DoCopyRect(rt, rt_clone, copyarea, copyarea.left, copyarea.top);
 		PSSetShaderResource(2, rt_clone);
 		if (config.tex_hazard == GSHWDrawConfig::TEX_HAZARD_RT)
 			PSSetShaderResource(0, rt_clone);
 	}
 	if (ds_clone)
 	{
-		CopyRect(ds, ds_clone, copyarea, copyarea.left, copyarea.top);
+		DoCopyRect(ds, ds_clone, copyarea, copyarea.left, copyarea.top);
 		PSSetShaderResource(4, ds_clone);
 		if (config.tex_hazard == GSHWDrawConfig::TEX_HAZARD_DEPTH)
 			PSSetShaderResource(0, ds_clone);
@@ -4004,7 +4216,7 @@ void GSDeviceOGL::DebugMessageCallback(GLenum gl_source, GLenum gl_type, GLuint 
 	// Don't spam noisy information on the terminal
 	if (gl_severity != GL_DEBUG_SEVERITY_NOTIFICATION && gl_source != GL_DEBUG_SOURCE_APPLICATION)
 	{
-		Console.Error("T:%s\tID:%d\tS:%s\t=> %s", type.c_str(), GSState::s_n, severity.c_str(), message.c_str());
+		Console.Error("T:%s\tID:%d\tS:%s\t=> %s", type.c_str(), g_gs_renderer ? g_gs_renderer->s_n : 0, severity.c_str(), message.c_str());
 	}
 }
 

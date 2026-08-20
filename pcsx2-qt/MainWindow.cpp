@@ -12,7 +12,9 @@
 #include "QtHost.h"
 #include "QtUtils.h"
 #include "SettingWidgetBinder.h"
+#ifdef ENABLE_QT_DEBUGGER
 #include "Debugger/Docking/DockManager.h"
+#endif
 #include "Settings/AchievementLoginDialog.h"
 #include "Settings/ControllerSettingsWindow.h"
 #include "Settings/GameListSettingsWidget.h"
@@ -535,11 +537,8 @@ void MainWindow::connectSignals()
 	connect(m_ui.actionViewSystemDisplay, &QAction::triggered, this, &MainWindow::onViewSystemDisplayTriggered);
 	connect(m_ui.actionViewGameProperties, &QAction::triggered, this, &MainWindow::onViewGamePropertiesActionTriggered);
 	connect(m_ui.actionGitHubRepository, &QAction::triggered, this, &MainWindow::onGitHubRepositoryActionTriggered);
-	connect(m_ui.actionWiki, &QAction::triggered, this, &MainWindow::onWikiActionTriggered);
-	connect(m_ui.actionDocumentation, &QAction::triggered, this, &MainWindow::onDocumentationActionTriggered);
-	connect(m_ui.actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
+	connect(m_ui.actionWebsite, &QAction::triggered, this, &MainWindow::onWebsiteActionTriggered);
 	connect(m_ui.actionAbout, &QAction::triggered, this, &MainWindow::onAboutActionTriggered);
-	connect(m_ui.actionCheckForUpdates, &QAction::triggered, this, [this]() { checkForUpdates(true, true); });
 	connect(m_ui.actionOpenDataDirectory, &QAction::triggered, this, &MainWindow::onToolsOpenDataDirectoryTriggered);
 	connect(m_ui.actionCoverDownloader, &QAction::triggered, this, &MainWindow::onToolsCoverDownloaderTriggered);
 	connect(m_ui.actionGridViewShowTitles, &QAction::triggered, m_game_list_widget, &GameListWidget::setShowCoverTitles);
@@ -646,7 +645,11 @@ void MainWindow::connectVMThreadSignals(EmuThread* thread)
 	connect(m_ui.actionToolbarPause, &QAction::toggled, thread, &EmuThread::setVMPaused);
 	connect(m_ui.actionToolbarFullscreen, &QAction::triggered, thread, &EmuThread::toggleFullscreen);
 	connect(m_ui.actionToggleSoftwareRendering, &QAction::triggered, thread, &EmuThread::toggleSoftwareRendering);
+#ifdef ENABLE_QT_DEBUGGER
 	connect(m_ui.actionDebugger, &QAction::triggered, this, &MainWindow::openDebugger);
+#else
+	m_ui.actionDebugger->setVisible(false);
+#endif
 	connect(m_ui.actionReloadPatches, &QAction::triggered, thread, &EmuThread::reloadPatches);
 }
 
@@ -794,7 +797,9 @@ void MainWindow::quit()
 
 void MainWindow::destroySubWindows()
 {
+#ifdef ENABLE_QT_DEBUGGER
 	DebuggerWindow::destroyInstance();
+#endif
 
 	if (m_controller_settings_window)
 	{
@@ -863,7 +868,7 @@ void MainWindow::onShowAdvancedSettingsToggled(bool checked)
 					  "even corrupted save files. "
 					  "We do not recommend changing advanced settings unless you know what you are doing, and the implications of changing "
 					  "each setting.\n\n"
-					  "The PCSX2 team will not provide any support for configurations that modify these settings, you are on your own.\n\n"
+					  "The ARMSX2 team will not provide any support for configurations that modify these settings, you are on your own.\n\n"
 					  "Are you sure you want to continue?"));
 		mb.setIcon(QMessageBox::Warning);
 		mb.addButton(QMessageBox::Yes);
@@ -1013,10 +1018,12 @@ void MainWindow::onAchievementsHardcoreModeChanged(bool enabled)
 
 	if (enabled)
 	{
+#ifdef ENABLE_QT_DEBUGGER
 		// If PauseOnEntry is enabled, we prompt the user to disable Hardcore Mode
 		// or cancel the action later, so we should keep the debugger around
 		if (g_debugger_window && !DebugInterface::getPauseOnEntry())
 			DebuggerWindow::destroyInstance();
+#endif
 	}
 }
 
@@ -1407,7 +1414,10 @@ bool MainWindow::shouldMouseLock() const
 	if (m_display_created == false || m_display_surface == nullptr)
 		return false;
 
-	const bool windowsHidden = (!g_debugger_window || g_debugger_window->isHidden()) &&
+	const bool windowsHidden =
+#ifdef ENABLE_QT_DEBUGGER
+	                           (!g_debugger_window || g_debugger_window->isHidden()) &&
+#endif
 	                           (!m_controller_settings_window || m_controller_settings_window->isHidden()) &&
 	                           (!m_settings_window || m_settings_window->isHidden());
 
@@ -1873,6 +1883,7 @@ void MainWindow::onGameListEntryContextMenuRequested(const QPoint& point)
 			action = menu.addAction(tr("Full Boot"));
 			connect(action, &QAction::triggered, [this, entry]() { startGameListEntry(*entry, std::nullopt, false); });
 
+#ifdef ENABLE_QT_DEBUGGER
 			if (m_ui.menuDebug->menuAction()->isVisible())
 			{
 				action = menu.addAction(tr("Boot and Debug"));
@@ -1882,6 +1893,7 @@ void MainWindow::onGameListEntryContextMenuRequested(const QPoint& point)
 					DebuggerWindow::getInstance()->show();
 				});
 			}
+#endif
 
 			menu.addSeparator();
 			populateLoadStateMenu(&menu, QString::fromStdString(entry->path), QString::fromStdString(entry->serial), entry->crc);
@@ -2045,14 +2057,9 @@ void MainWindow::onGitHubRepositoryActionTriggered()
 	QtUtils::OpenURL(this, AboutDialog::getGitHubRepositoryUrl());
 }
 
-void MainWindow::onWikiActionTriggered()
+void MainWindow::onWebsiteActionTriggered()
 {
-	QtUtils::OpenURL(this, AboutDialog::getWikiUrl());
-}
-
-void MainWindow::onDocumentationActionTriggered()
-{
-	QtUtils::OpenURL(this, AboutDialog::getDocumentationUrl());
+	QtUtils::OpenURL(this, AboutDialog::getWebsiteUrl());
 }
 
 void MainWindow::onAboutActionTriggered()
@@ -2074,10 +2081,10 @@ void MainWindow::checkForUpdates(bool display_message, bool force_check)
 
 			QString message;
 #ifdef _WIN32
-			message = tr("<p>Sorry, you are trying to update a PCSX2 version which is not an official GitHub release. To "
+			message = tr("<p>Sorry, you are trying to update an ARMSX2 version which is not an official GitHub release. To "
 						 "prevent incompatibilities, the auto-updater is only enabled on official builds.</p>"
 						 "<p>To obtain an official build, please download from the link below:</p>"
-						 "<p><a href=\"https://pcsx2.net/downloads/\">https://pcsx2.net/downloads/</a></p>");
+						 "<p><a href=\"https://armsx2.net/\">https://armsx2.net/</a></p>");
 #else
 			message = tr("Automatic updating is not supported on the current platform.");
 #endif
@@ -3217,11 +3224,13 @@ void MainWindow::doGameSettings(const char* category)
 	}
 }
 
+#ifdef ENABLE_QT_DEBUGGER
 void MainWindow::openDebugger()
 {
 	DebuggerWindow* dwnd = DebuggerWindow::getInstance();
 	dwnd->isVisible() ? dwnd->activateWindow() : dwnd->show();
 }
+#endif
 
 void MainWindow::doControllerSettings(ControllerSettingsWindow::Category category)
 {
@@ -3720,8 +3729,6 @@ void MainWindow::doDiscChange(CDVD_SourceType source, const QString& path)
 		reset_system = (message.clickedButton() == reset_button);
 	}
 
-	switchToEmulationView();
-
 	g_emu_thread->changeDisc(source, path);
 	if (reset_system)
 	{
@@ -3731,6 +3738,11 @@ void MainWindow::doDiscChange(CDVD_SourceType source, const QString& path)
 		else
 			g_emu_thread->resetVM();
 	}
+
+	// We have to do this after resetting the VM, otherwise the reset would be
+	// deferred since the VM would be running, and then VMLock::~VMLock would
+	// trample the reset state with its unpause event.
+	switchToEmulationView();
 }
 
 MainWindow::VMLock MainWindow::pauseAndLockVM()

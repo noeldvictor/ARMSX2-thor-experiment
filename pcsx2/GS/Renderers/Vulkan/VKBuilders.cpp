@@ -505,6 +505,16 @@ void Vulkan::GraphicsPipelineBuilder::AddBlendFlags(u32 flags)
 	m_blend_state.flags |= flags;
 }
 
+void Vulkan::GraphicsPipelineBuilder::AddDepthStencilFlags(u32 flags)
+{
+	m_depth_state.flags |= flags;
+}
+
+void Vulkan::GraphicsPipelineBuilder::SetBlendFlags(u32 flags)
+{
+	m_blend_state.flags = flags;
+}
+
 void Vulkan::GraphicsPipelineBuilder::ClearBlendAttachments()
 {
 	m_blend_attachments = {};
@@ -584,6 +594,13 @@ void Vulkan::GraphicsPipelineBuilder::SetProvokingVertex(VkProvokingVertexModeEX
 	AddPointerToChain(&m_rasterization_state, &m_provoking_vertex);
 
 	m_provoking_vertex.provokingVertexMode = mode;
+}
+
+void Vulkan::GraphicsPipelineBuilder::AddPipelineFlags(VkPipelineCreateFlags flags)
+{
+	// OR, not assign: callers add the colour and depth feedback-loop bits independently, and a
+	// draw can be in both loops at once.
+	m_ci.flags |= flags;
 }
 
 Vulkan::ComputePipelineBuilder::ComputePipelineBuilder()

@@ -123,6 +123,8 @@ namespace Vulkan
 			u32 attachment, VkColorComponentFlags write_mask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
 			                                                   VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT);
 		void AddBlendFlags(u32 flags);
+		void SetBlendFlags(u32 flags);
+		void AddDepthStencilFlags(u32 flags);
 		void ClearBlendAttachments();
 
 		void SetBlendConstants(float r, float g, float b, float a);
@@ -140,6 +142,11 @@ namespace Vulkan
 		void SetRenderPass(VkRenderPass render_pass, u32 subpass);
 
 		void SetProvokingVertex(VkProvokingVertexModeEXT mode);
+
+		/// OR bits into VkGraphicsPipelineCreateInfo::flags. Needed for the attachment
+		/// feedback-loop bits, which the spec requires on any pipeline used while its
+		/// attachments sit in FEEDBACK_LOOP_OPTIMAL. Ported from sashkinbro/EmuCoreX.
+		void AddPipelineFlags(VkPipelineCreateFlags flags);
 
 	private:
 		VkGraphicsPipelineCreateInfo m_ci;

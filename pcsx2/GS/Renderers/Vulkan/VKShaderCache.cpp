@@ -348,7 +348,7 @@ VKShaderCache::VKShaderCache() = default;
 VKShaderCache::~VKShaderCache()
 {
 	CloseShaderCache();
-	FlushPipelineCache();
+	FlushPipelineCache(true); // teardown: never skip, this is the last chance to persist
 	ClosePipelineCache();
 }
 
@@ -386,10 +386,19 @@ void VKShaderCache::Open()
 		const std::string index_filename = base_filename + ".idx";
 		const std::string blob_filename = base_filename + ".bin";
 
-		if (!ReadExistingShaderCache(index_filename, blob_filename))
+		const bool shader_cache_reset = !ReadExistingShaderCache(index_filename, blob_filename);
+		if (shader_cache_reset)
 			CreateNewShaderCache(index_filename, blob_filename);
 
-		if (!ReadExistingPipelineCache())
+		// Discard the pipeline blob whenever the SPIR-V cache was discarded. The blob itself is
+		// only validated against the Vulkan device header (vendorID/deviceID/pipelineCacheUUID),
+		// all of which are identical across an app update on the same phone — so a
+		// SHADER_CACHE_VERSION bump used to wipe the shaders while keeping every pipeline built
+		// from the *previous* build's shaders. Nothing prunes or size-caps that blob, and
+		// FlushPipelineCache() re-serialises it in full on the GS thread every N new compiles, so
+		// the dead entries turned into an ever-growing mid-gameplay stall that only a clean
+		// reinstall cleared (users reported "clean install improved performance").
+		if (shader_cache_reset || !ReadExistingPipelineCache())
 			CreateNewPipelineCache();
 	}
 	else
@@ -593,10 +602,28 @@ bool VKShaderCache::ReadExistingPipelineCache()
 	return true;
 }
 
-bool VKShaderCache::FlushPipelineCache()
+bool VKShaderCache::FlushPipelineCache(bool force)
 {
 	if (m_pipeline_cache == VK_NULL_HANDLE || !m_pipeline_cache_dirty || m_pipeline_cache_filename.empty())
 		return false;
+
+	// ★ Rate-limited, because this whole function is synchronous ON THE GS THREAD: it re-serialises
+	// the ENTIRE cache (measured at 777 KB on a Retroid Pocket 6) and writes it to disk, and the
+	// emulator is frozen for the duration. GetTFXPipeline triggers it every 256 new compiles with
+	// no time bound, and fast-forward blasts through content at 4x+ — hitting many new pipeline
+	// variants in a burst, crossing the threshold repeatedly, and stalling the picture for seconds
+	// right as the user drops back to normal speed. That is the reported "turn FF off and it hangs
+	// for a few seconds", and it is intermittent precisely because it depends on whether the burst
+	// crossed the counter. Losing a flush costs nothing but recompiling those pipelines on the next
+	// cold start, so throttling is strictly a win; teardown passes force=true.
+	static constexpr std::chrono::seconds MIN_FLUSH_INTERVAL{120};
+	const auto now = std::chrono::steady_clock::now();
+	if (!force && m_last_pipeline_cache_flush.time_since_epoch().count() != 0 &&
+		(now - m_last_pipeline_cache_flush) < MIN_FLUSH_INTERVAL)
+	{
+		return false;
+	}
+	m_last_pipeline_cache_flush = now;
 
 	size_t data_size;
 	VkResult res =

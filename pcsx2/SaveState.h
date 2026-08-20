@@ -59,6 +59,10 @@ extern bool SaveState_ZipToDisk(
 	const char* filename, Error* error);
 extern bool SaveState_ReadScreenshot(const std::string& filename, u32* out_width, u32* out_height, std::vector<u32>* out_pixels);
 extern bool SaveState_UnzipFromDisk(const std::string& filename, Error* error);
+// libretro in-memory state (retro_serialize/retro_unserialize)
+extern bool SaveState_ZipToBuffer(std::unique_ptr<ArchiveEntryList> srclist,
+	std::unique_ptr<SaveStateScreenshotData> screenshot, std::vector<u8>* out_data, Error* error);
+extern bool SaveState_UnzipFromBuffer(const void* data, size_t size, Error* error);
 
 // --------------------------------------------------------------------------------------
 //  SaveStateBase class
@@ -94,8 +98,16 @@ public:
 		return (m_version & 0xffff);
 	}
 
+	// Overrides the version with the one read from the state file being loaded.
+	__fi void SetVersion(u32 version) { m_version = version; }
+
 	bool FreezeBios();
 	bool FreezeInternals(Error* error);
+
+	// Load-only reader for legacy-format internal-structures blobs (the
+	// AetherSX2/NetherSX2-era majors accepted by
+	// SaveStateLegacy::IsSupportedVersion). Implemented in SaveStateLegacy.cpp.
+	bool FreezeInternalsLegacy(Error* error);
 
 	// Loads or saves an arbitrary data type.  Usable on atomic types, structs, and arrays.
 	// For dynamically allocated pointers use FreezeMem instead.
@@ -114,6 +126,14 @@ public:
 	}
 
 	void PrepBlock( int size );
+
+	// Skips over bytes that have no destination (legacy-format fields that
+	// were removed, or removed-era padding). Bounds-checked via PrepBlock.
+	void FreezeSkip( int size )
+	{
+		PrepBlock( size );
+		CommitBlock( size );
+	}
 
 	template <typename T>
 	void FreezeDeque(std::deque<T>& q)

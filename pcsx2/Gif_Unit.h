@@ -3,6 +3,7 @@
 
 #pragma once
 #include <deque>
+#include <vector>
 #include "Gif.h"
 #include "Vif.h"
 #include "GS.h"
@@ -192,6 +193,22 @@ static __fi void incTag(u32& offset, u32& size, u32 incAmount)
 	offset += incAmount;
 }
 
+#ifdef PCSX2_RECOMPILER_TESTS
+namespace gif_test_hooks
+{
+	// When non-null, the GIF Path 1 byte stream is appended to *g_path1_sink
+	// instead of entering the path-1 ring buffer + MTGS::WaitGS(), which
+	// asserts when no GS thread is running. VuTestHarness installs/clears
+	// this pointer. Both entry points feed it — see Gif_Path::CopyGSPacketData
+	// and Gif_Unit::TransferGSPacketData.
+	extern std::vector<u8>* g_path1_sink;
+
+	// When true, Gif_Unit::checkPaths(p1=true, ...) reports path 1 as busy.
+	// Used by EeVu1Vif's Mscalf-stall test to force the GIF-busy code path.
+	extern bool g_force_path1_busy;
+}
+#endif
+
 struct Gif_Path_MTVU
 {
 	u32 fakePackets; // Fake packets pending to be sent to MTGS
@@ -313,6 +330,21 @@ struct Gif_Path
 
 	void CopyGSPacketData(u8* pMem, u32 size, bool aligned = false)
 	{
+#ifdef PCSX2_RECOMPILER_TESTS
+		if (gif_test_hooks::g_path1_sink && idx == GIF_PATH_1)
+		{
+			// mVU's XGKICK wrap path (mVU_XGKICK_) copies the pre-wrap head
+			// of the packet straight into this buffer and hands only the
+			// post-wrap tail to TransferGSPacketData. Capturing just the
+			// latter made a wrapped kick look like a headless packet with no
+			// GIFtag — a harness blind spot, not a divergence. Feed the sink
+			// here too, and skip the ring entirely: with the sink installed
+			// nothing ever drains it.
+			gif_test_hooks::g_path1_sink->insert(
+				gif_test_hooks::g_path1_sink->end(), pMem, pMem + size);
+			return;
+		}
+#endif
 		if (curSize + size > buffSize)
 		{ // Move gsPack to front of buffer
 			GUNIT_LOG("CopyGSPacketData: Realigning packet!");
@@ -619,6 +651,26 @@ struct Gif_Unit
 	// If transfer cannot take place at this moment the return value is 0
 	u32 TransferGSPacketData(GIF_TRANSFER_TYPE tranType, u8* pMem, u32 size, bool aligned = false)
 	{
+#ifdef PCSX2_RECOMPILER_TESTS
+		if (gif_test_hooks::g_path1_sink && tranType == GIF_TRANS_XGKICK)
+		{
+			// Hard cap: GIF Path 1 ring is 16 KB (one VU memory). Anything
+			// larger means the JIT/helper miscalculated `size` (e.g. the
+			// EOP-bit at bit 31 leaked through to the byte count). Don't
+			// allocate the bogus span; record the anomaly + bail so the
+			// test fails loudly instead of OOM-ing the host.
+			if (size > 0x4000u)
+			{
+				Console.Error(
+					"[gif_test_hooks] PATH1 SINK ANOMALY: tranType=0x%x size=0x%x — capping at 0",
+					static_cast<u32>(tranType), size);
+				return 0; // Drop the transfer entirely; caller should treat as no-op.
+			}
+			gif_test_hooks::g_path1_sink->insert(
+				gif_test_hooks::g_path1_sink->end(), pMem, pMem + size);
+			return size;
+		}
+#endif
 
 		if (THREAD_VU1)
 		{
@@ -700,6 +752,10 @@ struct Gif_Unit
 	// path is not finished (needs more data/processing for an EOP)
 	__fi int checkPaths(bool p1, bool p2, bool p3, bool checkQ = false)
 	{
+#ifdef PCSX2_RECOMPILER_TESTS
+		if (gif_test_hooks::g_force_path1_busy && p1)
+			return 1;
+#endif
 		int ret = 0;
 		ret |= (p1 && !gifPath[GIF_PATH_1].isDone()) << 0;
 		ret |= (p2 && !gifPath[GIF_PATH_2].isDone()) << 1;

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 #include "GS/Renderers/Common/GSDevice.h"
+#include "GS/Renderers/Common/GSPassScheduler.h"
 #include "GS/GSGL.h"
 #include "GS/GS.h"
 #include "GS/GSUtil.h"
@@ -19,6 +20,7 @@
 #include "imgui.h"
 
 #include <algorithm>
+#include <cmath>
 #include <ostream>
 #include <fstream>
 #include <atomic>
@@ -281,6 +283,7 @@ static const char* TextureLabelString(TextureLabel label)
 std::unique_ptr<GSDevice> g_gs_device;
 
 GSDevice::GSDevice()
+	: m_pass_scheduler(std::make_unique<GSPassScheduler>())
 {
 #ifdef PCSX2_DEVBUILD
 	s_texture_counts.fill(0);
@@ -290,7 +293,16 @@ GSDevice::GSDevice()
 GSDevice::~GSDevice()
 {
 	// should've been cleaned up in Destroy()
-	pxAssert(m_pool[0].empty() && m_pool[1].empty() && !m_merge && !m_weavebob && !m_blend && !m_mad && !m_target_tmp && !m_cas && !m_mfx_output);
+	pxAssert(m_pool[0].empty() && m_pool[1].empty() && !m_merge && !m_weavebob && !m_blend && !m_mad && !m_target_tmp && !m_cas && !m_mfx_output && !m_fsr1_easu && !m_fsr1_output);
+}
+
+GSVector2i GSDevice::GetPresentationSize() const
+{
+	const s32 w = GetWindowWidth();
+	const s32 h = GetWindowHeight();
+	return (GSConfig.Rotation == DisplayRotation::Rot90 || GSConfig.Rotation == DisplayRotation::Rot270)
+			   ? GSVector2i(h, w)
+			   : GSVector2i(w, h);
 }
 
 const char* GSDevice::RenderAPIToString(RenderAPI api)
@@ -426,6 +438,18 @@ bool GSDevice::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 
 void GSDevice::Destroy()
 {
+	// Drop rather than emit: nothing is going to present these, and the targets they name
+	// are about to be destroyed.
+	m_pass_scheduler->Clear();
+	m_deferred_draw_count = 0;
+
+	// Nothing references these any more, and PurgePool() below deletes whatever the pool
+	// holds - so putting them back is how they get freed.
+	std::vector<GSTexture*> pending;
+	pending.swap(m_deferred_recycle);
+	for (GSTexture* tex : pending)
+		Recycle(tex);
+
 	ClearCurrent();
 	PurgePool();
 }
@@ -484,16 +508,24 @@ void GSDevice::ThrottlePresentation()
 
 void GSDevice::ClearRenderTarget(GSTexture* t, u32 c)
 {
+	FlushDeferredDrawsFor(t);
 	t->SetClearColor(c);
 }
 
 void GSDevice::ClearDepth(GSTexture* t, float d)
 {
+	FlushDeferredDrawsFor(t);
 	t->SetClearDepth(d);
+}
+
+void GSDevice::DoHintReadbackSource(GSTexture* tex)
+{
+	// Default: no scheduling hint. See GSDeviceVK for a backend that uses it.
 }
 
 bool GSDevice::ProcessClearsBeforeCopy(GSTexture* sTex, GSTexture* dTex, const bool full_copy)
 {
+	FlushDeferredDraws();
 	pxAssert(sTex->GetState() == GSTexture::State::Cleared && dTex->IsRenderTargetOrDepthStencil());
 
 	// Pass it forward if we're clearing the whole thing.
@@ -529,6 +561,7 @@ bool GSDevice::ProcessClearsBeforeCopy(GSTexture* sTex, GSTexture* dTex, const b
 
 void GSDevice::InvalidateRenderTarget(GSTexture* t)
 {
+	FlushDeferredDrawsFor(t);
 	t->SetState(GSTexture::State::Invalidated);
 }
 
@@ -647,8 +680,30 @@ GSTexture* GSDevice::FetchSurface(GSTexture::Usage usage, const GSVector2i& size
 
 GSTexture* GSDevice::FetchSurface(GSTexture::Usage usage, int width, int height, int levels, GSTexture::Format format, bool clear, bool prefer_reuse)
 {
+	// No blanket flush here: what comes back is either brand new or was recycled into the
+	// pool. The deferred-clear calls at the tail guard themselves.
 	const GSVector2i size(std::clamp(width, 1, static_cast<int>(g_gs_device->GetMaxTextureSize())),
 		std::clamp(height, 1, static_cast<int>(g_gs_device->GetMaxTextureSize())));
+
+	// Recycle() parks a texture a queued draw still names instead of returning it to the pool.
+	// That is invisible to correctness but not to allocation: if the surface being asked for is
+	// one of those, skipping the flush hands back a different texture than an undeferred run
+	// would, and the working set stays one larger for the rest of the frame. On God of War II
+	// that alone cost +7 render passes. Drain the queue when the answer is in that list, and
+	// only then - an unconditional flush here is what the scheduler exists to avoid.
+	if (!m_deferred_recycle.empty() && !m_flushing)
+	{
+		for (const GSTexture* held : m_deferred_recycle)
+		{
+			if (held->GetUsage() == usage && held->GetFormat() == format && held->GetSize() == size &&
+				held->GetMipmapLevels() == levels)
+			{
+				FlushDeferredDraws();
+				break;
+			}
+		}
+	}
+
 	FastList<GSTexture*>& pool = m_pool[!GSTexture::IsTexture(usage)];
 
 	GSTexture* t = nullptr;
@@ -679,8 +734,7 @@ GSTexture* GSDevice::FetchSurface(GSTexture::Usage usage, int width, int height,
 
 	if (!t)
 	{
-		if (pool.size() >= (GSTexture::IsTexture(usage) ? MAX_POOLED_TEXTURES : MAX_POOLED_TARGETS) &&
-			fallback != pool.end())
+		if (pool.size() >= GetPoolLimit(GSTexture::IsTexture(usage)) && fallback != pool.end())
 		{
 			t = *fallback;
 			m_pool_memory_usage -= t->GetMemUsage();
@@ -735,6 +789,15 @@ void GSDevice::Recycle(GSTexture* t)
 	if (!t)
 		return;
 
+	// Holding the texture back is much cheaper than flushing for it. The texture cache has
+	// dropped its reference, so nobody but the queue can still name it, and the queue is
+	// drained before this list is.
+	if (m_deferred_draw_count != 0 && !m_flushing && DeferredDrawsReference(t))
+	{
+		m_deferred_recycle.push_back(t);
+		return;
+	}
+
 	t->SetLastFrameUsed(m_frame);
 	
 #ifdef PCSX2_DEVBUILD
@@ -745,8 +808,8 @@ void GSDevice::Recycle(GSTexture* t)
 	pool.push_front(t);
 	m_pool_memory_usage += t->GetMemUsage();
 
-	const u32 max_size = t->IsTexture() ? MAX_POOLED_TEXTURES : MAX_POOLED_TARGETS;
-	const u32 max_age = t->IsTexture() ? MAX_TEXTURE_AGE : MAX_TARGET_AGE;
+	const u32 max_size = GetPoolLimit(t->IsTexture());
+	const u32 max_age = GetPoolMaxAge(t->IsTexture());
 	while (pool.size() > max_size)
 	{
 		// Don't toss when the texture was last used in this frame.
@@ -762,6 +825,30 @@ void GSDevice::Recycle(GSTexture* t)
 	}
 }
 
+// The pool budget is per-GPU on mobile: the GPU-profile tables resolve a MobileGsTuning
+// whose pool sizes and ages are sized for the part (an Adreno 200 wants ~48 pooled, a
+// laptop-class Adreno X ~160), instead of the one-size 300 that suits a desktop GPU.
+// Ported from sashkinbro/EmuCoreX, including its __ANDROID__ scoping: off Android the
+// profile is never resolved, so the tuning would still hold its conservative default
+// (96/8/96/6) and would silently cut the desktop pool from 300 to 96.
+u32 GSDevice::GetPoolLimit(bool texture) const
+{
+#if defined(__ANDROID__)
+	return texture ? m_mobile_gs_tuning.pooled_textures : m_mobile_gs_tuning.pooled_targets;
+#else
+	return texture ? MAX_POOLED_TEXTURES : MAX_POOLED_TARGETS;
+#endif
+}
+
+u32 GSDevice::GetPoolMaxAge(bool texture) const
+{
+#if defined(__ANDROID__)
+	return texture ? m_mobile_gs_tuning.texture_age : m_mobile_gs_tuning.target_age;
+#else
+	return texture ? MAX_TEXTURE_AGE : MAX_TARGET_AGE;
+#endif
+}
+
 bool GSDevice::UsesLowerLeftOrigin() const
 {
 	const RenderAPI api = GetRenderAPI();
@@ -770,12 +857,44 @@ bool GSDevice::UsesLowerLeftOrigin() const
 
 void GSDevice::AgePool()
 {
+	FlushDeferredDraws();
 	m_frame++;
 
 	// Toss out textures when they're not too-recently used.
 	for (u32 pool_idx = 0; pool_idx < m_pool.size(); pool_idx++)
 	{
-		const u32 max_age = (pool_idx == 0) ? MAX_TEXTURE_AGE : MAX_TARGET_AGE;
+		const u32 max_age = GetPoolMaxAge(pool_idx == 0);
+		FastList<GSTexture*>& pool = m_pool[pool_idx];
+		while (!pool.empty())
+		{
+			GSTexture* back = pool.back();
+			if ((m_frame - back->GetLastFrameUsed()) < max_age)
+				break;
+
+			m_pool_memory_usage -= back->GetMemUsage();
+			delete back;
+
+			pool.pop_back();
+		}
+	}
+}
+
+void GSDevice::AgePoolAfterPresentCapSkip()
+{
+	FlushDeferredDraws();
+	m_frame++;
+
+	// Frame age and deferred draw ordering remain per-frame. Only the deletion
+	// scan is amortized, and its four-frame bound prevents retained pool growth.
+	static constexpr u32 MAX_CLEANUP_DEFERRAL = 4;
+	if (++m_frames_since_pool_cleanup < MAX_CLEANUP_DEFERRAL)
+		return;
+	m_frames_since_pool_cleanup = 0;
+
+	// Toss out textures when they're not too-recently used.
+	for (u32 pool_idx = 0; pool_idx < m_pool.size(); pool_idx++)
+	{
+		const u32 max_age = GetPoolMaxAge(pool_idx == 0);
 		FastList<GSTexture*>& pool = m_pool[pool_idx];
 		while (!pool.empty())
 		{
@@ -793,6 +912,8 @@ void GSDevice::AgePool()
 
 void GSDevice::PurgePool()
 {
+	FlushDeferredDraws();
+	m_frames_since_pool_cleanup = 0;
 	for (FastList<GSTexture*>& pool : m_pool)
 	{
 		for (GSTexture* t : pool)
@@ -832,14 +953,19 @@ GSTexture* GSDevice::CreateShaderWriteTarget(const GSVector2i& size, GSTexture::
 	return FetchSurface(GSTexture::ShaderWriteTarget, size.x, size.y, 1, format, clear, prefer_reuse);
 }
 
+GSTexture::Usage GSDevice::GetDepthStencilUsage() const
+{
+	return m_features.depth_feedback ? GSTexture::FeedbackDepth : GSTexture::DepthStencil;
+}
+
 GSTexture* GSDevice::CreateDepthStencil(int w, int h, bool clear, bool prefer_reuse)
 {
-	return FetchSurface(GSTexture::DepthStencil, w, h, 1, GSTexture::Format::DepthStencil, clear, prefer_reuse);
+	return FetchSurface(GetDepthStencilUsage(), w, h, 1, GSTexture::Format::DepthStencil, clear, prefer_reuse);
 }
 
 GSTexture* GSDevice::CreateDepthStencil(const GSVector2i& size, bool clear, bool prefer_reuse)
 {
-	return FetchSurface(GSTexture::DepthStencil, size.x, size.y, 1, GSTexture::Format::DepthStencil, clear, prefer_reuse);
+	return FetchSurface(GetDepthStencilUsage(), size.x, size.y, 1, GSTexture::Format::DepthStencil, clear, prefer_reuse);
 }
 
 GSTexture* GSDevice::CreateTexture(int w, int h, int mipmap_levels, GSTexture::Format format, bool prefer_reuse)
@@ -874,6 +1000,7 @@ void GSDevice::DoStretchRectWithAssertions(GSTexture* sTex, const GSVector4& sRe
 {
 	pxAssert((dTex && dTex->IsDepthLike()) == shader.Float32Output());
 	pxAssert(!(filter == Biln && shader.SupportsBilinear())); // Don't allow HW bilinear if SW bilinear is required.
+	FlushDeferredDraws();
 	GL_INS("StretchRect(%s) {%d,%d} %dx%d -> {%d,%d) %dx%d", ShaderConvertName(shader.Shader()),
 		int(sRect.left), int(sRect.top),
 		int(sRect.right - sRect.left), int(sRect.bottom - sRect.top), int(dRect.left), int(dRect.top),
@@ -881,9 +1008,82 @@ void GSDevice::DoStretchRectWithAssertions(GSTexture* sTex, const GSVector4& sRe
 	DoStretchRect(sTex, sRect, dTex, dRect, shader, filter);
 }
 
+// Resolves a StretchRect edge onto the texel grid. Both coordinate spaces reach us as integer
+// rects that were divided and re-multiplied by a texture dimension along the way, so the value
+// we see is the intended integer plus a few ULPs of round-trip error. Anything further off the
+// grid than that is a deliberate offset -- a half-texel inset, say -- and has to keep going
+// through the shader, which is why the tolerance is far below the smallest offset anyone means.
+static bool SnapStretchRectEdgeToTexel(float v, s32& out)
+{
+	constexpr float tolerance = 1.0f / 512.0f;
+	const float rounded = std::round(v);
+	out = static_cast<s32>(rounded);
+	return std::abs(v - rounded) <= tolerance;
+}
+
+bool GSDevice::TryStretchRectAsCopy(GSTexture* sTex, const GSVector4& sRect, GSTexture* dTex,
+	const GSVector4& dRect, ShaderConvertSelector shader)
+{
+	// Only a plain copy is equivalent. Anything that reformats, rewrites channels or moves
+	// colour into depth needs the shader that was asked for.
+	const ShaderConvert sh = shader.Shader();
+	if ((sh != ShaderConvert::COPY && sh != ShaderConvert::DEPTH_COPY) || shader.Mask() != 0xf)
+		return false;
+
+	if (!sTex || !dTex || sTex == dTex || sTex->GetFormat() != dTex->GetFormat())
+		return false;
+
+	// Copies are per-aspect, so a colour-usage texture and a depth-usage one can't be copied
+	// between even when their formats agree.
+	if (sTex->IsDepthStencil() != dTex->IsDepthStencil())
+		return false;
+
+	// A source that is a pending clear or is invalidated has no contents to copy, and the two
+	// paths resolve that from opposite ends -- the draw path carries the clear into the
+	// destination's load op, the copy path commits it to the source first. Neither is what this
+	// exists for, so leave them where they already work.
+	if (sTex->GetState() != GSTexture::State::Dirty)
+		return false;
+
+	const GSVector2i ssize = sTex->GetSize();
+	const GSVector2i dsize = dTex->GetSize();
+
+	// Source coordinates arrive normalized, destination coordinates in pixels.
+	s32 sx, sy, sz, sw, dx, dy, dz, dw;
+	if (!SnapStretchRectEdgeToTexel(sRect.x * static_cast<float>(ssize.x), sx) ||
+		!SnapStretchRectEdgeToTexel(sRect.y * static_cast<float>(ssize.y), sy) ||
+		!SnapStretchRectEdgeToTexel(sRect.z * static_cast<float>(ssize.x), sz) ||
+		!SnapStretchRectEdgeToTexel(sRect.w * static_cast<float>(ssize.y), sw) ||
+		!SnapStretchRectEdgeToTexel(dRect.x, dx) || !SnapStretchRectEdgeToTexel(dRect.y, dy) ||
+		!SnapStretchRectEdgeToTexel(dRect.z, dz) || !SnapStretchRectEdgeToTexel(dRect.w, dw))
+	{
+		return false;
+	}
+
+	// 1:1 only -- a scaled copy is a resample, and then the filter the caller asked for matters.
+	// At 1:1 every sample lands dead centre on its texel, so Nearest and Biln agree with each
+	// other and with the copy, which is why the filter isn't consulted here.
+	if ((sz - sx) != (dz - dx) || (sw - sy) != (dw - dy) || sz <= sx || sw <= sy)
+		return false;
+
+	// The draw path scissors an out-of-bounds destination and clamps out-of-bounds source
+	// coordinates to the edge texel. A copy can do neither, so those stay with the shader.
+	if (sx < 0 || sy < 0 || sz > ssize.x || sw > ssize.y || dx < 0 || dy < 0 || dz > dsize.x || dw > dsize.y)
+		return false;
+
+	GL_INS("StretchRect(%s) served as copy: {%d,%d} %dx%d -> {%d,%d}", ShaderConvertName(sh), sx, sy, sz - sx,
+		sw - sy, dx, dy);
+
+	CopyRect(sTex, dTex, GSVector4i(sx, sy, sz, sw), static_cast<u32>(dx), static_cast<u32>(dy));
+	return true;
+}
+
 void GSDevice::StretchRect(GSTexture* sTex, const GSVector4& sRect, GSTexture* dTex, const GSVector4& dRect,
 	ShaderConvertSelector shader, Filter filter)
 {
+	if (TryStretchRectAsCopy(sTex, sRect, dTex, dRect, shader))
+		return;
+
 	DoStretchRectWithAssertions(sTex, sRect, dTex, dRect, shader, filter);
 }
 
@@ -937,7 +1137,62 @@ void GSDevice::StretchRectAutoMask(GSTexture* sTex, GSTexture* dTex, bool red, b
 	StretchRectAutoMask(sTex, dTex, GSVector4(dTex->GetRect()), red, green, blue, alpha, src_bpp, dst_bpp);
 }
 
-void GSDevice::DrawMultiStretchRects(
+void GSDevice::RenderHW(GSHWDrawConfig& config)
+{
+	// m_flushing: we are already inside Emit(), so this is a draw the backend is issuing
+	// on its own behalf. IsDSInRTActive: the caller is mid depth-as-colour sequence and
+	// will tear the temporary target down as soon as we return.
+	if (!GSConfig.CoalesceRenderPasses || m_flushing || IsDSInRTActive() ||
+		!GSPassScheduler::IsDeferrable(config))
+	{
+		FlushDeferredDraws();
+		DoRenderHW(config);
+		return;
+	}
+
+	if (m_pass_scheduler->TryEnqueue(config) != GSPassScheduler::Disposition::Queued)
+	{
+		// Either this draw can see something already queued, or a cap was reached. Emit the
+		// backlog and retry once against an empty queue; a draw that still will not fit is
+		// bigger than the whole arena, so just render it.
+		FlushDeferredDraws();
+		if (m_pass_scheduler->TryEnqueue(config) != GSPassScheduler::Disposition::Queued)
+		{
+			DoRenderHW(config);
+			return;
+		}
+	}
+
+	m_deferred_draw_count = m_pass_scheduler->GetCount();
+}
+
+bool GSDevice::DeferredDrawsReference(const GSTexture* tex) const
+{
+	return m_pass_scheduler->References(tex);
+}
+
+void GSDevice::FlushDeferredDrawsImpl()
+{
+	pxAssert(!m_flushing);
+
+	m_flushing = true;
+	m_pass_scheduler->Emit(this);
+	m_flushing = false;
+
+	m_deferred_draw_count = 0;
+
+	// The draws that were holding these back have run, so the pool can have them. Swap
+	// first: Recycle() is re-entrant through the backend overrides.
+	if (!m_deferred_recycle.empty())
+	{
+		std::vector<GSTexture*> pending;
+		pending.swap(m_deferred_recycle);
+		for (GSTexture* tex : pending)
+			Recycle(tex);
+	}
+}
+
+void GSDevice::DoDrawMultiStretchRects(
 	const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader)
 {
 	for (u32 i = 0; i < num_rects; i++)
@@ -952,12 +1207,18 @@ void GSDevice::SortMultiStretchRects(MultiStretchRect* rects, u32 num_rects)
 {
 	// Depending on num_rects, insertion sort may be better here.
 	std::sort(rects, rects + num_rects, [](const MultiStretchRect& lhs, const MultiStretchRect& rhs) {
-		return lhs.src < rhs.src || lhs.filter < rhs.filter;
+		// Strict weak ordering: only tie-break on filter when src is equal. The old
+		// `lhs.src < rhs.src || lhs.filter < rhs.filter` is not a valid comparator
+		// (it can report both a<b and b<a), which is undefined behaviour in std::sort.
+		if (lhs.src != rhs.src)
+			return lhs.src < rhs.src;
+		return lhs.filter < rhs.filter;
 	});
 }
 
 void GSDevice::ClearCurrent()
 {
+	FlushDeferredDraws();
 	m_current = nullptr;
 
 	delete m_merge;
@@ -967,6 +1228,8 @@ void GSDevice::ClearCurrent()
 	delete m_target_tmp;
 	delete m_cas;
 	delete m_mfx_output;
+	delete m_fsr1_easu;
+	delete m_fsr1_output;
 
 	m_merge = nullptr;
 	m_weavebob = nullptr;
@@ -975,10 +1238,13 @@ void GSDevice::ClearCurrent()
 	m_target_tmp = nullptr;
 	m_cas = nullptr;
 	m_mfx_output = nullptr;
+	m_fsr1_easu = nullptr;
+	m_fsr1_output = nullptr;
 }
 
 void GSDevice::Merge(GSTexture* sTex[3], GSVector4* sRect, GSVector4* dRect, const GSVector2i& fs, const GSRegPMODE& PMODE, const GSRegEXTBUF& EXTBUF, u32 c)
 {
+	FlushDeferredDraws();
 	if (ResizeRenderTarget(&m_merge, fs.x, fs.y, false, false))
 		DoMerge(sTex, sRect, m_merge, dRect, PMODE, EXTBUF, c, BilnIf(GSConfig.PCRTCOffsets));
 
@@ -987,6 +1253,7 @@ void GSDevice::Merge(GSTexture* sTex[3], GSVector4* sRect, GSVector4* dRect, con
 
 void GSDevice::Interlace(const GSVector2i& ds, int field, int mode, float yoffset)
 {
+	FlushDeferredDraws();
 	static int bufIdx = 0;
 	float offset = yoffset * static_cast<float>(field);
 	offset = GSConfig.DisableInterlaceOffset ? 0.0f : offset;
@@ -1055,6 +1322,7 @@ void GSDevice::Interlace(const GSVector2i& ds, int field, int mode, float yoffse
 
 void GSDevice::FXAA()
 {
+	FlushDeferredDraws();
 	// Combining FXAA+ShadeBoost can't share the same target.
 	GSTexture*& dTex = (m_current == m_target_tmp) ? m_merge : m_target_tmp;
 	if (ResizeRenderTarget(&dTex, m_current->GetWidth(), m_current->GetHeight(), false, false))
@@ -1064,26 +1332,46 @@ void GSDevice::FXAA()
 	}
 }
 
-void GSDevice::ApplyShaderChain()
+bool GSDevice::ApplyShaderChain(const GSVector2i& output_size)
 {
+	FlushDeferredDraws();
 	// Guarded here rather than in the backends so a device that never overrides
 	// DoApplyShaderChain (software, or a build without librashader) costs nothing.
-	if (!GSConfig.ShaderChainEnabled || GSConfig.ShaderChainPreset.empty() || !m_current)
-		return;
+	const bool wanted = GSConfig.ShaderChainEnabled && !GSConfig.ShaderChainPreset.empty();
+	// On the edge, not every frame: turning the chain off used to leave every pass's target
+	// and pipeline resident until the preset changed or the device died.
+	if (!wanted && m_shader_chain_loaded)
+	{
+		ReleaseShaderChain();
+		m_shader_chain_loaded = false;
+	}
+	if (!wanted || !m_current)
+		return false;
 
-	// Same ping-pong as FXAA: the chain reads m_current, so it can't also write it.
+	// A minimised or mid-resize window yields a degenerate rect; never build a 0-sized target.
+	if (output_size.x <= 0 || output_size.y <= 0)
+		return false;
+
+	// Same ping-pong as FXAA: the chain reads m_current, so it can't also write it. Unlike FXAA
+	// the target is sized to the caller's on-screen rect rather than to m_current — see the
+	// header for why that has to be the aspect-corrected rect and not the window.
 	GSTexture*& dTex = (m_current == m_target_tmp) ? m_merge : m_target_tmp;
-	if (!ResizeRenderTarget(&dTex, m_current->GetWidth(), m_current->GetHeight(), false, false))
-		return;
+	if (!ResizeRenderTarget(&dTex, output_size.x, output_size.y, false, false))
+		return false;
 
 	// Only swap on success — a failed chain (bad preset, unsupported backend) must leave
 	// m_current pointing at the unshaded frame rather than at a target nothing rendered to.
-	if (DoApplyShaderChain(m_current, dTex))
-		m_current = dTex;
+	if (!DoApplyShaderChain(m_current, dTex))
+		return false;
+
+	m_shader_chain_loaded = true;
+	m_current = dTex;
+	return true;
 }
 
 void GSDevice::ShadeBoost()
 {
+	FlushDeferredDraws();
 	if (ResizeRenderTarget(&m_target_tmp, m_current->GetWidth(), m_current->GetHeight(), false, false))
 	{
 		// predivide to avoid the divide (multiply) in the shader
@@ -1101,6 +1389,7 @@ void GSDevice::ShadeBoost()
 
 void GSDevice::Resize(int width, int height)
 {
+	FlushDeferredDraws();
 	GSTexture*& dTex = (m_current == m_target_tmp) ? m_merge : m_target_tmp;
 	GSVector2i s = m_current->GetSize();
 	int multiplier = 1;
@@ -1166,7 +1455,7 @@ bool GSDevice::ResizeRenderTarget(GSTexture** t, int w, int h, bool preserve_con
 	return true;
 }
 
-void GSDevice::BeginDSAsRT(GSTexture* ds, const GSVector4i& drawarea)
+void GSDevice::DoBeginDSAsRT(GSTexture* ds, const GSVector4i& drawarea)
 {
 	// Create a temporary RT and copy the area needed for the draw.
 	const int w = ds->GetWidth();
@@ -1198,6 +1487,11 @@ void GSDevice::EndDSAsRT()
 #define A_CPU 1
 #include "bin/resources/shaders/common/ffx_a.h"
 #include "bin/resources/shaders/common/ffx_cas.h"
+// FSR needs the 2021 revision of ffx_a.h on the GPU side, but its CPU-side constant setup
+// (FsrEasuConOffset/FsrRcasCon) is satisfied by the 2019 header above - which is the one
+// PCSX2 patched locally for Metal (A16/A_MSL/A_MAYBE_UNUSED) and that ffx_cas.h depends on.
+// So only the shader gets the 2021 copy; nothing here includes ffx_a_fsr1.h.
+#include "bin/resources/shaders/common/ffx_fsr1.h"
 
 #if defined(__clang__)
 #pragma clang diagnostic pop
@@ -1218,8 +1512,28 @@ bool GSDevice::GetCASShaderSource(std::string* source)
 	return true;
 }
 
+bool GSDevice::GetFSR1ShaderSource(std::string* source, bool easu_pass)
+{
+	std::optional<std::string> ffx_a_source = ReadShaderSource("shaders/common/ffx_a_fsr1.h");
+	std::optional<std::string> ffx_fsr1_source = ReadShaderSource("shaders/common/ffx_fsr1.h");
+	if (!ffx_a_source.has_value() || !ffx_fsr1_source.has_value())
+		return false;
+
+	// FSR_EASU_F/FSR_RCAS_F gate which function bodies ffx_fsr1.h emits at all, so the pass has
+	// to be chosen before the preprocessor runs. That is why this takes easu_pass rather than
+	// letting the backend pick with a specialization constant the way cas.glsl does.
+	source->insert(0, easu_pass ? "#version 460 core\n#define FSR_PASS_EASU 1\n"
+	                            : "#version 460 core\n#define FSR_PASS_EASU 0\n");
+
+	// Same cheeky string replace as CAS above - our shader compilers don't support includes.
+	StringUtil::ReplaceAll(source, "#include \"ffx_a_fsr1.h\"", ffx_a_source.value());
+	StringUtil::ReplaceAll(source, "#include \"ffx_fsr1.h\"", ffx_fsr1_source.value());
+	return true;
+}
+
 void GSDevice::CAS(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src_uv, const GSVector4& draw_rect, bool sharpen_only)
 {
+	FlushDeferredDraws();
 	const int dst_width = sharpen_only ? src_rect.width() : static_cast<int>(std::ceil(draw_rect.z - draw_rect.x));
 	const int dst_height = sharpen_only ? src_rect.height() : static_cast<int>(std::ceil(draw_rect.w - draw_rect.y));
 	const int src_offset_x = static_cast<int>(src_rect.x);
@@ -1258,6 +1572,7 @@ void GSDevice::CAS(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src_uv, con
 
 void GSDevice::MetalFXUpscale(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src_uv, const GSVector4& draw_rect)
 {
+	FlushDeferredDraws();
 	const int dst_width = static_cast<int>(std::ceil(draw_rect.z - draw_rect.x));
 	const int dst_height = static_cast<int>(std::ceil(draw_rect.w - draw_rect.y));
 	if (dst_width <= 0 || dst_height <= 0)
@@ -1283,6 +1598,86 @@ void GSDevice::MetalFXUpscale(GSTexture*& tex, GSVector4i& src_rect, GSVector4& 
 	}
 
 	tex = m_mfx_output;
+	src_rect = GSVector4i(0, 0, dst_width, dst_height);
+	src_uv = GSVector4(0.0f, 0.0f, 1.0f, 1.0f);
+}
+
+void GSDevice::FSR1Upscale(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src_uv, const GSVector4& draw_rect)
+{
+	FlushDeferredDraws();
+	const int dst_width = static_cast<int>(std::ceil(draw_rect.z - draw_rect.x));
+	const int dst_height = static_cast<int>(std::ceil(draw_rect.w - draw_rect.y));
+	if (dst_width <= 0 || dst_height <= 0)
+		return;
+
+	// Anchored inside FSR1Upscale explicitly: the first attempt at this matched an identical
+	// "GSTexture* src_tex = tex;" line in GSDevice::CAS, which FSR REPLACES, so the log could
+	// never fire and made a working pass look dead.
+	static int s_logged_w = 0, s_logged_h = 0;
+	if (s_logged_w != dst_width || s_logged_h != dst_height)
+	{
+		s_logged_w = dst_width;
+		s_logged_h = dst_height;
+		Console.WriteLnFmt("@@ANDROID_FSR1@@ upscaling {}x{} -> {}x{} (sharpness {})",
+			tex->GetWidth(), tex->GetHeight(), dst_width, dst_height, GSConfig.FSR_Sharpness);
+	}
+
+	GSTexture* src_tex = tex;
+
+	// Two targets, not one: RCAS is a separate dispatch that reads EASU's whole output, so it
+	// cannot write in place.
+	if (!m_fsr1_easu || m_fsr1_easu->GetWidth() != dst_width || m_fsr1_easu->GetHeight() != dst_height)
+	{
+		delete m_fsr1_easu;
+		m_fsr1_easu = CreateSurface(GSTexture::ShaderWriteTexture, dst_width, dst_height, 1, GSTexture::Format::Color);
+		if (!m_fsr1_easu)
+		{
+			Console.Error("Failed to allocate FSR1 EASU texture.");
+			return;
+		}
+	}
+	if (!m_fsr1_output || m_fsr1_output->GetWidth() != dst_width || m_fsr1_output->GetHeight() != dst_height)
+	{
+		delete m_fsr1_output;
+		m_fsr1_output = CreateSurface(GSTexture::ShaderWriteTexture, dst_width, dst_height, 1, GSTexture::Format::Color);
+		if (!m_fsr1_output)
+		{
+			Console.Error("Failed to allocate FSR1 RCAS texture.");
+			return;
+		}
+	}
+
+	// Zero-initialised, and pushed whole by both passes: the shader reads the fifth vector
+	// ("Sample") unconditionally to pick AMD's gamma2 output path, which we never want.
+	std::array<u32, NUM_FSR1_CONSTANTS> consts = {};
+
+	// EASU distinguishes the displayed region from the resource holding it: the viewport is the
+	// cropped src_rect, the size is the whole texture, and the offset puts the two together.
+	FsrEasuConOffset(&consts[0], &consts[4], &consts[8], &consts[12],
+		static_cast<AF1>(src_rect.width()), static_cast<AF1>(src_rect.height()),
+		static_cast<AF1>(src_tex->GetWidth()), static_cast<AF1>(src_tex->GetHeight()),
+		static_cast<AF1>(dst_width), static_cast<AF1>(dst_height),
+		static_cast<AF1>(src_rect.x), static_cast<AF1>(src_rect.y));
+
+	if (!DoFSR1EASU(src_tex, m_fsr1_easu, consts))
+	{
+		// leave textures intact if we failed
+		Console.Warning("Applying FSR1 EASU failed.");
+		return;
+	}
+
+	// RCAS takes sharpness in stops - 0 is the maximum and each stop halves it - so the 0..100
+	// slider runs backwards across the 2..0 range AMD's own sample exposes.
+	std::array<u32, NUM_FSR1_CONSTANTS> rcas_consts = {};
+	FsrRcasCon(&rcas_consts[0], 2.0f - (static_cast<float>(GSConfig.FSR_Sharpness) * 0.02f));
+
+	if (!DoFSR1RCAS(m_fsr1_easu, m_fsr1_output, rcas_consts))
+	{
+		Console.Warning("Applying FSR1 RCAS failed.");
+		return;
+	}
+
+	tex = m_fsr1_output;
 	src_rect = GSVector4i(0, 0, dst_width, dst_height);
 	src_uv = GSVector4(0.0f, 0.0f, 1.0f, 1.0f);
 }
@@ -1344,7 +1739,7 @@ private:
 	}
 };
 
-static const char* GetTopologyName(GSHWDrawConfig::Topology topology)
+const char* GSGetTopologyName(GSHWDrawConfig::Topology topology)
 {
 	switch (topology)
 	{
@@ -1568,7 +1963,7 @@ static const char* GetBlendFactorFormula(GSDevice::BlendFactor blendfactor)
 	return "Unknown";
 }
 
-static const char* GetDestinationAlphaModeName(GSHWDrawConfig::DestinationAlphaMode datm)
+const char* GSGetDestinationAlphaModeName(GSHWDrawConfig::DestinationAlphaMode datm)
 {
 	switch (datm)
 	{
@@ -1618,7 +2013,7 @@ static const char* GetPSAA1Name(GSHWDrawConfig::PS_AA1 aa1)
 	return "Unknown";
 }
 
-static const char* GetTexHazardName(u32 tex_hazard)
+const char* GSGetTexHazardName(u32 tex_hazard)
 {
 	switch (tex_hazard)
 	{
@@ -1824,14 +2219,14 @@ static void DumpVSConstantBuffer(DrawConfigWriter& out, const GSHWDrawConfig::VS
 static void DumpConfig(DrawConfigWriter& out, const GSHWDrawConfig& conf,
 	bool ps, bool vs, bool bs, bool dss, bool ss, bool asp, bool bmp, bool cbvs, bool cbps)
 {
-	out.WriteLn("topology: {} ({})", GetTopologyName(conf.topology), static_cast<u32>(conf.topology));
+	out.WriteLn("topology: {} ({})", GSGetTopologyName(conf.topology), static_cast<u32>(conf.topology));
 	out.WriteLn("require_one_barrier: {}", conf.require_one_barrier);
 	out.WriteLn("require_full_barrier: {}", conf.require_full_barrier);
 	DumpVector4(out, "drawarea", conf.drawarea);
 	DumpVector4(out, "samplearea", conf.samplearea);
-	out.WriteLn("tex_hazard: {}", GetTexHazardName(conf.tex_hazard));
+	out.WriteLn("tex_hazard: {}", GSGetTexHazardName(conf.tex_hazard));
 
-	out.WriteLn("destination_alpha: {} ({})", GetDestinationAlphaModeName(conf.destination_alpha), static_cast<u32>(conf.destination_alpha));
+	out.WriteLn("destination_alpha: {} ({})", GSGetDestinationAlphaModeName(conf.destination_alpha), static_cast<u32>(conf.destination_alpha));
 	out.WriteLn("datm: {} ({})", GetSetDATMName(conf.datm), static_cast<u32>(conf.datm));
 	out.WriteLn("line_expand: {}", conf.line_expand);
 	out.WriteLn("colormask: {:x}", conf.colormask.wrgba);

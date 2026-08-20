@@ -16,7 +16,9 @@
 #include "Tools/InputRecording/InputRecordingViewer.h"
 #include "Settings/ControllerSettingsWindow.h"
 #include "Settings/SettingsWindow.h"
+#ifdef ENABLE_QT_DEBUGGER
 #include "Debugger/DebuggerWindow.h"
+#endif
 #include "ui_MainWindow.h"
 
 class QProgressBar;
@@ -33,6 +35,8 @@ namespace Achievements
 {
 	enum class LoginRequestReason;
 }
+
+#include "QtMetaTypes.h"
 
 namespace GameList
 {
@@ -115,7 +119,9 @@ public:
 	void doSettings(const char* category = nullptr);
 	void doGameSettings(const char* category = nullptr);
 
+#ifdef ENABLE_QT_DEBUGGER
 	void openDebugger();
+#endif
 	void checkMousePosition(int x, int y);
 public Q_SLOTS:
 	void checkForUpdates(bool display_message, bool force_check);
@@ -181,8 +187,7 @@ private Q_SLOTS:
 	void onViewSystemDisplayTriggered();
 	void onViewGamePropertiesActionTriggered();
 	void onGitHubRepositoryActionTriggered();
-	void onWikiActionTriggered();
-	void onDocumentationActionTriggered();
+	void onWebsiteActionTriggered();
 	void onAboutActionTriggered();
 	void onToolsOpenDataDirectoryTriggered();
 	void onToolsCoverDownloaderTriggered();

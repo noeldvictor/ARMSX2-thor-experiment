@@ -4,12 +4,32 @@
 import SwiftUI
 
 struct AppearanceSettingsView: View {
+    private enum PresentedEditor: String, Identifiable {
+        case colours
+
+        var id: String { rawValue }
+    }
+
     @State private var settings = SettingsStore.shared
+    @State private var dynamicPreferences = SettingsStore.shared.dynamicAppearancePreferences
+    @State private var paletteTarget: ThemePaletteTarget = .shared
+    @State private var presentedEditor: PresentedEditor?
+    @State private var isShowingBackgroundOnly = false
     @State private var showPrimaryPicker = false
     @State private var showLandscapePicker = false
+    @State private var isAppearanceVisible = false
+    @State private var ownsExclusiveBackgroundPreview = false
+    @Environment(\.menuTabIsActive) private var menuTabIsActive
+    @Environment(\.menuBackgroundHost) private var menuBackgroundHost
 
     var body: some View {
         Form {
+            DynamicBackgroundAppearanceSections(
+                preferences: $dynamicPreferences,
+                isPreviewActive: shouldRenderDynamicPreview,
+                showPaletteEditor: { presentedEditor = .colours }
+            )
+
             Section {
                 BackgroundAssetRow(
                     title: settings.localized("Primary Background"),
@@ -22,12 +42,12 @@ struct AppearanceSettingsView: View {
                 BackgroundAssetRow(
                     title: settings.localized("Landscape Background"),
                     asset: settings.backgroundLandscapeAsset,
-                    glyph: "rectangle.landscape",
+                    glyph: "rectangle",
                     caption: settings.localized("Optional. Used only when the device is held in landscape.")
                 ) { showLandscapePicker = true }
                 .modifier(BackgroundSourcePicker(isPresented: $showLandscapePicker, role: .landscape, existingAsset: { settings.backgroundLandscapeAsset }) { updateLandscape($0) })
             } header: {
-                Text(settings.localized("Library Background"))
+                Text(settings.localized("Background"))
             } footer: {
                 Text(settings.localized("Each orientation keeps its own background. Setting one never overwrites the other."))
             }
@@ -51,7 +71,7 @@ struct AppearanceSettingsView: View {
                         Text(label(for: mode)).tag(mode)
                     }
                 } label: {
-                    Label(settings.localized("Landscape Fit Mode"), systemImage: "rectangle.landscape")
+                    Label(settings.localized("Landscape Fit Mode"), systemImage: "rectangle")
                 }
                 .onChange(of: settings.backgroundLandscapeFitMode) { _, _ in
                     UISelectionFeedbackGenerator().selectionChanged()
@@ -69,23 +89,82 @@ struct AppearanceSettingsView: View {
                     Label(settings.localized("Mute Video"), systemImage: settings.backgroundVideoMuted ? "speaker.slash" : "speaker.wave.2")
                 }
 
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Label(settings.localized("Background Dim"), systemImage: "circle.lefthalf.filled")
-                        Spacer()
-                        Text(String(format: "%d%%", Int(settings.backgroundDim * 100)))
-                            .font(.subheadline.monospacedDigit())
-                            .foregroundStyle(.secondary)
-                    }
-                    Slider(value: $settings.backgroundDim, in: 0.0...1.0, step: 0.05) {
-                        Text(settings.localized("Background Dim"))
-                    }
-                    .accessibilityValue(String(format: "%d%%", Int(settings.backgroundDim * 100)))
+                NumberRow(.backgroundDim, value: $settings.backgroundDim, settings: settings)
+            }
+
+            Section {
+                Toggle(isOn: $settings.backgroundEnabledInBIOS) {
+                    Label(settings.localized("BIOS"), systemImage: "cpu")
                 }
-                .padding(.vertical, 4)
+                Toggle(isOn: $settings.backgroundEnabledInSettings) {
+                    Label(settings.localized("Settings"), systemImage: "gearshape")
+                }
+            } header: {
+                Text(settings.localized("Show Background In"))
+            } footer: {
+                Text(settings.localized("The background always shows behind Games. BIOS and Settings can be toggled independently. Dim or mute from the settings above."))
+            }
+
+            Section {
+                Toggle(isOn: $settings.clearLiquidGlassUI) {
+                    Label(settings.localized("Clear Liquid Glass UI"), systemImage: "rectangle.on.rectangle")
+                }
+                Toggle(isOn: $settings.clearLiquidGlassUIQuickMenu) {
+                    Label(settings.localized("Clear Liquid Glass UI Quick Menu"), systemImage: "pause.rectangle")
+                }
+                Toggle(isOn: $settings.gameCardZoomAnimationEnabled) {
+                    Label(settings.localized("Game-Card Zoom Animation"), systemImage: "rectangle.inset.filled.and.person.filled")
+                }
+            } header: {
+                Text(settings.localized("Interface"))
+            } footer: {
+                Text(settings.localized("Choose the clear Liquid Glass style independently for the main interface and Quick Menu. Disabled options use the more opaque regular Liquid Glass style."))
             }
         }
         .navigationTitle(settings.localized("Appearance"))
+        .sheet(item: $presentedEditor, onDismiss: paletteEditorDidDismiss) { _ in
+            ThemePaletteEditor(
+                target: $paletteTarget,
+                preferences: $dynamicPreferences,
+                isShowingBackgroundOnly: $isShowingBackgroundOnly,
+                dynamicBackground: dynamicPreferences.dynamicBackground,
+                onSaveAppearance: saveDynamicAppearance
+            )
+            .presentationDetents([.large])
+        }
+        .onAppear {
+            isAppearanceVisible = true
+            synchronizeExclusivePreview()
+            dynamicPreferences = settings.dynamicAppearancePreferences
+        }
+        .onChange(of: menuTabIsActive) { _, _ in
+            synchronizeExclusivePreview()
+        }
+        .onDisappear {
+            isAppearanceVisible = false
+            synchronizeExclusivePreview()
+        }
+    }
+
+    private var shouldRenderDynamicPreview: Bool {
+        isAppearanceVisible
+            && menuTabIsActive
+            && presentedEditor == nil
+    }
+
+    private func synchronizeExclusivePreview() {
+        let shouldOwnPreview = isAppearanceVisible && menuTabIsActive
+        guard shouldOwnPreview != ownsExclusiveBackgroundPreview,
+              let menuBackgroundHost else {
+            return
+        }
+
+        if shouldOwnPreview {
+            menuBackgroundHost.beginExclusivePreview()
+        } else {
+            menuBackgroundHost.endExclusivePreview()
+        }
+        ownsExclusiveBackgroundPreview = shouldOwnPreview
     }
 
     @ViewBuilder
@@ -120,13 +199,24 @@ struct AppearanceSettingsView: View {
         }
     }
 
+    private func saveDynamicAppearance() {
+        settings.dynamicAppearancePreferences = dynamicPreferences
+    }
+
+    private func paletteEditorDidDismiss() {
+        isShowingBackgroundOnly = false
+        dynamicPreferences = settings.dynamicAppearancePreferences
+    }
+
     private func updatePrimary(_ asset: BackgroundAsset?) {
         if asset == nil { BackgroundStorage.remove(settings.backgroundPrimaryAsset) }
+        if asset != nil { settings.dynamicBackgroundsEnabled = false }
         settings.backgroundPrimaryAsset = asset
     }
 
     private func updateLandscape(_ asset: BackgroundAsset?) {
         if asset == nil { BackgroundStorage.remove(settings.backgroundLandscapeAsset) }
+        if asset != nil { settings.dynamicBackgroundsEnabled = false }
         settings.backgroundLandscapeAsset = asset
     }
 }

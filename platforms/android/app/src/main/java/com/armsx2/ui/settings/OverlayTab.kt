@@ -20,6 +20,29 @@ import com.armsx2.ui.InGameOverlay
 import com.armsx2.ui.UiScale
 import androidx.core.content.edit
 
+/** OSD text colours as 0xRRGGBB, index-aligned with [OSD_COLOR_LABEL_KEYS]. 0 = default white.
+ *  Deliberately light/desaturated: the OSD draws over gameplay with only a soft shadow behind
+ *  it, so fully-saturated colours read badly on bright scenes.
+ *  Internal, not private: the in-game quick menu cycles the same palette, and two copies would
+ *  drift the moment one gains a colour. */
+internal val OSD_COLORS = listOf(
+    0x000000, // default (white — 0 means "unset" to the renderer)
+    0x66FF66, // green
+    0x66E0FF, // cyan
+    0xFFE066, // yellow
+    0xFFA64D, // orange
+    0xFF6666, // red
+    0xFF7AC8, // pink
+    0xC08CFF, // purple
+)
+
+/** i18n keys for [OSD_COLORS], same order. */
+internal val OSD_COLOR_LABEL_KEYS = listOf(
+    "overlay.osdColor.default", "overlay.osdColor.green", "overlay.osdColor.cyan",
+    "overlay.osdColor.yellow", "overlay.osdColor.orange", "overlay.osdColor.red",
+    "overlay.osdColor.pink", "overlay.osdColor.purple",
+)
+
 /**
  * Performance Overlay element toggles. Lets the user show/hide individual
  * parts of the on-screen stats overlay (the master OSD pill on the Play tab
@@ -50,16 +73,64 @@ fun OverlayTab(state: MutableState<Settings>) {
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
+        // All three size sliders sit together at the top. The first scales the emulator's OSD
+        // (the perf/stat readout drawn over the game); the two below scale the app's own menus.
+        // They used to be split across the tab AND shared one label key, so this slider read as
+        // "UI Size (borders)" while actually driving osdScale — two settings, one name.
         IntSliderRow(
-            label = str("overlay.uiSize.label"),
+            label = str("overlay.osdSize.label"),
             value = s.osdScale,
             min = 50,
             max = 250,
-            description = str("overlay.uiSize.description"),
+            description = str("overlay.osdSize.description"),
             valueFormatter = { "$it%" },
             onChange = { apply(s.copy(osdScale = it)) },
         )
         SettingsDivider()
+
+        // OSD text colour. A preset row rather than an RGB picker: SegmentedRow is already
+        // controller-navigable (Left/Right/Confirm), whereas a colour wheel would demand
+        // pointer input and strand pad-only devices. 0 = leave it white, so nobody's OSD
+        // changes appearance until they choose to.
+        SegmentedRow(
+            label = str("overlay.osdColor.label"),
+            options = OSD_COLOR_LABEL_KEYS.map { str(it) },
+            selectedIndex = OSD_COLORS.indexOf(s.osdColor).coerceAtLeast(0),
+            description = str("overlay.osdColor.description"),
+            onChange = { apply(s.copy(osdColor = OSD_COLORS[it])) },
+        )
+        SettingsDivider()
+
+        // Interface scaling (global, not per-game): resize the library / menu chrome
+        // and text for different screen aspect ratios / handheld sizes. Does NOT
+        // touch the game image or the on-screen touch controls.
+        Text(
+            str("overlay.interfaceScaling.description"),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 14.sp,
+            modifier = Modifier.padding(top = 4.dp, bottom = 6.dp),
+        )
+        IntSliderRow(
+            label = str("overlay.uiSize.label"),
+            value = (UiScale.borderScale.value * 100f).toInt(),
+            min = (UiScale.MIN * 100f).toInt(),
+            max = (UiScale.BORDER_MAX * 100f).toInt(),
+            description = str("overlay.uiSize.description"),
+            valueFormatter = { "$it%" },
+            onChange = { UiScale.setBorderScale(it / 100f) },
+        )
+        SettingsDivider()
+        IntSliderRow(
+            label = str("overlay.uiFontSize.label"),
+            value = (UiScale.fontScale.value * 100f).toInt(),
+            min = (UiScale.MIN * 100f).toInt(),
+            max = (UiScale.MAX * 100f).toInt(),
+            description = str("overlay.uiFontSize.description"),
+            valueFormatter = { "$it%" },
+            onChange = { UiScale.setFontScale(it / 100f) },
+        )
+        SettingsDivider()
+
         ToggleRow(str("overlay.toggle.gpuUsage"), s.osdShowGpu) {
             apply(s.copy(osdShowGpu = it))
         }
@@ -98,35 +169,5 @@ fun OverlayTab(state: MutableState<Settings>) {
             ffToasts.value = it
             com.armsx2.runtime.MainActivityRuntime.prefs.edit { putBoolean("ui.hotkeyToasts", it) }
         }
-        SettingsDivider()
-
-        // Interface scaling (global, not per-game): resize the library / menu chrome
-        // and text for different screen aspect ratios / handheld sizes. Does NOT
-        // touch the game image or the on-screen touch controls.
-        Text(
-            str("overlay.interfaceScaling.description"),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontSize = 14.sp,
-            modifier = Modifier.padding(top = 10.dp, bottom = 6.dp),
-        )
-        IntSliderRow(
-            label = str("overlay.uiSize.label"),
-            value = (UiScale.borderScale.value * 100f).toInt(),
-            min = (UiScale.MIN * 100f).toInt(),
-            max = (UiScale.BORDER_MAX * 100f).toInt(),
-            description = str("overlay.uiSize.description"),
-            valueFormatter = { "$it%" },
-            onChange = { UiScale.setBorderScale(it / 100f) },
-        )
-        SettingsDivider()
-        IntSliderRow(
-            label = str("overlay.uiFontSize.label"),
-            value = (UiScale.fontScale.value * 100f).toInt(),
-            min = (UiScale.MIN * 100f).toInt(),
-            max = (UiScale.MAX * 100f).toInt(),
-            description = str("overlay.uiFontSize.description"),
-            valueFormatter = { "$it%" },
-            onChange = { UiScale.setFontScale(it / 100f) },
-        )
     }
 }

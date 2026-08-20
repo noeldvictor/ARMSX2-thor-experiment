@@ -67,6 +67,12 @@ void main()
 	gl_Position.z *= exp2(-32.0f);		// integer->float depth
 	gl_Position.y = -gl_Position.y;
 
+#if GPU_PROFILE_MALI
+	// Mali HW bug (PPSSPP EQUAL_WZ_CORRUPTS_DEPTH): clip-space z == w corrupts the
+	// depth buffer after the perspective divide. Nudge z off w. No-op off Mali.
+	if (gl_Position.z == gl_Position.w) gl_Position.z *= 0.999999f;
+#endif
+
 	#if VS_TME
 		vec2 uv = a_uv - TextureOffset;
 		vec2 st = a_st - TextureOffset;
@@ -311,7 +317,11 @@ void main()
 
 	bool is_bottom = (vid & 2u) != 0u;
 	bool is_right = (vid & 1u) != 0u;
+#if VS_PROVOKING_VERTEX_LAST
 	uint vid_other = is_bottom ? vid_base - 1 : vid_base + 1;
+#else
+	uint vid_other = is_bottom ? vid_base + 1 : vid_base - 1;
+#endif
 
 	vtx = load_vertex(vid_base);
 	ProcessedVertex other = load_vertex(vid_other);
@@ -450,11 +460,20 @@ void main()
 		vsOut.inv_cov = is_near_corner ? 0.0f : 1.0f; // Full coverage at near corner, otherwise none.
 	
 		vsOut.interior = 0;
+
+		#if !VS_IIP
+			// Get the provoking vertex color (last vertex in VK)
+			vtx.c = i0 == 2 ? vtx.c : (i1 == 2 ? other.c : opposite.c);
+		#endif
 	}
 
 #endif
 
 	gl_Position = vtx.p;
+#if GPU_PROFILE_MALI
+	// Mali EQUAL_WZ_CORRUPTS_DEPTH nudge (VS_EXPAND path); see the direct path above.
+	if (gl_Position.z == gl_Position.w) gl_Position.z *= 0.999999f;
+#endif
 	vsOut.t = vtx.t;
 	vsOut.ti = vtx.ti;
 	vsOut.c = vtx.c;
@@ -587,7 +606,7 @@ void main()
 
 #define PS_FEEDBACK_LOOP_IS_NEEDED_RT (PS_TEX_IS_FB == 1 || AFAIL_NEEDS_RT || PS_FBMASK || SW_BLEND_NEEDS_RT || SW_AD_TO_HW || (PS_DATE >= 5))
 #define PS_FEEDBACK_LOOP_IS_NEEDED_DEPTH (AFAIL_NEEDS_DEPTH || ZTST_NEEDS_DEPTH || AA1_NEEDS_DEPTH)
-#define ZWRITE (PS_ZCLAMP || PS_ZFLOOR || SW_DEPTH || PS_FEEDBACK_LOOP_IS_NEEDED_DEPTH)
+#define ZWRITE (PS_ZCLAMP || PS_ZFLOOR || PS_FEEDBACK_LOOP_IS_NEEDED_DEPTH)
 
 #define PS_RETURN_COLOR_ROV (!PS_NO_COLOR && PS_ROV_COLOR)
 #define PS_RETURN_COLOR (!PS_NO_COLOR && !PS_ROV_COLOR)
@@ -698,7 +717,9 @@ layout(set = 1, binding = 3) uniform texture2D PrimMinTexture;
 #endif
 
 #if ZWRITE && !PS_FEEDBACK_LOOP_IS_NEEDED_DEPTH
-layout(depth_less) out float gl_FragDepth;
+// depth_less would allow conservative early-Z, but floor(z*2^32)*2^-32 can exceed z
+// due to float32 rounding, violating the depth_less contract and silently culling geometry.
+out float gl_FragDepth;
 #endif
 
 #if NEEDS_TEX
@@ -920,7 +941,7 @@ vec4 clamp_wrap_uv(vec4 uv)
 			// textures. Fixes Xenosaga's hair issue.
 			uv = fract(uv);
 			#endif
-			uv = vec4((uvec4(uv * tex_size) & floatBitsToUint(MinMax.xyxy)) | floatBitsToUint(MinMax.zwzw)) / tex_size;
+			uv = vec4(gpu_bitwise_and(uvec4(uv * tex_size), floatBitsToUint(MinMax.xyxy)) | floatBitsToUint(MinMax.zwzw)) / tex_size;
 		}
 		#endif
 	}
@@ -943,7 +964,7 @@ vec4 clamp_wrap_uv(vec4 uv)
 			#if PS_FST == 0
 			uv.xz = fract(uv.xz);
 			#endif
-			uv.xz = vec2((uvec2(uv.xz * tex_size.xx) & floatBitsToUint(MinMax.xx)) | floatBitsToUint(MinMax.zz)) / tex_size.xx;
+			uv.xz = vec2(gpu_bitwise_and(uvec2(uv.xz * tex_size.xx), floatBitsToUint(MinMax.xx)) | floatBitsToUint(MinMax.zz)) / tex_size.xx;
 		}
 		#endif
 		#if PS_REGION_RECT == 1 && PS_WMT == 0
@@ -963,7 +984,7 @@ vec4 clamp_wrap_uv(vec4 uv)
 			#if PS_FST == 0
 			uv.yw = fract(uv.yw);
 			#endif
-			uv.yw = vec2((uvec2(uv.yw * tex_size.yy) & floatBitsToUint(MinMax.yy)) | floatBitsToUint(MinMax.ww)) / tex_size.yy;
+			uv.yw = vec2(gpu_bitwise_and(uvec2(uv.yw * tex_size.yy), floatBitsToUint(MinMax.yy)) | floatBitsToUint(MinMax.ww)) / tex_size.yy;
 		}
 		#endif
 	}
@@ -1303,7 +1324,7 @@ vec4 sample_color(vec2 st)
 		#if (PS_AEM_FMT == FMT_24)
 			c[i].a = (PS_AEM == 0 || any(bvec3(c[i].rgb))) ? TA.x : 0.0f;
 		#elif (PS_AEM_FMT == FMT_16)
-			c[i].a = (c[i].a >= 0.5) ? TA.y : ((PS_AEM == 0 || any(bvec3(ivec3(c[i].rgb * 255.0f) & ivec3(0xF8)))) ? TA.x : 0.0f);
+			c[i].a = (c[i].a >= 0.5) ? TA.y : ((PS_AEM == 0 || any(bvec3(gpu_bitwise_and(ivec3(c[i].rgb * 255.0f), ivec3(0xF8))))) ? TA.x : 0.0f);
 		#endif
 	}
 
@@ -1435,7 +1456,7 @@ vec4 ps_color()
 			T.a = float(denorm_c_before.g & 0x80u);
 		#endif
 
-		T.a = ((T.a >= 127.5f) ? TA.y : ((PS_AEM == 0 || any(bvec3(ivec3(T.rgb) & ivec3(0xF8)))) ? TA.x : 0.0f)) * 255.0f;
+		T.a = ((T.a >= 127.5f) ? TA.y : ((PS_AEM == 0 || any(bvec3(gpu_bitwise_and(ivec3(T.rgb), ivec3(0xF8))))) ? TA.x : 0.0f)) * 255.0f;
 	#endif
 
 	vec4 C = tfx(T, vsIn.c);
@@ -1453,7 +1474,7 @@ void ps_fbmask(inout vec4 C)
 		#else
 			vec4 RT = trunc(sample_from_rt() * 255.0f + 0.1f);
 		#endif
-		C = vec4((uvec4(C) & ~FbMask) | (uvec4(RT) & FbMask));
+		C = vec4(gpu_bitwise_and(uvec4(C), ~FbMask) | gpu_bitwise_and(uvec4(RT), FbMask));
 	#endif
 }
 
@@ -1468,7 +1489,7 @@ void ps_dither(inout vec3 C, float As)
 			fpos = ivec2(gl_FragCoord.xy * RcpScaleFactor);
 		#endif
 
-		float value = DitherMatrix[fpos.y & 3][fpos.x & 3];
+		float value = gpu_matrix_element(DitherMatrix, fpos.y & 3, fpos.x & 3);
 
 		// The idea here is we add on the dither amount adjusted by the alpha before it goes to the hw blend
 		// so after the alpha blend the resulting value should be the same as (Cs - Cd) * As + Cd + Dither.
@@ -1514,13 +1535,13 @@ void ps_color_clamp_wrap(inout vec3 C)
 	// GPU: Color = 1/255, Alpha = 255/255 * 255/128 => output 1.9921875
 #if PS_DST_FMT == FMT_16 && PS_DITHER != 3 && (PS_BLEND_MIX == 0 || PS_DITHER > 0)
 	// In 16 bits format, only 5 bits of colors are used. It impacts shadows computation of Castlevania
-	C = vec3(ivec3(C) & ivec3(0xF8));
+	C = vec3(gpu_bitwise_and(ivec3(C), ivec3(0xF8)));
 #elif PS_COLCLIP == 1 || PS_COLCLIP_HW == 1
-	C = vec3(ivec3(C) & ivec3(0xFF));
+	C = vec3(gpu_bitwise_and(ivec3(C), ivec3(0xFF)));
 #endif
 
 #elif PS_DST_FMT == FMT_16 && PS_DITHER != 3 && PS_BLEND_MIX == 0 && PS_BLEND_HW == 0
-	C = vec3(ivec3(C) & ivec3(0xF8));
+	C = vec3(gpu_bitwise_and(ivec3(C), ivec3(0xF8)));
 #endif
 }
 
@@ -1923,7 +1944,11 @@ void main()
 
 	// Output color scaling
 	#if !PS_NO_COLOR
-		#if PS_RTA_CORRECTION
+		#if PS_BLEND_FACTOR_IN_ALPHA
+			// No dual-source blend unit here. Nothing is keeping this pass's alpha, so hand the
+			// blend factor to fixed-function SRC_ALPHA through it instead of a second output.
+			o_col0.a = alpha_blend.a;
+		#elif PS_RTA_CORRECTION
 			o_col0.a = C.a / 128.0f;
 		#else
 			o_col0.a = C.a / 255.0f;

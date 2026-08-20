@@ -15,6 +15,10 @@
 #
 # Usage:  VC=<versionCode> VN=<versionName> tools/build-play-aab.sh [output.aab]
 # Env:    PROF (default ~/Downloads/armsx2.profdata), PKG (default come.nanodata.armsx2)
+#         PGO_MODE (default optimize; none|generate|optimize) — matches the sibling
+#         build-release-apk.sh. This was hardcoded to "optimize", so a caller asking
+#         for a profile-free build got one silently built against the profile anyway,
+#         and only the core .so size gave it away.
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"   # platforms/android
@@ -46,7 +50,7 @@ rm -f "$APK16"
 "$GRADLE" -p "$ROOT_DIR" :app:assemblePlayRelease \
 	-Parmsx2.applicationId="$PKG" \
 	-Parmsx2.hostPageSize=0x4000 -Parmsx2.nativeLibName=emucore_16k \
-	-Parmsx2.pgo=optimize -Parmsx2.pgoProfile="$PROF" \
+	-Parmsx2.pgo="${PGO_MODE:-optimize}" -Parmsx2.pgoProfile="$PROF" \
 	-Parmsx2.versionCode="$VC" -Parmsx2.versionName="$VN"
 [[ -f "$APK16" ]] || { echo "FATAL no 16k play apk" >&2; exit 1; }
 mkdir -p "$JNI"
@@ -60,7 +64,7 @@ rm -f "$AAB"
 "$GRADLE" -p "$ROOT_DIR" :app:bundlePlayRelease \
 	-Parmsx2.applicationId="$PKG" \
 	-Parmsx2.hostPageSize=0x1000 -Parmsx2.nativeLibName=emucore_4k \
-	-Parmsx2.pgo=optimize -Parmsx2.pgoProfile="$PROF" \
+	-Parmsx2.pgo="${PGO_MODE:-optimize}" -Parmsx2.pgoProfile="$PROF" \
 	-Parmsx2.versionCode="$VC" -Parmsx2.versionName="$VN"
 [[ -f "$AAB" ]] || { echo "FATAL bundlePlayRelease produced no AAB" >&2; exit 1; }
 cp -f "$AAB" "$OUTPUT_AAB"
@@ -70,7 +74,7 @@ rm -f "$JNI/libemucore_16k.so"
 
 echo; echo "================= VERIFY ================="
 echo "-- both cores in AAB (expect 4k AND 16k) --"
-n_cores=$(unzip -l "$OUTPUT_AAB" | grep -cE "libemucore_(4k|16k)\.so" || true)
+n_cores=$(unzip -l "$OUTPUT_AAB" | grep -cE "base/lib/arm64-v8a/libemucore_(4k|16k)\.so$" || true)
 unzip -l "$OUTPUT_AAB" | grep -E "libemucore_(4k|16k)\.so" || { echo "FATAL cores missing" >&2; exit 1; }
 [[ "$n_cores" -eq 2 ]] || { echo "FATAL expected 2 cores, got $n_cores" >&2; exit 1; }
 echo "-- package (must be $PKG) --"
@@ -79,6 +83,14 @@ unzip -p "$OUTPUT_AAB" base/manifest/AndroidManifest.xml | strings | grep -oE "c
 echo "-- MANAGE_EXTERNAL_STORAGE must be ABSENT (play flavor) --"
 if unzip -p "$OUTPUT_AAB" base/manifest/AndroidManifest.xml | strings | grep -q "MANAGE_EXTERNAL_STORAGE"; then
 	echo "  !! FATAL: MANAGE_EXTERNAL_STORAGE present in play AAB" >&2; exit 1
+else echo "  absent OK"; fi
+echo "-- REQUEST_INSTALL_PACKAGES must be ABSENT (self-updating violates Play policy) --"
+if unzip -p "$OUTPUT_AAB" base/manifest/AndroidManifest.xml | strings | grep -q "REQUEST_INSTALL_PACKAGES"; then
+	echo "  !! FATAL: REQUEST_INSTALL_PACKAGES present in play AAB (in-app updater leaked into the Play build)" >&2; exit 1
+else echo "  absent OK"; fi
+echo "-- libarmsx2_lsfg.so must be ABSENT (frame generation is github-flavour only) --"
+if unzip -l "$OUTPUT_AAB" | grep -q "libarmsx2_lsfg.so"; then
+	echo "  !! FATAL: libarmsx2_lsfg.so present in play AAB (LSFG leaked into the Play build)" >&2; exit 1
 else echo "  absent OK"; fi
 echo "-- versionName --"
 unzip -p "$OUTPUT_AAB" base/manifest/AndroidManifest.xml | strings | grep -oE "$VN" | head -1

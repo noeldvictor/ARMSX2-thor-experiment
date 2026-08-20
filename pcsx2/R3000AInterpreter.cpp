@@ -109,11 +109,12 @@ void psxJR()
 
 void psxJALR()
 {
+	const u32 target = _u32(_rRs_); // latch the target before linking
 	if (_Rd_)
 	{
 		_SetLink(_Rd_);
 	}
-	doBranch(_u32(_rRs_));
+	doBranch(target);
 }
 
 void psxBreakpoint(bool memcheck)
@@ -247,7 +248,7 @@ static void doBranch(s32 tar) {
 	}
 
 	// Override the memory size argument to IOPBOOT
-	if(tar == 0xbfc4a000) {
+	if(static_cast<u32>(tar) == 0xbfc4a000) {
 		psxRegs.GPR.n.a0 = Ps2MemSize::ExposedIopRam >> 20;
 	}
 

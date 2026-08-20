@@ -7,6 +7,7 @@
 #include "MTVU.h"
 #include "Host.h"
 #include "IconsFontAwesome.h"
+#include "PerformanceMetrics.h"
 #include "VMManager.h"
 
 #include "common/FPControl.h"
@@ -17,6 +18,7 @@
 #include <list>
 #include <mutex>
 #include <thread>
+#include <vector>
 
 // Uncomment this to enable profiling of the GS RingBufferCopy function.
 //#define PCSX2_GSRING_SAMPLING_STATS
@@ -144,6 +146,7 @@ void MTGS::ShutdownThread()
 void MTGS::ThreadEntryPoint()
 {
 	Threading::SetNameOfCurrentThread("GS");
+	PerformanceMetrics::AdpfRegisterCallingThread(); // ADPF: hint the GS thread's core (Android)
 
 	// GS can hit SMC write traps when executing InitAndReadFIFO
 	// As racey as it sounds, it should be safe, since InitAndReadFIFO is requested and immediately waited for,
@@ -282,7 +285,23 @@ void MTGS::PostVsyncStart(bool registers_written)
 
 void MTGS::InitAndReadFIFO(u8* mem, u32 qwc)
 {
-	if (EmuConfig.GS.HWDownloadMode >= GSHardwareDownloadMode::Unsynchronized && GSIsHardwareRenderer())
+	if (EmuConfig.GS.HWDownloadMode == GSHardwareDownloadMode::Asynchronous && GSIsHardwareRenderer())
+	{
+		// Hand back the CPU-side shadow of GS memory immediately; the ordered GS-thread command
+		// below schedules the real GPU download, which refreshes that shadow a few frames later.
+		// The EE thread never waits on the GS thread here.
+		GSReadLocalMemoryUnsync(mem, qwc, vif1.BITBLTBUF._u64, vif1.TRXPOS._u64, vif1.TRXREG._u64);
+		SendSimplePacket(Command::AsyncReadFIFO, static_cast<int>(qwc), 0, 0);
+		SetEvent();
+		return;
+	}
+
+	// NOTE: GSHardwareDownloadMode is no longer ordered (Asynchronous is appended after
+	// Disabled), so this has to enumerate the modes explicitly. NoReadbacks is deliberately
+	// NOT in this set — it falls through to the synchronizing path below.
+	if ((EmuConfig.GS.HWDownloadMode == GSHardwareDownloadMode::Unsynchronized ||
+			EmuConfig.GS.HWDownloadMode == GSHardwareDownloadMode::Disabled) &&
+		GSIsHardwareRenderer())
 	{
 		if (EmuConfig.GS.HWDownloadMode == GSHardwareDownloadMode::Unsynchronized)
 			GSReadLocalMemoryUnsync(mem, qwc, vif1.BITBLTBUF._u64, vif1.TRXPOS._u64, vif1.TRXREG._u64);
@@ -464,7 +483,7 @@ void MTGS::MainLoop()
 					{
 						mtvu_lock.unlock();
 						// Wait for MTVU to complete vu1 program
-						vu1Thread.semaXGkick.Wait();
+						vu1Thread.semaXGkick.WaitWithSpin();
 						mtvu_lock.lock();
 					}
 					Gif_Path& path = gifUnit.gifPath[GIF_PATH_1];
@@ -545,6 +564,19 @@ void MTGS::MainLoop()
 							MTGS_LOG("(MTGS Packet Read) ringtype=Fifo2, size=%d", tag.data[0]);
 							GSInitAndReadFIFO((u8*)tag.pointer, tag.data[0]);
 							break;
+
+						case Command::AsyncReadFIFO:
+						{
+							// The EE thread already took its answer from the shadow; this only
+							// exists to issue the GPU download that refreshes it. The result goes
+							// into a scratch buffer (some GS formats write one quadword past the
+							// requested transfer size, hence the +1).
+							MTGS_LOG("(MTGS Packet Read) ringtype=AsyncFifo, size=%d", tag.data[0]);
+							static thread_local std::vector<u8> async_fifo_buffer;
+							async_fifo_buffer.resize((static_cast<size_t>(tag.data[0]) + 1) * 16);
+							GSInitAndReadFIFO(async_fifo_buffer.data(), tag.data[0]);
+						}
+						break;
 
 #ifdef PCSX2_DEVBUILD
 						default:
@@ -924,6 +956,25 @@ void MTGS::Freeze(FreezeAction mode, MTGS::FreezeData& data)
 
 void MTGS::RunOnGSThread(AsyncCallType func)
 {
+	// The ring is single-producer: s_WritePos is owned by the CPU/EE thread, and the send path
+	// below is a relaxed load / slot write / release store with no CAS. A second producer makes
+	// both writers claim the same slot and both advance the position, so one packet is dropped —
+	// if the loser was a data-packet header the GS thread then parses payload qwords as command
+	// tags and dereferences a garbage pointer as an AsyncCallType. It also desyncs the
+	// pending-packet count, which lost-wakeup-deadlocks a WaitGS'ing EE against a sleeping GS
+	// thread (see the same reasoning spelled out in PINE.cpp's BuildStatsJson).
+	//
+	// So: marshal first. Host::RunOnGSThread() is the primitive for that — it chains through
+	// Host::RunOnCPUThread(), whose queue the CPU thread drains every vsync via
+	// PollInputOnCPUThread(). Dev-only because the remaining Android/iOS offenders should surface
+	// as a debuggable assert during development, not an abort in a shipped build.
+	//
+	// The data-packet path (PrepDataPacket/SendDataPacket/SendSimpleGSPacket) is deliberately not
+	// asserted: it is reached only from Gif_Unit, which is EE-thread code by construction, and it
+	// is hot enough that even a dev-build check per GIF packet is not worth it.
+	pxAssertMsg(VMManager::Internal::IsOnCPUThread(),
+		"MTGS::RunOnGSThread() off the CPU thread — use Host::RunOnGSThread() instead");
+
 	SendPointerPacket(Command::AsyncCall, 0, new AsyncCallType(std::move(func)));
 
 	// wake the gs thread in case it's sleeping
@@ -945,9 +996,9 @@ void MTGS::ApplySettings()
 	});
 
 	// We need to synchronize the thread when changing any settings when the download mode
-	// is unsynchronized, because otherwise we might potentially read in the middle of
-	// the GS renderer being reopened.
-	if (EmuConfig.GS.HWDownloadMode == GSHardwareDownloadMode::Unsynchronized)
+	// reads local memory from the EE thread, because otherwise we might potentially read in
+	// the middle of the GS renderer being reopened.
+	if (IsHardwareDownloadEEThreadRead(EmuConfig.GS.HWDownloadMode))
 		WaitGS(false, false, false);
 }
 
@@ -1008,7 +1059,7 @@ void MTGS::SetSoftwareRendering(bool software, GSInterlaceMode interlace, bool d
 	});
 
 	// See note in ApplySettings() for reasoning here.
-	if (EmuConfig.GS.HWDownloadMode == GSHardwareDownloadMode::Unsynchronized)
+	if (IsHardwareDownloadEEThreadRead(EmuConfig.GS.HWDownloadMode))
 		WaitGS(false, false, false);
 }
 

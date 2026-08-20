@@ -38,6 +38,7 @@ namespace GameDatabaseSchema
 		Normal,
 		Extra,
 		Full,
+		Exact, // eeClampMode only; the VUs stop at Extra+Preserve Sign.
 		Count
 	};
 
@@ -63,6 +64,7 @@ namespace GameDatabaseSchema
 		DrawBuffering,
 		PCRTCOffsets,
 		PCRTCOverscan,
+		CoalesceRenderPasses,
 
 		// integer settings
 		TrilinearFiltering,
@@ -83,6 +85,7 @@ namespace GameDatabaseSchema
 		RecommendedBlendingLevel,
 		RecommendedAccurateAlphaTest,
 		RecommendedHWAA1,
+		HWDownloadMode,
 		GetSkipCount,
 		BeforeDraw,
 		MoveHandler,

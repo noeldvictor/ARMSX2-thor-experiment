@@ -27,10 +27,15 @@ using GSMTLView = UIView;
 #include <AppKit/AppKit.h>
 using GSMTLView = NSView;
 #endif
-// MetalFX spatial upscaler ships on macOS 13+ and iOS 16+. It is weak-linked
-// (see CMakeLists.txt) so the binary still loads on older OS revisions, and
-// every call site is guarded by @available plus a runtime supportsDevice: probe.
-#include <MetalFX/MetalFX.h>
+// MetalFX upscaler: macOS 13+ / iOS 16+, weak-linked on device. The simulator
+// SDK has no MetalFX headers, so PCSX2_HAS_METALFX is 0 there and every
+// MetalFX reference is compiled out; m_features.metalfx_spatial stays false.
+#if TARGET_OS_SIMULATOR
+	#define PCSX2_HAS_METALFX 0
+#else
+	#define PCSX2_HAS_METALFX 1
+	#include <MetalFX/MetalFX.h>
+#endif
 #include <Metal/Metal.h>
 #include <QuartzCore/QuartzCore.h>
 #include <atomic>
@@ -87,7 +92,7 @@ struct PipelineSelectorMTL
 	GSHWDrawConfig::PSSelector ps;
 	PipelineSelectorExtrasMTL extras;
 	GSHWDrawConfig::VSSelector vs;
-	u8 pad[7];
+	u8 pad[3];
 	PipelineSelectorMTL()
 	{
 		memset(this, 0, sizeof(*this));
@@ -114,7 +119,7 @@ struct PipelineSelectorMTL
 	}
 };
 
-static_assert(sizeof(PipelineSelectorMTL) == 28);
+static_assert(sizeof(PipelineSelectorMTL) == 24);
 
 template <>
 struct std::hash<PipelineSelectorMTL>
@@ -254,7 +259,7 @@ public:
 
 	// Spinning
 	ReadbackSpinManager m_spin_manager;
-	u32 m_encoders_in_current_cmdbuf;
+	u32 m_encoders_in_current_cmdbuf = 0;
 	u32 m_spin_timer = 0;
 	MRCOwned<id<MTLComputePipelineState>> m_spin_pipeline;
 	MRCOwned<id<MTLBuffer>> m_spin_buffer;
@@ -265,10 +270,12 @@ public:
 
 	// MetalFX spatial upscaler. Creating the scaler is expensive, so it's cached and
 	// only rebuilt when the input/output size or format changes (the cache key below).
-	// Available macOS 13+ / iOS 16+; weak-linked so this compiles on all targets.
+	// macOS 13+ / iOS 16+ device, weak-linked. Compiled out on the simulator.
+#if PCSX2_HAS_METALFX
 	API_AVAILABLE(macos(13.0), ios(16.0)) MRCOwned<id<MTLFXSpatialScaler>> m_mfx_spatial;
 	int m_mfx_in_w = 0, m_mfx_in_h = 0, m_mfx_out_w = 0, m_mfx_out_h = 0;
 	MTLPixelFormat m_mfx_in_fmt = MTLPixelFormatInvalid, m_mfx_out_fmt = MTLPixelFormatInvalid;
+#endif
 	std::vector<MRCOwned<id<MTLRenderPipelineState>>> m_convert_pipeline;
 	MRCOwned<id<MTLRenderPipelineState>> m_present_pipeline[static_cast<int>(PresentShader::Count)];
 	MRCOwned<id<MTLRenderPipelineState>> m_merge_pipeline[4];
@@ -313,6 +320,8 @@ public:
 
 	// MARK: Ephemeral resources
 	MRCOwned<id<MTLCommandBuffer>> m_current_render_cmdbuf;
+	u32 m_skipped_present_frames_since_submit = 0;
+	u64 m_deferred_submit_started = 0;
 	struct MainRenderEncoder
 	{
 		MRCOwned<id<MTLRenderCommandEncoder>> encoder;
@@ -412,11 +421,32 @@ public:
 	void DoInterlace(GSTexture* sTex, const GSVector4& sRect, GSTexture* dTex, const GSVector4& dRect, ShaderInterlace shader, Filter filter, const InterlaceConstantBuffer& cb) override;
 	void DoFXAA(GSTexture* sTex, GSTexture* dTex) override;
 	void DoShadeBoost(GSTexture* sTex, GSTexture* dTex, const float params[4]) override;
+	bool DoApplyShaderChain(GSTexture* sTex, GSTexture* dTex) override;
+
+	/// librashader filter chain state. The handle is void* rather than
+	/// libra_mtl_filter_chain_t so this header needs nothing librashader generates — that
+	/// only exists when the Rust toolchain built the lib, and its Metal declarations are
+	/// __OBJC__-guarded, so a plain C++ translation unit could not include them at all.
+	/// The chain is rebuilt only when the preset path changes: creating it compiles the
+	/// whole slang chain, while the per-frame call is just command recording.
+	void* m_shader_chain = nullptr;
+	std::string m_shader_chain_preset;
+	bool m_shader_chain_failed = false;
+	size_t m_shader_frame_count = 0;
+	u64 m_shader_param_generation = 0;
+	void DestroyShaderChain();
+	void ReleaseShaderChain() override { DestroyShaderChain(); }
+	void ApplyShaderChainParams();
 
 	bool DoCAS(GSTexture* sTex, GSTexture* dTex, bool sharpen_only, const std::array<u32, NUM_CAS_CONSTANTS>& constants) override;
 
 	/// (Re)builds m_mfx_spatial when the src/dst size or format changes. Returns false on failure.
+	/// On simulator builds (PCSX2_HAS_METALFX=0) this is a no-op stub returning false.
+#if PCSX2_HAS_METALFX
 	API_AVAILABLE(macos(13.0), ios(16.0)) bool EnsureMetalFXSpatial(GSTexture* sTex, GSTexture* dTex);
+#else
+	bool EnsureMetalFXSpatial(GSTexture* sTex, GSTexture* dTex);
+#endif
 	bool DoMetalFXSpatial(GSTexture* sTex, GSTexture* dTex) override;
 
 	MRCOwned<id<MTLFunction>> LoadShader(NSString* name);
@@ -439,7 +469,7 @@ public:
 
 	void UpdateTexture(id<MTLTexture> texture, u32 x, u32 y, u32 width, u32 height, const void* data, u32 data_stride);
 
-	PresentResult BeginPresent(bool frame_skip) override;
+	PresentResult DoBeginPresent(bool frame_skip) override;
 	void EndPresent() override;
 	void SetVSyncMode(GSVSyncMode mode, bool allow_present_throttle) override;
 
@@ -454,18 +484,18 @@ public:
 
 	void ClearSamplerCache() override;
 
-	void CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY) override;
+	void DoCopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY) override;
 	void BeginStretchRect(NSString* name, GSTexture* dTex, MTLLoadAction action);
 	void DoStretchRect(GSTexture* sTex, const GSVector4& sRect, GSTexture* dTex, const GSVector4& dRect, id<MTLRenderPipelineState> pipeline, std::optional<Filter> filter, LoadAction load_action, const void* frag_uniform, size_t frag_uniform_len);
 	void DrawStretchRect(const GSVector4& sRect, const GSVector4& dRect, const GSVector2& ds);
 	/// Copy from a position in sTex to the same position in the currently active render encoder using the given fs pipeline and rect
 	void RenderCopy(GSTexture* sTex, id<MTLRenderPipelineState> pipeline, const GSVector4i& rect);
 	void PresentRect(GSTexture* sTex, const GSVector4& sRect, GSTexture* dTex, const GSVector4& dRect, PresentShader shader, float shaderTime, Filter filter) override;
-	void DrawMultiStretchRects(const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader) override;
-	void UpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize) override;
-	void ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM) override;
-	void FilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect) override;
-	void BeginDSAsRT(GSTexture* ds, const GSVector4i& drawarea) override;
+	void DoDrawMultiStretchRects(const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader) override;
+	void DoUpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize) override;
+	void DoConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM) override;
+	void DoFilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect) override;
+	void DoBeginDSAsRT(GSTexture* ds, const GSVector4i& drawarea) override;
 
 	void FlushClears(GSTexture* tex);
 
@@ -490,7 +520,7 @@ public:
 
 	void SetupDestinationAlpha(GSTexture* rt, GSTexture* ds, const GSVector4i& r, SetDATM datm);
 	void PrepareROVTexture(GSTexture** ptex);
-	void RenderHW(GSHWDrawConfig& config) override;
+	void DoRenderHW(GSHWDrawConfig& config) override;
 	void SendHWDraw(GSHWDrawConfig& config, id<MTLRenderCommandEncoder> enc, id<MTLBuffer> buffer, size_t off,
 		bool one_barrier, bool full_barrier);
 

@@ -45,10 +45,12 @@
 #include <TargetConditionals.h>
 #endif
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <limits>
 #include <span>
+#include <string>
 #include <tuple>
 
 InputRecordingUI::InputRecordingData g_InputRecordingData;
@@ -71,15 +73,95 @@ SmallString s_hardware_info_gpu_line;
 SmallString s_cpu_jit_line;
 SmallString s_cpu_usage_ee_line;
 SmallString s_cpu_usage_gs_line;
+SmallString s_cpu_usage_gs_back_line;
 SmallString s_cpu_usage_vu_line;
 std::vector<SmallString> s_software_thread_lines;
 SmallString s_capture_line;
 SmallString s_gpu_usage_line;
 SmallString s_gpu_debug_info_line;
 SmallString s_gpu_stats_line;
+SmallString s_lsfg_line;
 SmallString s_speed_icon;
+#if defined(__APPLE__) && TARGET_OS_IPHONE
+SmallString s_ios_device_stats_line;
+
+// Set by the iOS CMakeLists alongside the bundle version, so the overlay and
+// the About screen cannot disagree. "dev" only shows up in a build that came
+// from somewhere else.
+#if defined(ARMSX2_VERSION_STR)
+#define ARMSX2_IOS_OSD_VERSION ARMSX2_VERSION_STR
+#else
+#define ARMSX2_IOS_OSD_VERSION "dev"
+#endif
+#endif
+
+// Shrink-to-fit for the performance overlay. Only ever comes down, and only far enough for the widest
+// line to fit, so a value gaining a digit can't resize the block under the reader.
+static float s_osd_font_size = 0.0f;
+static float s_osd_fit_avail = -1.0f;
+static float s_osd_fit_base = -1.0f;
+static u32 s_osd_fit_lines = 0;
+static float s_osd_widest = 0.0f;
 
 constexpr ImU32 white_color = IM_COL32(255, 255, 255, 255);
+
+#if defined(__APPLE__) && TARGET_OS_IPHONE
+// Battery, heat and RAM come from the iOS frontend. There is no header for these three; the bridge
+// forward-declares its own the same way.
+extern "C" bool ARMSX2_iOSShouldShowDeviceStatsOverlay();
+extern "C" int ARMSX2_iOSGetDeviceStatsOverlaySeverity();
+extern "C" const char* ARMSX2_iOSGetDeviceStatsOverlayLine();
+#endif
+
+#ifdef ENABLE_VULKAN
+// Declared here rather than reached through GSLsfg.h, which includes VKLoader.h: that drags the
+// Vulkan headers — and under X11, all of Xlib's macros, which is why VKLoader has to #undef None
+// and Status — into a cross-platform translation unit that wants one string out of it.
+namespace GSLsfg
+{
+	std::string GetStatusText();
+}
+#endif
+
+/// Frame generation's own status line, or empty when the user has not switched it on. Behind a
+/// function so the draw code below carries no #ifdef: LSFG lives in the Vulkan backend and there
+/// is nothing to ask in a build without one.
+static std::string LsfgStatusText()
+{
+#ifdef ENABLE_VULKAN
+	return GSLsfg::GetStatusText();
+#else
+	return {};
+#endif
+}
+
+/// The OSD's normal text colour. GSConfig.OsdColor is 0xRRGGBB, and 0 means "unset" — every
+/// frontend but Android leaves it there, so the overlay keeps its classic white by default.
+/// Read per line rather than cached: it's a field load, and caching it would need invalidating
+/// on every settings apply for no measurable gain.
+__fi static ImU32 OsdTextColor()
+{
+	const u32 rgb = GSConfig.OsdColor;
+	if (rgb == 0)
+		return white_color;
+	return IM_COL32((rgb >> 16) & 0xFFu, (rgb >> 8) & 0xFFu, rgb & 0xFFu, 255);
+}
+
+#if defined(__APPLE__) && TARGET_OS_IPHONE
+// Same red as the sub-95% speed line, so the OSD keeps one vocabulary of alarm.
+static ImU32 ARMSX2IOSDeviceStatsColor()
+{
+	switch (ARMSX2_iOSGetDeviceStatsOverlaySeverity())
+	{
+		case 2:
+			return IM_COL32(255, 100, 100, 255);
+		case 1:
+			return IM_COL32(255, 220, 100, 255);
+		default:
+			return OsdTextColor();
+	}
+}
+#endif
 
 // OSD positioning funcs
 ImVec2 CalculateOSDPosition(OsdOverlayPos position, float margin, const ImVec2& text_size, float window_width, float window_height)
@@ -138,7 +220,9 @@ ImVec2 CalculatePerformanceOverlayTextPosition(OsdOverlayPos position, float mar
 			break;
 	}
 
-	return ImVec2(x_pos, position_y);
+	// A line wider than the window would otherwise start at negative x and run off the left edge,
+	// which is far worse than being clipped on the right.
+	return ImVec2(std::max(abs_margin, x_pos), position_y);
 }
 
 bool ShouldUseLeftAlignment(OsdOverlayPos position)
@@ -149,10 +233,10 @@ bool ShouldUseLeftAlignment(OsdOverlayPos position)
 namespace ImGuiManager
 {
 	static void FormatProcessorStat(SmallStringBase& text, double usage, double time);
-	static void DrawPerformanceOverlay(float& position_y, float scale, float margin, float spacing);
-	static void DrawShaderCompileIndicator(float scale, float margin, float spacing);
-	static void DrawSettingsOverlay(float scale, float margin, float spacing);
-	static void DrawInputsOverlay(float scale, float margin, float spacing);
+	static void DrawPerformanceOverlay(float& position_y, float scale, float margin, float bottom_margin, float spacing);
+	static void DrawShaderCompileIndicator(float scale, float margin, float bottom_margin, float spacing);
+	static void DrawSettingsOverlay(float scale, float margin, float bottom_margin, float spacing);
+	static void DrawInputsOverlay(float scale, float margin, float bottom_margin, float spacing);
 	static void DrawInputRecordingOverlay(float& position_y, float scale, float margin, float spacing);
 	static void DrawVideoCaptureOverlay(float& position_y, float scale, float margin, float spacing);
 	static void DrawTextureReplacementsOverlay(float& position_y, float scale, float margin, float spacing);
@@ -196,25 +280,67 @@ __ri void ImGuiManager::FormatProcessorStat(SmallStringBase& text, double usage,
 		text.append_format("{:.1f}% ({:.2f}ms)", usage, time);
 }
 
-__ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, float margin, float spacing)
+__ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, float margin, float bottom_margin, float spacing)
 {
 	// The perf-OSD flags in GSConfig are refreshed from the authoritative EmuConfig.GS at
 	// the top of RenderOverlays (see the note there). When every perf line is off, draw
 	// nothing and return BEFORE any draw call, so a line string cached before a pause can't
 	// linger on screen (the rebuild block below is skipped while the VM is paused, which is
-	// why toggling in the menu looked inert).
-	if (!GSConfig.OsdShowFPS && !GSConfig.OsdShowVPS && !GSConfig.OsdShowSpeed &&
-		!GSConfig.OsdShowResolution && !GSConfig.OsdShowCPU && !GSConfig.OsdShowGPU &&
-		!GSConfig.OsdShowGSStats && !GSConfig.OsdShowFrameTimes && !GSConfig.OsdShowHardwareInfo &&
-		!GSConfig.OsdShowVersion && !GSConfig.OsdShowGPUStats)
-	{
+	// why toggling in the menu looked inert). Packed rather than a chain of ors because the
+	// shrink-to-fit below needs to notice the set changing, not just emptying.
+	u32 enabled_lines =
+		(static_cast<u32>(GSConfig.OsdShowFPS) << 0) | (static_cast<u32>(GSConfig.OsdShowVPS) << 1) |
+		(static_cast<u32>(GSConfig.OsdShowSpeed) << 2) | (static_cast<u32>(GSConfig.OsdShowResolution) << 3) |
+		(static_cast<u32>(GSConfig.OsdShowCPU) << 4) | (static_cast<u32>(GSConfig.OsdShowGPU) << 5) |
+		(static_cast<u32>(GSConfig.OsdShowGSStats) << 6) | (static_cast<u32>(GSConfig.OsdShowFrameTimes) << 7) |
+		(static_cast<u32>(GSConfig.OsdShowHardwareInfo) << 8) | (static_cast<u32>(GSConfig.OsdShowVersion) << 9) |
+		(static_cast<u32>(GSConfig.OsdShowGPUStats) << 10);
+#if defined(__APPLE__) && TARGET_OS_IPHONE
+	// A Custom preset with nothing but Device Stats ticked is reachable, and it lands here.
+	enabled_lines |= static_cast<u32>(ARMSX2_iOSShouldShowDeviceStatsOverlay()) << 11;
+#endif
+	// Frame generation gets its OWN bit rather than riding on one of the toggles above, for two
+	// reasons: it is driven by the LSFG setting and not by any OsdShow* flag, and the shrink-to-fit
+	// below keys off this word changing — sharing a bit would leave the block sized for the wrong
+	// set of lines the moment the LSFG line appeared or went away.
+	const std::string lsfg_status = LsfgStatusText();
+	enabled_lines |= static_cast<u32>(!lsfg_status.empty()) << 12;
+	if (enabled_lines == 0)
 		return;
-	}
+
+	// Not cached behind the 100ms refresh like the lines below it. It is already built once per
+	// frame for the bit above, and caching it would leave the line on screen for up to a refresh
+	// after frame generation was switched off.
+	s_lsfg_line.assign(lsfg_status);
 
 	const float shadow_offset = std::ceil(scale);
 
 	ImFont* const osd_font = ImGuiManager::GetOSDFont();
-	const float font_size = ImGuiManager::GetFontSizeStandard();
+	const float base_font_size = ImGuiManager::GetFontSizeStandard();
+	const float avail = GetWindowWidth() - 2.0f * margin;
+
+	// Deriving the size from the current text every frame is what made the block dance — the widest
+	// line changes width constantly, and right-aligned rows each move by their own share of the
+	// rescale. Start over only when the space or the line set changes; in between, ratchet and hold.
+	if (avail != s_osd_fit_avail || base_font_size != s_osd_fit_base || enabled_lines != s_osd_fit_lines)
+	{
+		s_osd_fit_avail = avail;
+		s_osd_fit_base = base_font_size;
+		s_osd_fit_lines = enabled_lines;
+		s_osd_font_size = base_font_size;
+		s_osd_widest = 0.0f;
+	}
+	else if (avail > 0.0f && s_osd_widest > avail)
+	{
+		// Widths are linear in the size, so one step gets there. Integral, or ImGui bakes a fresh
+		// atlas for every sub-pixel wobble; half size is as small as this stays readable.
+		const float needed = std::floor(s_osd_font_size * avail / s_osd_widest);
+		s_osd_font_size = std::clamp(needed, std::max(1.0f, std::floor(base_font_size * 0.5f)), s_osd_font_size);
+	}
+	s_osd_widest = 0.0f;
+
+	const float font_size = s_osd_font_size;
+	const float fit = font_size / base_font_size;
 	const float line_height = ImGuiFullscreen::GetLineHeight({ osd_font, font_size });
 
 	ImDrawList* dl = ImGui::GetBackgroundDrawList();
@@ -234,7 +360,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 		case OsdOverlayPos::BottomCenter:
 		case OsdOverlayPos::BottomRight:
 
-			position_y = GetWindowHeight() - margin - (line_height * 15.0f + spacing * 14.0f);
+			position_y = GetWindowHeight() - bottom_margin - (line_height * 15.0f + spacing * 14.0f);
 			break;
 
 		case OsdOverlayPos::TopLeft:
@@ -249,6 +375,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 	do \
 	{ \
 		text_size = font->CalcTextSizeA(size, std::numeric_limits<float>::max(), -1.0f, (text), nullptr, nullptr); \
+		s_osd_widest = std::max(s_osd_widest, text_size.x); \
 		const ImVec2 text_pos = CalculatePerformanceOverlayTextPosition(GSConfig.OsdPerformancePos, margin, text_size, GetWindowWidth(), position_y); \
 		const bool __bold_osd = GSConfig.OsdBoldText; \
 		dl->AddText(font, size, ImVec2(text_pos.x + shadow_offset, text_pos.y + shadow_offset), IM_COL32(0, 0, 0, 100), (text)); \
@@ -361,6 +488,12 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 			const float speed = PerformanceMetrics::GetSpeed();
 
 			s_speed_line.clear();
+
+#if defined(__ANDROID__)
+			if (const u32 skip = GSGetManualFrameSkip(); skip > 0)
+				s_speed_line.append_format("{}SKIP: {}", s_speed_line.empty() ? "" : " | ", skip);
+#endif
+
 			if (GSConfig.OsdShowFPS)
 			{
 				switch (PerformanceMetrics::GetInternalFPSMethod())
@@ -377,6 +510,17 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					default:
 						s_speed_line.append("FPS: N/A");
 						break;
+				}
+
+				if (const u32 fps_cap_milli = GSGetMaxPresentMilliFps();
+					fps_cap_milli > 0 && fps_cap_milli != 60000 && !GSGetPresentCapSuspended())
+				{
+					std::string fps_cap = fmt::format("{:.3f}", static_cast<double>(fps_cap_milli) / 1000.0);
+					while (fps_cap.back() == '0')
+						fps_cap.pop_back();
+					if (fps_cap.back() == '.')
+						fps_cap.pop_back();
+					s_speed_line.append_format(" (Cap {} FPS)", fps_cap);
 				}
 			}
 
@@ -407,6 +551,11 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					s_speed_line.append_format("{}ARMSX2-MacOS 2.1 | Core: {}",
 						s_speed_line.empty() ? "" : " | ", BuildVersion::GitRev);
 				}
+#elif defined(__APPLE__) && TARGET_OS_IPHONE
+				// Version comes from the one place it is set, so this cannot drift
+				// the way the two branches either side of it have.
+				s_speed_line.append_format("{}ARMSX2 " ARMSX2_IOS_OSD_VERSION " | Core: {}",
+					s_speed_line.empty() ? "" : " | ", BuildVersion::GitRev);
 #elif defined(__ANDROID__)
 				s_speed_line.append_format("{}ARMSX2 2.7", s_speed_line.empty() ? "" : " | ");
 #else
@@ -421,10 +570,25 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				else if (speed > 105.0f)
 					s_speed_line_color = IM_COL32(100, 255, 100, 255); // green
 				else
-					s_speed_line_color = white_color;
+					s_speed_line_color = OsdTextColor();
 
 				DRAW_LINE(osd_font, font_size, s_speed_line.c_str(), s_speed_line_color);
 			}
+
+			// Straight after the speed line because it is the same kind of number, and because a
+			// user comparing "the game runs at 30" with "the screen gets 60" wants them adjacent.
+			if (!s_lsfg_line.empty())
+				DRAW_LINE(osd_font, font_size, s_lsfg_line.c_str(), OsdTextColor());
+
+#if defined(__APPLE__) && TARGET_OS_IPHONE
+			if (ARMSX2_iOSShouldShowDeviceStatsOverlay())
+			{
+				const char* stats_line = ARMSX2_iOSGetDeviceStatsOverlayLine();
+				s_ios_device_stats_line.assign(stats_line ? stats_line : "");
+				if (!s_ios_device_stats_line.empty())
+					DRAW_LINE(osd_font, font_size, s_ios_device_stats_line.c_str(), ARMSX2IOSDeviceStatsColor());
+			}
+#endif
 
 			if (GSConfig.OsdShowGSStats)
 			{
@@ -437,10 +601,10 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					PerformanceMetrics::GetMaximumFrameTime());
 
 				if (!s_gs_stats_line.empty())
-					DRAW_LINE(osd_font, font_size, s_gs_stats_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_gs_stats_line.c_str(), OsdTextColor());
 				if (!s_gs_memory_stats_line.empty())
-					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), white_color);
-				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), OsdTextColor());
+				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowResolution)
@@ -449,7 +613,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				GSgetInternalResolution(&iwidth, &iheight);
 
 				s_resolution_line.format("{}x{} {} {}", iwidth, iheight, ReportVideoMode(), ReportInterlaceMode());
-				DRAW_LINE(osd_font, font_size, s_resolution_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_resolution_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowHardwareInfo)
@@ -463,7 +627,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					const CPUInfo& info = GetCPUInfo();
 					const bool has_small = info.num_small_cores > 0;
 					const bool has_smt = info.num_threads != info.num_big_cores + info.num_small_cores;
-					s_hardware_info_cpu_line.format("CPU: {}", info.name);
+					s_hardware_info_cpu_line.format("CPU: {}", !info.name.empty() ? info.name : "Unknown");
 					if (has_smt && has_small)
 						s_hardware_info_cpu_line.append_format(" ({}P/{}E/{}T)", info.num_big_cores, info.num_small_cores, info.num_threads);
 					else if (has_small)
@@ -472,23 +636,27 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 						s_hardware_info_cpu_line.append_format(" ({}C/{}T)", info.num_big_cores, info.num_threads);
 				}
 
-				DRAW_LINE(osd_font, font_size, s_hardware_info_cpu_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_hardware_info_cpu_line.c_str(), OsdTextColor());
 
 				// GPU
 				const char* gpu_suffix = "";
-				if (GSConfig.UseDebugDevice && GSConfig.HWROV)
-					gpu_suffix = " (Debug & ROV)";
-				else if (GSConfig.UseDebugDevice)
-					gpu_suffix = " (Debug)";
-				else if (GSConfig.HWROV)
-					gpu_suffix = " (ROV)";
+
+				if (GSConfig.Renderer != GSRendererType::SW)
+				{
+					if (GSConfig.UseDebugDevice && GSConfig.HWROV)
+						gpu_suffix = " (Debug & ROV)";
+					else if (GSConfig.UseDebugDevice)
+						gpu_suffix = " (Debug)";
+					else if (GSConfig.HWROV)
+						gpu_suffix = " (ROV)";
+				}
 
 				s_hardware_info_gpu_line.format(
 					"GPU: {}{}",
 					g_gs_device->GetName(),
 					gpu_suffix);
 
-				DRAW_LINE(osd_font, font_size, s_hardware_info_gpu_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_hardware_info_gpu_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowCPU)
@@ -499,7 +667,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					EmuConfig.Cpu.Recompiler.EnableIOP ? "JIT" : "INT",
 					EmuConfig.Cpu.Recompiler.EnableVU0 ? "JIT" : "INT",
 					EmuConfig.Cpu.Recompiler.EnableVU1 ? "JIT" : "INT");
-				DRAW_LINE(osd_font, font_size, s_cpu_jit_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_cpu_jit_line.c_str(), OsdTextColor());
 #endif
 
 				if (EmuConfig.Speedhacks.EECycleRate != 0 || EmuConfig.Speedhacks.EECycleSkip != 0)
@@ -507,17 +675,27 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				else
 					s_cpu_usage_ee_line.assign("EE: ");
 				FormatProcessorStat(s_cpu_usage_ee_line, PerformanceMetrics::GetCPUThreadUsage(), PerformanceMetrics::GetCPUThreadAverageTime());
-				DRAW_LINE(osd_font, font_size, s_cpu_usage_ee_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_cpu_usage_ee_line.c_str(), OsdTextColor());
 
 				s_cpu_usage_gs_line.assign("GS: ");
 				FormatProcessorStat(s_cpu_usage_gs_line, PerformanceMetrics::GetGSThreadUsage(), PerformanceMetrics::GetGSThreadAverageTime());
-				DRAW_LINE(osd_font, font_size, s_cpu_usage_gs_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_cpu_usage_gs_line.c_str(), OsdTextColor());
+
+				// Only exists under GSBackThreadMode >= Lockstep. The line above is the MTGS
+				// thread alone, so without this one the split's second half is invisible.
+				if (PerformanceMetrics::HasGSBackThread())
+				{
+					s_cpu_usage_gs_back_line.assign("GSB: ");
+					FormatProcessorStat(s_cpu_usage_gs_back_line, PerformanceMetrics::GetGSBackThreadUsage(),
+						PerformanceMetrics::GetGSBackThreadAverageTime());
+					DRAW_LINE(osd_font, font_size, s_cpu_usage_gs_back_line.c_str(), OsdTextColor());
+				}
 
 				if (THREAD_VU1)
 				{
 					s_cpu_usage_vu_line.assign("VU: ");
 					FormatProcessorStat(s_cpu_usage_vu_line, PerformanceMetrics::GetVUThreadUsage(), PerformanceMetrics::GetVUThreadAverageTime());
-					DRAW_LINE(osd_font, font_size, s_cpu_usage_vu_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_cpu_usage_vu_line.c_str(), OsdTextColor());
 				}
 
 				const u32 gs_sw_threads = PerformanceMetrics::GetGSSWThreadCount();
@@ -528,14 +706,14 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					else
 						s_software_thread_lines.push_back(SmallString("SW-{}: ", thread));
 					FormatProcessorStat(s_software_thread_lines[thread], PerformanceMetrics::GetGSSWThreadUsage(thread), PerformanceMetrics::GetGSSWThreadAverageTime(thread));
-					DRAW_LINE(osd_font, font_size, s_software_thread_lines[thread].c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_software_thread_lines[thread].c_str(), OsdTextColor());
 				}
 
 				if (GSCapture::IsCapturing())
 				{
 					s_capture_line.assign("CAP: ");
 					FormatProcessorStat(s_capture_line, PerformanceMetrics::GetCaptureThreadUsage(), PerformanceMetrics::GetCaptureThreadAverageTime());
-					DRAW_LINE(osd_font, font_size, s_capture_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_capture_line.c_str(), OsdTextColor());
 				}
 			}
 
@@ -543,7 +721,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 			{
 				s_gpu_usage_line.assign("GPU: ");
 				FormatProcessorStat(s_gpu_usage_line, PerformanceMetrics::GetGPUUsage(), PerformanceMetrics::GetGPUAverageTime());
-				DRAW_LINE(osd_font, font_size, s_gpu_usage_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_gpu_usage_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowGPUDebug)
@@ -557,7 +735,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 						dev12->GetDescriptorHeapManager().GetAllocatedDescriptors(), dev12->GetDescriptorHeapManager().GetNumDescriptors(),
 						dev12->GetRTVHeapManager().GetAllocatedDescriptors(), dev12->GetRTVHeapManager().GetNumDescriptors(),
 						dev12->GetDSVHeapManager().GetAllocatedDescriptors(), dev12->GetDSVHeapManager().GetNumDescriptors());
-					DRAW_LINE(osd_font, font_size, s_gpu_debug_info_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_gpu_debug_info_line.c_str(), OsdTextColor());
 				}
 #endif
 			}
@@ -577,7 +755,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				s_gpu_stats_line.format("VSI: {} | PSI: {}",
 					FormatUnits(PerformanceMetrics::GetGPUAverageVSInvocations()),
 					FormatUnits(PerformanceMetrics::GetGPUAveragePSInvocations()));
-				DRAW_LINE(osd_font, font_size, s_gpu_stats_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_gpu_stats_line.c_str(), OsdTextColor());
 			}
 		}
 		// No refresh yet. Display cached lines.
@@ -586,59 +764,69 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 			if (GSConfig.OsdShowFPS || GSConfig.OsdShowVPS || GSConfig.OsdShowSpeed || GSConfig.OsdShowVersion)
 				DRAW_LINE(osd_font, font_size, s_speed_line.c_str(), s_speed_line_color);
 
+			if (!s_lsfg_line.empty())
+				DRAW_LINE(osd_font, font_size, s_lsfg_line.c_str(), OsdTextColor());
+
+#if defined(__APPLE__) && TARGET_OS_IPHONE
+			if (ARMSX2_iOSShouldShowDeviceStatsOverlay() && !s_ios_device_stats_line.empty())
+				DRAW_LINE(osd_font, font_size, s_ios_device_stats_line.c_str(), ARMSX2IOSDeviceStatsColor());
+#endif
+
 			if (GSConfig.OsdShowGSStats)
 			{
 				if (!s_gs_stats_line.empty())
-					DRAW_LINE(osd_font, font_size, s_gs_stats_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_gs_stats_line.c_str(), OsdTextColor());
 				if (!s_gs_memory_stats_line.empty())
-					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), white_color);
-				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), OsdTextColor());
+				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowResolution)
-				DRAW_LINE(osd_font, font_size, s_resolution_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_resolution_line.c_str(), OsdTextColor());
 
 			if (GSConfig.OsdShowHardwareInfo)
 			{
-				DRAW_LINE(osd_font, font_size, s_hardware_info_cpu_line.c_str(), white_color);
-				DRAW_LINE(osd_font, font_size, s_hardware_info_gpu_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_hardware_info_cpu_line.c_str(), OsdTextColor());
+				DRAW_LINE(osd_font, font_size, s_hardware_info_gpu_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowCPU)
 			{
 #if defined(__APPLE__) && !TARGET_OS_IPHONE
 				if (!s_cpu_jit_line.empty())
-					DRAW_LINE(osd_font, font_size, s_cpu_jit_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_cpu_jit_line.c_str(), OsdTextColor());
 #endif
-				DRAW_LINE(osd_font, font_size, s_cpu_usage_ee_line.c_str(), white_color);
-				DRAW_LINE(osd_font, font_size, s_cpu_usage_gs_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_cpu_usage_ee_line.c_str(), OsdTextColor());
+				DRAW_LINE(osd_font, font_size, s_cpu_usage_gs_line.c_str(), OsdTextColor());
+				if (PerformanceMetrics::HasGSBackThread())
+					DRAW_LINE(osd_font, font_size, s_cpu_usage_gs_back_line.c_str(), OsdTextColor());
 				if (THREAD_VU1)
-					DRAW_LINE(osd_font, font_size, s_cpu_usage_vu_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_cpu_usage_vu_line.c_str(), OsdTextColor());
 
 				const u32 thread_count = std::min(
 					PerformanceMetrics::GetGSSWThreadCount(),
 					static_cast<u32>(s_software_thread_lines.size()));
 				for (u32 thread = 0; thread < thread_count; thread++)
-					DRAW_LINE(osd_font, font_size, s_software_thread_lines[thread].c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_software_thread_lines[thread].c_str(), OsdTextColor());
 
 				if (GSCapture::IsCapturing())
-					DRAW_LINE(osd_font, font_size, s_capture_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_capture_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowGPU)
-				DRAW_LINE(osd_font, font_size, s_gpu_usage_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_gpu_usage_line.c_str(), OsdTextColor());
 
 			if (GSConfig.OsdShowGPUDebug)
 			{
 #ifdef _WIN32
 				if (g_gs_device->GetRenderAPI() == RenderAPI::D3D12)
-					DRAW_LINE(osd_font, font_size, s_gpu_debug_info_line.c_str(), white_color);
+					DRAW_LINE(osd_font, font_size, s_gpu_debug_info_line.c_str(), OsdTextColor());
 #endif
 			}
 
 			if (GSConfig.OsdShowGPUStats)
 			{
-				DRAW_LINE(osd_font, font_size, s_gpu_stats_line.c_str(), white_color);
+				DRAW_LINE(osd_font, font_size, s_gpu_stats_line.c_str(), OsdTextColor());
 			}
 		}
 
@@ -746,22 +934,27 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 			float min_vps = s_vps_min;
 			float max_vps = std::max(s_vps_max, min_vps + 10.0f);
 
+			// The graph has to come down with the text or it overhangs a shrunken block. Off the size
+			// the text actually got, not the ratio we asked for, or the two disagree by up to a step.
+			const float graph_scale = scale * fit;
+
 			SmallString label_buf;
 			label_buf.format("{:.1f}", max_val);
-			const float y_label_w = osd_font->CalcTextSizeA(font_size, FLT_MAX, 0.0f, label_buf.c_str(), label_buf.c_str() + label_buf.length()).x + 4.0f * scale;
+			const float y_label_w = osd_font->CalcTextSizeA(font_size, FLT_MAX, 0.0f, label_buf.c_str(), label_buf.c_str() + label_buf.length()).x + 4.0f * graph_scale;
 			label_buf.format("{:.0f}", max_vps);
-			const float right_label_w = osd_font->CalcTextSizeA(font_size, FLT_MAX, 0.0f, label_buf.c_str(), label_buf.c_str() + label_buf.length()).x + 4.0f * scale;
+			const float right_label_w = osd_font->CalcTextSizeA(font_size, FLT_MAX, 0.0f, label_buf.c_str(), label_buf.c_str() + label_buf.length()).x + 4.0f * graph_scale;
 
-			const float pad = 4.0f * scale;
-			const float row_gap = 2.0f * scale;
+			const float pad = 4.0f * graph_scale;
+			const float row_gap = 2.0f * graph_scale;
 			const float legend_h = (font_size * 2.0f) + row_gap + pad;
-			const ImVec2 graph_size(200.0f * scale, 60.0f * scale);
+			const ImVec2 graph_size(200.0f * graph_scale, 60.0f * graph_scale);
 			const ImVec2 total_size(y_label_w + graph_size.x + right_label_w + 2.0f * pad, graph_size.y + legend_h + 2.0f * pad);
+			s_osd_widest = std::max(s_osd_widest, total_size.x);
 
 			ImGui::SetNextWindowSize(total_size);
 			ImGui::SetNextWindowPos(CalculatePerformanceOverlayTextPosition(GSConfig.OsdPerformancePos, margin, total_size, GetWindowWidth(), position_y));
 			ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.45f));
-			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 4.0f * scale);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 4.0f * graph_scale);
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 			ImGui::PushFont(osd_font, font_size);
@@ -776,7 +969,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 
 				const int num_ticks = std::max(1, std::min(8, static_cast<int>(graph_size.y / (font_size * 1.1f))));
 				const float left_label_x = wpos.x + pad + y_label_w;
-				const float right_label_x = plot_br.x + 2.0f * scale;
+				const float right_label_x = plot_br.x + 2.0f * graph_scale;
 
 				const ImU32 ft_col = IM_COL32(100, 200, 255, 230);
 				const ImU32 vps_col = IM_COL32(100, 255, 100, 230);
@@ -793,7 +986,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 
 						s.format("{:.1f}", min_val + (max_val - min_val) * frac);
 						const float left_text_w = osd_font->CalcTextSizeA(font_size, FLT_MAX, 0.0f, s.c_str(), s.c_str() + s.length()).x;
-						const float lx = left_label_x - left_text_w - 2.0f * scale;
+						const float lx = left_label_x - left_text_w - 2.0f * graph_scale;
 						dl->AddText(osd_font, font_size, ImVec2(lx + shadow_offset, ly + shadow_offset), IM_COL32(0, 0, 0, 100), s.c_str(), s.c_str() + s.length());
 						dl->AddText(osd_font, font_size, ImVec2(lx, ly), ft_col, s.c_str(), s.c_str() + s.length());
 
@@ -834,7 +1027,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 
 				const float legend_y = plot_br.y + pad * 0.5f;
 				const float legend_square_size = font_size * 0.65f;
-				const float legend_gap = 4.0f * scale;
+				const float legend_gap = 4.0f * graph_scale;
 				SmallString frame_part, vps_part;
 				frame_part.format("Frame: {:.2f} ms", PerformanceMetrics::GetAverageFrameTime());
 				vps_part.format("V-Blank: {:.2f}", PerformanceMetrics::GetFPS());
@@ -849,7 +1042,7 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 						ImVec2(lx + legend_square_size, y + (font_size + legend_square_size) * 0.5f), col);
 					lx += legend_square_size + legend_gap;
 					dl->AddText(osd_font, font_size, ImVec2(lx + shadow_offset, y + shadow_offset), IM_COL32(0, 0, 0, 100), text, nullptr);
-					dl->AddText(osd_font, font_size, ImVec2(lx, y), white_color, text, nullptr);
+					dl->AddText(osd_font, font_size, ImVec2(lx, y), OsdTextColor(), text, nullptr);
 				};
 				draw_legend_entry(IM_COL32(100, 200, 255, 230), frame_part.c_str(), fw, legend_y);
 				draw_legend_entry(IM_COL32(100, 255, 100, 230), vps_part.c_str(), vw, legend_y + font_size + row_gap);
@@ -864,7 +1057,11 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 #undef DRAW_LINE
 }
 
-__ri void ImGuiManager::DrawShaderCompileIndicator(float scale, float margin, float spacing)
+// How tall the settings string ended up. It wraps now, so the indicator below can no longer
+// assume one line. DrawSettingsOverlay runs first, so this is current.
+static float s_settings_overlay_height = 0.0f;
+
+__ri void ImGuiManager::DrawShaderCompileIndicator(float scale, float margin, float bottom_margin, float spacing)
 {
 	static bool s_indicator_was_visible = false;
 	static double s_indicator_fade_in_start = 0.0;
@@ -902,8 +1099,7 @@ __ri void ImGuiManager::DrawShaderCompileIndicator(float scale, float margin, fl
 
 	ImFont* const font = ImGuiManager::GetOSDFont();
 	const float font_size = ImGuiManager::GetFontSizeStandard();
-	const float baseline_y =
-		GetWindowHeight() - margin - (GSConfig.OsdShowSettings ? font_size : 0.0f);
+	const float baseline_y = GetWindowHeight() - bottom_margin - s_settings_overlay_height;
 	const float radius = std::ceil(10.0f * scale);
 	const float cx = GetWindowWidth() - margin - radius;
 	const float cy = baseline_y - spacing - radius;
@@ -939,8 +1135,10 @@ __ri void ImGuiManager::DrawShaderCompileIndicator(float scale, float margin, fl
 	dl->PathStroke(text_col, thickness, false);
 }
 
-__ri void ImGuiManager::DrawSettingsOverlay(float scale, float margin, float spacing)
+__ri void ImGuiManager::DrawSettingsOverlay(float scale, float margin, float bottom_margin, float spacing)
 {
+	s_settings_overlay_height = 0.0f;
+
 	if (!GSConfig.OsdShowSettings ||
 		FullscreenUI::HasActiveWindow())
 		return;
@@ -1080,27 +1278,42 @@ __ri void ImGuiManager::DrawSettingsOverlay(float scale, float margin, float spa
 
 	const float shadow_offset = std::ceil(scale);
 	ImFont* const font = ImGuiManager::GetOSDFont();
-	const float font_size = ImGuiManager::GetFontSizeStandard();
-	const float position_y = GetWindowHeight() - margin - font_size;
+	const float base_font_size = ImGuiManager::GetFontSizeStandard();
+	const float avail = GetWindowWidth() - 2.0f * margin;
 
 	ImDrawList* dl = ImGui::GetBackgroundDrawList();
 	ImVec2 text_size =
-		font->CalcTextSizeA(font_size, std::numeric_limits<float>::max(), -1.0f, text.c_str(), text.c_str() + text.length(), nullptr);
-	const ImVec2 text_pos(GetWindowWidth() - margin - text_size.x, position_y);
+		font->CalcTextSizeA(base_font_size, std::numeric_limits<float>::max(), -1.0f, text.c_str(), text.c_str() + text.length(), nullptr);
+
+	// This one runs to a couple of hundred characters, so shrinking it far enough to fit on a single
+	// line would leave it unreadable. Take it down a little, then let it wrap onto two or three.
+	float font_size = base_font_size;
+	float wrap_width = 0.0f;
+	if (avail > 0.0f && text_size.x > avail)
+	{
+		font_size = std::max(1.0f, std::floor(base_font_size * std::clamp(avail / text_size.x, 0.6f, 1.0f)));
+		wrap_width = avail;
+		text_size = font->CalcTextSizeA(font_size, std::numeric_limits<float>::max(), wrap_width, text.c_str(), text.c_str() + text.length(), nullptr);
+	}
+
+	s_settings_overlay_height = text_size.y;
+
+	const float position_y = GetWindowHeight() - bottom_margin - text_size.y;
+	const ImVec2 text_pos(std::max(margin, GetWindowWidth() - margin - text_size.x), position_y);
 	const bool bold_osd = GSConfig.OsdBoldText;
 	dl->AddText(font, font_size,
 		ImVec2(text_pos.x + shadow_offset, text_pos.y + shadow_offset), IM_COL32(0, 0, 0, 100),
-		text.c_str(), text.c_str() + text.length());
+		text.c_str(), text.c_str() + text.length(), wrap_width);
 	dl->AddText(font, font_size, text_pos, white_color,
-		text.c_str(), text.c_str() + text.length());
+		text.c_str(), text.c_str() + text.length(), wrap_width);
 	if (bold_osd)
 	{
 		dl->AddText(font, font_size, ImVec2(text_pos.x + 0.6f, text_pos.y), white_color,
-			text.c_str(), text.c_str() + text.length());
+			text.c_str(), text.c_str() + text.length(), wrap_width);
 	}
 }
 
-__ri void ImGuiManager::DrawInputsOverlay(float scale, float margin, float spacing)
+__ri void ImGuiManager::DrawInputsOverlay(float scale, float margin, float bottom_margin, float spacing)
 {
 	// Technically this is racing the CPU thread.. but it doesn't really matter, at worst, the inputs get displayed onscreen late.
 	if (!GSConfig.OsdShowInputs ||
@@ -1133,7 +1346,7 @@ __ri void ImGuiManager::DrawInputsOverlay(float scale, float margin, float spaci
 	}
 
 	float current_x = ImFloor(margin);
-	float current_y = ImFloor(display_size.y - margin - ((static_cast<float>(num_ports) * (line_height + spacing)) - spacing));
+	float current_y = ImFloor(display_size.y - bottom_margin - ((static_cast<float>(num_ports) * (line_height + spacing)) - spacing));
 	const ImVec4 clip_rect(current_x, current_y, display_size.x - margin, display_size.y);
 
 	SmallString text;
@@ -1365,7 +1578,7 @@ __ri void ImGuiManager::DrawTextureReplacementsOverlay(float& position_y, float 
 	const ImVec2 text_pos(GetWindowWidth() - margin - text_size.x, position_y);
 
 	dl->AddText(osd_font, font_size, ImVec2(text_pos.x + shadow_offset, text_pos.y + shadow_offset), IM_COL32(0, 0, 0, 100), texture_line.c_str());
-	dl->AddText(osd_font, font_size, text_pos, white_color, texture_line.c_str());
+	dl->AddText(osd_font, font_size, text_pos, OsdTextColor(), texture_line.c_str());
 
 	position_y += text_size.y + spacing;
 }
@@ -1412,14 +1625,14 @@ __ri void ImGuiManager::DrawIndicatorsOverlay(float& position_y, float scale, fl
 				else // Unlimited
 					s_speed_icon = ICON_FA_FORWARD;
 
-				DRAW_LINE(osd_font, font_size, s_speed_icon, white_color);
+				DRAW_LINE(osd_font, font_size, s_speed_icon, OsdTextColor());
 			}
 		}
 		else
 		{
 			// Draw Pause indicator
 			const TinyString pause_msg = TinyString::from_format(TRANSLATE_FS("ImGuiOverlays", "{} Paused"), ICON_FA_PAUSE);
-			DRAW_LINE(osd_font, font_size, pause_msg, white_color);
+			DRAW_LINE(osd_font, font_size, pause_msg, OsdTextColor());
 		}
 		#undef DRAW_LINE
 }
@@ -1683,8 +1896,8 @@ void SaveStateSelectorUI::Draw()
 			ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoTitleBar |
 				ImGuiWindowFlags_NoScrollbar))
 	{
-		// Leave 2 lines for the legend
-		const float legend_margin = ImGui::GetFontSize() * 3.0f + ImGui::GetStyle().ItemSpacing.y * 3.0f;
+		// Leave room for the legend.
+		const float legend_margin = ImGui::GetTextLineHeightWithSpacing() * 4.0f;
 		const float padding = 10.0f * scale;
 
 		ImGui::BeginChild("##item_list", ImVec2(0, -legend_margin), false,
@@ -1923,19 +2136,27 @@ void ImGuiManager::RenderOverlays()
 	}
 
 	const float scale = ImGuiManager::GetGlobalScale();
-	const float margin = std::ceil(GSConfig.OsdMargin * scale);
+	const float base_margin = std::ceil(GSConfig.OsdMargin * scale);
 	const float spacing = std::ceil(5.0f * scale);
-	float position_y = margin;
+
+	// The frontend hands us the cut-out and home-indicator clearance on every rotation. Only one
+	// horizontal margin is threaded through the draw functions, so take the worse side; the bottom
+	// needs its own, or content anchored down there is spaced off the notch instead of the indicator.
+	float inset_left = 0.0f, inset_top = 0.0f, inset_right = 0.0f, inset_bottom = 0.0f;
+	ImGuiManager::GetOSDSafeAreaInsets(&inset_left, &inset_top, &inset_right, &inset_bottom);
+	const float margin = base_margin + std::max(inset_left, inset_right);
+	const float bottom_margin = base_margin + inset_bottom;
+	float position_y = base_margin + inset_top;
 
 	DrawIndicatorsOverlay(position_y, scale, margin, spacing);
 	DrawVideoCaptureOverlay(position_y, scale, margin, spacing);
 	DrawInputRecordingOverlay(position_y, scale, margin, spacing);
 	DrawTextureReplacementsOverlay(position_y, scale, margin, spacing);
 	if (GSConfig.OsdPerformancePos != OsdOverlayPos::None)
-		DrawPerformanceOverlay(position_y, scale, margin, spacing);
-	DrawSettingsOverlay(scale, margin, spacing);
-	DrawShaderCompileIndicator(scale, margin, spacing);
-	DrawInputsOverlay(scale, margin, spacing);
+		DrawPerformanceOverlay(position_y, scale, margin, bottom_margin, spacing);
+	DrawSettingsOverlay(scale, margin, bottom_margin, spacing);
+	DrawShaderCompileIndicator(scale, margin, bottom_margin, spacing);
+	DrawInputsOverlay(scale, margin, bottom_margin, spacing);
 	if (SaveStateSelectorUI::s_open)
 		SaveStateSelectorUI::Draw();
 }

@@ -6,20 +6,30 @@ import SwiftUI
 import UIKit
 #endif
 
+private enum SettingsStaticInfo {
+    static let buildVersion = ARMSX2Bridge.buildVersion()
+    static let shaderChainSupported = ARMSX2Bridge.isShaderChainSupported()
+}
+
 private enum SettingsPane: String, CaseIterable, Identifiable {
     case language
     case appearance
+    case appIcon
     case emulator
     case graphics
+    case shaders
+    case framePacing
     case audio
     case network
     case memoryCards
     case storage
+    case settingsPresets
     case retroAchievements
     case overlay
     case gameController
     case localMultiplayer
     case virtualPad
+    case help
     case licenses
     case about
 
@@ -31,10 +41,16 @@ private enum SettingsPane: String, CaseIterable, Identifiable {
             return "Language"
         case .appearance:
             return "Appearance"
+        case .appIcon:
+            return "App Icon"
         case .emulator:
             return "Emulator"
         case .graphics:
             return "Graphics"
+        case .shaders:
+            return "Shaders"
+        case .framePacing:
+            return "Frame Pacing"
         case .audio:
             return "Audio"
         case .network:
@@ -43,6 +59,8 @@ private enum SettingsPane: String, CaseIterable, Identifiable {
             return "Memory Cards"
         case .storage:
             return "Storage"
+        case .settingsPresets:
+            return "Settings Presets"
         case .retroAchievements:
             return "RetroAchievements"
         case .overlay:
@@ -53,6 +71,8 @@ private enum SettingsPane: String, CaseIterable, Identifiable {
             return "Local Multiplayer"
         case .virtualPad:
             return "Virtual Pad"
+        case .help:
+            return "Help"
         case .licenses:
             return "Licenses & Credits"
         case .about:
@@ -66,10 +86,16 @@ private enum SettingsPane: String, CaseIterable, Identifiable {
             return "globe"
         case .appearance:
             return "paintpalette"
+        case .appIcon:
+            return "app.badge"
         case .emulator:
             return "cpu"
         case .graphics:
             return "paintbrush"
+        case .shaders:
+            return "camera.filters"
+        case .framePacing:
+            return "speedometer"
         case .audio:
             return "speaker.wave.2"
         case .network:
@@ -78,6 +104,8 @@ private enum SettingsPane: String, CaseIterable, Identifiable {
             return "memorychip"
         case .storage:
             return "internaldrive"
+        case .settingsPresets:
+            return "slider.horizontal.3"
         case .retroAchievements:
             return "trophy"
         case .overlay:
@@ -88,6 +116,8 @@ private enum SettingsPane: String, CaseIterable, Identifiable {
             return "person.3"
         case .virtualPad:
             return "hand.draw"
+        case .help:
+            return "questionmark.circle"
         case .licenses:
             return "doc.text"
         case .about:
@@ -97,18 +127,48 @@ private enum SettingsPane: String, CaseIterable, Identifiable {
 }
 
 struct SettingsRootView: View {
+    let resetToRootRequest: Int
+    let onNavigationPathActivityChanged: (Bool) -> Void
     @State private var settings = SettingsStore.shared
-    @State private var jitAvailable = ARMSX2Bridge.isJITAvailable()
-    @State private var noJITFallbackActive = ARMSX2Bridge.isNoJITFallbackActive()
+    @State private var jitAvailable = false
+    @State private var noJITFallbackActive = false
+    @State private var hasLoadedJITStatus = false
     @State private var stikDebugOpenFailed = false
     @State private var stikDebugOpenInProgress = false
+    @State private var navigationPath: [SettingsPane] = []
+    @Environment(\.menuTabIsActive) private var menuTabIsActive
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 #if targetEnvironment(macCatalyst)
     @State private var selectedPane: SettingsPane? = .emulator
 #endif
 
+    init(
+        resetToRootRequest: Int = 0,
+        onNavigationPathActivityChanged: @escaping (Bool) -> Void = { _ in }
+    ) {
+        self.resetToRootRequest = resetToRootRequest
+        self.onNavigationPathActivityChanged = onNavigationPathActivityChanged
+    }
+
+    private var backgroundConfigured: Bool {
+        settings.hasCustomBackground && settings.backgroundEnabledInSettings
+    }
+
+    private var backgroundActive: Bool {
+        backgroundConfigured
+    }
+
+    private var showsPageOwnedLargeTitle: Bool {
+        navigationPath.isEmpty
+            && verticalSizeClass != .compact
+            && UIDevice.current.userInterfaceIdiom == .phone
+    }
+
     var body: some View {
 #if targetEnvironment(macCatalyst)
         NavigationSplitView {
+            // Left iterating allCases, so a build without librashader still lists Shaders here;
+            // settingsDetail answers for that rather than the enum learning a runtime capability.
             List(SettingsPane.allCases, selection: $selectedPane) { pane in
                 Label(settings.localized(pane.title), systemImage: pane.icon)
                     .tag(pane)
@@ -120,90 +180,112 @@ struct SettingsRootView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
         .navigationSplitViewStyle(.balanced)
+        .containerBackground(backgroundActive ? Color.clear : Color(uiColor: .systemGroupedBackground), for: .navigation)
 #else
-        List {
-            Section(settings.localized("Interface")) {
-                NavigationLink {
-                    LanguageSettingsView()
-                } label: {
+        NavigationStack(path: $navigationPath) {
+        ZStack {
+            if backgroundConfigured {
+                MenuBackgroundLayer(isActive: menuTabIsActive)
+            }
+
+            List {
+            if showsPageOwnedLargeTitle {
+                EmbeddedMenuLargeTitle(title: settings.localized("Settings"))
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+            }
+
+            Section {
+                NavigationLink(value: SettingsPane.language) {
                     Label(settings.localized("Language"), systemImage: "globe")
                 }
-                NavigationLink {
-                    AppearanceSettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.appearance) {
                     Label(settings.localized("Appearance"), systemImage: "paintpalette")
                 }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.appIcon) {
+                    Label(settings.localized("App Icon"), systemImage: "app.badge")
+                }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+            } header: {
+                Text(settings.localized("Interface"))
             }
 
             Section(settings.localized("Emulation")) {
-                NavigationLink {
-                    EmulatorSettingsView()
-                } label: {
+                NavigationLink(value: SettingsPane.emulator) {
                     Label(settings.localized("Emulator"), systemImage: "cpu")
                 }
-                NavigationLink {
-                    GraphicsSettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.graphics) {
                     Label(settings.localized("Graphics"), systemImage: "paintbrush")
                 }
-                NavigationLink {
-                    AudioSettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                if SettingsStaticInfo.shaderChainSupported {
+                    NavigationLink(value: SettingsPane.shaders) {
+                        Label(settings.localized("Shaders"), systemImage: "camera.filters")
+                    }
+                    .gameCardTintMenuBackgroundListRow(backgroundActive)
+                }
+                NavigationLink(value: SettingsPane.framePacing) {
+                    Label(settings.localized("Frame Pacing"), systemImage: "speedometer")
+                }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.audio) {
                     Label(settings.localized("Audio"), systemImage: "speaker.wave.2")
                 }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
             }
 
             Section(settings.localized("Input")) {
-                NavigationLink {
-                    GamepadSettingsView()
-                } label: {
+                NavigationLink(value: SettingsPane.gameController) {
                     Label(settings.localized("Game Controller"), systemImage: "gamecontroller")
                 }
-                NavigationLink {
-                    VirtualPadSettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.virtualPad) {
                     Label(settings.localized("Virtual Pad"), systemImage: "hand.draw")
                 }
-                NavigationLink {
-                    LocalMultiplayerSettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.localMultiplayer) {
                     Label(settings.localized("Local Multiplayer"), systemImage: "person.3")
                 }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
             }
 
             Section(settings.localized("Storage & Memory")) {
-                NavigationLink {
-                    MemoryCardSettingsView()
-                } label: {
+                NavigationLink(value: SettingsPane.memoryCards) {
                     Label(settings.localized("Memory Cards"), systemImage: "memorychip")
                 }
-                NavigationLink {
-                    StorageSettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.storage) {
                     Label(settings.localized("Storage"), systemImage: "internaldrive")
                 }
-                NavigationLink {
-                    NetworkSettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.network) {
                     Label(settings.localized("Network"), systemImage: "network")
                 }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
             }
 
             Section(settings.localized("Features")) {
-                NavigationLink {
-                    RetroAchievementsSettingsView()
-                } label: {
+                NavigationLink(value: SettingsPane.settingsPresets) {
+                    Label(settings.localized("Settings Presets"), systemImage: "slider.horizontal.3")
+                }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.retroAchievements) {
                     Label(settings.localized("RetroAchievements"), systemImage: "trophy")
                 }
-                NavigationLink {
-                    OverlaySettingsView()
-                } label: {
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+                NavigationLink(value: SettingsPane.overlay) {
                     Label(settings.localized("Overlay (OSD)"), systemImage: "text.below.photo")
                 }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
             }
 
             Section {
                 jitStatusRow
+                    .gameCardTintMenuBackgroundListRow(backgroundActive)
 
                 Button {
                     stikDebugOpenInProgress = true
@@ -217,43 +299,94 @@ struct SettingsRootView: View {
                     Label(settings.localized("Open StikDebug"), systemImage: "bolt.horizontal.circle")
                 }
                 .disabled(stikDebugOpenInProgress)
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
 
                 Text(settings.localized("JIT Access means iOS currently allows executable memory. Confirm the real runtime state in-game: the OSD should show EE:JIT, IOP:JIT, and VU:JIT. Match the StikDebug script to the JIT Script setting in Emulator settings."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .gameCardTintMenuBackgroundListRow(backgroundActive)
             } header: {
                 Text(settings.localized("JIT Status"))
             }
 
             Section {
-                NavigationLink {
-                    LicenseView()
-                } label: {
+                NavigationLink(value: SettingsPane.licenses) {
                     Label(settings.localized("Licenses & Credits"), systemImage: "doc.text")
                 }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
             }
 
             Section(settings.localized("About")) {
                 HStack {
                     Text(settings.localized("Version"))
                     Spacer()
-                    Text(ARMSX2Bridge.buildVersion())
+                    Text(SettingsStaticInfo.buildVersion)
                         .foregroundStyle(.secondary)
                         .font(.caption)
                 }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
+
+                NavigationLink(value: SettingsPane.help) {
+                    Label(settings.localized("Help"), systemImage: "questionmark.circle")
+                }
+                .gameCardTintMenuBackgroundListRow(backgroundActive)
             }
         }
-        .navigationTitle(settings.localized("Settings"))
+        .contentMargins(.top, 0, for: .scrollContent)
+        .scrollContentBackground(backgroundActive ? .hidden : .automatic)
+        }
+        .stableMenuContentGlassContainer()
+        // NavigationStack retains its root while a destination is pushed. The
+        // clear destination would otherwise reveal the root Settings rows
+        // underneath it, making both interfaces appear at once.
+        .opacity(navigationPath.isEmpty ? 1 : 0)
+        .clearNavigationContainerBackground()
+        .navigationTitle(
+            showsPageOwnedLargeTitle ? "" : settings.localized("Settings")
+        )
+        .toolbarBackground(
+            backgroundActive ? .hidden : .automatic,
+            for: .navigationBar
+        )
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .top) {
             Color.clear.frame(height: 6)
         }
-        .onAppear(perform: refreshJITStatus)
+        .onAppear {
+            if menuTabIsActive {
+                refreshJITStatus()
+            }
+        }
+        .onChange(of: menuTabIsActive) { _, isActive in
+            if isActive && !hasLoadedJITStatus {
+                refreshJITStatus()
+            }
+        }
 #if canImport(UIKit)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            refreshJITStatus()
+            if menuTabIsActive {
+                refreshJITStatus()
+            }
         }
 #endif
+        .navigationDestination(for: SettingsPane.self) { pane in
+            settingsDetail(for: pane)
+        }
+        }
+        .onChange(of: resetToRootRequest) { _, _ in
+            guard !navigationPath.isEmpty else { return }
+            var transaction = Transaction(animation: nil)
+            transaction.disablesAnimations = true
+            withTransaction(transaction) {
+                navigationPath.removeAll()
+            }
+        }
+        .onChange(of: navigationPath.isEmpty) { _, isEmpty in
+            onNavigationPathActivityChanged(!isEmpty)
+        }
+        .onAppear {
+            onNavigationPathActivityChanged(!navigationPath.isEmpty)
+        }
 #endif
     }
 
@@ -330,6 +463,7 @@ struct SettingsRootView: View {
     private func refreshJITStatus() {
         jitAvailable = ARMSX2Bridge.isJITAvailable()
         noJITFallbackActive = ARMSX2Bridge.isNoJITFallbackActive()
+        hasLoadedJITStatus = true
     }
 
     @ViewBuilder
@@ -339,10 +473,16 @@ struct SettingsRootView: View {
             LanguageSettingsView()
         case .appearance:
             AppearanceSettingsView()
+        case .appIcon:
+            AppIconSettingsView()
         case .emulator:
             EmulatorSettingsView()
         case .graphics:
             GraphicsSettingsView()
+        case .shaders:
+            ShaderSettingsView()
+        case .framePacing:
+            FramePacingSettingsView()
         case .audio:
             AudioSettingsView()
         case .network:
@@ -351,6 +491,8 @@ struct SettingsRootView: View {
             MemoryCardSettingsView()
         case .storage:
             StorageSettingsView()
+        case .settingsPresets:
+            SettingsPresetsView()
         case .retroAchievements:
             RetroAchievementsSettingsView()
         case .overlay:
@@ -361,6 +503,8 @@ struct SettingsRootView: View {
             LocalMultiplayerSettingsView()
         case .virtualPad:
             VirtualPadSettingsView()
+        case .help:
+            HelpView()
         case .licenses:
             LicenseView()
         case .about:
@@ -409,7 +553,7 @@ private struct SettingsAboutView: View {
                 HStack {
                     Text(settings.localized("Version"))
                     Spacer()
-                    Text(ARMSX2Bridge.buildVersion())
+                    Text(SettingsStaticInfo.buildVersion)
                         .foregroundStyle(.secondary)
                         .font(.caption)
                 }
@@ -422,6 +566,10 @@ private struct SettingsAboutView: View {
 private struct NetworkSettingsView: View {
     @State private var settings = SettingsStore.shared
     @State private var hosts: [DNSHost] = []
+    @State private var lastPersistedHosts: [DNSHost] = []
+    @State private var networkAdapters: [String] = []
+    @State private var hasLoadedHosts = false
+    @State private var hostSaveTask: Task<Void, Never>?
 
     var body: some View {
         Form {
@@ -457,7 +605,7 @@ private struct NetworkSettingsView: View {
                     }
 
                     Picker(settings.localized("Adapter"), selection: $settings.dev9EthDevice) {
-                        ForEach(ARMSX2Bridge.dev9NetworkAdapters(), id: \.self) { adapter in
+                        ForEach(networkAdapters, id: \.self) { adapter in
                             Text(adapter).tag(adapter)
                         }
                     }
@@ -516,8 +664,24 @@ private struct NetworkSettingsView: View {
             }
         }
         .navigationTitle(settings.localized("Network"))
-        .onAppear { loadHosts() }
-        .onChange(of: hosts) { _, _ in saveHosts() }
+        .onAppear {
+            loadNetworkAdaptersIfNeeded()
+            loadHosts()
+        }
+        .onChange(of: hosts) { _, newHosts in
+            guard hasLoadedHosts, newHosts != lastPersistedHosts else {
+                return
+            }
+            scheduleHostSave()
+        }
+        .onDisappear {
+            flushPendingHostSave()
+        }
+#if canImport(UIKit)
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            flushPendingHostSave()
+        }
+#endif
     }
 
     @ViewBuilder
@@ -560,6 +724,37 @@ private struct NetworkSettingsView: View {
             i += 1
         }
         hosts = loaded
+        lastPersistedHosts = loaded
+        hasLoadedHosts = true
+    }
+
+    private func loadNetworkAdaptersIfNeeded() {
+        guard networkAdapters.isEmpty else { return }
+        var loaded = ARMSX2Bridge.dev9NetworkAdapters()
+        if !settings.dev9EthDevice.isEmpty,
+           !loaded.contains(settings.dev9EthDevice) {
+            loaded.insert(settings.dev9EthDevice, at: 0)
+        }
+        networkAdapters = loaded
+    }
+
+    /// Text fields can publish on every keystroke. Coalescing those writes
+    /// avoids repeatedly rewriting every DEV9 host section while typing.
+    private func scheduleHostSave() {
+        hostSaveTask?.cancel()
+        hostSaveTask = Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(400))
+            guard !Task.isCancelled else { return }
+            saveHosts()
+            hostSaveTask = nil
+        }
+    }
+
+    private func flushPendingHostSave() {
+        hostSaveTask?.cancel()
+        hostSaveTask = nil
+        guard hasLoadedHosts, hosts != lastPersistedHosts else { return }
+        saveHosts()
     }
 
     private func saveHosts() {
@@ -577,6 +772,7 @@ private struct NetworkSettingsView: View {
             ARMSX2Bridge.setINIString(sec, key: "Address", value: host.address)
             ARMSX2Bridge.setINIBool(sec, key: "Enabled", value: host.enabled)
         }
+        lastPersistedHosts = hosts
     }
 }
 

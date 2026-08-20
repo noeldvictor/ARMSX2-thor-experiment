@@ -170,24 +170,12 @@ void FullscreenUI::ApplyLayoutSettings(const SettingsInterface* bsi)
 			return InputLayout::Playstation;
 		if (mode == "nintendo")
 			return InputLayout::Nintendo;
+		if (mode == "generic")
+			return InputLayout::Generic;
 		return InputLayout::Unknown;
 	};
 
-	switch (parse_glyph_layout(glyph_mode))
-	{
-		case InputLayout::Xbox:
-			InputManager::SetGamepadIconPreference(InputLayout::Xbox);
-			break;
-		case InputLayout::Playstation:
-			InputManager::SetGamepadIconPreference(InputLayout::Playstation);
-			break;
-		case InputLayout::Nintendo:
-			InputManager::SetGamepadIconPreference(InputLayout::Nintendo);
-			break;
-		default:
-			InputManager::SetGamepadIconPreference(InputLayout::Unknown);
-			break;
-	}
+	InputManager::SetGamepadIconPreference(parse_glyph_layout(glyph_mode));
 
 	const InputLayout layout = ImGuiFullscreen::GetGamepadLayout();
 
@@ -355,7 +343,12 @@ bool FullscreenUI::Initialize()
 	{
 		const bool open_main_window = s_current_main_window == MainWindowType::None;
 		if (open_main_window)
-			ReturnToMainWindow();
+		{
+			if (ShouldShowSetupWizard())
+				SwitchToSetup();
+			else
+				ReturnToMainWindow();
+		}
 	}
 
 	ForceKeyNavEnabled();
@@ -380,8 +373,8 @@ bool FullscreenUI::HasActiveWindow()
 bool FullscreenUI::AreAnyDialogsOpen()
 {
 	return (s_save_state_selector_open || s_about_window_open || s_cover_downloader_open ||
-			s_input_binding_type != InputBindingInfo::Type::Unknown || ImGuiFullscreen::IsChoiceDialogOpen() ||
-			ImGuiFullscreen::IsFileSelectorOpen());
+			s_achievements_login_open || s_input_binding_type != InputBindingInfo::Type::Unknown ||
+			ImGuiFullscreen::IsChoiceDialogOpen() || ImGuiFullscreen::IsFileSelectorOpen());
 }
 
 void FullscreenUI::CheckForConfigChanges(const Pcsx2Config& old_config)
@@ -444,6 +437,28 @@ void FullscreenUI::OnVMDestroyed()
 		s_was_paused_on_quick_menu_open = false;
 		s_current_pause_submenu = PauseSubMenu::None;
 		ReturnToMainWindow();
+	});
+}
+
+void FullscreenUI::OnVMResumed()
+{
+	if (!IsInitialized())
+		return;
+
+	MTGS::RunOnGSThread([]() {
+		if (!IsInitialized())
+			return;
+
+		if (s_current_main_window == MainWindowType::PauseMenu ||
+			s_current_main_window == MainWindowType::Settings ||
+			s_current_main_window == MainWindowType::Achievements ||
+			s_current_main_window == MainWindowType::Leaderboards)
+		{
+			s_current_main_window = MainWindowType::None;
+			s_current_pause_submenu = PauseSubMenu::None;
+			s_pause_menu_was_open = false;
+			QueueResetFocus(FocusResetType::WindowChanged);
+		}
 	});
 }
 
@@ -535,6 +550,7 @@ void FullscreenUI::Shutdown(bool clear_state)
 		CloseCoverDownloaderWindow();
 		s_cover_image_map.clear();
 		s_game_list_sorted_entries = {};
+		s_last_unsorted_entries = {};
 		s_game_list_directories_cache = {};
 		s_game_cheat_unlabelled_count = 0;
 		s_enabled_game_cheat_cache = {};
@@ -588,6 +604,7 @@ void FullscreenUI::Render()
 	ImGuiFullscreen::BeginLayout();
 
 	const bool should_draw_background = (s_current_main_window == MainWindowType::Landing ||
+		s_current_main_window == MainWindowType::Setup ||
 		s_current_main_window == MainWindowType::StartGame ||
 		s_current_main_window == MainWindowType::Exit ||
 		s_current_main_window == MainWindowType::GameList ||
@@ -610,6 +627,9 @@ void FullscreenUI::Render()
 	{
 		case MainWindowType::Landing:
 			DrawLandingWindow();
+			break;
+		case MainWindowType::Setup:
+			DrawSetupWindow();
 			break;
 		case MainWindowType::StartGame:
 			DrawStartGameWindow();
@@ -893,8 +913,8 @@ void FullscreenUI::DoStartDisc()
 	std::vector<std::string> devices(GetOpticalDriveList());
 	if (devices.empty())
 	{
-		ShowToast(std::string(), FSUI_STR("Could not find any CD/DVD-ROM devices. Please ensure you have a drive connected and sufficient "
-										  "permissions to access it."));
+		ShowToast(ICON_FA_COMPACT_DISC, FSUI_STR("Could not find any CD/DVD-ROM devices. Please ensure you have a drive connected and sufficient "
+												 "permissions to access it."));
 		return;
 	}
 
@@ -978,7 +998,7 @@ void FullscreenUI::DoChangeDiscFromFile()
 		{
 			if (!VMManager::IsDiscFileName(path))
 			{
-				ShowToast({}, fmt::format(FSUI_FSTR("{} is not a valid disc image."), Path::GetFileName(path)));
+				ShowToast(ICON_FA_TRIANGLE_EXCLAMATION, fmt::format(FSUI_FSTR("{} is not a valid disc image."), Path::GetFileName(path)));
 			}
 			else
 			{
@@ -1949,7 +1969,7 @@ bool FullscreenUI::OpenLoadStateSelectorForGame(const std::string& game_path)
 		}
 	}
 
-	ShowToast({}, FSUI_STR("No save states found."), 5.0f);
+	ShowToast(ICON_FA_FLOPPY_DISK, FSUI_STR("No save states found."), 5.0f);
 	return false;
 }
 
@@ -1964,7 +1984,7 @@ bool FullscreenUI::OpenSaveStateSelector(bool is_loading)
 		return true;
 	}
 
-	ShowToast({}, FSUI_STR("No save states found."), 5.0f);
+	ShowToast(ICON_FA_FLOPPY_DISK, FSUI_STR("No save states found."), 5.0f);
 	return false;
 }
 
@@ -2120,12 +2140,12 @@ void FullscreenUI::DrawSaveStateSelector(bool is_loading)
 					{
 						if (!FileSystem::FileExists(entry.path.c_str()))
 						{
-							ShowToast({}, fmt::format(FSUI_FSTR("{} does not exist."), ImGuiFullscreen::RemoveHash(entry.title)));
+							ShowToast(ICON_FA_TRIANGLE_EXCLAMATION, fmt::format(FSUI_FSTR("{} does not exist."), ImGuiFullscreen::RemoveHash(entry.title)));
 							is_open = true;
 						}
 						else if (FileSystem::DeleteFilePath(entry.path.c_str()))
 						{
-							ShowToast({}, fmt::format(FSUI_FSTR("{} deleted."), ImGuiFullscreen::RemoveHash(entry.title)));
+							ShowToast(ICON_FA_TRASH, fmt::format(FSUI_FSTR("{} deleted."), ImGuiFullscreen::RemoveHash(entry.title)));
 							if (s_save_state_selector_loading)
 								s_save_state_selector_slots.erase(s_save_state_selector_slots.begin() + i);
 							else
@@ -2145,7 +2165,7 @@ void FullscreenUI::DrawSaveStateSelector(bool is_loading)
 						}
 						else
 						{
-							ShowToast({}, fmt::format(FSUI_FSTR("Failed to delete {}."), ImGuiFullscreen::RemoveHash(entry.title)));
+							ShowToast(ICON_FA_TRIANGLE_EXCLAMATION, fmt::format(FSUI_FSTR("Failed to delete {}."), ImGuiFullscreen::RemoveHash(entry.title)));
 							is_open = false;
 						}
 					}
@@ -2372,7 +2392,7 @@ void FullscreenUI::DrawResumeStateSelector()
 			}
 			else
 			{
-				ShowToast(std::string(), FSUI_STR("Failed to delete save state."));
+				ShowToast(ICON_FA_TRIANGLE_EXCLAMATION, FSUI_STR("Failed to delete save state."));
 			}
 		}
 
@@ -2445,7 +2465,6 @@ void FullscreenUI::PopulateGameListEntryList()
 	static int s_last_sort = -1;
 	static bool s_last_reverse = false;
 	static bool s_last_prefer_eng = false;
-	static std::vector<const GameList::Entry*> s_last_unsorted_entries;
 
 	// Sort can be expensive, try to avoid when possible
 	const u32 count = GameList::GetEntryCount();
@@ -2606,6 +2625,11 @@ void FullscreenUI::DrawGameListWindow()
 	{
 		OpenCoverDownloaderWindow();
 	}
+	else if (ImGui::IsKeyPressed(ImGuiKey_GamepadL2, false) || ImGui::IsKeyPressed(ImGuiKey_F5, false))
+	{
+		ShowToast(std::string(), FSUI_STR("Scanning for new games..."), 4.0f);
+		Host::RefreshGameListAsync(false);
+	}
 
 	switch (s_game_list_view)
 	{
@@ -2640,6 +2664,7 @@ void FullscreenUI::DrawGameListWindow()
 			std::make_pair(glyphs.dpad, FSUI_VSTR("Select Game")),
 			std::make_pair(glyphs.select, FSUI_VSTR("Cover Downloader")),
 			std::make_pair(glyphs.start, FSUI_VSTR("Settings")),
+			std::make_pair(ICON_PF_LEFT_TRIGGER_L2, FSUI_VSTR("Refresh List")),
 			std::make_pair(swapNorthWest ? glyphs.west : glyphs.north, FSUI_VSTR("Change View")),
 			std::make_pair(swapNorthWest ? glyphs.north : glyphs.west, FSUI_VSTR("Launch Options")),
 			std::make_pair(glyphs.confirm(circleOK), FSUI_VSTR("Start Game")),
@@ -2654,6 +2679,7 @@ void FullscreenUI::DrawGameListWindow()
 			std::make_pair(ICON_PF_F2, FSUI_VSTR("Settings")),
 			std::make_pair(ICON_PF_F3, FSUI_VSTR("Launch Options")),
 			std::make_pair(ICON_PF_F4, FSUI_VSTR("Cover Downloader")),
+			std::make_pair(ICON_PF_F5, FSUI_VSTR("Refresh List")),
 			std::make_pair(ICON_PF_ENTER, FSUI_VSTR("Start Game")),
 			std::make_pair(ICON_PF_ESC, FSUI_VSTR("Back")),
 		});
@@ -3068,51 +3094,8 @@ void FullscreenUI::HandleGameListOptions(const GameList::Entry* entry)
 		});
 }
 
-void FullscreenUI::DrawGameListSettingsWindow()
+void FullscreenUI::DrawSearchDirectoriesList()
 {
-	ImGuiIO& io = ImGui::GetIO();
-	const ImVec2 heading_size =
-		ImVec2(io.DisplaySize.x, LayoutScale(LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY) +
-									 (LayoutScale(LAYOUT_MENU_BUTTON_Y_PADDING) * 2.0f) + LayoutScale(2.0f));
-
-	const float bg_alpha = VMManager::HasValidVM() ? 0.90f : 1.0f;
-
-	if (BeginFullscreenWindow(ImVec2(0.0f, 0.0f), heading_size, "gamelist_view", MulAlpha(UIPrimaryColor, bg_alpha)))
-	{
-		BeginNavBar();
-
-		if (NavButton(ICON_PF_BACKWARD, true, true))
-		{
-			s_current_main_window = MainWindowType::GameList;
-			QueueResetFocus(FocusResetType::WindowChanged);
-		}
-
-		NavTitle(FSUI_CSTR("Game List Settings"));
-		EndNavBar();
-	}
-
-	EndFullscreenWindow();
-
-	if (!BeginFullscreenWindow(
-			ImVec2(0.0f, heading_size.y),
-			ImVec2(io.DisplaySize.x, io.DisplaySize.y - heading_size.y - LayoutScale(LAYOUT_FOOTER_HEIGHT)),
-			"settings_parent", UIBackgroundColor, 0.0f, ImVec2(ImGuiFullscreen::LAYOUT_MENU_WINDOW_X_PADDING, 0.0f)))
-	{
-		EndFullscreenWindow();
-		return;
-	}
-
-	if (ImGui::IsWindowFocused() && WantsToCloseMenu())
-	{
-		s_current_main_window = MainWindowType::GameList;
-		QueueResetFocus(FocusResetType::WindowChanged);
-	}
-
-	auto lock = Host::GetSettingsLock();
-	SettingsInterface* bsi = GetEditingSettingsInterface(false);
-
-	BeginMenuButtons();
-
 	MenuHeading(FSUI_CSTR("Search Directories"));
 	if (MenuButton(FSUI_ICONSTR(ICON_FA_FOLDER_PLUS, "Add Search Directory"), FSUI_CSTR("Adds a new directory to the game search list.")))
 	{
@@ -3195,6 +3178,240 @@ void FullscreenUI::DrawGameListSettingsWindow()
 				});
 		}
 	}
+}
+
+bool FullscreenUI::ShouldShowSetupWizard()
+{
+	return Host::GetBaseBoolSettingValue("UI", "SetupWizardIncomplete", false);
+}
+
+void FullscreenUI::SwitchToSetup()
+{
+	s_setup_wizard_step = 0;
+	s_current_main_window = MainWindowType::Setup;
+	{
+		auto lock = Host::GetSettingsLock();
+		PopulateGameListDirectoryCache(Host::Internal::GetBaseSettingsLayer());
+	}
+	QueueResetFocus(FocusResetType::WindowChanged);
+}
+
+void FullscreenUI::CompleteSetupWizard()
+{
+	Host::SetBaseBoolSettingValue("UI", "SetupWizardIncomplete", false);
+	Host::CommitBaseSettingChanges();
+
+	// If game directories were configured, drop straight into the game list so the
+	// user immediately sees the scanned results; otherwise the normal main menu.
+	if (!s_game_list_directories_cache.empty())
+		SwitchToGameList();
+	else
+		ReturnToMainWindow();
+}
+
+void FullscreenUI::DrawSetupWindow()
+{
+	// Controller-navigable first-time setup, shown in Big Picture when the desktop
+	// setup wizard was skipped (see QtHost). Steps mirror the essentials the Qt
+	// wizard covers that matter for couch play: BIOS, game directories, achievements.
+	static constexpr const char* step_titles[] = {
+		FSUI_NSTR("Welcome"),
+		FSUI_NSTR("BIOS"),
+		FSUI_NSTR("Game Directories"),
+		FSUI_NSTR("RetroAchievements"),
+		FSUI_NSTR("Finished"),
+	};
+	static constexpr u32 STEP_COUNT = std::size(step_titles);
+
+	const u32 step = std::min(s_setup_wizard_step, STEP_COUNT - 1);
+	const bool last_step = (step == STEP_COUNT - 1);
+
+	const auto go_prev = [&step]() {
+		if (step > 0)
+		{
+			s_setup_wizard_step = step - 1;
+			QueueResetFocus(FocusResetType::WindowChanged);
+		}
+		else
+		{
+			// Leave the flag set so setup reappears next launch; users can still reach Settings.
+			ReturnToMainWindow();
+		}
+	};
+	const auto go_next = [&step, last_step]() {
+		if (last_step)
+		{
+			CompleteSetupWizard();
+		}
+		else
+		{
+			s_setup_wizard_step = step + 1;
+			QueueResetFocus(FocusResetType::WindowChanged);
+		}
+	};
+
+	ImGuiIO& io = ImGui::GetIO();
+	const ImVec2 heading_size =
+		ImVec2(io.DisplaySize.x, LayoutScale(LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY) +
+									 (LayoutScale(LAYOUT_MENU_BUTTON_Y_PADDING) * 2.0f) + LayoutScale(2.0f));
+
+	if (BeginFullscreenWindow(ImVec2(0.0f, 0.0f), heading_size, "setup_heading", UIPrimaryColor))
+	{
+		BeginNavBar();
+
+		if (NavButton(ICON_PF_BACKWARD, false, true))
+			go_prev();
+
+		NavTitle(SmallString::from_format(FSUI_FSTR("Initial Setup - {} ({}/{})"),
+			Host::TranslateToCString(TR_CONTEXT, step_titles[step]), step + 1, STEP_COUNT));
+
+		static constexpr float NAV_ITEM_WIDTH = 25.0f;
+		RightAlignNavButtons(1, NAV_ITEM_WIDTH, LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
+		if (NavButton(last_step ? ICON_FA_CHECK : ICON_PF_ARROW_RIGHT, false, true, NAV_ITEM_WIDTH, LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY))
+			go_next();
+
+		EndNavBar();
+	}
+	EndFullscreenWindow();
+
+	// Per-step window ID: each step must have its own ImGui nav state. A fixed ID would
+	// carry a stale NavId across steps (e.g. an Achievements item that doesn't exist on the
+	// Finished page), leaving focus on nothing and making buttons unselectable by controller.
+	if (!BeginFullscreenWindow(
+			ImVec2(0.0f, heading_size.y),
+			ImVec2(io.DisplaySize.x, io.DisplaySize.y - heading_size.y - LayoutScale(LAYOUT_FOOTER_HEIGHT)),
+			TinyString::from_format("setup_content_{}", step).c_str(), UIBackgroundColor, 0.0f,
+			ImVec2(ImGuiFullscreen::LAYOUT_MENU_WINDOW_X_PADDING, 0.0f)))
+	{
+		EndFullscreenWindow();
+		return;
+	}
+
+	ResetFocusHere();
+
+	if (!ImGui::IsPopupOpen(0u, ImGuiPopupFlags_AnyPopup))
+	{
+		if (ImGui::IsKeyPressed(ImGuiKey_GamepadL1, false))
+			go_prev();
+		else if (ImGui::IsKeyPressed(ImGuiKey_GamepadR1, false))
+			go_next();
+		else if (ImGui::IsWindowFocused() && WantsToCloseMenu())
+			go_prev();
+	}
+
+	// NOTE: The settings pages below require the settings lock held, but the Welcome and
+	// Finished steps must NOT hold it: their buttons call CompleteSetupWizard(), which
+	// re-acquires the (non-recursive) settings lock via SwitchToGameList/SetBaseBoolSettingValue.
+	// Holding it across those calls would deadlock, so scope the lock to the steps that need it.
+	switch (step)
+	{
+		case 0: // Welcome
+		{
+			BeginMenuButtons();
+			MenuHeading(FSUI_CSTR("Welcome to ARMSX2!"));
+			ActiveButton(FSUI_CSTR("Navigate with the D-Pad, and use the shoulder buttons to move between steps."), false, false,
+				LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
+			if (MenuButton(FSUI_ICONSTR(ICON_FA_GEAR, "Set Up ARMSX2"),
+					FSUI_CSTR("Choose a BIOS, add your game directories, and optionally sign in to RetroAchievements.")))
+				go_next();
+			ImGui::SetItemDefaultFocus();
+			if (MenuButton(FSUI_ICONSTR(ICON_FA_PLAY, "Skip Setup and Start Playing"),
+					FSUI_CSTR("Go straight to the main menu. You can configure everything later from Settings.")))
+				CompleteSetupWizard();
+			EndMenuButtons();
+		}
+		break;
+
+		case 1: // BIOS
+		{
+			auto lock = Host::GetSettingsLock();
+			DrawBIOSSettingsPage();
+		}
+		break;
+
+		case 2: // Game Directories
+		{
+			auto lock = Host::GetSettingsLock();
+			BeginMenuButtons();
+			DrawSearchDirectoriesList();
+			EndMenuButtons();
+		}
+		break;
+
+		case 3: // RetroAchievements
+		{
+			auto lock = Host::GetSettingsLock();
+			DrawAchievementsSettingsPage(lock);
+		}
+		break;
+
+		case 4: // Finished
+		default:
+		{
+			BeginMenuButtons();
+			MenuHeading(FSUI_CSTR("Setup Complete!"));
+			ActiveButton(FSUI_CSTR("You're all set. These options can be changed at any time from the Settings menu."), false, false,
+				LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
+			if (MenuButton(FSUI_ICONSTR(ICON_FA_CHECK, "Finish and Start Playing"),
+					FSUI_CSTR("Completes setup and opens the main menu.")))
+				go_next();
+			ImGui::SetItemDefaultFocus();
+			EndMenuButtons();
+		}
+		break;
+	}
+
+	EndFullscreenWindow();
+
+	SetStandardSelectionFooterText(true);
+}
+
+void FullscreenUI::DrawGameListSettingsWindow()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	const ImVec2 heading_size =
+		ImVec2(io.DisplaySize.x, LayoutScale(LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY) +
+									 (LayoutScale(LAYOUT_MENU_BUTTON_Y_PADDING) * 2.0f) + LayoutScale(2.0f));
+
+	const float bg_alpha = VMManager::HasValidVM() ? 0.90f : 1.0f;
+
+	if (BeginFullscreenWindow(ImVec2(0.0f, 0.0f), heading_size, "gamelist_view", MulAlpha(UIPrimaryColor, bg_alpha)))
+	{
+		BeginNavBar();
+
+		if (NavButton(ICON_PF_BACKWARD, true, true))
+		{
+			s_current_main_window = MainWindowType::GameList;
+			QueueResetFocus(FocusResetType::WindowChanged);
+		}
+
+		NavTitle(FSUI_CSTR("Game List Settings"));
+		EndNavBar();
+	}
+
+	EndFullscreenWindow();
+
+	if (!BeginFullscreenWindow(
+			ImVec2(0.0f, heading_size.y),
+			ImVec2(io.DisplaySize.x, io.DisplaySize.y - heading_size.y - LayoutScale(LAYOUT_FOOTER_HEIGHT)),
+			"settings_parent", UIBackgroundColor, 0.0f, ImVec2(ImGuiFullscreen::LAYOUT_MENU_WINDOW_X_PADDING, 0.0f)))
+	{
+		EndFullscreenWindow();
+		return;
+	}
+
+	if (ImGui::IsWindowFocused() && WantsToCloseMenu())
+	{
+		s_current_main_window = MainWindowType::GameList;
+		QueueResetFocus(FocusResetType::WindowChanged);
+	}
+
+	auto lock = Host::GetSettingsLock();
+	SettingsInterface* bsi = GetEditingSettingsInterface(false);
+
+	BeginMenuButtons();
+
+	DrawSearchDirectoriesList();
 
 	static constexpr const char* view_types[] = {
 		FSUI_NSTR("Game Grid"),
@@ -3388,9 +3605,9 @@ void FullscreenUI::ExitFullscreenAndOpenURL(const std::string_view url)
 void FullscreenUI::CopyTextToClipboard(std::string title, const std::string_view text)
 {
 	if (Host::CopyTextToClipboard(text))
-		ShowToast(std::string(), std::move(title));
+		ShowToast(ICON_FA_CLIPBOARD, std::move(title));
 	else
-		ShowToast(std::string(), FSUI_STR("Failed to copy text to clipboard."));
+		ShowToast(ICON_FA_TRIANGLE_EXCLAMATION, FSUI_STR("Failed to copy text to clipboard."));
 }
 
 void FullscreenUI::OpenAboutWindow()
@@ -3860,7 +4077,7 @@ void FullscreenUI::SwitchToAchievementsWindow()
 
 	if (!Achievements::HasAchievements())
 	{
-		ShowToast(std::string(), FSUI_STR("This game has no achievements."));
+		ShowToast(ICON_FA_TROPHY, FSUI_STR("This game has no achievements."));
 		return;
 	}
 
@@ -3904,7 +4121,7 @@ void FullscreenUI::SwitchToLeaderboardsWindow()
 
 	if (!Achievements::HasLeaderboards())
 	{
-		ShowToast(std::string(), FSUI_STR("This game has no leaderboards."));
+		ShowToast(ICON_FA_TROPHY, FSUI_STR("This game has no leaderboards."));
 		return;
 	}
 
@@ -4005,6 +4222,7 @@ TRANSLATE_NOOP("FullscreenUI", "Your memory card is still saving data.\n\nWARNIN
 TRANSLATE_NOOP("FullscreenUI", "No save present in this slot.");
 TRANSLATE_NOOP("FullscreenUI", "No save states found.");
 TRANSLATE_NOOP("FullscreenUI", "Failed to delete save state.");
+TRANSLATE_NOOP("FullscreenUI", "Scanning for new games...");
 TRANSLATE_NOOP("FullscreenUI", "empty title");
 TRANSLATE_NOOP("FullscreenUI", "no serial");
 TRANSLATE_NOOP("FullscreenUI", "Failed to copy text to clipboard.");
@@ -4040,11 +4258,18 @@ TRANSLATE_NOOP("FullscreenUI", "A resume save state created at %s was found.\n\n
 TRANSLATE_NOOP("FullscreenUI", "Region: ");
 TRANSLATE_NOOP("FullscreenUI", "Compatibility: ");
 TRANSLATE_NOOP("FullscreenUI", "No Game Selected");
-TRANSLATE_NOOP("FullscreenUI", "Game List Settings");
 TRANSLATE_NOOP("FullscreenUI", "Search Directories");
 TRANSLATE_NOOP("FullscreenUI", "Adds a new directory to the game search list.");
 TRANSLATE_NOOP("FullscreenUI", "Scanning Subdirectories");
 TRANSLATE_NOOP("FullscreenUI", "Not Scanning Subdirectories");
+TRANSLATE_NOOP("FullscreenUI", "Welcome to ARMSX2!");
+TRANSLATE_NOOP("FullscreenUI", "Navigate with the D-Pad, and use the shoulder buttons to move between steps.");
+TRANSLATE_NOOP("FullscreenUI", "Choose a BIOS, add your game directories, and optionally sign in to RetroAchievements.");
+TRANSLATE_NOOP("FullscreenUI", "Go straight to the main menu. You can configure everything later from Settings.");
+TRANSLATE_NOOP("FullscreenUI", "Setup Complete!");
+TRANSLATE_NOOP("FullscreenUI", "You're all set. These options can be changed at any time from the Settings menu.");
+TRANSLATE_NOOP("FullscreenUI", "Completes setup and opens the main menu.");
+TRANSLATE_NOOP("FullscreenUI", "Game List Settings");
 TRANSLATE_NOOP("FullscreenUI", "List Settings");
 TRANSLATE_NOOP("FullscreenUI", "Sets which view the game list will open to.");
 TRANSLATE_NOOP("FullscreenUI", "Determines which field the game list will be sorted by.");
@@ -4061,31 +4286,6 @@ TRANSLATE_NOOP("FullscreenUI", "Enter one or more cover image URL templates belo
 TRANSLATE_NOOP("FullscreenUI", "URLs:");
 TRANSLATE_NOOP("FullscreenUI", "Saves covers using the game's title instead of serial number.");
 TRANSLATE_NOOP("FullscreenUI", "Downloading covers...");
-TRANSLATE_NOOP("FullscreenUI", "RetroAchievements");
-TRANSLATE_NOOP("FullscreenUI", "Please enter your user name and password for retroachievements.org below.\n\nYour password will not be saved in PCSX2, an access token will be generated and used instead.");
-TRANSLATE_NOOP("FullscreenUI", "Username");
-TRANSLATE_NOOP("FullscreenUI", "Password");
-TRANSLATE_NOOP("FullscreenUI", "Logging in...");
-TRANSLATE_NOOP("FullscreenUI", "Dismiss");
-TRANSLATE_NOOP("FullscreenUI", "Login");
-TRANSLATE_NOOP("FullscreenUI", "Cancel");
-TRANSLATE_NOOP("FullscreenUI", "When enabled and logged in, PCSX2 will scan for achievements on startup.");
-TRANSLATE_NOOP("FullscreenUI", "\"Challenge\" mode for achievements, including leaderboard tracking. Disables save state, cheats, and slowdown functions.");
-TRANSLATE_NOOP("FullscreenUI", "Displays popup messages on events such as achievement unlocks and leaderboard submissions.");
-TRANSLATE_NOOP("FullscreenUI", "Displays popup messages when starting, submitting, or failing a leaderboard challenge.");
-TRANSLATE_NOOP("FullscreenUI", "Plays sound effects for events such as achievement unlocks and leaderboard submissions.");
-TRANSLATE_NOOP("FullscreenUI", "Shows icons in the screen when a challenge/primed achievement is active.");
-TRANSLATE_NOOP("FullscreenUI", "Shows icons in the screen when leaderboard tracking is active.");
-TRANSLATE_NOOP("FullscreenUI", "Determines where achievement/leaderboard overlays are positioned on the screen.");
-TRANSLATE_NOOP("FullscreenUI", "Determines where achievement/leaderboard notification popups are positioned on the screen.");
-TRANSLATE_NOOP("FullscreenUI", "When enabled, each session will behave as if no achievements have been unlocked.");
-TRANSLATE_NOOP("FullscreenUI", "When enabled, PCSX2 will assume all achievements are locked and not send any unlock notifications to the server.");
-TRANSLATE_NOOP("FullscreenUI", "When enabled, PCSX2 will list achievements from unofficial sets. These achievements are not tracked by RetroAchievements.");
-TRANSLATE_NOOP("FullscreenUI", "Sound Effects");
-TRANSLATE_NOOP("FullscreenUI", "Account");
-TRANSLATE_NOOP("FullscreenUI", "Logs out of RetroAchievements.");
-TRANSLATE_NOOP("FullscreenUI", "Logs in to RetroAchievements.");
-TRANSLATE_NOOP("FullscreenUI", "Current Game");
 TRANSLATE_NOOP("FullscreenUI", "An error occurred while deleting empty game settings:\n{}");
 TRANSLATE_NOOP("FullscreenUI", "An error occurred while saving game settings:\n{}");
 TRANSLATE_NOOP("FullscreenUI", "{} is not a valid disc image.");
@@ -4103,6 +4303,7 @@ TRANSLATE_NOOP("FullscreenUI", "Time Played: {}");
 TRANSLATE_NOOP("FullscreenUI", "Last Played: {}");
 TRANSLATE_NOOP("FullscreenUI", "Size: {:.2f} MB");
 TRANSLATE_NOOP("FullscreenUI", "Are you sure you want to reset the play time for '{}' ({})?\n\nYour current play time is {}.\n\nThis action cannot be undone.");
+TRANSLATE_NOOP("FullscreenUI", "Initial Setup - {} ({}/{})");
 TRANSLATE_NOOP("FullscreenUI", "Version: {}");
 TRANSLATE_NOOP("FullscreenUI", "Error: {}");
 TRANSLATE_NOOP("FullscreenUI", "Warning: {}");
@@ -4110,6 +4311,11 @@ TRANSLATE_NOOP("FullscreenUI", "Failed to Load State From Backup Slot {}");
 TRANSLATE_NOOP("FullscreenUI", "Failed to Load State From Slot {}");
 TRANSLATE_NOOP("FullscreenUI", "Failed to Save State To Slot {}");
 TRANSLATE_NOOP("FullscreenUI", "Game Grid");
+TRANSLATE_NOOP("FullscreenUI", "Welcome");
+TRANSLATE_NOOP("FullscreenUI", "BIOS");
+TRANSLATE_NOOP("FullscreenUI", "Game Directories");
+TRANSLATE_NOOP("FullscreenUI", "RetroAchievements");
+TRANSLATE_NOOP("FullscreenUI", "Finished");
 TRANSLATE_NOOP("FullscreenUI", "Type");
 TRANSLATE_NOOP("FullscreenUI", "Serial");
 TRANSLATE_NOOP("FullscreenUI", "Title");
@@ -4133,6 +4339,7 @@ TRANSLATE_NOOP("FullscreenUI", "Options");
 TRANSLATE_NOOP("FullscreenUI", "Load/Save State");
 TRANSLATE_NOOP("FullscreenUI", "Select Game");
 TRANSLATE_NOOP("FullscreenUI", "Cover Downloader");
+TRANSLATE_NOOP("FullscreenUI", "Refresh List");
 TRANSLATE_NOOP("FullscreenUI", "Change View");
 TRANSLATE_NOOP("FullscreenUI", "Launch Options");
 TRANSLATE_NOOP("FullscreenUI", "Startup Error");
@@ -4166,6 +4373,9 @@ TRANSLATE_NOOP("FullscreenUI", "Open in File Browser");
 TRANSLATE_NOOP("FullscreenUI", "Disable Subdirectory Scanning");
 TRANSLATE_NOOP("FullscreenUI", "Enable Subdirectory Scanning");
 TRANSLATE_NOOP("FullscreenUI", "Remove From List");
+TRANSLATE_NOOP("FullscreenUI", "Set Up ARMSX2");
+TRANSLATE_NOOP("FullscreenUI", "Skip Setup and Start Playing");
+TRANSLATE_NOOP("FullscreenUI", "Finish and Start Playing");
 TRANSLATE_NOOP("FullscreenUI", "Default View");
 TRANSLATE_NOOP("FullscreenUI", "Sort By");
 TRANSLATE_NOOP("FullscreenUI", "Sort Reversed");
@@ -4173,7 +4383,6 @@ TRANSLATE_NOOP("FullscreenUI", "Show Titles");
 TRANSLATE_NOOP("FullscreenUI", "Scan For New Games");
 TRANSLATE_NOOP("FullscreenUI", "Rescan All Games");
 TRANSLATE_NOOP("FullscreenUI", "Website");
-TRANSLATE_NOOP("FullscreenUI", "Support Forums");
 TRANSLATE_NOOP("FullscreenUI", "GitHub Repository");
 TRANSLATE_NOOP("FullscreenUI", "License");
 TRANSLATE_NOOP("FullscreenUI", "Close");

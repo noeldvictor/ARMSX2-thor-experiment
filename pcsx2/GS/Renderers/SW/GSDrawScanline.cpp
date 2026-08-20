@@ -5,6 +5,7 @@
 #include "GS/Renderers/SW/GSTextureCacheSW.h"
 #include "GS/Renderers/SW/GSScanlineEnvironment.h"
 #include "GS/Renderers/SW/GSRasterizer.h"
+#include "Memory.h"
 
 #include "common/Console.h"
 
@@ -30,13 +31,17 @@ GSDrawScanline::GSDrawScanline()
 	: m_sp_map("GSSetupPrim")
 	, m_ds_map("GSDrawScanline")
 {
-	GSCodeReserve::ResetMemory();
+	if (SysMemory::HasCodeMemory())
+		GSCodeReserve::ResetMemory();
 }
 
 GSDrawScanline::~GSDrawScanline()
 {
-	if (const size_t used = GSCodeReserve::GetMemoryUsed(); used > 0)
-		DevCon.WriteLn("SW JIT generated %zu bytes of code", used);
+	if (SysMemory::HasCodeMemory())
+	{
+		if (const size_t used = GSCodeReserve::GetMemoryUsed(); used > 0)
+			DevCon.WriteLn("SW JIT generated %zu bytes of code", used);
+	}
 }
 
 bool GSDrawScanline::ShouldUseCDrawScanline(u64 key)
@@ -115,18 +120,29 @@ void GSDrawScanline::BeginDraw(const GSRasterizerData& data, GSScanlineLocalData
 
 void GSDrawScanline::ResetCodeCache()
 {
+	if (!SysMemory::HasCodeMemory())
+		return;
+
 	Console.Warning("GS Software JIT cache overflow, resetting.");
 	m_sp_map.Clear();
 	m_ds_map.Clear();
 	GSCodeReserve::ResetMemory();
 }
 
-bool GSDrawScanline::SetupDraw(GSRasterizerData& data)
+bool GSDrawScanline::SetupDraw(GSRasterizerData& data, bool allow_compile)
 {
 	const GSScanlineGlobalData& global = data.global;
 
+	if (!SysMemory::HasCodeMemory())
+	{
+		data.setup_prim = &GSDrawScanline::CSetupPrim;
+		data.draw_scanline = &GSDrawScanline::CDrawScanline;
+		data.draw_edge = global.sel.aa1 ? &GSDrawScanline::CDrawEdge : nullptr;
+		return true;
+	}
+
 #ifdef ENABLE_JIT_RASTERIZER
-	data.draw_scanline = m_ds_map[global.sel];
+	data.draw_scanline = m_ds_map.Lookup(global.sel, allow_compile);
 	if (!data.draw_scanline) [[unlikely]]
 		return false;
 
@@ -138,7 +154,7 @@ bool GSDrawScanline::SetupDraw(GSRasterizerData& data)
 		sel.zwrite = 0;
 		sel.edge = 1;
 
-		data.draw_edge = m_ds_map[sel];
+		data.draw_edge = m_ds_map.Lookup(sel, allow_compile);
 		if (!data.draw_edge) [[unlikely]]
 			return false;
 	}
@@ -165,7 +181,7 @@ bool GSDrawScanline::SetupDraw(GSRasterizerData& data)
 	sel.zequal = global.sel.zequal;
 	sel.notest = global.sel.notest;
 
-	return (data.setup_prim = m_sp_map[sel]) != nullptr;
+	return (data.setup_prim = m_sp_map.Lookup(sel, allow_compile)) != nullptr;
 #else
 	data.setup_prim = &GSDrawScanline::CSetupPrim;
 	data.draw_scanline = &GSDrawScanline::CDrawScanline;
@@ -337,10 +353,16 @@ void GSDrawScanline::CSetupPrim(const GSVertexSW* vertex, const u16* index, cons
 			VectorF dr = dc.xxxx();
 			VectorF db = dc.zzzz();
 
+			// The pack has to be the unsigned-saturating one, as it is in both
+			// generators and in the step above. The mask has already put every lane
+			// in 0..65535, so an unsigned pack is the identity and a descending
+			// gradient keeps its negative offset; the signed pack saturates
+			// everything from 32768 up to 32767, which turns every lane of a
+			// descending gradient into garbage the whole scanline carries.
 			for (int i = 0; i < vlen; i++)
 			{
-				VectorI r = (VectorI(dr * load_shift(i)) & mask16).ps32();
-				VectorI b = (VectorI(db * load_shift(i)) & mask16).ps32();
+				VectorI r = (VectorI(dr * load_shift(i)) & mask16).pu32();
+				VectorI b = (VectorI(db * load_shift(i)) & mask16).pu32();
 
 				local.d[i].rb = r.upl16(b);
 			}
@@ -350,8 +372,8 @@ void GSDrawScanline::CSetupPrim(const GSVertexSW* vertex, const u16* index, cons
 
 			for (int i = 0; i < vlen; i++)
 			{
-				VectorI g = (VectorI(dg * load_shift(i)) & mask16).ps32();
-				VectorI a = (VectorI(da * load_shift(i)) & mask16).ps32();
+				VectorI g = (VectorI(dg * load_shift(i)) & mask16).pu32();
+				VectorI a = (VectorI(da * load_shift(i)) & mask16).pu32();
 
 				local.d[i].ga = g.upl16(a);
 			}

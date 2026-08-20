@@ -20,6 +20,10 @@ import android.view.InputDevice
  * Called only from the in-game input dispatch where a real `event.deviceId` is live.
  */
 object PadRouter {
+    // Nintendo USB/Bluetooth vendor id. A Joy-Con pair enumerates as TWO InputDevices
+    // (L + R) under this vendor, but they are one physical controller — so both halves
+    // are routed to a single port instead of being split across players.
+    private const val NINTENDO_VENDOR_ID = 0x057E
     // Unified slot -> claimed Android deviceId (-1 = unclaimed).
     private val slots = IntArray(8) { -1 }
     @Volatile private var pad2Enabled = false
@@ -39,6 +43,25 @@ object PadRouter {
         pad2Enabled = false
     }
 
+    /** Release the slot a now-departed device held, so a re-enumerated controller re-claims from the
+     *  top. Called on device removal: AYANEO handhelds power-cycle the built-in pad on sleep/wake and
+     *  it comes back with a NEW deviceId — the stale id otherwise keeps owning Player 1's slot, and
+     *  the woken pad claims slot 1 (an un-armed PS2 port 2), so gameplay input goes nowhere (#394). */
+    fun forgetDevice(deviceId: Int) {
+        if (deviceId < 0) return
+        for (i in slots.indices) if (slots[i] == deviceId) slots[i] = -1
+    }
+
+    /** Free every slot whose claimed device is no longer connected. Called on resume / focus regain
+     *  as a backstop for [forgetDevice] when the remove event landed while we were paused.
+     *  [activeDeviceIds] is `InputDevice.getDeviceIds()`. */
+    fun pruneStale(activeDeviceIds: IntArray) {
+        for (i in slots.indices) {
+            val id = slots[i]
+            if (id >= 0 && id !in activeDeviceIds) slots[i] = -1
+        }
+    }
+
     /** True once a second controller has joined this session (P2 main is live). */
     fun coopActive(): Boolean = slots[1] != -1
 
@@ -56,11 +79,19 @@ object PadRouter {
         if (deviceId < 0) return 0
         // Fast path: already-claimed nodes (no InputDevice lookup).
         for (i in slots.indices) if (slots[i] == deviceId) return i
+        val dev = InputDevice.getDevice(deviceId)
+        // Nintendo Joy-Cons (vendor 0x057E) enumerate as TWO InputDevices — the L and R
+        // halves of ONE physical controller. Collapse BOTH onto Player 1 (port 0) so a
+        // pair drives a single PS2 pad instead of splitting across P1/P2 (which made a
+        // 1-player game respond to only one half, and a co-op game see two controllers).
+        // They never claim a slot, so onPlayer2Joined stays silent for a lone pair. Gated
+        // strictly on the Nintendo vendor id — every other controller keeps its routing.
+        if (dev?.vendorId == NINTENDO_VENDOR_ID) return 0
         // Only a real GAMEPAD/JOYSTICK node may claim a slot. One physical controller
         // (notably a DualSense over Bluetooth) enumerates as SEVERAL InputDevices — a
         // gamepad node PLUS a touchpad/mouse node. Gating claims to gamepad sources stops
         // a secondary node from eating a slot and splitting one pad across two players.
-        val src = InputDevice.getDevice(deviceId)?.sources ?: 0
+        val src = dev?.sources ?: 0
         val isPad = (src and InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD ||
             (src and InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK
         if (!isPad) return 0 // touchpad / mouse / keyboard node → treat as P1, don't claim

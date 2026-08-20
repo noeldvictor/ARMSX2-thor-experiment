@@ -420,6 +420,7 @@ static const char* s_gs_hw_fix_names[] = {
 	"drawBuffering",
 	"PCRTCOffsets",
 	"PCRTCOverscan",
+	"coalesceRenderPasses",
 	"trilinearFiltering",
 	"skipDrawStart",
 	"skipDrawEnd",
@@ -438,6 +439,7 @@ static const char* s_gs_hw_fix_names[] = {
 	"recommendedBlendingLevel",
 	"recommendedAccurateAlphaTest",
 	"recommendedHWAA1",
+	"hwDownloadMode",
 	"getSkipCount",
 	"beforeDraw",
 	"moveHandler",
@@ -479,6 +481,61 @@ bool GameDatabaseSchema::isUserHackHWFix(GSHWFixId id)
 			return false;
 		default:
 			return true;
+	}
+}
+
+// Which fixes a player can claim for themselves. Anything not listed keeps the old
+// behaviour, so the database still wins on the ones no UI exposes.
+static std::optional<GSUserHackOverride> UserHackOverrideForHWFix(GameDatabaseSchema::GSHWFixId id)
+{
+	switch (id)
+	{
+		case GameDatabaseSchema::GSHWFixId::AlignSprite:
+			return GSUserHackOverride::AlignSprite;
+		case GameDatabaseSchema::GSHWFixId::MergeSprite:
+			return GSUserHackOverride::MergeSprite;
+		case GameDatabaseSchema::GSHWFixId::RoundSprite:
+			return GSUserHackOverride::RoundSprite;
+		case GameDatabaseSchema::GSHWFixId::HalfPixelOffset:
+			return GSUserHackOverride::HalfPixelOffset;
+		case GameDatabaseSchema::GSHWFixId::ForceEvenSpritePosition:
+			return GSUserHackOverride::ForceEvenSpritePosition;
+		case GameDatabaseSchema::GSHWFixId::NativeScaling:
+			return GSUserHackOverride::NativeScaling;
+		case GameDatabaseSchema::GSHWFixId::NativePaletteDraw:
+			return GSUserHackOverride::NativePaletteDraw;
+		case GameDatabaseSchema::GSHWFixId::BilinearUpscale:
+			return GSUserHackOverride::BilinearHack;
+		case GameDatabaseSchema::GSHWFixId::AutoFlush:
+			return GSUserHackOverride::AutoFlush;
+		case GameDatabaseSchema::GSHWFixId::TextureInsideRT:
+			return GSUserHackOverride::TextureInsideRt;
+		case GameDatabaseSchema::GSHWFixId::PreloadFrameData:
+			return GSUserHackOverride::PreloadFrameData;
+		case GameDatabaseSchema::GSHWFixId::DisablePartialInvalidation:
+			return GSUserHackOverride::DisablePartialInvalidation;
+		case GameDatabaseSchema::GSHWFixId::GPUPaletteConversion:
+			return GSUserHackOverride::GPUPaletteConversion;
+		case GameDatabaseSchema::GSHWFixId::DisableDepthSupport:
+			return GSUserHackOverride::DisableDepthSupport;
+		case GameDatabaseSchema::GSHWFixId::CPUFramebufferConversion:
+			return GSUserHackOverride::CPUFBConversion;
+		case GameDatabaseSchema::GSHWFixId::Limit24BitDepth:
+			return GSUserHackOverride::Limit24BitDepth;
+		case GameDatabaseSchema::GSHWFixId::EstimateTextureRegion:
+			return GSUserHackOverride::EstimateTextureRegion;
+		case GameDatabaseSchema::GSHWFixId::DrawBuffering:
+			return GSUserHackOverride::DrawBuffering;
+		case GameDatabaseSchema::GSHWFixId::CPUSpriteRenderBW:
+			return GSUserHackOverride::CPUSpriteRenderBW;
+		case GameDatabaseSchema::GSHWFixId::CPUSpriteRenderLevel:
+			return GSUserHackOverride::CPUSpriteRenderLevel;
+		case GameDatabaseSchema::GSHWFixId::CPUCLUTRender:
+			return GSUserHackOverride::CPUCLUTRender;
+		case GameDatabaseSchema::GSHWFixId::GPUTargetCLUT:
+			return GSUserHackOverride::GPUTargetCLUT;
+		default:
+			return std::nullopt;
 	}
 }
 
@@ -549,6 +606,7 @@ void GameDatabaseSchema::GameEntry::applyGameFixes(Pcsx2Config& config, bool app
 			config.Cpu.Recompiler.fpuOverflow = (clampMode >= 1);
 			config.Cpu.Recompiler.fpuExtraOverflow = (clampMode >= 2);
 			config.Cpu.Recompiler.fpuFullMode = (clampMode >= 3);
+			config.Cpu.Recompiler.fpuExactMode = (clampMode >= 4);
 		}
 		else
 			Console.Warning("GameDB: Skipping changing EE/FPU clamp mode [mode=%d]", clampMode);
@@ -671,6 +729,9 @@ bool GameDatabaseSchema::GameEntry::configMatchesHWFix(const Pcsx2Config::GSOpti
 		case GSHWFixId::PCRTCOverscan:
 			return (static_cast<int>(config.PCRTCOverscan) == value);
 
+		case GSHWFixId::CoalesceRenderPasses:
+			return (static_cast<int>(config.CoalesceRenderPasses) == value);
+
 		case GSHWFixId::Mipmap:
 			return (static_cast<int>(config.HWMipmap) == value);
 
@@ -700,6 +761,10 @@ bool GameDatabaseSchema::GameEntry::configMatchesHWFix(const Pcsx2Config::GSOpti
 
 		case GSHWFixId::Deinterlace:
 			return (config.InterlaceMode == GSInterlaceMode::Automatic || static_cast<int>(config.InterlaceMode) == value);
+
+		case GSHWFixId::HWDownloadMode:
+			// A non-default user choice already "matches" (we never override it — see the apply switch).
+			return (config.HWDownloadMode != GSHardwareDownloadMode::Enabled || static_cast<int>(config.HWDownloadMode) == value);
 
 		case GSHWFixId::CPUSpriteRenderBW:
 			return (config.UserHacks_CPUSpriteRenderBW == value);
@@ -751,7 +816,12 @@ void GameDatabaseSchema::GameEntry::applyGSHardwareFixes(Pcsx2Config::GSOptions&
 
 	for (const auto& [id, value] : gsHWFixes)
 	{
-		if (isUserHackHWFix(id) && !apply_auto_fixes)
+		// A pin is manual mode for one fix instead of all of them, so it takes the same
+		// road out: the player's value stays and this one gets named in the warning.
+		const std::optional<GSUserHackOverride> pin = UserHackOverrideForHWFix(id);
+		const bool pinned = pin.has_value() && config.IsUserHackPinned(pin.value());
+
+		if (isUserHackHWFix(id) && (!apply_auto_fixes || pinned))
 		{
 			if (configMatchesHWFix(config, id, value))
 				continue;
@@ -784,6 +854,25 @@ void GameDatabaseSchema::GameEntry::applyGSHardwareFixes(Pcsx2Config::GSOptions&
 
 			case GSHWFixId::PreloadFrameData:
 				config.PreloadFrameWithGSData = (value > 0);
+				break;
+
+			case GSHWFixId::HWDownloadMode:
+				// GameDB carries the recommended GS Hardware Download Mode as a DEFAULT only:
+				// it fills in for games the player hasn't touched, but must never override a
+				// deliberate choice (their per-game/global Hardware Download Mode wins, since
+				// LoadCoreSettings runs before this). So only apply when the current value is
+				// still the default (Enabled). Enable manual HW fixes to force Accurate back.
+				// The bound is a RANGE check over the raw wire value, not an ordering by
+				// accuracy (see the GSHardwareDownloadMode comment in Config.h) — so it has
+				// to name the LAST enumerator. Asynchronous was appended after Disabled, so
+				// bounding at Disabled silently discarded a GameDB entry asking for it: the
+				// parser accepted the value and this dropped it with no diagnostic.
+				if (config.HWDownloadMode == GSHardwareDownloadMode::Enabled &&
+					value > static_cast<int>(GSHardwareDownloadMode::Enabled) &&
+					value <= static_cast<int>(GSHardwareDownloadMode::Asynchronous))
+				{
+					config.HWDownloadMode = static_cast<GSHardwareDownloadMode>(value);
+				}
 				break;
 
 			case GSHWFixId::DisablePartialInvalidation:
@@ -841,6 +930,10 @@ void GameDatabaseSchema::GameEntry::applyGSHardwareFixes(Pcsx2Config::GSOptions&
 
 			case GSHWFixId::PCRTCOverscan:
 				config.PCRTCOverscan = (value > 0);
+				break;
+
+			case GSHWFixId::CoalesceRenderPasses:
+				config.CoalesceRenderPasses = (value > 0);
 				break;
 
 			case GSHWFixId::Mipmap:
@@ -1045,10 +1138,12 @@ void GameDatabaseSchema::GameEntry::applyGSHardwareFixes(Pcsx2Config::GSOptions&
 
 	if (!is_sw_renderer && !disabled_fixes.empty())
 	{
+		// Pinning a single hack lands here too, and then blaming manual mode would be a lie.
+		const std::string_view reason = apply_auto_fixes ?
+			TRANSLATE_SV("GameDatabase", "Your own choice was kept for these graphics fixes, so the automatic ones were not applied:") :
+			TRANSLATE_SV("GameDatabase", "Manual GS hardware renderer fixes are enabled, automatic fixes were not applied:");
 		Host::AddKeyedOSDMessage("HWFixesWarning",
-			fmt::format(ICON_FA_WAND_MAGIC_SPARKLES " {}\n{}",
-				TRANSLATE_SV("GameDatabase", "Manual GS hardware renderer fixes are enabled, automatic fixes were not applied:"),
-				disabled_fixes),
+			fmt::format(ICON_FA_WAND_MAGIC_SPARKLES " {}\n{}", reason, disabled_fixes),
 			Host::OSD_ERROR_DURATION);
 	}
 	else

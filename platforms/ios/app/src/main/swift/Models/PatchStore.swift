@@ -74,6 +74,7 @@ final class PatchStore: @unchecked Sendable {
     private var currentSerial = ""
     private var currentCRC = ""
     private var currentTitle = ""
+    private var presentationGeneration: UInt64 = 0
 
     var patchDatabaseURLTemplates: [String] {
         get {
@@ -129,6 +130,25 @@ final class PatchStore: @unchecked Sendable {
 
     private init() {}
 
+    /// Invalidates presentation work and discards manager-only metadata. Installed files and
+    /// persisted preferences remain untouched; the native runtime separately unloads patches.
+    func releasePresentationResources() {
+        presentationGeneration &+= 1
+        isoName = ""
+        launchContext = .library
+        identityState = .libraryAwaitingFirstLaunch
+        hasGameIdentity = false
+        canManageInstalledFiles = false
+        installed.removeAll(keepingCapacity: false)
+        lastMessage = nil
+        lastMessageKind = .information
+        showMessage = false
+        isDownloading = false
+        currentSerial = ""
+        currentCRC = ""
+        currentTitle = ""
+    }
+
     // MARK: - Identity
 
     static func gameIdentityAvailable(forISO iso: String) -> Bool {
@@ -137,14 +157,23 @@ final class PatchStore: @unchecked Sendable {
         return !PadLayoutGameIdentity.normalizedCRC(crc).isEmpty
     }
 
-    /// True when RetroAchievements Hardcore Mode is enabled or active. While true, no `.pnach`
-    /// content — cheats *or* patches — may be enabled: the core also refuses to apply them, so
-    /// already-enabled entries take no effect until Hardcore is off.
+    /// True when Hardcore Mode is actually in force, which is the only state the core refuses
+    /// pnach content in. Every gate down there keys on IsHardcoreModeActive, so the preference
+    /// on its own must not count: Hardcore only arms on a reset, and until it does the entries
+    /// carry on applying no matter what this screen says about them.
     static func hardcoreBlocksPnachContent() -> Bool {
         let state = ARMSX2Bridge.retroAchievementsState()
         let active = (state["hardcoreActive"] as? NSNumber)?.boolValue ?? false
-        let preference = (state["hardcorePreference"] as? NSNumber)?.boolValue ?? false
-        return active || preference || ARMSX2Bridge.isRetroAchievementsHardcoreActive()
+        return active || ARMSX2Bridge.isRetroAchievementsHardcoreActive()
+    }
+
+    /// Hardcore is switched on but has not taken hold yet, because it only arms when a game
+    /// boots. Everything below is still live until then, and saying nothing is how people end
+    /// up believing a cheat beat Hardcore.
+    static func hardcorePendingRestart() -> Bool {
+        guard !hardcoreBlocksPnachContent() else { return false }
+        let state = ARMSX2Bridge.retroAchievementsState()
+        return (state["hardcorePreference"] as? NSNumber)?.boolValue ?? false
     }
 
     /// Presentation patches that stay legal under Hardcore: widescreen and 60fps from a
@@ -594,6 +623,7 @@ final class PatchStore: @unchecked Sendable {
     // MARK: - Database download
 
     func downloadFromDatabase(forISO iso: String, asCheat: Bool) async {
+        let requestGeneration = presentationGeneration
         let crc = iso == isoName ? currentCRC : Self.formattedCRC(ARMSX2Bridge.gameSettings(forISO: iso)["crc"] as? String)
         guard !crc.isEmpty else {
             applyFeedback(identityState.guidance ?? "Database matching is unavailable for this game.", kind: .information)
@@ -612,13 +642,18 @@ final class PatchStore: @unchecked Sendable {
         let title = iso == isoName ? currentTitle : (ARMSX2Bridge.gameMetadata(forISO: iso)["title"] ?? iso)
 
         isDownloading = true
-        defer { isDownloading = false }
+        defer {
+            if requestGeneration == presentationGeneration {
+                isDownloading = false
+            }
+        }
 
         var succeededSources: [String] = []
         var notFoundCount = 0
         var firstError: String?
 
         for template in templates {
+            guard !Task.isCancelled, requestGeneration == presentationGeneration else { return }
             guard let url = resolvedDatabaseURL(template: template, serial: serial, crc: crc, title: title) else {
                 continue
             }
@@ -629,6 +664,7 @@ final class PatchStore: @unchecked Sendable {
                 request.timeoutInterval = 10
                 request.cachePolicy = .reloadIgnoringLocalCacheData
                 let (data, response) = try await URLSession.shared.data(for: request)
+                guard !Task.isCancelled, requestGeneration == presentationGeneration else { return }
                 guard let http = response as? HTTPURLResponse else {
                     if firstError == nil { firstError = "Could not download from \(sourceName)." }
                     continue
@@ -653,6 +689,7 @@ final class PatchStore: @unchecked Sendable {
                     if firstError == nil { firstError = "The file from \(sourceName) was not a valid patch." }
                     continue
                 }
+                guard !Task.isCancelled, requestGeneration == presentationGeneration else { return }
                 let outcome = writePatch(
                     text: text,
                     forISO: iso,
@@ -667,9 +704,12 @@ final class PatchStore: @unchecked Sendable {
                     if firstError == nil { firstError = "\(sourceName): \(outcome.message)" }
                 }
             } catch {
+                guard !Task.isCancelled, requestGeneration == presentationGeneration else { return }
                 if firstError == nil { firstError = "Could not reach \(sourceName). Check your connection or URL." }
             }
         }
+
+        guard !Task.isCancelled, requestGeneration == presentationGeneration else { return }
 
         let kindWord = asCheat ? "Cheat" : "Patch"
         if !succeededSources.isEmpty {

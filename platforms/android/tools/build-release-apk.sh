@@ -60,7 +60,13 @@ REL_KEY_PASS="${RELEASE_KEY_PASS:-$(prop keyPassword)}"
 for kv in "REL_KS:$REL_KS" "REL_KS_PASS:$REL_KS_PASS" "REL_KEY_ALIAS:$REL_KEY_ALIAS" "REL_KEY_PASS:$REL_KEY_PASS"; do
 	[[ -n "${kv#*:}" ]] || { echo "error: missing ${kv%%:*} (add armsx2_keystore.properties or set RELEASE_* env)" >&2; exit 1; }
 done
-for f in "$PROF" "$DEBUG_KS" "$REL_KS" "$LINEAGE" "$ZIPALIGN" "$APKSIGNER"; do
+# PROF is only read in optimize mode. Requiring it unconditionally made a regen
+# impossible: PGO_MODE=generate produces the instrumented APK you play to CREATE a
+# profile, so demanding one up front is a chicken-and-egg that fails instantly with
+# "FATAL missing" naming a file the run does not use.
+REQUIRED_FILES=("$DEBUG_KS" "$REL_KS" "$LINEAGE" "$ZIPALIGN" "$APKSIGNER")
+[[ "${PGO_MODE:-optimize}" == "optimize" ]] && REQUIRED_FILES+=("$PROF")
+for f in "${REQUIRED_FILES[@]}"; do
 	[[ -e "$f" ]] || { echo "FATAL missing: $f" >&2; exit 1; }
 done
 
@@ -69,15 +75,25 @@ BUILT="$ROOT_DIR/app/build/outputs/apk/github/release/app-github-release.apk"
 
 build_core() { # pagesize libname outapk
 	local ps="$1" ln="$2" outapk="$3"
-	echo "=== building core $ln (page=$ps, pgo=optimize) ==="
+	# Print the mode actually used, not a guess: this said "pgo=optimize" unconditionally
+	# even under PGO_MODE=generate, which is a lie in the one log you check when a profile
+	# collection turns up empty.
+	echo "=== building core $ln (page=$ps, pgo=${PGO_MODE:-optimize}) ==="
 	rm -f "$BUILT"
+	# GRADLE_EXTRA_ARGS carries the per-target properties (minSdk / ndkVersion / march)
+	# from build-release-targets.sh. Deliberately UNQUOTED: it is a list of -P flags, and
+	# quoting would hand gradle one argument containing spaces. Empty when unset, which is
+	# every direct invocation of this script.
+	# shellcheck disable=SC2086
 	"$GRADLE" -p "$ROOT_DIR" :app:assembleGithubRelease \
+		${GRADLE_EXTRA_ARGS:-} \
 		-Parmsx2.hostPageSize="$ps" \
 		-Parmsx2.nativeLibName="$ln" \
 		-Parmsx2.pgo="${PGO_MODE:-optimize}" \
 		-Parmsx2.pgoProfile="$PROF" \
 		-Parmsx2.versionCode="$VC" \
-		-Parmsx2.versionName="$VN"
+		-Parmsx2.versionName="$VN" \
+		-Parmsx2.recTestHooks="${REC_TEST_HOOKS:-false}"
 	[[ -f "$BUILT" ]] || { echo "FATAL gradle produced no APK for $ln" >&2; exit 1; }
 	unzip -l "$BUILT" "lib/arm64-v8a/lib${ln}.so" >/dev/null || { echo "FATAL $ln .so missing" >&2; exit 1; }
 	cp -f "$BUILT" "$outapk"

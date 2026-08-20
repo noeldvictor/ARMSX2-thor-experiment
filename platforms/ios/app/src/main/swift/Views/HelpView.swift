@@ -59,7 +59,7 @@ private let helpData: [HelpSection] = [
         ),
         HelpItem(
             question: "Frame Limiter",
-            answer: "Keeps gameplay near the selected FPS target by changing PCSX2 Normal Speed. 60 FPS is normal NTSC timing, 30 FPS is about 50% speed, and turning it off unlocks speed for testing at the cost of heat and battery."
+            answer: "Limits display presentation to the selected FPS target while CPU, audio, and game timing remain at 100%. Turning it off presents every available frame and can increase heat and battery use."
         ),
         HelpItem(
             question: "Patches and cheats",
@@ -75,7 +75,7 @@ private let helpData: [HelpSection] = [
         ),
         HelpItem(
             question: "VSync Queue Size",
-            answer: "Number of pre-rendered frames. Higher values reduce frame drops but increase input latency. Default: 8."
+            answer: "Number of pre-rendered frames. Higher values reduce frame drops but increase input latency. Default: 4."
         ),
     ]),
     HelpSection(title: "Overlay", icon: "speedometer", items: [
@@ -105,6 +105,14 @@ struct HelpView: View {
 #if targetEnvironment(macCatalyst)
     @State private var selectedTopic: HelpTopic? = .item(section: 0, item: 0)
 #endif
+
+    private var backgroundConfigured: Bool {
+        settings.hasCustomBackground && settings.backgroundEnabledInSettings
+    }
+
+    private var backgroundActive: Bool {
+        backgroundConfigured
+    }
 
     var body: some View {
 #if targetEnvironment(macCatalyst)
@@ -137,53 +145,53 @@ struct HelpView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
         .navigationSplitViewStyle(.balanced)
+        .containerBackground(backgroundActive ? Color.clear : Color(uiColor: .systemGroupedBackground), for: .navigation)
 #else
-        NavigationStack {
-            List {
-                ForEach(helpData) { section in
-                    Section {
-                        ForEach(section.items) { item in
-                            DisclosureGroup {
-                                Text(settings.localized(item.answer))
-                                    .font(.body)
-                                    .foregroundStyle(.secondary)
-                                    .padding(.vertical, 4)
-                            } label: {
-                                Text(settings.localized(item.question))
-                                    .font(.body)
-                                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-                                    .contentShape(Rectangle())
-                            }
-                        }
-                    } header: {
-                        Label(settings.localized(section.title), systemImage: section.icon)
-                    }
-                }
-
+        List {
+            ForEach(helpData) { section in
                 Section {
-                    HStack {
-                        Text(settings.localized("Version"))
-                        Spacer()
-                        Text(ARMSX2Bridge.buildVersion())
-                            .foregroundStyle(.secondary)
-                            .font(.caption)
-                    }
-                    Button {
-                        copyTroubleshootingInfo()
-                    } label: {
-                        Label(settings.localized("Copy Troubleshooting Info"), systemImage: "doc.on.doc")
-                    }
-                    if let copyStatusMessage {
-                        Text(settings.localized(copyStatusMessage))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                    ForEach(section.items) { item in
+                        DisclosureGroup {
+                            Text(settings.localized(item.answer))
+                                .font(.body)
+                                .foregroundStyle(.secondary)
+                                .padding(.vertical, 4)
+                        } label: {
+                            Text(settings.localized(item.question))
+                                .font(.body)
+                                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                .contentShape(Rectangle())
+                        }
                     }
                 } header: {
-                    Label(settings.localized("About"), systemImage: "info.circle")
+                    Label(settings.localized(section.title), systemImage: section.icon)
                 }
             }
-            .navigationTitle(settings.localized("Help"))
+
+            Section {
+                HStack {
+                    Text(settings.localized("Version"))
+                    Spacer()
+                    Text(ARMSX2Bridge.buildVersion())
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                }
+                Button {
+                    copyTroubleshootingInfo()
+                } label: {
+                    Label(settings.localized("Copy Troubleshooting Info"), systemImage: "doc.on.doc")
+                }
+                if let copyStatusMessage {
+                    Text(settings.localized(copyStatusMessage))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            } header: {
+                Label(settings.localized("About"), systemImage: "info.circle")
+            }
         }
+        .navigationTitle(settings.localized("Help"))
+        .navigationBarTitleDisplayMode(.inline)
 #endif
     }
 

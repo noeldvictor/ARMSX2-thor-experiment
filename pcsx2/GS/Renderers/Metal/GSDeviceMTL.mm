@@ -11,9 +11,16 @@
 
 #include "common/Console.h"
 #include "common/HostSys.h"
+#include "common/Timer.h"
 
 #include "cpuinfo.h"
 #include "imgui.h"
+
+#ifdef ARMSX2_HAS_LIBRASHADER
+// Without this first, the header declares no Metal entry points
+#define LIBRA_RUNTIME_METAL
+#include "librashader.h"
+#endif
 
 #ifdef __APPLE__
 #include "GSMTLSharedHeader.h"
@@ -28,17 +35,31 @@ GSDevice* MakeGSDeviceMTL()
 	return new GSDeviceMTL();
 }
 
+static GSAdapterInfo GetMetalAdapterInfo(id<MTLDevice> dev)
+{
+	GSAdapterInfo ai;
+	ai.name = [[dev name] UTF8String];
+	ai.max_texture_size = GSMTLDevice::GetMaxTextureSize(dev);
+	ai.max_upscale_multiplier = GSGetMaxUpscaleMultiplier(ai.max_texture_size);
+	return ai;
+}
+
 std::vector<GSAdapterInfo> GetMetalAdapterList()
 { @autoreleasepool {
 	std::vector<GSAdapterInfo> list;
-	auto devs = MRCTransfer(MTLCopyAllDevices());
-	for (id<MTLDevice> dev in devs.Get())
+	// MTLCopyAllDevices only exists on iOS 18. We ship down to 17, where there's a
+	// single GPU and nothing to enumerate anyway.
+	if (@available(macOS 10.11, iOS 18.0, *))
 	{
-		GSAdapterInfo ai;
-		ai.name = [[dev name] UTF8String];
-		ai.max_texture_size = GSMTLDevice::GetMaxTextureSize(dev);
-		ai.max_upscale_multiplier = GSGetMaxUpscaleMultiplier(ai.max_texture_size);
-		list.push_back(std::move(ai));
+		auto devs = MRCTransfer(MTLCopyAllDevices());
+		for (id<MTLDevice> dev in devs.Get())
+			list.push_back(GetMetalAdapterInfo(dev));
+	}
+	else
+	{
+		auto dev = MRCTransfer(MTLCreateSystemDefaultDevice());
+		if (dev.Get())
+			list.push_back(GetMetalAdapterInfo(dev.Get()));
 	}
 	return list;
 }}
@@ -269,6 +290,12 @@ void GSDeviceMTL::DrawCommandBufferFinished(u64 draw, id<MTLCommandBuffer> buffe
 
 void GSDeviceMTL::FlushEncoders()
 {
+	// A flush ends any batch accumulated across presentation-capped frames.
+	// Reset centrally so normal presents, readbacks, and upload-only flushes
+	// cannot leave stale age/frame bounds attached to the next batch.
+	m_skipped_present_frames_since_submit = 0;
+	m_deferred_submit_started = 0;
+
 	bool needs_submit = m_current_render_cmdbuf;
 	if (needs_submit)
 	{
@@ -402,7 +429,7 @@ void GSDeviceMTL::EndRenderPass()
 	}
 	// The late-upload blit encoder also lives on the render command buffer; any code
 	// that ends the render pass and then opens a new encoder on that buffer (e.g.
-	// CopyRect's blit encoder during OI_BlitFMV) must leave it closed, or Metal aborts
+	// DoCopyRect's blit encoder during OI_BlitFMV) must leave it closed, or Metal aborts
 	// with "A command encoder is already encoding to this command buffer".
 	if (m_late_texture_upload_encoder)
 	{
@@ -760,6 +787,133 @@ void GSDeviceMTL::DoShadeBoost(GSTexture* sTex, GSTexture* dTex, const float par
 	RenderCopy(sTex, m_shadeboost_pipeline, GSVector4i(0, 0, dTex->GetSize().x, dTex->GetSize().y));
 }
 
+#ifdef ARMSX2_HAS_LIBRASHADER
+
+static void ReportShaderChainError(const char* what, libra_error_t err)
+{
+	char* msg = nullptr;
+	if (libra_error_write(err, &msg) == 0 && msg)
+	{
+		Console.Error("(GS) librashader %s failed: %s", what, msg);
+		libra_error_free_string(&msg);
+	}
+	else
+	{
+		Console.Error("(GS) librashader %s failed (errno %d)", what, static_cast<int>(libra_error_errno(err)));
+	}
+	libra_error_free(&err);
+}
+
+#endif
+
+void GSDeviceMTL::DestroyShaderChain()
+{
+#ifdef ARMSX2_HAS_LIBRASHADER
+	if (m_shader_chain)
+	{
+		libra_mtl_filter_chain_t chain = static_cast<libra_mtl_filter_chain_t>(m_shader_chain);
+		libra_mtl_filter_chain_free(&chain);
+		m_shader_chain = nullptr;
+	}
+#endif
+	m_shader_chain_preset.clear();
+	m_shader_chain_failed = false;
+	m_shader_frame_count = 0;
+	m_shader_param_generation = 0;
+}
+
+void GSDeviceMTL::ApplyShaderChainParams()
+{
+#ifdef ARMSX2_HAS_LIBRASHADER
+	const u64 generation = GetShaderChainParamGeneration();
+	if (generation == m_shader_param_generation)
+		return;
+
+	std::vector<std::pair<std::string, float>> params;
+	if (GetShaderChainParams(m_shader_chain_preset, &params))
+	{
+		libra_mtl_filter_chain_t chain = static_cast<libra_mtl_filter_chain_t>(m_shader_chain);
+		for (const auto& [name, value] : params)
+		{
+			if (libra_error_t err = libra_mtl_filter_chain_set_param(&chain, name.c_str(), value))
+				libra_error_free(&err);
+		}
+	}
+
+	m_shader_param_generation = generation;
+#endif
+}
+
+bool GSDeviceMTL::DoApplyShaderChain(GSTexture* sTex, GSTexture* dTex)
+{ @autoreleasepool {
+#ifndef ARMSX2_HAS_LIBRASHADER
+	return false;
+#else
+	// Latch it, or a preset that fails to compile runs a full slang compile every frame
+	if (m_shader_chain_failed && m_shader_chain_preset == GSConfig.ShaderChainPreset)
+		return false;
+
+	if (!m_shader_chain || m_shader_chain_preset != GSConfig.ShaderChainPreset)
+	{
+		DestroyShaderChain();
+		m_shader_chain_preset = GSConfig.ShaderChainPreset;
+
+		libra_shader_preset_t preset = nullptr;
+		if (libra_error_t err = libra_preset_create(m_shader_chain_preset.c_str(), &preset))
+		{
+			ReportShaderChainError("preset load", err);
+			m_shader_chain_failed = true;
+			return false;
+		}
+
+		// create() invalidates `preset` on both paths, so nothing below may free it
+		libra_mtl_filter_chain_t chain = nullptr;
+		if (libra_error_t err = libra_mtl_filter_chain_create(&preset, m_queue, nullptr, &chain))
+		{
+			ReportShaderChainError("chain create", err);
+			m_shader_chain_failed = true;
+			return false;
+		}
+
+		m_shader_chain = chain;
+		m_shader_frame_count = 0;
+		m_shader_param_generation = 0;
+		Console.WriteLn("(GS) librashader: loaded preset '%s'", m_shader_chain_preset.c_str());
+	}
+
+	ApplyShaderChainParams();
+
+	id<MTLTexture> src = static_cast<GSTextureMTL*>(sTex)->GetTexture();
+	id<MTLTexture> dst = static_cast<GSTextureMTL*>(dTex)->GetTexture();
+	const libra_viewport_t vp = {0.0f, 0.0f,
+		static_cast<uint32_t>(dTex->GetWidth()), static_cast<uint32_t>(dTex->GetHeight())};
+
+	// The chain opens its own passes, and Metal aborts if ours still encodes
+	EndRenderPass();
+
+	libra_mtl_filter_chain_t chain = static_cast<libra_mtl_filter_chain_t>(m_shader_chain);
+	if (libra_error_t err = libra_mtl_filter_chain_frame(
+			&chain, GetRenderCmdBuf(), m_shader_frame_count, src, dst, &vp, nullptr, nullptr))
+	{
+		ReportShaderChainError("frame", err);
+		m_shader_chain_failed = true;
+		// A chain that failed partway has already encoded passes into this command buffer, and
+		// the ring it recycles per-frame objects over is shallower than our deferred-submit
+		// window. The success path flushes for exactly that reason; so must this one.
+		FlushEncoders();
+		return false;
+	}
+	m_shader_frame_count++;
+	dTex->SetState(GSTexture::State::Dirty);
+
+	// librashader recycles per-frame objects over a ring shallower than our deferred-submit
+	// window, so a frame is only safe once a submit follows it. This also clears the
+	// deferred-submit counters, so a chain frame always ends a batch
+	FlushEncoders();
+	return true;
+#endif
+}}
+
 bool GSDeviceMTL::DoCAS(GSTexture* sTex, GSTexture* dTex, bool sharpen_only, const std::array<u32, NUM_CAS_CONSTANTS>& constants)
 { @autoreleasepool {
 	g_perfmon.Put(GSPerfMon::TextureCopies, 1);
@@ -782,6 +936,7 @@ bool GSDeviceMTL::DoCAS(GSTexture* sTex, GSTexture* dTex, bool sharpen_only, con
 	return true;
 }}
 
+#if PCSX2_HAS_METALFX
 bool GSDeviceMTL::EnsureMetalFXSpatial(GSTexture* sTex, GSTexture* dTex)
 { @autoreleasepool {
 	id<MTLTexture> src = static_cast<GSTextureMTL*>(sTex)->GetTexture();
@@ -822,23 +977,39 @@ bool GSDeviceMTL::EnsureMetalFXSpatial(GSTexture* sTex, GSTexture* dTex)
 	m_mfx_in_fmt = in_fmt; m_mfx_out_fmt = out_fmt;
 	return true;
 }}
+#else
+bool GSDeviceMTL::EnsureMetalFXSpatial(GSTexture* sTex, GSTexture* dTex)
+{
+	// Statically compiled out on the iOS Simulator (PCSX2_HAS_METALFX=0).
+	(void)sTex; (void)dTex;
+	return false;
+}
+#endif
 
 bool GSDeviceMTL::DoMetalFXSpatial(GSTexture* sTex, GSTexture* dTex)
-{ @autoreleasepool {
-	if (@available(macOS 13.0, iOS 16.0, *))
-	{
-		if (!EnsureMetalFXSpatial(sTex, dTex))
-			return false;
+{
+#if PCSX2_HAS_METALFX
+	@autoreleasepool {
+		if (@available(macOS 13.0, iOS 16.0, *))
+		{
+			if (!EnsureMetalFXSpatial(sTex, dTex))
+				return false;
 
-		g_perfmon.Put(GSPerfMon::TextureCopies, 1);
-		EndRenderPass(); // MetalFX manages its own encoder; must not be inside one.
-		[m_mfx_spatial setColorTexture:static_cast<GSTextureMTL*>(sTex)->GetTexture()];
-		[m_mfx_spatial setOutputTexture:static_cast<GSTextureMTL*>(dTex)->GetTexture()];
-		[m_mfx_spatial encodeToCommandBuffer:GetRenderCmdBuf()];
-		return true;
+			g_perfmon.Put(GSPerfMon::TextureCopies, 1);
+			EndRenderPass(); // MetalFX manages its own encoder; must not be inside one.
+			[m_mfx_spatial setColorTexture:static_cast<GSTextureMTL*>(sTex)->GetTexture()];
+			[m_mfx_spatial setOutputTexture:static_cast<GSTextureMTL*>(dTex)->GetTexture()];
+			[m_mfx_spatial encodeToCommandBuffer:GetRenderCmdBuf()];
+			return true;
+		}
+		return false;
 	}
+#else
+	// Statically compiled out on the iOS Simulator (PCSX2_HAS_METALFX=0).
+	(void)sTex; (void)dTex;
 	return false;
-}}
+#endif
+}
 
 MRCOwned<id<MTLFunction>> GSDeviceMTL::LoadShader(NSString* name)
 {
@@ -1074,11 +1245,15 @@ bool GSDeviceMTL::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 		return false;
 
 	NSString* ns_adapter_name = [NSString stringWithUTF8String:GSConfig.Adapter.c_str()];
-	auto devs = MRCTransfer(MTLCopyAllDevices());
-	for (id<MTLDevice> dev in devs.Get())
+	// No device enumeration below iOS 18 — fall through to the default device.
+	if (@available(macOS 10.11, iOS 18.0, *))
 	{
-		if ([[dev name] isEqualToString:ns_adapter_name])
-			m_dev = GSMTLDevice(MRCRetain(dev));
+		auto devs = MRCTransfer(MTLCopyAllDevices());
+		for (id<MTLDevice> dev in devs.Get())
+		{
+			if ([[dev name] isEqualToString:ns_adapter_name])
+				m_dev = GSMTLDevice(MRCRetain(dev));
+		}
 	}
 	if (!m_dev.dev)
 	{
@@ -1159,16 +1334,37 @@ bool GSDeviceMTL::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 	m_features.dxt_textures = true;
 	m_features.bptc_textures = true;
 	m_features.framebuffer_fetch = m_dev.features.framebuffer_fetch && !GSConfig.DisableFramebufferFetch;
+	// Apple's programmable blending reads the tile in rasterization order, so overlapping
+	// primitives in one draw already observe each other and a full barrier adds nothing.
+	m_features.framebuffer_fetch_orders_overlap = m_features.framebuffer_fetch;
+	// Programmable blending is the one in-tile destination read that is genuinely structure-free:
+	// a feedback draw binds the target and stays in the same render pass (DoRenderHW), with no
+	// pass break and no copy. That is what makes it safe for the renderer to take a feedback read
+	// on a draw that did not need one. Vulkan's ordered-attachment-access spelling does NOT
+	// qualify, because there the loop is declared through the pass configuration and toggling it
+	// ends the pass. Without fetch, iOS has no barrier either and falls back to a real copy.
+	m_features.cheap_rt_feedback_read = m_features.framebuffer_fetch;
 	m_features.stencil_buffer = true;
 	m_features.cas_sharpening = true;
 	m_features.test_and_sample_depth = true;
 	m_features.depth_feedback = getDepthFeedback(m_dev, m_features.framebuffer_fetch);
 	m_features.aa1 = GSConfig.HWAA1 && m_features.vs_expand;
-	// MetalFX spatial upscaler: macOS 13+ / iOS 16+. The supportsDevice: probe
-	// returns NO on the iOS Simulator and on devices whose GPU lacks the hardware,
-	// so this is safe to run unconditionally on every Apple platform.
+	// Apple GPUs miscompare depth written from the shader (the PS2 32-bit Z floor) against
+	// the fixed-function interpolation a later read-only pass tests with, so a GEQUAL retest
+	// of the same geometry drops out along shared triangle edges and the layer underneath
+	// shows through as pinpoints -- God of War II's Athena statue, and dark walls in Black.
+	// Skipping the floor also drops [[depth(less)]] output, restoring early-ZS on a TBDR.
+	// See the matching gate in GSDeviceVK::CheckFeatures for the measurements.
+	m_features.no_ps2_z_quantization = GSConfig.DisablePS2DepthQuantization || m_dev.features.apple_gpu;
+	// MetalFX spatial upscaler: macOS 13+ / iOS 16+ device. The supportsDevice:
+	// probe returns NO on devices whose GPU lacks the hardware. On the iOS Simulator
+	// the MetalFX framework is absent at compile time (PCSX2_HAS_METALFX=0), so the
+	// feature is statically disabled here -- m_features.metalfx_spatial keeps its
+	// default false value and the upscaler UI will report unavailable.
+#if PCSX2_HAS_METALFX
 	if (@available(macOS 13.0, iOS 16.0, *))
 		m_features.metalfx_spatial = [MTLFXSpatialScalerDescriptor supportsDevice:m_dev.dev];
+#endif
 	m_features.rov = m_dev.features.rov && !m_features.framebuffer_fetch;
 	m_max_texture_size = m_dev.features.max_texsize;
 
@@ -1445,6 +1641,7 @@ bool GSDeviceMTL::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 void GSDeviceMTL::Destroy()
 { @autoreleasepool {
 	FlushEncoders();
+	DestroyShaderChain();
 	std::lock_guard<std::mutex> guard(m_backref->first);
 	m_backref->second = nullptr;
 
@@ -1545,13 +1742,49 @@ void GSDeviceMTL::UpdateTexture(id<MTLTexture> texture, u32 x, u32 y, u32 width,
 
 static bool s_capture_next = false;
 
-GSDevice::PresentResult GSDeviceMTL::BeginPresent(bool frame_skip)
+GSDevice::PresentResult GSDeviceMTL::DoBeginPresent(bool frame_skip)
 { @autoreleasepool {
 	if (m_capture_start_frame && FrameNo() == m_capture_start_frame)
 		s_capture_next = true;
 	if (frame_skip || m_window_info.type == WindowInfo::Type::Surfaceless || !g_gs_device)
 	{
 		ImGui::EndFrame();
+		if (frame_skip && GSGetPresentCapRenderSkip() && !GSGetPresentCapSuspended())
+		{
+			// Keep compatible work in one command buffer across capped frames. This
+			// reduces submission and tile load/store overhead at 20/15/12 FPS while
+			// bounding retained work by frame count, wall time, and encoder count.
+			const bool has_pending_work = m_current_render_cmdbuf || m_texture_upload_cmdbuf ||
+				m_vertex_upload_cmdbuf;
+			if (!has_pending_work)
+			{
+				m_skipped_present_frames_since_submit = 0;
+				m_deferred_submit_started = 0;
+			}
+			else
+			{
+				constexpr u32 MAX_DEFERRED_SKIPPED_FRAMES = 4;
+				constexpr u32 MAX_DEFERRED_ENCODERS = 256;
+				constexpr double MAX_DEFERRED_SUBMIT_MS = 75.0;
+
+				const u64 now = Common::Timer::GetCurrentValue();
+				if (m_skipped_present_frames_since_submit++ == 0)
+					m_deferred_submit_started = now;
+
+				const bool too_many_frames =
+					m_skipped_present_frames_since_submit >= MAX_DEFERRED_SKIPPED_FRAMES;
+				const bool too_many_encoders = m_current_render_cmdbuf &&
+					m_encoders_in_current_cmdbuf >= MAX_DEFERRED_ENCODERS;
+				const bool too_old = Common::Timer::ConvertValueToMilliseconds(
+					now - m_deferred_submit_started) >= MAX_DEFERRED_SUBMIT_MS;
+				if (too_many_frames || too_many_encoders || too_old)
+				{
+					m_skipped_present_frames_since_submit = 0;
+					m_deferred_submit_started = 0;
+					FlushEncoders();
+				}
+			}
+		}
 		return PresentResult::FrameSkipped;
 	}
 	id<MTLCommandBuffer> buf = GetRenderCmdBuf();
@@ -1574,7 +1807,7 @@ GSDevice::PresentResult GSDeviceMTL::BeginPresent(bool frame_skip)
 
 void GSDeviceMTL::EndPresent()
 { @autoreleasepool {
-	pxAssertMsg(m_current_render.encoder && m_current_render_cmdbuf, "BeginPresent cmdbuf was destroyed");
+	pxAssertMsg(m_current_render.encoder && m_current_render_cmdbuf, "DoBeginPresent cmdbuf was destroyed");
 	ImGui::Render();
 	RenderImGui(ImGui::GetDrawData());
 	EndRenderPass();
@@ -1713,12 +1946,12 @@ void GSDeviceMTL::ClearSamplerCache()
 	m_sampler_hw[SamplerSelector::Point().key] = CreateSampler(m_dev.dev, SamplerSelector::Point());
 }}
 
-void GSDeviceMTL::CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY)
+void GSDeviceMTL::DoCopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r, u32 destX, u32 destY)
 { @autoreleasepool {
 	// Empty rect, abort copy.
 	if (r.rempty())
 	{
-		GL_INS("Metal: CopyRect rect empty.");
+		GL_INS("Metal: DoCopyRect rect empty.");
 		return;
 	}
 	
@@ -1753,7 +1986,7 @@ void GSDeviceMTL::CopyRect(GSTexture* sTex, GSTexture* dTex, const GSVector4i& r
 
 	id<MTLCommandBuffer> cmdbuf = GetRenderCmdBuf();
 	id<MTLBlitCommandEncoder> encoder = [cmdbuf blitCommandEncoder];
-	[encoder setLabel:@"CopyRect"];
+	[encoder setLabel:@"DoCopyRect"];
 	[encoder copyFromTexture:sT->GetTexture()
 	             sourceSlice:0
 	             sourceLevel:0
@@ -1892,7 +2125,7 @@ void GSDeviceMTL::PresentRect(GSTexture* sTex, const GSVector4& sRect, GSTexture
 	}
 }}
 
-void GSDeviceMTL::DrawMultiStretchRects(const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader)
+void GSDeviceMTL::DoDrawMultiStretchRects(const MultiStretchRect* rects, u32 num_rects, GSTexture* dTex, ShaderConvertSelector shader)
 { @autoreleasepool {
 	BeginStretchRect(@"MultiStretchRect", dTex, MTLLoadActionLoad);
 
@@ -1950,7 +2183,7 @@ void GSDeviceMTL::DrawMultiStretchRects(const MultiStretchRect* rects, u32 num_r
 	flush(num_rects);
 }}
 
-void GSDeviceMTL::UpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize)
+void GSDeviceMTL::DoUpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, GSTexture* dTex, u32 dOffset, u32 dSize)
 {
 	GSMTLCLUTConvertPSUniform uniform = { sScale, {offsetX, offsetY}, dOffset };
 
@@ -1962,7 +2195,7 @@ void GSDeviceMTL::UpdateCLUTTexture(GSTexture* sTex, float sScale, u32 offsetX, 
 	RenderCopy(sTex, m_clut_pipeline[!is_clut4], dRect);
 }
 
-void GSDeviceMTL::ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM)
+void GSDeviceMTL::DoConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 offsetX, u32 offsetY, u32 SBW, u32 SPSM, GSTexture* dTex, u32 DBW, u32 DPSM)
 { @autoreleasepool {
 	const ShaderConvert shader = ((SPSM & 0xE) == 0) ? ShaderConvert::RGBA_TO_8I : ShaderConvert::RGB5A1_TO_8I;
 	id<MTLRenderPipelineState> pipeline = GetConvertPipeline(shader);
@@ -1975,7 +2208,7 @@ void GSDeviceMTL::ConvertToIndexedTexture(GSTexture* sTex, float sScale, u32 off
 	DoStretchRect(sTex, GSVector4::zero(), dTex, dRect, pipeline, Nearest, LoadAction::DontCareIfFull, &uniform, sizeof(uniform));
 }}
 
-void GSDeviceMTL::FilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect)
+void GSDeviceMTL::DoFilteredDownsampleTexture(GSTexture* sTex, GSTexture* dTex, u32 downsample_factor, const GSVector2i& clamp_min, const GSVector4& dRect)
 { @autoreleasepool {
 	const ShaderConvert shader = ShaderConvert::DOWNSAMPLE_COPY;
 	id<MTLRenderPipelineState> pipeline = GetConvertPipeline(shader);
@@ -1998,10 +2231,10 @@ static id<MTLTexture> CreateDSAsRTTexture(id<MTLDevice> dev, NSUInteger width, N
 	return result;
 }
 
-void GSDeviceMTL::BeginDSAsRT(GSTexture* ds, const GSVector4i& drawarea)
+void GSDeviceMTL::DoBeginDSAsRT(GSTexture* ds, const GSVector4i& drawarea)
 {
 	if (!m_features.framebuffer_fetch)
-		return GSDevice::BeginDSAsRT(ds, drawarea);
+		return GSDevice::DoBeginDSAsRT(ds, drawarea);
 	u32 needed_width = ds->GetWidth();
 	u32 needed_height = ds->GetHeight();
 	u32 current_width = static_cast<u32>([m_ds_as_rt_texture width]);
@@ -2458,7 +2691,7 @@ __fi void GSDeviceMTL::PrepareROVTexture(GSTexture** ptex)
 	*ptex = nullptr;
 }
 
-void GSDeviceMTL::RenderHW(GSHWDrawConfig& config)
+void GSDeviceMTL::DoRenderHW(GSHWDrawConfig& config)
 { @autoreleasepool {
 	if (config.tex && (config.ds == config.tex || config.rt == config.tex))
 		EndRenderPass(); // Barrier
@@ -2601,7 +2834,7 @@ void GSDeviceMTL::RenderHW(GSHWDrawConfig& config)
 	if (!rt && !config.ds)
 	{
 		// If we were rendering depth-only and depth gets cleared by the above check, that turns into rendering nothing, which should be a no-op
-		pxAssertMsg(0, "RenderHW was given a completely useless draw call!");
+		pxAssertMsg(0, "DoRenderHW was given a completely useless draw call!");
 		[m_current_render.encoder insertDebugSignpost:@"Skipped no-color no-depth draw"];
 		if (primid_tex)
 			Recycle(primid_tex);
@@ -2618,7 +2851,7 @@ void GSDeviceMTL::RenderHW(GSHWDrawConfig& config)
 	if (!rt_bind && !ds_bind && !stencil)
 		BeginFullROV(@"RenderHWROV", rt_size->GetWidth(), rt_size->GetHeight());
 	else
-		BeginRenderPass(@"RenderHW", rt_bind, MTLLoadActionLoad, ds_bind, MTLLoadActionLoad, stencil, MTLLoadActionLoad, rt1);
+		BeginRenderPass(@"DoRenderHW", rt_bind, MTLLoadActionLoad, ds_bind, MTLLoadActionLoad, stencil, MTLLoadActionLoad, rt1);
 	id<MTLRenderCommandEncoder> mtlenc = m_current_render.encoder;
 	FlushDebugEntries(mtlenc);
 	if (usesStencil(config.destination_alpha))

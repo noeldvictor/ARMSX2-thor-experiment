@@ -5,6 +5,7 @@
 #include "common/Console.h"
 #include "common/HashCombine.h"
 #include "common/FileSystem.h"
+#include "common/HostSys.h"
 #include "common/Path.h"
 #include "common/StringUtil.h"
 #include "common/ScopedGuard.h"
@@ -23,6 +24,7 @@
 #include <cstring>
 #include <deque>
 #include <functional>
+#include <list>
 #include <mutex>
 #include <unordered_map>
 #include <unordered_set>
@@ -113,12 +115,19 @@ namespace GSTextureReplacements
 	static void PrecacheReplacementTextures();
 	static void ClearReplacementTextures();
 
+	static size_t ReplacementTextureBytes(const ReplacementTexture& tex);
+	static size_t GetReplacementCacheBudget();
+	static void TouchReplacementCacheLocked(const TextureName& name);
+	static const ReplacementTexture* InsertReplacementCacheLocked(const TextureName& name, ReplacementTexture& tex);
+	static void ResetReplacementCacheLocked();
+
 	static void StartWorkerThread();
 	static void StopWorkerThread();
 	static void QueueWorkerThreadItem(std::function<void()> fn, bool high_priority);
 	static void WorkerThreadEntryPoint();
 	static void SyncWorkerThread();
 	static void CancelPendingLoadsAndDumps();
+	static void NotifyStartupCompleteForCurrentGame();
 
 	static std::string s_current_serial;
 
@@ -136,6 +145,21 @@ namespace GSTextureReplacements
 	static std::unordered_map<TextureName, ReplacementTexture> s_replacement_texture_cache;
 	static std::mutex s_replacement_texture_cache_mutex;
 
+	/// Byte accounting + LRU ordering for the cache above.
+	///
+	/// Replacement packs can be enormous — a 5 GB uncompressed-DDS Persona 3 FES pack was
+	/// OOM-killing Android mid-load — and this cache previously had NO size cap and NO
+	/// eviction: it was only ever cleared wholesale on shutdown/game change, so every texture
+	/// the game touched stayed resident until the process died. Turning Precache off did not
+	/// help, it only changed how quickly memory filled. Now we track bytes and evict the
+	/// least-recently-used entries once past a budget derived from physical RAM, so an
+	/// oversized pack degrades to "some textures aren't replaced" instead of a hard crash.
+	static size_t s_replacement_texture_cache_bytes = 0;
+	static size_t s_replacement_texture_cache_budget = 0; // lazily computed on first use
+	static std::list<TextureName> s_replacement_texture_lru; // front = least recently used
+	static std::unordered_map<TextureName, std::list<TextureName>::iterator> s_replacement_texture_lru_map;
+	static bool s_replacement_cache_budget_hit = false;
+
 	/// List of textures that are pending asynchronous load. Second element is whether we're only precaching.
 	static std::unordered_map<TextureName, bool> s_pending_async_load_textures;
 
@@ -150,6 +174,113 @@ namespace GSTextureReplacements
 	static std::deque<std::pair<std::function<void()>, bool>> s_worker_thread_queue;
 	static bool s_worker_thread_running = false;
 }; // namespace GSTextureReplacements
+
+size_t GSTextureReplacements::ReplacementTextureBytes(const ReplacementTexture& tex)
+{
+	size_t bytes = tex.data.size();
+	for (const ReplacementTexture::MipData& mip : tex.mips)
+		bytes += mip.data.size();
+	return bytes;
+}
+
+size_t GSTextureReplacements::GetReplacementCacheBudget()
+{
+	if (s_replacement_texture_cache_budget != 0)
+		return s_replacement_texture_cache_budget;
+
+	// Derived from physical RAM rather than hardcoded: the same core runs on 3 GB phones and
+	// 32 GB desktops. A quarter of RAM leaves headroom for the EE/GS allocations and, on
+	// Android, keeps us clear of the low-memory killer.
+	//
+	// The ceiling is deliberately generous. The cache only ever grows to what a pack actually
+	// loads, so a high cap costs nothing on small packs — it only decides when we START
+	// EVICTING, and evicting a pack that would otherwise have fit turns a one-off load into
+	// repeated reload churn (felt as stutter when walking into a new area). Real packs
+	// measured: God of War 1 HD = 2.97 GB, Persona 3 FES HD = 5.0 GB, both UNCOMPRESSED DDS.
+	//
+	// RAM/2 below is the policy that actually protects small devices; MAX_BUDGET only exists to
+	// stop an absurd figure on huge-RAM machines, so it binds solely at >= 12 GB RAM (under that,
+	// RAM/2 is already lower). Raised 6 -> 16 GB so a 16-24 GB handheld can hold a large
+	// uncompressed pack whole instead of evicting with RAM to spare. Must stay a 64-bit-safe
+	// value: this is only correct because arm64/desktop size_t is 64-bit — on a 32-bit build
+	// anything >= 4 GB wraps to 0 and would evict everything.
+	constexpr size_t MIN_BUDGET = static_cast<size_t>(192) * 1024 * 1024;
+	constexpr size_t MAX_BUDGET = static_cast<size_t>(16384) * 1024 * 1024; // 16 GB
+	const u64 physical = GetPhysicalMemory();
+	size_t budget = (physical != 0) ? static_cast<size_t>(physical / 2) : MIN_BUDGET; // RAM/2 (was /4): hold real packs whole
+	if (budget < MIN_BUDGET)
+		budget = MIN_BUDGET;
+	if (budget > MAX_BUDGET)
+		budget = MAX_BUDGET;
+
+	s_replacement_texture_cache_budget = budget;
+	Console.WriteLnFmt("Texture replacements: cache budget {} MB (physical memory {} MB).",
+		budget / 1048576, physical / 1048576);
+	return s_replacement_texture_cache_budget;
+}
+
+void GSTextureReplacements::TouchReplacementCacheLocked(const TextureName& name)
+{
+	const auto it = s_replacement_texture_lru_map.find(name);
+	if (it == s_replacement_texture_lru_map.end())
+		return;
+
+	// Back = most recently used; the front is what gets evicted first.
+	s_replacement_texture_lru.splice(s_replacement_texture_lru.end(), s_replacement_texture_lru, it->second);
+}
+
+const GSTextureReplacements::ReplacementTexture* GSTextureReplacements::InsertReplacementCacheLocked(
+	const TextureName& name, ReplacementTexture& tex)
+{
+	const size_t incoming = ReplacementTextureBytes(tex);
+	const size_t budget = GetReplacementCacheBudget();
+
+	// A single texture larger than the entire budget can never be held. Leave [tex] untouched
+	// so the caller can still upload it this once, rather than evicting everything for it.
+	if (incoming > budget)
+		return nullptr;
+
+	while ((s_replacement_texture_cache_bytes + incoming) > budget && !s_replacement_texture_lru.empty())
+	{
+		const TextureName victim = s_replacement_texture_lru.front();
+		const auto vit = s_replacement_texture_cache.find(victim);
+		if (vit != s_replacement_texture_cache.end())
+		{
+			s_replacement_texture_cache_bytes -= ReplacementTextureBytes(vit->second);
+			s_replacement_texture_cache.erase(vit);
+		}
+		s_replacement_texture_lru_map.erase(victim);
+		s_replacement_texture_lru.pop_front();
+
+		if (!s_replacement_cache_budget_hit)
+		{
+			s_replacement_cache_budget_hit = true;
+			Console.WarningFmt("Texture replacements: cache budget of {} MB reached; evicting. An oversized "
+							   "pack (typically uncompressed DDS) will only be partially applied.",
+				budget / 1048576);
+			Host::AddIconOSDMessage("ReplacementCacheBudget", ICON_FA_CIRCLE_EXCLAMATION,
+				fmt::format(TRANSLATE_FS("TextureReplacement",
+								"Texture pack is larger than the {} MB cache budget, so only part of it will be "
+								"applied. Use a block-compressed (BC/DXT) pack for full coverage."),
+					budget / 1048576),
+				Host::OSD_WARNING_DURATION);
+		}
+	}
+
+	s_replacement_texture_cache_bytes += incoming;
+	s_replacement_texture_lru.push_back(name);
+	s_replacement_texture_lru_map.emplace(name, std::prev(s_replacement_texture_lru.end()));
+	return &s_replacement_texture_cache.emplace(name, std::move(tex)).first->second;
+}
+
+void GSTextureReplacements::ResetReplacementCacheLocked()
+{
+	s_replacement_texture_cache.clear();
+	s_replacement_texture_lru.clear();
+	s_replacement_texture_lru_map.clear();
+	s_replacement_texture_cache_bytes = 0;
+	s_replacement_cache_budget_hit = false;
+}
 
 TextureName GSTextureReplacements::CreateTextureName(const GSTextureCache::HashCacheKey& hash, u32 miplevel)
 {
@@ -376,6 +507,7 @@ static bool GetWrongCasePath(std::string* output, const char* dir, std::string_v
 void GSTextureReplacements::ReloadReplacementMap()
 {
 	SyncWorkerThread();
+	ScopedGuard startup_complete_guard([]() { NotifyStartupCompleteForCurrentGame(); });
 
 	// clear out the caches
 	{
@@ -383,14 +515,20 @@ void GSTextureReplacements::ReloadReplacementMap()
 		s_replacement_textures_without_clut_hash.clear();
 
 		std::unique_lock<std::mutex> lock(s_replacement_texture_cache_mutex);
-		s_replacement_texture_cache.clear();
+		ResetReplacementCacheLocked();
 		s_pending_async_load_textures.clear();
 		s_async_loaded_textures.clear();
 	}
 
 	// can't replace bios textures.
 	if (s_current_serial.empty() || !GSConfig.LoadTextureReplacements)
+	{
+		// Say why, rather than returning silently — "off" and "no serial yet" are the two
+		// most common reasons a pack appears to do nothing (see the summary log below).
+		if (!s_current_serial.empty() && !GSConfig.LoadTextureReplacements)
+			Console.WriteLnFmt("Texture replacements: disabled (LoadTextureReplacements off) for {}", s_current_serial);
 		return;
+	}
 
 	const std::string texture_dir = GetGameTextureDirectory();
 	const std::string replacement_dir(Path::Combine(texture_dir, TEXTURE_REPLACEMENT_SUBDIRECTORY_NAME));
@@ -437,6 +575,15 @@ void GSTextureReplacements::ReloadReplacementMap()
 		s_replacement_textures_without_clut_hash.insert(name.value());
 	}
 
+	// "indexed", not "loaded": this count only proves filename discovery + name parsing.
+	// It says nothing about whether any texture was looked up, decoded, or uploaded — those
+	// are separate stages that fail independently and silently. Every quiet path out of this
+	// function looks identical from outside (feature off, wrong serial, empty folder,
+	// unparseable names), so print the count AND the exact directory scanned: a zero here
+	// with a path that doesn't match the user's pack folder is the whole diagnosis.
+	Console.WriteLnFmt("Texture replacements: {} indexed for '{}' (scanned {})",
+		s_replacement_texture_filenames.size(), s_current_serial, replacement_dir);
+
 	if (!s_replacement_texture_filenames.empty())
 	{
 		if (GSConfig.PrecacheTextureReplacements)
@@ -449,6 +596,31 @@ void GSTextureReplacements::ReloadReplacementMap()
 			Console.Warning("Palette textures will be disabled. Please enable full preloading or disable GPU palette conversion.");
 		}
 	}
+}
+
+void GSTextureReplacements::NotifyStartupCompleteForCurrentGame()
+{
+	const std::string serial = s_current_serial;
+	if (serial.empty() || serial != VMManager::GetDiscSerial())
+		return;
+
+	// Without precaching there is no finite startup decode phase: replacement images are
+	// intentionally loaded on demand. In that configuration, indexing the active game's
+	// replacement map is the complete startup boundary.
+	if (!GSConfig.LoadTextureReplacements || !GSConfig.PrecacheTextureReplacements ||
+		s_replacement_texture_filenames.empty())
+	{
+		VMManager::NotifyTextureReplacementStartupComplete();
+		return;
+	}
+
+	// PrecacheReplacementTextures() queues every startup decode before this barrier.
+	// The serial check prevents a stale barrier from completing readiness after a disc
+	// change or a replacement-map reload for another game.
+	QueueWorkerThreadItem([serial]() {
+		if (serial == VMManager::GetDiscSerial())
+			VMManager::NotifyTextureReplacementStartupComplete();
+	}, false);
 }
 
 void GSTextureReplacements::UpdateConfig(Pcsx2Config::GSOptions& old_config)
@@ -520,6 +692,7 @@ GSTexture* GSTextureReplacements::LookupReplacementTexture(const GSTextureCache:
 		if (it != s_replacement_texture_cache.end())
 		{
 			// replacement is cached, can immediately upload to host GPU
+			TouchReplacementCacheLocked(name);
 			*alpha_minmax = it->second.alpha_minmax;
 			return CreateReplacementTexture(it->second, mipmap);
 		}
@@ -542,13 +715,17 @@ GSTexture* GSTextureReplacements::LookupReplacementTexture(const GSTextureCache:
 		if (!replacement.has_value())
 			return nullptr;
 
-		// insert into cache
+		// Insert into cache. This can decline when a single texture is bigger than the entire
+		// budget, in which case [local] is left intact and we upload it just this once.
 		std::unique_lock<std::mutex> lock(s_replacement_texture_cache_mutex);
-		const ReplacementTexture& rtex = s_replacement_texture_cache.emplace(name, std::move(replacement.value())).first->second;
+		ReplacementTexture& local = replacement.value();
+		const ReplacementTexture* rtex = InsertReplacementCacheLocked(name, local);
+		if (!rtex)
+			rtex = &local;
 
 		// and upload to gpu
-		*alpha_minmax = rtex.alpha_minmax;
-		return CreateReplacementTexture(rtex, mipmap);
+		*alpha_minmax = rtex->alpha_minmax;
+		return CreateReplacementTexture(*rtex, mipmap);
 	}
 }
 
@@ -684,14 +861,14 @@ void GSTextureReplacements::QueueAsyncReplacementTextureLoad(const TextureName& 
 		}
 
 		// insert into the cache and queue for later injection
-		if (replacement.has_value())
+		if (replacement.has_value() && InsertReplacementCacheLocked(name, replacement.value()))
 		{
-			s_replacement_texture_cache.emplace(name, std::move(replacement.value()));
 			s_async_loaded_textures.emplace_back(name, mipmap);
 		}
 		else
 		{
-			// loading failed, so clear it from the pending list
+			// Load failed, or the texture is too large to ever cache. Either way it can't be
+			// injected later (injection reads back out of the cache), so drop the pending mark.
 			s_pending_async_load_textures.erase(name);
 		}
 	}, !cache_only);
@@ -708,6 +885,12 @@ void GSTextureReplacements::PrecacheReplacementTextures()
 	// pretty simple, just go through the filenames and if any aren't cached, cache them
 	for (const auto& it : s_replacement_texture_filenames)
 	{
+		// Stop once the cache is full. Queueing the remainder of an oversized pack would only
+		// thrash — each load immediately evicting the previous one — and hammer storage for
+		// nothing. The textures still load on demand later if they're actually used.
+		if (s_replacement_texture_cache_bytes >= GetReplacementCacheBudget())
+			break;
+
 		if (s_replacement_texture_cache.find(it.first) != s_replacement_texture_cache.end())
 			continue;
 
@@ -722,7 +905,7 @@ void GSTextureReplacements::ClearReplacementTextures()
 	s_replacement_textures_without_clut_hash.clear();
 
 	std::unique_lock<std::mutex> lock(s_replacement_texture_cache_mutex);
-	s_replacement_texture_cache.clear();
+	ResetReplacementCacheLocked();
 	s_pending_async_load_textures.clear();
 	s_async_loaded_textures.clear();
 }
@@ -751,8 +934,36 @@ GSTexture* GSTextureReplacements::CreateReplacementTexture(const ReplacementText
 	if (!tex)
 		return nullptr;
 
+	// Update() CAN fail, and its result was being discarded. On Vulkan an upload needs either room
+	// in the shared streaming buffer or a dedicated staging allocation (GSTextureVK::DoUpdate), and
+	// either can fail under memory pressure — at which point the texture exists but its contents are
+	// UNDEFINED. Injecting it anyway reports success and hands the game garbage, which on screen is
+	// indistinguishable from a replacement that never loaded: missing cursors, letters cut in half.
+	//
+	// It is worse for us than upstream because of the CPU BC decode above: a BC7 texture becomes
+	// RGBA8 at four times the size, so the upload that has to succeed is four times larger. Drop the
+	// texture instead, so the game falls back to its original and the pack degrades to "not
+	// replaced" rather than "corrupt".
+	const auto upload_failed = [&](u32 level) {
+		static bool logged_once = false;
+		if (!logged_once)
+		{
+			logged_once = true;
+			Console.Error("Texture replacements: GPU upload failed (level %u, %dx%d %s). The "
+						  "replacement is being skipped rather than drawn with undefined contents. "
+						  "This usually means texture memory is exhausted — try turning Precache "
+						  "Texture Replacements off, or lowering the render resolution.",
+				level, rtex.width, rtex.height, GSTexture::GetFormatName(rtex.format));
+		}
+		g_gs_device->Recycle(tex);
+	};
+
 	// upload base level
-	tex->Update(GSVector4i(0, 0, rtex.width, rtex.height), rtex.data.data(), rtex.pitch);
+	if (!tex->Update(GSVector4i(0, 0, rtex.width, rtex.height), rtex.data.data(), rtex.pitch))
+	{
+		upload_failed(0);
+		return nullptr;
+	}
 
 	// and the mips if they're present in the replacement texture
 	if (!rtex.mips.empty())
@@ -760,7 +971,13 @@ GSTexture* GSTextureReplacements::CreateReplacementTexture(const ReplacementText
 		for (u32 i = 0; i < static_cast<u32>(rtex.mips.size()); i++)
 		{
 			const ReplacementTexture::MipData& mip = rtex.mips[i];
-			tex->Update(GSVector4i(0, 0, static_cast<int>(mip.width), static_cast<int>(mip.height)), mip.data.data(), mip.pitch, i + 1);
+			if (!tex->Update(GSVector4i(0, 0, static_cast<int>(mip.width), static_cast<int>(mip.height)),
+					mip.data.data(), mip.pitch, i + 1))
+			{
+				// A garbage mip is still garbage — it just only shows at distance.
+				upload_failed(i + 1);
+				return nullptr;
+			}
 		}
 	}
 
@@ -769,10 +986,33 @@ GSTexture* GSTextureReplacements::CreateReplacementTexture(const ReplacementText
 
 void GSTextureReplacements::ProcessAsyncLoadedTextures()
 {
-	// this holds the lock while doing the upload, but it should be reasonably quick
+	// Per-frame GPU upload budget.
+	//
+	// Every pending texture used to be uploaded in ONE call ("this should be reasonably
+	// quick" — true for a handful of BC-compressed textures, false otherwise). Walking into
+	// a new area streams a whole batch in at once, and real HD packs are entirely
+	// UNCOMPRESSED DDS (God of War 1 HD = 2.97 GB over 2235 files, Persona 3 FES = 5.0 GB),
+	// where one 2048x2048 texture is 16 MB. Ten arriving together meant ~160 MB of GPU
+	// upload inside a single frame, while holding the cache lock — reported as "FPS drops to
+	// 50 and stutters in certain areas" with a pack that runs fine on other emulators.
+	//
+	// Spreading the uploads costs a frame or two of pop-in, which is imperceptible next to
+	// dropping the frame outright. 16 MB bounds the worst case to roughly one uncompressed
+	// 2048x2048 texture per frame — the natural granularity here.
+	constexpr size_t MAX_UPLOAD_BYTES_PER_FRAME = static_cast<size_t>(16) * 1024 * 1024;
+
 	std::unique_lock<std::mutex> lock(s_replacement_texture_cache_mutex);
-	for (const auto& [name, mipmap] : s_async_loaded_textures)
+	size_t uploaded_bytes = 0;
+	size_t idx = 0;
+	for (; idx < s_async_loaded_textures.size(); idx++)
 	{
+		// Checked at the top with a zero start, so a texture larger than the whole budget
+		// still goes through on its own frame and can never wedge the queue.
+		if (uploaded_bytes >= MAX_UPLOAD_BYTES_PER_FRAME)
+			break;
+
+		const auto& [name, mipmap] = s_async_loaded_textures[idx];
+
 		// no longer pending!
 		const auto pit = s_pending_async_load_textures.find(name);
 		if (pit != s_pending_async_load_textures.end())
@@ -781,6 +1021,7 @@ void GSTextureReplacements::ProcessAsyncLoadedTextures()
 			s_pending_async_load_textures.erase(pit);
 
 			// if we were precaching, don't inject into the TC if we didn't actually get requested
+			// (costs no upload, so it doesn't draw down the budget)
 			if (cache_only)
 				continue;
 		}
@@ -794,8 +1035,15 @@ void GSTextureReplacements::ProcessAsyncLoadedTextures()
 		GSTexture* tex = CreateReplacementTexture(it->second, mipmap);
 		if (tex)
 			g_texture_cache->InjectHashCacheTexture(HashCacheKeyFromTextureName(name), tex, it->second.alpha_minmax);
+
+		uploaded_bytes += ReplacementTextureBytes(it->second);
 	}
-	s_async_loaded_textures.clear();
+
+	// Carry whatever we didn't reach into the next frame rather than dropping it.
+	if (idx >= s_async_loaded_textures.size())
+		s_async_loaded_textures.clear();
+	else
+		s_async_loaded_textures.erase(s_async_loaded_textures.begin(), s_async_loaded_textures.begin() + idx);
 }
 
 void GSTextureReplacements::DumpTexture(const GSTextureCache::HashCacheKey& hash, const GIFRegTEX0& TEX0,

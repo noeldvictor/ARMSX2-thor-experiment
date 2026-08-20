@@ -98,14 +98,26 @@ namespace HostMemoryMap
 
 namespace SysMemory
 {
+	/// Reserve the host memory map (and, on arm64, the constant-VA arena) early,
+	/// before other allocations could squat on the fixed base. Idempotent — a
+	/// later Allocate() reuses the same reservation. Used by headless runners and
+	/// SDL frontends that need the deterministic arena claimed before any
+	/// heap/mmap could squat on the fixed base.
+	void ReserveMemory();
 	bool Allocate();
 	void Reset();
 	void Release();
 
+	/// Returns true after the VM data-memory map has been allocated.
+	bool IsAllocated();
+
+	/// Returns true when an executable code-cache mapping is available.
+	bool HasCodeMemory();
+
 	/// Returns data memory (Main in Memory Map).
 	u8* GetDataPtr(size_t offset);
 
-	/// Returns memory used for the recompilers.
+	/// Returns memory used for the recompilers, or nullptr when no code mapping exists.
 	u8* GetCodePtr(size_t offset);
 
 	/// Returns the file mapping which backs the data memory.

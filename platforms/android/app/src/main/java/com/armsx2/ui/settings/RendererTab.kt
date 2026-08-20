@@ -25,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -50,8 +49,9 @@ import kr.co.iefriends.pcsx2.NativeApp
 import java.io.BufferedInputStream
 import java.io.File
 import java.util.zip.ZipInputStream
+import androidx.compose.runtime.saveable.rememberSaveable
 import kotlin.math.abs
-import androidx.core.content.edit
+import kotlin.math.roundToInt
 
 /**
  * Renderer section of the in-game settings overlay.
@@ -104,49 +104,125 @@ fun RendererTab(state: MutableState<Settings>) {
         modifier = Modifier
             .fillMaxWidth(),
     ) {
-        CollapsibleSection(str("renderer.section.displayResolution"), initiallyExpanded = false) {
+        CollapsibleSection(str("renderer.section.displayResolution"), initiallyExpanded = true) {
             // Graphics API (OpenGL / Vulkan) + Vulkan custom-driver picker.
             // from the removed first-run setup renderer page into settings.
             RendererBackendSection(state)
             SettingsDivider()
-            val upscaleIndex = UPSCALE_OPTIONS
-                .indexOfFirst { abs(it.value - s.upscaleFloat) < 0.01f }
-                .takeIf { it >= 0 } ?: 0
+            // Clear Shader Cache — directly under the GPU driver picker. Switching the Vulkan driver
+            // is exactly when you want to wipe the on-disk shader cache so it recompiles on the new
+            // one, so the control lives with the driver rather than buried lower in the tab.
+            ClearShaderCacheRow()
+            SettingsDivider()
+            // GS Multi-threading (GV7 front/back split), placed right under the
+            // renderer/driver picker. Off = today's single-threaded path (the
+            // default — opt-in); On = the GS runs on a dedicated back thread
+            // (Pipelined, enum value 3). The enum's Inline/Lockstep rungs (1/2)
+            // are dev-only and deliberately not exposed. Restart-required (in
+            // RestartOptionsAreEqual); native-lib snapshots the field across a
+            // live apply, so it only takes effect on the next game boot.
+            ToggleRow(
+                str("renderer.gsBackThread.label"),
+                s.gsBackThreadMode >= 3,
+                description = str("renderer.gsBackThread.description"),
+            ) {
+                apply(s.copy(gsBackThreadMode = if (it) 3 else 0))
+            }
+            SettingsDivider()
+            // A value that matches no preset is a CUSTOM one (set below, per-game, or from an INI).
+            // It used to fall back to index 0, which displayed 0.25x while the GS ran something
+            // else entirely — so the row lied about the active resolution.
+            val presetIndex = UPSCALE_OPTIONS.indexOfFirst { abs(it.value - s.upscaleFloat) < 0.01f }
+            val customIndex = UPSCALE_OPTIONS.size
+            // Whether the Custom row is OPEN has to be its own state, not "the value matches no
+            // preset". Picking Custom leaves the value untouched by design, so deriving it from the
+            // value alone made the tap a no-op: the selection snapped straight back to the preset
+            // and the slider never appeared. A value that matches no preset (per-game, or an INI)
+            // still forces it open, so the row can never misreport what the GS is running.
+            val customOpen = rememberSaveable { mutableStateOf(false) }
+            val showCustom = customOpen.value || presetIndex < 0
+            val upscaleIndex = if (showCustom) customIndex else presetIndex
             SegmentedGridRow(
                 label = str("renderer.upscale.label"),
-                options = UPSCALE_OPTIONS.map { it.label },
+                options = UPSCALE_OPTIONS.map { it.label } + str("renderer.upscale.custom"),
                 selectedIndex = upscaleIndex,
                 columns = 4,
                 description = str("renderer.upscale.description"),
                 onChange = { index ->
-                    val mult = UPSCALE_OPTIONS[index].value
-                    // Persist scope-aware (per-game when the overlay scope is Game);
-                    // the live GS apply happens in InGameOverlay's settings delta.
-                    if (abs(s.upscaleFloat - mult) >= 0.01f) apply(s.copy(upscaleFloat = mult))
+                    if (index == customIndex) {
+                        // Reveal the slider and keep the current value as its starting point —
+                        // jumping to some arbitrary default would throw away what they had.
+                        customOpen.value = true
+                    } else {
+                        customOpen.value = false
+                        val mult = UPSCALE_OPTIONS[index].value
+                        // Persist scope-aware (per-game when the overlay scope is Game);
+                        // the live GS apply happens in InGameOverlay's settings delta.
+                        if (abs(s.upscaleFloat - mult) >= 0.01f) apply(s.copy(upscaleFloat = mult))
+                    }
                 },
             )
+            // Custom resolution scale, as a PERCENTAGE of native — the Dolphin-style numeric
+            // control people ask for when a preset step is too coarse. The GS multiplier is a
+            // float, so e.g. 107% turns 512x448 into a true 480p-height render without paying for
+            // a full 2x. Only shown on Custom, so the preset grid stays uncluttered.
+            if (upscaleIndex == customIndex) {
+                IntSliderRow(
+                    label = str("renderer.upscale.customScale"),
+                    value = (s.upscaleFloat * 100f).roundToInt().coerceIn(25, 800),
+                    min = 25,
+                    max = 800,
+                    description = str("renderer.upscale.customScale.description"),
+                    valueFormatter = { "$it%" },
+                    onReset = { apply(s.copy(upscaleFloat = 1.0f)) },
+                    onChange = { pct -> apply(s.copy(upscaleFloat = pct / 100f)) },
+                )
+            }
             SettingsDivider()
             SegmentedRow(
                 label = str("renderer.displayMode.label"),
-                options = listOf("Stretch", "Auto", "4:3", "16:9", "10:7"),
-                selectedIndex = s.aspectRatio.coerceIn(0, 4),
+                // Adding an option here means widening BOTH clamps: this one and
+                // EmulationMenuViewModel.setAspectRatio. A clamp left at the old maximum does not
+                // fail loudly -- it silently snaps the new choice back to the previous entry.
+                options = listOf("Stretch", "Auto", "4:3", "16:9", "10:7", "21:9", "20:9", "19.5:9", "Custom"),
+                selectedIndex = s.aspectRatio.coerceIn(0, 8),
                 description = str("renderer.displayMode.description"),
                 onChange = { apply(s.copy(aspectRatio = it)) },
             )
+            // Only meaningful for Custom (8), so it stays hidden otherwise rather than sitting there
+            // inert. Shown when EITHER the main aspect or the FMV override is Custom, since the FMV
+            // path reads the same ratio.
+            if (s.aspectRatio == 8 || s.fmvAspectRatio == 8) {
+                IntSliderRow(
+                    label = str("renderer.customAspect.label"),
+                    // Presented in hundredths: the slider is integral, the setting is a float.
+                    value = (s.customAspectRatio * 100f).toInt().coerceIn(50, 500),
+                    min = 50,
+                    max = 500,
+                    description = str("renderer.customAspect.description"),
+                    // Show the ratio itself plus its :9 equivalent, which is how phone panels are
+                    // quoted — makes "I want 19.5:9" reachable without mental arithmetic.
+                    valueFormatter = { hundredths ->
+                        val r = hundredths / 100f
+                        "%.2f  (%.1f:9)".format(r, r * 9f)
+                    },
+                    onChange = { apply(s.copy(customAspectRatio = it / 100f)) },
+                )
+            }
             SettingsDivider()
             // FMV Aspect Ratio override — applies only during FMVs/cutscenes; "Off" keeps
             // the aspect above. Handy for games that render FMVs at a different ratio.
             SegmentedRow(
                 label = str("renderer.fmvAspect.label"),
-                options = listOf("Off", "Auto", "4:3", "16:9", "10:7"),
-                selectedIndex = s.fmvAspectRatio.coerceIn(0, 4),
+                options = listOf("Off", "Auto", "4:3", "16:9", "10:7", "21:9", "20:9", "19.5:9", "Custom"),
+                selectedIndex = s.fmvAspectRatio.coerceIn(0, 8),
                 description = str("renderer.fmvAspect.description"),
                 onChange = { apply(s.copy(fmvAspectRatio = it)) },
             )
             SettingsDivider()
-            // Emulation Screen Orientation — global (Android activity orientation), stored
-            // in prefs and applied via Main; not an emucore/per-game setting.
-            val orientation = remember { mutableIntStateOf(MainActivityRuntime.prefs.getInt("ui.orientation", 0)) }
+            // Emulation Screen Orientation — Android activity orientation, now scope-aware
+            // (global ∘ per-game) like the rest of this tab. applyEmulationOrientation resolves
+            // the running game's value at boot and reverts to global on exit-to-library.
             SegmentedRow(
                 label = str("renderer.orientation.label"),
                 options = listOf(
@@ -155,19 +231,46 @@ fun RendererTab(state: MutableState<Settings>) {
                     str("renderer.orientation.portrait"),
                     str("renderer.orientation.autoRotate"),
                 ),
-                selectedIndex = orientation.value.coerceIn(0, 3),
+                selectedIndex = s.orientation.coerceIn(0, 3),
                 description = str("renderer.orientation.description"),
                 onChange = {
-                    orientation.value = it
-                    MainActivityRuntime.prefs.edit {
-                        putInt(
-                            "ui.orientation",
-                            it
-                        )
-                    }
+                    apply(s.copy(orientation = it))
                     MainActivityRuntime.instance?.applyEmulationOrientation()
                 },
             )
+            SettingsDivider()
+            // GitHub #375: where the render sits in a PORTRAIT window. Top (default) frees the
+            // bottom half for touch controls; Center keeps the old vertical-centered behavior.
+            // Live via NativeApp.setPortraitRenderTop (through applyTo); only affects portrait.
+            SegmentedRow(
+                label = str("renderer.portraitPosition.label"),
+                options = listOf(str("renderer.portraitPosition.top"), str("renderer.portraitPosition.center")),
+                selectedIndex = if (s.portraitRenderTop) 0 else 1,
+                description = str("renderer.portraitPosition.description"),
+                onChange = { apply(s.copy(portraitRenderTop = it == 0)) },
+            )
+            SettingsDivider()
+            // Where the render sits in a LANDSCAPE window. Center is the default; Top suits
+            // foldables and clamshell controllers, whose screens open downward so a centred
+            // image reads as sitting too low. Live via NativeApp.setLandscapeRenderTop.
+            SegmentedRow(
+                label = str("renderer.landscapePosition.label"),
+                options = listOf(str("renderer.landscapePosition.center"), str("renderer.landscapePosition.top")),
+                selectedIndex = if (s.landscapeRenderTop) 1 else 0,
+                description = str("renderer.landscapePosition.description"),
+                onChange = { apply(s.copy(landscapeRenderTop = it == 1)) },
+            )
+            SettingsDivider()
+            // Auto Progressive Scan — holds Triangle+Cross through boot, the combo some titles
+            // probe to offer 480p progressive. Takes effect on the next boot (it is a boot-time
+            // pad hold, not a live setting), and only does anything on games that implement it.
+            ToggleRow(
+                str("renderer.autoProgressive.label"),
+                s.autoProgressiveScan,
+                description = str("renderer.autoProgressive.description"),
+            ) {
+                apply(s.copy(autoProgressiveScan = it))
+            }
             SettingsDivider()
             SegmentedGridRow(
                 label = str("renderer.deinterlacing.label"),
@@ -201,8 +304,11 @@ fun RendererTab(state: MutableState<Settings>) {
             SettingsDivider()
             SegmentedGridRow(
                 label = str("renderer.hardwareDownloadMode.label"),
-                options = listOf("Accurate", "Force Full", "No Readbacks", "Unsync", "Disabled"),
-                selectedIndex = s.hardwareDownloadMode.coerceIn(0, 4),
+                // Index == GSHardwareDownloadMode; "Async" is 5 and must stay last. Keep this list
+                // and the clamp below in sync with the enum AND with the in-game menu's copy in
+                // EmulationMenuScreen — there are two independent pickers for this setting.
+                options = listOf("Accurate", "Force Full", "No Readbacks", "Unsync", "Disabled", "Async"),
+                selectedIndex = s.hardwareDownloadMode.coerceIn(0, 5),
                 columns = 3,
                 description = str("renderer.hardwareDownloadMode.description"),
                 onChange = { apply(s.copy(hardwareDownloadMode = it)) },
@@ -293,23 +399,48 @@ fun RendererTab(state: MutableState<Settings>) {
                 apply(s.copy(fxaa = it))
             }
             SettingsDivider()
-            SegmentedRow(
-                label = str("renderer.cas.label"),
-                options = listOf(str("fixes.opt.off"), str("renderer.cas.sharpen"), str("renderer.cas.sharpenResize")),
-                selectedIndex = s.casMode.coerceIn(0, 2),
-                description = str("renderer.cas.description"),
-                onChange = { apply(s.copy(casMode = it)) },
-            )
-            if (s.casMode != 0) {
+            val fsr1On = s.upscaler == Settings.UPSCALER_FSR1
+            ToggleRow(
+                str("renderer.fsr1.label"),
+                fsr1On,
+                description = str("renderer.fsr1.description"),
+            ) {
+                apply(s.copy(upscaler = if (it) Settings.UPSCALER_FSR1 else Settings.UPSCALER_OFF))
+            }
+            if (fsr1On) {
                 SettingsDivider()
                 IntSliderRow(
-                    label = str("renderer.cas.sharpness.label"),
-                    value = s.casSharpness.coerceIn(0, 100),
+                    label = str("renderer.fsr1.sharpness.label"),
+                    value = s.fsrSharpness.coerceIn(0, 100),
                     min = 0,
                     max = 100,
                     valueFormatter = { "$it%" },
-                    onChange = { apply(s.copy(casSharpness = it)) },
+                    onChange = { apply(s.copy(fsrSharpness = it)) },
                 )
+            }
+            // FSR's second pass IS RCAS, a contrast-adaptive sharpener, so the core runs one or
+            // the other and never both. Showing CAS while FSR is on would offer a slider that
+            // does nothing.
+            if (!fsr1On) {
+                SettingsDivider()
+                SegmentedRow(
+                    label = str("renderer.cas.label"),
+                    options = listOf(str("fixes.opt.off"), str("renderer.cas.sharpen"), str("renderer.cas.sharpenResize")),
+                    selectedIndex = s.casMode.coerceIn(0, 2),
+                    description = str("renderer.cas.description"),
+                    onChange = { apply(s.copy(casMode = it)) },
+                )
+                if (s.casMode != 0) {
+                    SettingsDivider()
+                    IntSliderRow(
+                        label = str("renderer.cas.sharpness.label"),
+                        value = s.casSharpness.coerceIn(0, 100),
+                        min = 0,
+                        max = 100,
+                        valueFormatter = { "$it%" },
+                        onChange = { apply(s.copy(casSharpness = it)) },
+                    )
+                }
             }
             SettingsDivider()
             // RetroArch (.slangp) chains run last in the post-process order (after
@@ -332,6 +463,12 @@ fun RendererTab(state: MutableState<Settings>) {
             // <dataroot>/shaders/, which is the folder ShaderChainSection's picker scans —
             // so it takes no tier and needs no apply(), same as DriverManagerSection.
             com.armsx2.ui.common.ShaderManagerSection()
+        }
+        SettingsDivider()
+        // Its OWN section, not a row at the bottom of Display Effects: buried under the whole
+        // shader manager inside a collapsed section, nobody could find it.
+        CollapsibleSection(str("renderer.section.overlayArt")) {
+            OverlayArtSection()
         }
         SettingsDivider()
         CollapsibleSection(str("renderer.section.texturePacks")) {
@@ -398,6 +535,16 @@ fun RendererTab(state: MutableState<Settings>) {
                 description = str("renderer.rov.description"),
             ) {
                 apply(s.copy(hwRov = it))
+            }
+            SettingsDivider()
+            // Every Android GPU is a tiler, so this is aimed at us even though it landed with
+            // only a desktop UI. Default OFF because it is brand new, not because it is risky.
+            ToggleRow(
+                str("renderer.coalesceRenderPasses.label"),
+                s.coalesceRenderPasses,
+                description = str("renderer.coalesceRenderPasses.description"),
+            ) {
+                apply(s.copy(coalesceRenderPasses = it))
             }
             SettingsDivider()
             ToggleRow(
@@ -489,9 +636,6 @@ fun RendererTab(state: MutableState<Settings>) {
                     apply(s.copy(gpuProfile = it))
                 },
             )
-
-            SettingsDivider()
-            ClearShaderCacheRow()
         }
     }
 }
@@ -583,6 +727,213 @@ private fun TexturePackImportRow() {
                 fontWeight = FontWeight.SemiBold,
             )
         }
+    }
+}
+
+/**
+ * RetroArch overlay artwork (bezel / border): import a pack, pick one, set its opacity.
+ *
+ * Separate from the shader chain on purpose — an RA overlay is just an image, so it composites
+ * for free and can be layered WITH a shader preset, which is what was asked for. Only the image
+ * half of the .cfg is used; ARMSX2 has its own touch layout, so the format's input hitboxes are
+ * deliberately ignored rather than fighting it.
+ */
+@Composable
+private fun OverlayArtSection() {
+    val context = LocalContext.current
+    val refresh = remember { mutableStateOf(0) }
+    val entries = remember(refresh.value) { com.armsx2.OverlayRepo.list(context) }
+    // Result of the last import, so it can never be silent — a .cfg whose image didn't come with
+    // it used to look identical to a successful import (nothing appeared, nothing was said).
+    val status = remember { mutableStateOf("") }
+    // MULTI-select, so a .cfg CAN be imported as a file: pick the cfg and its image(s) together in
+    // one go. A single-document pick can't reach the cfg's siblings, which is why importing a lone
+    // cfg silently produced nothing — but the fix for that is letting you select them both, not
+    // forcing everyone to use a folder picker.
+    val importer = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.OpenMultipleDocuments(),
+    ) { uris ->
+        if (!uris.isNullOrEmpty()) {
+            var total = 0
+            var sawCfg = false
+            var sawImage = false
+            uris.forEach { uri ->
+                val name = runCatching {
+                    context.contentResolver.query(uri, null, null, null, null)?.use { c ->
+                        val i = c.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+                        if (i >= 0 && c.moveToFirst()) c.getString(i) else null
+                    }
+                }.getOrNull()
+                if (name?.endsWith(".cfg", true) == true) sawCfg = true
+                if (name?.substringAfterLast('.', "")?.lowercase() in setOf("png", "jpg", "jpeg", "webp")) sawImage = true
+                total += com.armsx2.OverlayRepo.importFrom(context, uri, name)
+            }
+            refresh.value++
+            status.value = when {
+                total <= 0 -> I18n.get("renderer.overlayArt.importFailed")
+                // A cfg with no artwork alongside it still can't resolve — say so rather than
+                // leaving the list looking unchanged.
+                sawCfg && !sawImage -> I18n.get("renderer.overlayArt.importCfgAlone")
+                else -> I18n.get("renderer.overlayArt.imported").format(total)
+            }
+        }
+    }
+    val folderImporter = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree(),
+    ) { uri ->
+        if (uri != null) {
+            val n = com.armsx2.OverlayRepo.importTree(context, uri)
+            refresh.value++
+            status.value = if (n > 0) I18n.get("renderer.overlayArt.imported").format(n)
+            else I18n.get("renderer.overlayArt.importFailed")
+        }
+    }
+
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(rowAura())
+            .controllerFocusable("renderer.overlayArt.import", RoundedCornerShape(16.dp),
+                onConfirm = { importer.launch(arrayOf("application/zip", "image/*", "*/*")) })
+            .clickable { importer.launch(arrayOf("application/zip", "image/*", "*/*")) }
+            .padding(horizontal = 6.dp, vertical = 5.dp),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Text(
+            str("renderer.overlayArt.import"),
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
+    }
+    // ---- Download instead of import ----------------------------------------------------------
+    // Importing by hand is genuinely fiddly (a .cfg is useless without the image it references),
+    // so the primary path is now a browse-and-tap list from libretro's own overlay collection.
+    // The file/folder importers stay for people bringing their own packs.
+    val scope = rememberCoroutineScope()
+    val catalog = remember { mutableStateOf<List<com.armsx2.OverlayRepo.CatalogEntry>>(emptyList()) }
+    val catalogBusy = remember { mutableStateOf(false) }
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(rowAura())
+            .controllerFocusable("renderer.overlayArt.browse", RoundedCornerShape(16.dp), onConfirm = {
+                if (!catalogBusy.value) {
+                    catalogBusy.value = true
+                    scope.launch {
+                        val list = withContext(Dispatchers.IO) { com.armsx2.OverlayRepo.fetchCatalog() }
+                        catalog.value = list
+                        catalogBusy.value = false
+                        if (list.isEmpty()) status.value = I18n.get("renderer.overlayArt.browseFailed")
+                    }
+                }
+            })
+            .clickable {
+                if (!catalogBusy.value) {
+                    catalogBusy.value = true
+                    scope.launch {
+                        val list = withContext(Dispatchers.IO) { com.armsx2.OverlayRepo.fetchCatalog() }
+                        catalog.value = list
+                        catalogBusy.value = false
+                        if (list.isEmpty()) status.value = I18n.get("renderer.overlayArt.browseFailed")
+                    }
+                }
+            }
+            .padding(horizontal = 6.dp, vertical = 5.dp),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Text(
+            if (catalogBusy.value) str("renderer.overlayArt.browsing") else str("renderer.overlayArt.browse"),
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
+    }
+    catalog.value.forEach { entry ->
+        val download = {
+            scope.launch {
+                status.value = I18n.get("renderer.overlayArt.downloading").format(entry.name)
+                val n = withContext(Dispatchers.IO) {
+                    com.armsx2.OverlayRepo.downloadFromCatalog(context, entry)
+                }
+                refresh.value++
+                status.value = if (n > 0) I18n.get("renderer.overlayArt.downloaded").format(entry.name)
+                else I18n.get("renderer.overlayArt.importFailed")
+            }
+            Unit
+        }
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 14.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .controllerFocusable("renderer.overlayArt.dl.${entry.path}", RoundedCornerShape(12.dp), onConfirm = download)
+                .clickable { download() }
+                .padding(horizontal = 8.dp, vertical = 7.dp),
+            contentAlignment = Alignment.CenterStart,
+        ) {
+            Text("⤓  ${entry.name}", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
+        }
+    }
+    // Folder import — the one that works for a RetroArch .cfg, because only a tree URI can bring
+    // the artwork the cfg points at along with it.
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(rowAura())
+            .controllerFocusable("renderer.overlayArt.importFolder", RoundedCornerShape(16.dp),
+                onConfirm = { folderImporter.launch(null) })
+            .clickable { folderImporter.launch(null) }
+            .padding(horizontal = 6.dp, vertical = 5.dp),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Text(
+            str("renderer.overlayArt.importFolder"),
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
+    }
+    if (status.value.isNotBlank()) {
+        Text(
+            status.value,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 13.sp,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 4.dp),
+        )
+    }
+    SettingsDivider()
+    // "None" first so turning it off is always one tap away, even with a long pack list.
+    val options = listOf(str("renderer.overlayArt.none")) + entries.map { it.name }
+    val selected = entries.indexOfFirst { it.imagePath == com.armsx2.OverlayRepo.activePath.value }
+        .let { if (it >= 0) it + 1 else 0 }
+    SegmentedGridRow(
+        label = str("renderer.overlayArt.label"),
+        options = options,
+        selectedIndex = selected,
+        columns = 2,
+        description = str("renderer.overlayArt.description"),
+        onChange = { idx ->
+            com.armsx2.OverlayRepo.setActive(
+                if (idx == 0) "" else entries.getOrNull(idx - 1)?.imagePath.orEmpty(),
+            )
+        },
+    )
+    if (com.armsx2.OverlayRepo.activePath.value.isNotBlank()) {
+        SettingsDivider()
+        IntSliderRow(
+            label = str("renderer.overlayArt.opacity"),
+            value = (com.armsx2.OverlayRepo.opacity.floatValue * 100f).roundToInt(),
+            min = 5,
+            max = 100,
+            description = str("renderer.overlayArt.opacity.description"),
+            valueFormatter = { "$it%" },
+            onReset = { com.armsx2.OverlayRepo.setOpacity(1f) },
+            onChange = { com.armsx2.OverlayRepo.setOpacity(it / 100f) },
+        )
     }
 }
 
@@ -682,6 +1033,11 @@ private fun GsDumpCaptureRow() {
 private fun activeTextureSerial(): String? {
     return MainActivityRuntime.currentGame.value?.serial?.takeIf { it.isNotBlank() }
         ?: runCatching { NativeApp.getGameSerial() }.getOrNull()?.takeIf { it.isNotBlank() }
+        // Last resort: the game the user most recently had open. Both sources above go blank the
+        // moment you quit to the library (currentGame is nulled so per-game settings scope can't
+        // leak, and the VM's serial dies with the VM), which stranded texture-pack import behind
+        // "Boot a game first" even though the user had just played — and quit — that game.
+        ?: MainActivityRuntime.contextGame.value?.serial?.takeIf { it.isNotBlank() }
 }
 
 private fun importTexturePack(context: Context, uri: Uri, serial: String): Int {

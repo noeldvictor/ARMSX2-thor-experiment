@@ -292,6 +292,7 @@ private:
 
 	bool NeedsBlending();
 	bool IsRTWritten();
+	bool IsRTWrittenLive(const GIFRegALPHA& ALPHA) override;
 	bool IsDepthAlwaysPassing();
 	bool IsUsingCsInBlend();
 	bool IsUsingAsInBlend();
@@ -331,6 +332,9 @@ private:
 	u32 m_split_clear_color = 0;
 
 	bool m_userhacks_tcoffset = false;
+	// Set around the software Move() fallback: its source readback must not be deferred by
+	// GSHardwareDownloadMode::Asynchronous, because the blit consumes local memory right away.
+	bool m_force_synchronous_local_readback = false;
 	float m_userhacks_tcoffset_x = 0.0f;
 	float m_userhacks_tcoffset_y = 0.0f;
 
@@ -380,6 +384,16 @@ public:
 	void InvalidateLocalMem(const GIFRegBITBLTBUF& BITBLTBUF, const GSVector4i& r, bool clut = false) override;
 	void Move() override;
 	void Draw() override;
+
+	/// One-line PS2-level description of the draw about to be issued: primitive type,
+	/// framebuffer/depth/texture addresses and formats, blend and test state. Used for
+	/// the per-draw graphics-debugger label, so a capture names draws in PS2 terms
+	/// instead of showing an anonymous list.
+	std::string DescribeDraw() const;
+
+	/// Opens a per-draw ledger row from the PS2 register state. The backend half of the
+	/// row is filled at submit; see GSDrawLog.
+	void RecordDrawLogEntry() const;
 
 	void PurgeTextureCache(bool sources, bool targets, bool hash_cache) override;
 	void ReadbackTextureCache() override;

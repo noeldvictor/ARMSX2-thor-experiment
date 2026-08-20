@@ -38,6 +38,7 @@ target_sources(pcsx2-qt PRIVATE
 	Translations.cpp
 	QtHost.cpp
 	QtHost.h
+	QtMetaTypes.h
 	QtKeyCodes.cpp
 	QtProgressCallback.cpp
 	QtProgressCallback.h
@@ -177,6 +178,41 @@ target_sources(pcsx2-qt PRIVATE
 	Settings/USBBindingWidget_GunCon2.ui
 	Settings/USBBindingWidget_RyojouhenCon.ui
 	Settings/USBBindingWidget_ShinkansenCon.ui
+	Tools/InputRecording/NewInputRecordingDlg.cpp
+	Tools/InputRecording/NewInputRecordingDlg.h
+	Tools/InputRecording/NewInputRecordingDlg.ui
+	Tools/InputRecording/InputRecordingViewer.cpp
+	Tools/InputRecording/InputRecordingViewer.h
+	Tools/InputRecording/InputRecordingViewer.ui
+	resources/resources.qrc
+)
+
+if (NOT APPLE)
+    target_sources(pcsx2-qt PRIVATE
+        ShortcutCreationDialog.cpp
+        ShortcutCreationDialog.h
+        ShortcutCreationDialog.ui
+    )
+endif()
+
+file(GLOB TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Translations/pcsx2-qt_*-*.ts)
+
+target_precompile_headers(pcsx2-qt PRIVATE PrecompiledHeader.h)
+set_source_files_properties(PrecompiledHeader.cpp PROPERTIES HEADER_FILE_ONLY TRUE)
+
+target_include_directories(pcsx2-qt PRIVATE
+	${Qt6Gui_PRIVATE_INCLUDE_DIRS}
+	"${CMAKE_BINARY_DIR}/common/include"
+	"${CMAKE_SOURCE_DIR}/pcsx2"
+	"${CMAKE_SOURCE_DIR}/pcsx2-qt"
+)
+
+# The debugger UI (and its KDDockWidgets dependency) is optional. Default off on
+# ARM64 handheld targets; see ENABLE_QT_DEBUGGER in cmake/BuildParameters.cmake.
+if(ENABLE_QT_DEBUGGER)
+	target_compile_definitions(pcsx2-qt PRIVATE ENABLE_QT_DEBUGGER)
+	target_link_libraries(pcsx2-qt PRIVATE KDAB::kddockwidgets)
+	target_sources(pcsx2-qt PRIVATE
 	Debugger/AnalysisOptionsDialog.cpp
 	Debugger/AnalysisOptionsDialog.h
 	Debugger/AnalysisOptionsDialog.ui
@@ -263,34 +299,8 @@ target_sources(pcsx2-qt PRIVATE
 	Debugger/SymbolTree/SymbolTreeView.ui
 	Debugger/SymbolTree/TypeString.cpp
 	Debugger/SymbolTree/TypeString.h
-	Tools/InputRecording/NewInputRecordingDlg.cpp
-	Tools/InputRecording/NewInputRecordingDlg.h
-	Tools/InputRecording/NewInputRecordingDlg.ui
-	Tools/InputRecording/InputRecordingViewer.cpp
-	Tools/InputRecording/InputRecordingViewer.h
-	Tools/InputRecording/InputRecordingViewer.ui
-	resources/resources.qrc
-)
-
-if (NOT APPLE)
-    target_sources(pcsx2-qt PRIVATE
-        ShortcutCreationDialog.cpp
-        ShortcutCreationDialog.h
-        ShortcutCreationDialog.ui
-    )
+	)
 endif()
-
-file(GLOB TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Translations/pcsx2-qt_*-*.ts)
-
-target_precompile_headers(pcsx2-qt PRIVATE PrecompiledHeader.h)
-set_source_files_properties(PrecompiledHeader.cpp PROPERTIES HEADER_FILE_ONLY TRUE)
-
-target_include_directories(pcsx2-qt PRIVATE
-	${Qt6Gui_PRIVATE_INCLUDE_DIRS}
-	"${CMAKE_BINARY_DIR}/common/include"
-	"${CMAKE_SOURCE_DIR}/pcsx2"
-	"${CMAKE_SOURCE_DIR}/pcsx2-qt"
-)
 
 target_link_libraries(pcsx2-qt PRIVATE
 	PCSX2_FLAGS
@@ -298,7 +308,6 @@ target_link_libraries(pcsx2-qt PRIVATE
 	Qt6::Core
 	Qt6::Gui
 	Qt6::Widgets
-	KDAB::kddockwidgets
 )
 
 if(NOT WIN32 AND NOT APPLE)

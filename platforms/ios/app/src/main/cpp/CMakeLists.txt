@@ -12,10 +12,10 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif()
 
 set(ARMSX2_VERSION_MAJOR 2)
-set(ARMSX2_VERSION_MINOR 4)
-set(ARMSX2_VERSION_PATCH 1)
+set(ARMSX2_VERSION_MINOR 5)
+set(ARMSX2_VERSION_PATCH 3)
 set(ARMSX2_VERSION "${ARMSX2_VERSION_MAJOR}.${ARMSX2_VERSION_MINOR}.${ARMSX2_VERSION_PATCH}")
-set(ARMSX2_BUILD_NUMBER 241)
+set(ARMSX2_BUILD_NUMBER 253)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 	set(CMAKE_C_COMPILER_WORKS 1)
@@ -143,6 +143,10 @@ add_subdirectory(${ARMSX2_ROOT}/common ${CMAKE_BINARY_DIR}/common)
 # make pcsx2
 add_subdirectory(${ARMSX2_ROOT}/pcsx2 ${CMAKE_BINARY_DIR}/pcsx2)
 #add_subdirectory(pcsx2-qt)
+
+# Fetched and cargo-built, never vendored. Must follow pcsx2 so PCSX2_FLAGS exists by the
+# time the link block below runs.
+add_subdirectory(3rdparty/librashader)
 
 # Updater is Windows only for now.
 if (WIN32)
@@ -315,6 +319,23 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 				MACOSX_PACKAGE_LOCATION "Resources/${IOS_CONTROLLER_SKIN_RELATIVE_DIR}")
 		endforeach()
 
+		# A .slangp names its stages by relative path, so the tree has to survive the copy;
+		# a flattened bundle breaks every preset. Staged under "Resources/..." like the
+		# controller skins above, which iOS then flattens to the .app root — the shipped
+		# path is <app>/shaders/..., with no Resources/ component.
+		file(GLOB_RECURSE IOS_SHADER_PRESET_FILES CONFIGURE_DEPENDS
+			"${CMAKE_SOURCE_DIR}/../assets/shaders/*")
+		foreach(IOS_SHADER_PRESET_FILE IN LISTS IOS_SHADER_PRESET_FILES)
+			file(RELATIVE_PATH IOS_SHADER_PRESET_RELATIVE_FILE
+				"${CMAKE_SOURCE_DIR}/../assets"
+				"${IOS_SHADER_PRESET_FILE}")
+			get_filename_component(IOS_SHADER_PRESET_RELATIVE_DIR
+				"${IOS_SHADER_PRESET_RELATIVE_FILE}" DIRECTORY)
+			target_sources(ARMSX2iOS PRIVATE "${IOS_SHADER_PRESET_FILE}")
+			set_source_files_properties("${IOS_SHADER_PRESET_FILE}" PROPERTIES
+				MACOSX_PACKAGE_LOCATION "Resources/${IOS_SHADER_PRESET_RELATIVE_DIR}")
+		endforeach()
+
 	set(ARMSX2_APPLE_FRAMEWORKS
 		"-framework UIKit"
 		"-framework AVFoundation"
@@ -337,22 +358,58 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 		${ARMSX2_APPLE_FRAMEWORKS}
 	)
 
+	# The define MUST go on PCSX2_FLAGS, not PCSX2: generate-ios-xcode.sh always passes
+	# -DLTO_PCSX2_CORE=ON, which compiles GS/Renderers/Metal/GSDeviceMTL.mm into a separate
+	# PCSX2_LTO target that never sees PCSX2's PRIVATE properties. PCSX2_FLAGS is the
+	# INTERFACE target both link. Getting it wrong compiles clean, links clean, and silently
+	# ships the chain stubbed out — verify with nm on the built binary, never the build log.
+	if(ARMSX2_HAVE_LIBRASHADER)
+		target_link_libraries(PCSX2_FLAGS INTERFACE librashader)
+		target_compile_definitions(PCSX2_FLAGS INTERFACE ARMSX2_HAS_LIBRASHADER=1)
+		target_link_libraries(ARMSX2iOS PRIVATE librashader)
+		# And again for ARMSX2iOS itself, which ARMSX2Bridge.mm compiles into: PCSX2_FLAGS is
+		# linked PRIVATE into PCSX2 at pcsx2/CMakeLists.txt:10, so its INTERFACE define stops
+		# there and the bridge's capability query would report NO in every build.
+		target_compile_definitions(ARMSX2iOS PRIVATE ARMSX2_HAS_LIBRASHADER=1)
+	endif()
+
 	target_compile_options(ARMSX2iOS PRIVATE $<$<COMPILE_LANGUAGE:C,CXX,OBJC,OBJCXX>:-pipe>)
 
-	execute_process(
-		COMMAND git rev-parse --short HEAD
-		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-		OUTPUT_VARIABLE ARMSX2_GIT_HASH
-		OUTPUT_STRIP_TRAILING_WHITESPACE
-		ERROR_QUIET
+	# The hash used to be resolved here, which meant it stuck at whatever cmake
+	# last saw and a build after a commit reported the wrong revision. Resolve it
+	# into a header on every build instead. The version stays a define because it
+	# lives in this file, so touching it always reconfigures anyway.
+	set(ARMSX2_GIT_HASH_HEADER "${CMAKE_CURRENT_BINARY_DIR}/armsx2_git_hash.h")
+	# Seed it now so the header exists even before the target below has run once.
+	execute_process(COMMAND ${CMAKE_COMMAND}
+		-DGIT_WORKING_DIR=${CMAKE_SOURCE_DIR}
+		-DOUTPUT_FILE=${ARMSX2_GIT_HASH_HEADER}
+		-P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/WriteGitHash.cmake)
+	add_custom_target(armsx2_git_hash ALL
+		BYPRODUCTS "${ARMSX2_GIT_HASH_HEADER}"
+		COMMAND ${CMAKE_COMMAND}
+			-DGIT_WORKING_DIR=${CMAKE_SOURCE_DIR}
+			-DOUTPUT_FILE=${ARMSX2_GIT_HASH_HEADER}
+			-P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/WriteGitHash.cmake
+		COMMENT "Resolving git hash"
 	)
-	if(NOT ARMSX2_GIT_HASH)
-		set(ARMSX2_GIT_HASH "unknown")
-	endif()
+	add_dependencies(ARMSX2iOS armsx2_git_hash)
+
+	# Same treatment for the core's own banner, which comes from svnrev.h and was
+	# stale for the same reason. Upstream still writes it at configure time up in
+	# write_svnrev_h; this only refreshes it, and produces identical bytes.
+	add_custom_target(armsx2_svnrev ALL
+		COMMAND ${CMAKE_COMMAND}
+			-DGIT_WORKING_DIR=${PROJECT_SOURCE_DIR}
+			-DOUTPUT_FILE=${CMAKE_BINARY_DIR}/common/include/svnrev.h
+			-P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/WriteSvnRev.cmake
+		COMMENT "Resolving core git revision"
+	)
+	add_dependencies(PCSX2 armsx2_svnrev)
+	add_dependencies(ARMSX2iOS armsx2_svnrev)
 
 	target_compile_definitions(ARMSX2iOS PRIVATE
 		PCSX2_NO_PCAP=1
-		ARMSX2_GIT_HASH="${ARMSX2_GIT_HASH}"
 		ARMSX2_VERSION_STR="${ARMSX2_VERSION}"
 	)
 	if(ARMSX2_MAC_CATALYST)
@@ -360,6 +417,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 	endif()
 
 	target_include_directories(ARMSX2iOS PRIVATE
+		${CMAKE_CURRENT_BINARY_DIR}
 		${CMAKE_SOURCE_DIR}
 		${ARMSX2_ROOT}
 		${ARMSX2_ROOT}/common
@@ -398,15 +456,25 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 		${CMAKE_BINARY_DIR}/3rdparty/SDL3/include-revision
 	)
 
+	# Runtime resources come from the canonical bin/resources tree (shared with the
+	# desktop and Android builds), not a committed iOS copy. dx11 shaders are
+	# excluded — iOS renders with Metal and never compiles them. The mobile GameDB
+	# overlay is bundled alongside so the shared GameDatabase override loader applies
+	# the same tiler-GPU tuning at runtime (converging iOS onto the runtime-overlay
+	# model, retiring the old build-time gamedb-convert.py merge). patches.zip is the
+	# only genuine iOS-only extra still committed under assets/resources.
+	set(ARMSX2_SHARED_RESOURCES "${ARMSX2_ROOT}/bin/resources")
 	file(GLOB METAL_SHADERS "${ARMSX2_ROOT}/pcsx2/GS/Renderers/Metal/*.metal")
-	file(GLOB FONTS "${CMAKE_SOURCE_DIR}/../assets/resources/fonts/*.ttf" "${CMAKE_SOURCE_DIR}/../assets/resources/fonts/*.otf")
-	file(GLOB_RECURSE IOS_SHADER_RESOURCES "${CMAKE_SOURCE_DIR}/../assets/resources/shaders/*")
-	file(GLOB_RECURSE IOS_SOUND_RESOURCES "${CMAKE_SOURCE_DIR}/../assets/resources/sounds/*")
+	file(GLOB FONTS "${ARMSX2_SHARED_RESOURCES}/fonts/*.ttf" "${ARMSX2_SHARED_RESOURCES}/fonts/*.otf")
+	file(GLOB_RECURSE IOS_SHADER_RESOURCES "${ARMSX2_SHARED_RESOURCES}/shaders/*")
+	list(FILTER IOS_SHADER_RESOURCES EXCLUDE REGEX "/dx11/")
+	file(GLOB_RECURSE IOS_SOUND_RESOURCES "${ARMSX2_SHARED_RESOURCES}/sounds/*")
 	set(IOS_TOP_LEVEL_RESOURCES
-		"${CMAKE_SOURCE_DIR}/../assets/resources/GameIndex.yaml"
-		"${CMAKE_SOURCE_DIR}/../assets/resources/RedumpDatabase.yaml"
+		"${ARMSX2_SHARED_RESOURCES}/GameIndex.yaml"
+		"${ARMSX2_SHARED_RESOURCES}/RedumpDatabase.yaml"
+		"${ARMSX2_SHARED_RESOURCES}/game_controller_db.txt"
+		"${ARMSX2_ROOT}/bin/resources-overlay/armsx2_overrides.yaml"
 		"${CMAKE_SOURCE_DIR}/../assets/resources/patches.zip"
-		"${CMAKE_SOURCE_DIR}/../assets/resources/game_controller_db.txt"
 	)
 
 	target_sources(ARMSX2iOS PRIVATE ${METAL_SHADERS} ${FONTS} ${IOS_SHADER_RESOURCES})
@@ -423,14 +491,14 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
 	endforeach()
 	foreach(IOS_SHADER_RESOURCE IN LISTS IOS_SHADER_RESOURCES)
 		get_filename_component(IOS_SHADER_DIR "${IOS_SHADER_RESOURCE}" DIRECTORY)
-		file(RELATIVE_PATH IOS_SHADER_SUBDIR "${CMAKE_SOURCE_DIR}/../assets/resources" "${IOS_SHADER_DIR}")
+		file(RELATIVE_PATH IOS_SHADER_SUBDIR "${ARMSX2_SHARED_RESOURCES}" "${IOS_SHADER_DIR}")
 		set_source_files_properties("${IOS_SHADER_RESOURCE}" PROPERTIES
 			MACOSX_PACKAGE_LOCATION "Resources/${IOS_SHADER_SUBDIR}")
 	endforeach()
 	target_sources(ARMSX2iOS PRIVATE ${IOS_SOUND_RESOURCES})
 	foreach(IOS_SOUND_RESOURCE IN LISTS IOS_SOUND_RESOURCES)
 		get_filename_component(IOS_SOUND_DIR "${IOS_SOUND_RESOURCE}" DIRECTORY)
-		file(RELATIVE_PATH IOS_SOUND_SUBDIR "${CMAKE_SOURCE_DIR}/../assets/resources" "${IOS_SOUND_DIR}")
+		file(RELATIVE_PATH IOS_SOUND_SUBDIR "${ARMSX2_SHARED_RESOURCES}" "${IOS_SOUND_DIR}")
 		set_source_files_properties("${IOS_SOUND_RESOURCE}" PROPERTIES
 			MACOSX_PACKAGE_LOCATION "Resources/${IOS_SOUND_SUBDIR}")
 	endforeach()

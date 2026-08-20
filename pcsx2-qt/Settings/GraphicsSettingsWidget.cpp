@@ -173,7 +173,7 @@ GraphicsSettingsWidget::GraphicsSettingsWidget(SettingsWindow* settings_dialog, 
 	SettingWidgetBinder::BindWidgetToIntSetting(sif, m_upscaling.textureOffsetY, "EmuCore/GS", "UserHacks_TCOffsetY", 0);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_upscaling.alignSprite, "EmuCore/GS", "UserHacks_align_sprite_X", false);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_upscaling.mergeSprite, "EmuCore/GS", "UserHacks_merge_pp_sprite", false);
-	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_upscaling.forceEvenSpritePosition, "EmuCore/GS", "UserHacks_forceEvenSpritePosition", false);
+	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_upscaling.forceEvenSpritePosition, "EmuCore/GS", "UserHacks_ForceEvenSpritePosition", false);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_upscaling.nativePaletteDraw, "EmuCore/GS", "UserHacks_NativePaletteDraw", false);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -244,11 +244,13 @@ GraphicsSettingsWidget::GraphicsSettingsWidget(SettingsWindow* settings_dialog, 
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_advanced.disableShaderCache, "EmuCore/GS", "DisableShaderCache", false);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_advanced.disableVertexShaderExpand, "EmuCore/GS", "DisableVertexShaderExpand", false);
 	SettingWidgetBinder::BindWidgetToIntSetting(sif, m_advanced.gsDownloadMode, "EmuCore/GS", "HWDownloadMode", static_cast<int>(GSHardwareDownloadMode::Enabled));
+	SettingWidgetBinder::BindWidgetToIntSetting(sif, m_advanced.gsBackThreadMode, "EmuCore/GS", "GSBackThreadMode", static_cast<int>(GSBackThreadMode::Off));
 	SettingWidgetBinder::BindWidgetToFloatSetting(sif, m_advanced.ntscFrameRate, "EmuCore/GS", "FrameRateNTSC", 59.94f);
 	SettingWidgetBinder::BindWidgetToFloatSetting(sif, m_advanced.palFrameRate, "EmuCore/GS", "FrameRatePAL", 50.00f);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_advanced.spinCPUDuringReadbacks, "EmuCore/GS", "HWSpinCPUForReadbacks", false);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_advanced.spinGPUDuringReadbacks, "EmuCore/GS", "HWSpinGPUForReadbacks", false);
 	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_advanced.rovBarriersVK, "EmuCore/GS", "HWROVBarriersVK", false);
+	SettingWidgetBinder::BindWidgetToBoolSetting(sif, m_advanced.coalesceRenderPasses, "EmuCore/GS", "CoalesceRenderPasses", false);
 	SettingWidgetBinder::BindWidgetToIntSetting(sif, m_advanced.texturePreloading, "EmuCore/GS", "texture_preloading", static_cast<int>(TexturePreloadingLevel::Off));
 
 	setTabVisible(m_advanced_tab, QtHost::ShouldShowAdvancedSettings());
@@ -559,6 +561,12 @@ GraphicsSettingsWidget::GraphicsSettingsWidget(SettingsWindow* settings_dialog, 
 			tr("Submits useless work to the GPU during readbacks to prevent it from going into powersave modes. "
 			   "May improve performance during readbacks but with a significant increase in power usage."));
 
+		dialog()->registerWidgetHelp(m_advanced.coalesceRenderPasses, tr("Coalesce Render Passes"), tr("Unchecked"),
+			tr("Holds draws back so that consecutive draws to the same render target share one render pass, instead of "
+			   "starting a new one every time a game alternates between two targets. Intended for tiling GPUs, where "
+			   "every pass boundary costs a full tile load and store - it does nothing useful on a desktop GPU. Rendering "
+			   "is unchanged either way. Games known to benefit have it enabled automatically."));
+
 		// Software
 		dialog()->registerWidgetHelp(m_sw.extraSWThreads, tr("Software Rendering Threads"), tr("2 threads"),
 			tr("Number of rendering threads: 0 for single thread, 2 or more for multithread (1 is for debugging). "
@@ -796,6 +804,12 @@ GraphicsSettingsWidget::GraphicsSettingsWidget(SettingsWindow* settings_dialog, 
 			tr("Skips synchronizing with the GS thread and host GPU for GS downloads. "
 			   "Can result in a large speed boost on slower systems, at the cost of many broken graphical effects. "
 			   "If games are broken and you have this option enabled, please disable it first."));
+
+		dialog()->registerWidgetHelp(m_advanced.gsBackThreadMode, tr("GS Back Thread"), tr("Disabled"),
+			tr("Pipelined splits GS emulation across two threads: one parses GIF data and builds vertices while the other runs draws, "
+			   "the texture cache, and the GPU device. Can significantly reduce GS thread time on multi-core systems with spare cores, "
+			   "but competes for cores with the EE/VU threads. The Inline Records and Lockstep modes are debugging tools and much "
+			   "slower — do not use them for play."));
 
 		dialog()->registerWidgetHelp(m_advanced.ntscFrameRate, tr("NTSC Frame Rate"), tr("59.94 Hz"),
 			tr("Determines what frame rate NTSC games run at."));
@@ -1125,8 +1139,11 @@ void GraphicsSettingsWidget::updateRendererDependentOptions()
 		current_adapter_info = (current_adapter_info || adapters.empty()) ? current_adapter_info : &adapters.front();
 	}
 
+	// The toggle unlocks everything past 8x rather than past 12x, so the usual 16K-texture
+	// GPU (max texture size / 1280 = 12x) can still reach its 12x -- it just has to ask. With
+	// no adapter info we follow the standing assumption below, that the GPU is good for 12x.
 	const bool supports_extended_upscales =
-		current_adapter_info && current_adapter_info->max_upscale_multiplier > 12u;
+		!current_adapter_info || current_adapter_info->max_upscale_multiplier > 8u;
 	{
 		QSignalBlocker sb(m_advanced.extendedUpscales);
 		m_advanced.extendedUpscales->setEnabled(supports_extended_upscales);
@@ -1171,10 +1188,24 @@ void GraphicsSettingsWidget::updateRendererDependentOptions()
 
 void GraphicsSettingsWidget::populateUpscaleMultipliers(u32 max_upscale_multiplier)
 {
+	// The set at and below 8x is the one the Android UI offers: quarter steps up to 3x, then
+	// half, then whole. Sub-native is there because fewer pixels is a large win on low/mid
+	// handhelds, and the GS only clamps the upper bound (GSClampUpscaleMultiplier), so those
+	// apply as-is. Above 8x is gated on Extended Upscaling Multipliers.
 	static constexpr std::pair<const char*, float> templates[] = {
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "0.25x Native"), 0.25f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "0.5x Native"), 0.5f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "0.75x Native"), 0.75f},
 		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "Native (PS2) (Default)"), 1.0f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "1.25x Native"), 1.25f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "1.5x Native"), 1.5f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "1.75x Native"), 1.75f},
 		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "2x Native (~720px/HD)"), 2.0f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "2.25x Native"), 2.25f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "2.5x Native"), 2.5f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "2.75x Native"), 2.75f},
 		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "3x Native (~1080px/FHD)"), 3.0f},
+		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "3.5x Native"), 3.5f},
 		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "4x Native (~1440px/QHD)"), 4.0f},
 		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "5x Native (~1800px/QHD+)"), 5.0f},
 		{QT_TRANSLATE_NOOP("GraphicsSettingsWidget", "6x Native (~2160px/4K UHD)"), 6.0f},
@@ -1200,8 +1231,9 @@ void GraphicsSettingsWidget::populateUpscaleMultipliers(u32 max_upscale_multipli
 	};
 	static constexpr u32 max_template_multiplier = 25;
 
-	// Limit the dropdown to 12x if we're not showing advanced settings. Save the noobs.
-	static constexpr u32 max_non_advanced_multiplier = 12;
+	// Stop at 8x -- the top of the Android set -- unless advanced settings are showing.
+	// Save the noobs.
+	static constexpr u32 max_non_advanced_multiplier = 8;
 
 	QSignalBlocker sb(m_hw.upscaleMultiplier);
 	m_hw.upscaleMultiplier->clear();
@@ -1256,14 +1288,16 @@ void GraphicsSettingsWidget::populateUpscaleMultipliers(u32 max_upscale_multipli
 		int index = m_hw.upscaleMultiplier->findData(QVariant(saved_value));
 
 		// If the saved value goes above the current UI limit, add it temporarily
-		if (index <= 0 && saved_value > max_shown_multiplier)
+		if (index < 0 && saved_value > max_shown_multiplier)
 		{
 			m_hw.upscaleMultiplier->addItem(tr("%1x Native").arg(saved_value), QVariant(saved_value));
 			m_hw.upscaleMultiplier->setItemData(m_hw.upscaleMultiplier->count() - 1, true, TemporaryMultiplierRole);
 			index = m_hw.upscaleMultiplier->findData(QVariant(saved_value));
 		}
 
-		if (index > 0)
+		// Index 0 is a real entry here (0.25x) — there's no "Use Global Setting" row in the
+		// global tab, so a found index of 0 has to be honoured.
+		if (index >= 0)
 			m_hw.upscaleMultiplier->setCurrentIndex(index);
 	}
 }

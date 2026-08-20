@@ -39,6 +39,10 @@ BIOS
 #include "common/Error.h"
 
 #include <cstdio>
+#include <cstdlib>
+#ifdef __linux__
+#include <sys/mman.h>
+#endif
 
 #ifdef ENABLECACHE
 #include "Cache.h"
@@ -103,8 +107,23 @@ bool SysMemory::AllocateMemoryMap()
 		return false;
 	}
 
+	// Constant-VA placement for the on-disk VU program cache: on arm64 the
+	// data + code reservations must sit at the same VAs every run so cached
+	// JIT code reloads without repatching its baked addresses. 4GB clears the
+	// ASLR brk window (non-PIE image at 0x400000 + brk randomization < 2GB) and
+	// sits far below the mmap_base / PIE-load regions, so the slot-0 candidate
+	// succeeds deterministically; Create() walks 256MB-stride fallback slots and
+	// finally kernel placement (program-cache misses, never corruption). Other
+	// arches pass 0 and take kernel-chosen placement. The code area is hinted
+	// directly after the data area, reproducing a contiguous arena when both land.
+#if defined(__aarch64__) || defined(_M_ARM64)
+	constexpr uptr kArenaBase = 0x100000000ull; // 4GB
+#else
+	constexpr uptr kArenaBase = 0;
+#endif
+
 	Console.WriteLn("@@MAC_MEMMAP@@ data_area_begin size=%zu", static_cast<size_t>(HostMemoryMap::MainSize));
-	if (!(s_memory_mapping_area = SharedMemoryMappingArea::Create(HostMemoryMap::MainSize, false)))
+	if (!(s_memory_mapping_area = SharedMemoryMappingArea::Create(HostMemoryMap::MainSize, false, kArenaBase)))
 	{
 		Host::ReportErrorAsync("Error", "Failed to map main memory.");
 		ReleaseMemoryMap();
@@ -129,19 +148,20 @@ bool SysMemory::AllocateMemoryMap()
 	// intCpu::Reserve() never touches s_code_memory.
 	if (!DarwinMisc::iPSX2_FORCE_EE_INTERP)
 	{
-		if ((s_code_memory = static_cast<u8*>(DarwinMisc::MmapCodeDualMap(HostMemoryMap::CodeSize))) == nullptr)
+		s_code_memory = static_cast<u8*>(DarwinMisc::MmapCodeDualMap(HostMemoryMap::CodeSize));
+		if (!s_code_memory)
 		{
-			std::fprintf(stderr, "@@BOOT_FAIL@@ reason=ios_code_alloc_failed stage=code_dualmap\n");
+			DarwinMisc::iPSX2_FORCE_EE_INTERP = 1;
+			Console.Warning("iOS executable code-memory allocation failed; continuing with interpreter providers");
+			std::fprintf(stderr, "@@JIT_FALLBACK@@ reason=ios_code_alloc_failed backend=interpreter\n");
 			std::fflush(stderr);
-			Host::ReportErrorAsync("Error",
-				"Failed to allocate iOS executable code memory. "
-				"Try Settings \u2192 Emulator \u2192 JIT Script \u2192 Legacy, or relaunch via StikDebug.");
-			ReleaseMemoryMap();
-			return false;
 		}
-		Console.WriteLn("@@P43_OFFSET@@ g_code_rw_offset=%ld rw_base=%p size=%zu",
-			(long)DarwinMisc::g_code_rw_offset, reinterpret_cast<void*>(DarwinMisc::g_code_rw_base),
-			static_cast<size_t>(DarwinMisc::g_code_rw_size));
+		else
+		{
+			Console.WriteLn("@@P43_OFFSET@@ g_code_rw_offset=%ld rw_base=%p size=%zu",
+				(long)DarwinMisc::g_code_rw_offset, reinterpret_cast<void*>(DarwinMisc::g_code_rw_base),
+				static_cast<size_t>(DarwinMisc::g_code_rw_size));
+		}
 	}
 	else
 	{
@@ -149,19 +169,62 @@ bool SysMemory::AllocateMemoryMap()
 		s_code_memory = nullptr;
 	}
 #else
-	if (!(s_code_mapping_area = SharedMemoryMappingArea::Create(HostMemoryMap::CodeSize, true)))
+#ifdef __APPLE__
+	// [jit-transplant] CI-only test hook: ARMSX2_FORCE_DUAL_MAP=1 routes macOS
+	// through the iOS dual-map allocator (vm_remap RW alias, g_code_rw_offset
+	// != 0) so the recompiler test suite exercises every RW-alias write path
+	// without an iOS device. Production macOS takes the SharedMemoryMappingArea
+	// MAP_JIT path below, unchanged.
+	const bool skip_code_memory = DarwinMisc::iPSX2_FORCE_EE_INTERP;
+	const char* const force_dual_map = std::getenv("ARMSX2_FORCE_DUAL_MAP");
+	if (skip_code_memory)
 	{
-		Host::ReportErrorAsync("Error", "Failed to map code memory.");
-		ReleaseMemoryMap();
-		return false;
+		Console.WriteLn("[Apple] Skipping code-memory allocation — interpreter-only mode");
+		s_code_memory = nullptr;
 	}
+	else if (force_dual_map && std::atoi(force_dual_map) == 1)
+	{
+		if ((s_code_memory = static_cast<u8*>(DarwinMisc::MmapCodeDualMap(HostMemoryMap::CodeSize))) == nullptr)
+		{
+			Host::ReportErrorAsync("Error", "Failed to allocate forced dual-map code memory.");
+			ReleaseMemoryMap();
+			return false;
+		}
+	}
+	else
+#endif
+	{
+		if (!(s_code_mapping_area = SharedMemoryMappingArea::Create(HostMemoryMap::CodeSize, true, kArenaBase ? kArenaBase + HostMemoryMap::MainSize : 0)))
+		{
+			Host::ReportErrorAsync("Error", "Failed to map code memory.");
+			ReleaseMemoryMap();
+			return false;
+		}
 
-	if ((s_code_memory = s_code_mapping_area->Map(nullptr, 0, s_code_mapping_area->BasePointer(), HostMemoryMap::CodeSize, PageAccess_Any())) == nullptr)
-	{
-		Host::ReportErrorAsync("Error", "Failed to allocate code memory.");
-		ReleaseMemoryMap();
-		return false;
+		if ((s_code_memory = s_code_mapping_area->Map(nullptr, 0, s_code_mapping_area->BasePointer(), HostMemoryMap::CodeSize, PageAccess_Any())) == nullptr)
+		{
+			Host::ReportErrorAsync("Error", "Failed to allocate code memory.");
+			ReleaseMemoryMap();
+			return false;
+		}
 	}
+#endif
+
+#ifdef __linux__
+	// FX-15 (design credit FEX-Emu): back the hot JIT code caches with
+	// transparent hugepages to cut iTLB pressure. madvise is what the
+	// Rocknix default THP mode ("madvise") honors, and the code half is a
+	// private anonymous mapping, which is what THP backs. Scoped to the
+	// EE+IOP and mVU0+mVU1 rec caches — each pair contiguous in the map —
+	// leaving the VIF/SW-renderer tail alone. A/B off-arm: launch under
+	// prctl(PR_SET_THP_DISABLE) (see tools/perf/fx15_thp_ab.sh) — it
+	// survives execve, so no in-tree gate is needed.
+	static_assert(HostMemoryMap::IOPrecOffset == HostMemoryMap::EErecOffset + HostMemoryMap::EErecSize);
+	static_assert(HostMemoryMap::mVU1recOffset == HostMemoryMap::mVU0recOffset + HostMemoryMap::mVU0recSize);
+	madvise(s_code_memory + HostMemoryMap::EErecOffset,
+		HostMemoryMap::EErecSize + HostMemoryMap::IOPrecSize, MADV_HUGEPAGE);
+	madvise(s_code_memory + HostMemoryMap::mVU0recOffset,
+		HostMemoryMap::mVU0recSize + HostMemoryMap::mVU1recSize, MADV_HUGEPAGE);
 #endif
 
 	HostMemoryMap::EEmem = (uptr)(s_data_memory + HostMemoryMap::EEmemOffset);
@@ -189,15 +252,21 @@ void SysMemory::DumpMemoryMap()
 	DUMP_REGION("VTLB Virtual Map", s_data_memory, HostMemoryMap::VTLBVirtualMapOffset, HostMemoryMap::VTLBVirtualMapSize);
 	DUMP_REGION("VTLB Address Map", s_data_memory, HostMemoryMap::VTLBAddressMapOffset, HostMemoryMap::VTLBAddressMapSize);
 
-	DUMP_REGION("R5900 Recompiler Cache", s_code_memory, HostMemoryMap::EErecOffset, HostMemoryMap::EErecSize);
-	DUMP_REGION("R3000A Recompiler Cache", s_code_memory, HostMemoryMap::IOPrecOffset, HostMemoryMap::IOPrecSize);
-	DUMP_REGION("Micro VU0 Recompiler Cache", s_code_memory, HostMemoryMap::mVU0recOffset, HostMemoryMap::mVU0recSize);
-	DUMP_REGION("Micro VU1 Recompiler Cache", s_code_memory, HostMemoryMap::mVU1recOffset, HostMemoryMap::mVU1recSize);
-	DUMP_REGION("VIF0 Unpack Recompiler Cache", s_code_memory, HostMemoryMap::VIF0recOffset, HostMemoryMap::VIF0recSize);
-	DUMP_REGION("VIF1 Unpack Recompiler Cache", s_code_memory, HostMemoryMap::VIF1recOffset, HostMemoryMap::VIF1recSize);
-	DUMP_REGION("VIF Unpack Recompiler Cache", s_code_memory, HostMemoryMap::VIFUnpackRecOffset, HostMemoryMap::VIFUnpackRecSize);
-	DUMP_REGION("GS Software Renderer", s_code_memory, HostMemoryMap::SWrecOffset, HostMemoryMap::SWrecSize);
-
+	if (HasCodeMemory())
+	{
+		DUMP_REGION("R5900 Recompiler Cache", s_code_memory, HostMemoryMap::EErecOffset, HostMemoryMap::EErecSize);
+		DUMP_REGION("R3000A Recompiler Cache", s_code_memory, HostMemoryMap::IOPrecOffset, HostMemoryMap::IOPrecSize);
+		DUMP_REGION("Micro VU0 Recompiler Cache", s_code_memory, HostMemoryMap::mVU0recOffset, HostMemoryMap::mVU0recSize);
+		DUMP_REGION("Micro VU1 Recompiler Cache", s_code_memory, HostMemoryMap::mVU1recOffset, HostMemoryMap::mVU1recSize);
+		DUMP_REGION("VIF0 Unpack Recompiler Cache", s_code_memory, HostMemoryMap::VIF0recOffset, HostMemoryMap::VIF0recSize);
+		DUMP_REGION("VIF1 Unpack Recompiler Cache", s_code_memory, HostMemoryMap::VIF1recOffset, HostMemoryMap::VIF1recSize);
+		DUMP_REGION("VIF Unpack Recompiler Cache", s_code_memory, HostMemoryMap::VIFUnpackRecOffset, HostMemoryMap::VIFUnpackRecSize);
+		DUMP_REGION("GS Software Renderer", s_code_memory, HostMemoryMap::SWrecOffset, HostMemoryMap::SWrecSize);
+	}
+	else
+	{
+		DevCon.WriteLn(Color_Gray, "  Executable code caches unavailable (interpreter-only mode)");
+	}
 
 #undef DUMP_REGION
 }
@@ -211,10 +280,18 @@ void SysMemory::ReleaseMemoryMap()
 #else
 		if (s_code_mapping_area)
 			s_code_mapping_area->Unmap(s_code_memory, HostMemoryMap::CodeSize, false);
+#ifdef __APPLE__
+		else
+			// macOS ARMSX2_FORCE_DUAL_MAP test hook allocated via MmapCodeDualMap.
+			DarwinMisc::MunmapCodeDualMap(s_code_memory, HostMemoryMap::CodeSize);
+#endif
 #endif
 		s_code_memory = nullptr;
 	}
 	s_code_mapping_area.reset();
+#ifdef __APPLE__
+	DarwinMisc::SetJitRange(nullptr, 0);
+#endif
 
 	if (s_data_memory)
 	{
@@ -232,11 +309,19 @@ void SysMemory::ReleaseMemoryMap()
 	}
 }
 
+void SysMemory::ReserveMemory()
+{
+	// Claim the host memory map (and the arm64 constant-VA arena) up front, so
+	// the fixed-base placement isn't lost to an intervening heap/mmap. Idempotent.
+	if (!s_data_memory_file_handle)
+		AllocateMemoryMap();
+}
+
 bool SysMemory::Allocate()
 {
 	DevCon.WriteLn(Color_StrongBlue, "Allocating host memory for virtual systems...");
 
-	if (!AllocateMemoryMap())
+	if (!s_data_memory_file_handle && !AllocateMemoryMap())
 		return false;
 
 	memAllocate();
@@ -282,6 +367,16 @@ void SysMemory::Release()
 	ReleaseMemoryMap();
 }
 
+bool SysMemory::IsAllocated()
+{
+	return s_data_memory != nullptr;
+}
+
+bool SysMemory::HasCodeMemory()
+{
+	return s_code_memory != nullptr;
+}
+
 u8* SysMemory::GetDataPtr(size_t offset)
 {
 	pxAssert(offset <= HostMemoryMap::MainSize);
@@ -291,7 +386,7 @@ u8* SysMemory::GetDataPtr(size_t offset)
 u8* SysMemory::GetCodePtr(size_t offset)
 {
 	pxAssert(offset <= HostMemoryMap::CodeSize);
-	return s_code_memory + offset;
+	return s_code_memory ? (s_code_memory + offset) : nullptr;
 }
 
 void* SysMemory::GetDataFileHandle()
@@ -306,6 +401,24 @@ bool memGetExtraMemMode()
 
 void memSetExtraMemMode(bool mode)
 {
+#ifdef ARCH_ARM64
+	// The ARM64 EE recompiler is MainRam-only: its LUT loop, recLutEntries, the
+	// recRAM advance, the alias mask and the manual_page/manual_counter arrays are
+	// all sized to Ps2MemSize::MainRam, where the x86 rec sizes the same things to
+	// ExposedRam. Pages 0x0200-0x1FFF therefore keep the unmapped default, and
+	// dispatching into one lands on UnmappedRecLUTPage -> recError. Converting all
+	// of them together is real work and has to happen as one change (c4d0a8a47c
+	// spells out why); until it does, refuse the setting at the seam rather than
+	// let a user-selectable option fail as a recError deep inside a game. The
+	// interpreter handles the 128MB map fine, so gate on the recompiler only.
+	if (mode && EmuConfig.Cpu.Recompiler.EnableEE)
+	{
+		Console.Warning("Extended RAM (128MB) is not supported by the ARM64 EE recompiler; ignoring it. "
+						"Disable the EE recompiler if you need it.");
+		mode = false;
+	}
+#endif
+
 	s_extra_memory = mode;
 
 	// update the amount of RAM exposed to the VM
@@ -479,6 +592,16 @@ void memMapPhy()
 	// High memory, uninstalled on the configuration we emulate
 	vtlb_MapHandler(null_handler, Ps2MemSize::ExposedRam, 0x10000000 - Ps2MemSize::ExposedRam);
 
+	// Physical RAM mirrors used by BIOS InitRDRAM for RDRAM device configuration.
+	// On real PS2 hardware:
+	//   0x20000000-0x21FFFFFF = uncached mirror of main RAM
+	//   0x30000000-0x31FFFFFF = uncached & accelerated mirror of main RAM
+	// These mirrors must be present in the physical map; without them, BIOS writes
+	// to RDRAM device registers hit UnmappedPhyHandler (bus error).
+	// Requires VTLB_PMAP_SZ >= 1GB to cover these addresses.
+	vtlb_MapBlock(eeMem->Main, 0x20000000, Ps2MemSize::ExposedRam);
+	vtlb_MapBlock(eeMem->Main, 0x30000000, Ps2MemSize::ExposedRam);
+
 	// Various ROMs (all read-only)
 	vtlb_MapBlock(eeMem->ROM,	0x1fc00000, Ps2MemSize::Rom);
 	vtlb_MapBlock(eeMem->ROM1,	0x1e000000, Ps2MemSize::Rom1);
@@ -578,6 +701,26 @@ static void TAKES_R128 nullWrite128(u32 mem, r128 value)
 	MEM_LOG("Write uninstalled memory at address %08x", mem);
 }
 
+// paddr is post-translation, so cpuTlbMiss lands a physical address in
+// BadVAddr, Context and EntryHi. Recompilers do not raise; see vtlb_Miss.
+static void _ext_memUnknown(u32 paddr, bool write)
+{
+	if (Cpu == &intCpu)
+	{
+		if (write)
+			cpuTlbMissW(paddr, cpuRegs.branch);
+		else
+			cpuTlbMissR(paddr, cpuRegs.branch);
+		return;
+	}
+
+	// MEM_LOG at the call sites is devbuild-only.
+	static int spamStop = 0;
+	if (spamStop++ < 50 || IsDevBuild)
+		Console.Error("Unknown memory %s at 0x%08x, pc=0x%08x",
+			write ? "write" : "read", paddr, cpuRegs.pc);
+}
+
 template<int p>
 static mem8_t _ext_memRead8 (u32 mem)
 {
@@ -599,7 +742,7 @@ static mem8_t _ext_memRead8 (u32 mem)
 	}
 
 	MEM_LOG("Unknown Memory Read8   from address %8.8x", mem);
-	cpuTlbMissR(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, false);
 	return 0;
 }
 
@@ -632,7 +775,7 @@ static mem16_t _ext_memRead16(u32 mem)
 		default: break;
 	}
 	MEM_LOG("Unknown Memory read16  from address %8.8x", mem);
-	cpuTlbMissR(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, false);
 	return 0;
 }
 
@@ -655,7 +798,7 @@ static mem32_t _ext_memRead32(u32 mem)
 	}
 
 	MEM_LOG("Unknown Memory read32  from address %8.8x (Status=%8.8x)", mem, cpuRegs.CP0.n.Status.val);
-	cpuTlbMissR(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, false);
 	return 0;
 }
 
@@ -677,7 +820,7 @@ static u64 _ext_memRead64(u32 mem)
 	}
 
 	MEM_LOG("Unknown Memory read64  from address %8.8x", mem);
-	cpuTlbMissR(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, false);
 	return 0;
 }
 
@@ -703,7 +846,7 @@ static RETURNS_R128 _ext_memRead128(u32 mem)
 	}
 
 	MEM_LOG("Unknown Memory read128 from address %8.8x", mem);
-	cpuTlbMissR(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, false);
 	return r128_zero();
 }
 
@@ -726,7 +869,7 @@ static void _ext_memWrite8 (u32 mem, mem8_t  value)
 	}
 
 	MEM_LOG("Unknown Memory write8   to  address %x with data %2.2x", mem, value);
-	cpuTlbMissW(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, true);
 }
 
 template<int p>
@@ -751,7 +894,7 @@ static void _ext_memWrite16(u32 mem, mem16_t value)
 		default: break;
 	}
 	MEM_LOG("Unknown Memory write16  to  address %x with data %4.4x", mem, value);
-	cpuTlbMissW(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, true);
 }
 
 template<int p>
@@ -770,7 +913,7 @@ static void _ext_memWrite32(u32 mem, mem32_t value)
 		default: break;
 	}
 	MEM_LOG("Unknown Memory write32  to  address %x with data %8.8x", mem, value);
-	cpuTlbMissW(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, true);
 }
 
 template<int p>
@@ -794,7 +937,7 @@ static void _ext_memWrite64(u32 mem, mem64_t value)
 	}*/
 
 	MEM_LOG("Unknown Memory write64  to  address %x with data %8.8x_%8.8x", mem, (u32)(value>>32), (u32)value);
-	cpuTlbMissW(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, true);
 }
 
 template<int p>
@@ -827,7 +970,7 @@ static void TAKES_R128 _ext_memWrite128(u32 mem, r128 value)
 
 	alignas(16) const u128 uvalue = r128_to_u128(value);
 	MEM_LOG("Unknown Memory write128 to  address %x with data %8.8x_%8.8x_%8.8x_%8.8x", mem, uvalue._u32[3], uvalue._u32[2], uvalue._u32[1], uvalue._u32[0]);
-	cpuTlbMissW(mem, cpuRegs.branch);
+	_ext_memUnknown(mem, true);
 }
 
 #define vtlb_RegisterHandlerTempl1(nam,t) vtlb_RegisterHandler(nam##Read8<t>,nam##Read16<t>,nam##Read32<t>,nam##Read64<t>,nam##Read128<t>, \

@@ -425,6 +425,9 @@
     <ClCompile Include="SaveState.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="SaveStateLegacy.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
     <ClCompile Include="SourceLog.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -809,6 +812,9 @@
     <ClCompile Include="SPU2\spu2freeze.cpp">
       <Filter>System\Ps2\SPU2</Filter>
     </ClCompile>
+    <ClCompile Include="SPU2\spu2freeze-legacy.cpp">
+      <Filter>System\Ps2\SPU2</Filter>
+    </ClCompile>
     <ClCompile Include="SPU2\spu2sys.cpp">
       <Filter>System\Ps2\SPU2</Filter>
     </ClCompile>
@@ -1089,6 +1095,21 @@
       <Filter>System\Ps2\GS\Renderers\Common</Filter>
     </ClCompile>
     <ClCompile Include="GS\Renderers\Common\GSFunctionMap.cpp">
+      <Filter>System\Ps2\GS\Renderers\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GS\Renderers\Common\GSGPUDriverProfile.cpp">
+      <Filter>System\Ps2\GS\Renderers\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfile.cpp">
+      <Filter>System\Ps2\GS\Renderers\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfileMali.cpp">
+      <Filter>System\Ps2\GS\Renderers\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfileAdreno.cpp">
+      <Filter>System\Ps2\GS\Renderers\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GS\Renderers\Common\GSGPUProfilePowerVR.cpp">
       <Filter>System\Ps2\GS\Renderers\Common</Filter>
     </ClCompile>
     <ClCompile Include="GS\GSCapture.cpp">
@@ -1476,6 +1497,9 @@
       <Filter>System\Include</Filter>
     </ClInclude>
     <ClInclude Include="SaveState.h">
+      <Filter>System\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveStateLegacy.h">
       <Filter>System\Include</Filter>
     </ClInclude>
     <ClInclude Include="Dmac.h">
@@ -2040,6 +2064,12 @@
       <Filter>System\Ps2\GS\Renderers\Common</Filter>
     </ClInclude>
     <ClInclude Include="GS\Renderers\Common\GSFunctionMap.h">
+      <Filter>System\Ps2\GS\Renderers\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GS\Renderers\Common\GSGPUProfile.h">
+      <Filter>System\Ps2\GS\Renderers\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GS\Renderers\Common\GSGPUProfilePrivate.h">
       <Filter>System\Ps2\GS\Renderers\Common</Filter>
     </ClInclude>
     <ClInclude Include="GS\GSCapture.h">

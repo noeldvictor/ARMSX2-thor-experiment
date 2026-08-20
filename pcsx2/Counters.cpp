@@ -472,6 +472,18 @@ static __fi void DoFMVSwitch()
 		case FMVAspectRatioSwitchType::R10_7:
 			EmuConfig.CurrentAspectRatio = new_fmv_state ? AspectRatioType::R10_7 : EmuConfig.GS.AspectRatio;
 			break;
+		case FMVAspectRatioSwitchType::R21_9:
+			EmuConfig.CurrentAspectRatio = new_fmv_state ? AspectRatioType::R21_9 : EmuConfig.GS.AspectRatio;
+			break;
+		case FMVAspectRatioSwitchType::R20_9:
+			EmuConfig.CurrentAspectRatio = new_fmv_state ? AspectRatioType::R20_9 : EmuConfig.GS.AspectRatio;
+			break;
+		case FMVAspectRatioSwitchType::R19_5_9:
+			EmuConfig.CurrentAspectRatio = new_fmv_state ? AspectRatioType::R19_5_9 : EmuConfig.GS.AspectRatio;
+			break;
+		case FMVAspectRatioSwitchType::Custom:
+			EmuConfig.CurrentAspectRatio = new_fmv_state ? AspectRatioType::Custom : EmuConfig.GS.AspectRatio;
+			break;
 		default:
 			break;
 	}
@@ -493,6 +505,8 @@ static __fi void VSyncStart(u64 sCycle)
 	// Don't bother throttling if we're going to pause.
 	if (!VMManager::Internal::IsExecutionInterrupted())
 		VMManager::Internal::Throttle();
+	else
+		PerformanceMetrics::AdpfPauseFrameWork(); // interrupted → no Throttle → drop the ADPF period so the resume report excludes the pause
 
 	gsPostVsyncStart(); // MUST be after framelimit; doing so before causes funk with frame times!
 
@@ -737,7 +751,24 @@ __fi void rcntSyncCounter(int i)
 {
 	if (counters[i].mode.ClockSource != 0x3) // don't count hblank sources
 	{
-		const u32 change = (cpuRegs.cycle - counters[i].startCycle) / counters[i].rate;
+		// The baseline can transiently sit ahead of cpuRegs.cycle (savestate thaw and
+		// vsync-retime seams). The old u32 `change` turned that underflow into
+		// startCycle += 2^32 - rate and count += 0xFFFFFFFF: a poisoned counter that
+		// stayed dead until cycle crossed the bogus baseline (~14.6 s) and rode along
+		// in every savestate taken meanwhile. Skip the sync instead; the counter
+		// resumes when cycle catches up, at most one tick later.
+		if ((s64)(cpuRegs.cycle - counters[i].startCycle) < 0)
+		{
+			// Post-fix this should be unreachable for ungated counters: every
+			// baseline writer rounds down from cpuRegs.cycle. A fire means the
+			// EE clock moved backwards — that is how the cross-thread
+			// nextEventCycle poke poisoned GoW2 savestates. Loud on purpose.
+			Console.Warning("rcntSyncCounter: counter %d baseline ahead of cycle by %lld — EE clock went backwards?",
+				i, (long long)(counters[i].startCycle - cpuRegs.cycle));
+			return;
+		}
+
+		const u64 change = (cpuRegs.cycle - counters[i].startCycle) / counters[i].rate;
 		counters[i].startCycle += change * counters[i].rate;
 
 		counters[i].startCycle &= ~((u64)counters[i].rate - 1);
@@ -958,6 +989,41 @@ __fi u32 rcntRcount(int index)
 
 	ret = counters[index].count;
 
+	// Never expose a boundary crossing (wrap or target-reset) to the guest
+	// before the corresponding interrupt has actually been DELIVERED. On
+	// hardware the boundary and the interrupt are the same edge, and with
+	// interrupts enabled the handler preempts before any later read can
+	// execute — a wrapped count paired with the pre-overflow ISR state is an
+	// impossible observation. Under the JITs that window is real and spans
+	// two phases:
+	//   1. The count (derived from the live cpuRegs.cycle) has crossed the
+	//      boundary but the scheduled rcntUpdate event hasn't run yet.
+	//   2. rcntUpdate has processed the crossing (count wrapped, OVFF/EQUF
+	//      set, INTC raised) but the exception is still waiting for the next
+	//      event test to be dispatched, so the guest's ISR hasn't run.
+	// NFL 2K5's lock-free 64-bit clock (overflow-ISR-maintained wrap
+	// accumulator + T0_COUNT) reads time going backwards in that window and
+	// hangs in a runaway divide at the boot logo. Clamp the read to
+	// just-before-the-boundary until delivery. The deliverability guard makes
+	// this exact: with interrupts blocked (DI/EXL — including inside the
+	// handler itself) or the INTC source masked, the guest legitimately
+	// observes the wrapped count, as on hardware.
+	const u32 target = counters[index].target & 0xffff;
+	const bool intc_pending_delivery =
+		(psHu32(INTC_STAT) & psHu32(INTC_MASK) & (1u << counters[index].interrupt)) &&
+		(cpuRegs.CP0.n.Status.val & 0x400) &&
+		cpuRegs.CP0.n.Status.b.EIE && cpuRegs.CP0.n.Status.b.IE &&
+		!cpuRegs.CP0.n.Status.b.EXL && !cpuRegs.CP0.n.Status.b.ERL;
+	if (counters[index].mode.ZeroReturn)
+	{
+		if (target != 0 && (ret >= target || (counters[index].mode.TargetReached && intc_pending_delivery)))
+			ret = target - 1;
+	}
+	else if (ret > 0xffff || (counters[index].mode.OverflowReached && intc_pending_delivery))
+	{
+		ret = 0xffff;
+	}
+
 	// Spams the Console.
 	EECNT_LOG("EE Counter[%d] readCount32 = %x", index, ret);
 	return (u16)ret;
@@ -1047,7 +1113,40 @@ bool SaveStateBase::rcntFreeze()
 	Freeze(gsIsInterlaced);
 
 	if (IsLoading())
+	{
+		// DELETEME after 2026-12-01: transitional repair for old poisoned states.
+		// Repair states poisoned by the old u32 rcntSyncCounter blowup (baseline one
+		// full 2^32 epoch in the future, count far outside the 16-bit domain): snap
+		// the baseline back to now and re-fold the count, or the counter stays dead
+		// until cycle crosses the bogus baseline. cpuRegs is thawed before us, so
+		// cpuRegs.cycle is the loaded state's own clock here.
+		//
+		// The trigger (cross-thread ExitExecution warping the EE clock backwards)
+		// was fixed 2026-08-09, so no new state can carry this scar; this block
+		// only heals .p2s files saved by builds older than that. Once those have
+		// aged out (a few months of releases), delete the loop below — the guard
+		// in rcntSyncCounter stays.
+		for (int i = 0; i < 4; i++)
+		{
+			bool repaired = false;
+			if ((s64)(cpuRegs.cycle - counters[i].startCycle) < 0)
+			{
+				counters[i].startCycle = cpuRegs.cycle & ~((u64)counters[i].rate - 1);
+				repaired = true;
+			}
+			// A state saved later in a poisoned session has a sane baseline but a count
+			// still draining down from the +0xFFFFFFFF blowup. The counters are 16-bit;
+			// anything past one pending overflow's worth is unambiguous corruption.
+			if (counters[i].count > 0x20000)
+			{
+				counters[i].count &= 0xffff;
+				repaired = true;
+			}
+			if (repaired)
+				Console.Warning("rcntFreeze: counter %d carried a poisoned baseline/count; repaired", i);
+		}
 		cpuRcntSet();
+	}
 
 	return IsOkay();
 }

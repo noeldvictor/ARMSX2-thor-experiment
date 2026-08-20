@@ -75,6 +75,9 @@ u32 GetConsoleSampleRate();
 /// Tells SPU2 to forward audio packets to GSCapture.
 void SetAudioCaptureActive(bool active);
 bool IsAudioCaptureActive();
+	// libretro: direct access to the output stream so the frontend can pull
+	// mixed frames from retro_run.
+	AudioStream* GetOutputStream();
 } // namespace SPU2
 
 void SPU2write(u32 mem, u16 value);
@@ -82,6 +85,10 @@ u16 SPU2read(u32 mem);
 
 void SPU2async();
 s32 SPU2freeze(FreezeAction mode, freezeData* data);
+
+// Partial restore from a legacy-format (AetherSX2-era) SPU2 block, whose tail
+// cannot be replayed. See the definition for what is and is not kept.
+s32 SPU2freezeLegacy(const void* data, size_t size);
 
 void SPU2readDMA4Mem(u16* pMem, u32 size);
 void SPU2writeDMA4Mem(u16* pMem, u32 size);

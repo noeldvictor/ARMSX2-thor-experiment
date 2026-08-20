@@ -75,11 +75,17 @@ void GSvsync(u32 field, bool registers_written);
 // VSyncs, skipping presentation of the rest. 0 disables. See GSRenderer::VSync.
 void GSSetManualFrameSkip(u32 frames);
 u32 GSGetManualFrameSkip();
-// Max presented-FPS cap (Android). Caps the DISPLAY frame rate without touching
-// emulation speed — dropped on the GS thread in GSRenderer::VSync. 0 disables.
-void GSSetMaxPresentFps(u32 fps, u64 present_interval);
+// Max presented-FPS cap. Caps the DISPLAY frame rate without touching emulation
+// speed — dropped on the GS thread in GSRenderer::VSync. 0 disables.
+void GSSetMaxPresentFps(u32 fps, u64 present_interval, u32 milli_fps = 0);
 u32 GSGetMaxPresentFps();
+u32 GSGetMaxPresentMilliFps();
 u64 GSGetMaxPresentInterval();
+// Allows capped hardware-renderer frames to bypass final display composition and
+// post-processing when no correctness-sensitive consumer needs the finished image.
+// Platform opt-in keeps the existing presentation-only behavior as the default.
+void GSSetPresentCapRenderSkip(bool enabled);
+bool GSGetPresentCapRenderSkip();
 // While true (set when the limiter enters Turbo / fast-forward), the present cap
 // above is bypassed so the speed-up is actually visible. The cap resumes — with
 // a clean re-prime, no catch-up burst — as soon as fast-forward ends.
@@ -88,7 +94,15 @@ bool GSGetPresentCapSuspended();
 int GSfreeze(FreezeAction mode, freezeData* data);
 std::string GSGetBaseSnapshotFilename();
 std::string GSGetBaseVideoFilename();
-void GSQueueSnapshot(const std::string& path, u32 gsdump_frames = 0);
+// False if there is no renderer, or a snapshot is already queued and this request was dropped.
+bool GSQueueSnapshot(const std::string& path, u32 gsdump_frames = 0);
+// True while a dump is open and taking frames. Queueing a snapshot over one of these does not
+// start a second dump -- it overwrites the remaining frame count and cuts the recording short.
+bool GSIsDumpRecording();
+// True when the two-object split is live: a pipelined back thread with its own front parser.
+// Not the same question as the BackThreadMode setting, which downgrades to lockstep when the
+// split is unsupported, so this is the only way to tell whether the mode really engaged.
+bool GSHasFrontParser();
 void GSStopGSDump();
 bool GSBeginCapture(std::string filename);
 void GSEndCapture();
@@ -96,6 +110,11 @@ void GSPresentCurrentFrame();
 void GSThrottlePresentation();
 void GSGameChanged();
 void GSSetDisplayAlignment(GSDisplayAlignment alignment);
+void GSSetPortraitRenderTopAlign(bool enabled);
+/// Pixels kept clear at the top of a portrait window (display cutout / camera).
+void GSSetPortraitRenderTopInset(int pixels);
+/// Top-align the render in a LANDSCAPE window (foldables / clamshell controllers).
+void GSSetLandscapeRenderTopAlign(bool enabled);
 bool GSHasDisplayWindow();
 void GSResizeDisplayWindow(u32 width, u32 height, float scale);
 void GSUpdateDisplayWindow();
