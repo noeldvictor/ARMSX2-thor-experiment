@@ -28,6 +28,15 @@
 - Do not create or switch to feature branches unless explicitly requested.
 - Commit and push completed work unless the user explicitly asks not to.
 - Keep commit messages short and specific.
+- Never run ultra review (`/code-review ultra` or the `/ultrareview` alias). Verify with the build steps above instead.
+
+## Upstream Refresh
+- "Get the latest ARMSX2 updates" means `git fetch upstream`, then merge `upstream/master` into `master` as a real merge commit. Do not rebase or squash; the history is a series of merge commits titled `Refresh Thor fork from upstream ARMSX2`.
+- Three files conflict on nearly every refresh. Resolve them this way:
+  - `AGENTS.md` - keep this fork's file. Upstream ships its own PCSX2 desktop-oriented `AGENTS.md`; discard that side.
+  - `README.md` - keep the fork identity text. Upstream's "Current status" feature checklist does not belong here.
+  - `platforms/android/app/src/main/java/com/armsx2/ui/patches/PatchManagerViewModel.kt` - take upstream's `refresh()` body (serial/CRC scoping, no `syncAllEnableLists`) and keep the fork's leading `CheatPresenceIndex.invalidate()` call.
+- After resolving, run `.\gradlew.bat :app:compileGithubDebugKotlin` from `platforms/android` before pushing.
 
 ## Fork Identity
 - Treat this as the personal AYN Thor experiment fork, not official ARMSX2.
