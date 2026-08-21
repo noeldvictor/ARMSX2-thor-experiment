@@ -37,6 +37,9 @@ does **not** upscale the finished frame. Present-time upscaling already exists h
 - Style presets rather than a curated per-game table.
 - VRAM: warn once, then evict in a batch to a low-water mark, with a declined-hash
   set so a full budget cannot thrash.
+- Mounted in **both** All Settings (renderer tab) and the in-game pause menu, from one
+  definition in `ui/common`. In-game matters: filters are only comparable if you can
+  switch them without leaving the game.
 - Build order was scaffold → cheap scalers → neural last, as Vulkan compute. Do not
   jump to the neural path.
 
@@ -64,6 +67,8 @@ Reference manuals for the Thor's exact cores in
 - **Applied:** `armsx2.march=armv8.2-a+fp16+dotprod` now defaults in
   `platforms/android/gradle.properties`. Before this, local debug builds fell back to
   `armv8.1-a` and tested different codegen than any released APK.
+- Verified on device: the v8.2 build installs and runs with no SIGILL. Confirmed in the
+  CMake cache as `-O3 -g -march=armv8.2-a+fp16+dotprod`.
 - Not benchmarked. No profiling has been run, so nothing here identifies a
   *measured* hot path — do that before vectorizing anything.
 
@@ -95,3 +100,12 @@ Reference manuals for the Thor's exact cores in
   loader already scans.
 - Runtime resolution order is pack → upscaler → native, which is what makes partial
   pack coverage acceptable.
+
+### Device defaults
+
+- **On-screen touch controls default to off** (`TouchControls.visibilityMode` 0 rather than
+  upstream's 11). The Thor has physical sticks and buttons; the overlay was covering the
+  game to duplicate them. Mode 0 is what the code already documented as the
+  physical-controls-device setting.
+- A stored preference always wins over a default, so changing a default does nothing for
+  an existing install. Worth remembering before concluding a default change "did not work".
