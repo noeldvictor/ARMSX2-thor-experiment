@@ -60,6 +60,10 @@
 - Prefer existing bridges in `NativeApp.java` and `native-lib.cpp` before adding JNI surface area.
 - Preserve upstream behavior when the refreshed Compose patch manager already covers a fork feature.
 
+## Android Gotchas
+- Android compiles regexes with ICU, which is stricter than desktop Java. Patterns that build and pass a Kotlin compile can still throw `PatternSyntaxException` at runtime on device. Escape `]` and `}` inside patterns (`[^\]]`, `\}`), and treat a green Gradle build as no evidence a regex is valid.
+- Compiling is not running. After a change that touches startup, the game list, or cover rendering, launch the app on device and check `adb logcat -b crash` before calling it done.
+
 ## Style
 - Match nearby Kotlin/Compose or C++ style.
 - Use Android resources for app-visible text when practical.
