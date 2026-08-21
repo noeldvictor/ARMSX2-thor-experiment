@@ -113,7 +113,7 @@ object CheatPresenceIndex {
         if (value.isNullOrBlank()) return
         val variants = listOf(
             value,
-            value.replace(Regex("\\[[^]]*]|\\([^)]*\\)|\\{[^}]*}"), " "),
+            value.replace(Regex("\\[[^\\]]*\\]|\\([^)]*\\)|\\{[^}]*\\}"), " "),
             value.substringBefore('[').substringBefore('('),
         )
         variants.forEach { candidate ->
