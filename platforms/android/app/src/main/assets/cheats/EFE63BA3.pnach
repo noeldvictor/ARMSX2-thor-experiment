@@ -1,0 +1,120 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Guy Game, The [SLUS-21074] [EFE63BA3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Hyper Reload]
+// patch=1,EE,9023AAB4,extended,0C096903
+
+[Cheats/Start With Max Money]
+// patch=1,EE,200C0220,extended,3C0505F5
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,34A5E0FF
+// patch=1,EE,20158B2C,extended,0C030088
+
+[Cheats/1-The Whole Nine Yards]
+// patch=1,EE,2032B5EC,extended,00000002
+
+[Cheats/2-The Three Towers]
+// patch=1,EE,2032B5F0,extended,00000002
+
+[Cheats/3-Blond Ignition]
+// patch=1,EE,2032B5F4,extended,00000002
+
+[Cheats/4-Breastquake]
+// patch=1,EE,2032B5F8,extended,00000002
+
+[Cheats/5-Twin Peaks]
+// patch=1,EE,2032B5FC,extended,00000002
+
+[Cheats/6-Hooterrific]
+// patch=1,EE,2032B600,extended,00000002
+
+[Cheats/7-Not In Kansas Anymore]
+// patch=1,EE,2032B604,extended,00000002
+
+[Cheats/8-Breasts Or Wings?]
+// patch=1,EE,2032B608,extended,00000002
+
+[Cheats/9-Love Puppy Parade]
+// patch=1,EE,2032B60C,extended,00000002
+
+[Cheats/10-Boobs-A-Poppin']
+// patch=1,EE,2032B610,extended,00000002
+
+[Cheats/11-Titty Photo Finish]
+// patch=1,EE,2032B614,extended,00000002
+
+[Cheats/12-The Thrill Of Victory]
+// patch=1,EE,2032B618,extended,00000002
+
+[Cheats/13-The One With Tits]
+// patch=1,EE,2032B61C,extended,00000002
+
+[Cheats/14-Topless Domination]
+// patch=1,EE,2032B620,extended,00000002
+
+[Cheats/15-Man's Best Friends]
+// patch=1,EE,2032B624,extended,00000002
+
+[Cheats/16-Mountains Of Love]
+// patch=1,EE,2032B628,extended,00000002
+
+[Cheats/17-Meet The Twins]
+// patch=1,EE,2032B62C,extended,00000002
+
+[Cheats/18-Ounces Of Bounces]
+// patch=1,EE,2032B630,extended,00000002
+
+[Cheats/19-Dual Air Bags]
+// patch=1,EE,2032B634,extended,00000002
+
+[Cheats/20-Mammary Madness]
+// patch=1,EE,2032B638,extended,00000002
+
+[Cheats/All Episodes]
+// patch=1,EE,4032B5EC,extended,00140001
+// patch=1,EE,00000002,extended,00000000
+
+[Cheats/Hey, Ladies!]
+// patch=1,EE,01741B69,extended,00000001
+
+[Cheats/Mind Fuck]
+// patch=1,EE,01741B6A,extended,00000001
+
+[Cheats/Back Stage]
+// patch=1,EE,01741B6B,extended,00000001
+
+[Cheats/Meet Matt]
+// patch=1,EE,01741B6C,extended,00000001
+
+[Cheats/The Babes]
+// patch=1,EE,01741B6D,extended,00000001
+
+[Cheats/Night At Padre]
+// patch=1,EE,01741B6E,extended,00000001
+
+[Cheats/Game Over!]
+// patch=1,EE,01741B6F,extended,00000001
+
+[Cheats/All Videos]
+// patch=1,EE,20111364,extended,24030001
+// patch=1,EE,20111368,extended,A0430F09
+
+[Cheats/The Girls Of Summer]
+// patch=1,EE,01741B70,extended,00000001
+
+[Cheats/Eye Candy]
+// patch=1,EE,01741B71,extended,00000001
+
+[Cheats/Got Titty?]
+// patch=1,EE,01741B72,extended,00000001
+
+[Cheats/The Fruits Of Our Labor]
+// patch=1,EE,01741B73,extended,00000001
+
+[Cheats/Boobs, Babes And Boobs]
+// patch=1,EE,01741B74,extended,00000001
+
+[Cheats/All Pictures]
+// patch=1,EE,201113A4,extended,24030001
+// patch=1,EE,201113A8,extended,A0430F10

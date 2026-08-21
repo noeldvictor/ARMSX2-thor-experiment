@@ -1,0 +1,171 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Warriors, The [SLUS-21215] [B99A75DE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Spells]
+// patch=1,EE,9044D2A8,extended,0C10C190
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,106FE490,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,206FE490,extended,0098967F
+
+[Cheats/Infinite Rage]
+// patch=1,EE,20256628,extended,00000000
+
+[Cheats/Infinite Item Usage]
+// patch=1,EE,2041E620,extended,00000000
+
+[Cheats/Max Items (Upon Usage)]
+// patch=1,EE,2041E618,extended,24020009
+
+[Cheats/Infinite Time (Timed Missions)]
+// patch=1,EE,204234A4,extended,00000000
+
+[Cheats/Flash]
+// patch=1,EE,21FD88D0,extended,00000009
+
+[Cheats/Money]
+// patch=1,EE,21FD88FC,extended,000003E7
+
+[Cheats/Spray Paint]
+// patch=1,EE,21FD8928,extended,00000009
+
+[Cheats/Powercuffs]
+// patch=1,EE,21FD8980,extended,00000009
+
+[Cheats/Hancuff Keys]
+// patch=1,EE,21FD89AC,extended,00000009
+
+[Cheats/Infinite Health]
+// patch=1,EE,1065A684,extended,000009C4
+// patch=1,EE,1065A804,extended,000009C4
+// patch=1,EE,1065A984,extended,000009C4
+// patch=1,EE,1065AB04,extended,000009C4
+// patch=1,EE,1065BA04,extended,000009C4
+
+[Cheats/Max Health]
+// patch=1,EE,1065A686,extended,000009C4
+// patch=1,EE,1065A806,extended,000009C4
+// patch=1,EE,1065A986,extended,000009C4
+// patch=1,EE,1065AB06,extended,000009C4
+// patch=1,EE,1065BA06,extended,000009C4
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,2065A684,extended,09C409C4
+// patch=1,EE,2065A804,extended,09C409C4
+// patch=1,EE,2065A984,extended,09C409C4
+// patch=1,EE,2065AB04,extended,09C409C4
+// patch=1,EE,2065BA04,extended,09C409C4
+
+[Cheats/Coney-1-New Blood]
+// patch=1,EE,706FE8F8,extended,002000FD
+// patch=1,EE,206FE79C,extended,0098967F
+
+[Cheats/Coney-2-Real Live Bunch]
+// patch=1,EE,706FE8F8,extended,002000FB
+// patch=1,EE,206FE7A8,extended,0098967F
+
+[Cheats/East Coney-3-Payback]
+// patch=1,EE,706FE8F8,extended,002000F7
+// patch=1,EE,206FE7B4,extended,0098967F
+
+[Cheats/Riverside-4-Blackout]
+// patch=1,EE,706FE8F8,extended,002000EF
+// patch=1,EE,206FE7C0,extended,0098967F
+
+[Cheats/Tremont-5-Real Heavy Rep]
+// patch=1,EE,706FE8F8,extended,002000BF
+// patch=1,EE,206FE7CC,extended,0098967F
+
+[Cheats/Soho-6-Writer's Block]
+// patch=1,EE,706FE8F9,extended,002000FE
+// patch=1,EE,206FE7D8,extended,0098967F
+
+[Cheats/East Harlem-7-Adios Amigo]
+// patch=1,EE,706FE8F9,extended,002000FD
+// patch=1,EE,206FE7E4,extended,0098967F
+
+[Cheats/Coney-8-Encore]
+// patch=1,EE,706FE8F9,extended,002000F7
+// patch=1,EE,206FE7F0,extended,0098967F
+
+[Cheats/Coney-9-Payin' The Cost]
+// patch=1,EE,706FE8F9,extended,002000DF
+// patch=1,EE,206FE7FC,extended,0098967F
+
+[Cheats/East Coney-10-Destroyed]
+// patch=1,EE,706FE8F9,extended,002000BF
+// patch=1,EE,206FE808,extended,0098967F
+
+[Cheats/Pelham-11-Boys In Blue]
+// patch=1,EE,706FE8F9,extended,0020007F
+// patch=1,EE,206FE814,extended,0098967F
+
+[Cheats/Bensonhurst-12-Set Up]
+// patch=1,EE,706FE8FA,extended,002000FD
+// patch=1,EE,206FE820,extended,0098967F
+
+[Cheats/Trainyard-13-All-City]
+// patch=1,EE,706FE8FA,extended,002000FB
+// patch=1,EE,206FE82C,extended,0098967F
+
+[Cheats/Gunhill-14-Desperate Dudes]
+// patch=1,EE,706FE8FA,extended,002000F7
+// patch=1,EE,206FE838,extended,0098967F
+
+[Cheats/Tremont-15-No Permits, No Parley]
+// patch=1,EE,706FE8FA,extended,002000EF
+// patch=1,EE,206FE844,extended,0098967F
+
+[Cheats/Riverside-16-Home Run]
+// patch=1,EE,706FE8FA,extended,002000DF
+// patch=1,EE,206FE850,extended,0098967F
+
+[Cheats/Bowery-17-Friendly Faces]
+// patch=1,EE,706FE8FA,extended,002000BF
+// patch=1,EE,206FE85C,extended,0098967F
+
+[Cheats/Coney-18-Come Out To Play]
+// patch=1,EE,706FE8FA,extended,0020007F
+// patch=1,EE,206FE868,extended,0098967F
+
+[Cheats/Coney-B-The Best]
+// patch=1,EE,706FE90D,extended,002000FD
+// patch=1,EE,206FE880,extended,0098967F
+
+[Cheats/Harlem-E-Sharp Dressed Man]
+// patch=1,EE,706FE90D,extended,002000F7
+// patch=1,EE,206FE8A4,extended,0098967F
+
+[Cheats/East Cony-A-Roots]
+// patch=1,EE,706FE90F,extended,002000FB
+// patch=1,EE,206FE874,extended,0098967F
+
+[Cheats/Chinatown-D-Scout's Honor]
+// patch=1,EE,706FE90F,extended,002000F7
+// patch=1,EE,206FE898,extended,0098967F
+
+[Cheats/East Coney-C-Heavy Muscle]
+// patch=1,EE,706FE910,extended,002000BF
+// patch=1,EE,206FE88C,extended,0098967F
+
+[Cheats/All Replay Levels]
+// patch=1,EE,406FE8F8,extended,00140001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Armies Of The Night]
+// patch=1,EE,206FE8BC,extended,0098967E
+
+[Cheats/Quick Points Gain]
+// patch=1,EE,106FE494,extended,0000FFFF
+
+[Cheats/Max Points]
+// patch=1,EE,206FE494,extended,0098967F
+
+[Cheats/Infinite Credits]
+// patch=1,EE,20619910,extended,00000063
+
+[Cheats/Infinite Time]
+// patch=1,EE,204234A4,extended,00000000

@@ -1,0 +1,90 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: TransFormers [SLUS-20668] [F40DAE1E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Todos Santos]
+// patch=1,EE,9013A9BC,extended,0C042444
+
+[Cheats/Infinite Autobot Energon Level]
+// patch=1,EE,20716FB4,extended,42FA0000
+
+[Cheats/Unlock All Extras]
+// patch=1,EE,207170E0,extended,FFFFFFFF
+// patch=1,EE,207170E4,extended,FFFFFFFF
+
+[Cheats/Unlock All Mini-Cons]
+// patch=1,EE,207173C0,extended,FFFFFFFF
+// patch=1,EE,107173C4,extended,0000FFFF
+// patch=1,EE,008F04C4,extended,00000001
+
+[Cheats/Infinite Energy Usage]
+// patch=1,EE,203EE5EC,extended,00000000
+
+[Cheats/Press {L1} For Moon Jump]
+// patch=1,EE,D08FA842,extended,0000FBFF
+// patch=1,EE,204710A8,extended,00000000
+// patch=1,EE,D08FA842,extended,0010FBFF
+// patch=1,EE,204710A8,extended,E7A00098
+
+[Cheats/Matrix Jumps]
+// patch=1,EE,20717698,extended,C0480000
+
+[Cheats/Disable Mini-Con Overload]
+// patch=1,EE,008F04C5,extended,00000001
+
+[Cheats/Infinite Stealth]
+// patch=1,EE,008F04C6,extended,00000001
+
+[Cheats/Infinite Powerlink]
+// patch=1,EE,008F04C9,extended,00000001
+
+[Cheats/1-Hit Kills]
+// patch=1,EE,008F04CD,extended,00000001
+
+[Cheats/Big Head Mode]
+// patch=1,EE,008F04CF,extended,00000001
+
+[Cheats/Turbo Modes]
+// patch=1,EE,008F04D0,extended,00000001
+
+[Cheats/Amazon]
+// patch=1,EE,20717114,extended,00000001
+// patch=1,EE,20717158,extended,00000009
+// patch=1,EE,2071715C,extended,0000000D
+
+[Cheats/Antarctica]
+// patch=1,EE,20717160,extended,00000001
+// patch=1,EE,207171A4,extended,0000000A
+// patch=1,EE,207171A8,extended,00000006
+
+[Cheats/Deep Amazon]
+// patch=1,EE,207171AC,extended,00000001
+// patch=1,EE,207171F0,extended,00000008
+// patch=1,EE,207171F4,extended,00000007
+
+[Cheats/Mid-Atlantic]
+// patch=1,EE,207171F8,extended,00000001
+// patch=1,EE,2071723C,extended,00000001
+// patch=1,EE,20717240,extended,00000001
+
+[Cheats/Alaska]
+// patch=1,EE,20717244,extended,00000001
+// patch=1,EE,20717288,extended,00000005
+// patch=1,EE,2071728C,extended,00000009
+
+[Cheats/Starship]
+// patch=1,EE,20717290,extended,00000001
+// patch=1,EE,207172D4,extended,00000001
+// patch=1,EE,207172D8,extended,0000000A
+
+[Cheats/Pacific Island]
+// patch=1,EE,207172DC,extended,00000001
+// patch=1,EE,20717320,extended,00000006
+// patch=1,EE,20717324,extended,0000000C
+
+[Cheats/Cybertron]
+// patch=1,EE,20717328,extended,00000001
+
+[Cheats/All Levels]
+// patch=1,EE,40717114,extended,00080013
+// patch=1,EE,00000001,extended,00000000

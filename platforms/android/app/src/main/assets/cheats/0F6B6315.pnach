@@ -1,0 +1,603 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Kingdom Hearts [SLUS-20370] [0F6B6315]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Myu's Necklace]
+// patch=1,EE,90263228,extended,0C09291F
+
+[Cheats/Press {START} For Save Menu]
+// patch=1,EE,204865E0,extended,00114288
+
+[Cheats/Max Munny]
+// patch=1,EE,204080AC,extended,0001869F
+
+[Cheats/Have All 101 Dalmatians]
+// patch=1,EE,003F3393,extended,000000FF
+// patch=1,EE,203F3394,extended,FFFFFFFF
+// patch=1,EE,203F3398,extended,FFFFFFFF
+// patch=1,EE,203F339C,extended,FFFFFFFF
+
+[Cheats/Have All Trinity's]
+// patch=1,EE,003F38AB,extended,000000FF
+
+[Cheats/Infinite Time (In Collisseum)]
+// patch=1,EE,102B6230,extended,0000F600
+
+[Cheats/Characters Are Beheaded]
+// patch=1,EE,20124094,extended,00000000
+
+[Cheats/Characters Are Huge]
+// patch=1,EE,10124054,extended,00004000
+
+[Cheats/Characters Are Larger]
+// patch=1,EE,10124054,extended,00003FC0
+
+[Cheats/Characters Are Smaller]
+// patch=1,EE,10124054,extended,00003F40
+
+[Cheats/Characters Are Tiny]
+// patch=1,EE,10124054,extended,00003F00
+
+[Cheats/Dumbo]
+// patch=1,EE,003F2460,extended,00000000
+
+[Cheats/Bambi]
+// patch=1,EE,003F2461,extended,00000001
+
+[Cheats/Genie]
+// patch=1,EE,003F2462,extended,00000002
+
+[Cheats/Tinker Bell]
+// patch=1,EE,003F2463,extended,00000003
+
+[Cheats/Mushu]
+// patch=1,EE,003F2464,extended,00000004
+
+[Cheats/Simba]
+// patch=1,EE,003F2465,extended,00000005
+
+[Cheats/Bahamut]
+// patch=1,EE,003F2466,extended,00000006
+
+[Cheats/Infinite HP]
+// patch=1,EE,20524094,extended,000003E7
+// patch=1,EE,20524178,extended,000003E7
+// patch=1,EE,2052425C,extended,000003E7
+// patch=1,EE,003F1C95,extended,000000FF
+// patch=1,EE,003F1D09,extended,000000FF
+// patch=1,EE,003F1D7D,extended,000000FF
+// patch=1,EE,003F1DF1,extended,000000FF
+// patch=1,EE,003F1E65,extended,000000FF
+// patch=1,EE,003F1ED9,extended,000000FF
+// patch=1,EE,003F1F4D,extended,000000FF
+// patch=1,EE,003F1FC1,extended,000000FF
+// patch=1,EE,003F2035,extended,000000FF
+// patch=1,EE,003F20A9,extended,000000FF
+
+[Cheats/Max HP]
+// patch=1,EE,20524098,extended,000003E7
+// patch=1,EE,2052417C,extended,000003E7
+// patch=1,EE,20524260,extended,000003E7
+// patch=1,EE,003F1C96,extended,000000FF
+// patch=1,EE,003F1D0A,extended,000000FF
+// patch=1,EE,003F1D7E,extended,000000FF
+// patch=1,EE,003F1DF2,extended,000000FF
+// patch=1,EE,003F1E66,extended,000000FF
+// patch=1,EE,003F1EDA,extended,000000FF
+// patch=1,EE,003F1F4E,extended,000000FF
+// patch=1,EE,003F1FC2,extended,000000FF
+// patch=1,EE,003F2036,extended,000000FF
+// patch=1,EE,003F20AA,extended,000000FF
+
+[Cheats/Infinite MP]
+// patch=1,EE,2052409C,extended,000003E7
+// patch=1,EE,20524180,extended,000003E7
+// patch=1,EE,20524264,extended,000003E7
+// patch=1,EE,003F1C97,extended,000000FF
+// patch=1,EE,003F1D0B,extended,000000FF
+// patch=1,EE,003F1D7F,extended,000000FF
+// patch=1,EE,003F1DF3,extended,000000FF
+// patch=1,EE,003F1E67,extended,000000FF
+// patch=1,EE,003F1EDB,extended,000000FF
+// patch=1,EE,003F1F4F,extended,000000FF
+// patch=1,EE,003F1FC3,extended,000000FF
+// patch=1,EE,003F2037,extended,000000FF
+// patch=1,EE,003F20AB,extended,000000FF
+
+[Cheats/Max MP]
+// patch=1,EE,205240A0,extended,000003E7
+// patch=1,EE,20524184,extended,000003E7
+// patch=1,EE,20524268,extended,000003E7
+// patch=1,EE,003F1C98,extended,000000FF
+// patch=1,EE,003F1D0C,extended,000000FF
+// patch=1,EE,003F1D80,extended,000000FF
+// patch=1,EE,003F1DF4,extended,000000FF
+// patch=1,EE,003F1E68,extended,000000FF
+// patch=1,EE,003F1EDC,extended,000000FF
+// patch=1,EE,003F1F50,extended,000000FF
+// patch=1,EE,003F1FC4,extended,000000FF
+// patch=1,EE,003F2038,extended,000000FF
+// patch=1,EE,003F20AC,extended,000000FF
+
+[Cheats/Max Orange Meter?]
+// patch=1,EE,10524116,extended,000003E7
+
+[Cheats/Level 99]
+// patch=1,EE,003F1C94,extended,00000063
+// patch=1,EE,003F1D08,extended,00000063
+// patch=1,EE,003F1D7C,extended,00000063
+// patch=1,EE,003F1DF0,extended,00000063
+// patch=1,EE,003F1E64,extended,00000063
+// patch=1,EE,003F1ED8,extended,00000063
+// patch=1,EE,003F1F4C,extended,00000063
+// patch=1,EE,003F1FC0,extended,00000063
+// patch=1,EE,003F2034,extended,00000063
+// patch=1,EE,003F20A8,extended,00000063
+
+[Cheats/Max AP]
+// patch=1,EE,003F1C99,extended,000000FF
+
+[Cheats/Max STR]
+// patch=1,EE,003F1C9A,extended,000000FF
+// patch=1,EE,003F1D0E,extended,000000FF
+// patch=1,EE,003F1D82,extended,000000FF
+// patch=1,EE,003F1DF6,extended,000000FF
+// patch=1,EE,003F1E6A,extended,000000FF
+// patch=1,EE,003F1EDE,extended,000000FF
+// patch=1,EE,003F1F52,extended,000000FF
+// patch=1,EE,003F1FC6,extended,000000FF
+// patch=1,EE,003F203A,extended,000000FF
+// patch=1,EE,003F20AE,extended,000000FF
+
+[Cheats/Max DEF]
+// patch=1,EE,003F1C9B,extended,000000FF
+// patch=1,EE,003F1D0F,extended,000000FF
+// patch=1,EE,003F1D83,extended,000000FF
+// patch=1,EE,003F1DF7,extended,000000FF
+// patch=1,EE,003F1E6B,extended,000000FF
+// patch=1,EE,003F1EDF,extended,000000FF
+// patch=1,EE,003F1F53,extended,000000FF
+// patch=1,EE,003F1FC7,extended,000000FF
+// patch=1,EE,003F203B,extended,000000FF
+// patch=1,EE,003F20AF,extended,000000FF
+
+[Cheats/Quick EXP Gain]
+// patch=1,EE,103F1CD0,extended,0000FFFF
+// patch=1,EE,103F1D44,extended,0000FFFF
+// patch=1,EE,103F1DB8,extended,0000FFFF
+// patch=1,EE,103F1E2C,extended,0000FFFF
+// patch=1,EE,103F1EA0,extended,0000FFFF
+// patch=1,EE,103F1F14,extended,0000FFFF
+// patch=1,EE,103F1F88,extended,0000FFFF
+// patch=1,EE,103F1FFC,extended,0000FFFF
+// patch=1,EE,103F2070,extended,0000FFFF
+// patch=1,EE,103F20E4,extended,0000FFFF
+
+[Cheats/Max EXP]
+// patch=1,EE,203F1CD0,extended,0098967F
+// patch=1,EE,203F1D44,extended,0098967F
+// patch=1,EE,203F1DB8,extended,0098967F
+// patch=1,EE,203F1E2C,extended,0098967F
+// patch=1,EE,203F1EA0,extended,0098967F
+// patch=1,EE,203F1F14,extended,0098967F
+// patch=1,EE,203F1F88,extended,0098967F
+// patch=1,EE,203F1FFC,extended,0098967F
+// patch=1,EE,203F2070,extended,0098967F
+// patch=1,EE,203F20E4,extended,0098967F
+
+[Cheats/Max AP/Max AP]
+// patch=1,EE,003F1D0D,extended,000000FF
+// patch=1,EE,003F1D81,extended,000000FF
+// patch=1,EE,003F1DF5,extended,000000FF
+// patch=1,EE,003F1E69,extended,000000FF
+// patch=1,EE,003F1EDD,extended,000000FF
+// patch=1,EE,003F1F51,extended,000000FF
+// patch=1,EE,003F1FC5,extended,000000FF
+// patch=1,EE,003F2039,extended,000000FF
+// patch=1,EE,003F20AD,extended,000000FF
+
+[Cheats/Potion]
+// patch=1,EE,003F212A,extended,00000063
+
+[Cheats/Hi-Potion]
+// patch=1,EE,003F212B,extended,00000063
+
+[Cheats/Ether]
+// patch=1,EE,003F212C,extended,00000063
+
+[Cheats/Elixir]
+// patch=1,EE,003F212D,extended,00000063
+
+[Cheats/Mega-Potion]
+// patch=1,EE,003F212F,extended,00000063
+
+[Cheats/Mega-Ether]
+// patch=1,EE,003F2130,extended,00000063
+
+[Cheats/Megalixir]
+// patch=1,EE,003F2131,extended,00000063
+
+[Cheats/Tent]
+// patch=1,EE,003F21B7,extended,00000063
+
+[Cheats/Camping Set]
+// patch=1,EE,003F21B8,extended,00000063
+
+[Cheats/Cottage]
+// patch=1,EE,003F21B9,extended,00000063
+
+[Cheats/Power Up]
+// patch=1,EE,003F21C1,extended,00000063
+
+[Cheats/Defense Up]
+// patch=1,EE,003F21C2,extended,00000063
+
+[Cheats/AP Up]
+// patch=1,EE,003F21C3,extended,00000063
+
+[Cheats/Fire Arts]
+// patch=1,EE,003F21C7,extended,00000063
+
+[Cheats/Blizzard Arts]
+// patch=1,EE,003F21C8,extended,00000063
+
+[Cheats/Thunder Arts]
+// patch=1,EE,003F21C9,extended,00000063
+
+[Cheats/Cure Arts]
+// patch=1,EE,003F21CA,extended,00000063
+
+[Cheats/Gravity Arts]
+// patch=1,EE,003F21CB,extended,00000063
+
+[Cheats/Stop Arts]
+// patch=1,EE,003F21CC,extended,00000063
+
+[Cheats/Aero Arts]
+// patch=1,EE,003F21CD,extended,00000063
+
+[Cheats/Shiitake Rank]
+// patch=1,EE,003F21CE,extended,00000063
+
+[Cheats/Matsutake Rank]
+// patch=1,EE,003F21CF,extended,00000063
+
+[Cheats/Mystery Mold]
+// patch=1,EE,003F21D0,extended,00000063
+
+[Cheats/Ansem's Report 1]
+// patch=1,EE,003F21D1,extended,00000063
+
+[Cheats/Ansem's Report 2]
+// patch=1,EE,003F21D2,extended,00000063
+
+[Cheats/Ansem's Report 3]
+// patch=1,EE,003F21D3,extended,00000063
+
+[Cheats/Ansem's Report 4]
+// patch=1,EE,003F21D4,extended,00000063
+
+[Cheats/Ansem's Report 5]
+// patch=1,EE,003F21D5,extended,00000063
+
+[Cheats/Ansem's Report 6]
+// patch=1,EE,003F21D6,extended,00000063
+
+[Cheats/Ansem's Report 7]
+// patch=1,EE,003F21D7,extended,00000063
+
+[Cheats/Ansem's Report 8]
+// patch=1,EE,003F21D8,extended,00000063
+
+[Cheats/Ansem's Report 9]
+// patch=1,EE,003F21D9,extended,00000063
+
+[Cheats/Ansem's Report 10]
+// patch=1,EE,003F21DA,extended,00000063
+
+[Cheats/Khama Vol. 8]
+// patch=1,EE,003F21DB,extended,00000063
+
+[Cheats/Salegg Vol. 6]
+// patch=1,EE,003F21DC,extended,00000063
+
+[Cheats/Azal Vol. 3]
+// patch=1,EE,003F21DD,extended,00000063
+
+[Cheats/Mava Vol. 3]
+// patch=1,EE,003F21DE,extended,00000063
+
+[Cheats/Mava Vol. 6]
+// patch=1,EE,003F21DF,extended,00000063
+
+[Cheats/Theon Vol. 6]
+// patch=1,EE,003F21E0,extended,00000063
+
+[Cheats/Nahara Vol. 5]
+// patch=1,EE,003F21E1,extended,00000063
+
+[Cheats/Hafet Vol. 4]
+// patch=1,EE,003F21E2,extended,00000063
+
+[Cheats/Empty Bottle]
+// patch=1,EE,003F21E3,extended,00000063
+
+[Cheats/Old Book]
+// patch=1,EE,003F21E4,extended,00000063
+
+[Cheats/Emblem Piece]
+// patch=1,EE,003F21E5,extended,00000063
+
+[Cheats/Emblem Piece 2]
+// patch=1,EE,003F21E6,extended,00000063
+
+[Cheats/Emblem Piece 3]
+// patch=1,EE,003F21E7,extended,00000063
+
+[Cheats/Emblem Piece 4]
+// patch=1,EE,003F21E8,extended,00000063
+
+[Cheats/Log]
+// patch=1,EE,003F21E9,extended,00000063
+
+[Cheats/Cloth]
+// patch=1,EE,003F21EA,extended,00000063
+
+[Cheats/Rope]
+// patch=1,EE,003F21EB,extended,00000063
+
+[Cheats/Seagull Egg]
+// patch=1,EE,003F21EC,extended,00000063
+
+[Cheats/Fish]
+// patch=1,EE,003F21ED,extended,00000063
+
+[Cheats/Mushroom]
+// patch=1,EE,003F21EE,extended,00000063
+
+[Cheats/Coconut]
+// patch=1,EE,003F21EF,extended,00000063
+
+[Cheats/Drinking Water]
+// patch=1,EE,003F21F0,extended,00000063
+
+[Cheats/Navi-G Piece]
+// patch=1,EE,003F21F1,extended,00000063
+
+[Cheats/Navi-G Piece 2]
+// patch=1,EE,003F21F2,extended,00000063
+
+[Cheats/Navi-Gummi]
+// patch=1,EE,003F21F3,extended,00000063
+
+[Cheats/Navi-G Piece 3]
+// patch=1,EE,003F21F4,extended,00000063
+
+[Cheats/Navi-G Piece 4]
+// patch=1,EE,003F21F5,extended,00000063
+
+[Cheats/Navi-Gummi 2]
+// patch=1,EE,003F21F6,extended,00000063
+
+[Cheats/Watergleam]
+// patch=1,EE,003F21F7,extended,00000063
+
+[Cheats/Naturespark]
+// patch=1,EE,003F21F8,extended,00000063
+
+[Cheats/Fireglow]
+// patch=1,EE,003F21F9,extended,00000063
+
+[Cheats/Earthshine]
+// patch=1,EE,003F21FA,extended,00000063
+
+[Cheats/Crystal Trident]
+// patch=1,EE,003F21FB,extended,00000063
+
+[Cheats/Postcard]
+// patch=1,EE,003F21FC,extended,00000063
+
+[Cheats/Torn Page]
+// patch=1,EE,003F21FD,extended,00000063
+
+[Cheats/Torn Page 2]
+// patch=1,EE,003F21FE,extended,00000063
+
+[Cheats/Torn Page 3]
+// patch=1,EE,003F21FF,extended,00000063
+
+[Cheats/Torn Page 4]
+// patch=1,EE,003F2200,extended,00000063
+
+[Cheats/Torn Page 5]
+// patch=1,EE,003F2201,extended,00000063
+
+[Cheats/Slide 1]
+// patch=1,EE,003F2202,extended,00000063
+
+[Cheats/Slide 2]
+// patch=1,EE,003F2203,extended,00000063
+
+[Cheats/Slide 3]
+// patch=1,EE,003F2204,extended,00000063
+
+[Cheats/Slide 4]
+// patch=1,EE,003F2205,extended,00000063
+
+[Cheats/Slide 5]
+// patch=1,EE,003F2206,extended,00000063
+
+[Cheats/Slide 6]
+// patch=1,EE,003F2207,extended,00000063
+
+[Cheats/Footprints]
+// patch=1,EE,003F2208,extended,00000063
+
+[Cheats/Claw Marks]
+// patch=1,EE,003F2209,extended,00000063
+
+[Cheats/Stench]
+// patch=1,EE,003F220A,extended,00000063
+
+[Cheats/Antenna]
+// patch=1,EE,003F220B,extended,00000063
+
+[Cheats/Forget-Me-Not]
+// patch=1,EE,003F220C,extended,00000063
+
+[Cheats/Jack-In-The-Box]
+// patch=1,EE,003F220D,extended,00000063
+
+[Cheats/Entry Pass]
+// patch=1,EE,003F220E,extended,00000063
+
+[Cheats/Hero License]
+// patch=1,EE,003F220F,extended,00000063
+
+[Cheats/Pretty Stone]
+// patch=1,EE,003F2210,extended,00000063
+
+[Cheats/Lucid Shard]
+// patch=1,EE,003F2212,extended,00000063
+
+[Cheats/Lucid Gem]
+// patch=1,EE,003F2213,extended,00000063
+
+[Cheats/Lucid Crystal]
+// patch=1,EE,003F2214,extended,00000063
+
+[Cheats/Spirit Shard]
+// patch=1,EE,003F2215,extended,00000063
+
+[Cheats/Spirit Gem]
+// patch=1,EE,003F2216,extended,00000063
+
+[Cheats/Power Shard]
+// patch=1,EE,003F2217,extended,00000063
+
+[Cheats/Power Gem]
+// patch=1,EE,003F2218,extended,00000063
+
+[Cheats/Power Crystal]
+// patch=1,EE,003F2219,extended,00000063
+
+[Cheats/Blaze Shard]
+// patch=1,EE,003F221A,extended,00000063
+
+[Cheats/Blaze Gem]
+// patch=1,EE,003F221B,extended,00000063
+
+[Cheats/Frost Shard]
+// patch=1,EE,003F221C,extended,00000063
+
+[Cheats/Frost Gem]
+// patch=1,EE,003F221D,extended,00000063
+
+[Cheats/Thunder Shard]
+// patch=1,EE,003F221E,extended,00000063
+
+[Cheats/Thunder Gem]
+// patch=1,EE,003F221F,extended,00000063
+
+[Cheats/Shiny Crystal]
+// patch=1,EE,003F2220,extended,00000063
+
+[Cheats/Bright Shard]
+// patch=1,EE,003F2221,extended,00000063
+
+[Cheats/Bright Gem]
+// patch=1,EE,003F2222,extended,00000063
+
+[Cheats/Bright Crystal]
+// patch=1,EE,003F2223,extended,00000063
+
+[Cheats/Mystery Goo]
+// patch=1,EE,003F2224,extended,00000063
+
+[Cheats/Gale]
+// patch=1,EE,003F2225,extended,00000063
+
+[Cheats/Mythril Shard]
+// patch=1,EE,003F2226,extended,00000063
+
+[Cheats/Mythril]
+// patch=1,EE,003F2227,extended,00000063
+
+[Cheats/Orichalcum]
+// patch=1,EE,003F2228,extended,00000063
+
+[Cheats/Have All Keys]
+// patch=1,EE,103F217A,extended,00000101
+// patch=1,EE,403F217C,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103F218C,extended,00000101
+
+[Cheats/Have All Staffs]
+// patch=1,EE,403F2190,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,003F219C,extended,00000001
+
+[Cheats/Have All Shields]
+// patch=1,EE,403F21A0,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,003F21AC,extended,00000001
+
+[Cheats/Unlock All Paths]
+// patch=1,EE,103F3BA2,extended,0000FFFF
+// patch=1,EE,103F3BA4,extended,0000FFFF
+// patch=1,EE,003F3BA6,extended,000000FF
+
+[Cheats/Traverse Town]
+// patch=1,EE,003F3B80,extended,00000003
+// patch=1,EE,003F3B80,extended,00000004
+
+[Cheats/Wonderland]
+// patch=1,EE,003F3B81,extended,00000003
+// patch=1,EE,003F3B81,extended,00000004
+
+[Cheats/Olympus Coliseum]
+// patch=1,EE,003F3B82,extended,00000003
+// patch=1,EE,003F3B82,extended,00000004
+
+[Cheats/Deep Jungle]
+// patch=1,EE,003F3B83,extended,00000003
+// patch=1,EE,003F3B83,extended,00000004
+
+[Cheats/Agrabah]
+// patch=1,EE,003F3B84,extended,00000003
+// patch=1,EE,003F3B84,extended,00000004
+
+[Cheats/Halloween Town]
+// patch=1,EE,003F3B85,extended,00000003
+// patch=1,EE,003F3B85,extended,00000004
+
+[Cheats/Atlantica]
+// patch=1,EE,003F3B86,extended,00000003
+// patch=1,EE,003F3B86,extended,00000004
+
+[Cheats/Neverland]
+// patch=1,EE,003F3B87,extended,00000003
+// patch=1,EE,003F3B87,extended,00000004
+
+[Cheats/Hollow Bastion]
+// patch=1,EE,003F3B88,extended,00000003
+// patch=1,EE,003F3B88,extended,00000004
+
+[Cheats/End Of The World]
+// patch=1,EE,003F3B89,extended,00000003
+// patch=1,EE,003F3B89,extended,00000004
+
+[Cheats/Monstro]
+// patch=1,EE,003F3B8A,extended,00000003
+// patch=1,EE,003F3B8A,extended,00000004
+
+[Cheats/Have All Blueprints]
+// patch=1,EE,003FDB4F,extended,00000001
+// patch=1,EE,403FDB50,extended,00090001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Max All Equipment]
+// patch=1,EE,103F213A,extended,00006363
+// patch=1,EE,403F213C,extended,00090001
+// patch=1,EE,63636363,extended,00000000
+// patch=1,EE,003F2160,extended,00000063

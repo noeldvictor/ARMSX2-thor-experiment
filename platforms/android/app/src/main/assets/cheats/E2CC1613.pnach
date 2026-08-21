@@ -1,0 +1,249 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: NHL Hitz 2002 [SLUS-20140] [E2CC1613]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Super Max Puck Speed]
+// patch=1,EE,F038CDF8,extended,003B2ED7
+
+[Cheats/Home Team Scores 255]
+// patch=1,EE,11E7293C,extended,000000FF
+
+[Cheats/Home Team Scores 150]
+// patch=1,EE,11E7293C,extended,00000096
+
+[Cheats/Home Team Scores 100]
+// patch=1,EE,11E7293C,extended,00000064
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,11E7293C,extended,00000032
+
+[Cheats/Home Team Scores 25]
+// patch=1,EE,11E7293C,extended,00000019
+
+[Cheats/Home Team Scores 10]
+// patch=1,EE,11E7293C,extended,0000000A
+
+[Cheats/Home Team Scores 5]
+// patch=1,EE,11E7293C,extended,00000005
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,11E7293C,extended,00000000
+
+[Cheats/Away Team Scores 255]
+// patch=1,EE,11E72940,extended,000000FF
+
+[Cheats/Away Team Scores 150]
+// patch=1,EE,11E72940,extended,00000096
+
+[Cheats/Away Team Scores 100]
+// patch=1,EE,11E72940,extended,00000064
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,11E72940,extended,00000032
+
+[Cheats/Away Team Scores 25]
+// patch=1,EE,11E72940,extended,00000019
+
+[Cheats/Away Team Scores 10]
+// patch=1,EE,11E72940,extended,0000000A
+
+[Cheats/Away Team Scores 5]
+// patch=1,EE,11E72940,extended,00000005
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,11E72940,extended,00000000
+
+[Cheats/Infinite Turbo P1]
+// patch=1,EE,21E729D0,extended,42C80000
+
+[Cheats/No Turbo P1]
+// patch=1,EE,21E729D0,extended,00000000
+
+[Cheats/Infinite Turbo P2]
+// patch=1,EE,21E729D4,extended,42C80000
+
+[Cheats/No Turbo P2]
+// patch=1,EE,21E729D4,extended,00000000
+
+[Cheats/Infinite Turbo P3]
+// patch=1,EE,21E729D8,extended,42C80000
+
+[Cheats/No Turbo P3]
+// patch=1,EE,21E729D8,extended,00000000
+
+[Cheats/Infinite Turbo P4]
+// patch=1,EE,21E729DC,extended,42C80000
+
+[Cheats/No Turbo P4]
+// patch=1,EE,21E729DC,extended,00000000
+
+[Cheats/Infinite Turbo P5]
+// patch=1,EE,21E729E0,extended,42C80000
+
+[Cheats/No Turbo P5]
+// patch=1,EE,21E729E0,extended,00000000
+
+[Cheats/Infinite Turbo P6]
+// patch=1,EE,21E729E4,extended,42C80000
+
+[Cheats/No Turbo P6]
+// patch=1,EE,21E729E4,extended,00000000
+
+[Cheats/Infinite Turbo P7]
+// patch=1,EE,21E729E8,extended,42C80000
+
+[Cheats/No Turbo P7]
+// patch=1,EE,21E729E8,extended,00000000
+
+[Cheats/Infinite Turbo P8]
+// patch=1,EE,21E729EC,extended,42C80000
+
+[Cheats/No Turbo P8]
+// patch=1,EE,21E729EC,extended,00000000
+
+[Cheats/Infinite Credits (Hockey Shop)]
+// patch=1,EE,11E6EE50,extended,0000270F
+
+[Cheats/Start On 2nd Period]
+// patch=1,EE,D1E72938,extended,00000001
+// patch=1,EE,11E72938,extended,00000002
+
+[Cheats/Start On 3rd Period]
+// patch=1,EE,D1E72938,extended,00000001
+// patch=1,EE,11E72938,extended,00000003
+
+[Cheats/Max Stats (Created Character)]
+// patch=1,EE,10483B1E,extended,00001414
+// patch=1,EE,20483B20,extended,14141414
+// patch=1,EE,10483B24,extended,00001414
+// patch=1,EE,10483B26,extended,00000014
+
+[Cheats/P1 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1EC0048,extended,00000005
+// patch=1,EE,1173E79E,extended,00004334
+
+[Cheats/P1 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1EC0048,extended,0000000A
+// patch=1,EE,1173E79E,extended,00003F80
+
+[Cheats/P2 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1EBFA68,extended,00000005
+// patch=1,EE,1173E79E,extended,00004334
+
+[Cheats/P2 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1EBFA68,extended,0000000A
+// patch=1,EE,1173E79E,extended,00003F80
+
+[Cheats/Show Shot Speed]
+// patch=1,EE,11E72A2C,extended,00000001
+
+[Cheats/Show Hot Spot]
+// patch=1,EE,11E72A58,extended,00000001
+
+[Cheats/No Crowd]
+// patch=1,EE,11E72B08,extended,00000001
+
+[Cheats/Snow Mode]
+// patch=1,EE,11E72B34,extended,00000001
+
+[Cheats/Rain Mode]
+// patch=1,EE,11E72B60,extended,00000001
+
+[Cheats/Infinite Turbo]
+// patch=1,EE,11E72BE4,extended,00000001
+
+[Cheats/Big Puck]
+// patch=1,EE,11E72C10,extended,00000001
+
+[Cheats/Late Hits]
+// patch=1,EE,11E72C94,extended,00000001
+
+[Cheats/Pinball Boards]
+// patch=1,EE,11E72D18,extended,00000001
+
+[Cheats/No Puck Out]
+// patch=1,EE,11E72D70,extended,00000001
+
+[Cheats/Hitz Time]
+// patch=1,EE,11E72E20,extended,00000001
+
+[Cheats/Tennis Ball]
+// patch=1,EE,11E72E78,extended,00000001
+
+[Cheats/Win Fights For Goals]
+// patch=1,EE,11E72ED0,extended,00000001
+
+[Cheats/Skills Versus]
+// patch=1,EE,11E72F54,extended,00000001
+
+[Cheats/Big Hits]
+// patch=1,EE,11E7305C,extended,00000001
+
+[Cheats/Turbo Boost]
+// patch=1,EE,11E730B4,extended,00000001
+
+[Cheats/Domino Effect]
+// patch=1,EE,11E7310C,extended,00000001
+
+[Cheats/No Fake Shots]
+// patch=1,EE,11E73214,extended,00000001
+
+[Cheats/No One-Timers]
+// patch=1,EE,11E73240,extended,00000001
+
+[Cheats/Bulldozer Puck]
+// patch=1,EE,11E73298,extended,00000001
+
+[Cheats/Huge Puck]
+// patch=1,EE,11E732F0,extended,00000001
+
+[Cheats/First To 7 Wins]
+// patch=1,EE,11E73348,extended,00000001
+
+[Cheats/Big Head P1]
+// patch=1,EE,11E72A84,extended,00000001
+// patch=1,EE,11E72A90,extended,00000001
+
+[Cheats/Huge Head P1]
+// patch=1,EE,11E73004,extended,00000001
+// patch=1,EE,11E73010,extended,00000001
+
+[Cheats/Big Head Team-P1]
+// patch=1,EE,11E72AB0,extended,00000001
+// patch=1,EE,11E72AB8,extended,00000001
+
+[Cheats/Huge Head Team-P1]
+// patch=1,EE,11E73030,extended,00000001
+// patch=1,EE,11E73038,extended,00000001
+
+[Cheats/Big Head P2]
+// patch=1,EE,11E72A84,extended,00000001
+// patch=1,EE,11E72AA0,extended,00000001
+
+[Cheats/Huge Head P2]
+// patch=1,EE,11E73004,extended,00000001
+// patch=1,EE,11E73020,extended,00000001
+
+[Cheats/Big Head Team-P2]
+// patch=1,EE,11E72AB0,extended,00000001
+// patch=1,EE,11E72AB4,extended,00000001
+
+[Cheats/Huge Head Team-P2]
+// patch=1,EE,11E73030,extended,00000001
+// patch=1,EE,11E73034,extended,00000001
+
+[Cheats/Have All Jerseys]
+// patch=1,EE,41E6EE54,extended,00350001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Have All Heads]
+// patch=1,EE,41E6EF28,extended,000F0001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Have All Stadiums]
+// patch=1,EE,41E6EF64,extended,000E0001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Have All Teams]
+// patch=1,EE,41E6EF9C,extended,00140001
+// patch=1,EE,00000000,extended,00000000

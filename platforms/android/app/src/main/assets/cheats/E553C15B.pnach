@@ -1,0 +1,118 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Bouncer, The [SCES-50241] [E553C15B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Worlds Completed]
+// patch=1,EE,902EE134,extended,0C0BFCEB
+
+[Cheats/Infinite Bouncer Points]
+// patch=1,EE,203DC068,extended,0001869F
+
+[Cheats/Infinite Life]
+// patch=1,EE,21D89F64,extended,0000012C
+// patch=1,EE,21D89FF4,extended,0000012C
+// patch=1,EE,21D8A084,extended,0000012C
+
+[Cheats/Max Life]
+// patch=1,EE,21D89F6C,extended,0000012C
+// patch=1,EE,21D89FFC,extended,0000012C
+// patch=1,EE,21D8A08C,extended,0000012C
+
+[Cheats/Infinite Defense]
+// patch=1,EE,21D89F70,extended,0000012C
+// patch=1,EE,21D8A000,extended,0000012C
+// patch=1,EE,21D8A090,extended,0000012C
+
+[Cheats/Max Defense]
+// patch=1,EE,21D89F78,extended,0000012C
+// patch=1,EE,21D8A008,extended,0000012C
+// patch=1,EE,21D8A098,extended,0000012C
+
+[Cheats/Max Power]
+// patch=1,EE,21D89F7C,extended,0000012C
+// patch=1,EE,21D8A00C,extended,0000012C
+// patch=1,EE,21D8A09C,extended,0000012C
+
+[Cheats/Have All Extra Skills]
+// patch=1,EE,21D89F80,extended,000000FF
+// patch=1,EE,21D8A010,extended,000000FF
+// patch=1,EE,21D8A0A0,extended,000000FF
+
+[Cheats/Rank S]
+// patch=1,EE,21D89F84,extended,00000007
+// patch=1,EE,21D8A014,extended,00000007
+// patch=1,EE,21D8A0A4,extended,00000007
+
+[Cheats/Max Bouncer Points]
+// patch=1,EE,21D89FC0,extended,0001869F
+// patch=1,EE,21D8A050,extended,0001869F
+// patch=1,EE,21D8A0E0,extended,0001869F
+
+[Cheats/Always Gain Extra Skill 1]
+// patch=1,EE,20346FCC,extended,00000001
+
+[Cheats/Always Gain Extra Skill 2]
+// patch=1,EE,20346FD0,extended,00000001
+
+[Cheats/Always Gain Extra Skill 3]
+// patch=1,EE,20346FD4,extended,00000001
+
+[Cheats/Always Gain Extra Skill 4]
+// patch=1,EE,20346FD8,extended,00000001
+
+[Cheats/Always Gain Extra Skill 5]
+// patch=1,EE,20346FDC,extended,00000001
+
+[Cheats/Always Gain Extra Skill 6]
+// patch=1,EE,20346FE0,extended,00000001
+
+[Cheats/Always Gain Extra Skill 7]
+// patch=1,EE,20346FE4,extended,00000001
+
+[Cheats/Max Life Up]
+// patch=1,EE,20346FC0,extended,00000007
+
+[Cheats/Max Power Up]
+// patch=1,EE,20346FC4,extended,00000007
+
+[Cheats/Max Defense Up]
+// patch=1,EE,20346FC8,extended,00000007
+
+[Cheats/Have All Characters (VS. Mode)]
+// patch=1,EE,21D8CB40,extended,FFFFFFFF
+
+[Cheats/Echidna]
+// patch=1,EE,01D8A1A3,extended,00000007
+
+[Cheats/Dauragon]
+// patch=1,EE,01D8A1A4,extended,00000007
+
+[Cheats/Dauragon 2]
+// patch=1,EE,01D8A1A5,extended,00000007
+
+[Cheats/Dauragon 3]
+// patch=1,EE,01D8A1A6,extended,00000007
+
+[Cheats/Dauragon 4]
+// patch=1,EE,01D8A1A7,extended,00000007
+
+[Cheats/Mugetsu]
+// patch=1,EE,01D8A1A8,extended,00000007
+
+[Cheats/Mugetsu 2]
+// patch=1,EE,01D8A1A9,extended,00000007
+
+[Cheats/PD-4]
+// patch=1,EE,01D8A1AA,extended,00000007
+
+[Cheats/Dominique]
+// patch=1,EE,01D8A1AB,extended,00000007
+
+[Cheats/Kaldea]
+// patch=1,EE,01D8A1AC,extended,00000007
+
+[Cheats/Wong]
+// patch=1,EE,01D8A1AD,extended,00000007
+
+[Cheats/Leann]
+// patch=1,EE,01D8A1AE,extended,00000007

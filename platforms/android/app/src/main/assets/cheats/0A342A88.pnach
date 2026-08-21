@@ -1,0 +1,117 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Futurama [SLUS-20439] [0A342A88]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Above 4]
+// patch=1,EE,903EE0D4,extended,0C100099
+
+[Cheats/Infinite Health]
+// patch=1,EE,20157868,extended,C4810538
+// patch=1,EE,20157870,extended,E4810530
+
+[Cheats/Infinite Lives]
+// patch=1,EE,2043E024,extended,00000063
+
+[Cheats/Infinite Lives Usage]
+// patch=1,EE,2027FDA0,extended,00000000
+
+[Cheats/Max Infinite Lives Usage]
+// patch=1,EE,2027FD98,extended,24020063
+
+[Cheats/Extra Lives]
+// patch=1,EE,1027FD98,extended,00000001
+
+[Cheats/Infinite Money]
+// patch=1,EE,105F459C,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,205F459C,extended,0098967F
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20189228,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,20189220,extended,24020063
+
+[Cheats/Extra Ammo]
+// patch=1,EE,20189220,extended,00461021
+
+[Cheats/Max Nibblers Collected]
+// patch=1,EE,505F45A4,extended,00000004
+// patch=1,EE,005F45A0,extended,00000000
+
+[Cheats/Glagnar's Human Rinds]
+// patch=1,EE,20546790,extended,00000001
+
+[Cheats/Tri-Curious]
+// patch=1,EE,20546798,extended,00000001
+
+[Cheats/Slurm]
+// patch=1,EE,205467A0,extended,00000001
+
+[Cheats/Zap Brannigan-Join The Army]
+// patch=1,EE,205467A8,extended,00000001
+
+[Cheats/Got Protoplasm]
+// patch=1,EE,205467B0,extended,00000001
+
+[Cheats/Maxx Hypnosis Hour]
+// patch=1,EE,205467B8,extended,00000001
+
+[Cheats/Lightspeed Briefs]
+// patch=1,EE,205467C0,extended,00000001
+
+[Cheats/Extreme Walrus Juice]
+// patch=1,EE,205467C8,extended,00000001
+
+[Cheats/Dolphin-The Intelligent Meat]
+// patch=1,EE,205467D0,extended,00000001
+
+[Cheats/Robo Fresh]
+// patch=1,EE,205467D8,extended,00000001
+
+[Cheats/Thompson's Teeth]
+// patch=1,EE,205467E0,extended,00000001
+
+[Cheats/Bachelor Chow]
+// patch=1,EE,205467E8,extended,00000001
+
+[Cheats/Malfunctioning Eddie's]
+// patch=1,EE,205467F0,extended,00000001
+
+[Cheats/Mom's Old Fashioned Robot Oil]
+// patch=1,EE,205467F8,extended,00000001
+
+[Cheats/U-Yank]
+// patch=1,EE,20546800,extended,00000001
+
+[Cheats/Ice Cold Slurmee]
+// patch=1,EE,20546808,extended,00000001
+
+[Cheats/Brown Out]
+// patch=1,EE,20546810,extended,00000001
+
+[Cheats/Unknown 1]
+// patch=1,EE,20546818,extended,00000001
+
+[Cheats/All My Circuits]
+// patch=1,EE,20546820,extended,00000001
+
+[Cheats/Thunder Cougar Falcon Bird]
+// patch=1,EE,20546828,extended,00000001
+
+[Cheats/Morbo On Management]
+// patch=1,EE,20546830,extended,00000001
+
+[Cheats/Fishy Joe's]
+// patch=1,EE,20546838,extended,00000001
+
+[Cheats/Kibbles 'n' Snouts]
+// patch=1,EE,20546840,extended,00000001
+
+[Cheats/Unknown 2]
+// patch=1,EE,20546848,extended,00000001
+
+[Cheats/All Gallery]
+// patch=1,EE,40546790,extended,00180002
+// patch=1,EE,00000001,extended,00000000

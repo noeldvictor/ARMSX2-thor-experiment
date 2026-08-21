@@ -1,0 +1,97 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Aeon Flux [SLUS-21205] [9FA0A1B0]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Time]
+// patch=1,EE,9044A52C,extended,0C1189EB
+
+[Cheats/Infinite Health (Hold {SELECT} If Stuck)]
+// patch=1,EE,E002FFFF,extended,00705642
+// patch=1,EE,202B29C0,extended,C4810900
+// patch=1,EE,202B29C8,extended,E48108FC
+// patch=1,EE,E002FFFE,extended,00705642
+// patch=1,EE,202B29C0,extended,C48108FC
+// patch=1,EE,202B29C8,extended,AC8008FC
+
+[Cheats/Max Style]
+// patch=1,EE,200C0220,extended,3C01447A
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,AC812B0C
+// patch=1,EE,202B6090,extended,08030088
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,202FC690,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,202FC68C,extended,240303E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,102FC68C,extended,00000001
+
+[Cheats/Unlock All Capsules]
+// patch=1,EE,20276348,extended,24040001
+// patch=1,EE,2027634C,extended,AC640084
+
+[Cheats/God Mode]
+// patch=1,EE,70614EDC,extended,00000001
+// patch=1,EE,20501240,extended,00000001
+
+[Cheats/Restore Health]
+// patch=1,EE,70614EDC,extended,00000002
+
+[Cheats/Unlimited Health]
+// patch=1,EE,70614EDC,extended,00000004
+// patch=1,EE,2050761C,extended,00000001
+
+[Cheats/Unlimited Ammo]
+// patch=1,EE,70614EDC,extended,00000010
+// patch=1,EE,20501264,extended,00000001
+
+[Cheats/All Replay Episodes]
+// patch=1,EE,70614EDC,extended,00000020
+
+[Cheats/Unlock Slideshows]
+// patch=1,EE,70614EDC,extended,00000040
+
+[Cheats/Unlimited Power Strikes]
+// patch=1,EE,70614EDD,extended,00000002
+// patch=1,EE,20507654,extended,00000001
+
+[Cheats/Free Fatalities]
+// patch=1,EE,70614EDD,extended,00000004
+// patch=1,EE,20507628,extended,00000001
+
+[Cheats/Fun]
+// patch=1,EE,70614EDD,extended,00000008
+
+[Cheats/Seeds-Outfit]
+// patch=1,EE,70614EDD,extended,00000010
+
+[Cheats/War-Outfit]
+// patch=1,EE,70614EDD,extended,00000020
+
+[Cheats/Fame-Outfit]
+// patch=1,EE,70614EDD,extended,00000040
+
+[Cheats/Bomber Jacket-Outfit]
+// patch=1,EE,70614EDD,extended,00000080
+
+[Cheats/Mrs. Goodchild-Outfit]
+// patch=1,EE,70614EDE,extended,00000002
+
+[Cheats/Revelation-Outfit]
+// patch=1,EE,70614EDE,extended,00000004
+
+[Cheats/More Various Outfits]
+// patch=1,EE,70614EDE,extended,00000008
+
+[Cheats/One Strike Kills]
+// patch=1,EE,70614EDE,extended,00000010
+// patch=1,EE,2050762C,extended,00000001
+
+[Cheats/Action Movie]
+// patch=1,EE,70614EDE,extended,00000020
+// patch=1,EE,20507630,extended,00000001
+
+[Cheats/All Cheats]
+// patch=1,EE,20614EDC,extended,FFFFFFFF

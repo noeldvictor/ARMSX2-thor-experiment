@@ -1,0 +1,38 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Bass Strike [SLUS-20325] [6C5906C7]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Ossian's Lute]
+// patch=1,EE,9010DCB8,extended,0C0436D6
+
+[Cheats/Infinite Time (Arcade Mode)]
+// patch=1,EE,103B7E1E,extended,00005000
+
+[Cheats/Instant Win (Arcade Mode)]
+// patch=1,EE,103B7E1E,extended,00000000
+// patch=1,EE,103B7E64,extended,00000009
+// patch=1,EE,103B7E4C,extended,0000270F
+
+[Cheats/Max Fish Caught P1]
+// patch=1,EE,103B7E64,extended,00000009
+
+[Cheats/No Fish Caught P1]
+// patch=1,EE,103B7E64,extended,00000000
+
+[Cheats/Max Total Weight P1]
+// patch=1,EE,103B7E4C,extended,0000270F
+
+[Cheats/No Total Weight P1]
+// patch=1,EE,103B7E4C,extended,00000000
+
+[Cheats/Max Fish Caught P2]
+// patch=1,EE,103B7E68,extended,00000009
+
+[Cheats/No Fish Caught P2]
+// patch=1,EE,103B7E68,extended,00000000
+
+[Cheats/Max Total Weight P2]
+// patch=1,EE,103B7E50,extended,0000270F
+
+[Cheats/No Total Weight P2]
+// patch=1,EE,103B7E50,extended,00000000

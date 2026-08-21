@@ -1,0 +1,13 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Corvette [SLUS-20858] [DDFD68B1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Todd Richards-Career-Max All Stats]
+// patch=1,EE,9034B87C,extended,0C0DCA0D
+
+[Cheats/Always Low Lap Time]
+// patch=1,EE,201823D8,extended,00000000
+// patch=1,EE,2018240C,extended,00000000
+
+[Cheats/Access Any Race]
+// patch=1,EE,20188854,extended,24050001

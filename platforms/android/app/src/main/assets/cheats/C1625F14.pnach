@@ -1,0 +1,71 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Midnight Club II [SLUS-20209] [C1625F14]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Total Damage Outs]
+// patch=1,EE,F0100008,extended,003F2927
+
+[Cheats/Infinite Damage]
+// patch=1,EE,2020E6E4,extended,AE00005C
+// patch=1,EE,2020E67C,extended,AE20005C
+
+[Cheats/Machine Gun & Rockets]
+// patch=1,EE,00427788,extended,00000001
+
+[Cheats/Never Take Damage]
+// patch=1,EE,0042780C,extended,00000001
+
+[Cheats/Infinite Nitro]
+// patch=1,EE,0042780D,extended,00000001
+
+[Cheats/Unlock All Races]
+// patch=1,EE,0042CCE8,extended,00000001
+
+[Cheats/Unlock All Cities]
+// patch=1,EE,0042CCE9,extended,00000001
+
+[Cheats/Unlock All Vehicles]
+// patch=1,EE,0042CCEA,extended,00000001
+
+[Cheats/Unlock Customization]
+// patch=1,EE,0042CCEB,extended,00000001
+
+[Cheats/Unlock All Abilities]
+// patch=1,EE,0042CCEC,extended,00000001
+
+[Cheats/Unlock Insanity]
+// patch=1,EE,0042CCED,extended,00000001
+
+[Cheats/No Props]
+// patch=1,EE,0042CDAC,extended,00000000
+// patch=1,EE,004AC189,extended,00000000
+
+[Cheats/No Traffic]
+// patch=1,EE,0042CDAD,extended,00000000
+// patch=1,EE,004AC18A,extended,00000000
+
+[Cheats/No AI]
+// patch=1,EE,0042CDAF,extended,00000001
+// patch=1,EE,004AC18B,extended,00000000
+
+[Cheats/No Pedestrians]
+// patch=1,EE,0042CDAF,extended,00000001
+// patch=1,EE,004AC18C,extended,00000000
+
+[Cheats/VoomPeds]
+// patch=1,EE,0042CEB8,extended,00000001
+
+[Cheats/Idiot AI]
+// patch=1,EE,2042CCE0,extended,3A83126F
+
+[Cheats/Quick Win (Arcade Mode-Circuit)]
+// patch=1,EE,201AE674,extended,2441FFFF
+// patch=1,EE,201AE678,extended,A1010030
+
+[Cheats/Game Completed]
+// patch=1,EE,205B4C80,extended,FFFFFFFF
+// patch=1,EE,205B4C84,extended,FFFFFFFF
+// patch=1,EE,205B4C88,extended,FFFFFFFF
+// patch=1,EE,205B4C8C,extended,FFFFFFFF
+// patch=1,EE,205B4C90,extended,FFFFFFFF
+// patch=1,EE,205B4C94,extended,FFFFFFFF

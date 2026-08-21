@@ -1,0 +1,49 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Hard Rock Casino [SLUS-21102] [E360416A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {SELECT} For More Balls]
+// patch=1,EE,9011FE28,extended,00832021
+
+[Cheats/Infinite Credits]
+// patch=1,EE,10245798,extended,0000FFFF
+
+[Cheats/Max Credits]
+// patch=1,EE,20245798,extended,4876E7FF
+// patch=1,EE,2024579C,extended,00000017
+
+[Cheats/Quit Playing Doesnt Decrease Credits]
+// patch=1,EE,201BD978,extended,00000000
+
+[Cheats/Video Keno Slots]
+// patch=1,EE,2015A53C,extended,00000000
+
+[Cheats/Poker Slots]
+// patch=1,EE,2015A8A4,extended,00000000
+
+[Cheats/Regular Slots]
+// patch=1,EE,2015C320,extended,00000000
+
+[Cheats/Roulette]
+// patch=1,EE,2015D2AC,extended,00000000
+
+[Cheats/Baccarat]
+// patch=1,EE,2015E8BC,extended,00000000
+
+[Cheats/Fortune Pai Gow]
+// patch=1,EE,2015EC28,extended,00000000
+
+[Cheats/Casino War]
+// patch=1,EE,2015F1DC,extended,00000000
+
+[Cheats/Big Raise Hold 'Em]
+// patch=1,EE,2015F5E0,extended,00000000
+
+[Cheats/Let It Rie]
+// patch=1,EE,2015FB40,extended,00000000
+
+[Cheats/Black Jack]
+// patch=1,EE,2015FEE4,extended,00000000
+
+[Cheats/Hard Rock Slots]
+// patch=1,EE,20204A08,extended,00000000

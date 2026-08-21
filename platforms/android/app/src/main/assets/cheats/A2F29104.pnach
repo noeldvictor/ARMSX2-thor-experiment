@@ -1,0 +1,66 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Vexx [SLES-50481] [A2F29104]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Shadow Body]
+// patch=1,EE,901BCC84,extended,0C0E638E
+
+[Cheats/Infinite Health]
+// patch=1,EE,20167864,extended,3C0140C0
+// patch=1,EE,20167868,extended,46000836
+// patch=1,EE,2016786C,extended,AC610000
+
+[Cheats/Infinite Lives]
+// patch=1,EE,206AFE04,extended,00000009
+
+[Cheats/Extra Lives]
+// patch=1,EE,10173EE0,extended,00000001
+
+[Cheats/Max Shards]
+// patch=1,EE,206AFE34,extended,00000064
+
+[Cheats/Only Need 1 Shard To Obtain Wraithheart]
+// patch=1,EE,D06AFE34,extended,10200063
+// patch=1,EE,206AFE34,extended,00000063
+
+[Cheats/Max Souls Jars]
+// patch=1,EE,206AFE3C,extended,00000064
+
+[Cheats/Max Overall Hearts]
+// patch=1,EE,206AFE44,extended,00000032
+
+[Cheats/Have All Timberdale Hearts]
+// patch=1,EE,406B2DA4,extended,000A0002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Dragonreach Hearts]
+// patch=1,EE,406B2DF4,extended,00090002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All The Neverglades Hearts]
+// patch=1,EE,406B2E3C,extended,00090002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Tempest Peak Manor Hearts]
+// patch=1,EE,406B2E84,extended,00090002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All The Below Hearts]
+// patch=1,EE,406B2ECC,extended,000A0002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Daggercrag Hearts]
+// patch=1,EE,406B2F1C,extended,00090002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Summit Of The Sages Hearts]
+// patch=1,EE,406B2F64,extended,00080002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Frostblight Mill Hearts]
+// patch=1,EE,406B2FA4,extended,00090002
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Citadel Of Shadows Hearts]
+// patch=1,EE,406B2FEC,extended,00080002
+// patch=1,EE,00000001,extended,00000000

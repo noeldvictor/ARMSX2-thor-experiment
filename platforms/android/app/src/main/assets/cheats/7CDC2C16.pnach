@@ -1,0 +1,188 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Alter Echo [SLUS-20465] [7CDC2C16]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slot 236]
+// patch=1,EE,90157DC4,extended,0C0B1867
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,20211C90,extended,24030001
+
+[Cheats/Infinite Special Attacks]
+// patch=1,EE,20210690,extended,00000000
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,0806192A
+// patch=1,EE,200C0224,extended,E44100B8
+// patch=1,EE,2011BCC0,extended,0C030088
+
+[Cheats/Quick Plasm Gain]
+// patch=1,EE,1034E39C,extended,0000FFFF
+
+[Cheats/Max Plasm]
+// patch=1,EE,2034E39C,extended,05F5E0FF
+// patch=1,EE,2034E3A0,extended,4CBEBC1F
+// patch=1,EE,203C51EC,extended,05F5E0FF
+
+[Cheats/Buying New Abilities Cost $0]
+// patch=1,EE,2029D270,extended,00000000
+
+[Cheats/Buy New Abilities With No Plasma]
+// patch=1,EE,1029D41E,extended,00001000
+
+[Cheats/Have All Abilities]
+// patch=1,EE,408485D4,extended,00310001
+// patch=1,EE,00000002,extended,00000000
+
+[Cheats/Disable FMV]
+// patch=1,EE,202B47D0,extended,24020001
+
+[Cheats/Rebirth-Echo]
+// patch=1,EE,203C51F4,extended,00000001
+
+[Cheats/Rebirth-Gunplay]
+// patch=1,EE,203C51F4,extended,00000002
+
+[Cheats/Rebirth-Stealth]
+// patch=1,EE,203C51F4,extended,00000003
+
+[Cheats/Rebirth-Time]
+// patch=1,EE,203C51F4,extended,00000004
+
+[Cheats/Rebirth-Master]
+// patch=1,EE,203C51F4,extended,00000005
+
+[Cheats/Surface-Search]
+// patch=1,EE,203C51F4,extended,00000006
+
+[Cheats/Surface-Arana]
+// patch=1,EE,203C51F4,extended,00000007
+
+[Cheats/Surface-Master]
+// patch=1,EE,203C51F4,extended,00000008
+
+[Cheats/Hunted-Reunion]
+// patch=1,EE,203C51F4,extended,00000009
+
+[Cheats/Hunted-Gunship]
+// patch=1,EE,203C51F4,extended,0000000A
+
+[Cheats/Hunted-Pursuit]
+// patch=1,EE,203C51F4,extended,0000000B
+
+[Cheats/Hunted-Showdown]
+// patch=1,EE,203C51F4,extended,0000000C
+
+[Cheats/Hunted-Master]
+// patch=1,EE,203C51F4,extended,0000000D
+
+[Cheats/Power-Transmit]
+// patch=1,EE,203C51F4,extended,0000000E
+
+[Cheats/Power-Kess]
+// patch=1,EE,203C51F4,extended,0000000F
+
+[Cheats/Power-Master]
+// patch=1,EE,203C51F4,extended,00000010
+
+[Cheats/Transit-Stome]
+// patch=1,EE,203C51F4,extended,00000011
+
+[Cheats/Transit-Ambush]
+// patch=1,EE,203C51F4,extended,00000012
+
+[Cheats/Transit-Seedlings]
+// patch=1,EE,203C51F4,extended,00000013
+
+[Cheats/Transit-Obstacles]
+// patch=1,EE,203C51F4,extended,00000014
+
+[Cheats/Transit-Cooperation]
+// patch=1,EE,203C51F4,extended,00000015
+
+[Cheats/Transit-Master]
+// patch=1,EE,203C51F4,extended,00000016
+
+[Cheats/Spaceport-Plans 1]
+// patch=1,EE,203C51F4,extended,00000017
+
+[Cheats/Spaceport-Plans 2]
+// patch=1,EE,203C51F4,extended,00000018
+
+[Cheats/Spaceport-Shuttle]
+// patch=1,EE,203C51F4,extended,00000019
+
+[Cheats/Brain-Plea]
+// patch=1,EE,203C51F4,extended,0000001A
+
+[Cheats/Brain-Underneath]
+// patch=1,EE,203C51F4,extended,0000001B
+
+[Cheats/Brain-Gherran]
+// patch=1,EE,203C51F4,extended,0000001C
+
+[Cheats/Brain-Toxic 1]
+// patch=1,EE,203C51F4,extended,0000001D
+
+[Cheats/Brain-Toxic 2]
+// patch=1,EE,203C51F4,extended,0000001E
+
+[Cheats/Brain-Kess]
+// patch=1,EE,203C51F4,extended,0000001F
+
+[Cheats/Brain-Master]
+// patch=1,EE,203C51F4,extended,00000020
+
+[Cheats/Rescue-Arana]
+// patch=1,EE,203C51F4,extended,00000021
+
+[Cheats/Rescue-Forcefield]
+// patch=1,EE,203C51F4,extended,00000022
+
+[Cheats/Rescue-Sacrifice]
+// patch=1,EE,203C51F4,extended,00000023
+
+[Cheats/Breach-Landing]
+// patch=1,EE,203C51F4,extended,00000024
+
+[Cheats/Breach-Barriers 1]
+// patch=1,EE,203C51F4,extended,00000025
+
+[Cheats/Breach-Barriers 2]
+// patch=1,EE,203C51F4,extended,00000026
+
+[Cheats/Breach-Approach]
+// patch=1,EE,203C51F4,extended,00000027
+
+[Cheats/Breach-Elevator]
+// patch=1,EE,203C51F4,extended,00000028
+
+[Cheats/Breach-Shield 1]
+// patch=1,EE,203C51F4,extended,00000029
+
+[Cheats/Breach-Shield 2]
+// patch=1,EE,203C51F4,extended,0000002A
+
+[Cheats/Breach-Master]
+// patch=1,EE,203C51F4,extended,0000002B
+
+[Cheats/Citadel-Alone]
+// patch=1,EE,203C51F4,extended,0000002C
+
+[Cheats/Citadel-Ascent]
+// patch=1,EE,203C51F4,extended,0000002D
+
+[Cheats/Citadel-Assault]
+// patch=1,EE,203C51F4,extended,0000002E
+
+[Cheats/Citadel-Inside]
+// patch=1,EE,203C51F4,extended,0000002F
+
+[Cheats/Citadel-Guardian]
+// patch=1,EE,203C51F4,extended,00000030
+
+[Cheats/Citadel-Paavo]
+// patch=1,EE,203C51F4,extended,00000031
+
+[Cheats/Citadel-Ending]
+// patch=1,EE,203C51F4,extended,00000032

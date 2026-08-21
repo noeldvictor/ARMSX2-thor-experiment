@@ -1,0 +1,538 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ultimate Spider-Man [SLUS-20870] [FDD12792]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Complete Skill Challenges Easier]
+// patch=1,EE,905ED9CC,extended,0C17FA8B
+
+[Cheats/Infinite Health]
+// patch=1,EE,2017B604,extended,C4410208
+// patch=1,EE,2017B60C,extended,E4410200
+
+[Cheats/Max Health Upgrades]
+// patch=1,EE,2038807C,extended,24030003
+// patch=1,EE,20388080,extended,AE030038
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,10164418,extended,00000001
+// patch=1,EE,10164434,extended,00000001
+
+[Cheats/Dont Lose Health From Falling High Distances]
+// patch=1,EE,2044B940,extended,00000000
+
+[Cheats/P1 Press {CROSS} For Moon Jump]
+// patch=1,EE,200C0220,extended,3C014140
+// patch=1,EE,200C0224,extended,AC410004
+// patch=1,EE,200C0228,extended,08080D08
+// patch=1,EE,200C022C,extended,C4400004
+// patch=1,EE,D0698D82,extended,0000BFFF
+// patch=1,EE,2020341C,extended,08030088
+// patch=1,EE,D0698D82,extended,0000FFFF
+// patch=1,EE,2020341C,extended,C4400004
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Race Timers]
+// patch=1,EE,E002FBFE,extended,00698D82
+// patch=1,EE,203C1720,extended,00000000
+// patch=1,EE,203C1724,extended,00000000
+// patch=1,EE,E002FEFE,extended,00698D82
+// patch=1,EE,203C1720,extended,E6800020
+// patch=1,EE,203C1724,extended,E6820020
+
+[Cheats/Access All Character]
+// patch=1,EE,2066FBE8,extended,00000001
+
+[Cheats/Access All Characters/Covers/Concept Art/Landmarks]
+// patch=1,EE,21D87D18,extended,42C80000
+
+[Cheats/Alex O' Hirn]
+// patch=1,EE,20B1E008,extended,3F800000
+
+[Cheats/Beetle]
+// patch=1,EE,20B1E00C,extended,3F800000
+
+[Cheats/Boomerang]
+// patch=1,EE,20B1E010,extended,3F800000
+
+[Cheats/Carnage]
+// patch=1,EE,20B1E014,extended,3F800000
+
+[Cheats/Police Officer]
+// patch=1,EE,20B1E018,extended,3F800000
+
+[Cheats/Die-Caste Thug]
+// patch=1,EE,20B1E01C,extended,3F800000
+
+[Cheats/Die-Caste Boss]
+// patch=1,EE,20B1E020,extended,3F800000
+
+[Cheats/Die-Caste Lieutenant]
+// patch=1,EE,20B1E024,extended,3F800000
+
+[Cheats/Eddie Brock Jr.]
+// patch=1,EE,20B1E028,extended,3F800000
+
+[Cheats/Eddie Brock Sr.]
+// patch=1,EE,20B1E02C,extended,3F800000
+
+[Cheats/Electro Full Power]
+// patch=1,EE,20B1E030,extended,3F800000
+
+[Cheats/Electro]
+// patch=1,EE,20B1E034,extended,3F800000
+
+[Cheats/Mei Hua Bang Thug]
+// patch=1,EE,20B1E038,extended,3F800000
+
+[Cheats/Mei Hua Bang Boss]
+// patch=1,EE,20B1E03C,extended,3F800000
+
+[Cheats/Mei Hua Bang Lieutenant]
+// patch=1,EE,20B1E040,extended,3F800000
+
+[Cheats/Nick Fury]
+// patch=1,EE,20B1E044,extended,3F800000
+
+[Cheats/Green Goblin]
+// patch=1,EE,20B1E048,extended,3F800000
+
+[Cheats/Johnny Storm]
+// patch=1,EE,20B1E04C,extended,3F800000
+
+[Cheats/Kenny 'Kong' Harlan]
+// patch=1,EE,20B1E050,extended,3F800000
+
+[Cheats/Liz Allen]
+// patch=1,EE,20B1E054,extended,3F800000
+
+[Cheats/Mary Jane Watson]
+// patch=1,EE,20B1E058,extended,3F800000
+
+[Cheats/Peter Parker]
+// patch=1,EE,20B1E05C,extended,3F800000
+// patch=1,EE,20B1E270,extended,3F800000
+
+[Cheats/Richard Parker]
+// patch=1,EE,20B1E060,extended,3F800000
+
+[Cheats/Rhino]
+// patch=1,EE,20B1E064,extended,3F800000
+
+[Cheats/High Rollers Thug]
+// patch=1,EE,20B1E068,extended,3F800000
+
+[Cheats/High Rollers Boss]
+// patch=1,EE,20B1E06C,extended,3F800000
+
+[Cheats/High Rollers Lieutenant]
+// patch=1,EE,20B1E070,extended,3F800000
+
+[Cheats/Silver Sable]
+// patch=1,EE,20B1E074,extended,3F800000
+
+[Cheats/Sable Mercenary]
+// patch=1,EE,20B1E078,extended,3F800000
+
+[Cheats/Sharon Carter]
+// patch=1,EE,20B1E07C,extended,3F800000
+
+[Cheats/S.H.I.E.L.D. Agent]
+// patch=1,EE,20B1E080,extended,3F800000
+
+[Cheats/Shocker]
+// patch=1,EE,20B1E084,extended,3F800000
+
+[Cheats/Yancy Street Thug]
+// patch=1,EE,20B1E088,extended,3F800000
+
+[Cheats/Yancy Street Boss]
+// patch=1,EE,20B1E08C,extended,3F800000
+
+[Cheats/Yancy Street Lieutenant]
+// patch=1,EE,20B1E090,extended,3F800000
+
+[Cheats/Spider-Man]
+// patch=1,EE,20B1E094,extended,3F800000
+// patch=1,EE,20B1E278,extended,3F800000
+
+[Cheats/Adrian Toomes]
+// patch=1,EE,20B1E098,extended,3F800000
+
+[Cheats/Bolivar Trask]
+// patch=1,EE,20B1E09C,extended,3F800000
+
+[Cheats/Venom]
+// patch=1,EE,20B1E0A0,extended,3F800000
+
+[Cheats/Wolverine]
+// patch=1,EE,20B1E0A4,extended,3F800000
+
+[Cheats/All Characters]
+// patch=1,EE,40B1E008,extended,00280001
+// patch=1,EE,3F800000,extended,00000000
+
+[Cheats/Father's Pride]
+// patch=1,EE,20B1E0A8,extended,3F800000
+
+[Cheats/Workout]
+// patch=1,EE,20B1E0AC,extended,3F800000
+
+[Cheats/Feeding Time]
+// patch=1,EE,20B1E0B0,extended,3F800000
+
+[Cheats/Hell Of A Mess]
+// patch=1,EE,20B1E0B4,extended,3F800000
+
+[Cheats/Like A Rhinocerous, But Bigger]
+// patch=1,EE,20B1E0B8,extended,3F800000
+
+[Cheats/Inexpungible]
+// patch=1,EE,20B1E0BC,extended,3F800000
+
+[Cheats/Class Trip]
+// patch=1,EE,20B1E0C0,extended,3F800000
+
+[Cheats/Throw Down]
+// patch=1,EE,20B1E0C4,extended,3F800000
+
+[Cheats/Pursuit]
+// patch=1,EE,20B1E0C8,extended,3F800000
+
+[Cheats/Mine]
+// patch=1,EE,20B1E0CC,extended,3F800000
+
+[Cheats/Cool Suit]
+// patch=1,EE,20B1E0D0,extended,3F800000
+
+[Cheats/Skyscraper Battle]
+// patch=1,EE,20B1E0D4,extended,3F800000
+
+[Cheats/The Great Escape]
+// patch=1,EE,20B1E0D8,extended,3F800000
+
+[Cheats/18 And Over]
+// patch=1,EE,20B1E0DC,extended,3F800000
+
+[Cheats/A Sample]
+// patch=1,EE,20B1E0E0,extended,3F800000
+
+[Cheats/Crazy]
+// patch=1,EE,20B1E0E4,extended,3F800000
+
+[Cheats/Rescue]
+// patch=1,EE,20B1E0E8,extended,3F800000
+
+[Cheats/Brothers]
+// patch=1,EE,20B1E0EC,extended,3F800000
+
+[Cheats/Final Battle]
+// patch=1,EE,20B1E0F0,extended,3F800000
+
+[Cheats/All Concept Art]
+// patch=1,EE,40B1E0A8,extended,00130001
+// patch=1,EE,3F800000,extended,00000000
+
+[Cheats/The Baxter Building]
+// patch=1,EE,20B1E0F4,extended,3F800000
+
+[Cheats/Daily Bugle]
+// patch=1,EE,20B1E0F8,extended,3F800000
+
+[Cheats/Doctor Strange's Sanctum Sanctorum]
+// patch=1,EE,20B1E0FC,extended,3F800000
+
+[Cheats/Eastside Tunnel]
+// patch=1,EE,20B1E100,extended,3F800000
+
+[Cheats/Empire State Art Museum]
+// patch=1,EE,20B1E104,extended,3F800000
+
+[Cheats/Empire State University]
+// patch=1,EE,20B1E108,extended,3F800000
+
+[Cheats/Latverian Embassy]
+// patch=1,EE,20B1E10C,extended,3F800000
+
+[Cheats/Midtown High School]
+// patch=1,EE,20B1E110,extended,3F800000
+
+[Cheats/Park Castle]
+// patch=1,EE,20B1E114,extended,3F800000
+
+[Cheats/Parker's House]
+// patch=1,EE,20B1E118,extended,3F800000
+
+[Cheats/Queensborough Bridge]
+// patch=1,EE,20B1E11C,extended,3F800000
+
+[Cheats/Reed Richards Science Center]
+// patch=1,EE,20B1E120,extended,3F800000
+
+[Cheats/Statue Of Liberty]
+// patch=1,EE,20B1E124,extended,3F800000
+
+[Cheats/The Place]
+// patch=1,EE,20B1E128,extended,3F800000
+
+[Cheats/Trask Tower]
+// patch=1,EE,20B1E12C,extended,3F800000
+
+[Cheats/All Landmarks]
+// patch=1,EE,40B1E0F4,extended,000F0001
+// patch=1,EE,3F800000,extended,00000000
+
+[Cheats/Cover 1]
+// patch=1,EE,20B1E130,extended,3F800000
+
+[Cheats/Cover 2]
+// patch=1,EE,20B1E134,extended,3F800000
+
+[Cheats/Cover 3]
+// patch=1,EE,20B1E138,extended,3F800000
+
+[Cheats/Cover 4]
+// patch=1,EE,20B1E13C,extended,3F800000
+
+[Cheats/Cover 5]
+// patch=1,EE,20B1E140,extended,3F800000
+
+[Cheats/Cover 6]
+// patch=1,EE,20B1E144,extended,3F800000
+
+[Cheats/Cover 7]
+// patch=1,EE,20B1E148,extended,3F800000
+
+[Cheats/Cover 8]
+// patch=1,EE,20B1E14C,extended,3F800000
+
+[Cheats/Cover 9]
+// patch=1,EE,20B1E150,extended,3F800000
+
+[Cheats/Cover 10]
+// patch=1,EE,20B1E154,extended,3F800000
+
+[Cheats/Cover 11]
+// patch=1,EE,20B1E158,extended,3F800000
+
+[Cheats/Cover 12]
+// patch=1,EE,20B1E15C,extended,3F800000
+
+[Cheats/Cover 13]
+// patch=1,EE,20B1E160,extended,3F800000
+
+[Cheats/Cover 14]
+// patch=1,EE,20B1E164,extended,3F800000
+
+[Cheats/Cover 15]
+// patch=1,EE,20B1E168,extended,3F800000
+
+[Cheats/Cover 16]
+// patch=1,EE,20B1E16C,extended,3F800000
+
+[Cheats/Cover 17]
+// patch=1,EE,20B1E170,extended,3F800000
+
+[Cheats/Cover 18]
+// patch=1,EE,20B1E174,extended,3F800000
+
+[Cheats/Cover 19]
+// patch=1,EE,20B1E178,extended,3F800000
+
+[Cheats/Cover 20]
+// patch=1,EE,20B1E17C,extended,3F800000
+
+[Cheats/Cover 21]
+// patch=1,EE,20B1E180,extended,3F800000
+
+[Cheats/Cover 22]
+// patch=1,EE,20B1E184,extended,3F800000
+
+[Cheats/Cover 23]
+// patch=1,EE,20B1E188,extended,3F800000
+
+[Cheats/Cover 24]
+// patch=1,EE,20B1E18C,extended,3F800000
+
+[Cheats/Cover 25]
+// patch=1,EE,20B1E190,extended,3F800000
+
+[Cheats/Cover 26]
+// patch=1,EE,20B1E194,extended,3F800000
+
+[Cheats/Cover 27]
+// patch=1,EE,20B1E198,extended,3F800000
+
+[Cheats/Cover 28]
+// patch=1,EE,20B1E19C,extended,3F800000
+
+[Cheats/Cover 29]
+// patch=1,EE,20B1E1A0,extended,3F800000
+
+[Cheats/Cover 30]
+// patch=1,EE,20B1E1A4,extended,3F800000
+
+[Cheats/Cover 31]
+// patch=1,EE,20B1E1A8,extended,3F800000
+
+[Cheats/Cover 32]
+// patch=1,EE,20B1E1AC,extended,3F800000
+
+[Cheats/Cover 33]
+// patch=1,EE,20B1E1B0,extended,3F800000
+
+[Cheats/Cover 34]
+// patch=1,EE,20B1E1B4,extended,3F800000
+
+[Cheats/Cover 35]
+// patch=1,EE,20B1E1B8,extended,3F800000
+
+[Cheats/Cover 36]
+// patch=1,EE,20B1E1BC,extended,3F800000
+
+[Cheats/Cover 37]
+// patch=1,EE,20B1E1C0,extended,3F800000
+
+[Cheats/Cover 38]
+// patch=1,EE,20B1E1C4,extended,3F800000
+
+[Cheats/Cover 39]
+// patch=1,EE,20B1E1C8,extended,3F800000
+
+[Cheats/Cover 40]
+// patch=1,EE,20B1E1CC,extended,3F800000
+
+[Cheats/Cover 41]
+// patch=1,EE,20B1E1D0,extended,3F800000
+
+[Cheats/Cover 42]
+// patch=1,EE,20B1E1D4,extended,3F800000
+
+[Cheats/Cover 43]
+// patch=1,EE,20B1E1D8,extended,3F800000
+
+[Cheats/Cover 44]
+// patch=1,EE,20B1E1DC,extended,3F800000
+
+[Cheats/Cover 45]
+// patch=1,EE,20B1E1E0,extended,3F800000
+
+[Cheats/Cover 46]
+// patch=1,EE,20B1E1E4,extended,3F800000
+
+[Cheats/Cover 47]
+// patch=1,EE,20B1E1E8,extended,3F800000
+
+[Cheats/Cover 48]
+// patch=1,EE,20B1E1EC,extended,3F800000
+
+[Cheats/Cover 49]
+// patch=1,EE,20B1E1F0,extended,3F800000
+
+[Cheats/Cover 50]
+// patch=1,EE,20B1E1F4,extended,3F800000
+
+[Cheats/Cover 51]
+// patch=1,EE,20B1E1F8,extended,3F800000
+
+[Cheats/Cover 52]
+// patch=1,EE,20B1E1FC,extended,3F800000
+
+[Cheats/Cover 53]
+// patch=1,EE,20B1E200,extended,3F800000
+
+[Cheats/Cover 54]
+// patch=1,EE,20B1E204,extended,3F800000
+
+[Cheats/Cover 55]
+// patch=1,EE,20B1E208,extended,3F800000
+
+[Cheats/Cover 56]
+// patch=1,EE,20B1E20C,extended,3F800000
+
+[Cheats/Cover 57]
+// patch=1,EE,20B1E210,extended,3F800000
+
+[Cheats/Cover 58]
+// patch=1,EE,20B1E214,extended,3F800000
+
+[Cheats/Cover 59]
+// patch=1,EE,20B1E218,extended,3F800000
+
+[Cheats/Cover 60]
+// patch=1,EE,20B1E21C,extended,3F800000
+
+[Cheats/Cover 61]
+// patch=1,EE,20B1E220,extended,3F800000
+
+[Cheats/Cover 62]
+// patch=1,EE,20B1E224,extended,3F800000
+
+[Cheats/Cover 63]
+// patch=1,EE,20B1E228,extended,3F800000
+
+[Cheats/Cover 64]
+// patch=1,EE,20B1E22C,extended,3F800000
+
+[Cheats/Cover 65]
+// patch=1,EE,20B1E230,extended,3F800000
+
+[Cheats/Cover 66]
+// patch=1,EE,20B1E234,extended,3F800000
+
+[Cheats/Cover 67]
+// patch=1,EE,20B1E238,extended,3F800000
+
+[Cheats/Cover 68]
+// patch=1,EE,20B1E23C,extended,3F800000
+
+[Cheats/Cover 69]
+// patch=1,EE,20B1E240,extended,3F800000
+
+[Cheats/Cover 70]
+// patch=1,EE,20B1E244,extended,3F800000
+
+[Cheats/Cover 71]
+// patch=1,EE,20B1E248,extended,3F800000
+
+[Cheats/Cover 72]
+// patch=1,EE,20B1E24C,extended,3F800000
+
+[Cheats/Cover 73]
+// patch=1,EE,20B1E250,extended,3F800000
+
+[Cheats/Cover 74]
+// patch=1,EE,20B1E254,extended,3F800000
+
+[Cheats/Cover 75]
+// patch=1,EE,20B1E258,extended,3F800000
+
+[Cheats/Cover 76]
+// patch=1,EE,20B1E25C,extended,3F800000
+
+[Cheats/Cover 77]
+// patch=1,EE,20B1E260,extended,3F800000
+
+[Cheats/Cover 78]
+// patch=1,EE,20B1E264,extended,3F800000
+
+[Cheats/Cover 79]
+// patch=1,EE,20B1E268,extended,3F800000
+
+[Cheats/All Covers]
+// patch=1,EE,40B1E130,extended,004F0001
+// patch=1,EE,3F800000,extended,00000000
+
+[Cheats/Arachnoman]
+// patch=1,EE,20B1E26C,extended,3F800000
+
+[Cheats/Peter Parker Hoodie]
+// patch=1,EE,20B1E274,extended,3F800000
+
+[Cheats/Black Suit]
+// patch=1,EE,20B1E27C,extended,3F800000
+
+[Cheats/Wrestling]
+// patch=1,EE,20B1E280,extended,3F800000
+
+[Cheats/All Costumes]
+// patch=1,EE,40B1E26C,extended,00060001
+// patch=1,EE,3F800000,extended,00000000

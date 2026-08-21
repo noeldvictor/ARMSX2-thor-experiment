@@ -1,0 +1,15 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Woody Woodpecker [SLES-50613] [B9A91CA8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Accessories For Sale]
+// patch=1,EE,F0100008,extended,0012C2E7
+
+[Cheats/Infinite Lives]
+// patch=1,EE,10920A7C,extended,0000000A
+
+[Cheats/Max Money]
+// patch=1,EE,10920A80,extended,0000270F
+
+[Cheats/Infinite Special Movies]
+// patch=1,EE,10920A84,extended,00000063

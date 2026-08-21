@@ -1,0 +1,15 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Nascar Thunder 2002 [SLUS-20266] [6436665F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Points]
+// patch=1,EE,90278E3C,extended,0C0830CC
+
+[Cheats/Max Money (Career Mode)]
+// patch=1,EE,21F74678,extended,0098967F
+
+[Cheats/Unlock All Drivers]
+// patch=1,EE,21F6D6C4,extended,00000100
+// patch=1,EE,21F6DB04,extended,00000100
+// patch=1,EE,41F6DE34,extended,002E0011
+// patch=1,EE,00000100,extended,00000000

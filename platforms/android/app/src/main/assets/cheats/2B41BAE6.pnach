@@ -1,0 +1,57 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shrek Super Party [SLUS-20516] [2B41BAE6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Characters]
+// patch=1,EE,F0100008,extended,00215437
+
+[Cheats/Max Overall Score P1]
+// patch=1,EE,10670174,extended,000003E7
+
+[Cheats/No Overall Score P1]
+// patch=1,EE,10670174,extended,00000000
+
+[Cheats/Max Overall Score P2]
+// patch=1,EE,106701F4,extended,000003E7
+
+[Cheats/No Overall Score P2]
+// patch=1,EE,106701F4,extended,00000000
+
+[Cheats/Max Overall Score P3]
+// patch=1,EE,10670274,extended,000003E7
+
+[Cheats/No Overall Score P3]
+// patch=1,EE,10670274,extended,00000000
+
+[Cheats/Max Overall Score P4]
+// patch=1,EE,106702F4,extended,000003E7
+
+[Cheats/No Overall Score P4]
+// patch=1,EE,106702F4,extended,00000000
+
+[Cheats/Max Score P1]
+// patch=1,EE,1026A34C,extended,000003E7
+
+[Cheats/No Score P1]
+// patch=1,EE,1026A34C,extended,00000000
+
+[Cheats/Max Score P2]
+// patch=1,EE,1026A350,extended,000003E7
+
+[Cheats/No Score P2]
+// patch=1,EE,1026A350,extended,00000000
+
+[Cheats/Max Score P3]
+// patch=1,EE,1026A354,extended,000003E7
+
+[Cheats/No Score P3]
+// patch=1,EE,1026A354,extended,00000000
+
+[Cheats/Max Score P4]
+// patch=1,EE,1026A358,extended,000003E7
+
+[Cheats/No Score P4]
+// patch=1,EE,1026A358,extended,00000000
+
+[Cheats/Hella Score Gain]
+// patch=1,EE,202073AC,extended,24420032

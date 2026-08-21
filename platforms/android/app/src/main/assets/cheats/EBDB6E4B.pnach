@@ -1,0 +1,338 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Incredibles, The [SLES-52812] [EBDB6E4B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Moves]
+// patch=1,EE,90111620,extended,0C047328
+
+[Cheats/Infinite Health]
+// patch=1,EE,202424AC,extended,24030064
+// patch=1,EE,202424B0,extended,A443001C
+
+[Cheats/Infinite Incredi-Meter]
+// patch=1,EE,2024103C,extended,24020064
+// patch=1,EE,20241040,extended,A4820798
+
+[Cheats/Invincibility]
+// patch=1,EE,206482E0,extended,00000001
+
+[Cheats/Disable HUD]
+// patch=1,EE,2062FC90,extended,00000000
+
+[Cheats/Very Tiny Head Mode]
+// patch=1,EE,206301A4,extended,3F000000
+
+[Cheats/Tiny Head Mode]
+// patch=1,EE,206301A4,extended,3F400000
+
+[Cheats/Big Head Mode]
+// patch=1,EE,206301A4,extended,40000000
+
+[Cheats/Huge Head Mode]
+// patch=1,EE,206301A4,extended,40800000
+
+[Cheats/Always Disco Mode]
+// patch=1,EE,706315F1,extended,00000001
+
+[Cheats/Always Have Fire Trail]
+// patch=1,EE,706315F1,extended,00000002
+
+[Cheats/Slow Motion Mode]
+// patch=1,EE,206482D8,extended,3F000000
+
+[Cheats/Hyper Mode]
+// patch=1,EE,206482D8,extended,40000000
+
+[Cheats/Ultra Hyper Mode]
+// patch=1,EE,206482D8,extended,40800000
+
+[Cheats/Jumper]
+// patch=1,EE,006CFE68,extended,00000001
+
+[Cheats/Incrediboy!]
+// patch=1,EE,006CFE69,extended,00000001
+
+[Cheats/Switch Targets]
+// patch=1,EE,006CFE6A,extended,00000001
+
+[Cheats/Omnidroid 08]
+// patch=1,EE,006CFE6B,extended,00000001
+
+[Cheats/Surprising]
+// patch=1,EE,006CFE6C,extended,00000001
+
+[Cheats/Duty Calls]
+// patch=1,EE,006CFE6D,extended,00000001
+
+[Cheats/Omnidroid 09]
+// patch=1,EE,006CFE6E,extended,00000001
+
+[Cheats/Snug]
+// patch=1,EE,006CFE6F,extended,00000001
+
+[Cheats/Island Approach]
+// patch=1,EE,006CFE70,extended,00000001
+
+[Cheats/Put These On]
+// patch=1,EE,006CFE71,extended,00000001
+
+[Cheats/Minions At Work]
+// patch=1,EE,006CFE72,extended,00000001
+
+[Cheats/Identification Please]
+// patch=1,EE,006CFE73,extended,00000001
+
+[Cheats/Dash On The Run]
+// patch=1,EE,006CFE74,extended,00000001
+
+[Cheats/Begin The Attack]
+// patch=1,EE,006CFE75,extended,00000001
+
+[Cheats/Incredi-Ball]
+// patch=1,EE,006CFE76,extended,00000001
+
+[Cheats/Reunited!]
+// patch=1,EE,006CFE77,extended,00000001
+
+[Cheats/Supers Return]
+// patch=1,EE,006CFE78,extended,00000001
+
+[Cheats/Robot Manners]
+// patch=1,EE,006CFE79,extended,00000001
+
+[Cheats/Say Please]
+// patch=1,EE,006CFE7A,extended,00000001
+
+[Cheats/Just Like Old Times]
+// patch=1,EE,006CFE7B,extended,00000001
+
+[Cheats/Victory]
+// patch=1,EE,006CFE7C,extended,00000001
+
+[Cheats/Welcome Back]
+// patch=1,EE,006CFE7D,extended,00000001
+
+[Cheats/Great]
+// patch=1,EE,006CFE7E,extended,00000001
+
+[Cheats/Are We There Yet?]
+// patch=1,EE,006CFE7F,extended,00000001
+
+[Cheats/Super Moonlighting]
+// patch=1,EE,006CFE82,extended,00000001
+
+[Cheats/First Assignment]
+// patch=1,EE,006CFE87,extended,00000001
+
+[Cheats/All Video]
+// patch=1,EE,406CFE68,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,006CFE82,extended,00000001
+// patch=1,EE,006CFE87,extended,00000001
+
+[Cheats/Artwork 2]
+// patch=1,EE,006CFE90,extended,00000001
+
+[Cheats/Artwork 3]
+// patch=1,EE,006CFE91,extended,00000001
+
+[Cheats/Artwork 4]
+// patch=1,EE,006CFE92,extended,00000001
+
+[Cheats/Artwork 5]
+// patch=1,EE,006CFE93,extended,00000001
+
+[Cheats/Artwork 6]
+// patch=1,EE,006CFE94,extended,00000001
+
+[Cheats/Artwork 7]
+// patch=1,EE,006CFE95,extended,00000001
+
+[Cheats/Artwork 8]
+// patch=1,EE,006CFE96,extended,00000001
+
+[Cheats/Artwork 9]
+// patch=1,EE,006CFE97,extended,00000001
+
+[Cheats/Artwork 10]
+// patch=1,EE,006CFE98,extended,00000001
+
+[Cheats/Artwork 11]
+// patch=1,EE,006CFE99,extended,00000001
+
+[Cheats/Artwork 12]
+// patch=1,EE,006CFE9A,extended,00000001
+
+[Cheats/Artwork 13]
+// patch=1,EE,006CFE9B,extended,00000001
+
+[Cheats/Artwork 14]
+// patch=1,EE,006CFE9C,extended,00000001
+
+[Cheats/Artwork 15]
+// patch=1,EE,006CFE9D,extended,00000001
+
+[Cheats/Artwork 16]
+// patch=1,EE,006CFE9E,extended,00000001
+
+[Cheats/Artwork 17]
+// patch=1,EE,006CFE9F,extended,00000001
+
+[Cheats/Artwork 18]
+// patch=1,EE,006CFEA0,extended,00000001
+
+[Cheats/Artwork 19]
+// patch=1,EE,006CFEA1,extended,00000001
+
+[Cheats/Artwork 20]
+// patch=1,EE,006CFEA2,extended,00000001
+
+[Cheats/Artwork 21]
+// patch=1,EE,006CFEA3,extended,00000001
+
+[Cheats/Artwork 22]
+// patch=1,EE,006CFEA4,extended,00000001
+
+[Cheats/Artwork 23]
+// patch=1,EE,006CFEA5,extended,00000001
+
+[Cheats/Artwork 24]
+// patch=1,EE,006CFEA6,extended,00000001
+
+[Cheats/Artwork 25]
+// patch=1,EE,006CFEA7,extended,00000001
+
+[Cheats/Artwork 26]
+// patch=1,EE,006CFEA8,extended,00000001
+
+[Cheats/Artwork 27]
+// patch=1,EE,006CFEA9,extended,00000001
+
+[Cheats/Artwork 28]
+// patch=1,EE,006CFEAA,extended,00000001
+
+[Cheats/Artwork 29]
+// patch=1,EE,006CFEAB,extended,00000001
+
+[Cheats/Artwork 30]
+// patch=1,EE,006CFEAC,extended,00000001
+
+[Cheats/Artwork 31]
+// patch=1,EE,006CFEAD,extended,00000001
+
+[Cheats/Artwork 32]
+// patch=1,EE,006CFEAE,extended,00000001
+
+[Cheats/Artwork 33]
+// patch=1,EE,006CFEAF,extended,00000001
+
+[Cheats/Artwork 34]
+// patch=1,EE,006CFEB0,extended,00000001
+
+[Cheats/Artwork 35]
+// patch=1,EE,006CFEB1,extended,00000001
+
+[Cheats/Artwork 36]
+// patch=1,EE,006CFEB2,extended,00000001
+
+[Cheats/Artwork 37]
+// patch=1,EE,006CFEB3,extended,00000001
+
+[Cheats/Artwork 38]
+// patch=1,EE,006CFEB4,extended,00000001
+
+[Cheats/Artwork 39]
+// patch=1,EE,006CFEB5,extended,00000001
+
+[Cheats/Artwork 40]
+// patch=1,EE,006CFEB6,extended,00000001
+
+[Cheats/Artwork 41]
+// patch=1,EE,006CFEB7,extended,00000001
+
+[Cheats/Artwork 42]
+// patch=1,EE,006CFEB8,extended,00000001
+
+[Cheats/Artwork 43]
+// patch=1,EE,006CFEB9,extended,00000001
+
+[Cheats/Artwork 44]
+// patch=1,EE,006CFEBA,extended,00000001
+
+[Cheats/Artwork 45]
+// patch=1,EE,006CFEBB,extended,00000001
+
+[Cheats/Artwork 46]
+// patch=1,EE,006CFEBC,extended,00000001
+
+[Cheats/Artwork 47]
+// patch=1,EE,006CFEBD,extended,00000001
+
+[Cheats/Artwork 48]
+// patch=1,EE,006CFEBE,extended,00000001
+
+[Cheats/Artwork 49]
+// patch=1,EE,006CFEBF,extended,00000001
+
+[Cheats/Artwork 50]
+// patch=1,EE,006CFEC0,extended,00000001
+
+[Cheats/Artwork 51]
+// patch=1,EE,006CFEC1,extended,00000001
+
+[Cheats/Artwork 52]
+// patch=1,EE,006CFEC2,extended,00000001
+
+[Cheats/Artwork 53]
+// patch=1,EE,006CFEC3,extended,00000001
+
+[Cheats/Artwork 54]
+// patch=1,EE,006CFEC4,extended,00000001
+
+[Cheats/Artwork 55]
+// patch=1,EE,006CFEC5,extended,00000001
+
+[Cheats/Artwork 56]
+// patch=1,EE,006CFEC6,extended,00000001
+
+[Cheats/Artwork 57]
+// patch=1,EE,006CFEC7,extended,00000001
+
+[Cheats/Artwork 58]
+// patch=1,EE,006CFEC8,extended,00000001
+
+[Cheats/Artwork 59]
+// patch=1,EE,006CFEC9,extended,00000001
+
+[Cheats/Artwork 60]
+// patch=1,EE,006CFECA,extended,00000001
+
+[Cheats/Artwork 61]
+// patch=1,EE,006CFECB,extended,00000001
+
+[Cheats/Artwork 62]
+// patch=1,EE,006CFECC,extended,00000001
+
+[Cheats/Artwork 63]
+// patch=1,EE,006CFECD,extended,00000001
+
+[Cheats/Artwork 64]
+// patch=1,EE,006CFECE,extended,00000001
+
+[Cheats/Artwork 65]
+// patch=1,EE,006CFECF,extended,00000001
+
+[Cheats/Artwork 66]
+// patch=1,EE,006CFED0,extended,00000001
+
+[Cheats/Artwork 67]
+// patch=1,EE,006CFED1,extended,00000001
+
+[Cheats/Artwork 68]
+// patch=1,EE,006CFED2,extended,00000001
+
+[Cheats/All Artwork]
+// patch=1,EE,406CFE90,extended,00100001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,106CFED0,extended,00000101
+// patch=1,EE,006CFED2,extended,00000001

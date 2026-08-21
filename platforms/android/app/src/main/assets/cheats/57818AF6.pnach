@@ -1,0 +1,953 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shadow Of Rome [SLUS-20902] [57818AF6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Items]
+// patch=1,EE,90275238,extended,0C0496E8
+
+[Cheats/Disable FMV]
+// patch=1,EE,201099B0,extended,24020001
+
+[Cheats/Infinite Health]
+// patch=1,EE,2037D284,extended,A4430382
+
+[Cheats/Infinite Salvo Points]
+// patch=1,EE,104FEB40,extended,0000FFFF
+
+[Cheats/Max Salvo Points]
+// patch=1,EE,204FEB40,extended,05F5E0FF
+
+[Cheats/Infinite Weapon Durability]
+// patch=1,EE,201A208C,extended,00000000
+
+[Cheats/Have All Salvo List (In-Game)]
+// patch=1,EE,40551590,extended,007E0001
+// patch=1,EE,A70FA70F,extended,00000000
+
+[Cheats/Unlock All Options/Cheats]
+// patch=1,EE,20550998,extended,FFFFFFFF
+
+[Cheats/Have All Salvos]
+// patch=1,EE,40550FD4,extended,00080001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/Have All Salvos Viewed]
+// patch=1,EE,40550FF4,extended,00080001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/Max Total Salvo Points-All Games]
+// patch=1,EE,20551BE4,extended,05F5E0FF
+
+[Cheats/No Total Salvo Points-All Games]
+// patch=1,EE,20551BE4,extended,00000000
+
+[Cheats/Max Enemies Killed]
+// patch=1,EE,205522BC,extended,85F5E0FF
+
+[Cheats/No Enemies Killed]
+// patch=1,EE,205522BC,extended,80000000
+
+[Cheats/Max Most Salvo Points In One Event]
+// patch=1,EE,205522C4,extended,85F5E0FF
+
+[Cheats/No Most Salvo Points In One Event]
+// patch=1,EE,205522C4,extended,80000000
+
+[Cheats/No Continues Used]
+// patch=1,EE,205522CC,extended,80000000
+
+[Cheats/Max Longest Chain Combo]
+// patch=1,EE,205522D0,extended,85F5E0FF
+
+[Cheats/No Longest Chain Combo]
+// patch=1,EE,205522D0,extended,80000000
+
+[Cheats/Max Bare-Handed Clears]
+// patch=1,EE,205522F8,extended,85F5E0FF
+
+[Cheats/No Bare-Handed Clears]
+// patch=1,EE,205522F8,extended,80000000
+
+[Cheats/Max Distance Traveled In Miles]
+// patch=1,EE,20552350,extended,8997A960
+
+[Cheats/No Distance Traveled In Miles]
+// patch=1,EE,20552350,extended,80000000
+
+[Cheats/Max Most Points From A Single Salvo]
+// patch=1,EE,20552378,extended,85F5E0FF
+
+[Cheats/No Most Points From A Single Salvo]
+// patch=1,EE,20552378,extended,80000000
+
+[Cheats/Max Weapons Thrown]
+// patch=1,EE,205522D4,extended,85F5E0FF
+
+[Cheats/No Weapons Thrown]
+// patch=1,EE,205522D4,extended,80000000
+
+[Cheats/Max Thrown Weapon Hits]
+// patch=1,EE,205522D8,extended,85F5E0FF
+
+[Cheats/No Thrown Weapon Hits]
+// patch=1,EE,205522D8,extended,80000000
+
+[Cheats/Max Thrown Weapon Kills]
+// patch=1,EE,205522DC,extended,85F5E0FF
+
+[Cheats/No Thrown Weapon Kills]
+// patch=1,EE,205522DC,extended,80000000
+
+[Cheats/Max Weapons Broken]
+// patch=1,EE,205522E0,extended,85F5E0FF
+
+[Cheats/No Weapons Broken]
+// patch=1,EE,205522E0,extended,80000000
+
+[Cheats/Max Weapons Stolen From Enemies]
+// patch=1,EE,205522FC,extended,85F5E0FF
+
+[Cheats/No Weapons Stolen From Enemies]
+// patch=1,EE,205522FC,extended,80000000
+
+[Cheats/Max Weapons Stolen By Enemies]
+// patch=1,EE,20552300,extended,85F5E0FF
+
+[Cheats/No Weapons Stolen By Enemies]
+// patch=1,EE,20552300,extended,80000000
+
+[Cheats/Max Weapons Dropped]
+// patch=1,EE,20552320,extended,85F5E0FF
+
+[Cheats/No Weapons Dropped]
+// patch=1,EE,20552320,extended,80000000
+
+[Cheats/Max Enemy Weapons Dropped]
+// patch=1,EE,20552324,extended,85F5E0FF
+
+[Cheats/No Enemy Weapons Dropped]
+// patch=1,EE,20552324,extended,80000000
+
+[Cheats/Max Successful Supra Attacks]
+// patch=1,EE,20552330,extended,85F5E0FF
+
+[Cheats/No Successful Supra Attacks]
+// patch=1,EE,20552330,extended,80000000
+
+[Cheats/Max Times You've Been Knocked Down]
+// patch=1,EE,205522E4,extended,85F5E0FF
+
+[Cheats/No Times You've Been Knocked Down]
+// patch=1,EE,205522E4,extended,80000000
+
+[Cheats/Max Times You've Knocked Enemies Down]
+// patch=1,EE,205522E8,extended,85F5E0FF
+
+[Cheats/No Times You've Knocked Enemies Down]
+// patch=1,EE,205522E8,extended,80000000
+
+[Cheats/Max Enemies Pulled To Their Feet]
+// patch=1,EE,205522EC,extended,85F5E0FF
+
+[Cheats/No Enemies Pulled To Their Feet]
+// patch=1,EE,205522EC,extended,80000000
+
+[Cheats/Max Enemies Chased And Attacked]
+// patch=1,EE,205522F0,extended,85F5E0FF
+
+[Cheats/No Enemies Chased And Attacked]
+// patch=1,EE,205522F0,extended,80000000
+
+[Cheats/Max Enemies Chased And Killed]
+// patch=1,EE,205522F4,extended,85F5E0FF
+
+[Cheats/No Enemies Chased And Killed]
+// patch=1,EE,205522F4,extended,80000000
+
+[Cheats/Max Attacks Received By Enemies]
+// patch=1,EE,2055231C,extended,85F5E0FF
+
+[Cheats/No Attacks Received By Enemies]
+// patch=1,EE,2055231C,extended,80000000
+
+[Cheats/Max Enemy Attacks Blocked]
+// patch=1,EE,20552328,extended,85F5E0FF
+
+[Cheats/No Enemy Attacks Blocked]
+// patch=1,EE,20552328,extended,80000000
+
+[Cheats/Max Attacks Blocked By Enemies]
+// patch=1,EE,2055232C,extended,85F5E0FF
+
+[Cheats/No Attacks Blocked By Enemies]
+// patch=1,EE,2055232C,extended,80000000
+
+[Cheats/Max Helmets Broken By Enemies]
+// patch=1,EE,20552334,extended,85F5E0FF
+
+[Cheats/No Helmets Broken By Enemies]
+// patch=1,EE,20552334,extended,80000000
+
+[Cheats/Max Enemy Helmets Broken]
+// patch=1,EE,20552338,extended,85F5E0FF
+
+[Cheats/No Enemy Helmets Broken]
+// patch=1,EE,20552338,extended,80000000
+
+[Cheats/Max Victories-Gladius]
+// patch=1,EE,2055237C,extended,85F5E0FF
+
+[Cheats/No Victories-Gladius]
+// patch=1,EE,2055237C,extended,80000000
+
+[Cheats/Max Victories-Scimitar]
+// patch=1,EE,20552380,extended,85F5E0FF
+
+[Cheats/No Victories-Scimitar]
+// patch=1,EE,20552380,extended,80000000
+
+[Cheats/Max Victories-Mace]
+// patch=1,EE,20552384,extended,85F5E0FF
+
+[Cheats/No Victories-Mace]
+// patch=1,EE,20552384,extended,80000000
+
+[Cheats/Max Victories-Halberd]
+// patch=1,EE,20552388,extended,85F5E0FF
+
+[Cheats/No Victories-Halberd]
+// patch=1,EE,20552388,extended,80000000
+
+[Cheats/Max Victories-Maul]
+// patch=1,EE,2055238C,extended,85F5E0FF
+
+[Cheats/No Victories-Maul]
+// patch=1,EE,2055238C,extended,80000000
+
+[Cheats/Max Victories-Morningstar]
+// patch=1,EE,20552390,extended,85F5E0FF
+
+[Cheats/No Victories-Morningstar]
+// patch=1,EE,20552390,extended,80000000
+
+[Cheats/Max Victories-Dagger]
+// patch=1,EE,20552394,extended,85F5E0FF
+
+[Cheats/No Victories-Dagger]
+// patch=1,EE,20552394,extended,80000000
+
+[Cheats/Max Victories-Rock]
+// patch=1,EE,20552398,extended,85F5E0FF
+
+[Cheats/No Victories-Rock]
+// patch=1,EE,20552398,extended,80000000
+
+[Cheats/Max Victories-Spear]
+// patch=1,EE,2055239C,extended,85F5E0FF
+
+[Cheats/No Victories-Spear]
+// patch=1,EE,2055239C,extended,80000000
+
+[Cheats/Max Victories-Bow]
+// patch=1,EE,205523A0,extended,85F5E0FF
+
+[Cheats/No Victories-Bow]
+// patch=1,EE,205523A0,extended,80000000
+
+[Cheats/Max Victories-Sling]
+// patch=1,EE,205523A4,extended,85F5E0FF
+
+[Cheats/No Victories-Sling]
+// patch=1,EE,205523A4,extended,80000000
+
+[Cheats/Max Victories-Torch]
+// patch=1,EE,205523A8,extended,85F5E0FF
+
+[Cheats/No Victories-Torch]
+// patch=1,EE,205523A8,extended,80000000
+
+[Cheats/Max Victories-Rudis]
+// patch=1,EE,205523AC,extended,85F5E0FF
+
+[Cheats/No Victories-Rudis]
+// patch=1,EE,205523AC,extended,80000000
+
+[Cheats/Max Victories-Whip]
+// patch=1,EE,205523B0,extended,85F5E0FF
+
+[Cheats/No Victories-Whip]
+// patch=1,EE,205523B0,extended,80000000
+
+[Cheats/Max Victories-Trident]
+// patch=1,EE,205523B4,extended,85F5E0FF
+
+[Cheats/No Victories-Trident]
+// patch=1,EE,205523B4,extended,80000000
+
+[Cheats/Max Victories-Magnus]
+// patch=1,EE,205523B8,extended,85F5E0FF
+
+[Cheats/No Victories-Magnus]
+// patch=1,EE,205523B8,extended,80000000
+
+[Cheats/Max Victories-Roma Sai]
+// patch=1,EE,205523BC,extended,85F5E0FF
+
+[Cheats/No Victories-Roma Sai]
+// patch=1,EE,205523BC,extended,80000000
+
+[Cheats/Max Victories-Barca Axe]
+// patch=1,EE,205523C0,extended,85F5E0FF
+
+[Cheats/No Victories-Barca Axe]
+// patch=1,EE,205523C0,extended,80000000
+
+[Cheats/Max Victories-German Hand Axe]
+// patch=1,EE,205523C4,extended,85F5E0FF
+
+[Cheats/No Victories-German Hand Axe]
+// patch=1,EE,205523C4,extended,80000000
+
+[Cheats/Max Victories-Long Axe]
+// patch=1,EE,205523C8,extended,85F5E0FF
+
+[Cheats/No Victories-Long Axe]
+// patch=1,EE,205523C8,extended,80000000
+
+[Cheats/Max Victories-Guardian Gladius]
+// patch=1,EE,205523CC,extended,85F5E0FF
+
+[Cheats/No Victories-Guardian Gladius]
+// patch=1,EE,205523CC,extended,80000000
+
+[Cheats/Max Victories-Gedo Spear]
+// patch=1,EE,205523D0,extended,85F5E0FF
+
+[Cheats/No Victories-Gedo Spear]
+// patch=1,EE,205523D0,extended,80000000
+
+[Cheats/Max Victories-Zedo Spear]
+// patch=1,EE,205523D4,extended,85F5E0FF
+
+[Cheats/No Victories-Zedo Spear]
+// patch=1,EE,205523D4,extended,80000000
+
+[Cheats/Max Victories-Power Gladius]
+// patch=1,EE,205523D8,extended,85F5E0FF
+
+[Cheats/No Victories-Power Gladius]
+// patch=1,EE,205523D8,extended,80000000
+
+[Cheats/Max Victories-Power Scimitar]
+// patch=1,EE,205523DC,extended,85F5E0FF
+
+[Cheats/No Victories-Power Scimitar]
+// patch=1,EE,205523DC,extended,80000000
+
+[Cheats/Max Victories-Grand Mace]
+// patch=1,EE,205523E0,extended,85F5E0FF
+
+[Cheats/No Victories-Grand Mace]
+// patch=1,EE,205523E0,extended,80000000
+
+[Cheats/Max Victories-Grand Halberd]
+// patch=1,EE,205523E4,extended,85F5E0FF
+
+[Cheats/No Victories-Grand Halberd]
+// patch=1,EE,205523E4,extended,80000000
+
+[Cheats/Max Victories-Power Maul]
+// patch=1,EE,205523E8,extended,85F5E0FF
+
+[Cheats/No Victories-Power Maul]
+// patch=1,EE,205523E8,extended,80000000
+
+[Cheats/Max Victories-War Chain]
+// patch=1,EE,205523EC,extended,85F5E0FF
+
+[Cheats/No Victories-War Chain]
+// patch=1,EE,205523EC,extended,80000000
+
+[Cheats/Max Victories-Apollo Spear]
+// patch=1,EE,205523F0,extended,85F5E0FF
+
+[Cheats/No Victories-Apollo Spear]
+// patch=1,EE,205523F0,extended,80000000
+
+[Cheats/Max Victories-Fire Bow]
+// patch=1,EE,205523F4,extended,85F5E0FF
+
+[Cheats/No Victories-Fire Bow]
+// patch=1,EE,205523F4,extended,80000000
+
+[Cheats/Max Victories-Oil Sling]
+// patch=1,EE,205523F8,extended,85F5E0FF
+
+[Cheats/No Victories-Oil Sling]
+// patch=1,EE,205523F8,extended,80000000
+
+[Cheats/Max Victories-Stick]
+// patch=1,EE,205523FC,extended,85F5E0FF
+
+[Cheats/No Victories-Stick]
+// patch=1,EE,205523FC,extended,80000000
+
+[Cheats/Max Victories-Head]
+// patch=1,EE,20552400,extended,85F5E0FF
+
+[Cheats/No Victories-Head]
+// patch=1,EE,20552400,extended,80000000
+
+[Cheats/Max Victories-Arm]
+// patch=1,EE,20552404,extended,85F5E0FF
+
+[Cheats/No Victories-Arm]
+// patch=1,EE,20552404,extended,80000000
+
+[Cheats/Max Victories-Parma]
+// patch=1,EE,20552408,extended,85F5E0FF
+
+[Cheats/No Victories-Parma]
+// patch=1,EE,20552408,extended,80000000
+
+[Cheats/Max Victories-Spike Shield]
+// patch=1,EE,2055240C,extended,85F5E0FF
+
+[Cheats/No Victories-Spike Shield]
+// patch=1,EE,2055240C,extended,80000000
+
+[Cheats/Max Victories-German Shield]
+// patch=1,EE,20552410,extended,85F5E0FF
+
+[Cheats/No Victories-German Shield]
+// patch=1,EE,20552410,extended,80000000
+
+[Cheats/Max Victories-Roma Shield]
+// patch=1,EE,20552414,extended,85F5E0FF
+
+[Cheats/No Victories-Roma Shield]
+// patch=1,EE,20552414,extended,80000000
+
+[Cheats/Max Victories-Guardian Shield]
+// patch=1,EE,20552418,extended,85F5E0FF
+
+[Cheats/No Victories-Guardian Shield]
+// patch=1,EE,20552418,extended,80000000
+
+[Cheats/Max Victories-No Weapon]
+// patch=1,EE,2055241C,extended,85F5E0FF
+
+[Cheats/No Victories-No Weapon]
+// patch=1,EE,2055241C,extended,80000000
+
+[Cheats/Max Victories-Barrel]
+// patch=1,EE,20552420,extended,85F5E0FF
+
+[Cheats/No Victories-Barrel]
+// patch=1,EE,20552420,extended,80000000
+
+[Cheats/Max Victories-Valcross Bow]
+// patch=1,EE,20552424,extended,85F5E0FF
+
+[Cheats/No Victories-Valcross Bow]
+// patch=1,EE,20552424,extended,80000000
+
+[Cheats/Max Victories-Claw Shard]
+// patch=1,EE,20552428,extended,85F5E0FF
+
+[Cheats/No Victories-Claw Shard]
+// patch=1,EE,20552428,extended,80000000
+
+[Cheats/Max Victories-Large Warrior]
+// patch=1,EE,2055246C,extended,85F5E0FF
+
+[Cheats/No Victories-Large Warrior]
+// patch=1,EE,2055246C,extended,80000000
+
+[Cheats/Max Victories-Mid-Size Warrior]
+// patch=1,EE,20552470,extended,85F5E0FF
+
+[Cheats/No Victories-Mid-Size Warrior]
+// patch=1,EE,20552470,extended,80000000
+
+[Cheats/Max Victories-Small Warrior]
+// patch=1,EE,20552474,extended,85F5E0FF
+
+[Cheats/No Victories-Small Warrior]
+// patch=1,EE,20552474,extended,80000000
+
+[Cheats/Max Victories-Female Warrior]
+// patch=1,EE,20552478,extended,85F5E0FF
+
+[Cheats/No Victories-Female Warrior]
+// patch=1,EE,20552478,extended,80000000
+
+[Cheats/Max Victories-Roman Soldier]
+// patch=1,EE,2055247C,extended,85F5E0FF
+
+[Cheats/No Victories-Roman Soldier]
+// patch=1,EE,2055247C,extended,80000000
+
+[Cheats/Max Victories-German Fighter]
+// patch=1,EE,20552480,extended,85F5E0FF
+
+[Cheats/No Victories-German Fighter]
+// patch=1,EE,20552480,extended,80000000
+
+[Cheats/Max Victories-Soldier Of Antonius]
+// patch=1,EE,20552484,extended,85F5E0FF
+
+[Cheats/No Victories-Soldier Of Antonius]
+// patch=1,EE,20552484,extended,80000000
+
+[Cheats/Max Victories-Bandit]
+// patch=1,EE,20552488,extended,85F5E0FF
+
+[Cheats/No Victories-Bandit]
+// patch=1,EE,20552488,extended,80000000
+
+[Cheats/Max Victories-Pirate]
+// patch=1,EE,2055248C,extended,85F5E0FF
+
+[Cheats/No Victories-Pirate]
+// patch=1,EE,2055248C,extended,80000000
+
+[Cheats/Max Victories-Barca]
+// patch=1,EE,20552490,extended,85F5E0FF
+
+[Cheats/No Victories-Barca]
+// patch=1,EE,20552490,extended,80000000
+
+[Cheats/Max Victories-Sextus]
+// patch=1,EE,20552494,extended,85F5E0FF
+
+[Cheats/No Victories-Sextus]
+// patch=1,EE,20552494,extended,80000000
+
+[Cheats/Max Victories-Decius]
+// patch=1,EE,20552498,extended,85F5E0FF
+
+[Cheats/No Victories-Decius]
+// patch=1,EE,20552498,extended,80000000
+
+[Cheats/Max Victories-Antonius]
+// patch=1,EE,2055249C,extended,85F5E0FF
+
+[Cheats/No Victories-Antonius]
+// patch=1,EE,2055249C,extended,80000000
+
+[Cheats/Max Victories-Arcanas]
+// patch=1,EE,205524A0,extended,85F5E0FF
+
+[Cheats/No Victories-Arcanas]
+// patch=1,EE,205524A0,extended,80000000
+
+[Cheats/Max Victories-Narclastese]
+// patch=1,EE,205524A4,extended,85F5E0FF
+
+[Cheats/No Victories-Narclastese]
+// patch=1,EE,205524A4,extended,80000000
+
+[Cheats/Max Victories-Askari]
+// patch=1,EE,205524A8,extended,85F5E0FF
+
+[Cheats/No Victories-Askari]
+// patch=1,EE,205524A8,extended,80000000
+
+[Cheats/Max Victories-Zedo]
+// patch=1,EE,205524AC,extended,85F5E0FF
+
+[Cheats/No Victories-Zedo]
+// patch=1,EE,205524AC,extended,80000000
+
+[Cheats/Max Victories-Gedo]
+// patch=1,EE,205524B0,extended,85F5E0FF
+
+[Cheats/No Victories-Gedo]
+// patch=1,EE,205524B0,extended,80000000
+
+[Cheats/Max Victories-Tiger]
+// patch=1,EE,205524B4,extended,85F5E0FF
+
+[Cheats/No Victories-Tiger]
+// patch=1,EE,205524B4,extended,80000000
+
+[Cheats/Max Victories-Elephant]
+// patch=1,EE,205524B8,extended,85F5E0FF
+
+[Cheats/No Victories-Elephant]
+// patch=1,EE,205524B8,extended,80000000
+
+[Cheats/Max Victories-Vulture]
+// patch=1,EE,205524BC,extended,85F5E0FF
+
+[Cheats/No Victories-Vulture]
+// patch=1,EE,205524BC,extended,80000000
+
+[Cheats/Max Victories-Elite Large Warrior]
+// patch=1,EE,205524C0,extended,85F5E0FF
+
+[Cheats/No Victories-Elite Large Warrior]
+// patch=1,EE,205524C0,extended,80000000
+
+[Cheats/Max Victories-Elite Mid-Size Warrior]
+// patch=1,EE,205524C4,extended,85F5E0FF
+
+[Cheats/No Victories-Elite Mid-Size Warrior]
+// patch=1,EE,205524C4,extended,80000000
+
+[Cheats/Max Victories-Elite Small Warrior]
+// patch=1,EE,205524C8,extended,85F5E0FF
+
+[Cheats/No Victories-Elite Small Warrior]
+// patch=1,EE,205524C8,extended,80000000
+
+[Cheats/Max Victories-Elite Female Warrior]
+// patch=1,EE,205524CC,extended,85F5E0FF
+
+[Cheats/No Victories-Elite Female Warrior]
+// patch=1,EE,205524CC,extended,80000000
+
+[Cheats/Max Heads Severed]
+// patch=1,EE,20552444,extended,85F5E0FF
+
+[Cheats/No Heads Severed]
+// patch=1,EE,20552444,extended,80000000
+
+[Cheats/Max Arms Severed]
+// patch=1,EE,20552448,extended,85F5E0FF
+
+[Cheats/No Arms Severed]
+// patch=1,EE,20552448,extended,80000000
+
+[Cheats/Max Torsos Hacked]
+// patch=1,EE,2055244C,extended,85F5E0FF
+
+[Cheats/No Torsos Hacked]
+// patch=1,EE,2055244C,extended,80000000
+
+[Cheats/Max Heads Crushed]
+// patch=1,EE,20552450,extended,85F5E0FF
+
+[Cheats/No Heads Crushed]
+// patch=1,EE,20552450,extended,80000000
+
+[Cheats/Max Necks Broken]
+// patch=1,EE,20552454,extended,85F5E0FF
+
+[Cheats/No Necks Broken]
+// patch=1,EE,20552454,extended,80000000
+
+[Cheats/Max Arms Broken]
+// patch=1,EE,20552458,extended,85F5E0FF
+
+[Cheats/No Arms Broken]
+// patch=1,EE,20552458,extended,80000000
+
+[Cheats/Max Distance Ran In Miles]
+// patch=1,EE,205524D0,extended,8997A960
+
+[Cheats/No Distance Ran In Miles]
+// patch=1,EE,205524D0,extended,80000000
+
+[Cheats/Max Distance Walked In Miles]
+// patch=1,EE,205524D4,extended,8997A960
+
+[Cheats/No Distance Walked In Miles]
+// patch=1,EE,205524D4,extended,80000000
+
+[Cheats/Max Distance Crawled In Miles]
+// patch=1,EE,205524D8,extended,8997A960
+
+[Cheats/No Distance Crawled In Miles]
+// patch=1,EE,205524D8,extended,80000000
+
+[Cheats/Max Pieces Of Meat Thrown To Crowd]
+// patch=1,EE,20552304,extended,85F5E0FF
+
+[Cheats/No Pieces Of Meat Thrown To Crowd]
+// patch=1,EE,20552304,extended,80000000
+
+[Cheats/Max Roses Thrown To Crowd]
+// patch=1,EE,20552308,extended,85F5E0FF
+
+[Cheats/No Roses Thrown To Crowd]
+// patch=1,EE,20552308,extended,80000000
+
+[Cheats/Max Weapons Thrown To Crowd]
+// patch=1,EE,2055230C,extended,85F5E0FF
+
+[Cheats/No Weapons Thrown To Crowd]
+// patch=1,EE,2055230C,extended,80000000
+
+[Cheats/Max Appeals]
+// patch=1,EE,20552310,extended,85F5E0FF
+
+[Cheats/No Appeals]
+// patch=1,EE,20552310,extended,80000000
+
+[Cheats/Max Successful Appeals]
+// patch=1,EE,20552314,extended,85F5E0FF
+
+[Cheats/No Successful Appeals]
+// patch=1,EE,20552314,extended,80000000
+
+[Cheats/Max Times Caught On Fire]
+// patch=1,EE,2055233C,extended,85F5E0FF
+
+[Cheats/No Times Caught On Fire]
+// patch=1,EE,2055233C,extended,80000000
+
+[Cheats/Max Enemies Caught On Fire]
+// patch=1,EE,20552340,extended,85F5E0FF
+
+[Cheats/No Enemies Caught On Fire]
+// patch=1,EE,20552340,extended,80000000
+
+[Cheats/Max Times Doused In Oil]
+// patch=1,EE,20552344,extended,85F5E0FF
+
+[Cheats/No Times Doused In Oil]
+// patch=1,EE,20552344,extended,80000000
+
+[Cheats/Max Times Enemies Doused In Oil]
+// patch=1,EE,20552348,extended,85F5E0FF
+
+[Cheats/No Times Enemies Doused In Oil]
+// patch=1,EE,20552348,extended,80000000
+
+[Cheats/Max Pieces Of Meat Eaten]
+// patch=1,EE,2055234C,extended,85F5E0FF
+
+[Cheats/No Pieces Of Meat Eaten]
+// patch=1,EE,2055234C,extended,80000000
+
+[Cheats/City Arena-Battle Royale]
+// patch=1,EE,005509AD,extended,00000001
+// patch=1,EE,205509A8,extended,05F5E0FF
+// patch=1,EE,00550B2D,extended,00000001
+// patch=1,EE,20550B28,extended,05F5E0FF
+// patch=1,EE,00550CAD,extended,00000001
+// patch=1,EE,20550CA8,extended,05F5E0FF
+
+[Cheats/City Arena-Elimination]
+// patch=1,EE,005509B5,extended,00000001
+// patch=1,EE,205509B0,extended,05F5E0FF
+// patch=1,EE,00550B35,extended,00000001
+// patch=1,EE,20550B30,extended,05F5E0FF
+// patch=1,EE,00550CB5,extended,00000001
+// patch=1,EE,20550CB0,extended,05F5E0FF
+
+[Cheats/City Arena-Beast Hunt]
+// patch=1,EE,005509BD,extended,00000001
+// patch=1,EE,205509B8,extended,05F5E0FF
+// patch=1,EE,00550B3D,extended,00000001
+// patch=1,EE,20550B38,extended,05F5E0FF
+// patch=1,EE,00550CBD,extended,00000001
+// patch=1,EE,20550CB8,extended,05F5E0FF
+
+[Cheats/City Arena-Team Battle]
+// patch=1,EE,005509C5,extended,00000001
+// patch=1,EE,205509C0,extended,05F5E0FF
+// patch=1,EE,00550B45,extended,00000001
+// patch=1,EE,20550B40,extended,05F5E0FF
+// patch=1,EE,00550CC5,extended,00000001
+// patch=1,EE,20550CC0,extended,05F5E0FF
+
+[Cheats/City Arena-Siege]
+// patch=1,EE,005509CD,extended,00000001
+// patch=1,EE,205509C8,extended,05F5E0FF
+// patch=1,EE,00550B4D,extended,00000001
+// patch=1,EE,20550B48,extended,05F5E0FF
+// patch=1,EE,00550CCD,extended,00000001
+// patch=1,EE,20550CC8,extended,05F5E0FF
+
+[Cheats/City Arena-Boss Battle]
+// patch=1,EE,005509D5,extended,00000001
+// patch=1,EE,205509D0,extended,05F5E0FF
+// patch=1,EE,00550B55,extended,00000001
+// patch=1,EE,20550B50,extended,05F5E0FF
+// patch=1,EE,00550CD5,extended,00000001
+// patch=1,EE,20550CD0,extended,05F5E0FF
+
+[Cheats/Northern Arena-Rescue Mission]
+// patch=1,EE,005509DD,extended,00000001
+// patch=1,EE,205509D8,extended,05F5E0FF
+// patch=1,EE,00550B5D,extended,00000001
+// patch=1,EE,20550B58,extended,05F5E0FF
+// patch=1,EE,00550CDD,extended,00000001
+// patch=1,EE,20550CD8,extended,05F5E0FF
+
+[Cheats/Northern Arena-Elimination]
+// patch=1,EE,005509E5,extended,00000001
+// patch=1,EE,205509E0,extended,05F5E0FF
+// patch=1,EE,00550B65,extended,00000001
+// patch=1,EE,20550B60,extended,05F5E0FF
+// patch=1,EE,00550CE5,extended,00000001
+// patch=1,EE,20550CE0,extended,05F5E0FF
+
+[Cheats/Northern Arena-Battle Royale]
+// patch=1,EE,005509ED,extended,00000001
+// patch=1,EE,00550A0D,extended,00000001
+// patch=1,EE,205509E8,extended,05F5E0FF
+// patch=1,EE,20550A08,extended,05F5E0FF
+// patch=1,EE,00550B6D,extended,00000001
+// patch=1,EE,00550B8D,extended,00000001
+// patch=1,EE,20550B68,extended,05F5E0FF
+// patch=1,EE,20550B88,extended,05F5E0FF
+// patch=1,EE,00550CED,extended,00000001
+// patch=1,EE,00550D0D,extended,00000001
+// patch=1,EE,20550CE8,extended,05F5E0FF
+// patch=1,EE,20550D08,extended,05F5E0FF
+
+[Cheats/Northern Arena-Team Battle]
+// patch=1,EE,005509F5,extended,00000001
+// patch=1,EE,205509F0,extended,05F5E0FF
+// patch=1,EE,00550B75,extended,00000001
+// patch=1,EE,20550B70,extended,05F5E0FF
+// patch=1,EE,00550CF5,extended,00000001
+// patch=1,EE,20550CF0,extended,05F5E0FF
+
+[Cheats/Northern Arena-Artus Dominus]
+// patch=1,EE,005509FD,extended,00000001
+// patch=1,EE,205509F8,extended,05F5E0FF
+// patch=1,EE,00550B7D,extended,00000001
+// patch=1,EE,20550B78,extended,05F5E0FF
+// patch=1,EE,00550CFD,extended,00000001
+// patch=1,EE,20550CF8,extended,05F5E0FF
+
+[Cheats/Circus Maximus-1st Race]
+// patch=1,EE,00550A15,extended,00000001
+// patch=1,EE,20550A10,extended,05F5E0FF
+// patch=1,EE,00550B95,extended,00000001
+// patch=1,EE,20550B90,extended,05F5E0FF
+// patch=1,EE,00550D15,extended,00000001
+// patch=1,EE,20550D10,extended,05F5E0FF
+
+[Cheats/Circus Maximus-2nd Race]
+// patch=1,EE,00550A1D,extended,00000001
+// patch=1,EE,20550A18,extended,05F5E0FF
+// patch=1,EE,00550B9D,extended,00000001
+// patch=1,EE,20550B98,extended,05F5E0FF
+// patch=1,EE,00550D1D,extended,00000001
+// patch=1,EE,20550D18,extended,05F5E0FF
+
+[Cheats/Circus Maximus-3rd Race]
+// patch=1,EE,00550A25,extended,00000001
+// patch=1,EE,20550A20,extended,05F5E0FF
+// patch=1,EE,00550BA5,extended,00000001
+// patch=1,EE,20550BA0,extended,05F5E0FF
+// patch=1,EE,00550D25,extended,00000001
+// patch=1,EE,20550D20,extended,05F5E0FF
+
+[Cheats/Circus Maximus-Last Race]
+// patch=1,EE,00550A35,extended,00000001
+// patch=1,EE,20550A30,extended,05F5E0FF
+// patch=1,EE,00550BB5,extended,00000001
+// patch=1,EE,20550BB0,extended,05F5E0FF
+// patch=1,EE,00550D35,extended,00000001
+// patch=1,EE,20550D30,extended,05F5E0FF
+
+[Cheats/Desert Arena-Battle Royale]
+// patch=1,EE,00550A3D,extended,00000001
+// patch=1,EE,20550A38,extended,05F5E0FF
+// patch=1,EE,00550BBD,extended,00000001
+// patch=1,EE,20550BB8,extended,05F5E0FF
+// patch=1,EE,00550D3D,extended,00000001
+// patch=1,EE,20550D38,extended,05F5E0FF
+
+[Cheats/Desert Arena-Beast Hunt]
+// patch=1,EE,00550A45,extended,00000001
+// patch=1,EE,20550A40,extended,05F5E0FF
+// patch=1,EE,00550BC5,extended,00000001
+// patch=1,EE,20550BC0,extended,05F5E0FF
+// patch=1,EE,00550D45,extended,00000001
+// patch=1,EE,20550D40,extended,05F5E0FF
+
+[Cheats/Desert Arena-Team Battle]
+// patch=1,EE,00550A4D,extended,00000001
+// patch=1,EE,20550A48,extended,05F5E0FF
+// patch=1,EE,00550BCD,extended,00000001
+// patch=1,EE,20550BC8,extended,05F5E0FF
+// patch=1,EE,00550D4D,extended,00000001
+// patch=1,EE,20550D48,extended,05F5E0FF
+
+[Cheats/Desert Arena-Artus Dominus]
+// patch=1,EE,00550A55,extended,00000001
+// patch=1,EE,20550A50,extended,05F5E0FF
+// patch=1,EE,00550BD5,extended,00000001
+// patch=1,EE,20550BD0,extended,05F5E0FF
+// patch=1,EE,00550D55,extended,00000001
+// patch=1,EE,20550D50,extended,05F5E0FF
+
+[Cheats/Desert Arena-Elimination]
+// patch=1,EE,00550A5D,extended,00000001
+// patch=1,EE,20550A58,extended,05F5E0FF
+// patch=1,EE,00550BDD,extended,00000001
+// patch=1,EE,20550BD8,extended,05F5E0FF
+// patch=1,EE,00550D5D,extended,00000001
+// patch=1,EE,20550D58,extended,05F5E0FF
+
+[Cheats/Desert Arena-Boss Battle]
+// patch=1,EE,00550A65,extended,00000001
+// patch=1,EE,20550A60,extended,05F5E0FF
+// patch=1,EE,00550BE5,extended,00000001
+// patch=1,EE,20550BE0,extended,05F5E0FF
+// patch=1,EE,00550D65,extended,00000001
+// patch=1,EE,20550D60,extended,05F5E0FF
+
+[Cheats/Great Arena-Rescue Mission]
+// patch=1,EE,00550A6D,extended,00000001
+// patch=1,EE,20550A68,extended,05F5E0FF
+// patch=1,EE,00550BED,extended,00000001
+// patch=1,EE,20550BE8,extended,05F5E0FF
+// patch=1,EE,00550D6D,extended,00000001
+// patch=1,EE,20550D68,extended,05F5E0FF
+
+[Cheats/Great Arena-Beast Hunt]
+// patch=1,EE,00550A75,extended,00000001
+// patch=1,EE,20550A70,extended,05F5E0FF
+// patch=1,EE,00550BF5,extended,00000001
+// patch=1,EE,20550BF0,extended,05F5E0FF
+// patch=1,EE,00550D75,extended,00000001
+// patch=1,EE,20550D70,extended,05F5E0FF
+
+[Cheats/Great Arena-Elimination]
+// patch=1,EE,00550A7D,extended,00000001
+// patch=1,EE,20550A78,extended,05F5E0FF
+// patch=1,EE,00550BFD,extended,00000001
+// patch=1,EE,20550BF8,extended,05F5E0FF
+// patch=1,EE,00550D7D,extended,00000001
+// patch=1,EE,20550D78,extended,05F5E0FF
+
+[Cheats/Great Arena-Team Battle]
+// patch=1,EE,00550A85,extended,00000001
+// patch=1,EE,20550A80,extended,05F5E0FF
+// patch=1,EE,00550C05,extended,00000001
+// patch=1,EE,20550C00,extended,05F5E0FF
+// patch=1,EE,00550D85,extended,00000001
+// patch=1,EE,20550D80,extended,05F5E0FF
+
+[Cheats/Great Arena-Siege]
+// patch=1,EE,00550A8D,extended,00000001
+// patch=1,EE,20550A88,extended,05F5E0FF
+// patch=1,EE,00550C0D,extended,00000001
+// patch=1,EE,20550C08,extended,05F5E0FF
+// patch=1,EE,00550D8D,extended,00000001
+// patch=1,EE,20550D88,extended,05F5E0FF
+
+[Cheats/Great Arena-Sword Struggle]
+// patch=1,EE,00550A95,extended,00000001
+// patch=1,EE,20550A90,extended,05F5E0FF
+// patch=1,EE,00550C15,extended,00000001
+// patch=1,EE,20550C10,extended,05F5E0FF
+// patch=1,EE,00550D95,extended,00000001
+// patch=1,EE,20550D90,extended,05F5E0FF
+
+[Cheats/Great Arena-Decius' Last Stand?]
+// patch=1,EE,00550AAD,extended,00000001
+// patch=1,EE,20550AA8,extended,05F5E0FF
+// patch=1,EE,00550C2D,extended,00000001
+// patch=1,EE,20550C28,extended,05F5E0FF
+// patch=1,EE,00550DAD,extended,00000001
+// patch=1,EE,20550DA8,extended,05F5E0FF

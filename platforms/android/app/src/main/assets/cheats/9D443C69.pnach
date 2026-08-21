@@ -1,0 +1,74 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Darkwatch [UNKNOWN] [9D443C69]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite grenades]
+// patch=1,EE,202A5C78,extended,00000000
+
+[Cheats/Infinite reload]
+// patch=1,EE,202A7944,extended,00000000
+
+[Cheats/Infinite health]
+// patch=1,EE,200FFE00,extended,3C0142C8
+// patch=1,EE,200FFE0C,extended,AE210098
+// patch=1,EE,200FFE10,extended,AE21002C
+// patch=1,EE,200FFE14,extended,03E00008
+// patch=1,EE,2021F4F0,extended,0C03FF80
+
+[Cheats/Infinite shield]
+// patch=1,EE,200FFE00,extended,3C0142C8
+// patch=1,EE,200FFE04,extended,AE2100A0
+// patch=1,EE,200FFE08,extended,AE2100A4
+// patch=1,EE,200FFE14,extended,03E00008
+// patch=1,EE,2021F4F0,extended,0C03FF80
+
+[Cheats/Level - 01 .Canyonshoot]
+// patch=1,EE,20320908,extended,24040001
+
+[Cheats/Level - 02. Cemetery]
+// patch=1,EE,20320908,extended,24040002
+
+[Cheats/Level - 03. DevilsBelly]
+// patch=1,EE,20320908,extended,24040003
+
+[Cheats/Level - 04. DWOutPost]
+// patch=1,EE,20320908,extended,24040004
+
+[Cheats/Level - 05. WarTrain]
+// patch=1,EE,20320908,extended,24040005
+
+[Cheats/Level - 06. TortureMaze]
+// patch=1,EE,20320908,extended,24040006
+
+[Cheats/Level - 07. TradingPost]
+// patch=1,EE,20320908,extended,24040007
+
+[Cheats/Level - 08. Citadel_Launch]
+// patch=1,EE,20320908,extended,24040008
+
+[Cheats/Level - 09. SplittingPaths]
+// patch=1,EE,20320908,extended,24040009
+
+[Cheats/Level - 10. Regulator]
+// patch=1,EE,20320908,extended,2404000A
+
+[Cheats/Level - 11. Invasion]
+// patch=1,EE,20320908,extended,2404000B
+
+[Cheats/Level - 12. HangTown]
+// patch=1,EE,20320908,extended,2404000C
+
+[Cheats/Level - 13. Citadel Under attack]
+// patch=1,EE,20320908,extended,2404000D
+
+[Cheats/Level - 14. Fall of Citadel]
+// patch=1,EE,20320908,extended,2404000E
+
+[Cheats/Level - 15. Ride to Dead Fall]
+// patch=1,EE,20320908,extended,2404000F
+
+[Cheats/Level - 16. Penetrating Dead Fall]
+// patch=1,EE,20320908,extended,24040010
+
+[Cheats/Level - 17. Ground Zero]
+// patch=1,EE,20320908,extended,24040011

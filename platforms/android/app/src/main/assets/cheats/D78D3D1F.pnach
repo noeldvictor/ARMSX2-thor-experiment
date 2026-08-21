@@ -1,0 +1,31 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Blood Will Tell [UNKNOWN] [D78D3D1F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health (Yakkimaru)]
+// patch=1,EE,201FD464,extended,00000000
+
+[Cheats/Infinite Health (Dororo)]
+// patch=1,EE,2029D0B4,extended,3C0143C8
+// patch=1,EE,2029D0B8,extended,44810000
+// patch=1,EE,2029D0BC,extended,E6000020
+
+[Cheats/Infinite Energy]
+// patch=1,EE,200FFF00,extended,3C013F80
+// patch=1,EE,200FFF04,extended,AE8107EC
+// patch=1,EE,200FFF08,extended,AE61005C
+// patch=1,EE,200FFF0C,extended,03E00008
+// patch=1,EE,201FDC90,extended,0C03FFC0
+
+[Cheats/Infinite Ammo (arms)]
+// patch=1,EE,20207924,extended,00000000
+
+[Cheats/Infinite Ammo (legs)]
+// patch=1,EE,202080BC,extended,00000000
+
+[Cheats/Faster Animations]
+// patch=1,EE,2028EC88,extended,3C014000
+// patch=1,EE,2028ECA0,extended,4481B000
+
+[Cheats/Freeze Missions time]
+// patch=1,EE,201EB448,extended,00000000

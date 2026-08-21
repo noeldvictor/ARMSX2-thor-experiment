@@ -1,0 +1,61 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ridge Racer V [SLUS-20002] [06AD9CA0]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P4 Start On 8th Shot Recorded]
+// patch=1,EE,F0200008,extended,002C640F
+
+[Cheats/Lap 1]
+// patch=1,EE,21DC0164,extended,00000000
+
+[Cheats/Lap 2]
+// patch=1,EE,21DC0168,extended,00000000
+
+[Cheats/Lap 3]
+// patch=1,EE,21DC016C,extended,00000000
+
+[Cheats/Infinite Continues]
+// patch=1,EE,01E2D140,extended,00000003
+
+[Cheats/Unlock Extra GPs]
+// patch=1,EE,11E2D17E,extended,0000010F
+
+[Cheats/Max Distance Traveled]
+// patch=1,EE,21E2D180,extended,05F5E0FF
+
+[Cheats/Frontal]
+// patch=1,EE,01E2D186,extended,00000001
+// patch=1,EE,01E2D18E,extended,00000001
+
+[Cheats/Bravery]
+// patch=1,EE,01E2D187,extended,00000001
+// patch=1,EE,01E2D18F,extended,00000001
+
+[Cheats/Gale]
+// patch=1,EE,01E2D188,extended,00000001
+// patch=1,EE,01E2D190,extended,00000001
+
+[Cheats/Baron]
+// patch=1,EE,01E2D189,extended,00000001
+// patch=1,EE,01E2D191,extended,00000001
+
+[Cheats/Monarch]
+// patch=1,EE,01E2D18A,extended,00000001
+// patch=1,EE,01E2D192,extended,00000001
+
+[Cheats/Unlock Race Modes]
+// patch=1,EE,01E2D1A1,extended,00000001
+// patch=1,EE,01E2D1A5,extended,00000001
+// patch=1,EE,11E2D1A6,extended,00000601
+
+[Cheats/Have All Trophies]
+// patch=1,EE,21E2F328,extended,01010101
+// patch=1,EE,21E2F32C,extended,01010101
+
+[Cheats/Have All Medals]
+// patch=1,EE,21E2F330,extended,01010101
+// patch=1,EE,21E2F334,extended,01010101
+
+[Cheats/Have All Cars]
+// patch=1,EE,41E2D1C8,extended,00070001
+// patch=1,EE,02020202,extended,00000000

@@ -1,0 +1,115 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Reservoir Dogs [SLUS-21479] [08C682C1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Apocalypse]
+// patch=1,EE,9044E64C,extended,0C113BF1
+
+[Cheats/Disable FMV]
+// patch=1,EE,2043D940,extended,24020001
+
+[Cheats/Infinite Health]
+// patch=1,EE,201ECF64,extended,C4410004
+// patch=1,EE,201ECF74,extended,E460154C
+
+[Cheats/Infinite Adrenaline]
+// patch=1,EE,201D2A40,extended,E4A11834
+
+[Cheats/Infinite Ammo-Pistols]
+// patch=1,EE,201064F0,extended,00000000
+// patch=1,EE,201065B0,extended,00000000
+
+[Cheats/Max Infinite Ammo-Pistols]
+// patch=1,EE,201064EC,extended,240203E7
+// patch=1,EE,201065AC,extended,240203E7
+
+[Cheats/Extra Ammo-Pistols]
+// patch=1,EE,201064EC,extended,00451021
+// patch=1,EE,201065AC,extended,00651021
+
+[Cheats/Infinite Ammo-Shotgun]
+// patch=1,EE,20106140,extended,00000000
+
+[Cheats/Max Infinite Ammo-Shotgun]
+// patch=1,EE,20106134,extended,240203E7
+
+[Cheats/Extra Ammo-Shotgun]
+// patch=1,EE,10106134,extended,00000001
+
+[Cheats/Infinite Ammo-Sub Machine Gun]
+// patch=1,EE,20106660,extended,00000000
+
+[Cheats/Max Infinite Ammo-Sub Machine Gun]
+// patch=1,EE,20106654,extended,240203E7
+
+[Cheats/Extra Ammo-Sub Machine Gun]
+// patch=1,EE,20106654,extended,00651021
+
+[Cheats/Never Reload]
+// patch=1,EE,20139D20,extended,00000000
+
+[Cheats/Never Reload With Max Clip]
+// patch=1,EE,20139D1C,extended,240203E7
+
+[Cheats/Disable Ammo Hud]
+// patch=1,EE,2031FCBC,extended,00000000
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,41DD8E24,extended,00100010
+// patch=1,EE,000000FF,extended,00000000
+
+[Cheats/Career Criminal Rank-All Levels]
+// patch=1,EE,41DD8E20,extended,00100010
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Professional Rank-All Levels]
+// patch=1,EE,41DD8E20,extended,00100010
+// patch=1,EE,3F000000,extended,00000000
+
+[Cheats/Consummuate Pro Rank-All Levels]
+// patch=1,EE,41DD8E20,extended,00100010
+// patch=1,EE,3F800000,extended,00000000
+
+[Cheats/Psychopath Rank-All Levels]
+// patch=1,EE,41DD8E20,extended,00100010
+// patch=1,EE,BF000000,extended,00000000
+
+[Cheats/Stone Cold Psycho Rank-All Levels]
+// patch=1,EE,41DD8E20,extended,00100010
+// patch=1,EE,BF800000,extended,00000000
+
+[Cheats/Unlock Levels]
+// patch=1,EE,21DE429C,extended,93FBE490
+// patch=1,EE,21DE5224,extended,00000001
+
+[Cheats/Unlock Art Gallery]
+// patch=1,EE,21DE42A0,extended,7F1981CE
+// patch=1,EE,21DE5228,extended,00000001
+
+[Cheats/Unlock Movie Gallery]
+// patch=1,EE,21DE42A4,extended,24B85D04
+// patch=1,EE,21DE522C,extended,00000001
+
+[Cheats/Fully Loaded]
+// patch=1,EE,21DE42A8,extended,A21C56C5
+// patch=1,EE,21DE5230,extended,00000001
+
+[Cheats/Bulletproof]
+// patch=1,EE,21DE42AC,extended,F9BD8A0F
+// patch=1,EE,21DE5234,extended,00000001
+
+[Cheats/Adrenaline Rush]
+// patch=1,EE,21DE42B0,extended,155FEF51
+// patch=1,EE,21DE5238,extended,00000001
+
+[Cheats/Magic Bullet]
+// patch=1,EE,21DE42B4,extended,4EFE339B
+// patch=1,EE,21DE523C,extended,00000001
+
+[Cheats/Battering Ram]
+// patch=1,EE,21DE42B8,extended,1CD6E564
+// patch=1,EE,21DE5240,extended,00000001
+
+[Cheats/Time Out]
+// patch=1,EE,21DE42BC,extended,477739AE
+// patch=1,EE,21DE5244,extended,00000001

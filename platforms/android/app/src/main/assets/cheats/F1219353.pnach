@@ -1,0 +1,27 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Stunt GP [SLUS-20218] [F1219353]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Show XYZ]
+// patch=1,EE,902A3254,extended,0C0ACE0D
+
+[Cheats/Infinite Energy]
+// patch=1,EE,203C2658,extended,447A0000
+
+[Cheats/Infinite Credits]
+// patch=1,EE,1055C370,extended,0000FFFF
+
+[Cheats/Max Credits]
+// patch=1,EE,2055C370,extended,05F5E0FF
+
+[Cheats/Max Offer-All Characters]
+// patch=1,EE,4055C500,extended,00060002
+// patch=1,EE,05F5E0FF,extended,00000000
+
+[Cheats/Unlock All Cars]
+// patch=1,EE,40542678,extended,00060001
+// patch=1,EE,02020202,extended,00000000
+
+[Cheats/Unlock All Tracks]
+// patch=1,EE,40542690,extended,00060001
+// patch=1,EE,02020202,extended,00000000

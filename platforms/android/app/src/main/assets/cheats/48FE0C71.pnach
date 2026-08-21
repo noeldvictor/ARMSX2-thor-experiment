@@ -1,0 +1,16 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Final Fantasy X2 [UNKNOWN] [48FE0C71]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite HP]
+// patch=1,EE,2AACC91F,extended,27BDFFF0
+// patch=1,EE,2AA8C91F,extended,FFBF0000
+// patch=1,EE,2A94C91F,extended,0C071480
+// patch=1,EE,2A90C91F,extended,308400FF
+// patch=1,EE,2A9CC91F,extended,2401270F
+// patch=1,EE,2A98C91F,extended,AC41016C
+// patch=1,EE,2A84C91F,extended,8C42016C
+// patch=1,EE,2A80C91F,extended,DFBF0000
+// patch=1,EE,2A8CC91F,extended,03E00008
+// patch=1,EE,2A88C91F,extended,27BD0010
+// patch=1,EE,2A6F226E,extended,0C030088

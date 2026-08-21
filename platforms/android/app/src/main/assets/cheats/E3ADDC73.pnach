@@ -1,0 +1,47 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Alias [SLUS-20673] [E3ADDC73]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Best Driver Condition]
+// patch=1,EE,90283754,extended,0C09DBAA
+
+[Cheats/Disable FMV]
+// patch=1,EE,20286C78,extended,24020001
+
+[Cheats/Infinite Health]
+// patch=1,EE,2013FAC8,extended,00000000
+// patch=1,EE,1013FAF2,extended,00001000
+
+[Cheats/Save Anywhere]
+// patch=1,EE,2023C104,extended,24030001
+// patch=1,EE,2023C108,extended,AC431E5C
+
+[Cheats/Partially Transparent Characters]
+// patch=1,EE,20385AC4,extended,3F800000
+
+[Cheats/See Thru Some Objects]
+// patch=1,EE,20385AC4,extended,40800000
+
+[Cheats/P1 Press {L1}+{SELECT} For Thermal Vision]
+// patch=1,EE,D0381EC2,extended,0000FBFE
+// patch=1,EE,20385B20,extended,00000001
+
+[Cheats/P1 Press {L2}+{SELECT} For Foggy Vision]
+// patch=1,EE,D0381EC2,extended,0000FEFE
+// patch=1,EE,20385B20,extended,00000002
+
+[Cheats/P1 Press {R1}+{SELECT} For Security Camera Vision]
+// patch=1,EE,D0381EC2,extended,0000F7FE
+// patch=1,EE,20385B20,extended,00000003
+
+[Cheats/P1 Press {R2}+{SELECT} For Inverted Vision]
+// patch=1,EE,D0381EC2,extended,0000FDFE
+// patch=1,EE,20385B20,extended,00000004
+
+[Cheats/P1 Press {L3}+{SELECT} For Blurry Vision]
+// patch=1,EE,D0381EC2,extended,0000FFFC
+// patch=1,EE,20385B20,extended,00000005
+
+[Cheats/P1 Press {R3}+{SELECT} For Normal Vision]
+// patch=1,EE,D0381EC2,extended,0000FFFA
+// patch=1,EE,20385B20,extended,00000000

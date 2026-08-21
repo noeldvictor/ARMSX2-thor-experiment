@@ -1,0 +1,364 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Devil Kings [SLUS-21297] [B304172F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Display Debug Down]
+// patch=1,EE,902702A0,extended,00832021
+
+[Cheats/Infinite HP]
+// patch=1,EE,217C844C,extended,00013880
+
+[Cheats/Max HP]
+// patch=1,EE,217C8454,extended,00013880
+// patch=1,EE,20561728,extended,00013880
+// patch=1,EE,20561908,extended,00013880
+// patch=1,EE,20561AE8,extended,00013880
+// patch=1,EE,20561CC8,extended,00013880
+// patch=1,EE,20561EA8,extended,00013880
+// patch=1,EE,20562088,extended,00013880
+// patch=1,EE,20562448,extended,00013880
+// patch=1,EE,20562268,extended,00013880
+// patch=1,EE,20562628,extended,00013880
+// patch=1,EE,205629E8,extended,00013880
+// patch=1,EE,20562DA8,extended,00013880
+// patch=1,EE,20563168,extended,00013880
+
+[Cheats/Max Hits]
+// patch=1,EE,217C93A4,extended,0000270F
+
+[Cheats/Max Slain]
+// patch=1,EE,217C93B8,extended,0000270F
+
+[Cheats/Infinite Fury]
+// patch=1,EE,217C93E4,extended,0000571C
+
+[Cheats/Max Fury]
+// patch=1,EE,217C93EC,extended,0000571C
+
+[Cheats/Max EXP]
+// patch=1,EE,20601D50,extended,000F423F
+
+[Cheats/Unlock All Generals]
+// patch=1,EE,205610E4,extended,FFFFFFFF
+
+[Cheats/Unlock All Lands]
+// patch=1,EE,205610E8,extended,FFFFFFFF
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,40561110,extended,00040001
+// patch=1,EE,FFFFFFFF,extended,00000000
+// patch=1,EE,2056114C,extended,FFFFFFFF
+
+[Cheats/Unlock All Music]
+// patch=1,EE,20561150,extended,FFFFFFFF
+// patch=1,EE,20561154,extended,FFFFFFFF
+
+[Cheats/Unlock All Movies]
+// patch=1,EE,20561158,extended,FFFFFFFF
+
+[Cheats/Unity]
+// patch=1,EE,0055F613,extended,00000063
+
+[Cheats/Dark Scale]
+// patch=1,EE,0055F614,extended,00000063
+
+[Cheats/Legend Slayer]
+// patch=1,EE,0055F615,extended,00000063
+
+[Cheats/Vorpal Reaver]
+// patch=1,EE,0055F616,extended,00000063
+
+[Cheats/Baphomet]
+// patch=1,EE,0055F617,extended,00000063
+
+[Cheats/Folding Fan]
+// patch=1,EE,0055F618,extended,00000063
+
+[Cheats/All Weapons]
+// patch=1,EE,0055F613,extended,00000063
+// patch=1,EE,2055F614,extended,63636363
+// patch=1,EE,0055F618,extended,00000063
+
+[Cheats/Spartan Brace]
+// patch=1,EE,00561094,extended,00000063
+
+[Cheats/Armor]
+// patch=1,EE,00561095,extended,00000063
+
+[Cheats/Energy Bead]
+// patch=1,EE,00561096,extended,00000063
+
+[Cheats/Health Ring]
+// patch=1,EE,00561097,extended,00000063
+
+[Cheats/Fire Charm]
+// patch=1,EE,00561098,extended,00000063
+
+[Cheats/Lightning Charm]
+// patch=1,EE,00561099,extended,00000063
+
+[Cheats/Ice Charm]
+// patch=1,EE,0056109A,extended,00000063
+
+[Cheats/Dark Charm]
+// patch=1,EE,0056109B,extended,00000063
+
+[Cheats/Fury Quencher]
+// patch=1,EE,0056109C,extended,00000063
+
+[Cheats/Shield Crusher]
+// patch=1,EE,0056109D,extended,00000063
+
+[Cheats/Awakening Vial]
+// patch=1,EE,0056109E,extended,00000063
+
+[Cheats/Sage Hairpin]
+// patch=1,EE,0056109F,extended,00000063
+
+[Cheats/Rally Pipe]
+// patch=1,EE,005610A0,extended,00000063
+
+[Cheats/Fury Soul]
+// patch=1,EE,005610A1,extended,00000063
+
+[Cheats/Saddle Of The Whirlwind]
+// patch=1,EE,005610A2,extended,00000063
+
+[Cheats/Hourglass Of Fate]
+// patch=1,EE,005610A3,extended,00000063
+
+[Cheats/Ground Killer Gauntlets]
+// patch=1,EE,005610A4,extended,00000063
+
+[Cheats/Air Killer Gauntlets]
+// patch=1,EE,005610A5,extended,00000063
+
+[Cheats/Flame Killer Gauntlets]
+// patch=1,EE,005610A6,extended,00000063
+
+[Cheats/Shadow Killer Gauntlets]
+// patch=1,EE,005610A7,extended,00000063
+
+[Cheats/Machine Killer Gauntlets]
+// patch=1,EE,005610A8,extended,00000063
+
+[Cheats/Iron Gauntlets]
+// patch=1,EE,005610A9,extended,00000063
+
+[Cheats/Wood Killer Gaunlets]
+// patch=1,EE,005610AA,extended,00000063
+
+[Cheats/Parchment Of Infamy]
+// patch=1,EE,005610AB,extended,00000063
+
+[Cheats/Disciplinarian Paddle]
+// patch=1,EE,005610AC,extended,00000063
+
+[Cheats/Bronze Award]
+// patch=1,EE,005610AD,extended,00000063
+
+[Cheats/Silver Award]
+// patch=1,EE,005610AE,extended,00000063
+
+[Cheats/Gold Award]
+// patch=1,EE,005610AF,extended,00000063
+
+[Cheats/Headdress Of The Minotaur]
+// patch=1,EE,005610B0,extended,00000063
+
+[Cheats/Wheel Of Gale-I]
+// patch=1,EE,005610B1,extended,00000063
+
+[Cheats/Wheel Of Gale-II]
+// patch=1,EE,005610B2,extended,00000063
+// patch=1,EE,005610B3,extended,00000063
+
+[Cheats/Hilt Of Reflection]
+// patch=1,EE,005610B4,extended,00000063
+
+[Cheats/Face Of The Berserker]
+// patch=1,EE,005610B5,extended,00000063
+
+[Cheats/Skull Of The Berserker]
+// patch=1,EE,005610B6,extended,00000063
+
+[Cheats/Eyes Of The Berserker]
+// patch=1,EE,005610B7,extended,00000063
+
+[Cheats/Power Shot]
+// patch=1,EE,005610B8,extended,00000063
+
+[Cheats/Bounty Chest-I]
+// patch=1,EE,005610B9,extended,00000063
+
+[Cheats/Bounty Chest-II]
+// patch=1,EE,005610BA,extended,00000063
+
+[Cheats/Bounty Chest-III]
+// patch=1,EE,005610BB,extended,00000063
+
+[Cheats/Back Scratcher]
+// patch=1,EE,005610BC,extended,00000063
+
+[Cheats/Red Mask Of Demoness]
+// patch=1,EE,005610BD,extended,00000063
+
+[Cheats/White Mask Of Demoness]
+// patch=1,EE,005610BE,extended,00000063
+
+[Cheats/Blue Mask Of Demoness]
+// patch=1,EE,005610BF,extended,00000063
+
+[Cheats/Hammer Displacer]
+// patch=1,EE,005610C0,extended,00000063
+
+[Cheats/Cursed Mask]
+// patch=1,EE,005610C1,extended,00000063
+
+[Cheats/Cursed Jacket]
+// patch=1,EE,005610C2,extended,00000063
+
+[Cheats/Cursed Cloak]
+// patch=1,EE,005610C3,extended,00000063
+
+[Cheats/Chain Of Necrosis]
+// patch=1,EE,005610C4,extended,00000063
+
+[Cheats/Breakthrough Secret]
+// patch=1,EE,005610C5,extended,00000063
+
+[Cheats/Coup D'etat Scale]
+// patch=1,EE,005610C6,extended,00000063
+
+[Cheats/Jewel Of Rage]
+// patch=1,EE,005610C7,extended,00000063
+
+[Cheats/Charm Of Good Fortune]
+// patch=1,EE,005610C8,extended,00000063
+
+[Cheats/Top Lottery Ticket Fragment]
+// patch=1,EE,005610C9,extended,00000063
+
+[Cheats/Middle Lottery Ticket Fragment]
+// patch=1,EE,005610CA,extended,00000063
+
+[Cheats/Bottom Lottery Ticket Fragment]
+// patch=1,EE,005610CB,extended,00000063
+
+[Cheats/Medal Of Valor]
+// patch=1,EE,005610CC,extended,00000063
+
+[Cheats/Cursed King Doll]
+// patch=1,EE,005610CD,extended,00000063
+
+[Cheats/Cursed Princess Doll]
+// patch=1,EE,005610CE,extended,00000063
+
+[Cheats/Cursed Minstrel Doll]
+// patch=1,EE,005610CF,extended,00000063
+
+[Cheats/Soothing Harp]
+// patch=1,EE,005610D0,extended,00000063
+
+[Cheats/Tainted Figurine Head]
+// patch=1,EE,005610D1,extended,00000063
+
+[Cheats/Tainted Figurine Torso]
+// patch=1,EE,005610D2,extended,00000063
+
+[Cheats/Tainted Figurine Legs]
+// patch=1,EE,005610D3,extended,00000063
+
+[Cheats/Helmet Of Betrayer]
+// patch=1,EE,005610D4,extended,00000063
+
+[Cheats/Beads Of Mercy]
+// patch=1,EE,005610D5,extended,00000063
+
+[Cheats/Grave Power]
+// patch=1,EE,005610D6,extended,00000063
+
+[Cheats/Gift Box Of Reward]
+// patch=1,EE,005610D7,extended,00000063
+
+[Cheats/Sash Of Atonement]
+// patch=1,EE,005610D8,extended,00000063
+
+[Cheats/Die Of Fortune-I]
+// patch=1,EE,005610D9,extended,00000063
+
+[Cheats/Die Of Fortune-II]
+// patch=1,EE,005610DA,extended,00000063
+
+[Cheats/Die Of Fortune-III]
+// patch=1,EE,005610DB,extended,00000063
+
+[Cheats/Foul Incense]
+// patch=1,EE,005610DC,extended,00000063
+
+[Cheats/Book Of Immortality-I]
+// patch=1,EE,005610DD,extended,00000063
+
+[Cheats/Book Of Immortality-II]
+// patch=1,EE,005610DE,extended,00000063
+
+[Cheats/Book Of Immortality-III]
+// patch=1,EE,005610DF,extended,00000063
+
+[Cheats/Plasma Generator]
+// patch=1,EE,005610E0,extended,00000063
+
+[Cheats/Warrior's Code-Loyalty]
+// patch=1,EE,005610E1,extended,00000063
+
+[Cheats/Warrior's Code-Valor]
+// patch=1,EE,005610E2,extended,00000063
+
+[Cheats/Warrior's Code-Honor]
+// patch=1,EE,005610E3,extended,00000063
+
+[Cheats/All Items]
+// patch=1,EE,40561094,extended,00140001
+// patch=1,EE,63636363,extended,00000000
+
+[Cheats/Max ATK]
+// patch=1,EE,2056172C,extended,00000BB8
+// patch=1,EE,2056190C,extended,00000BB8
+// patch=1,EE,20561AEC,extended,00000BB8
+// patch=1,EE,20561CCC,extended,00000BB8
+// patch=1,EE,20561EAC,extended,00000BB8
+// patch=1,EE,2056208C,extended,00000BB8
+// patch=1,EE,2056244C,extended,00000BB8
+// patch=1,EE,2056226C,extended,00000BB8
+// patch=1,EE,2056262C,extended,00000BB8
+// patch=1,EE,205629EC,extended,00000BB8
+// patch=1,EE,20562DAC,extended,00000BB8
+// patch=1,EE,2056316C,extended,00000BB8
+
+[Cheats/Max DEF]
+// patch=1,EE,20561730,extended,00000BB8
+// patch=1,EE,20561910,extended,00000BB8
+// patch=1,EE,20561AF0,extended,00000BB8
+// patch=1,EE,20561CD0,extended,00000BB8
+// patch=1,EE,20561EB0,extended,00000BB8
+// patch=1,EE,20562090,extended,00000BB8
+// patch=1,EE,20562450,extended,00000BB8
+// patch=1,EE,20562270,extended,00000BB8
+// patch=1,EE,20562630,extended,00000BB8
+// patch=1,EE,205629F0,extended,00000BB8
+// patch=1,EE,20562DB0,extended,00000BB8
+// patch=1,EE,20563170,extended,00000BB8
+
+[Cheats/Max Fury Drive]
+// patch=1,EE,20561734,extended,00000008
+// patch=1,EE,20561914,extended,00000008
+// patch=1,EE,20561AF4,extended,00000008
+// patch=1,EE,20561CD4,extended,00000008
+// patch=1,EE,20561EB4,extended,00000008
+// patch=1,EE,20562094,extended,00000008
+// patch=1,EE,20562454,extended,00000008
+// patch=1,EE,20562274,extended,00000008
+// patch=1,EE,20562634,extended,00000008
+// patch=1,EE,205629F4,extended,00000008
+// patch=1,EE,20562DB4,extended,00000008
+// patch=1,EE,20563174,extended,00000008

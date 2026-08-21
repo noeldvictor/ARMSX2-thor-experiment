@@ -1,0 +1,146 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: UEFA Euro 2004 [SLUS-20936] [AFB7CF09]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Frill Spies/Rangs]
+// patch=1,EE,904111A4,extended,0C108E3B
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,2056D820,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,2056D820,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,2056D820,extended,00000000
+
+[Cheats/Home Team Start With 50]
+// patch=1,EE,D056D820,extended,00000000
+// patch=1,EE,2056D820,extended,00000032
+
+[Cheats/Home Team Start With 20]
+// patch=1,EE,D056D820,extended,00000000
+// patch=1,EE,2056D820,extended,00000014
+
+[Cheats/Home Team Start With 10]
+// patch=1,EE,D056D820,extended,00000000
+// patch=1,EE,2056D820,extended,0000000A
+
+[Cheats/Home Team Start With 5]
+// patch=1,EE,D056D820,extended,00000000
+// patch=1,EE,2056D820,extended,00000005
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,2056D824,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,2056D824,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,2056D824,extended,00000000
+
+[Cheats/Away Team Start With 50]
+// patch=1,EE,D056D824,extended,00000000
+// patch=1,EE,2056D824,extended,00000032
+
+[Cheats/Away Team Start With 20]
+// patch=1,EE,D056D824,extended,00000000
+// patch=1,EE,2056D824,extended,00000014
+
+[Cheats/Away Team Start With 10]
+// patch=1,EE,D056D824,extended,00000000
+// patch=1,EE,2056D824,extended,0000000A
+
+[Cheats/Away Team Start With 5]
+// patch=1,EE,D056D824,extended,00000000
+// patch=1,EE,2056D824,extended,00000005
+
+[Cheats/Goal's Score 10]
+// patch=1,EE,101CE014,extended,0000000A
+
+[Cheats/Goal's Score 5]
+// patch=1,EE,101CE014,extended,00000005
+
+[Cheats/Goal's Score 2]
+// patch=1,EE,101CE014,extended,00000002
+
+[Cheats/All Goal's Score For Home Team]
+// patch=1,EE,201CE008,extended,24030000
+
+[Cheats/All Goal's Score For Away Team]
+// patch=1,EE,201CE008,extended,24030004
+
+[Cheats/Infinite Sprint (Both Teams)]
+// patch=1,EE,201D9400,extended,00000000
+
+[Cheats/P1]
+// patch=1,EE,205739CC,extended,3F800000
+// patch=1,EE,205739CC,extended,00000000
+// patch=1,EE,205764F0,extended,3F800000
+// patch=1,EE,205764F0,extended,00000000
+
+[Cheats/P2]
+// patch=1,EE,20573DB8,extended,3F800000
+// patch=1,EE,20573DB8,extended,00000000
+// patch=1,EE,205768DC,extended,3F800000
+// patch=1,EE,205768DC,extended,00000000
+
+[Cheats/P3]
+// patch=1,EE,205741A4,extended,3F800000
+// patch=1,EE,205741A4,extended,00000000
+// patch=1,EE,20576CC8,extended,3F800000
+// patch=1,EE,20576CC8,extended,00000000
+
+[Cheats/P4]
+// patch=1,EE,20574590,extended,3F800000
+// patch=1,EE,20574590,extended,00000000
+// patch=1,EE,205770B4,extended,3F800000
+// patch=1,EE,205770B4,extended,00000000
+
+[Cheats/P5]
+// patch=1,EE,2057497C,extended,3F800000
+// patch=1,EE,2057497C,extended,00000000
+// patch=1,EE,205774A0,extended,3F800000
+// patch=1,EE,205774A0,extended,00000000
+
+[Cheats/P6]
+// patch=1,EE,20574D68,extended,3F800000
+// patch=1,EE,20574D68,extended,00000000
+// patch=1,EE,2057788C,extended,3F800000
+// patch=1,EE,2057788C,extended,00000000
+
+[Cheats/P7]
+// patch=1,EE,20575154,extended,3F800000
+// patch=1,EE,20575154,extended,00000000
+// patch=1,EE,20577C78,extended,3F800000
+// patch=1,EE,20577C78,extended,00000000
+
+[Cheats/P8]
+// patch=1,EE,20575540,extended,3F800000
+// patch=1,EE,20575540,extended,00000000
+// patch=1,EE,20578064,extended,3F800000
+// patch=1,EE,20578064,extended,00000000
+
+[Cheats/P9]
+// patch=1,EE,2057592C,extended,3F800000
+// patch=1,EE,2057592C,extended,00000000
+// patch=1,EE,20578450,extended,3F800000
+// patch=1,EE,20578450,extended,00000000
+
+[Cheats/P10]
+// patch=1,EE,20575D18,extended,3F800000
+// patch=1,EE,20575D18,extended,00000000
+// patch=1,EE,2057883C,extended,3F800000
+// patch=1,EE,2057883C,extended,00000000
+
+[Cheats/P11]
+// patch=1,EE,20576104,extended,3F800000
+// patch=1,EE,20576104,extended,00000000
+// patch=1,EE,20578C28,extended,3F800000
+// patch=1,EE,20578C28,extended,00000000
+
+[Cheats/All Players]
+// patch=1,EE,405739CC,extended,000B00FB
+// patch=1,EE,3F800000,extended,00000000
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,405764F0,extended,000B00FB

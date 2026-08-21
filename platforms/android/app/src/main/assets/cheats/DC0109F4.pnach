@@ -1,0 +1,80 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: X-Squad [SLES-50031] [DC0109F4]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,901BBAFC,extended,0C07D3D4
+
+[Cheats/Infinite Pistol Ammo]
+// patch=1,EE,11AD03D4,extended,0000000F
+
+[Cheats/Infinite Mission Points]
+// patch=1,EE,10224DDC,extended,0000270F
+
+[Cheats/Have All Weapons]
+// patch=1,EE,E013FFFE,extended,1022DFCA
+// patch=1,EE,202246EC,extended,0000CA58
+// patch=1,EE,202246F0,extended,0000CA59
+// patch=1,EE,202246F4,extended,0000CA5A
+// patch=1,EE,202246F8,extended,0000CA5B
+// patch=1,EE,202246FC,extended,0000CA5C
+// patch=1,EE,20224700,extended,0000CA5D
+// patch=1,EE,20224704,extended,0000CA5E
+// patch=1,EE,20224708,extended,0000CA5F
+// patch=1,EE,2022470C,extended,0000CA60
+// patch=1,EE,20224710,extended,0000CA61
+// patch=1,EE,20224714,extended,0000CA62
+// patch=1,EE,20224718,extended,0000CA63
+// patch=1,EE,2022471C,extended,0000CA64
+// patch=1,EE,20224720,extended,0000CA65
+// patch=1,EE,20224724,extended,0000CA66
+// patch=1,EE,20224728,extended,0000CA67
+// patch=1,EE,2022472C,extended,0000CA68
+// patch=1,EE,20224730,extended,0000CA69
+// patch=1,EE,20224734,extended,0000CA6A
+
+[Cheats/Have All Items]
+// patch=1,EE,E008FFFE,extended,1022DFCA
+// patch=1,EE,20224738,extended,0001FE77
+// patch=1,EE,2022473C,extended,0001FE78
+// patch=1,EE,20224740,extended,0001FE78
+// patch=1,EE,20224744,extended,0001FE7A
+// patch=1,EE,20224748,extended,0001FE7B
+// patch=1,EE,2022474C,extended,0001FE7C
+// patch=1,EE,20224750,extended,0001FE7D
+// patch=1,EE,20224754,extended,0001FE7E
+
+[Cheats/Level 1]
+// patch=1,EE,11AC1AF8,extended,00000099
+// patch=1,EE,11AC1AFC,extended,00000099
+
+[Cheats/Level 2]
+// patch=1,EE,11C973C8,extended,00000099
+// patch=1,EE,11C973CC,extended,00000099
+
+[Cheats/Level 3]
+// patch=1,EE,11C2CB28,extended,00000099
+// patch=1,EE,11C2CB2C,extended,00000099
+
+[Cheats/Level 4]
+// patch=1,EE,11C65188,extended,00000099
+// patch=1,EE,11C6518C,extended,00000099
+
+[Cheats/Level 5]
+// patch=1,EE,11C76508,extended,00000099
+// patch=1,EE,11C7650C,extended,00000099
+
+[Cheats/Level 6]
+// patch=1,EE,11A4F128,extended,00000099
+// patch=1,EE,11A4F12C,extended,00000099
+
+[Cheats/Level 7]
+// patch=1,EE,1199DA78,extended,00000099
+// patch=1,EE,1199DA7C,extended,00000099
+
+[Cheats/Level 8]
+// patch=1,EE,119C0068,extended,00000099
+// patch=1,EE,119C006C,extended,00000099
+
+[Cheats/Level 9]
+// patch=1,EE,115B1C98,extended,00000099

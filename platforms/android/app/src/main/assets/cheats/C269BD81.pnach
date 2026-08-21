@@ -1,0 +1,364 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: NHL 2006 [SLUS-21241] [C269BD81]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P8 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,9010D9FC,extended,0C0456E5
+// patch=1,EE,D1033B42,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,107AD716,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,107AD716,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,107AD716,extended,00000000
+
+[Cheats/Home Team Start With Score 50]
+// patch=1,EE,D07AD716,extended,00000000
+// patch=1,EE,107AD716,extended,00000032
+
+[Cheats/Home Team Start With Score 20]
+// patch=1,EE,D07AD716,extended,00000000
+// patch=1,EE,107AD716,extended,00000014
+
+[Cheats/Home Team Start With Score 10]
+// patch=1,EE,D07AD716,extended,00000000
+// patch=1,EE,107AD716,extended,0000000A
+
+[Cheats/Home Team Start With Score 5]
+// patch=1,EE,D07AD716,extended,00000000
+// patch=1,EE,107AD716,extended,00000005
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,107AD772,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,107AD772,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,107AD772,extended,00000000
+
+[Cheats/Away Team Start With Score 50]
+// patch=1,EE,D07AD772,extended,00000000
+// patch=1,EE,107AD772,extended,00000032
+
+[Cheats/Away Team Start With Score 20]
+// patch=1,EE,D07AD772,extended,00000000
+// patch=1,EE,107AD772,extended,00000014
+
+[Cheats/Away Team Start With Score 10]
+// patch=1,EE,D07AD772,extended,00000000
+// patch=1,EE,107AD772,extended,0000000A
+
+[Cheats/Away Team Start With Score 5]
+// patch=1,EE,D07AD772,extended,00000000
+// patch=1,EE,107AD772,extended,00000005
+
+[Cheats/Goal's Score 10]
+// patch=1,EE,10176FF8,extended,0000000A
+
+[Cheats/Goal's Score 5]
+// patch=1,EE,10176FF8,extended,00000005
+
+[Cheats/Goal's Score 2]
+// patch=1,EE,10176FF8,extended,00000002
+
+[Cheats/All Goals Score For Home Team]
+// patch=1,EE,20176F38,extended,24020000
+
+[Cheats/All Goals Score For Away Team]
+// patch=1,EE,20176F38,extended,24020001
+
+[Cheats/P1 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1032642,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P1 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1032642,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P2 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1032942,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P2 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1032942,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P3 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1032C42,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P3 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1032C42,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P4 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1032F42,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P4 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1032F42,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P5 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1033242,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P5 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1033242,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P6 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1033542,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P6 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1033542,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P7 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1033842,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P7 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1033842,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P8 Press {L1}+{L2} For More Time]
+// patch=1,EE,D1033B42,extended,0000FAFF
+// patch=1,EE,107A1388,extended,000004B0
+
+[Cheats/P8 Press {R1}+{R2} To End Period]
+// patch=1,EE,D1033B42,extended,0000F5FF
+// patch=1,EE,107A1388,extended,00000001
+
+[Cheats/P1 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1032642,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/P1 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,D1032642,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/P2 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1032942,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/P2 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,D1032942,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/P3 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1032C42,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/P3 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,D1032C42,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/P4 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1032F42,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/P4 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,D1032F42,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/P5 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1033242,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/P5 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,D1033242,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/P6 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1033542,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/P6 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,D1033542,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/P7 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1033842,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/P7 Press {L2}+{SELECT} For 3rd Period]
+// patch=1,EE,D1033842,extended,0000FEFE
+// patch=1,EE,207A138C,extended,00020002
+
+[Cheats/P8 Press {L1}+{SELECT} For 2nd Period]
+// patch=1,EE,D1033B42,extended,0000FBFE
+// patch=1,EE,207A138C,extended,00010001
+
+[Cheats/Max Shots]
+// patch=1,EE,107AD714,extended,0000270F
+// patch=1,EE,107AD770,extended,0000270F
+
+[Cheats/No Shots]
+// patch=1,EE,107AD714,extended,00000000
+// patch=1,EE,107AD770,extended,00000000
+
+[Cheats/Max Shorthanded Goals]
+// patch=1,EE,107AD71C,extended,0000270F
+// patch=1,EE,107AD778,extended,0000270F
+
+[Cheats/No Shorthanded Goals]
+// patch=1,EE,107AD71C,extended,00000000
+// patch=1,EE,107AD778,extended,00000000
+
+[Cheats/Max Empty Net Goals]
+// patch=1,EE,107AD720,extended,0000270F
+// patch=1,EE,107AD77C,extended,0000270F
+
+[Cheats/No Empty Net Goals]
+// patch=1,EE,107AD720,extended,00000000
+// patch=1,EE,107AD77C,extended,00000000
+
+[Cheats/Max Faceoffs Won]
+// patch=1,EE,107AD724,extended,0000270F
+// patch=1,EE,107AD780,extended,0000270F
+
+[Cheats/No Faceoffs Won]
+// patch=1,EE,107AD724,extended,00000000
+// patch=1,EE,107AD780,extended,00000000
+
+[Cheats/Max Overall Powerplays]
+// patch=1,EE,107AD728,extended,0000270F
+// patch=1,EE,107AD784,extended,0000270F
+
+[Cheats/No Overall Powerplays]
+// patch=1,EE,107AD728,extended,00000000
+// patch=1,EE,107AD784,extended,00000000
+
+[Cheats/Max Powerplays]
+// patch=1,EE,107AD72A,extended,0000270F
+// patch=1,EE,107AD786,extended,0000270F
+
+[Cheats/No Powerplays]
+// patch=1,EE,107AD72A,extended,00000000
+// patch=1,EE,107AD786,extended,00000000
+
+[Cheats/Max Powerplay Minutes]
+// patch=1,EE,107AD72E,extended,00000257
+// patch=1,EE,107AD78A,extended,00000257
+
+[Cheats/No Powerplay Minutes]
+// patch=1,EE,107AD72E,extended,00000000
+// patch=1,EE,107AD78A,extended,00000000
+
+[Cheats/Max Penalties]
+// patch=1,EE,107AD730,extended,0000270F
+// patch=1,EE,107AD78C,extended,0000270F
+
+[Cheats/No Penalties]
+// patch=1,EE,107AD730,extended,00000000
+// patch=1,EE,107AD78C,extended,00000000
+
+[Cheats/Max Penalty Minutes]
+// patch=1,EE,107AD732,extended,00000257
+// patch=1,EE,107AD78E,extended,00000257
+
+[Cheats/No Penalty Minutes]
+// patch=1,EE,107AD732,extended,00000000
+// patch=1,EE,107AD78E,extended,00000000
+
+[Cheats/Max Time On Attack]
+// patch=1,EE,107AD734,extended,00000257
+// patch=1,EE,107AD790,extended,00000257
+
+[Cheats/No Time On Attack]
+// patch=1,EE,107AD734,extended,00000000
+// patch=1,EE,107AD790,extended,00000000
+
+[Cheats/Max One-Timers]
+// patch=1,EE,107AD736,extended,0000270F
+// patch=1,EE,107AD792,extended,0000270F
+
+[Cheats/No One-Timers]
+// patch=1,EE,107AD736,extended,00000000
+// patch=1,EE,107AD792,extended,00000000
+
+[Cheats/Max One-Timer Goals]
+// patch=1,EE,107AD73A,extended,0000270F
+// patch=1,EE,107AD796,extended,0000270F
+
+[Cheats/No One-Timer Goals]
+// patch=1,EE,107AD73A,extended,00000000
+// patch=1,EE,107AD796,extended,00000000
+
+[Cheats/Max Breakaways]
+// patch=1,EE,107AD73C,extended,0000270F
+// patch=1,EE,107AD798,extended,0000270F
+
+[Cheats/No Breakaways]
+// patch=1,EE,107AD73C,extended,00000000
+// patch=1,EE,107AD798,extended,00000000
+
+[Cheats/Max Overall Penalty Shots]
+// patch=1,EE,107AD740,extended,0000270F
+// patch=1,EE,107AD79C,extended,0000270F
+
+[Cheats/No Overall Penalty Shots]
+// patch=1,EE,107AD740,extended,00000000
+// patch=1,EE,107AD79C,extended,00000000
+
+[Cheats/Max Penalty Shots]
+// patch=1,EE,107AD742,extended,0000270F
+// patch=1,EE,107AD79E,extended,0000270F
+
+[Cheats/No Penalty Shots]
+// patch=1,EE,107AD742,extended,00000000
+// patch=1,EE,107AD79E,extended,00000000
+
+[Cheats/Max Hits]
+// patch=1,EE,107AD744,extended,0000270F
+// patch=1,EE,107AD7A0,extended,0000270F
+
+[Cheats/No Hits]
+// patch=1,EE,107AD744,extended,00000000
+// patch=1,EE,107AD7A0,extended,00000000
+
+[Cheats/Max Overall Passing]
+// patch=1,EE,107AD746,extended,0000270F
+// patch=1,EE,107AD7A2,extended,0000270F
+
+[Cheats/No Overall Passing]
+// patch=1,EE,107AD746,extended,00000000
+// patch=1,EE,107AD7A2,extended,00000000
+
+[Cheats/Max Passing]
+// patch=1,EE,107AD748,extended,0000270F
+// patch=1,EE,107AD7A4,extended,0000270F
+
+[Cheats/No Passing]
+// patch=1,EE,107AD748,extended,00000000
+// patch=1,EE,107AD7A4,extended,00000000
+
+[Cheats/All Upgrades Are Free]
+// patch=1,EE,205CA694,extended,24020000
+
+[Cheats/Free Agents Sign To Lower Terms]
+// patch=1,EE,206FE11C,extended,00252698
+// patch=1,EE,206FE124,extended,00252698
+
+[Cheats/Trade Allowed If Minimum Goalies Reached]
+// patch=1,EE,2070AA34,extended,0028BFD8
+
+[Cheats/Trade Allowed If Minimum Skaters Reached]
+// patch=1,EE,2070AA38,extended,0028BFD8
+
+[Cheats/Trade Allowed If Maximum Roster Reached]
+// patch=1,EE,2070AA3C,extended,0028BFD8
+
+[Cheats/Trades Never Rejected]
+// patch=1,EE,4070AA14,extended,00080001
+// patch=1,EE,0028BFD8,extended,00000000
+// patch=1,EE,2070AA40,extended,0028BFD8
+// patch=1,EE,2070AA44,extended,0028BFD8
+// patch=1,EE,2028C090,extended,00000000

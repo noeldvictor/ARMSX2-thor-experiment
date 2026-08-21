@@ -1,0 +1,42 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tom Clancy's Rainbow Six 3 [SLUS-20883] [21CC1EC3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P2 Press {L2}+Left To Deactivate Walk Thru Walls]
+// patch=1,EE,9013585C,extended,0C04ADCC
+
+[Cheats/Infinite Health]
+// patch=1,EE,E00300DC,extended,003E82F4
+// patch=1,EE,203E82F8,extended,2403005C
+// patch=1,EE,203E82FC,extended,AC430630
+// patch=1,EE,103E8302,extended,00001000
+
+[Cheats/Infinite Health (Partners)]
+// patch=1,EE,E00501B0,extended,003E9B10
+// patch=1,EE,200C0230,extended,02912021
+// patch=1,EE,200C0234,extended,24010034
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,AC610630
+// patch=1,EE,203E9B14,extended,0C03008C
+
+[Cheats/Never Reload (Equipped Weapon)]
+// patch=1,EE,E00200F8,extended,003E89D8
+// patch=1,EE,203E89E0,extended,24040063
+// patch=1,EE,203E89E8,extended,A0440372
+
+[Cheats/Max Infinite Clips (Equipped Weapon)]
+// patch=1,EE,E00200F8,extended,003E912C
+// patch=1,EE,203E9130,extended,24010063
+// patch=1,EE,203E9138,extended,AC41037C
+
+[Cheats/Infinite Clips (MP5A4-9MM Only)]
+// patch=1,EE,D03F0B68,extended,00009900
+// patch=1,EE,203F0B80,extended,00000000
+
+[Cheats/Extra Clips (MP5A4-9MM Only)]
+// patch=1,EE,D03F0B68,extended,00009900
+// patch=1,EE,103F0B7C,extended,00000001
+
+[Cheats/Never Reload (MP5A4-9MM Only)]
+// patch=1,EE,D03F0ADC,extended,0000C318
+// patch=1,EE,203F0AEC,extended,00000000

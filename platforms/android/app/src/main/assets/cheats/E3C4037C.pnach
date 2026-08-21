@@ -1,0 +1,67 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Forever Kingdom [SLUS-20343] [E3C4037C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Buying Cars Increases Points]
+// patch=1,EE,9021CB4C,extended,0C08C5A4
+
+[Cheats/Max Stars]
+// patch=1,EE,203FD744,extended,0001869F
+
+[Cheats/Max Accessory Grade]
+// patch=1,EE,103FD8CE,extended,00000009
+// patch=1,EE,103FD95A,extended,00000009
+// patch=1,EE,103FD9E6,extended,00000009
+
+[Cheats/Infinite PP]
+// patch=1,EE,103FD8D0,extended,0000270F
+// patch=1,EE,103FD95C,extended,0000270F
+// patch=1,EE,103FD9E8,extended,0000270F
+
+[Cheats/Slot 1]
+// patch=1,EE,20564C74,extended,00000063
+
+[Cheats/Slot 2]
+// patch=1,EE,20564C80,extended,00000063
+
+[Cheats/Slot 3]
+// patch=1,EE,20564C8C,extended,00000063
+
+[Cheats/Slot 4]
+// patch=1,EE,20564C98,extended,00000063
+
+[Cheats/Slot 5]
+// patch=1,EE,20564CA4,extended,00000063
+
+[Cheats/Slot 6]
+// patch=1,EE,20564CB0,extended,00000063
+
+[Cheats/Slot 7]
+// patch=1,EE,20564CBC,extended,00000063
+
+[Cheats/Slot 8]
+// patch=1,EE,20564CC8,extended,00000063
+
+[Cheats/Slot 9]
+// patch=1,EE,20564CD4,extended,00000063
+
+[Cheats/Slot 10]
+// patch=1,EE,20564CE0,extended,00000063
+
+[Cheats/Slot 11]
+// patch=1,EE,20564CEC,extended,00000063
+
+[Cheats/Slot 12]
+// patch=1,EE,20564CF8,extended,00000063
+
+[Cheats/Slot 13]
+// patch=1,EE,20564D04,extended,00000063
+
+[Cheats/Slot 14]
+// patch=1,EE,20564D10,extended,00000063
+
+[Cheats/Slot 15]
+// patch=1,EE,20564D1C,extended,00000063
+
+[Cheats/Slot 16]
+// patch=1,EE,20564D28,extended,00000063

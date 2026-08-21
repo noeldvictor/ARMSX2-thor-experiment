@@ -1,0 +1,112 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Gun [SLUS-21139] [4B80628D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Guitar Hero II-Making Of Songs]
+// patch=1,EE,9043B528,extended,0C116D01
+
+[Cheats/Infinite Health]
+// patch=1,EE,20629634,extended,43480000
+
+[Cheats/Infinite Cash]
+// patch=1,EE,1069FBD8,extended,0000FFFF
+
+[Cheats/Max Cash]
+// patch=1,EE,2069FBD8,extended,05F5E0FF
+
+[Cheats/Infinite Quickdraw]
+// patch=1,EE,20828268,extended,3F800000
+
+[Cheats/Infinite Quickdraw Usage]
+// patch=1,EE,2031454C,extended,00000000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2031AA68,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,2031A9EC,extended,241003E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,2031A9EC,extended,02308021
+
+[Cheats/Never Reload]
+// patch=1,EE,2031BE18,extended,00000000
+
+[Cheats/Infinite Whiskey]
+// patch=1,EE,20315048,extended,00000000
+
+[Cheats/Infinite Horse Health]
+// patch=1,EE,202FBDF4,extended,00000000
+// patch=1,EE,202FBDFC,extended,00000000
+
+[Cheats/Max Enemies Kills]
+// patch=1,EE,20670438,extended,05F5E0FF
+
+[Cheats/No Enemies Kills]
+// patch=1,EE,20670438,extended,00000000
+
+[Cheats/Max Gold]
+// patch=1,EE,20670448,extended,0000002C
+
+[Cheats/No Gold]
+// patch=1,EE,20670448,extended,00000000
+
+[Cheats/Max Quickdraw Kills]
+// patch=1,EE,20670458,extended,05F5E0FF
+
+[Cheats/No Quickdraw Kills]
+// patch=1,EE,20670458,extended,00000000
+
+[Cheats/Max Horse Trample]
+// patch=1,EE,20670468,extended,05F5E0FF
+
+[Cheats/No Horse Trample]
+// patch=1,EE,20670468,extended,00000000
+
+[Cheats/Max Burn Kills]
+// patch=1,EE,20670478,extended,05F5E0FF
+
+[Cheats/No Burn Kills]
+// patch=1,EE,20670478,extended,00000000
+
+[Cheats/Max Horses Lost]
+// patch=1,EE,20670488,extended,05F5E0FF
+
+[Cheats/No Horses Lost]
+// patch=1,EE,20670488,extended,00000000
+
+[Cheats/Max Horses Killed]
+// patch=1,EE,20670498,extended,05F5E0FF
+
+[Cheats/No Horses Killed]
+// patch=1,EE,20670498,extended,00000000
+
+[Cheats/Max Explosive Kills]
+// patch=1,EE,206704A8,extended,05F5E0FF
+
+[Cheats/No Explosive Kills]
+// patch=1,EE,206704A8,extended,00000000
+
+[Cheats/Max Melee Kills]
+// patch=1,EE,206704B8,extended,05F5E0FF
+
+[Cheats/No Melee Kills]
+// patch=1,EE,206704B8,extended,00000000
+
+[Cheats/Max Weapons Shot]
+// patch=1,EE,206704C8,extended,05F5E0FF
+
+[Cheats/No Weapons Shot]
+// patch=1,EE,206704C8,extended,00000000
+
+[Cheats/Max Innocents Killed]
+// patch=1,EE,206704D8,extended,05F5E0FF
+
+[Cheats/No Innocents Killed]
+// patch=1,EE,206704D8,extended,00000000
+
+[Cheats/Max Headshots]
+// patch=1,EE,20670508,extended,05F5E0FF
+
+[Cheats/No Headshots]
+// patch=1,EE,20670508,extended,00000000

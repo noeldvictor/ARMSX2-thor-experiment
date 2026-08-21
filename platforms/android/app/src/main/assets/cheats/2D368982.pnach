@@ -1,0 +1,50 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Parappa The Rapper 2 [SCUS-97167] [2D368982]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Circuit Points]
+// patch=1,EE,F0100008,extended,0015B8FF
+
+[Cheats/Max Score P1]
+// patch=1,EE,20189338,extended,0001869F
+
+[Cheats/Always Rap Cool]
+// patch=1,EE,1018931C,extended,00000000
+
+[Cheats/Always Rap Good]
+// patch=1,EE,1AC3BCE1,extended,00000003
+
+[Cheats/Unlock All Stages (After Finishing Stage 1)]
+// patch=1,EE,11C658C8,extended,0000FFFF
+
+[Cheats/Stage 1]
+// patch=1,EE,11C65900,extended,0000FFFF
+// patch=1,EE,11C65960,extended,0000FFFF
+
+[Cheats/Stage 2]
+// patch=1,EE,11C65904,extended,0000FFFF
+// patch=1,EE,11C65964,extended,0000FFFF
+
+[Cheats/Stage 3]
+// patch=1,EE,11C65908,extended,0000FFFF
+// patch=1,EE,11C65968,extended,0000FFFF
+
+[Cheats/Stage 4]
+// patch=1,EE,11C6590C,extended,0000FFFF
+// patch=1,EE,11C6596C,extended,0000FFFF
+
+[Cheats/Stage 5]
+// patch=1,EE,11C65910,extended,0000FFFF
+// patch=1,EE,11C65970,extended,0000FFFF
+
+[Cheats/Stage 6]
+// patch=1,EE,11C65914,extended,0000FFFF
+// patch=1,EE,11C65974,extended,0000FFFF
+
+[Cheats/Stage 7]
+// patch=1,EE,11C65918,extended,0000FFFF
+// patch=1,EE,11C65978,extended,0000FFFF
+
+[Cheats/Stage 8]
+// patch=1,EE,11C6591C,extended,0000FFFF
+// patch=1,EE,11C6597C,extended,0000FFFF

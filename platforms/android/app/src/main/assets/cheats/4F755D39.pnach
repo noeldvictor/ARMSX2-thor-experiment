@@ -1,0 +1,125 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ty The Tasmanian Tiger [SLUS-20571] [4F755D39]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Sweet Tooth Epilogue]
+// patch=1,EE,904202F8,extended,0C108EF3
+
+[Cheats/Press {L1}+{SELECT} For Max Opals (Inside A Level)]
+// patch=1,EE,D0463A1C,extended,00000104
+// patch=1,EE,20463AF4,extended,0000012C
+
+[Cheats/Always Able To Exit Level]
+// patch=1,EE,20DBD284,extended,00000001
+
+[Cheats/Infinite Lives]
+// patch=1,EE,209A19E8,extended,00000005
+
+[Cheats/Infinite Health]
+// patch=1,EE,1046997C,extended,00000004
+
+[Cheats/Unlock Extras Movies]
+// patch=1,EE,209A8EA0,extended,00000001
+
+[Cheats/Have All Rainbow Scales]
+// patch=1,EE,009A0905,extended,000000FF
+// patch=1,EE,109A0906,extended,0000FFFF
+// patch=1,EE,009A0908,extended,00000001
+
+[Cheats/Have Dual Rangs]
+// patch=1,EE,209A1984,extended,00000001
+
+[Cheats/Have Frostyrang]
+// patch=1,EE,209A1990,extended,00000001
+
+[Cheats/Have Flamerang]
+// patch=1,EE,209A1994,extended,00000001
+
+[Cheats/Have Megarang]
+// patch=1,EE,209A19A0,extended,00000001
+
+[Cheats/Have Zoomerang]
+// patch=1,EE,209A19A4,extended,00000001
+
+[Cheats/Have Infrarang]
+// patch=1,EE,209A19A8,extended,00000001
+
+[Cheats/Have Zappyrang]
+// patch=1,EE,209A19AC,extended,00000001
+
+[Cheats/Have Multirang]
+// patch=1,EE,209A19B4,extended,00000001
+
+[Cheats/Have Chronorang]
+// patch=1,EE,209A19B8,extended,00000001
+
+[Cheats/Coin 1]
+// patch=1,EE,209A19BC,extended,00000001
+
+[Cheats/Coin 2]
+// patch=1,EE,209A19C0,extended,00000001
+
+[Cheats/Coin 3]
+// patch=1,EE,209A19C4,extended,00000001
+
+[Cheats/Coin 4]
+// patch=1,EE,209A19C8,extended,00000001
+
+[Cheats/Coin 5]
+// patch=1,EE,209A19CC,extended,00000001
+
+[Cheats/Have Completed]
+// patch=1,EE,209A0C60,extended,00000001
+// patch=1,EE,209A0D0C,extended,00000001
+// patch=1,EE,209A0DB8,extended,00000001
+// patch=1,EE,209A0F10,extended,00000001
+// patch=1,EE,209A0FBC,extended,00000001
+// patch=1,EE,209A1068,extended,00000001
+// patch=1,EE,209A11C0,extended,00000001
+// patch=1,EE,209A126C,extended,00000001
+// patch=1,EE,209A1318,extended,00000001
+// patch=1,EE,209A0E64,extended,00000001
+
+[Cheats/Have All Objectives]
+// patch=1,EE,409A0BE0,extended,00080001
+// patch=1,EE,00000001,extended,00000000
+// patch=1,EE,409A0C8C,extended,00080001
+// patch=1,EE,409A0D38,extended,00080001
+// patch=1,EE,409A0D58,extended,000A0001
+// patch=1,EE,409A0E90,extended,00080001
+// patch=1,EE,409A0F3C,extended,00080001
+// patch=1,EE,409A0FE8,extended,00080001
+// patch=1,EE,409A1140,extended,00080001
+// patch=1,EE,409A11EC,extended,00080001
+// patch=1,EE,409A1298,extended,00080001
+
+[Cheats/Have All Golden Cogs]
+// patch=1,EE,409A0C00,extended,000A0001
+// patch=1,EE,00000001,extended,00000000
+// patch=1,EE,409A0CAC,extended,000A0001
+// patch=1,EE,409A0EB0,extended,000A0001
+// patch=1,EE,409A0F5C,extended,000A0001
+// patch=1,EE,409A1008,extended,000A0001
+// patch=1,EE,409A1160,extended,000A0001
+// patch=1,EE,409A120C,extended,000A0001
+// patch=1,EE,409A12B8,extended,000A0001
+
+[Cheats/Save All Bilbies]
+// patch=1,EE,209A0C28,extended,01010101
+// patch=1,EE,009A0C2C,extended,00000001
+// patch=1,EE,209A0CD4,extended,01010101
+// patch=1,EE,009A0CD8,extended,00000001
+// patch=1,EE,209A0D80,extended,01010101
+// patch=1,EE,009A0D84,extended,00000001
+// patch=1,EE,209A0ED8,extended,01010101
+// patch=1,EE,009A0EDC,extended,00000001
+// patch=1,EE,209A0F84,extended,01010101
+// patch=1,EE,009A0F88,extended,00000001
+// patch=1,EE,209A1030,extended,01010101
+// patch=1,EE,009A1034,extended,00000001
+// patch=1,EE,209A1188,extended,01010101
+// patch=1,EE,009A118C,extended,00000001
+// patch=1,EE,209A1234,extended,01010101
+// patch=1,EE,009A1238,extended,00000001
+// patch=1,EE,209A12E0,extended,01010101
+// patch=1,EE,009A12E4,extended,00000001

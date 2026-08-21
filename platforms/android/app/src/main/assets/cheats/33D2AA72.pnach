@@ -1,0 +1,76 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mister Mosquito [SLUS-20375] [33D2AA72]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Disable Alarm Sounding]
+// patch=1,EE,F0100008,extended,0010B68F
+
+[Cheats/Have All Colors]
+// patch=1,EE,1038B4D8,extended,0000FFFF
+
+[Cheats/Max Extra Tanks]
+// patch=1,EE,1038B610,extended,0000000F
+
+[Cheats/Max Ex. B]
+// patch=1,EE,1038B654,extended,00000050
+
+[Cheats/Infinite Health]
+// patch=1,EE,103992FC,extended,00000028
+
+[Cheats/Max Health]
+// patch=1,EE,10399300,extended,00000014
+
+[Cheats/Suck Blood Quicker]
+// patch=1,EE,2039931C,extended,42C80000
+
+[Cheats/Max Rocket Gauge P1]
+// patch=1,EE,2066AA14,extended,42C80000
+
+[Cheats/No Rocket Gauge P1]
+// patch=1,EE,2066AA10,extended,00000000
+
+[Cheats/P1 Press {CROSS} For Hover Mode]
+// patch=1,EE,D038DEC2,extended,0000BFFF
+// patch=1,EE,20707456,extended,C3FA0000
+
+[Cheats/Start With 50 Wins P1]
+// patch=1,EE,D07085C0,extended,00000000
+// patch=1,EE,107085C0,extended,00000032
+
+[Cheats/Start With 20 Wins P1]
+// patch=1,EE,D07085C0,extended,00000000
+// patch=1,EE,107085C0,extended,00000014
+
+[Cheats/Start With 10 Wins P1]
+// patch=1,EE,D07085C0,extended,00000000
+// patch=1,EE,107085C0,extended,0000000A
+
+[Cheats/Never Gain Wins P1]
+// patch=1,EE,D07085C0,extended,00200002
+// patch=1,EE,107085C0,extended,00000000
+
+[Cheats/Max Rocket Gauge P2]
+// patch=1,EE,2066AA18,extended,42C80000
+
+[Cheats/No Rocket Gauge P2]
+// patch=1,EE,2066AA18,extended,00000000
+
+[Cheats/P2 Press {CROSS} For Hover Mode]
+// patch=1,EE,D0391EC2,extended,0000BFFF
+// patch=1,EE,207079D4,extended,C3FA0000
+
+[Cheats/Start With 50 Wins P2]
+// patch=1,EE,D07085C4,extended,00000000
+// patch=1,EE,107085C4,extended,00000032
+
+[Cheats/Start With 20 Wins P2]
+// patch=1,EE,D07085C4,extended,00000000
+// patch=1,EE,107085C4,extended,00000014
+
+[Cheats/Start With 10 Wins P2]
+// patch=1,EE,D07085C4,extended,00000000
+// patch=1,EE,107085C4,extended,0000000A
+
+[Cheats/Never Gain Wins P2]
+// patch=1,EE,D07085C4,extended,00200002
+// patch=1,EE,107085C4,extended,00000000

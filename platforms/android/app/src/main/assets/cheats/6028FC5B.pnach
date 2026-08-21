@@ -1,0 +1,246 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rayman Arena [SLUS-20272] [6028FC5B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Press {L1}+{CROSS} For Moon Jump]
+// patch=1,EE,901160B4,extended,0C048F12
+
+[Cheats/Shadow Plain-Lum Spring]
+// patch=1,EE,20DCDFFC,extended,00000002
+
+[Cheats/Rise & Shine-Lum Spring]
+// patch=1,EE,20DCE000,extended,00000002
+
+[Cheats/Sunset Coast-Lum Spring]
+// patch=1,EE,20DCE004,extended,00000002
+
+[Cheats/Shadow Plain-Lum Fight]
+// patch=1,EE,20DCE038,extended,00000002
+
+[Cheats/Rise & Shine-Lum Fight]
+// patch=1,EE,20DCE03C,extended,00000002
+
+[Cheats/Sunset Coast-Lum Fight]
+// patch=1,EE,20DCE040,extended,00000002
+
+[Cheats/Shadow Plain-Capture The Fly]
+// patch=1,EE,20DCE074,extended,00000002
+
+[Cheats/Rise & Shine-Capture The Fly]
+// patch=1,EE,20DCE078,extended,00000002
+
+[Cheats/Sunset Coast-Capture The Fly]
+// patch=1,EE,20DCE07C,extended,00000002
+
+[Cheats/First Runs-Race]
+// patch=1,EE,20DCE0B0,extended,00000002
+
+[Cheats/Nebulous Tower-Race]
+// patch=1,EE,20DCE0B4,extended,00000002
+
+[Cheats/Dark Sewer-Race]
+// patch=1,EE,20DCE0B8,extended,00000002
+
+[Cheats/First Runs-Popolopoi]
+// patch=1,EE,20DCE0FC,extended,00000002
+
+[Cheats/Nebulous Tower-Popolopoi]
+// patch=1,EE,20DCE100,extended,00000002
+
+[Cheats/Dark Sewer-Popolopoi]
+// patch=1,EE,20DCE104,extended,00000002
+
+[Cheats/First Runs-Lums]
+// patch=1,EE,20DCE144,extended,00000002
+
+[Cheats/Nebulous Tower-Lums]
+// patch=1,EE,20DCE148,extended,00000002
+
+[Cheats/Dark Sewer-Lums]
+// patch=1,EE,20DCE14C,extended,00000002
+
+[Cheats/Timber Wood-Lum Springs]
+// patch=1,EE,20DCE008,extended,00000002
+
+[Cheats/Haunted Yard-Lum Springs]
+// patch=1,EE,20DCE00C,extended,00000002
+
+[Cheats/Palm Beach-Lum Springs]
+// patch=1,EE,20DCE010,extended,00000002
+
+[Cheats/Timber Wood-Lum Fight]
+// patch=1,EE,20DCE044,extended,00000002
+
+[Cheats/Haunted Yard-Lum Fight]
+// patch=1,EE,20DCE048,extended,00000002
+
+[Cheats/Palm Beach-Lum Fight]
+// patch=1,EE,20DCE04C,extended,00000002
+
+[Cheats/Timber Wood-Capture The Fly]
+// patch=1,EE,20DCE080,extended,00000002
+
+[Cheats/Haunted Yard-Capture The Fly]
+// patch=1,EE,20DCE084,extended,00000002
+
+[Cheats/Palm Beach-Capture The Fly]
+// patch=1,EE,20DCE088,extended,00000002
+
+[Cheats/Dawn Sand-Race]
+// patch=1,EE,20DCE0BC,extended,00000002
+
+[Cheats/Water Canyon-Race]
+// patch=1,EE,20DCE0C0,extended,00000002
+
+[Cheats/Thousand Waterfalls-Race]
+// patch=1,EE,20DCE0C4,extended,00000002
+
+[Cheats/Dawn Sand-Popolopoi]
+// patch=1,EE,20DCE108,extended,00000002
+
+[Cheats/Water Canyon-Popolopoi]
+// patch=1,EE,20DCE10C,extended,00000002
+
+[Cheats/Thousand Waterfalls-Popolopoi]
+// patch=1,EE,20DCE110,extended,00000002
+
+[Cheats/Dawn Sand-Lums]
+// patch=1,EE,20DCE150,extended,00000002
+
+[Cheats/Water Canyon-Lums]
+// patch=1,EE,20DCE154,extended,00000002
+
+[Cheats/Thousand Waterfalls-Lums]
+// patch=1,EE,20DCE158,extended,00000002
+
+[Cheats/Spellbound Forest-Lum Spring]
+// patch=1,EE,20DCE014,extended,00000002
+
+[Cheats/Lys Palace-Lum Spring]
+// patch=1,EE,20DCE018,extended,00000002
+
+[Cheats/Coconut Island-Lum Spring]
+// patch=1,EE,20DCE01C,extended,00000002
+
+[Cheats/Spellbound Forest-Lum Fight]
+// patch=1,EE,20DCE050,extended,00000002
+
+[Cheats/Lys Palace-Lum Fight]
+// patch=1,EE,20DCE054,extended,00000002
+
+[Cheats/Coconut Island-Lum Fight]
+// patch=1,EE,20DCE058,extended,00000002
+
+[Cheats/Spellbound Forest-Capture The Fly]
+// patch=1,EE,20DCE08C,extended,00000002
+
+[Cheats/Lys Palace-Capture The Fly]
+// patch=1,EE,20DCE090,extended,00000002
+
+[Cheats/Coconut Island-Capture The Fly]
+// patch=1,EE,20DCE094,extended,00000002
+
+[Cheats/Forest Jump-Race]
+// patch=1,EE,20DCE0C8,extended,00000002
+
+[Cheats/Zenith Harbour-Race]
+// patch=1,EE,20DCE0CC,extended,00000002
+
+[Cheats/Treasure Ship-Race]
+// patch=1,EE,20DCE0D0,extended,00000002
+
+[Cheats/Forest Jump-Popolopoi]
+// patch=1,EE,20DCE114,extended,00000002
+
+[Cheats/Zenith Harbour-Popolopoi]
+// patch=1,EE,20DCE118,extended,00000002
+
+[Cheats/Treasure Ship-Popolopoi]
+// patch=1,EE,20DCE11C,extended,00000002
+
+[Cheats/Forest Jump-Lums]
+// patch=1,EE,20DCE15C,extended,00000002
+
+[Cheats/Zenith Harbour-Lums]
+// patch=1,EE,20DCE160,extended,00000002
+
+[Cheats/Treasure Ship-Lums]
+// patch=1,EE,20DCE164,extended,00000002
+
+[Cheats/Gemstone Temple-Lum Spring]
+// patch=1,EE,20DCE020,extended,00000002
+
+[Cheats/Forgotten Dungeon-Lum Spring]
+// patch=1,EE,20DCE024,extended,00000002
+
+[Cheats/Ghastly Trees-Lum Spring]
+// patch=1,EE,20DCE028,extended,00000002
+
+[Cheats/Gemstone Temple-Lum Fight]
+// patch=1,EE,20DCE05C,extended,00000002
+
+[Cheats/Forgotten Dungeon-Lum Fight]
+// patch=1,EE,20DCE060,extended,00000002
+
+[Cheats/Ghastly Trees-Lum Fight]
+// patch=1,EE,20DCE064,extended,00000002
+
+[Cheats/Gemstone Temple-Capture The Fly]
+// patch=1,EE,20DCE098,extended,00000002
+
+[Cheats/Forgotten Dungeon-Capture The Fly]
+// patch=1,EE,20DCE09C,extended,00000002
+
+[Cheats/Ghastly Trees-Capture The Fly]
+// patch=1,EE,20DCE0A0,extended,00000002
+
+[Cheats/Pipe Maze-Race]
+// patch=1,EE,20DCE0D4,extended,00000002
+
+[Cheats/Lava Factory-Race]
+// patch=1,EE,20DCE0D8,extended,00000002
+
+[Cheats/Electric Final-Race]
+// patch=1,EE,20DCE0DC,extended,00000002
+
+[Cheats/Pipe Maze-Popolopoi]
+// patch=1,EE,20DCE120,extended,00000002
+
+[Cheats/Lava Factory-Popolopoi]
+// patch=1,EE,20DCE124,extended,00000002
+
+[Cheats/Electric Final-Popolopoi]
+// patch=1,EE,20DCE128,extended,00000002
+
+[Cheats/Pipe Maze-Lums]
+// patch=1,EE,20DCE168,extended,00000002
+
+[Cheats/Lava Factory-Lums]
+// patch=1,EE,20DCE16C,extended,00000002
+
+[Cheats/Electric Final-Lums]
+// patch=1,EE,20DCE170,extended,00000002
+
+[Cheats/Spooky Tower-Lum Spring]
+// patch=1,EE,20DCE02C,extended,00000002
+
+[Cheats/Spooky Tower-Lum Fight]
+// patch=1,EE,20DCE068,extended,00000002
+
+[Cheats/Spooky Tower-Capture The Fly]
+// patch=1,EE,20DCE02C,extended,00000002
+
+[Cheats/Future-Training]
+// patch=1,EE,20DCE0E0,extended,00000002
+
+[Cheats/Big Bang-Training]
+// patch=1,EE,20DCE0E4,extended,00000002
+
+[Cheats/Speed Stress-Survival]
+// patch=1,EE,20DCE0E8,extended,00000002
+
+[Cheats/Born To Slide-Training]
+// patch=1,EE,20DCE0EC,extended,00000002
+
+[Cheats/On And On-On And On]
+// patch=1,EE,20DCE0F0,extended,00000002

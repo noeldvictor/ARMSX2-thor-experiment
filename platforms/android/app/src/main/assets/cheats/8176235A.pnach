@@ -1,0 +1,266 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Van Helsing [SLES-51908] [8176235A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Devil's Whisper]
+// patch=1,EE,9027142C,extended,0C09F45B
+
+[Cheats/Disable FMV]
+// patch=1,EE,20274388,extended,24020001
+
+[Cheats/NTSC 2 PAL]
+// patch=1,EE,20226968,extended,24120003
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0240,extended,24840050
+// patch=1,EE,200C0244,extended,3C014348
+// patch=1,EE,200C0248,extended,03E00008
+// patch=1,EE,200C024C,extended,AC810004
+// patch=1,EE,201C5ABC,extended,0C030090
+
+[Cheats/Max Health]
+// patch=1,EE,200C0230,extended,24840050
+// patch=1,EE,200C0234,extended,3C014348
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,AC810008
+// patch=1,EE,201C5A98,extended,0C03008C
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2015C4C8,extended,00000000
+
+[Cheats/Infinite Finishing Moves]
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,AC820334
+// patch=1,EE,2015C518,extended,0803008A
+// patch=1,EE,2015C51C,extended,24020005
+// patch=1,EE,002E7F69,extended,00000001
+
+[Cheats/Max Finishing Moves]
+// patch=1,EE,200C0220,extended,03E00008
+// patch=1,EE,200C0224,extended,AC820338
+// patch=1,EE,2015C568,extended,08030088
+// patch=1,EE,2015C56C,extended,24020005
+
+[Cheats/Infinite Item Usage]
+// patch=1,EE,2019DDBC,extended,00000000
+
+[Cheats/Extra Items]
+// patch=1,EE,1019DDB4,extended,00000001
+
+[Cheats/Infinite Power Glyphs]
+// patch=1,EE,102E7F38,extended,0000FFFF
+
+[Cheats/Max Power Glyphs]
+// patch=1,EE,202E7F38,extended,05F5E0FF
+
+[Cheats/Power Glyphs Worth 9999]
+// patch=1,EE,101A5BB8,extended,0000270F
+
+[Cheats/Power Glyphs Worth 999]
+// patch=1,EE,101A5BB8,extended,000003E7
+
+[Cheats/Power Glyphs Worth 99]
+// patch=1,EE,101A5BB8,extended,00000063
+
+[Cheats/Power Glyphs Worth 50]
+// patch=1,EE,101A5BB8,extended,00000032
+
+[Cheats/Power Glyphs Worth 10]
+// patch=1,EE,101A5BB8,extended,0000000A
+
+[Cheats/Access All Cheats]
+// patch=1,EE,2019FFB0,extended,24100001
+
+[Cheats/Infinite Kill Time]
+// patch=1,EE,20149698,extended,00000000
+
+[Cheats/Infinite Speed Boost (Upon Pickup)]
+// patch=1,EE,201585C8,extended,00000000
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,200C0250,extended,3C01C7C4
+// patch=1,EE,200C0254,extended,0804D1B6
+// patch=1,EE,200C0258,extended,44816000
+// patch=1,EE,20146F38,extended,0C030094
+
+[Cheats/Crossbow]
+// patch=1,EE,002E9DA0,extended,00000001
+
+[Cheats/Electric Gun]
+// patch=1,EE,002E9DB0,extended,00000001
+
+[Cheats/Gatling Gun]
+// patch=1,EE,002E9DB8,extended,00000001
+
+[Cheats/Rifle]
+// patch=1,EE,002E9DC0,extended,00000001
+
+[Cheats/Double Scimitars]
+// patch=1,EE,002E9DC8,extended,00000001
+
+[Cheats/Shotgun]
+// patch=1,EE,002E9DD0,extended,00000001
+
+[Cheats/Alt Pistols]
+// patch=1,EE,002F4058,extended,00000001
+
+[Cheats/Alt Crossbow]
+// patch=1,EE,002F4068,extended,00000001
+
+[Cheats/Alt Tojo Blades]
+// patch=1,EE,002F4078,extended,00000001
+
+[Cheats/Alt Electric Gun]
+// patch=1,EE,002F4088,extended,00000001
+
+[Cheats/Alt Gatling Gun]
+// patch=1,EE,002F4098,extended,00000001
+
+[Cheats/Alt Scimitars]
+// patch=1,EE,002F40B8,extended,00000001
+
+[Cheats/Alt Shotgun]
+// patch=1,EE,002F40C8,extended,00000001
+
+[Cheats/Melee Explosion]
+// patch=1,EE,002E9D90,extended,00000001
+
+[Cheats/Dodge-Fire]
+// patch=1,EE,002F3FC8,extended,00000001
+
+[Cheats/Grapple Strike]
+// patch=1,EE,002F3FD8,extended,00000001
+
+[Cheats/Ground Strike]
+// patch=1,EE,002F3FE8,extended,00000001
+
+[Cheats/Air Strike]
+// patch=1,EE,002F3FF8,extended,00000001
+
+[Cheats/Tojo Fire]
+// patch=1,EE,002F4008,extended,00000001
+
+[Cheats/Air Hop]
+// patch=1,EE,002F4018,extended,00000001
+
+[Cheats/Scimitar Swing]
+// patch=1,EE,002F4028,extended,00000001
+
+[Cheats/Grapple Jump]
+// patch=1,EE,002F4038,extended,00000001
+
+[Cheats/Infinite Double Jump]
+// patch=1,EE,002E7F60,extended,00000001
+
+[Cheats/Invincible]
+// patch=1,EE,002E7F62,extended,00000001
+
+[Cheats/Unlimited Ammo]
+// patch=1,EE,002E7F64,extended,00000001
+// patch=1,EE,002F70B9,extended,00000001
+// patch=1,EE,003073F9,extended,00000001
+
+[Cheats/Unlimited Speed]
+// patch=1,EE,002E7F65,extended,00000001
+// patch=1,EE,002F70C9,extended,00000001
+// patch=1,EE,00307409,extended,00000001
+
+[Cheats/Display Character Grid]
+// patch=1,EE,002E7F66,extended,00000001
+
+[Cheats/Display Enemy Grids]
+// patch=1,EE,002E7F67,extended,00000001
+
+[Cheats/Display Object Grids]
+// patch=1,EE,002E7F68,extended,00000001
+
+[Cheats/Metallic Enemies]
+// patch=1,EE,002E7F6B,extended,00000001
+
+[Cheats/Archaic Clothes]
+// patch=1,EE,002F7039,extended,00000001
+// patch=1,EE,00307379,extended,00000001
+
+[Cheats/Power Clothes]
+// patch=1,EE,002F7041,extended,00000001
+// patch=1,EE,00307381,extended,00000001
+
+[Cheats/Dwerger Skin]
+// patch=1,EE,002F7049,extended,00000001
+// patch=1,EE,00307389,extended,00000001
+
+[Cheats/Wraith Skin]
+// patch=1,EE,002F7051,extended,00000001
+// patch=1,EE,00307391,extended,00000001
+
+[Cheats/Archangel Ski]
+// patch=1,EE,002F7059,extended,00000001
+// patch=1,EE,00307399,extended,00000001
+
+[Cheats/Gargoyle Skin]
+// patch=1,EE,002F7061,extended,00000001
+// patch=1,EE,003073A1,extended,00000001
+
+[Cheats/Fell Skin]
+// patch=1,EE,002F7069,extended,00000001
+// patch=1,EE,003073A9,extended,00000001
+
+[Cheats/Shadow Fiend]
+// patch=1,EE,002F7071,extended,00000001
+// patch=1,EE,003073B1,extended,00000001
+
+[Cheats/Big Head]
+// patch=1,EE,002F7079,extended,00000001
+// patch=1,EE,003073B9,extended,00000001
+
+[Cheats/Big Melee]
+// patch=1,EE,002F7081,extended,00000001
+// patch=1,EE,003073C1,extended,00000001
+
+[Cheats/Small Fiend]
+// patch=1,EE,002F7089,extended,00000001
+// patch=1,EE,003073C9,extended,00000001
+
+[Cheats/Metal Body]
+// patch=1,EE,002F7091,extended,00000001
+// patch=1,EE,003073D1,extended,00000001
+
+[Cheats/Metal Fiend]
+// patch=1,EE,002F7099,extended,00000001
+// patch=1,EE,003073D9,extended,00000001
+
+[Cheats/Color Body]
+// patch=1,EE,002F70A1,extended,00000001
+// patch=1,EE,003073E1,extended,00000001
+
+[Cheats/Plain World]
+// patch=1,EE,002F70A9,extended,00000001
+// patch=1,EE,003073E9,extended,00000001
+
+[Cheats/Sick Player]
+// patch=1,EE,002F70B1,extended,00000001
+// patch=1,EE,003073F1,extended,00000001
+
+[Cheats/Armory Anytime]
+// patch=1,EE,002F70C1,extended,00000001
+// patch=1,EE,00307401,extended,00000001
+
+[Cheats/Translucent Body]
+// patch=1,EE,002F70D1,extended,00000001
+// patch=1,EE,00307411,extended,00000001
+
+[Cheats/Translucent Fiend]
+// patch=1,EE,002F70D9,extended,00000001
+// patch=1,EE,00307419,extended,00000001
+
+[Cheats/Ghost Body]
+// patch=1,EE,002F70E1,extended,00000001
+// patch=1,EE,00307421,extended,00000001
+
+[Cheats/Ghost Fiend]
+// patch=1,EE,002F70E9,extended,00000001
+// patch=1,EE,00307429,extended,00000001
+
+[Cheats/Shadow Body]
+// patch=1,EE,002F70F1,extended,00000001
+// patch=1,EE,00307431,extended,00000001

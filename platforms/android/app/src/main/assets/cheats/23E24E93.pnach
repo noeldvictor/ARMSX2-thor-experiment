@@ -1,0 +1,165 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: My Street [SCUS-97212] [23E24E93]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Magic Alloy]
+// patch=1,EE,F0100008,extended,00194D57
+
+[Cheats/Max Money]
+// patch=1,EE,20287070,extended,461C3FF6
+
+[Cheats/Hella Marbles (Red Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA054,extended,000003E7
+
+[Cheats/No Marbles (Red Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA054,extended,00000000
+
+[Cheats/Hella Marbles (Blue Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA058,extended,000003E7
+
+[Cheats/No Marbles (Blue Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA058,extended,00000000
+
+[Cheats/Hella Marbles (Green Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA05C,extended,000003E7
+
+[Cheats/No Marbles (Green Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA05C,extended,00000000
+
+[Cheats/Hella Marbles (Yellow Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA060,extended,000003E7
+
+[Cheats/No Marbles (Yellow Player)]
+// patch=1,EE,D18CA202,extended,0000018C
+// patch=1,EE,218CA060,extended,00000000
+
+[Cheats/Team 1 Max Score]
+// patch=1,EE,D18C5D52,extended,0000018C
+// patch=1,EE,218C5D40,extended,00000063
+
+[Cheats/Team 1 No Score]
+// patch=1,EE,D18C5D52,extended,0000018C
+// patch=1,EE,218C5D40,extended,00000000
+
+[Cheats/Team 2 Max Score]
+// patch=1,EE,D18C5D52,extended,0000018C
+// patch=1,EE,218C5D44,extended,00000063
+
+[Cheats/Team 2 No Score]
+// patch=1,EE,D18C5D52,extended,0000018C
+// patch=1,EE,218C5D44,extended,00000000
+
+[Cheats/Max Score (Red Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A5F4,extended,0000270F
+
+[Cheats/No Score (Red Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A5F4,extended,00000000
+
+[Cheats/Max Score (Blue Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A604,extended,0000270F
+
+[Cheats/No Score (Blue Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A604,extended,00000000
+
+[Cheats/Max Score (Green Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A614,extended,0000270F
+
+[Cheats/No Score (Green Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A614,extended,00000000
+
+[Cheats/Max Score (Yellow Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A624,extended,0000270F
+
+[Cheats/No Score (Yellow Player)]
+// patch=1,EE,D190A6DE,extended,00000190
+// patch=1,EE,2190A624,extended,00000000
+
+[Cheats/Always Lap 1 (Red Player)]
+// patch=1,EE,D18C6F36,extended,0000018C
+// patch=1,EE,218C6ECC,extended,00000000
+
+[Cheats/Start On Lap 4 (Red Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C6ECC,extended,00000000
+// patch=1,EE,218C6ECC,extended,00000004
+
+[Cheats/Start On Lap 7 (Red Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C6ECC,extended,00000000
+// patch=1,EE,218C6ECC,extended,00000007
+
+[Cheats/Start On Lap 14 (Red Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C6ECC,extended,00000000
+// patch=1,EE,218C6ECC,extended,0000000E
+
+[Cheats/Always Lap 1 (Blue Player)]
+// patch=1,EE,D18C6F36,extended,0000018C
+// patch=1,EE,218C6F9C,extended,00000000
+
+[Cheats/Start On Lap 4 (Blue Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C6F9C,extended,00000000
+// patch=1,EE,218C6F9C,extended,00000004
+
+[Cheats/Start On Lap 7 (Blue Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C6F9C,extended,00000000
+// patch=1,EE,218C6F9C,extended,00000007
+
+[Cheats/Start On Lap 14 (Blue Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C6F9C,extended,00000000
+// patch=1,EE,218C6F9C,extended,0000000E
+
+[Cheats/Always Lap 1 (Green Player)]
+// patch=1,EE,D18C6F36,extended,0000018C
+// patch=1,EE,218C706C,extended,00000000
+
+[Cheats/Start On Lap 4 (Green Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C706C,extended,00000000
+// patch=1,EE,218C706C,extended,00000004
+
+[Cheats/Start On Lap 7 (Green Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C706C,extended,00000000
+// patch=1,EE,218C706C,extended,00000007
+
+[Cheats/Start On Lap 14 (Green Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C706C,extended,00000000
+// patch=1,EE,218C706C,extended,0000000E
+
+[Cheats/Always Lap 1 (Yellow Player)]
+// patch=1,EE,D18C6F36,extended,0000018C
+// patch=1,EE,218C713C,extended,00000000
+
+[Cheats/Start On Lap 4 (Yellow Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C713C,extended,00000000
+// patch=1,EE,218C713C,extended,00000004
+
+[Cheats/Start On Lap 7 (Yellow Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C713C,extended,00000000
+// patch=1,EE,218C713C,extended,00000007
+
+[Cheats/Start On Lap 14 (Yellow Player)]
+// patch=1,EE,E002018C,extended,018C6F36
+// patch=1,EE,D18C713C,extended,00000000
+// patch=1,EE,218C713C,extended,0000000E

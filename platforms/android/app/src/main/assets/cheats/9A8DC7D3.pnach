@@ -1,0 +1,185 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Blood Omen 2 [SLUS-20024] [9A8DC7D3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Super Unleash Clash (Both Teams)]
+// patch=1,EE,90464854,extended,0C120097
+
+[Cheats/Infinite Health]
+// patch=1,EE,20222344,extended,3C0242C8
+// patch=1,EE,20222348,extended,44826000
+// patch=1,EE,20222380,extended,E44C0010
+// patch=1,EE,20222394,extended,E44C0018
+
+[Cheats/Infinite Lore]
+// patch=1,EE,202220EC,extended,3C0242C8
+// patch=1,EE,202220F0,extended,44826000
+// patch=1,EE,20222128,extended,E44C0004
+// patch=1,EE,2022213C,extended,E44C000C
+
+[Cheats/Infinite Health (Alternate)]
+// patch=1,EE,2021AAC8,extended,3C014400
+// patch=1,EE,2021AAD0,extended,AC810010
+
+[Cheats/Max Health]
+// patch=1,EE,2021ACA4,extended,3C014400
+// patch=1,EE,2021ACAC,extended,AC810018
+
+[Cheats/Infinite RAGE]
+// patch=1,EE,2022D174,extended,3C01447A
+// patch=1,EE,2022D178,extended,44810800
+
+[Cheats/Max RAGE]
+// patch=1,EE,2022D170,extended,3C01447A
+// patch=1,EE,2022D184,extended,AC810024
+
+[Cheats/Have All Dark Gifts]
+// patch=1,EE,200C0220,extended,24010001
+// patch=1,EE,200C0224,extended,AC81000C
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,8C82000C
+// patch=1,EE,20254F60,extended,08030088
+
+[Cheats/Superjump Never Blocked]
+// patch=1,EE,20232E98,extended,00000000
+
+[Cheats/Auto Block Always Enabled]
+// patch=1,EE,10222926,extended,00001000
+
+[Cheats/Have Soulreaver]
+// patch=1,EE,20491C88,extended,00000001
+
+[Cheats/Allow Aborting From Cinematics (Press {CROSS})]
+// patch=1,EE,2049149C,extended,00000001
+
+[Cheats/Draw Kain's Enemy SENSE Stuff]
+// patch=1,EE,20491550,extended,00000001
+
+[Cheats/Show Kain's Position]
+// patch=1,EE,20491568,extended,00000001
+
+[Cheats/Show Kain's Velocity]
+// patch=1,EE,20491580,extended,00000001
+
+[Cheats/Show Kain's Platform Info]
+// patch=1,EE,2049158C,extended,00000001
+
+[Cheats/Show Kain's Animations]
+// patch=1,EE,20491598,extended,00000001
+
+[Cheats/Show Kain's Facing]
+// patch=1,EE,204915A4,extended,00000001
+
+[Cheats/Show Kain's Lore]
+// patch=1,EE,204915BC,extended,00000001
+
+[Cheats/Show Kain's Hit Points]
+// patch=1,EE,204915C8,extended,00000001
+
+[Cheats/Invulnerable]
+// patch=1,EE,204915E0,extended,00000001
+
+[Cheats/Show Kain's Charge Move Points]
+// patch=1,EE,204915F8,extended,00000001
+
+[Cheats/Show Elapsed Player Time]
+// patch=1,EE,20491604,extended,00000001
+
+[Cheats/Show Checkpoint Info]
+// patch=1,EE,20491640,extended,00000001
+
+[Cheats/Show Kain's Blocking Preference]
+// patch=1,EE,2049164C,extended,00000001
+
+[Cheats/COMBAT Messages]
+// patch=1,EE,20491664,extended,00000001
+
+[Cheats/Disable Enemies]
+// patch=1,EE,2049170C,extended,00000001
+
+[Cheats/Mute Sounds]
+// patch=1,EE,20493D28,extended,00000001
+
+[Cheats/Show Symbol Stats]
+// patch=1,EE,20493D34,extended,00000001
+
+[Cheats/Show Terrain Rendering Stats]
+// patch=1,EE,20493D40,extended,00000001
+
+[Cheats/Show Cell Crossings]
+// patch=1,EE,20493D4C,extended,00000001
+
+[Cheats/Show Render Totals]
+// patch=1,EE,20493DDC,extended,00000001
+
+[Cheats/Show Sound Stream Usage]
+// patch=1,EE,20493E18,extended,00000001
+
+[Cheats/Show Sound Channel Usage]
+// patch=1,EE,20493E24,extended,00000001
+
+[Cheats/Show Bone IDs]
+// patch=1,EE,20493E3C,extended,00000001
+
+[Cheats/Show FPS]
+// patch=1,EE,20493E54,extended,00000001
+
+[Cheats/Show Music Vars 0]
+// patch=1,EE,20493E78,extended,00000001
+
+[Cheats/Show Music Vars 1]
+// patch=1,EE,20493E84,extended,00000001
+
+[Cheats/Show Free SRAM]
+// patch=1,EE,20493E9C,extended,00000001
+
+[Cheats/Show SoundGroup Volume]
+// patch=1,EE,20493EA8,extended,00000001
+
+[Cheats/Slow Motion]
+// patch=1,EE,20495548,extended,00000001
+
+[Cheats/Display Anim Info]
+// patch=1,EE,20495554,extended,00000001
+
+[Cheats/Disable Creature Lighting]
+// patch=1,EE,20495590,extended,00000000
+
+[Cheats/Enable Creature Lighting]
+// patch=1,EE,20495590,extended,00000001
+
+[Cheats/Characters Are Deaf]
+// patch=1,EE,204955B4,extended,00000001
+
+[Cheats/Characters Are Blind]
+// patch=1,EE,204955C0,extended,00000001
+
+[Cheats/Draw Lines Of Site]
+// patch=1,EE,204955CC,extended,00000001
+
+[Cheats/Display Current Regions]
+// patch=1,EE,20495644,extended,00000001
+
+[Cheats/Display Regions Loaded]
+// patch=1,EE,20495650,extended,00000001
+
+[Cheats/Display EType]
+// patch=1,EE,20495680,extended,00000001
+
+[Cheats/Show Mem Totals]
+// patch=1,EE,2049568C,extended,00000001
+
+[Cheats/Show Camera Info]
+// patch=1,EE,204956A4,extended,00000001
+
+[Cheats/Show Detector Debug Stuff]
+// patch=1,EE,20491520,extended,00000001
+
+[Cheats/Allow Attack Through Walls]
+// patch=1,EE,20491778,extended,00000001
+
+[Cheats/Display Bone Orients]
+// patch=1,EE,20495560,extended,00000001
+
+[Cheats/Debug Conversation Stuff]
+// patch=1,EE,204955FC,extended,00000001

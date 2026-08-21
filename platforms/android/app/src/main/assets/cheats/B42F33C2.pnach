@@ -1,0 +1,121 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Teenage Mutant Ninja Turtles [SLES-51931] [B42F33C2]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Gallery 2]
+// patch=1,EE,F0100008,extended,0012BCDB
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,2020B3CC,extended,244203E7
+
+[Cheats/Super Quick Score Gain]
+// patch=1,EE,2020B3CC,extended,2442270F
+
+[Cheats/Hella Quick Score Gain]
+// patch=1,EE,2020B3CC,extended,24427FFF
+
+[Cheats/Infinite Normal Shurikens]
+// patch=1,EE,202132B4,extended,00000000
+
+[Cheats/Extra Normal Shurikens]
+// patch=1,EE,102132B0,extended,00000001
+
+[Cheats/Infinite Lightning Shurikens]
+// patch=1,EE,202132EC,extended,00000000
+
+[Cheats/Extra Lightning Shurikens]
+// patch=1,EE,102132E8,extended,00000001
+
+[Cheats/Infinite Fire Shurikens]
+// patch=1,EE,20213330,extended,00000000
+
+[Cheats/Extra Fire Shurikens]
+// patch=1,EE,1021332C,extended,00000001
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,240200C8
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,AC82002C
+// patch=1,EE,202035B0,extended,0C030088
+
+[Cheats/Infinite Continues]
+// patch=1,EE,20D596E0,extended,00000009
+
+[Cheats/Extra Continues]
+// patch=1,EE,2015FB78,extended,00641821
+
+[Cheats/Always Low Time (Bonus Missions)]
+// patch=1,EE,20D5983C,extended,00000000
+
+[Cheats/Unlock All Characters/Extra Modes]
+// patch=1,EE,20D59CA0,extended,FFFFFFFF
+
+[Cheats/P1 Starts With 50 Normal Shurikens]
+// patch=1,EE,20D596E4,extended,00000032
+
+[Cheats/P1 Starts With 20 Normal Shurikens]
+// patch=1,EE,20D596E4,extended,00000014
+
+[Cheats/P1 Starts With 5 Normal Shurikens]
+// patch=1,EE,20D596E4,extended,00000005
+
+[Cheats/P1 Starts With 50 Lightning Shurikens]
+// patch=1,EE,20D596E8,extended,00000032
+
+[Cheats/P1 Starts With 20 Lightning Shurikens]
+// patch=1,EE,20D596E8,extended,00000014
+
+[Cheats/P1 Starts With 5 Lightning Shurikens]
+// patch=1,EE,20D596E8,extended,00000005
+
+[Cheats/P1 Starts With 50 Fire Shurikens]
+// patch=1,EE,20D596EC,extended,00000032
+
+[Cheats/P1 Starts With 20 Fire Shurikens]
+// patch=1,EE,20D596EC,extended,00000014
+
+[Cheats/P1 Starts With 5 Fire Shurikens]
+// patch=1,EE,20D596EC,extended,00000005
+
+[Cheats/P2 Starts With 50 Normal Shurikens]
+// patch=1,EE,20D596F0,extended,00000032
+
+[Cheats/P2 Starts With 20 Normal Shurikens]
+// patch=1,EE,20D596F0,extended,00000014
+
+[Cheats/P2 Starts With 5 Normal Shurikens]
+// patch=1,EE,20D596F0,extended,00000005
+
+[Cheats/P2 Starts With 50 Lightning Shurikens]
+// patch=1,EE,20D596F4,extended,00000032
+
+[Cheats/P2 Starts With 20 Lightning Shurikens]
+// patch=1,EE,20D596F4,extended,00000014
+
+[Cheats/P2 Starts With 5 Lightning Shurikens]
+// patch=1,EE,20D596F4,extended,00000005
+
+[Cheats/P2 Starts With 50 Fire Shurikens]
+// patch=1,EE,20D596F8,extended,00000032
+
+[Cheats/P2 Starts With 20 Fire Shurikens]
+// patch=1,EE,20D596F8,extended,00000014
+
+[Cheats/P2 Starts With 5 Fire Shurikens]
+// patch=1,EE,20D596F8,extended,00000005
+
+[Cheats/Raphael]
+// patch=1,EE,20D59BA0,extended,00000025
+
+[Cheats/Michelangelo]
+// patch=1,EE,20D59BD0,extended,00000025
+
+[Cheats/Donatello]
+// patch=1,EE,20D59C00,extended,00000025
+
+[Cheats/Leonardo]
+// patch=1,EE,20D59C30,extended,00000025
+
+[Cheats/Unlock All Database-All Characters]
+// patch=1,EE,40D59CB8,extended,00040005
+// patch=1,EE,0000000F,extended,00000000

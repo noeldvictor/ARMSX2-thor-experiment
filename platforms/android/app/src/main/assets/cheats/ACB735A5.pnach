@@ -1,0 +1,61 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Airblade [SLUS-20346] [ACB735A5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Special Tricks]
+// patch=1,EE,9011227C,extended,0C047AB2
+
+[Cheats/Infinite Turbo]
+// patch=1,EE,203077D8,extended,3F800000
+
+[Cheats/Max Score]
+// patch=1,EE,203078D0,extended,4CBEBC20
+// patch=1,EE,203284C8,extended,4CBEBC20
+// patch=1,EE,203284E0,extended,4CBEBC20
+// patch=1,EE,203284F8,extended,4CBEBC20
+// patch=1,EE,20328510,extended,4CBEBC20
+// patch=1,EE,20328528,extended,4CBEBC20
+// patch=1,EE,20328540,extended,4CBEBC20
+
+[Cheats/Infinite Time]
+// patch=1,EE,203310C8,extended,4415C000
+
+[Cheats/Have Finished]
+// patch=1,EE,203284B8,extended,00000001
+// patch=1,EE,203284D0,extended,00000001
+// patch=1,EE,203284E8,extended,00000001
+// patch=1,EE,20328500,extended,00000001
+// patch=1,EE,20328518,extended,00000001
+// patch=1,EE,20328530,extended,00000001
+
+[Cheats/Low Time]
+// patch=1,EE,203284BC,extended,00000000
+// patch=1,EE,203284D4,extended,00000000
+// patch=1,EE,203284EC,extended,00000000
+// patch=1,EE,20328504,extended,00000000
+// patch=1,EE,2032851C,extended,00000000
+// patch=1,EE,20328534,extended,00000000
+
+[Cheats/No Falls]
+// patch=1,EE,203284C0,extended,00000000
+// patch=1,EE,203284D8,extended,00000000
+// patch=1,EE,203284F0,extended,00000000
+// patch=1,EE,20328508,extended,00000000
+// patch=1,EE,20328520,extended,00000000
+// patch=1,EE,20328538,extended,00000000
+
+[Cheats/Max Best Combo]
+// patch=1,EE,203284C4,extended,00000063
+// patch=1,EE,203284DC,extended,00000063
+// patch=1,EE,203284F4,extended,00000063
+// patch=1,EE,2032850C,extended,00000063
+// patch=1,EE,20328524,extended,00000063
+// patch=1,EE,2032853C,extended,00000063
+
+[Cheats/Grade S]
+// patch=1,EE,203284CC,extended,00000000
+// patch=1,EE,203284E4,extended,00000000
+// patch=1,EE,203284FC,extended,00000000
+// patch=1,EE,20328514,extended,00000000
+// patch=1,EE,2032852C,extended,00000000
+// patch=1,EE,20328544,extended,00000000

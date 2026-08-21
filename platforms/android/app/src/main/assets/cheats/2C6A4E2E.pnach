@@ -1,0 +1,144 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: FIFA Soccer 2004 [SLUS-20750] [2C6A4E2E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P8 Press {R1}+{R2} To End Half]
+// patch=1,EE,9042C5B4,extended,0C110E27
+// patch=1,EE,D065E502,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,205915A0,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,205915A0,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,205915A0,extended,00000000
+
+[Cheats/Home Team Start With Score 50]
+// patch=1,EE,D05915A0,extended,00000000
+// patch=1,EE,205915A0,extended,00000032
+
+[Cheats/Home Team Start With Score 20]
+// patch=1,EE,D05915A0,extended,00000000
+// patch=1,EE,205915A0,extended,00000014
+
+[Cheats/Home Team Start With Score 10]
+// patch=1,EE,D05915A0,extended,00000000
+// patch=1,EE,205915A0,extended,0000000A
+
+[Cheats/Home Team Start With Score 5]
+// patch=1,EE,D05915A0,extended,00000000
+// patch=1,EE,205915A0,extended,00000005
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,205915A4,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,205915A4,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,205915A4,extended,00000000
+
+[Cheats/Away Team Start With Score 50]
+// patch=1,EE,D05915A4,extended,00000000
+// patch=1,EE,205915A4,extended,00000032
+
+[Cheats/Away Team Start With Score 20]
+// patch=1,EE,D05915A4,extended,00000000
+// patch=1,EE,205915A4,extended,00000014
+
+[Cheats/Away Team Start With Score 10]
+// patch=1,EE,D05915A4,extended,00000000
+// patch=1,EE,205915A4,extended,0000000A
+
+[Cheats/Away Team Start With Score 5]
+// patch=1,EE,D05915A4,extended,00000000
+// patch=1,EE,205915A4,extended,00000005
+
+[Cheats/All Goal's Score For Home Team]
+// patch=1,EE,201E54E0,extended,24030000
+
+[Cheats/All Goal's Score For Away Team]
+// patch=1,EE,201E54E0,extended,24030004
+
+[Cheats/Goal's Score 10]
+// patch=1,EE,101E54EC,extended,0000000A
+
+[Cheats/Goal's Score 5]
+// patch=1,EE,101E54EC,extended,00000005
+
+[Cheats/Goal's Score 2]
+// patch=1,EE,101E54EC,extended,00000002
+
+[Cheats/Max Budget Remaining]
+// patch=1,EE,200C0220,extended,3463E0FF
+// patch=1,EE,200C0224,extended,ACE30028
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,AD030010
+// patch=1,EE,202F9D68,extended,0C030088
+// patch=1,EE,202F9D6C,extended,3C0305F5
+
+[Cheats/Infinite Budget Points Usage]
+// patch=1,EE,202FA974,extended,00000000
+
+[Cheats/P1 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065DE02,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000
+
+[Cheats/P1 Press {R1}+{R2} To End Half]
+// patch=1,EE,D065DE02,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/P2 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065DF02,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000
+
+[Cheats/P2 Press {R1}+{R2} To End Half]
+// patch=1,EE,D065DF02,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/P3 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065E002,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000
+
+[Cheats/P3 Press {R1}+{R2} To End Half]
+// patch=1,EE,D065E002,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/P4 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065E102,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000
+
+[Cheats/P4 Press {R1}+{R2} To End Half]
+// patch=1,EE,D065E102,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/P5 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065E202,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000
+
+[Cheats/P5 Press {R1}+{R2} To End Half]
+// patch=1,EE,D065E202,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/P6 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065E302,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000
+
+[Cheats/P6 Press {R1}+{R2} To End Half]
+// patch=1,EE,D065E302,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/P7 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065E402,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000
+
+[Cheats/P7 Press {R1}+{R2} To End Half]
+// patch=1,EE,D065E402,extended,0000F5FF
+// patch=1,EE,105940B8,extended,00000170
+
+[Cheats/P8 Press {L1}+{L2} For More Time]
+// patch=1,EE,D065E502,extended,0000FAFF
+// patch=1,EE,105940B8,extended,00000000

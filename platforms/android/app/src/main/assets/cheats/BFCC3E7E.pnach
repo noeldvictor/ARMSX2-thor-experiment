@@ -1,0 +1,327 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shinobi [SLUS-20459] [BFCC3E7E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Skills]
+// patch=1,EE,90381124,extended,0C0D6FB6
+
+[Cheats/Infinite Shurikens]
+// patch=1,EE,202B2E1C,extended,00000000
+
+[Cheats/Infinite Life (Hold {L1}+{SELECT} To Die)]
+// patch=1,EE,2024ADA0,extended,AE23032C
+// patch=1,EE,D051D442,extended,0010FBFE
+// patch=1,EE,2024AD90,extended,24032710
+// patch=1,EE,D051D442,extended,0000FBFE
+// patch=1,EE,2024AD90,extended,8E23032C
+
+[Cheats/Infinite Life (Alternate)]
+// patch=1,EE,2024E1E8,extended,00000000
+
+[Cheats/Infinite Slash]
+// patch=1,EE,2024ADB8,extended,24032710
+// patch=1,EE,2024ADC8,extended,AE230330
+
+[Cheats/Infinite Slash (Alternate)]
+// patch=1,EE,2024AD24,extended,00000000
+
+[Cheats/Idiot AI]
+// patch=1,EE,202597D0,extended,03E00008
+// patch=1,EE,202597D4,extended,00000000
+// patch=1,EE,20259860,extended,03E00008
+// patch=1,EE,20259864,extended,00000000
+
+[Cheats/Enable Lib Buffer Info]
+// patch=1,EE,202462D4,extended,00000000
+
+[Cheats/Enable Sound Port Info]
+// patch=1,EE,20246218,extended,00000000
+
+[Cheats/Enable Sound Core Volume Info]
+// patch=1,EE,20246070,extended,00000000
+
+[Cheats/Enable Debug Info 1]
+// patch=1,EE,20245D64,extended,00000000
+
+[Cheats/Enable Debug Info 2]
+// patch=1,EE,20245DB8,extended,00000000
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,20832310,extended,00000000
+
+[Cheats/Unlock Almost Everything]
+// patch=1,EE,20832280,extended,FFFFFFFF
+
+[Cheats/Stage 1-B]
+// patch=1,EE,D0832288,extended,00200100
+// patch=1,EE,00832289,extended,00000001
+// patch=1,EE,20832334,extended,000F423F
+// patch=1,EE,2083232C,extended,00000000
+// patch=1,EE,10832330,extended,00000000
+
+[Cheats/Stage 2-A]
+// patch=1,EE,D0832288,extended,00200200
+// patch=1,EE,00832289,extended,00000002
+// patch=1,EE,20832340,extended,000F423F
+// patch=1,EE,20832338,extended,00000000
+// patch=1,EE,1083233C,extended,00000000
+
+[Cheats/Stage 2-B]
+// patch=1,EE,D0832288,extended,00200300
+// patch=1,EE,00832289,extended,00000003
+// patch=1,EE,2083234C,extended,000F423F
+// patch=1,EE,20832344,extended,00000000
+// patch=1,EE,10832348,extended,00000000
+
+[Cheats/Stage 3-A]
+// patch=1,EE,D0832288,extended,00200400
+// patch=1,EE,00832289,extended,00000004
+// patch=1,EE,20832358,extended,000F423F
+// patch=1,EE,20832350,extended,00000000
+// patch=1,EE,10832354,extended,00000000
+
+[Cheats/Stage 3-B]
+// patch=1,EE,D0832288,extended,00200500
+// patch=1,EE,00832289,extended,00000005
+// patch=1,EE,20832364,extended,000F423F
+// patch=1,EE,2083235C,extended,00000000
+// patch=1,EE,10832360,extended,00000000
+
+[Cheats/Stage 4-A]
+// patch=1,EE,D0832288,extended,00200600
+// patch=1,EE,00832289,extended,00000006
+// patch=1,EE,20832370,extended,000F423F
+// patch=1,EE,20832368,extended,00000000
+// patch=1,EE,1083236C,extended,00000000
+
+[Cheats/Stage 4-B]
+// patch=1,EE,D0832288,extended,00200700
+// patch=1,EE,00832289,extended,00000007
+// patch=1,EE,2083237C,extended,000F423F
+// patch=1,EE,20832374,extended,00000000
+// patch=1,EE,10832378,extended,00000000
+
+[Cheats/Stage 5-A]
+// patch=1,EE,D0832288,extended,00200800
+// patch=1,EE,00832289,extended,00000008
+// patch=1,EE,20832388,extended,000F423F
+// patch=1,EE,20832380,extended,00000000
+// patch=1,EE,10832384,extended,00000000
+
+[Cheats/Stage 5-B]
+// patch=1,EE,D0832288,extended,00200900
+// patch=1,EE,00832289,extended,00000009
+// patch=1,EE,20832394,extended,000F423F
+// patch=1,EE,2083238C,extended,00000000
+// patch=1,EE,10832390,extended,00000000
+
+[Cheats/Stage 6-A]
+// patch=1,EE,D0832288,extended,00200A00
+// patch=1,EE,00832289,extended,0000000A
+// patch=1,EE,208323A0,extended,000F423F
+// patch=1,EE,20832398,extended,00000000
+// patch=1,EE,1083239C,extended,00000000
+
+[Cheats/Stage 6-B]
+// patch=1,EE,D0832288,extended,00200B00
+// patch=1,EE,00832289,extended,0000000B
+// patch=1,EE,208323AC,extended,000F423F
+// patch=1,EE,208323A4,extended,00000000
+// patch=1,EE,108323A8,extended,00000000
+
+[Cheats/Stage 7-A]
+// patch=1,EE,D0832288,extended,00200C00
+// patch=1,EE,00832289,extended,0000000C
+// patch=1,EE,208323B8,extended,000F423F
+// patch=1,EE,208323B0,extended,00000000
+// patch=1,EE,108323B4,extended,00000000
+
+[Cheats/Stage 7-B]
+// patch=1,EE,D0832288,extended,00200D00
+// patch=1,EE,00832289,extended,0000000D
+// patch=1,EE,208323C4,extended,000F423F
+// patch=1,EE,208323BC,extended,00000000
+// patch=1,EE,108323C0,extended,00000000
+
+[Cheats/Stage 8-A]
+// patch=1,EE,D0832288,extended,00200E00
+// patch=1,EE,00832289,extended,0000000E
+// patch=1,EE,208323D0,extended,000F423F
+// patch=1,EE,208323C8,extended,00000000
+// patch=1,EE,108323CC,extended,00000000
+
+[Cheats/Stage 8-B]
+// patch=1,EE,D0832288,extended,00200F00
+// patch=1,EE,00832289,extended,0000000F
+// patch=1,EE,208323DC,extended,000F423F
+// patch=1,EE,208323D4,extended,00000000
+// patch=1,EE,108323D8,extended,00000000
+
+[Cheats/Normal Levels]
+// patch=1,EE,0083228C,extended,00000011
+
+[Cheats/Hard Levels]
+// patch=1,EE,0083228D,extended,00000011
+
+[Cheats/Super Levels]
+// patch=1,EE,0083228E,extended,00000011
+
+[Cheats/Stage 1-A-Secret 1]
+// patch=1,EE,0083228F,extended,00000001
+
+[Cheats/Stage 1-A-Secret 2]
+// patch=1,EE,00832290,extended,00000001
+
+[Cheats/Stage 1-A-Secret 3]
+// patch=1,EE,00832291,extended,00000001
+
+[Cheats/Stage 1-A-Secret 4]
+// patch=1,EE,00832292,extended,00000001
+
+[Cheats/Stage 1-A-Secret 5]
+// patch=1,EE,00832293,extended,00000001
+
+[Cheats/Stage 1-B-Secret 1]
+// patch=1,EE,00832297,extended,00000001
+
+[Cheats/Stage 1-B-Secret 2]
+// patch=1,EE,00832298,extended,00000001
+
+[Cheats/Stage 1-B-Secret 3]
+// patch=1,EE,00832299,extended,00000001
+
+[Cheats/Stage 1-B-Secret 4]
+// patch=1,EE,0083229A,extended,00000001
+
+[Cheats/Stage 2-A-Secret 1]
+// patch=1,EE,0083229F,extended,00000001
+
+[Cheats/Stage 2-A-Secret 2]
+// patch=1,EE,008322A0,extended,00000001
+
+[Cheats/Stage 2-A-Secret 3]
+// patch=1,EE,008322A1,extended,00000001
+
+[Cheats/Stage 2-B-Secret 1]
+// patch=1,EE,008322A7,extended,00000001
+
+[Cheats/Stage 2-B-Secret 2]
+// patch=1,EE,008322A8,extended,00000001
+
+[Cheats/Stage 2-B-Secret 3]
+// patch=1,EE,008322A9,extended,00000001
+
+[Cheats/Stage 3-A-Secret 1]
+// patch=1,EE,008322AF,extended,00000001
+
+[Cheats/Stage 3-A-Secret 2]
+// patch=1,EE,008322B0,extended,00000001
+
+[Cheats/Stage 3-A-Secret 3]
+// patch=1,EE,008322B1,extended,00000001
+
+[Cheats/Stage 3-A-Secret 4]
+// patch=1,EE,008322B3,extended,00000001
+
+[Cheats/Stage 3-B-Secret 1]
+// patch=1,EE,008322B7,extended,00000001
+
+[Cheats/Stage 3-B-Secret 2]
+// patch=1,EE,008322B8,extended,00000001
+
+[Cheats/Stage 3-B-Secret 3]
+// patch=1,EE,008322BA,extended,00000001
+
+[Cheats/Stage 4-A-Secret 1]
+// patch=1,EE,008322BF,extended,00000001
+
+[Cheats/Stage 4-A-Secret 2]
+// patch=1,EE,008322C0,extended,00000001
+
+[Cheats/Stage 4-A-Secret 3]
+// patch=1,EE,008322C1,extended,00000001
+
+[Cheats/Stage 4-A-Secret 4]
+// patch=1,EE,008322C2,extended,00000001
+
+[Cheats/Stage 4-B-Secret 1]
+// patch=1,EE,008322C7,extended,00000001
+
+[Cheats/Stage 4-B-Secret 2]
+// patch=1,EE,008322C8,extended,00000001
+
+[Cheats/Stage 4-B-Secret 3]
+// patch=1,EE,008322C9,extended,00000001
+
+[Cheats/Stage 4-B-Secret 4]
+// patch=1,EE,008322CA,extended,00000001
+
+[Cheats/Stage 4-B-Secret 5]
+// patch=1,EE,008322CB,extended,00000001
+
+[Cheats/Stage 5-A-Secret 1]
+// patch=1,EE,008322CF,extended,00000001
+
+[Cheats/Stage 5-A-Secret 2]
+// patch=1,EE,008322D0,extended,00000001
+
+[Cheats/Stage 5-A-Secret 3]
+// patch=1,EE,008322D1,extended,00000001
+
+[Cheats/Stage 5-A-Secret 4]
+// patch=1,EE,008322D2,extended,00000001
+
+[Cheats/Stage 6-A-Secret 1]
+// patch=1,EE,008322DF,extended,00000001
+
+[Cheats/Stage 6-A-Secret 2]
+// patch=1,EE,008322E0,extended,00000001
+
+[Cheats/Stage 6-A-Secret 3]
+// patch=1,EE,008322E1,extended,00000001
+
+[Cheats/Stage 7-A-Secret 1]
+// patch=1,EE,008322EF,extended,00000001
+
+[Cheats/Stage 7-A-Secret 2]
+// patch=1,EE,008322F0,extended,00000001
+
+[Cheats/Stage 7-A-Secret 3]
+// patch=1,EE,008322F1,extended,00000001
+
+[Cheats/Stage 8-A-Secret 1]
+// patch=1,EE,008322FF,extended,00000001
+
+[Cheats/Stage 8-A-Secret 2]
+// patch=1,EE,00832300,extended,00000001
+
+[Cheats/Stage 8-A-Secret 3]
+// patch=1,EE,00832301,extended,00000001
+
+[Cheats/Stage 8-A-Secret 4]
+// patch=1,EE,00832302,extended,00000001
+
+[Cheats/Stage 8-A-Secret 5]
+// patch=1,EE,00832303,extended,00000001
+
+[Cheats/Stage 8-A-Secret 6]
+// patch=1,EE,00832304,extended,00000001
+
+[Cheats/Stage 8-B-Secret 1]
+// patch=1,EE,00832307,extended,00000001
+
+[Cheats/Stage 8-B-Secret 2]
+// patch=1,EE,00832308,extended,00000001
+
+[Cheats/Stage 8-B-Secret 3]
+// patch=1,EE,00832309,extended,00000001
+
+[Cheats/Stage 1-A]
+// patch=1,EE,20832328,extended,000F423F
+// patch=1,EE,20832320,extended,00000000
+// patch=1,EE,10832324,extended,00000000
+
+[Cheats/Stage Ex]
+// patch=1,EE,208323F4,extended,000F423F
+// patch=1,EE,208323EC,extended,00000000
+// patch=1,EE,108323F0,extended,00000000

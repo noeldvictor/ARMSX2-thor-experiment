@@ -1,0 +1,71 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Silent Scope 3 [SLUS-20514] [5CA5427D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Extra Options]
+// patch=1,EE,9010C18C,extended,0C04570E
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,10530CD4,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,20530CD4,extended,05F5E0FF
+
+[Cheats/Always Low Mission Time]
+// patch=1,EE,20530CB8,extended,00000000
+
+[Cheats/Better Rank]
+// patch=1,EE,10530D0E,extended,00000001
+
+[Cheats/Infinite Health]
+// patch=1,EE,20530D60,extended,3F800000
+
+[Cheats/Infinite Bullets]
+// patch=1,EE,10530D86,extended,00000006
+
+[Cheats/Infinite Critical Time]
+// patch=1,EE,10530D9C,extended,00000016
+
+[Cheats/Infinite Credits (Silent Scope EX-Story Mode)]
+// patch=1,EE,1056BD50,extended,00000063
+
+[Cheats/Extra Credits (Silent Scope EX-Story Mode)]
+// patch=1,EE,101F3908,extended,00000001
+
+[Cheats/Instant Death (All Enemies)]
+// patch=1,EE,201C1EB8,extended,24030000
+// patch=1,EE,201C1EC0,extended,A603000A
+
+[Cheats/Press {SELECT} To Kill Any Enemy]
+// patch=1,EE,201C1EC0,extended,A603000A
+// patch=1,EE,D05803C6,extended,0010FFFE
+// patch=1,EE,201C1EB8,extended,8603000A
+// patch=1,EE,D05803C6,extended,0000FFFE
+// patch=1,EE,201C1EB8,extended,24030000
+
+[Cheats/Max Cleared Score]
+// patch=1,EE,20597320,extended,05F5E0FF
+// patch=1,EE,20597330,extended,05F5E0FF
+// patch=1,EE,20597340,extended,05F5E0FF
+// patch=1,EE,20597350,extended,05F5E0FF
+// patch=1,EE,20597370,extended,05F5E0FF
+// patch=1,EE,20597380,extended,05F5E0FF
+// patch=1,EE,20597390,extended,05F5E0FF
+
+[Cheats/Always Low Cleared Time]
+// patch=1,EE,20597324,extended,00000000
+// patch=1,EE,20597334,extended,00000000
+// patch=1,EE,20597344,extended,00000000
+// patch=1,EE,20597354,extended,00000000
+// patch=1,EE,20597374,extended,00000000
+// patch=1,EE,20597384,extended,00000000
+// patch=1,EE,20597394,extended,00000000
+
+[Cheats/Have Finished]
+// patch=1,EE,2059732C,extended,000000FF
+// patch=1,EE,2059733C,extended,000000FF
+// patch=1,EE,2059734C,extended,000000FF
+// patch=1,EE,2059735C,extended,000000FF
+// patch=1,EE,2059737C,extended,000000FF
+// patch=1,EE,2059738C,extended,000000FF
+// patch=1,EE,2059739C,extended,000000FF

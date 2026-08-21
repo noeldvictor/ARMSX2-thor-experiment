@@ -1,0 +1,371 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Narc [SLUS-20730] [51FDE3AC]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Booster Levels]
+// patch=1,EE,90300638,extended,0C0D5AF3
+
+[Cheats/Infinite Health]
+// patch=1,EE,201A76AC,extended,3C013F80
+// patch=1,EE,201A76B4,extended,AC410004
+// patch=1,EE,101A76BA,extended,00001000
+
+[Cheats/Always 100 Badge Rating]
+// patch=1,EE,20188CE4,extended,3C013F80
+// patch=1,EE,20188CEC,extended,AC61000C
+
+[Cheats/Always 200 Badge Rating]
+// patch=1,EE,20188CE4,extended,3C014000
+// patch=1,EE,20188CEC,extended,AC61000C
+
+[Cheats/Infinite Clips]
+// patch=1,EE,2029B3EC,extended,00000000
+
+[Cheats/Max Infinite Clips]
+// patch=1,EE,2029B3E0,extended,24030063
+
+[Cheats/Never Reload]
+// patch=1,EE,2029B434,extended,00000000
+// patch=1,EE,2029B474,extended,00000000
+
+[Cheats/Quick Cash Gain]
+// patch=1,EE,11E403B0,extended,0000FFFF
+
+[Cheats/Max Cash]
+// patch=1,EE,21E403B0,extended,05F5E0FF
+// patch=1,EE,21E40408,extended,05F5E0FF
+
+[Cheats/Quick Pot Gain]
+// patch=1,EE,11E403B4,extended,0000FFFF
+
+[Cheats/Max Pot]
+// patch=1,EE,21E403B4,extended,05F5E0FF
+
+[Cheats/Quick Speed Gain]
+// patch=1,EE,11E403B8,extended,0000FFFF
+
+[Cheats/Max Speed]
+// patch=1,EE,21E403B8,extended,05F5E0FF
+
+[Cheats/Quick LSD Gain]
+// patch=1,EE,11E403BC,extended,0000FFFF
+
+[Cheats/Max LSD]
+// patch=1,EE,21E403BC,extended,05F5E0FF
+
+[Cheats/Quick Crack Gain]
+// patch=1,EE,11E403C0,extended,0000FFFF
+
+[Cheats/Max Crack]
+// patch=1,EE,21E403C0,extended,05F5E0FF
+
+[Cheats/Quick Liquid Soul Gain]
+// patch=1,EE,11E403C4,extended,0000FFFF
+
+[Cheats/Max Liquid Soul]
+// patch=1,EE,21E403C4,extended,05F5E0FF
+
+[Cheats/Quick Protodone Gain]
+// patch=1,EE,11E403C8,extended,0000FFFF
+
+[Cheats/Max Protodone]
+// patch=1,EE,21E403C8,extended,05F5E0FF
+
+[Cheats/Quick Quaaludes Gain]
+// patch=1,EE,11E403CC,extended,0000FFFF
+
+[Cheats/Max Quaaludes]
+// patch=1,EE,21E403CC,extended,05F5E0FF
+
+[Cheats/Quick Ecstasy Gain]
+// patch=1,EE,11E403D0,extended,0000FFFF
+
+[Cheats/Max Ecstasy]
+// patch=1,EE,21E403D0,extended,05F5E0FF
+
+[Cheats/Have All Stashes Found-USA]
+// patch=1,EE,01E404C0,extended,00000019
+
+[Cheats/Need 1 Stash Found For All-USA]
+// patch=1,EE,D1E404C0,extended,00200018
+// patch=1,EE,01E404C0,extended,00000018
+
+[Cheats/Have All Stashes Found-Hong Kong]
+// patch=1,EE,01E404CC,extended,00000019
+
+[Cheats/Need 1 Stash Found For All-Hong Kong]
+// patch=1,EE,D1E404CC,extended,00200018
+// patch=1,EE,01E404CC,extended,00000018
+
+[Cheats/Have All Hidden Hong Kong Stashes]
+// patch=1,EE,107751C4,extended,00000019
+
+[Cheats/Have All Hidden USA Stashes]
+// patch=1,EE,107751C6,extended,00000019
+
+[Cheats/Max Officer Rank-Avg Badge]
+// patch=1,EE,107751C8,extended,0000270F
+
+[Cheats/No Officer Rank-Avg Badge]
+// patch=1,EE,107751C8,extended,00000000
+
+[Cheats/Max Civilians Busted]
+// patch=1,EE,11E403FE,extended,0000270F
+
+[Cheats/No Civilians Busted]
+// patch=1,EE,11E403FE,extended,00000000
+
+[Cheats/Max Civilians Killed]
+// patch=1,EE,11E40400,extended,0000270F
+
+[Cheats/No Civilians Killed]
+// patch=1,EE,11E40400,extended,00000000
+
+[Cheats/Max Cops Killed]
+// patch=1,EE,11E40402,extended,0000270F
+
+[Cheats/No Cops Killed]
+// patch=1,EE,11E40402,extended,00000000
+
+[Cheats/Max Criminals Busted]
+// patch=1,EE,11E40404,extended,0000270F
+
+[Cheats/No Criminals Busted]
+// patch=1,EE,11E40404,extended,00000000
+
+[Cheats/Max Criminals Killed]
+// patch=1,EE,11E40406,extended,0000270F
+
+[Cheats/No Criminals killed]
+// patch=1,EE,11E40406,extended,00000000
+
+[Cheats/No Cash]
+// patch=1,EE,21E40408,extended,00000000
+
+[Cheats/Max Cash Seized]
+// patch=1,EE,21E4040C,extended,05F5E0FF
+
+[Cheats/No Cash Seized]
+// patch=1,EE,21E4040C,extended,00000000
+
+[Cheats/Max Cash Desposited]
+// patch=1,EE,21E40410,extended,05F5E0FF
+
+[Cheats/No Cash Desposited]
+// patch=1,EE,21E40410,extended,00000000
+
+[Cheats/Max Cash From Sales]
+// patch=1,EE,21E40414,extended,05F5E0FF
+
+[Cheats/No Cash From Sales]
+// patch=1,EE,21E40414,extended,00000000
+
+[Cheats/Max Cash Spent On Drugs]
+// patch=1,EE,21E40418,extended,05F5E0FF
+
+[Cheats/No Cash Spent On Drugs]
+// patch=1,EE,21E40418,extended,00000000
+
+[Cheats/Max Shots Fired]
+// patch=1,EE,21E4041C,extended,05F5E0FF
+
+[Cheats/No Shots Fired]
+// patch=1,EE,21E4041C,extended,00000000
+
+[Cheats/Max Shots Hit]
+// patch=1,EE,21E40420,extended,05F5E0FF
+
+[Cheats/No Shots Hit]
+// patch=1,EE,21E40420,extended,00000000
+
+[Cheats/Max Head Shots]
+// patch=1,EE,21E40424,extended,05F5E0FF
+
+[Cheats/No Head Shots]
+// patch=1,EE,21E40424,extended,00000000
+
+[Cheats/Max Body Shots]
+// patch=1,EE,21E40428,extended,05F5E0FF
+
+[Cheats/No Body Shots]
+// patch=1,EE,21E40428,extended,00000000
+
+[Cheats/Max Limb Shots]
+// patch=1,EE,21E4042C,extended,05F5E0FF
+
+[Cheats/No Limb Shots]
+// patch=1,EE,21E4042C,extended,00000000
+
+[Cheats/Max Pot Seized]
+// patch=1,EE,11E40430,extended,0000270F
+
+[Cheats/No Pot Seized]
+// patch=1,EE,11E40430,extended,00000000
+
+[Cheats/Max Pot Deposited]
+// patch=1,EE,11E40450,extended,0000270F
+
+[Cheats/No Pot Deposited]
+// patch=1,EE,11E40450,extended,00000000
+
+[Cheats/Max Pot Sold]
+// patch=1,EE,11E40470,extended,0000270F
+
+[Cheats/No Pot Sold]
+// patch=1,EE,11E40470,extended,00000000
+
+[Cheats/Max Speed Seized]
+// patch=1,EE,11E40434,extended,0000270F
+
+[Cheats/No Speed Seized]
+// patch=1,EE,11E40434,extended,00000000
+
+[Cheats/Max Speed Deposited]
+// patch=1,EE,11E40454,extended,0000270F
+
+[Cheats/No Speed Deposited]
+// patch=1,EE,11E40454,extended,00000000
+
+[Cheats/Max Speed Sold]
+// patch=1,EE,11E40474,extended,0000270F
+
+[Cheats/No Speed Sold]
+// patch=1,EE,11E40474,extended,00000000
+
+[Cheats/Max LSD Seized]
+// patch=1,EE,11E40438,extended,0000270F
+
+[Cheats/No LSD Seized]
+// patch=1,EE,11E40438,extended,00000000
+
+[Cheats/Max LSD Deposited]
+// patch=1,EE,11E40458,extended,0000270F
+
+[Cheats/No LSD Deposited]
+// patch=1,EE,11E40458,extended,00000000
+
+[Cheats/Max LSD Sold]
+// patch=1,EE,11E40478,extended,0000270F
+
+[Cheats/No LSD Sold]
+// patch=1,EE,11E40478,extended,00000000
+
+[Cheats/Max Crack Seized]
+// patch=1,EE,11E4043C,extended,0000270F
+
+[Cheats/No Crack Seized]
+// patch=1,EE,11E4043C,extended,00000000
+
+[Cheats/Max Crack Deposited]
+// patch=1,EE,11E4045C,extended,0000270F
+
+[Cheats/No Crack Deposited]
+// patch=1,EE,11E4045C,extended,00000000
+
+[Cheats/Max Crack Sold]
+// patch=1,EE,11E4047C,extended,0000270F
+
+[Cheats/No Crack Sold]
+// patch=1,EE,11E4047C,extended,00000000
+
+[Cheats/Max Liquid Soul Seized]
+// patch=1,EE,11E40440,extended,0000270F
+
+[Cheats/No Liquid Soul Seized]
+// patch=1,EE,11E40440,extended,00000000
+
+[Cheats/Max Liquid Soul Deposited]
+// patch=1,EE,11E40460,extended,0000270F
+
+[Cheats/No Liquid Soul Deposited]
+// patch=1,EE,11E40460,extended,00000000
+
+[Cheats/Max Liquid Soul Sold]
+// patch=1,EE,11E40480,extended,0000270F
+
+[Cheats/No Liquid Soul Sold]
+// patch=1,EE,11E40480,extended,00000000
+
+[Cheats/Max Protodone Seized]
+// patch=1,EE,11E40444,extended,0000270F
+
+[Cheats/No Protodone Seized]
+// patch=1,EE,11E40444,extended,00000000
+
+[Cheats/Max Protodone Deposited]
+// patch=1,EE,11E40464,extended,0000270F
+
+[Cheats/No Protodone Deposited]
+// patch=1,EE,11E40464,extended,00000000
+
+[Cheats/Max Protodone Sold]
+// patch=1,EE,11E40484,extended,0000270F
+
+[Cheats/No Protodone Sold]
+// patch=1,EE,11E40484,extended,00000000
+
+[Cheats/Max Quaaludes Seized]
+// patch=1,EE,11E40448,extended,0000270F
+
+[Cheats/No Quaaludes Seized]
+// patch=1,EE,11E40448,extended,00000000
+
+[Cheats/Max Quaaludes Deposited]
+// patch=1,EE,11E40468,extended,0000270F
+
+[Cheats/No Quaaludes Deposited]
+// patch=1,EE,11E40468,extended,00000000
+
+[Cheats/Max Quaaludes Sold]
+// patch=1,EE,11E40488,extended,0000270F
+
+[Cheats/No Quaaludes Sold]
+// patch=1,EE,11E40488,extended,00000000
+
+[Cheats/Max Ecstacy Seized]
+// patch=1,EE,11E4044C,extended,0000270F
+
+[Cheats/No Ecstacy Seized]
+// patch=1,EE,11E4044C,extended,00000000
+
+[Cheats/Max Ecstacy Deposited]
+// patch=1,EE,11E4046C,extended,0000270F
+
+[Cheats/No Ecstacy Deposited]
+// patch=1,EE,11E4046C,extended,00000000
+
+[Cheats/Max Ecstacy Sold]
+// patch=1,EE,11E4048C,extended,0000270F
+
+[Cheats/No Ecstacy Sold]
+// patch=1,EE,11E4048C,extended,00000000
+
+[Cheats/Max Addictions]
+// patch=1,EE,11E404B0,extended,0000270F
+
+[Cheats/No Addictions]
+// patch=1,EE,11E404B0,extended,00000000
+
+[Cheats/Max Blackouts]
+// patch=1,EE,11E404B2,extended,0000270F
+
+[Cheats/No Blackouts]
+// patch=1,EE,11E404B2,extended,00000000
+
+[Cheats/Max Withdrawals]
+// patch=1,EE,11E404B4,extended,0000270F
+
+[Cheats/No Withdrawals]
+// patch=1,EE,11E404B4,extended,00000000
+
+[Cheats/Max Officer Rank-Beat Cop]
+// patch=1,EE,11E404B6,extended,0000270F
+
+[Cheats/No Officer Rank-Beat Cop]
+// patch=1,EE,11E404B6,extended,00000000
+
+[Cheats/Max Officer Rank-Badge Revoked]
+// patch=1,EE,11E404B8,extended,0000270F
+
+[Cheats/No Officer Rank-Badge Revoked]
+// patch=1,EE,11E404B8,extended,00000000

@@ -1,0 +1,19 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mortal Kombat - Shaolin Monks [UNKNOWN] [3D02E0BF]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,201EB0B0,extended,8C8203A0
+// patch=1,EE,201EB0B4,extended,AC820398
+
+[Cheats/Infinite Energy]
+// patch=1,EE,20169514,extended,00000000
+
+[Cheats/Buying Moves Does Not Decrease Exp]
+// patch=1,EE,20174C64,extended,00000000
+
+[Cheats/Sub-Zero]
+// patch=1,EE,205D82B4,extended,00000001
+
+[Cheats/Scorpion]
+// patch=1,EE,205D82B8,extended,00000001

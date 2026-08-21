@@ -1,0 +1,13 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tak And The Power Of Juju [SLUS-20519] [17493C04]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Juju Potions]
+// patch=1,EE,F0100008,extended,0036D3BF
+
+[Cheats/Infinite Health]
+// patch=1,EE,201BBBA8,extended,3C013F80
+// patch=1,EE,201BBBAC,extended,AE410298
+
+[Cheats/Infinite Orange Feathers]
+// patch=1,EE,20434600,extended,0000270F

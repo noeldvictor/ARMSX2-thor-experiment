@@ -1,0 +1,39 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: PsychoNauts [SLUS-21120] [2373FD16]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Movies]
+// patch=1,EE,902E15E4,extended,0C0BCCA3
+
+[Cheats/Quick Rank Up]
+// patch=1,EE,20247974,extended,25EF0064
+
+[Cheats/P1 Hold {L1}+{R1}, Then Press {CROSS} For Max Lives]
+// patch=1,EE,D036EE42,extended,0000B3FF
+// patch=1,EE,2020C9C0,extended,00000000
+// patch=1,EE,D036EE42,extended,0000FFFF
+// patch=1,EE,2020C9C0,extended,1440000E
+
+[Cheats/P1 Hold {L1}+{R1}, Then Press {SQUARE} For Super Oly]
+// patch=1,EE,D036EE42,extended,000073FF
+// patch=1,EE,2020CA08,extended,00000000
+// patch=1,EE,D036EE42,extended,0000FFFF
+// patch=1,EE,2020CA08,extended,14400019
+
+[Cheats/P1 Hold {L1}+{R1}, Then Press {CIRCLE} For Max Ammo]
+// patch=1,EE,D036EE42,extended,0000D3FF
+// patch=1,EE,2020CA7C,extended,00000000
+// patch=1,EE,D036EE42,extended,0000FFFF
+// patch=1,EE,2020CA7C,extended,14400012
+
+[Cheats/P1 Hold {L1}+{R1}, Then Press {TRIANGLE} For Global Items]
+// patch=1,EE,D036EE42,extended,0000E3FF
+// patch=1,EE,2020CAD4,extended,00000000
+// patch=1,EE,D036EE42,extended,0000FFFF
+// patch=1,EE,2020CAD4,extended,1440000C
+
+[Cheats/P1 Hold {L1}+{R1}, Then Press {R2} For Max Arrowheads]
+// patch=1,EE,D036EE42,extended,0000F1FF
+// patch=1,EE,2020CB4C,extended,00000000
+// patch=1,EE,D036EE42,extended,0000FFFF
+// patch=1,EE,2020CB4C,extended,1440000E

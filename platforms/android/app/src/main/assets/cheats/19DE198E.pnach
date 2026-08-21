@@ -1,0 +1,878 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Battle Engine Aquila [SLUS-20495] [19DE198E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Missions]
+// patch=1,EE,9035A7EC,extended,0C0DC59E
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201182F0,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,201182EC,extended,46000800
+
+[Cheats/Weapons Never Overheat]
+// patch=1,EE,2011B4E0,extended,00000000
+
+[Cheats/Infinite Energy]
+// patch=1,EE,20115E04,extended,00000000
+
+[Cheats/Infinite Armor]
+// patch=1,EE,200C0230,extended,3C0142C8
+// patch=1,EE,200C0234,extended,AE210108
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,46140036
+// patch=1,EE,2010A230,extended,0C03008C
+
+[Cheats/View Goodies To Unlock All]
+// patch=1,EE,200C0220,extended,24020003
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,AC621F44
+// patch=1,EE,2018B3C0,extended,08030088
+
+[Cheats/1.10-Blackout]
+// patch=1,EE,2038BAA4,extended,00000001
+// patch=1,EE,2038A220,extended,3F800000
+
+[Cheats/2.00-Interception]
+// patch=1,EE,2038BAB4,extended,00000001
+// patch=1,EE,2038A260,extended,3F800000
+
+[Cheats/2.11-Assault On Apollo]
+// patch=1,EE,2038BAC4,extended,00000001
+// patch=1,EE,2038A2A0,extended,3F800000
+
+[Cheats/2.12-Assault On Apollo (Evo)]
+// patch=1,EE,2038BACC,extended,00000001
+// patch=1,EE,2038A2E0,extended,3F800000
+
+[Cheats/2.21-Escort Duty]
+// patch=1,EE,2038BAD4,extended,00000001
+// patch=1,EE,2038A320,extended,3F800000
+
+[Cheats/2.22-Escort Duty (Evo)]
+// patch=1,EE,2038BADC,extended,00000001
+// patch=1,EE,2038A360,extended,3F800000
+
+[Cheats/2.31-Counterstrike]
+// patch=1,EE,2038BAF4,extended,00000001
+// patch=1,EE,2038A3A0,extended,3F800000
+
+[Cheats/2.32-Counterstrike (Evo)]
+// patch=1,EE,2038BAFC,extended,00000001
+// patch=1,EE,2038A3E0,extended,3F800000
+
+[Cheats/3.00-Liberation Of Russo]
+// patch=1,EE,2038BB14,extended,00000001
+// patch=1,EE,2038A420,extended,3F800000
+
+[Cheats/3.11-Muspell Counterattack]
+// patch=1,EE,2038BB34,extended,00000001
+// patch=1,EE,2038A460,extended,3F800000
+
+[Cheats/3.12-Muspell Counterattack (Evo)]
+// patch=1,EE,2038BB3C,extended,00000001
+// patch=1,EE,2038A4A0,extended,3F800000
+
+[Cheats/3.21-The Wake Of The Venturer]
+// patch=1,EE,2038BB44,extended,00000001
+// patch=1,EE,2038A4E0,extended,3F800000
+
+[Cheats/3.22-The Wake Of The Venturer (Evo)]
+// patch=1,EE,2038BB4C,extended,00000001
+// patch=1,EE,2038A520,extended,3F800000
+
+[Cheats/3.31-Thunderhead!]
+// patch=1,EE,2038BB64,extended,00000001
+// patch=1,EE,2038A560,extended,3F800000
+
+[Cheats/3.32-Thunderhead! (Evo)]
+// patch=1,EE,2038BB6C,extended,00000001
+// patch=1,EE,2038A5A0,extended,3F800000
+
+[Cheats/4.00-Beach Head]
+// patch=1,EE,2038BB84,extended,00000001
+// patch=1,EE,2038A5E0,extended,3F800000
+
+[Cheats/4.11-Weathering The Storm]
+// patch=1,EE,2038BBA4,extended,00000001
+// patch=1,EE,2038A620,extended,3F800000
+
+[Cheats/4.12-Weathering The Storm (Evo)]
+// patch=1,EE,2038BBAC,extended,00000001
+// patch=1,EE,2038A660,extended,3F800000
+
+[Cheats/4.21-Naval Ambush]
+// patch=1,EE,2038BBB4,extended,00000001
+// patch=1,EE,2038A6A0,extended,3F800000
+
+[Cheats/4.22-Naval Ambush (Evo)]
+// patch=1,EE,2038BBBC,extended,00000001
+// patch=1,EE,2038A6E0,extended,3F800000
+
+[Cheats/4.31-Battle For Yenya]
+// patch=1,EE,2038BBD4,extended,00000001
+// patch=1,EE,2038A720,extended,3F800000
+
+[Cheats/4.32-Battle For Yenya (Evo)]
+// patch=1,EE,2038BBDC,extended,00000001
+// patch=1,EE,2038A760,extended,3F800000
+
+[Cheats/5.00-Split Second]
+// patch=1,EE,2038BBF4,extended,00000001
+// patch=1,EE,2038A7A0,extended,3F800000
+
+[Cheats/5.11-Death From Above]
+// patch=1,EE,2038BC14,extended,00000001
+// patch=1,EE,2038A7E0,extended,3F800000
+
+[Cheats/5.12-Death From Above (Evo)]
+// patch=1,EE,2038BC1C,extended,00000001
+// patch=1,EE,2038A820,extended,3F800000
+
+[Cheats/5.21-Versus The Hive]
+// patch=1,EE,2038BC24,extended,00000001
+// patch=1,EE,2038A860,extended,3F800000
+
+[Cheats/5.22-Versus The Hive (Evo)]
+// patch=1,EE,2038BC2C,extended,00000001
+// patch=1,EE,2038A8A0,extended,3F800000
+
+[Cheats/5.23-Enter The Gill-M]
+// patch=1,EE,2038BC34,extended,00000001
+// patch=1,EE,2038A8E0,extended,3F800000
+
+[Cheats/5.24-Enter The Gill-M (Evo)]
+// patch=1,EE,2038BC3C,extended,00000001
+// patch=1,EE,2038A920,extended,3F800000
+
+[Cheats/6.00-Back To Castellian]
+// patch=1,EE,2038BC44,extended,00000001
+// patch=1,EE,2038A960,extended,3F800000
+
+[Cheats/6.11-Castellian Assault]
+// patch=1,EE,2038BC84,extended,00000001
+// patch=1,EE,2038A9A0,extended,3F800000
+
+[Cheats/6.12-Castellian Assault (Evo)]
+// patch=1,EE,2038BC8C,extended,00000001
+// patch=1,EE,2038A9E0,extended,3F800000
+
+[Cheats/6.21-Air Raid]
+// patch=1,EE,2038BC94,extended,00000001
+// patch=1,EE,2038AA20,extended,3F800000
+
+[Cheats/6.22-Air Raid (Evo)]
+// patch=1,EE,2038BC9C,extended,00000001
+// patch=1,EE,2038AA60,extended,3F800000
+
+[Cheats/7.00-Crushing Blow]
+// patch=1,EE,2038BCB4,extended,00000001
+// patch=1,EE,2038AAA0,extended,3F800000
+
+[Cheats/7.10-Blinding The Enemy]
+// patch=1,EE,2038BCD4,extended,00000001
+// patch=1,EE,2038AAE0,extended,3F800000
+
+[Cheats/7.20-Rescue Attempt]
+// patch=1,EE,2038BCE4,extended,00000001
+// patch=1,EE,2038AB20,extended,3F800000
+
+[Cheats/7.31-Assault Force Fenrir]
+// patch=1,EE,2038BCF4,extended,00000001
+// patch=1,EE,2038AB60,extended,3F800000
+
+[Cheats/7.32-Assault Force Fenrir (Evo)]
+// patch=1,EE,2038BCFC,extended,00000001
+// patch=1,EE,2038ABA0,extended,3F800000
+
+[Cheats/7.41-The Fall Of The Fenrir]
+// patch=1,EE,2038BD04,extended,00000001
+// patch=1,EE,2038ABE0,extended,3F800000
+
+[Cheats/7.42-The Fall Of The Fenrir (Evo)]
+// patch=1,EE,2038BD14,extended,00000001
+// patch=1,EE,2038AC20,extended,3F800000
+
+[Cheats/8.00-The Sentinel Awakes]
+// patch=1,EE,2038BD34,extended,00000001
+// patch=1,EE,2038AC60,extended,3F800000
+
+[Cheats/1.00-Training Level]
+// patch=1,EE,2038A1E0,extended,3F800000
+
+[Cheats/Hawk Winter]
+// patch=1,EE,2038C0E4,extended,00000003
+
+[Cheats/Tatiana Kiralova]
+// patch=1,EE,2038C0E8,extended,00000003
+
+[Cheats/Col. Chuck Kramer]
+// patch=1,EE,2038C0EC,extended,00000003
+
+[Cheats/Jason Lorenzo]
+// patch=1,EE,2038C0F0,extended,00000003
+
+[Cheats/Lt. Tara Fox]
+// patch=1,EE,2038C0F4,extended,00000003
+
+[Cheats/Lt. Billy Casbah]
+// patch=1,EE,2038C0F8,extended,00000003
+
+[Cheats/Lewis Carver]
+// patch=1,EE,2038C0FC,extended,00000003
+
+[Cheats/Gen. Archarus Surt]
+// patch=1,EE,2038C100,extended,00000003
+
+[Cheats/BE:A Unit-00 'Prototype']
+// patch=1,EE,2038C104,extended,00000003
+
+[Cheats/BE:A Unit-01 'Pulsar']
+// patch=1,EE,2038C108,extended,00000003
+
+[Cheats/BE:A Unit-03 'Lancer']
+// patch=1,EE,2038C10C,extended,00000003
+
+[Cheats/BE:A Unit-04S 'Sniper']
+// patch=1,EE,2038C110,extended,00000003
+
+[Cheats/Trooper]
+// patch=1,EE,2038C114,extended,00000003
+
+[Cheats/Dragoon]
+// patch=1,EE,2038C118,extended,00000003
+
+[Cheats/AV-14 Sabre Light Tank]
+// patch=1,EE,2038C11C,extended,00000003
+
+[Cheats/M-1 Broadsword Main Battle Tank]
+// patch=1,EE,2038C120,extended,00000003
+
+[Cheats/AV-18 Bardiche Assault Tank]
+// patch=1,EE,2038C124,extended,00000003
+
+[Cheats/M-112 Archer Mobile Artilery]
+// patch=1,EE,2038C128,extended,00000003
+
+[Cheats/Truck]
+// patch=1,EE,2038C12C,extended,00000003
+
+[Cheats/F-24 Valkyrie A' Superiority Fighter]
+// patch=1,EE,2038C130,extended,00000003
+
+[Cheats/XF-28 Venom Advanced A' Superiority Fighter]
+// patch=1,EE,2038C134,extended,00000003
+
+[Cheats/B-7F Monitor Bomber]
+// patch=1,EE,2038C138,extended,00000003
+
+[Cheats/A-15 Penetrator Ground Attack Vehicle]
+// patch=1,EE,2038C13C,extended,00000003
+
+[Cheats/U-17 Highside Transporter]
+// patch=1,EE,2038C140,extended,00000003
+
+[Cheats/ACX-1 Venturer Arcarrier]
+// patch=1,EE,2038C144,extended,00000003
+
+[Cheats/NAV-3 Turtle Landing Craft]
+// patch=1,EE,2038C148,extended,00000003
+
+[Cheats/FSV-6 Marshall Frigate]
+// patch=1,EE,2038C14C,extended,00000003
+
+[Cheats/FG-8 Packhorse Supply Frigate]
+// patch=1,EE,2038C150,extended,00000003
+
+[Cheats/SAT Turret]
+// patch=1,EE,2038C154,extended,00000003
+
+[Cheats/Beam Turret]
+// patch=1,EE,2038C158,extended,00000003
+
+[Cheats/Pulse Turret]
+// patch=1,EE,2038C15C,extended,00000003
+
+[Cheats/Artillery Emplacement]
+// patch=1,EE,2038C160,extended,00000003
+// patch=1,EE,2038C1C4,extended,00000003
+
+[Cheats/Blaster Turret]
+// patch=1,EE,2038C164,extended,00000003
+
+[Cheats/Grunt]
+// patch=1,EE,2038C168,extended,00000003
+
+[Cheats/Warrior]
+// patch=1,EE,2038C16C,extended,00000003
+
+[Cheats/Commando]
+// patch=1,EE,2038C170,extended,00000003
+
+[Cheats/ASF-7 Lightning Interceptor]
+// patch=1,EE,2038C174,extended,00000003
+
+[Cheats/ASX-9 Storm Advanced Tactical Fighter]
+// patch=1,EE,2038C178,extended,00000003
+
+[Cheats/B-4 Sky Tyrant Heavy Bomber]
+// patch=1,EE,2038C17C,extended,00000003
+
+[Cheats/A-19 Enforcer Ground Attack Vehicle]
+// patch=1,EE,2038C180,extended,00000003
+
+[Cheats/UD-3 Thunder Infantry Dropship]
+// patch=1,EE,2038C184,extended,00000003
+
+[Cheats/UD-5H Quell Heavy Lifter]
+// patch=1,EE,2038C188,extended,00000003
+
+[Cheats/T-85 Land Raider Tank]
+// patch=1,EE,2038C18C,extended,00000003
+
+[Cheats/T-92 Growler Main Battle Tank]
+// patch=1,EE,2038C190,extended,00000003
+
+[Cheats/ML-16 Vengeance Rocket Launcher]
+// patch=1,EE,2038C194,extended,00000003
+
+[Cheats/A-3 Steel Rain Mobile Artillery]
+// patch=1,EE,2038C198,extended,00000003
+
+[Cheats/Truck 2]
+// patch=1,EE,2038C19C,extended,00000003
+
+[Cheats/W-8 Cerberus Walker]
+// patch=1,EE,2038C1A0,extended,00000003
+
+[Cheats/W-11 Marauder Walker]
+// patch=1,EE,2038C1A4,extended,00000003
+
+[Cheats/WX-15 Dominator Walker]
+// patch=1,EE,2038C1A8,extended,00000003
+
+[Cheats/G-1 Gnat Attack Drone]
+// patch=1,EE,2038C1AC,extended,00000003
+
+[Cheats/D-9 Arachnodrone Walker]
+// patch=1,EE,2038C1B0,extended,00000003
+
+[Cheats/BB-2 Manticore Battleship]
+// patch=1,EE,2038C1B4,extended,00000003
+
+[Cheats/SAM Site]
+// patch=1,EE,2038C1B8,extended,00000003
+
+[Cheats/Cannon Turret]
+// patch=1,EE,2038C1BC,extended,00000003
+
+[Cheats/Machine Gun Turret]
+// patch=1,EE,2038C1C0,extended,00000003
+
+[Cheats/Flak Turret]
+// patch=1,EE,2038C1C8,extended,00000003
+
+[Cheats/Thunderhead]
+// patch=1,EE,2038C1CC,extended,00000003
+
+[Cheats/Warspite]
+// patch=1,EE,2038C1D0,extended,00000003
+
+[Cheats/SSV-8 Thornback Missile Submarine]
+// patch=1,EE,2038C1D4,extended,00000003
+
+[Cheats/Hive]
+// patch=1,EE,2038C1D8,extended,00000003
+
+[Cheats/Gill-M]
+// patch=1,EE,2038C1DC,extended,00000003
+
+[Cheats/ASX-9F Vilifier Stealth Fighter]
+// patch=1,EE,2038C1E0,extended,00000003
+
+[Cheats/Aircarrier Fenrir]
+// patch=1,EE,2038C1E4,extended,00000003
+
+[Cheats/Sentinel]
+// patch=1,EE,2038C1E8,extended,00000003
+
+[Cheats/Race Challenge 1]
+// patch=1,EE,2038C1EC,extended,00000003
+
+[Cheats/Race Challenge 2]
+// patch=1,EE,2038C1F0,extended,00000003
+
+[Cheats/Race Challenge 3]
+// patch=1,EE,2038C1F4,extended,00000003
+
+[Cheats/Race Challenge 4]
+// patch=1,EE,2038C1F8,extended,00000003
+
+[Cheats/Race Challenge 5]
+// patch=1,EE,2038C1FC,extended,00000003
+
+[Cheats/Battle Engine Aquila Picture]
+// patch=1,EE,2038C20C,extended,00000003
+
+[Cheats/Intro Storyboard Sequence]
+// patch=1,EE,2038C210,extended,00000003
+
+[Cheats/Team Photo]
+// patch=1,EE,2038C214,extended,00000003
+
+[Cheats/Development]
+// patch=1,EE,2038C218,extended,00000003
+
+[Cheats/Row 4-Col 1]
+// patch=1,EE,2038C21C,extended,00000003
+
+[Cheats/Row 4-Col 2]
+// patch=1,EE,2038C220,extended,00000003
+
+[Cheats/Row 4-Col 3]
+// patch=1,EE,2038C224,extended,00000003
+
+[Cheats/Row 4-Col 4]
+// patch=1,EE,2038C228,extended,00000003
+
+[Cheats/Row 4-Col 5]
+// patch=1,EE,2038C22C,extended,00000003
+
+[Cheats/Row 4-Col 6]
+// patch=1,EE,2038C230,extended,00000003
+
+[Cheats/Row 4-Col 7]
+// patch=1,EE,2038C234,extended,00000003
+
+[Cheats/Row 4-Col 8]
+// patch=1,EE,2038C238,extended,00000003
+
+[Cheats/Row 4-Col 9]
+// patch=1,EE,2038C23C,extended,00000003
+
+[Cheats/Row 4-Col 10]
+// patch=1,EE,2038C240,extended,00000003
+
+[Cheats/Row 4-Col 11]
+// patch=1,EE,2038C244,extended,00000003
+
+[Cheats/Row 4-Col 12]
+// patch=1,EE,2038C248,extended,00000003
+
+[Cheats/Row 4-Col 13]
+// patch=1,EE,2038C24C,extended,00000003
+
+[Cheats/Row 4-Col 14]
+// patch=1,EE,2038C250,extended,00000003
+
+[Cheats/Row 4-Col 15]
+// patch=1,EE,2038C254,extended,00000003
+
+[Cheats/Row 4-Col 16]
+// patch=1,EE,2038C258,extended,00000003
+
+[Cheats/Row 4-Col 17]
+// patch=1,EE,2038C25C,extended,00000003
+
+[Cheats/Row 4-Col 18]
+// patch=1,EE,2038C260,extended,00000003
+
+[Cheats/Row 4-Col 19]
+// patch=1,EE,2038C264,extended,00000003
+
+[Cheats/Row 4-Col 20]
+// patch=1,EE,2038C268,extended,00000003
+
+[Cheats/Row 4-Col 21]
+// patch=1,EE,2038C26C,extended,00000003
+
+[Cheats/Row 4-Col 22]
+// patch=1,EE,2038C270,extended,00000003
+
+[Cheats/Row 4-Col 23]
+// patch=1,EE,2038C274,extended,00000003
+
+[Cheats/Row 4-Col 24]
+// patch=1,EE,2038C278,extended,00000003
+
+[Cheats/Row 4-Col 25]
+// patch=1,EE,2038C27C,extended,00000003
+
+[Cheats/Row 4-Col 26]
+// patch=1,EE,2038C280,extended,00000003
+
+[Cheats/Row 4-Col 27]
+// patch=1,EE,2038C284,extended,00000003
+
+[Cheats/Row 4-Col 28]
+// patch=1,EE,2038C288,extended,00000003
+
+[Cheats/Row 4-Col 29]
+// patch=1,EE,2038C28C,extended,00000003
+
+[Cheats/Row 4-Col 30]
+// patch=1,EE,2038C290,extended,00000003
+
+[Cheats/Row 4-Col 31]
+// patch=1,EE,2038C294,extended,00000003
+
+[Cheats/Row 4-Col 32]
+// patch=1,EE,2038C298,extended,00000003
+
+[Cheats/Row 4-Col 33]
+// patch=1,EE,2038C29C,extended,00000003
+
+[Cheats/Row 4-Col 34]
+// patch=1,EE,2038C2A0,extended,00000003
+
+[Cheats/Row 4-Col 35]
+// patch=1,EE,2038C2A4,extended,00000003
+
+[Cheats/Row 4-Col 36]
+// patch=1,EE,2038C2A8,extended,00000003
+
+[Cheats/Row 4-Col 37]
+// patch=1,EE,2038C2AC,extended,00000003
+
+[Cheats/Row 4-Col 38]
+// patch=1,EE,2038C2B0,extended,00000003
+
+[Cheats/Row 4-Col 39]
+// patch=1,EE,2038C2B4,extended,00000003
+
+[Cheats/Row 4-Col 40]
+// patch=1,EE,2038C2B8,extended,00000003
+
+[Cheats/Row 4-Col 41]
+// patch=1,EE,2038C2BC,extended,00000003
+
+[Cheats/Row 4-Col 42]
+// patch=1,EE,2038C2C0,extended,00000003
+
+[Cheats/Row 4-Col 43]
+// patch=1,EE,2038C2C4,extended,00000003
+
+[Cheats/Row 4-Col 44]
+// patch=1,EE,2038C2C8,extended,00000003
+
+[Cheats/Row 4-Col 45]
+// patch=1,EE,2038C2CC,extended,00000003
+
+[Cheats/Row 4-Col 46]
+// patch=1,EE,2038C2D0,extended,00000003
+
+[Cheats/Row 4-Col 47]
+// patch=1,EE,2038C2D4,extended,00000003
+
+[Cheats/Row 4-Col 48]
+// patch=1,EE,2038C2D8,extended,00000003
+
+[Cheats/Row 4-Col 49]
+// patch=1,EE,2038C2DC,extended,00000003
+
+[Cheats/Row 4-Col 50]
+// patch=1,EE,2038C2E0,extended,00000003
+
+[Cheats/Row 4-Col 51]
+// patch=1,EE,2038C2E4,extended,00000003
+
+[Cheats/Row 4-Col 52]
+// patch=1,EE,2038C2E8,extended,00000003
+
+[Cheats/Row 4-Col 53]
+// patch=1,EE,2038C2EC,extended,00000003
+
+[Cheats/Row 4-Col 54]
+// patch=1,EE,2038C2F0,extended,00000003
+
+[Cheats/Row 4-Col 55]
+// patch=1,EE,2038C2F4,extended,00000003
+
+[Cheats/Row 4-Col 56]
+// patch=1,EE,2038C2F8,extended,00000003
+
+[Cheats/Row 4-Col 57]
+// patch=1,EE,2038C2FC,extended,00000003
+
+[Cheats/Row 4-Col 58]
+// patch=1,EE,2038C300,extended,00000003
+
+[Cheats/Row 4-Col 59]
+// patch=1,EE,2038C304,extended,00000003
+
+[Cheats/Row 4-Col 60]
+// patch=1,EE,2038C308,extended,00000003
+
+[Cheats/Row 4-Col 61]
+// patch=1,EE,2038C30C,extended,00000003
+
+[Cheats/Row 4-Col 62]
+// patch=1,EE,2038C310,extended,00000003
+
+[Cheats/Row 4-Col 63]
+// patch=1,EE,2038C314,extended,00000003
+
+[Cheats/Row 4-Col 64]
+// patch=1,EE,2038C318,extended,00000003
+
+[Cheats/Row 4-Col 65]
+// patch=1,EE,2038C31C,extended,00000003
+
+[Cheats/Row 4-Col 66]
+// patch=1,EE,2038C320,extended,00000003
+
+[Cheats/Row 4-Col 67]
+// patch=1,EE,2038C324,extended,00000003
+
+[Cheats/Row 4-Col 68]
+// patch=1,EE,2038C328,extended,00000003
+
+[Cheats/Row 4-Col 69]
+// patch=1,EE,2038C32C,extended,00000003
+
+[Cheats/Row 4-Col 70]
+// patch=1,EE,2038C330,extended,00000003
+
+[Cheats/Row 4-Col 71]
+// patch=1,EE,2038C334,extended,00000003
+
+[Cheats/Row 4-Col 72]
+// patch=1,EE,2038C338,extended,00000003
+
+[Cheats/Row 4-Col 73]
+// patch=1,EE,2038C33C,extended,00000003
+
+[Cheats/Row 4-Col 74]
+// patch=1,EE,2038C340,extended,00000003
+
+[Cheats/Row 4-Col 75]
+// patch=1,EE,2038C344,extended,00000003
+
+[Cheats/Row 4-Col 76]
+// patch=1,EE,2038C348,extended,00000003
+
+[Cheats/Row 4-Col 77]
+// patch=1,EE,2038C34C,extended,00000003
+
+[Cheats/Row 4-Col 78]
+// patch=1,EE,2038C350,extended,00000003
+
+[Cheats/Row 4-Col 79]
+// patch=1,EE,2038C354,extended,00000003
+
+[Cheats/Row 4-Col 80]
+// patch=1,EE,2038C358,extended,00000003
+
+[Cheats/Row 4-Col 81]
+// patch=1,EE,2038C35C,extended,00000003
+
+[Cheats/Row 4-Col 82]
+// patch=1,EE,2038C360,extended,00000003
+
+[Cheats/Row 4-Col 83]
+// patch=1,EE,2038C364,extended,00000003
+
+[Cheats/Row 4-Col 84]
+// patch=1,EE,2038C368,extended,00000003
+
+[Cheats/Row 4-Col 85]
+// patch=1,EE,2038C36C,extended,00000003
+
+[Cheats/Row 4-Col 86]
+// patch=1,EE,2038C370,extended,00000003
+
+[Cheats/Row 4-Col 87]
+// patch=1,EE,2038C374,extended,00000003
+
+[Cheats/Row 4-Col 88]
+// patch=1,EE,2038C378,extended,00000003
+
+[Cheats/Row 4-Col 89]
+// patch=1,EE,2038C37C,extended,00000003
+
+[Cheats/Row 4-Col 90]
+// patch=1,EE,2038C380,extended,00000003
+
+[Cheats/Row 4-Col 91]
+// patch=1,EE,2038C384,extended,00000003
+
+[Cheats/Row 4-Col 92]
+// patch=1,EE,2038C388,extended,00000003
+
+[Cheats/Row 4-Col 93]
+// patch=1,EE,2038C38C,extended,00000003
+
+[Cheats/Row 4-Col 94]
+// patch=1,EE,2038C390,extended,00000003
+
+[Cheats/Row 4-Col 95]
+// patch=1,EE,2038C394,extended,00000003
+
+[Cheats/Row 4-Col 96]
+// patch=1,EE,2038C398,extended,00000003
+
+[Cheats/Row 4-Col 97]
+// patch=1,EE,2038C39C,extended,00000003
+
+[Cheats/Row 4-Col 98]
+// patch=1,EE,2038C3A0,extended,00000003
+
+[Cheats/Row 4-Col 99]
+// patch=1,EE,2038C3A4,extended,00000003
+
+[Cheats/Row 4-Col 100]
+// patch=1,EE,2038C3A8,extended,00000003
+
+[Cheats/Row 4-Col 101]
+// patch=1,EE,2038C3AC,extended,00000003
+
+[Cheats/Row 4-Col 102]
+// patch=1,EE,2038C3B0,extended,00000003
+
+[Cheats/Row 4-Col 103]
+// patch=1,EE,2038C3B4,extended,00000003
+
+[Cheats/Row 4-Col 104]
+// patch=1,EE,2038C3B8,extended,00000003
+
+[Cheats/Row 4-Col 105]
+// patch=1,EE,2038C3BC,extended,00000003
+
+[Cheats/Row 4-Col 106]
+// patch=1,EE,2038C3C0,extended,00000003
+
+[Cheats/Row 4-Col 107]
+// patch=1,EE,2038C3C4,extended,00000003
+
+[Cheats/Row 4-Col 108]
+// patch=1,EE,2038C3C8,extended,00000003
+
+[Cheats/Row 4-Col 109]
+// patch=1,EE,2038C3CC,extended,00000003
+
+[Cheats/Row 4-Col 110]
+// patch=1,EE,2038C3D0,extended,00000003
+
+[Cheats/Row 4-Col 111]
+// patch=1,EE,2038C3D4,extended,00000003
+
+[Cheats/Row 4-Col 112]
+// patch=1,EE,2038C3D8,extended,00000003
+
+[Cheats/Row 4-Col 113]
+// patch=1,EE,2038C3DC,extended,00000003
+
+[Cheats/Row 4-Col 114]
+// patch=1,EE,2038C3E0,extended,00000003
+
+[Cheats/Row 4-Col 115]
+// patch=1,EE,2038C3E4,extended,00000003
+
+[Cheats/Row 4-Col 116]
+// patch=1,EE,2038C3E8,extended,00000003
+
+[Cheats/Row 4-Col 117]
+// patch=1,EE,2038C3EC,extended,00000003
+
+[Cheats/Row 4-Col 118]
+// patch=1,EE,2038C3F0,extended,00000003
+
+[Cheats/Row 4-Col 119]
+// patch=1,EE,2038C3F4,extended,00000003
+
+[Cheats/Row 4-Col 120]
+// patch=1,EE,2038C3F8,extended,00000003
+
+[Cheats/Row 4-Col 121]
+// patch=1,EE,2038C3FC,extended,00000003
+
+[Cheats/Row 4-Col 122]
+// patch=1,EE,2038C400,extended,00000003
+
+[Cheats/Row 4-Col 123]
+// patch=1,EE,2038C404,extended,00000003
+
+[Cheats/Row 3-Col 1]
+// patch=1,EE,2038C408,extended,00000003
+
+[Cheats/Row 3-Col 2]
+// patch=1,EE,2038C40C,extended,00000003
+
+[Cheats/Row 3-Col 3]
+// patch=1,EE,2038C410,extended,00000003
+
+[Cheats/Row 3-Col 4]
+// patch=1,EE,2038C414,extended,00000003
+
+[Cheats/Row 3-Col 5]
+// patch=1,EE,2038C418,extended,00000003
+
+[Cheats/Row 3-Col 6]
+// patch=1,EE,2038C41C,extended,00000003
+
+[Cheats/Row 3-Col 7]
+// patch=1,EE,2038C420,extended,00000003
+
+[Cheats/Row 3-Col 8]
+// patch=1,EE,2038C424,extended,00000003
+
+[Cheats/Row 3-Col 9]
+// patch=1,EE,2038C428,extended,00000003
+
+[Cheats/Row 3-Col 10]
+// patch=1,EE,2038C42C,extended,00000003
+
+[Cheats/Row 3-Col 11]
+// patch=1,EE,2038C430,extended,00000003
+
+[Cheats/Row 3-Col 12]
+// patch=1,EE,2038C434,extended,00000003
+
+[Cheats/Row 3-Col 13]
+// patch=1,EE,2038C438,extended,00000003
+
+[Cheats/Row 3-Col 14]
+// patch=1,EE,2038C43C,extended,00000003
+
+[Cheats/Row 3-Col 15]
+// patch=1,EE,2038C440,extended,00000003
+
+[Cheats/Row 3-Col 16]
+// patch=1,EE,2038C444,extended,00000003
+
+[Cheats/Row 3-Col 17]
+// patch=1,EE,2038C448,extended,00000003
+
+[Cheats/Row 3-Col 18]
+// patch=1,EE,2038C44C,extended,00000003
+
+[Cheats/Row 3-Col 19]
+// patch=1,EE,2038C450,extended,00000003
+
+[Cheats/Row 3-Col 20]
+// patch=1,EE,2038C454,extended,00000003
+
+[Cheats/Row 3-Col 21]
+// patch=1,EE,2038C458,extended,00000003
+
+[Cheats/Row 3-Col 22]
+// patch=1,EE,2038C45C,extended,00000003
+
+[Cheats/Row 3-Col 23]
+// patch=1,EE,2038C460,extended,00000003
+
+[Cheats/Row 3-Col 24]
+// patch=1,EE,2038C464,extended,00000003
+
+[Cheats/Row 3-Col 25]
+// patch=1,EE,2038C468,extended,00000003
+
+[Cheats/Row 3-Col 26]
+// patch=1,EE,2038C46C,extended,00000003
+
+[Cheats/Row 3-Col 27]
+// patch=1,EE,2038C470,extended,00000003
+
+[Cheats/Row 3-Col 28]
+// patch=1,EE,2038C474,extended,00000003

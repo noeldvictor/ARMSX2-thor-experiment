@@ -1,0 +1,66 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Killer 7 [SLES-53366] [54EF429A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock Mission Select (Main Menu)]
+// patch=1,EE,90124F88,extended,0C04A302
+
+[Cheats/Infinite Health]
+// patch=1,EE,201FB8C0,extended,24020096
+// patch=1,EE,201FB8C4,extended,A64202B8
+
+[Cheats/Never Reload]
+// patch=1,EE,201FC6AC,extended,00000000
+
+[Cheats/Have All Smiths Personalities]
+// patch=1,EE,2061C870,extended,FFFFFFFF
+// patch=1,EE,2061C874,extended,FFFFFFFF
+
+[Cheats/Have All Smiths Alive]
+// patch=1,EE,2061C868,extended,00000000
+// patch=1,EE,2061C86C,extended,FFFFFFFF
+
+[Cheats/Max Power Level]
+// patch=1,EE,2061C3EC,extended,00000009
+// patch=1,EE,2061C424,extended,00000009
+// patch=1,EE,2061C42C,extended,00000009
+// patch=1,EE,2061C41C,extended,00000009
+// patch=1,EE,2061C3FC,extended,00000009
+// patch=1,EE,2061C434,extended,00000009
+
+[Cheats/Max Speed Level]
+// patch=1,EE,2061C43C,extended,00000009
+// patch=1,EE,2061C474,extended,00000009
+// patch=1,EE,2061C47C,extended,00000009
+// patch=1,EE,2061C46C,extended,00000009
+// patch=1,EE,2061C44C,extended,00000009
+// patch=1,EE,2061C484,extended,00000009
+
+[Cheats/Max Waver Level]
+// patch=1,EE,2061C48C,extended,00000009
+// patch=1,EE,2061C4C4,extended,00000009
+// patch=1,EE,2061C4BC,extended,00000009
+// patch=1,EE,2061C49C,extended,00000009
+// patch=1,EE,2061C4D4,extended,00000009
+
+[Cheats/Max Criticals Level]
+// patch=1,EE,2061C4DC,extended,00000009
+// patch=1,EE,2061C514,extended,00000009
+// patch=1,EE,2061C51C,extended,00000009
+// patch=1,EE,2061C50C,extended,00000009
+// patch=1,EE,2061C4EC,extended,00000009
+
+[Cheats/Max All Levels]
+// patch=1,EE,4061C3EC,extended,00040014
+// patch=1,EE,00000009,extended,00000000
+// patch=1,EE,4061C424,extended,00040014
+// patch=1,EE,4061C42C,extended,00040014
+// patch=1,EE,4061C41C,extended,00040014
+// patch=1,EE,4061C3FC,extended,00040014
+// patch=1,EE,4061C434,extended,00040014
+
+[Cheats/Max Invisibility Level]
+// patch=1,EE,2061C4CC,extended,00000009
+
+[Cheats/Max Range Level]
+// patch=1,EE,2061C524,extended,00000009

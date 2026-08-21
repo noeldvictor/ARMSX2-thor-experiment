@@ -1,0 +1,62 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Pool Paradise [SLUS-20987] [46B6FA94]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Continues]
+// patch=1,EE,9029C280,extended,0C0A86F9
+
+[Cheats/Max Money]
+// patch=1,EE,200C0220,extended,3C0205F5
+// patch=1,EE,200C0224,extended,3442E0FF
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,AC8206B4
+// patch=1,EE,20156A80,extended,08030088
+
+[Cheats/Infinite Money Usage]
+// patch=1,EE,20156C1C,extended,00000000
+
+[Cheats/Extra Money]
+// patch=1,EE,20156C14,extended,00451021
+
+[Cheats/Unlock All Sub-Games]
+// patch=1,EE,200C0230,extended,24120001
+// patch=1,EE,200C0234,extended,0804F1A4
+// patch=1,EE,200C0238,extended,AC5200A4
+// patch=1,EE,2013C658,extended,0803008C
+
+[Cheats/Unlock All Gadgets]
+// patch=1,EE,200C0240,extended,24120001
+// patch=1,EE,200C0244,extended,0804F1A4
+// patch=1,EE,200C0248,extended,AC52009C
+// patch=1,EE,2013C668,extended,08030090
+
+[Cheats/Unlock All Cues]
+// patch=1,EE,200C0250,extended,24120001
+// patch=1,EE,200C0254,extended,0804F1A4
+// patch=1,EE,200C0258,extended,AC520058
+// patch=1,EE,2013C648,extended,08030094
+
+[Cheats/Unlock All Crazy Tables]
+// patch=1,EE,200C0260,extended,24120001
+// patch=1,EE,200C0264,extended,0804F1A4
+// patch=1,EE,200C0268,extended,AC520024
+// patch=1,EE,2013C638,extended,08030098
+
+[Cheats/Unlock All Baizes]
+// patch=1,EE,200C0270,extended,24120001
+// patch=1,EE,200C0274,extended,0804F1A4
+// patch=1,EE,200C0278,extended,AC520000
+// patch=1,EE,2013C624,extended,0803009C
+
+[Cheats/Unlock All Balls]
+// patch=1,EE,200C0280,extended,24120001
+// patch=1,EE,200C0284,extended,0804F1A4
+// patch=1,EE,200C0288,extended,AC5200C8
+// patch=1,EE,2013C67C,extended,080300A0
+
+[Cheats/Unlock All Items]
+// patch=1,EE,200C0290,extended,24120001
+// patch=1,EE,200C0294,extended,0804F1A4
+// patch=1,EE,200C0298,extended,AC5200BC
+// patch=1,EE,2013C688,extended,080300A4
+// patch=1,EE,2013C68C,extended,02221021

@@ -1,0 +1,110 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rogue Trooper [SLUS-21320] [2F63F868]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Portuguese]
+// patch=1,EE,903B68AC,extended,0C0EEEC3
+
+[Cheats/Infinite Health]
+// patch=1,EE,2030BA7C,extended,3C0143C8
+// patch=1,EE,2030BA80,extended,AC610028
+// patch=1,EE,1030BA86,extended,00001000
+// patch=1,EE,004926E4,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2027D274,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,2027D26C,extended,240203E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,2027D26C,extended,00501023
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,2027CD7C,extended,00000000
+
+[Cheats/Max Infinite Grenades]
+// patch=1,EE,2027CD60,extended,24030009
+
+[Cheats/Extra Grenades]
+// patch=1,EE,2027CD60,extended,00511821
+
+[Cheats/Never Reload Pistol/Gunnar]
+// patch=1,EE,2038D12C,extended,00000000
+
+[Cheats/Never Reload With Max Clip Pistol/Gunnar]
+// patch=1,EE,2038D128,extended,24030063
+
+[Cheats/Never Reload Beam Rifle]
+// patch=1,EE,2039202C,extended,00000000
+
+[Cheats/Never Reload With Max Clip Beam Rifle]
+// patch=1,EE,20392028,extended,24030063
+
+[Cheats/Never Reload Mortal Launcher]
+// patch=1,EE,20394DF0,extended,00000000
+
+[Cheats/Never Reload Sniper Mode]
+// patch=1,EE,2039B63C,extended,00000000
+
+[Cheats/Never Reload With Max Clip Sniper Mode]
+// patch=1,EE,2039B638,extended,24030063
+
+[Cheats/Never Reload Sammy Launcher]
+// patch=1,EE,203A1218,extended,00000000
+
+[Cheats/Never Reload With Max Clip Sammy Launcher]
+// patch=1,EE,203A1208,extended,24020063
+
+[Cheats/Never Reload Shotgun]
+// patch=1,EE,203A3160,extended,00000000
+
+[Cheats/Never Reload With Max Clip Shotgun]
+// patch=1,EE,203A3158,extended,24030063
+
+[Cheats/Infinite Holodecoy]
+// patch=1,EE,20274550,extended,00000000
+
+[Cheats/Unlock All Cheats]
+// patch=1,EE,2028C584,extended,24030001
+// patch=1,EE,2028C58C,extended,A0430000
+// patch=1,EE,2028C5A4,extended,24020001
+
+[Cheats/Infinite Salvation Points Usage]
+// patch=1,EE,2027BE20,extended,00000000
+
+[Cheats/Extra Salvation Points Usage]
+// patch=1,EE,2027BE18,extended,00621821
+
+[Cheats/Unlock All Levels (Level Select)]
+// patch=1,EE,200C0234,extended,2402000B
+// patch=1,EE,200C0238,extended,080D4BF3
+// patch=1,EE,200C023C,extended,ACC20298
+// patch=1,EE,20352FC8,extended,0803008D
+
+[Cheats/Emplacement Guns Never Overheat]
+// patch=1,EE,203A2674,extended,00000000
+
+[Cheats/Low Gravity Ragdoll]
+// patch=1,EE,004926E1,extended,00000001
+
+[Cheats/Infinite Supplies]
+// patch=1,EE,004926E3,extended,00000001
+
+[Cheats/Extreme Ragdoll]
+// patch=1,EE,004926E6,extended,00000001
+
+[Cheats/Hippy Blood]
+// patch=1,EE,004926E7,extended,00000001
+
+[Cheats/View To Unlock All]
+// patch=1,EE,200C0220,extended,3C0105F5
+// patch=1,EE,200C0224,extended,3421E0FF
+// patch=1,EE,200C0228,extended,AE810158
+// patch=1,EE,200C022C,extended,080D0350
+// patch=1,EE,200C0230,extended,AE81015C
+// patch=1,EE,20341244,extended,0C030088
+
+[Cheats/View To Have All Viewed]
+// patch=1,EE,20341254,extended,24020001
+// patch=1,EE,20341258,extended,A2420000

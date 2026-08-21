@@ -1,0 +1,2704 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Romancing Saga [SLUS-21263] [239CF68A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have No Skills]
+// patch=1,EE,9027DDD4,extended,0C0A4E38
+
+[Cheats/Disable FMV]
+// patch=1,EE,20284C88,extended,24020001
+
+[Cheats/Max Money]
+// patch=1,EE,204233DC,extended,000F423F
+
+[Cheats/Max Jewels]
+// patch=1,EE,104234C0,extended,0000270F
+
+[Cheats/Game Time Max]
+// patch=1,EE,2011FC4C,extended,ACA42380
+
+[Cheats/Game Time Frozen]
+// patch=1,EE,2011FC48,extended,24420000
+
+[Cheats/Game Time X2 Faster]
+// patch=1,EE,2011FC48,extended,24420004
+
+[Cheats/Game Time X3 Faster]
+// patch=1,EE,2011FC48,extended,24420006
+
+[Cheats/Game Time X5 Faster]
+// patch=1,EE,2011FC48,extended,2442000A
+
+[Cheats/Game Time X60 Faster]
+// patch=1,EE,2011FC48,extended,24420078
+
+[Cheats/View Items For 99 DP]
+// patch=1,EE,200C2250,extended,AF838250
+// patch=1,EE,200C2254,extended,240B0063
+// patch=1,EE,200C2258,extended,A0CB0008
+// patch=1,EE,200C225C,extended,080817F0
+// patch=1,EE,20205FB8,extended,08030894
+
+[Cheats/View Items For 98 DP]
+// patch=1,EE,200C2250,extended,AF838250
+// patch=1,EE,200C2254,extended,240B0062
+// patch=1,EE,200C2258,extended,A0CB0008
+// patch=1,EE,200C225C,extended,080817F0
+// patch=1,EE,20205FB8,extended,08030894
+
+[Cheats/Have All Proficiencies]
+// patch=1,EE,2041A7A0,extended,0300073E
+// patch=1,EE,2041A7A4,extended,0100070D
+
+[Cheats/Have All Maps Obtained]
+// patch=1,EE,10424EEA,extended,0000FFFF
+// patch=1,EE,40424EEC,extended,000F0001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/View Spells To Have All Spells]
+// patch=1,EE,201FE300,extended,2402FFFF
+// patch=1,EE,201FE304,extended,AC620000
+
+[Cheats/View Tech/Abilities To Have All Tech/Abilities]
+// patch=1,EE,20201E3C,extended,2403FFFF
+// patch=1,EE,20201E40,extended,AC430000
+// patch=1,EE,20201EEC,extended,2402FFFF
+// patch=1,EE,20201EF0,extended,AC620000
+
+[Cheats/Shop Items Never Sold Out]
+// patch=1,EE,2021AEDC,extended,AE440004
+
+[Cheats/Can Buy Shop Items With Not Enough Money]
+// patch=1,EE,1021B4C6,extended,00001000
+
+[Cheats/Pushing L2, For Super Run]
+// patch=1,EE,200C2200,extended,46800020
+// patch=1,EE,200C2204,extended,3C040042
+// patch=1,EE,200C2208,extended,94845802
+// patch=1,EE,200C220C,extended,30840100
+// patch=1,EE,200C2210,extended,14800004
+// patch=1,EE,200C2214,extended,3C013F00
+// patch=1,EE,200C2218,extended,34210000
+// patch=1,EE,200C221C,extended,08052D0C
+// patch=1,EE,200C2224,extended,08052D0B
+// patch=1,EE,2014B428,extended,08030880
+
+[Cheats/Pushing L2, For Warp 9 Run]
+// patch=1,EE,200C2200,extended,46800020
+// patch=1,EE,200C2204,extended,3C040042
+// patch=1,EE,200C2208,extended,94845802
+// patch=1,EE,200C220C,extended,30840100
+// patch=1,EE,200C2210,extended,14800004
+// patch=1,EE,200C2214,extended,3C013F80
+// patch=1,EE,200C2218,extended,34210000
+// patch=1,EE,200C221C,extended,08052D0C
+// patch=1,EE,200C2224,extended,08052D0B
+// patch=1,EE,2014B428,extended,08030880
+
+[Cheats/Pushing L2, For Moon Walk]
+// patch=1,EE,200C2200,extended,46800020
+// patch=1,EE,200C2204,extended,3C040042
+// patch=1,EE,200C2208,extended,94845802
+// patch=1,EE,200C220C,extended,30840100
+// patch=1,EE,200C2210,extended,14800004
+// patch=1,EE,200C2214,extended,3C01BDB4
+// patch=1,EE,200C2218,extended,34213958
+// patch=1,EE,200C221C,extended,08052D0C
+// patch=1,EE,200C2224,extended,08052D0B
+// patch=1,EE,2014B428,extended,08030880
+
+[Cheats/Search]
+// patch=1,EE,2041A820,extended,00000009
+
+[Cheats/Gathering]
+// patch=1,EE,2041A824,extended,00000009
+
+[Cheats/Deleted]
+// patch=1,EE,2041A828,extended,00000009
+
+[Cheats/Strategy]
+// patch=1,EE,2041A82C,extended,00000009
+
+[Cheats/Survival]
+// patch=1,EE,2041A830,extended,00000009
+
+[Cheats/Covert]
+// patch=1,EE,2041A834,extended,00000009
+
+[Cheats/Deleted 2]
+// patch=1,EE,2041A838,extended,00000009
+
+[Cheats/Trading]
+// patch=1,EE,2041A83C,extended,00000009
+
+[Cheats/Max Crystal Cartel]
+// patch=1,EE,20423490,extended,00064000
+
+[Cheats/Max Draconian Merchanges]
+// patch=1,EE,20423494,extended,00064000
+
+[Cheats/Max Maritime Imports]
+// patch=1,EE,20423498,extended,00064000
+
+[Cheats/Infinite EP/BP]
+// patch=1,EE,20163AEC,extended,00421021
+// patch=1,EE,20163B80,extended,00405F84
+
+[Cheats/Infinite LP]
+// patch=1,EE,20163A84,extended,00401021
+// patch=1,EE,204193EC,extended,00000063
+// patch=1,EE,2041984C,extended,00000063
+// patch=1,EE,20419CAC,extended,00000063
+// patch=1,EE,2041A10C,extended,00000063
+// patch=1,EE,2041A56C,extended,00000063
+// patch=1,EE,2041A9CC,extended,00000063
+// patch=1,EE,2041AE2C,extended,00000063
+// patch=1,EE,2041B28C,extended,00000063
+// patch=1,EE,2041B6EC,extended,00000063
+// patch=1,EE,2041BB4C,extended,00000063
+// patch=1,EE,2041BFAC,extended,00000063
+// patch=1,EE,2041C40C,extended,00000063
+// patch=1,EE,2041C86C,extended,00000063
+// patch=1,EE,2041CCCC,extended,00000063
+// patch=1,EE,2041D12C,extended,00000063
+// patch=1,EE,2041D58C,extended,00000063
+// patch=1,EE,2041D9EC,extended,00000063
+// patch=1,EE,2041DE4C,extended,00000063
+// patch=1,EE,2041E2AC,extended,00000063
+// patch=1,EE,2041E70C,extended,00000063
+// patch=1,EE,2041EB6C,extended,00000063
+// patch=1,EE,2041EFCC,extended,00000063
+// patch=1,EE,2041F42C,extended,00000063
+// patch=1,EE,2041F88C,extended,00000063
+// patch=1,EE,2041FCEC,extended,00000063
+// patch=1,EE,2042014C,extended,00000063
+// patch=1,EE,204205AC,extended,00000063
+// patch=1,EE,20420A0C,extended,00000063
+// patch=1,EE,20420E6C,extended,00000063
+// patch=1,EE,204212CC,extended,00000063
+// patch=1,EE,2042172C,extended,00000063
+
+[Cheats/Frontier-Weston]
+// patch=1,EE,00424544,extended,00000001
+
+[Cheats/Frontier-New Road]
+// patch=1,EE,00424545,extended,00000001
+
+[Cheats/Frontier-Yassi]
+// patch=1,EE,00424546,extended,00000001
+
+[Cheats/Frontier-Saoki]
+// patch=1,EE,00424547,extended,00000001
+
+[Cheats/Frontier-Yassi Cavern]
+// patch=1,EE,00424548,extended,00000001
+
+[Cheats/Frontier-Saoki Cavern]
+// patch=1,EE,00424549,extended,00000001
+
+[Cheats/Frontier-Vamoire's Den]
+// patch=1,EE,0042454A,extended,00000001
+
+[Cheats/Frontier-Jewel Beast's Lair]
+// patch=1,EE,0042454B,extended,00000001
+
+[Cheats/KJaraht-South Estamir]
+// patch=1,EE,0042454C,extended,00000001
+
+[Cheats/KJaraht-Tarmitta]
+// patch=1,EE,0042454D,extended,00000001
+
+[Cheats/KJaraht-Lake Malar]
+// patch=1,EE,0042454E,extended,00000001
+
+[Cheats/Knights Dominion-Mirsaburg]
+// patch=1,EE,0042454F,extended,00000001
+
+[Cheats/Knights Dominion-Eugenstadt]
+// patch=1,EE,00424550,extended,00000001
+
+[Cheats/Knights Dominion-Weiserheim]
+// patch=1,EE,00424551,extended,00000001
+
+[Cheats/Knights Dominion-Abandoned Keep]
+// patch=1,EE,00424552,extended,00000001
+
+[Cheats/Knights Dominion-Kidnappers' Cave]
+// patch=1,EE,00424553,extended,00000001
+
+[Cheats/Knights Dominion-Pagan Ruins]
+// patch=1,EE,00424554,extended,00000001
+
+[Cheats/Valhalland-Garo's Village]
+// patch=1,EE,00424555,extended,00000001
+
+[Cheats/Valhalland-Shiverland]
+// patch=1,EE,00424556,extended,00000001
+
+[Cheats/Valhalland-West Cave]
+// patch=1,EE,00424557,extended,00000001
+
+[Cheats/Valhalland-South Cave]
+// patch=1,EE,00424558,extended,00000001
+
+[Cheats/Valhalland-Frozen Lake]
+// patch=1,EE,00424559,extended,00000001
+
+[Cheats/Rosalia-Crystal City]
+// patch=1,EE,0042455A,extended,00000001
+
+[Cheats/Rosalia-Isthmus]
+// patch=1,EE,0042455B,extended,00000001
+
+[Cheats/Rosalia-Yeoville]
+// patch=1,EE,0042455C,extended,00000001
+
+[Cheats/Rosalia-Altours]
+// patch=1,EE,0042455D,extended,00000001
+
+[Cheats/Rosalia-North Estamir]
+// patch=1,EE,0042455E,extended,00000001
+
+[Cheats/Rosalia-Mt. Scurve]
+// patch=1,EE,0042455F,extended,00000001
+
+[Cheats/Rosalia-Crystal Lake]
+// patch=1,EE,00424560,extended,00000001
+
+[Cheats/Dry Lands-Uso]
+// patch=1,EE,00424561,extended,00000001
+
+[Cheats/Dry Lands-Taralian Camp]
+// patch=1,EE,00424562,extended,00000001
+
+[Cheats/Dry Lands-Northpoint]
+// patch=1,EE,00424563,extended,00000001
+
+[Cheats/Dry Lands-Ettinham]
+// patch=1,EE,00424564,extended,00000001
+
+[Cheats/Dry Lands-Steppes Of Galessa]
+// patch=1,EE,00424565,extended,00000001
+
+[Cheats/Dry Lands-Kaklim Desert]
+// patch=1,EE,00424566,extended,00000001
+
+[Cheats/Walon Isle-Godongo]
+// patch=1,EE,00424567,extended,00000001
+
+[Cheats/Walon Isle-Oapu]
+// patch=1,EE,00424568,extended,00000001
+
+[Cheats/Walon Isle-Jungle]
+// patch=1,EE,00424569,extended,00000001
+
+[Cheats/Coral Sea-Pirate Coast]
+// patch=1,EE,0042456A,extended,00000001
+
+[Cheats/Coral Sea-Mask Isle]
+// patch=1,EE,0042456B,extended,00000001
+
+[Cheats/Coral Sea-Coral Sea]
+// patch=1,EE,0042456C,extended,00000001
+
+[Cheats/Bafa Empire-Melvir]
+// patch=1,EE,0042456D,extended,00000001
+
+[Cheats/Bafa Empire-Loban]
+// patch=1,EE,0042456E,extended,00000001
+
+[Cheats/Bafa Empire-Bruele]
+// patch=1,EE,0042456F,extended,00000001
+
+[Cheats/Bafa Empire-Aurefont]
+// patch=1,EE,00424570,extended,00000001
+
+[Cheats/Bafa Empire-Mazewood]
+// patch=1,EE,00424571,extended,00000001
+
+[Cheats/Bafa Empire-Bayre Plateau]
+// patch=1,EE,00424572,extended,00000001
+
+[Cheats/Ligau Isle-Jelton]
+// patch=1,EE,00424573,extended,00000001
+
+[Cheats/Ligau Isle-Plains]
+// patch=1,EE,00424574,extended,00000001
+
+[Cheats/Ligau Isle-Mt. Tomae]
+// patch=1,EE,00424575,extended,00000001
+
+[Cheats/Kjaraht-Assassins' Guild]
+// patch=1,EE,00424576,extended,00000001
+
+[Cheats/Dry Lands-Auldburg]
+// patch=1,EE,00424577,extended,00000001
+
+[Cheats/Valhalland-Frosthold Fortress]
+// patch=1,EE,00424578,extended,00000001
+
+[Cheats/Walon Isle-Twinmoon Temple]
+// patch=1,EE,00424579,extended,00000001
+
+[Cheats/Kjaraht-Water Dragon]
+// patch=1,EE,0042457A,extended,00000001
+
+[Cheats/Rosalia-Isle Of Evil]
+// patch=1,EE,0042457B,extended,00000001
+
+[Cheats/Dry Lands-Trials Of Elore]
+// patch=1,EE,0042457C,extended,00000001
+
+[Cheats/Bafal Empire-Great Pit]
+// patch=1,EE,0042457D,extended,00000001
+
+[Cheats/Walon Isle-Strait]
+// patch=1,EE,0042457E,extended,00000001
+
+[Cheats/Knights Dominion-Drachenvale]
+// patch=1,EE,0042457F,extended,00000001
+
+[Cheats/Frontier-Faerie's Grove]
+// patch=1,EE,00424580,extended,00000001
+
+[Cheats/Kjaraht-Faerie's Grove]
+// patch=1,EE,00424581,extended,00000001
+
+[Cheats/Knights Dominion-Faerie's Grove]
+// patch=1,EE,00424582,extended,00000001
+
+[Cheats/Valhalland-Faerie's Grove]
+// patch=1,EE,00424583,extended,00000001
+
+[Cheats/Rosalia-Faerie's Grove]
+// patch=1,EE,00424584,extended,00000001
+
+[Cheats/Dry Lands-Faerie's Grove]
+// patch=1,EE,00424585,extended,00000001
+
+[Cheats/Walon Isle-Faerie's Grove]
+// patch=1,EE,00424586,extended,00000001
+
+[Cheats/Bafal Empire-Faerie's Grove]
+// patch=1,EE,00424587,extended,00000001
+
+[Cheats/Ligau Isle-Faerie's Grove]
+// patch=1,EE,00424588,extended,00000001
+
+[Cheats/All Map Locations]
+// patch=1,EE,40424544,extended,00110001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00424588,extended,00000001
+
+[Cheats/View Status For Full LP]
+// patch=1,EE,202137F4,extended,24030063
+// patch=1,EE,202137F8,extended,AEA30018
+
+[Cheats/View Status For Max LP]
+// patch=1,EE,20213820,extended,24030063
+// patch=1,EE,20213824,extended,AEA3001C
+
+[Cheats/View Status For Max HP]
+// patch=1,EE,20213828,extended,2401270F
+// patch=1,EE,2021382C,extended,AEA10014
+
+[Cheats/View Status For Max/Infinite BP]
+// patch=1,EE,20152E50,extended,24050063
+// patch=1,EE,20152E54,extended,00822021
+// patch=1,EE,20152E58,extended,AC850028
+// patch=1,EE,20152E5C,extended,AC850024
+
+[Cheats/View Status For Max STR]
+// patch=1,EE,201F7FE0,extended,240A0063
+// patch=1,EE,201F7FE8,extended,AEAA0040
+
+[Cheats/View Status For Max Plus STR]
+// patch=1,EE,201F8010,extended,240A0063
+// patch=1,EE,201F8018,extended,AEAA0060
+
+[Cheats/View Status For Max VIT]
+// patch=1,EE,201F8044,extended,240A0063
+// patch=1,EE,201F804C,extended,AEAA0044
+
+[Cheats/View Status For Max Plus VIT]
+// patch=1,EE,201F8074,extended,240A0063
+// patch=1,EE,201F807C,extended,AEAA0064
+
+[Cheats/View Status For Max DEX]
+// patch=1,EE,201F80A8,extended,240A0063
+// patch=1,EE,201F80B0,extended,AEAA0048
+
+[Cheats/View Status For Max Plus DEX]
+// patch=1,EE,201F80D8,extended,240A0063
+// patch=1,EE,201F80E0,extended,AEAA0068
+
+[Cheats/View Status For Max AGI]
+// patch=1,EE,201F810C,extended,240A0063
+// patch=1,EE,201F8114,extended,AEAA004C
+
+[Cheats/View Status For Max Plus AGI]
+// patch=1,EE,201F813C,extended,240A0063
+// patch=1,EE,201F8144,extended,AEAA006C
+
+[Cheats/View Status For Max INT]
+// patch=1,EE,201F8170,extended,240A0063
+// patch=1,EE,201F8178,extended,AEAA0050
+
+[Cheats/View Status For Max Plus INT]
+// patch=1,EE,201F81A0,extended,240A0063
+// patch=1,EE,201F81A8,extended,AEAA0070
+
+[Cheats/View Status For Max WIL]
+// patch=1,EE,201F81D4,extended,240A0063
+// patch=1,EE,201F81DC,extended,AEAA0054
+
+[Cheats/View Status For Max Plus WIL]
+// patch=1,EE,201F8204,extended,240A0063
+// patch=1,EE,201F820C,extended,AEAA0074
+
+[Cheats/View Status For Max COM]
+// patch=1,EE,201F8238,extended,240A0063
+// patch=1,EE,201F8240,extended,AEAA0058
+
+[Cheats/View Status For Max Plus COM]
+// patch=1,EE,201F8268,extended,240A0063
+// patch=1,EE,201F8270,extended,AEAA0078
+
+[Cheats/View Status For Max CHA]
+// patch=1,EE,201F829C,extended,240A0063
+// patch=1,EE,201F82A4,extended,AEAA005C
+
+[Cheats/View Status For Max Plus CHA]
+// patch=1,EE,201F82CC,extended,240A0063
+// patch=1,EE,201F82D4,extended,AEAA007C
+
+[Cheats/View Status For Max PHY/MAG DEF]
+// patch=1,EE,20151ED0,extended,24030021
+// patch=1,EE,20151ED4,extended,AC830000
+// patch=1,EE,20151ED8,extended,241103E7
+// patch=1,EE,20151EDC,extended,AC910004
+
+[Cheats/View Status For Max Plus PHY/MAG DEF]
+// patch=1,EE,201F2934,extended,24040063
+// patch=1,EE,201F2938,extended,AC440000
+
+[Cheats/View Status For Max Weight]
+// patch=1,EE,201F2644,extended,240703E7
+// patch=1,EE,201F2664,extended,AC670008
+
+[Cheats/View Status For No Weight]
+// patch=1,EE,201F2644,extended,24070000
+// patch=1,EE,201F2664,extended,AC670008
+
+[Cheats/Party Has 1 Character]
+// patch=1,EE,00423310,extended,00000001
+
+[Cheats/Party Has 2 Characters]
+// patch=1,EE,00423310,extended,00000002
+
+[Cheats/Party Has 3 Characters]
+// patch=1,EE,00423310,extended,00000003
+
+[Cheats/Party Has 4 Characters]
+// patch=1,EE,00423310,extended,00000004
+
+[Cheats/Party Has 5 Characters]
+// patch=1,EE,00423310,extended,00000005
+
+[Cheats/None]
+// patch=1,EE,20423314,extended,FFFFFFFF
+// patch=1,EE,20423318,extended,FFFFFFFF
+// patch=1,EE,2042331C,extended,FFFFFFFF
+// patch=1,EE,20423320,extended,FFFFFFFF
+// patch=1,EE,20423324,extended,FFFFFFFF
+
+[Cheats/Albert]
+// patch=1,EE,20423314,extended,00000000
+// patch=1,EE,20423318,extended,00000000
+// patch=1,EE,2042331C,extended,00000000
+// patch=1,EE,20423320,extended,00000000
+// patch=1,EE,20423324,extended,00000000
+
+[Cheats/Janil]
+// patch=1,EE,20423314,extended,00000001
+// patch=1,EE,20423318,extended,00000001
+// patch=1,EE,2042331C,extended,00000001
+// patch=1,EE,20423320,extended,00000001
+// patch=1,EE,20423324,extended,00000001
+
+[Cheats/Gray]
+// patch=1,EE,20423314,extended,00000002
+// patch=1,EE,20423318,extended,00000002
+// patch=1,EE,2042331C,extended,00000002
+// patch=1,EE,20423320,extended,00000002
+// patch=1,EE,20423324,extended,00000002
+
+[Cheats/Hawk]
+// patch=1,EE,20423314,extended,00000003
+// patch=1,EE,20423318,extended,00000003
+// patch=1,EE,2042331C,extended,00000003
+// patch=1,EE,20423320,extended,00000003
+// patch=1,EE,20423324,extended,00000003
+
+[Cheats/Aisha]
+// patch=1,EE,20423314,extended,00000004
+// patch=1,EE,20423318,extended,00000004
+// patch=1,EE,2042331C,extended,00000004
+// patch=1,EE,20423320,extended,00000004
+// patch=1,EE,20423324,extended,00000004
+
+[Cheats/Claudia]
+// patch=1,EE,20423314,extended,00000005
+// patch=1,EE,20423318,extended,00000005
+// patch=1,EE,2042331C,extended,00000005
+// patch=1,EE,20423320,extended,00000005
+// patch=1,EE,20423324,extended,00000005
+
+[Cheats/Barbara]
+// patch=1,EE,20423314,extended,00000006
+// patch=1,EE,20423318,extended,00000006
+// patch=1,EE,2042331C,extended,00000006
+// patch=1,EE,20423320,extended,00000006
+// patch=1,EE,20423324,extended,00000006
+
+[Cheats/Sif]
+// patch=1,EE,20423314,extended,00000007
+// patch=1,EE,20423318,extended,00000007
+// patch=1,EE,2042331C,extended,00000007
+// patch=1,EE,20423320,extended,00000007
+// patch=1,EE,20423324,extended,00000007
+
+[Cheats/Neidhart]
+// patch=1,EE,20423314,extended,00000008
+// patch=1,EE,20423318,extended,00000008
+// patch=1,EE,2042331C,extended,00000008
+// patch=1,EE,20423320,extended,00000008
+// patch=1,EE,20423324,extended,00000008
+
+[Cheats/Dargue]
+// patch=1,EE,20423314,extended,00000009
+// patch=1,EE,20423318,extended,00000009
+// patch=1,EE,2042331C,extended,00000009
+// patch=1,EE,20423320,extended,00000009
+// patch=1,EE,20423324,extended,00000009
+
+[Cheats/Dowd]
+// patch=1,EE,20423314,extended,0000000A
+// patch=1,EE,20423318,extended,0000000A
+// patch=1,EE,2042331C,extended,0000000A
+// patch=1,EE,20423320,extended,0000000A
+// patch=1,EE,20423324,extended,0000000A
+
+[Cheats/Galahand]
+// patch=1,EE,20423314,extended,0000000B
+// patch=1,EE,20423318,extended,0000000B
+// patch=1,EE,2042331C,extended,0000000B
+// patch=1,EE,20423320,extended,0000000B
+// patch=1,EE,20423324,extended,0000000B
+
+[Cheats/Gain]
+// patch=1,EE,20423314,extended,0000000C
+// patch=1,EE,20423318,extended,0000000C
+// patch=1,EE,2042331C,extended,0000000C
+// patch=1,EE,20423320,extended,0000000C
+// patch=1,EE,20423324,extended,0000000C
+
+[Cheats/Raphael]
+// patch=1,EE,20423314,extended,0000000D
+// patch=1,EE,20423318,extended,0000000D
+// patch=1,EE,2042331C,extended,0000000D
+// patch=1,EE,20423320,extended,0000000D
+// patch=1,EE,20423324,extended,0000000D
+
+[Cheats/Theodore]
+// patch=1,EE,20423314,extended,0000000E
+// patch=1,EE,20423318,extended,0000000E
+// patch=1,EE,2042331C,extended,0000000E
+// patch=1,EE,20423320,extended,0000000E
+// patch=1,EE,20423324,extended,0000000E
+
+[Cheats/Herman]
+// patch=1,EE,20423314,extended,0000000F
+// patch=1,EE,20423318,extended,0000000F
+// patch=1,EE,2042331C,extended,0000000F
+// patch=1,EE,20423320,extended,0000000F
+// patch=1,EE,20423324,extended,0000000F
+
+[Cheats/Guella Ha]
+// patch=1,EE,20423314,extended,00000010
+// patch=1,EE,20423318,extended,00000010
+// patch=1,EE,2042331C,extended,00000010
+// patch=1,EE,20423320,extended,00000010
+// patch=1,EE,20423324,extended,00000010
+
+[Cheats/Red Mage]
+// patch=1,EE,20423314,extended,00000011
+// patch=1,EE,20423318,extended,00000011
+// patch=1,EE,2042331C,extended,00000011
+// patch=1,EE,20423320,extended,00000011
+// patch=1,EE,20423324,extended,00000011
+
+[Cheats/The Minstrel]
+// patch=1,EE,20423314,extended,00000012
+// patch=1,EE,20423318,extended,00000012
+// patch=1,EE,2042331C,extended,00000012
+// patch=1,EE,20423320,extended,00000012
+// patch=1,EE,20423324,extended,00000012
+
+[Cheats/Diana]
+// patch=1,EE,20423314,extended,00000013
+// patch=1,EE,20423318,extended,00000013
+// patch=1,EE,2042331C,extended,00000013
+// patch=1,EE,20423320,extended,00000013
+// patch=1,EE,20423324,extended,00000013
+
+[Cheats/Myrian]
+// patch=1,EE,20423314,extended,00000014
+// patch=1,EE,20423318,extended,00000014
+// patch=1,EE,2042331C,extended,00000014
+// patch=1,EE,20423320,extended,00000014
+// patch=1,EE,20423324,extended,00000014
+
+[Cheats/Frielei]
+// patch=1,EE,20423314,extended,00000015
+// patch=1,EE,20423318,extended,00000015
+// patch=1,EE,2042331C,extended,00000015
+// patch=1,EE,20423320,extended,00000015
+// patch=1,EE,20423324,extended,00000015
+
+[Cheats/Brau]
+// patch=1,EE,20423314,extended,00000016
+// patch=1,EE,20423318,extended,00000016
+// patch=1,EE,2042331C,extended,00000016
+// patch=1,EE,20423320,extended,00000016
+// patch=1,EE,20423324,extended,00000016
+
+[Cheats/Sylvan]
+// patch=1,EE,20423314,extended,00000017
+// patch=1,EE,20423318,extended,00000017
+// patch=1,EE,2042331C,extended,00000017
+// patch=1,EE,20423320,extended,00000017
+// patch=1,EE,20423324,extended,00000017
+
+[Cheats/Captain Silver]
+// patch=1,EE,20423314,extended,00000018
+// patch=1,EE,20423318,extended,00000018
+// patch=1,EE,2042331C,extended,00000018
+// patch=1,EE,20423320,extended,00000018
+// patch=1,EE,20423324,extended,00000018
+
+[Cheats/Dragon Knight]
+// patch=1,EE,20423314,extended,00000019
+// patch=1,EE,20423318,extended,00000019
+// patch=1,EE,2042331C,extended,00000019
+// patch=1,EE,20423320,extended,00000019
+// patch=1,EE,20423324,extended,00000019
+
+[Cheats/Farah]
+// patch=1,EE,20423314,extended,0000001A
+// patch=1,EE,20423318,extended,0000001A
+// patch=1,EE,2042331C,extended,0000001A
+// patch=1,EE,20423320,extended,0000001A
+// patch=1,EE,20423324,extended,0000001A
+
+[Cheats/Patrick]
+// patch=1,EE,20423314,extended,0000001B
+// patch=1,EE,20423318,extended,0000001B
+// patch=1,EE,2042331C,extended,0000001B
+// patch=1,EE,20423320,extended,0000001B
+// patch=1,EE,20423324,extended,0000001B
+
+[Cheats/Patrick 2]
+// patch=1,EE,20423314,extended,0000001C
+// patch=1,EE,20423318,extended,0000001C
+// patch=1,EE,2042331C,extended,0000001C
+// patch=1,EE,20423320,extended,0000001C
+// patch=1,EE,20423324,extended,0000001C
+
+[Cheats/Aldora 2]
+// patch=1,EE,20423314,extended,0000001D
+// patch=1,EE,20423318,extended,0000001D
+// patch=1,EE,2042331C,extended,0000001D
+// patch=1,EE,20423320,extended,0000001D
+// patch=1,EE,20423324,extended,0000001D
+
+[Cheats/Darque 2]
+// patch=1,EE,20423314,extended,0000001E
+// patch=1,EE,20423318,extended,0000001E
+// patch=1,EE,2042331C,extended,0000001E
+// patch=1,EE,20423320,extended,0000001E
+// patch=1,EE,20423324,extended,0000001E
+
+[Cheats/Monsters To The East]
+// patch=1,EE,00424FA8,extended,00000000
+// patch=1,EE,00424FAC,extended,00000000
+
+[Cheats/Assault On Isthous Keep]
+// patch=1,EE,00424FB0,extended,00000000
+// patch=1,EE,00424FB4,extended,00000000
+
+[Cheats/Valhalland Monsters]
+// patch=1,EE,00424FB8,extended,00000000
+// patch=1,EE,00424FBC,extended,00000000
+// patch=1,EE,00424FB8,extended,00000001
+// patch=1,EE,00424FBC,extended,00000001
+// patch=1,EE,00424FB8,extended,00000002
+// patch=1,EE,00424FBC,extended,00000002
+// patch=1,EE,00424FB8,extended,00000003
+// patch=1,EE,00424FBC,extended,00000003
+// patch=1,EE,00424FB8,extended,00000004
+// patch=1,EE,00424FBC,extended,00000004
+// patch=1,EE,00424FB8,extended,00000005
+// patch=1,EE,00424FBC,extended,00000005
+
+[Cheats/An Expeditionary Force]
+// patch=1,EE,00424FC0,extended,00000000
+// patch=1,EE,00424FC4,extended,00000000
+// patch=1,EE,00424FC0,extended,00000001
+// patch=1,EE,00424FC4,extended,00000001
+// patch=1,EE,00424FC0,extended,00000002
+// patch=1,EE,00424FC4,extended,00000002
+// patch=1,EE,00424FC0,extended,00000003
+// patch=1,EE,00424FC4,extended,00000003
+// patch=1,EE,00424FC0,extended,00000004
+// patch=1,EE,00424FC4,extended,00000004
+// patch=1,EE,00424FC0,extended,00000005
+// patch=1,EE,00424FC4,extended,00000005
+
+[Cheats/Voice Of The Blade]
+// patch=1,EE,00424FC8,extended,00000000
+// patch=1,EE,00424FCC,extended,00000000
+// patch=1,EE,00424FC8,extended,00000001
+// patch=1,EE,00424FCC,extended,00000001
+// patch=1,EE,00424FC8,extended,00000002
+// patch=1,EE,00424FCC,extended,00000002
+// patch=1,EE,00424FC8,extended,00000003
+// patch=1,EE,00424FCC,extended,00000003
+// patch=1,EE,00424FC8,extended,00000004
+// patch=1,EE,00424FCC,extended,00000004
+// patch=1,EE,00424FC8,extended,00000005
+// patch=1,EE,00424FCC,extended,00000005
+
+[Cheats/Wuhan's Secret]
+// patch=1,EE,00424FD0,extended,00000000
+// patch=1,EE,00424FD4,extended,00000000
+// patch=1,EE,00424FD0,extended,00000001
+// patch=1,EE,00424FD4,extended,00000001
+// patch=1,EE,00424FD0,extended,00000002
+// patch=1,EE,00424FD4,extended,00000002
+// patch=1,EE,00424FD0,extended,00000003
+// patch=1,EE,00424FD4,extended,00000003
+// patch=1,EE,00424FD0,extended,00000004
+// patch=1,EE,00424FD4,extended,00000004
+// patch=1,EE,00424FD0,extended,00000005
+// patch=1,EE,00424FD4,extended,00000005
+
+[Cheats/Plain Treasure]
+// patch=1,EE,00424FD8,extended,00000000
+// patch=1,EE,00424FDC,extended,00000000
+// patch=1,EE,00424FD8,extended,00000001
+// patch=1,EE,00424FDC,extended,00000001
+// patch=1,EE,00424FD8,extended,00000002
+// patch=1,EE,00424FDC,extended,00000002
+// patch=1,EE,00424FD8,extended,00000003
+// patch=1,EE,00424FDC,extended,00000003
+// patch=1,EE,00424FD8,extended,00000004
+// patch=1,EE,00424FDC,extended,00000004
+// patch=1,EE,00424FD8,extended,00000005
+// patch=1,EE,00424FDC,extended,00000005
+
+[Cheats/Free The Gecklings]
+// patch=1,EE,00424FE0,extended,00000000
+// patch=1,EE,00424FE4,extended,00000000
+// patch=1,EE,00424FE0,extended,00000001
+// patch=1,EE,00424FE4,extended,00000001
+// patch=1,EE,00424FE0,extended,00000002
+// patch=1,EE,00424FE4,extended,00000002
+// patch=1,EE,00424FE0,extended,00000003
+// patch=1,EE,00424FE4,extended,00000003
+// patch=1,EE,00424FE0,extended,00000004
+// patch=1,EE,00424FE4,extended,00000004
+// patch=1,EE,00424FE0,extended,00000005
+// patch=1,EE,00424FE4,extended,00000005
+
+[Cheats/Unsettling Settlements]
+// patch=1,EE,00424FE8,extended,00000000
+// patch=1,EE,00424FEC,extended,00000000
+// patch=1,EE,00424FE8,extended,00000001
+// patch=1,EE,00424FEC,extended,00000001
+// patch=1,EE,00424FE8,extended,00000002
+// patch=1,EE,00424FEC,extended,00000002
+// patch=1,EE,00424FE8,extended,00000003
+// patch=1,EE,00424FEC,extended,00000003
+// patch=1,EE,00424FE8,extended,00000004
+// patch=1,EE,00424FEC,extended,00000004
+// patch=1,EE,00424FE8,extended,00000005
+// patch=1,EE,00424FEC,extended,00000005
+
+[Cheats/Pride Of The Knights]
+// patch=1,EE,00424FF0,extended,00000000
+// patch=1,EE,00424FF4,extended,00000000
+// patch=1,EE,00424FF0,extended,00000001
+// patch=1,EE,00424FF4,extended,00000001
+// patch=1,EE,00424FF0,extended,00000002
+// patch=1,EE,00424FF4,extended,00000002
+// patch=1,EE,00424FF0,extended,00000003
+// patch=1,EE,00424FF4,extended,00000003
+// patch=1,EE,00424FF0,extended,00000004
+// patch=1,EE,00424FF4,extended,00000004
+// patch=1,EE,00424FF0,extended,00000005
+// patch=1,EE,00424FF4,extended,00000005
+
+[Cheats/Raid On The Depository]
+// patch=1,EE,00424FF8,extended,00000000
+// patch=1,EE,00424FFC,extended,00000000
+// patch=1,EE,00424FF8,extended,00000001
+// patch=1,EE,00424FFC,extended,00000001
+// patch=1,EE,00424FF8,extended,00000002
+// patch=1,EE,00424FFC,extended,00000002
+// patch=1,EE,00424FF8,extended,00000003
+// patch=1,EE,00424FFC,extended,00000003
+// patch=1,EE,00424FF8,extended,00000004
+// patch=1,EE,00424FFC,extended,00000004
+// patch=1,EE,00424FF8,extended,00000005
+// patch=1,EE,00424FFC,extended,00000005
+
+[Cheats/Innkeepers Daughter]
+// patch=1,EE,00425000,extended,00000000
+// patch=1,EE,00425004,extended,00000000
+// patch=1,EE,00425000,extended,00000001
+// patch=1,EE,00425004,extended,00000001
+// patch=1,EE,00425000,extended,00000002
+// patch=1,EE,00425004,extended,00000002
+// patch=1,EE,00425000,extended,00000003
+// patch=1,EE,00425004,extended,00000003
+// patch=1,EE,00425000,extended,00000004
+// patch=1,EE,00425004,extended,00000004
+// patch=1,EE,00425000,extended,00000005
+// patch=1,EE,00425004,extended,00000005
+
+[Cheats/A Suspicious Demise]
+// patch=1,EE,00425008,extended,00000000
+// patch=1,EE,0042500C,extended,00000000
+// patch=1,EE,00425008,extended,00000001
+// patch=1,EE,0042500C,extended,00000001
+// patch=1,EE,00425008,extended,00000002
+// patch=1,EE,0042500C,extended,00000002
+// patch=1,EE,00425008,extended,00000003
+// patch=1,EE,0042500C,extended,00000003
+// patch=1,EE,00425008,extended,00000004
+// patch=1,EE,0042500C,extended,00000004
+// patch=1,EE,00425008,extended,00000005
+// patch=1,EE,0042500C,extended,00000005
+
+[Cheats/The Fiends Of Saoki]
+// patch=1,EE,00425010,extended,00000000
+// patch=1,EE,00425014,extended,00000000
+// patch=1,EE,00425010,extended,00000001
+// patch=1,EE,00425014,extended,00000001
+// patch=1,EE,00425010,extended,00000002
+// patch=1,EE,00425014,extended,00000002
+// patch=1,EE,00425010,extended,00000003
+// patch=1,EE,00425014,extended,00000003
+// patch=1,EE,00425010,extended,00000004
+// patch=1,EE,00425014,extended,00000004
+// patch=1,EE,00425010,extended,00000005
+// patch=1,EE,00425014,extended,00000005
+
+[Cheats/Neville's Request]
+// patch=1,EE,00425018,extended,00000000
+// patch=1,EE,0042501C,extended,00000000
+// patch=1,EE,00425018,extended,00000001
+// patch=1,EE,0042501C,extended,00000001
+// patch=1,EE,00425018,extended,00000002
+// patch=1,EE,0042501C,extended,00000002
+// patch=1,EE,00425018,extended,00000003
+// patch=1,EE,0042501C,extended,00000003
+// patch=1,EE,00425018,extended,00000004
+// patch=1,EE,0042501C,extended,00000004
+// patch=1,EE,00425018,extended,00000005
+// patch=1,EE,0042501C,extended,00000005
+
+[Cheats/Gaian's Rescue]
+// patch=1,EE,00425020,extended,00000000
+// patch=1,EE,00425024,extended,00000000
+// patch=1,EE,00425020,extended,00000001
+// patch=1,EE,00425024,extended,00000001
+// patch=1,EE,00425020,extended,00000002
+// patch=1,EE,00425024,extended,00000002
+// patch=1,EE,00425020,extended,00000003
+// patch=1,EE,00425024,extended,00000003
+// patch=1,EE,00425020,extended,00000004
+// patch=1,EE,00425024,extended,00000004
+// patch=1,EE,00425020,extended,00000005
+// patch=1,EE,00425024,extended,00000005
+
+[Cheats/Missing Taralians]
+// patch=1,EE,00425028,extended,00000000
+// patch=1,EE,0042502C,extended,00000000
+// patch=1,EE,00425028,extended,00000001
+// patch=1,EE,0042502C,extended,00000001
+// patch=1,EE,00425028,extended,00000002
+// patch=1,EE,0042502C,extended,00000002
+// patch=1,EE,00425028,extended,00000003
+// patch=1,EE,0042502C,extended,00000003
+// patch=1,EE,00425028,extended,00000004
+// patch=1,EE,0042502C,extended,00000004
+// patch=1,EE,00425028,extended,00000005
+// patch=1,EE,0042502C,extended,00000005
+
+[Cheats/Eule Gives A Hoot]
+// patch=1,EE,00425030,extended,00000000
+// patch=1,EE,00425034,extended,00000000
+// patch=1,EE,00425030,extended,00000001
+// patch=1,EE,00425034,extended,00000001
+// patch=1,EE,00425030,extended,00000002
+// patch=1,EE,00425034,extended,00000002
+// patch=1,EE,00425030,extended,00000003
+// patch=1,EE,00425034,extended,00000003
+// patch=1,EE,00425030,extended,00000004
+// patch=1,EE,00425034,extended,00000004
+// patch=1,EE,00425030,extended,00000005
+// patch=1,EE,00425034,extended,00000005
+
+[Cheats/Constance Kiddnapped]
+// patch=1,EE,00425038,extended,00000000
+// patch=1,EE,0042503C,extended,00000000
+// patch=1,EE,00425040,extended,00000000
+// patch=1,EE,00425044,extended,00000000
+
+[Cheats/Water Dragon Rite]
+// patch=1,EE,00425048,extended,00000000
+// patch=1,EE,0042504C,extended,00000000
+// patch=1,EE,00425048,extended,00000001
+// patch=1,EE,0042504C,extended,00000001
+// patch=1,EE,00425048,extended,00000002
+// patch=1,EE,0042504C,extended,00000002
+// patch=1,EE,00425048,extended,00000003
+// patch=1,EE,0042504C,extended,00000003
+// patch=1,EE,00425048,extended,00000004
+// patch=1,EE,0042504C,extended,00000004
+// patch=1,EE,00425048,extended,00000005
+// patch=1,EE,0042504C,extended,00000005
+
+[Cheats/The Raincloud Armlet]
+// patch=1,EE,00425050,extended,00000000
+// patch=1,EE,00425054,extended,00000000
+// patch=1,EE,00425050,extended,00000001
+// patch=1,EE,00425054,extended,00000001
+// patch=1,EE,00425050,extended,00000002
+// patch=1,EE,00425054,extended,00000002
+// patch=1,EE,00425050,extended,00000003
+// patch=1,EE,00425054,extended,00000003
+// patch=1,EE,00425050,extended,00000004
+// patch=1,EE,00425054,extended,00000004
+// patch=1,EE,00425050,extended,00000005
+// patch=1,EE,00425054,extended,00000005
+
+[Cheats/Test Of Courage]
+// patch=1,EE,00425058,extended,00000000
+// patch=1,EE,0042505C,extended,00000000
+// patch=1,EE,00425058,extended,00000001
+// patch=1,EE,0042505C,extended,00000001
+// patch=1,EE,00425058,extended,00000002
+// patch=1,EE,0042505C,extended,00000002
+// patch=1,EE,00425058,extended,00000003
+// patch=1,EE,0042505C,extended,00000003
+// patch=1,EE,00425058,extended,00000004
+// patch=1,EE,0042505C,extended,00000004
+// patch=1,EE,00425058,extended,00000005
+// patch=1,EE,0042505C,extended,00000005
+
+[Cheats/Beast Ecology]
+// patch=1,EE,00425060,extended,00000000
+// patch=1,EE,00425064,extended,00000000
+// patch=1,EE,00425060,extended,00000001
+// patch=1,EE,00425064,extended,00000001
+// patch=1,EE,00425060,extended,00000002
+// patch=1,EE,00425064,extended,00000002
+// patch=1,EE,00425060,extended,00000003
+// patch=1,EE,00425064,extended,00000003
+// patch=1,EE,00425060,extended,00000004
+// patch=1,EE,00425064,extended,00000004
+// patch=1,EE,00425060,extended,00000005
+// patch=1,EE,00425064,extended,00000005
+
+[Cheats/Return Of The Vampires]
+// patch=1,EE,00425068,extended,00000000
+// patch=1,EE,0042506C,extended,00000000
+// patch=1,EE,00425068,extended,00000001
+// patch=1,EE,0042506C,extended,00000001
+// patch=1,EE,00425068,extended,00000002
+// patch=1,EE,0042506C,extended,00000002
+// patch=1,EE,00425068,extended,00000003
+// patch=1,EE,0042506C,extended,00000003
+// patch=1,EE,00425068,extended,00000004
+// patch=1,EE,0042506C,extended,00000004
+// patch=1,EE,00425068,extended,00000005
+// patch=1,EE,0042506C,extended,00000005
+
+[Cheats/Find The Aquamarine]
+// patch=1,EE,00425070,extended,00000000
+// patch=1,EE,00425074,extended,00000000
+// patch=1,EE,00425070,extended,00000001
+// patch=1,EE,00425074,extended,00000001
+// patch=1,EE,00425070,extended,00000002
+// patch=1,EE,00425074,extended,00000002
+// patch=1,EE,00425070,extended,00000003
+// patch=1,EE,00425074,extended,00000003
+// patch=1,EE,00425070,extended,00000004
+// patch=1,EE,00425074,extended,00000004
+// patch=1,EE,00425070,extended,00000005
+// patch=1,EE,00425074,extended,00000005
+
+[Cheats/Ailing Emperor]
+// patch=1,EE,00425078,extended,00000000
+// patch=1,EE,0042507C,extended,00000000
+// patch=1,EE,00425078,extended,00000001
+// patch=1,EE,0042507C,extended,00000001
+// patch=1,EE,00425078,extended,00000002
+// patch=1,EE,0042507C,extended,00000002
+// patch=1,EE,00425078,extended,00000003
+// patch=1,EE,0042507C,extended,00000003
+// patch=1,EE,00425078,extended,00000004
+// patch=1,EE,0042507C,extended,00000004
+// patch=1,EE,00425078,extended,00000005
+// patch=1,EE,0042507C,extended,00000005
+
+[Cheats/Ancient Texts]
+// patch=1,EE,00425080,extended,00000000
+// patch=1,EE,00425084,extended,00000000
+// patch=1,EE,00425080,extended,00000001
+// patch=1,EE,00425084,extended,00000001
+// patch=1,EE,00425080,extended,00000002
+// patch=1,EE,00425084,extended,00000002
+// patch=1,EE,00425080,extended,00000003
+// patch=1,EE,00425084,extended,00000003
+// patch=1,EE,00425080,extended,00000004
+// patch=1,EE,00425084,extended,00000004
+// patch=1,EE,00425080,extended,00000005
+// patch=1,EE,00425084,extended,00000005
+
+[Cheats/Finding The Fatestones]
+// patch=1,EE,00425088,extended,00000000
+// patch=1,EE,0042508C,extended,00000000
+// patch=1,EE,00425088,extended,00000001
+// patch=1,EE,0042508C,extended,00000001
+// patch=1,EE,00425088,extended,00000002
+// patch=1,EE,0042508C,extended,00000002
+// patch=1,EE,00425088,extended,00000003
+// patch=1,EE,0042508C,extended,00000003
+// patch=1,EE,00425088,extended,00000004
+// patch=1,EE,0042508C,extended,00000004
+// patch=1,EE,00425088,extended,00000005
+// patch=1,EE,0042508C,extended,00000005
+
+[Cheats/Temple Tours]
+// patch=1,EE,00425090,extended,00000000
+// patch=1,EE,00425094,extended,00000000
+// patch=1,EE,00425090,extended,00000001
+// patch=1,EE,00425094,extended,00000001
+// patch=1,EE,00425090,extended,00000002
+// patch=1,EE,00425094,extended,00000002
+// patch=1,EE,00425090,extended,00000003
+// patch=1,EE,00425094,extended,00000003
+// patch=1,EE,00425090,extended,00000004
+// patch=1,EE,00425094,extended,00000004
+// patch=1,EE,00425090,extended,00000005
+// patch=1,EE,00425094,extended,00000005
+
+[Cheats/Silver's Treasure]
+// patch=1,EE,00425098,extended,00000000
+// patch=1,EE,0042509C,extended,00000000
+// patch=1,EE,004250A0,extended,00000000
+// patch=1,EE,004250A4,extended,00000000
+// patch=1,EE,00425098,extended,00000001
+// patch=1,EE,0042509C,extended,00000001
+// patch=1,EE,004250A0,extended,00000001
+// patch=1,EE,004250A4,extended,00000001
+// patch=1,EE,00425098,extended,00000002
+// patch=1,EE,0042509C,extended,00000002
+// patch=1,EE,004250A0,extended,00000002
+// patch=1,EE,004250A4,extended,00000002
+// patch=1,EE,00425098,extended,00000003
+// patch=1,EE,0042509C,extended,00000003
+// patch=1,EE,004250A0,extended,00000003
+// patch=1,EE,004250A4,extended,00000003
+// patch=1,EE,00425098,extended,00000004
+// patch=1,EE,0042509C,extended,00000004
+// patch=1,EE,004250A0,extended,00000004
+// patch=1,EE,004250A4,extended,00000004
+// patch=1,EE,00425098,extended,00000005
+// patch=1,EE,0042509C,extended,00000005
+// patch=1,EE,004250A0,extended,00000005
+// patch=1,EE,004250A4,extended,00000005
+
+[Cheats/The Assassins' Guild]
+// patch=1,EE,004250A8,extended,00000000
+// patch=1,EE,004250AC,extended,00000000
+// patch=1,EE,004250A8,extended,00000001
+// patch=1,EE,004250AC,extended,00000001
+// patch=1,EE,004250A8,extended,00000002
+// patch=1,EE,004250AC,extended,00000002
+// patch=1,EE,004250A8,extended,00000003
+// patch=1,EE,004250AC,extended,00000003
+// patch=1,EE,004250A8,extended,00000004
+// patch=1,EE,004250AC,extended,00000004
+// patch=1,EE,004250A8,extended,00000005
+// patch=1,EE,004250AC,extended,00000005
+
+[Cheats/The Mine Assaulted]
+// patch=1,EE,004250B0,extended,00000000
+// patch=1,EE,004250B4,extended,00000000
+// patch=1,EE,004250B0,extended,00000001
+// patch=1,EE,004250B4,extended,00000001
+// patch=1,EE,004250B0,extended,00000002
+// patch=1,EE,004250B4,extended,00000002
+// patch=1,EE,004250B0,extended,00000003
+// patch=1,EE,004250B4,extended,00000003
+// patch=1,EE,004250B0,extended,00000004
+// patch=1,EE,004250B4,extended,00000004
+// patch=1,EE,004250B0,extended,00000005
+// patch=1,EE,004250B4,extended,00000005
+
+[Cheats/Isle Of Evil]
+// patch=1,EE,004250B8,extended,00000000
+// patch=1,EE,004250BC,extended,00000000
+// patch=1,EE,004250B8,extended,00000001
+// patch=1,EE,004250BC,extended,00000001
+// patch=1,EE,004250B8,extended,00000002
+// patch=1,EE,004250BC,extended,00000002
+// patch=1,EE,004250B8,extended,00000003
+// patch=1,EE,004250BC,extended,00000003
+// patch=1,EE,004250B8,extended,00000004
+// patch=1,EE,004250BC,extended,00000004
+// patch=1,EE,004250B8,extended,00000005
+// patch=1,EE,004250BC,extended,00000005
+
+[Cheats/Pirate Invasion]
+// patch=1,EE,004250C0,extended,00000000
+// patch=1,EE,004250C4,extended,00000000
+// patch=1,EE,004250C0,extended,00000001
+// patch=1,EE,004250C4,extended,00000001
+// patch=1,EE,004250C0,extended,00000002
+// patch=1,EE,004250C4,extended,00000002
+// patch=1,EE,004250C0,extended,00000003
+// patch=1,EE,004250C4,extended,00000003
+// patch=1,EE,004250C0,extended,00000004
+// patch=1,EE,004250C4,extended,00000004
+// patch=1,EE,004250C0,extended,00000005
+// patch=1,EE,004250C4,extended,00000005
+
+[Cheats/Theodore's Madness]
+// patch=1,EE,004250C8,extended,00000000
+// patch=1,EE,004250CC,extended,00000000
+// patch=1,EE,004250C8,extended,00000001
+// patch=1,EE,004250CC,extended,00000001
+// patch=1,EE,004250C8,extended,00000002
+// patch=1,EE,004250CC,extended,00000002
+// patch=1,EE,004250C8,extended,00000003
+// patch=1,EE,004250CC,extended,00000003
+// patch=1,EE,004250C8,extended,00000004
+// patch=1,EE,004250CC,extended,00000004
+// patch=1,EE,004250C8,extended,00000005
+// patch=1,EE,004250CC,extended,00000005
+
+[Cheats/Frosthold Fortress]
+// patch=1,EE,004250D0,extended,00000000
+// patch=1,EE,004250D4,extended,00000000
+// patch=1,EE,004250D0,extended,00000001
+// patch=1,EE,004250D4,extended,00000001
+// patch=1,EE,004250D0,extended,00000002
+// patch=1,EE,004250D4,extended,00000002
+// patch=1,EE,004250D0,extended,00000003
+// patch=1,EE,004250D4,extended,00000003
+// patch=1,EE,004250D0,extended,00000004
+// patch=1,EE,004250D4,extended,00000004
+// patch=1,EE,004250D0,extended,00000005
+// patch=1,EE,004250D4,extended,00000005
+
+[Cheats/The Jewel Beast]
+// patch=1,EE,004250D8,extended,00000000
+// patch=1,EE,004250DC,extended,00000000
+// patch=1,EE,004250D8,extended,00000001
+// patch=1,EE,004250DC,extended,00000001
+// patch=1,EE,004250D8,extended,00000002
+// patch=1,EE,004250DC,extended,00000002
+// patch=1,EE,004250D8,extended,00000003
+// patch=1,EE,004250DC,extended,00000003
+// patch=1,EE,004250D8,extended,00000004
+// patch=1,EE,004250DC,extended,00000004
+// patch=1,EE,004250D8,extended,00000005
+// patch=1,EE,004250DC,extended,00000005
+
+[Cheats/Monster Of Mt. Tomae]
+// patch=1,EE,004250E0,extended,00000000
+// patch=1,EE,004250E4,extended,00000000
+// patch=1,EE,004250E0,extended,00000001
+// patch=1,EE,004250E4,extended,00000001
+// patch=1,EE,004250E0,extended,00000002
+// patch=1,EE,004250E4,extended,00000002
+// patch=1,EE,004250E0,extended,00000003
+// patch=1,EE,004250E4,extended,00000003
+// patch=1,EE,004250E0,extended,00000004
+// patch=1,EE,004250E4,extended,00000004
+// patch=1,EE,004250E0,extended,00000005
+// patch=1,EE,004250E4,extended,00000005
+
+[Cheats/Plant Ecology]
+// patch=1,EE,004250E8,extended,00000000
+// patch=1,EE,004250EC,extended,00000000
+// patch=1,EE,004250E8,extended,00000001
+// patch=1,EE,004250EC,extended,00000001
+// patch=1,EE,004250E8,extended,00000002
+// patch=1,EE,004250EC,extended,00000002
+// patch=1,EE,004250E8,extended,00000003
+// patch=1,EE,004250EC,extended,00000003
+// patch=1,EE,004250E8,extended,00000004
+// patch=1,EE,004250EC,extended,00000004
+// patch=1,EE,004250E8,extended,00000005
+// patch=1,EE,004250EC,extended,00000005
+
+[Cheats/The Cyclone Choes]
+// patch=1,EE,004250F0,extended,00000000
+// patch=1,EE,004250F4,extended,00000000
+
+[Cheats/The Ignigarde]
+// patch=1,EE,004250F8,extended,00000000
+// patch=1,EE,004250FC,extended,00000000
+// patch=1,EE,004250F8,extended,00000001
+// patch=1,EE,004250FC,extended,00000001
+// patch=1,EE,004250F8,extended,00000002
+// patch=1,EE,004250FC,extended,00000002
+// patch=1,EE,004250F8,extended,00000003
+// patch=1,EE,004250FC,extended,00000003
+// patch=1,EE,004250F8,extended,00000004
+// patch=1,EE,004250FC,extended,00000004
+// patch=1,EE,004250F8,extended,00000005
+// patch=1,EE,004250FC,extended,00000005
+
+[Cheats/The Ice Sword]
+// patch=1,EE,00425100,extended,00000000
+// patch=1,EE,00425104,extended,00000000
+// patch=1,EE,00425100,extended,00000001
+// patch=1,EE,00425104,extended,00000001
+// patch=1,EE,00425100,extended,00000002
+// patch=1,EE,00425104,extended,00000002
+// patch=1,EE,00425100,extended,00000003
+// patch=1,EE,00425104,extended,00000003
+// patch=1,EE,00425100,extended,00000004
+// patch=1,EE,00425104,extended,00000004
+// patch=1,EE,00425100,extended,00000005
+// patch=1,EE,00425104,extended,00000005
+
+[Cheats/Aquatic Ecology]
+// patch=1,EE,00425108,extended,00000000
+// patch=1,EE,0042510C,extended,00000000
+// patch=1,EE,00425108,extended,00000001
+// patch=1,EE,0042510C,extended,00000001
+// patch=1,EE,00425108,extended,00000002
+// patch=1,EE,0042510C,extended,00000002
+// patch=1,EE,00425108,extended,00000003
+// patch=1,EE,0042510C,extended,00000003
+// patch=1,EE,00425108,extended,00000004
+// patch=1,EE,0042510C,extended,00000004
+// patch=1,EE,00425108,extended,00000005
+// patch=1,EE,0042510C,extended,00000005
+
+[Cheats/Insect Ecology]
+// patch=1,EE,00425110,extended,00000000
+// patch=1,EE,00425114,extended,00000000
+// patch=1,EE,00425110,extended,00000001
+// patch=1,EE,00425114,extended,00000001
+// patch=1,EE,00425110,extended,00000002
+// patch=1,EE,00425114,extended,00000002
+// patch=1,EE,00425110,extended,00000003
+// patch=1,EE,00425114,extended,00000003
+// patch=1,EE,00425110,extended,00000004
+// patch=1,EE,00425114,extended,00000004
+// patch=1,EE,00425110,extended,00000005
+// patch=1,EE,00425114,extended,00000005
+
+[Cheats/Stolen Nymphs]
+// patch=1,EE,00425118,extended,00000000
+// patch=1,EE,0042511C,extended,00000000
+// patch=1,EE,00425118,extended,00000001
+// patch=1,EE,0042511C,extended,00000001
+// patch=1,EE,00425118,extended,00000002
+// patch=1,EE,0042511C,extended,00000002
+// patch=1,EE,00425118,extended,00000003
+// patch=1,EE,0042511C,extended,00000003
+// patch=1,EE,00425118,extended,00000004
+// patch=1,EE,0042511C,extended,00000004
+// patch=1,EE,00425118,extended,00000005
+// patch=1,EE,0042511C,extended,00000005
+
+[Cheats/The Underwater Temple]
+// patch=1,EE,00425120,extended,00000000
+// patch=1,EE,00425124,extended,00000000
+// patch=1,EE,00425120,extended,00000001
+// patch=1,EE,00425124,extended,00000001
+// patch=1,EE,00425120,extended,00000002
+// patch=1,EE,00425124,extended,00000002
+// patch=1,EE,00425120,extended,00000003
+// patch=1,EE,00425124,extended,00000003
+// patch=1,EE,00425120,extended,00000004
+// patch=1,EE,00425124,extended,00000004
+// patch=1,EE,00425120,extended,00000005
+// patch=1,EE,00425124,extended,00000005
+
+[Cheats/The End Of Weston]
+// patch=1,EE,00425128,extended,00000000
+// patch=1,EE,0042512C,extended,00000000
+// patch=1,EE,00425128,extended,00000001
+// patch=1,EE,0042512C,extended,00000001
+// patch=1,EE,00425128,extended,00000002
+// patch=1,EE,0042512C,extended,00000002
+// patch=1,EE,00425128,extended,00000003
+// patch=1,EE,0042512C,extended,00000003
+// patch=1,EE,00425128,extended,00000004
+// patch=1,EE,0042512C,extended,00000004
+// patch=1,EE,00425128,extended,00000005
+// patch=1,EE,0042512C,extended,00000005
+
+[Cheats/Oh, Mummy!]
+// patch=1,EE,00425130,extended,00000000
+// patch=1,EE,00425134,extended,00000000
+// patch=1,EE,00425130,extended,00000001
+// patch=1,EE,00425134,extended,00000001
+// patch=1,EE,00425130,extended,00000002
+// patch=1,EE,00425134,extended,00000002
+// patch=1,EE,00425130,extended,00000003
+// patch=1,EE,00425134,extended,00000003
+// patch=1,EE,00425130,extended,00000004
+// patch=1,EE,00425134,extended,00000004
+// patch=1,EE,00425130,extended,00000005
+// patch=1,EE,00425134,extended,00000005
+
+[Cheats/Face Saruin]
+// patch=1,EE,00425138,extended,00000000
+// patch=1,EE,0042513C,extended,00000000
+// patch=1,EE,00425140,extended,00000000
+// patch=1,EE,00425144,extended,00000000
+// patch=1,EE,00425148,extended,00000000
+// patch=1,EE,0042514C,extended,00000000
+// patch=1,EE,00425138,extended,00000001
+// patch=1,EE,0042513C,extended,00000001
+// patch=1,EE,00425140,extended,00000001
+// patch=1,EE,00425144,extended,00000001
+// patch=1,EE,00425148,extended,00000001
+// patch=1,EE,0042514C,extended,00000001
+// patch=1,EE,00425138,extended,00000002
+// patch=1,EE,0042513C,extended,00000002
+// patch=1,EE,00425140,extended,00000002
+// patch=1,EE,00425144,extended,00000002
+// patch=1,EE,00425148,extended,00000002
+// patch=1,EE,0042514C,extended,00000002
+// patch=1,EE,00425138,extended,00000003
+// patch=1,EE,0042513C,extended,00000003
+// patch=1,EE,00425140,extended,00000003
+// patch=1,EE,00425144,extended,00000003
+// patch=1,EE,00425148,extended,00000003
+// patch=1,EE,0042514C,extended,00000003
+// patch=1,EE,00425138,extended,00000004
+// patch=1,EE,0042513C,extended,00000004
+// patch=1,EE,00425140,extended,00000004
+// patch=1,EE,00425144,extended,00000004
+// patch=1,EE,00425148,extended,00000004
+// patch=1,EE,0042514C,extended,00000004
+// patch=1,EE,00425138,extended,00000005
+// patch=1,EE,0042513C,extended,00000005
+// patch=1,EE,00425140,extended,00000005
+// patch=1,EE,00425144,extended,00000005
+// patch=1,EE,00425148,extended,00000005
+// patch=1,EE,0042514C,extended,00000005
+
+[Cheats/Yucomb's Statues]
+// patch=1,EE,00425150,extended,00000000
+// patch=1,EE,00425154,extended,00000000
+// patch=1,EE,00425150,extended,00000001
+// patch=1,EE,00425154,extended,00000001
+// patch=1,EE,00425150,extended,00000002
+// patch=1,EE,00425154,extended,00000002
+// patch=1,EE,00425150,extended,00000003
+// patch=1,EE,00425154,extended,00000003
+// patch=1,EE,00425150,extended,00000004
+// patch=1,EE,00425154,extended,00000004
+// patch=1,EE,00425150,extended,00000005
+// patch=1,EE,00425154,extended,00000005
+
+[Cheats/Wugen And The Shield]
+// patch=1,EE,00425158,extended,00000000
+// patch=1,EE,0042515C,extended,00000000
+// patch=1,EE,00425158,extended,00000001
+// patch=1,EE,0042515C,extended,00000001
+// patch=1,EE,00425158,extended,00000002
+// patch=1,EE,0042515C,extended,00000002
+// patch=1,EE,00425158,extended,00000003
+// patch=1,EE,0042515C,extended,00000003
+// patch=1,EE,00425158,extended,00000004
+// patch=1,EE,0042515C,extended,00000004
+// patch=1,EE,00425158,extended,00000005
+// patch=1,EE,0042515C,extended,00000005
+
+[Cheats/Heroes And Gods At War]
+// patch=1,EE,00425160,extended,00000000
+// patch=1,EE,00425164,extended,00000000
+// patch=1,EE,00425160,extended,00000001
+// patch=1,EE,00425164,extended,00000001
+// patch=1,EE,00425160,extended,00000002
+// patch=1,EE,00425164,extended,00000002
+// patch=1,EE,00425160,extended,00000003
+// patch=1,EE,00425164,extended,00000003
+// patch=1,EE,00425160,extended,00000004
+// patch=1,EE,00425164,extended,00000004
+// patch=1,EE,00425160,extended,00000005
+// patch=1,EE,00425164,extended,00000005
+
+[Cheats/A Tale Of Death]
+// patch=1,EE,00425168,extended,00000000
+// patch=1,EE,0042516C,extended,00000000
+// patch=1,EE,00425168,extended,00000001
+// patch=1,EE,0042516C,extended,00000001
+// patch=1,EE,00425168,extended,00000002
+// patch=1,EE,0042516C,extended,00000002
+// patch=1,EE,00425168,extended,00000003
+// patch=1,EE,0042516C,extended,00000003
+// patch=1,EE,00425168,extended,00000004
+// patch=1,EE,0042516C,extended,00000004
+// patch=1,EE,00425168,extended,00000005
+// patch=1,EE,0042516C,extended,00000005
+
+[Cheats/Giants And Auldburg]
+// patch=1,EE,00425170,extended,00000000
+// patch=1,EE,00425174,extended,00000000
+// patch=1,EE,00425170,extended,00000001
+// patch=1,EE,00425174,extended,00000001
+// patch=1,EE,00425170,extended,00000002
+// patch=1,EE,00425174,extended,00000002
+// patch=1,EE,00425170,extended,00000003
+// patch=1,EE,00425174,extended,00000003
+// patch=1,EE,00425170,extended,00000004
+// patch=1,EE,00425174,extended,00000004
+// patch=1,EE,00425170,extended,00000005
+// patch=1,EE,00425174,extended,00000005
+
+[Cheats/Schitach's Shiny Ring]
+// patch=1,EE,00425178,extended,00000000
+// patch=1,EE,0042517C,extended,00000000
+// patch=1,EE,00425178,extended,00000001
+// patch=1,EE,0042517C,extended,00000001
+// patch=1,EE,00425178,extended,00000002
+// patch=1,EE,0042517C,extended,00000002
+// patch=1,EE,00425178,extended,00000003
+// patch=1,EE,0042517C,extended,00000003
+// patch=1,EE,00425178,extended,00000004
+// patch=1,EE,0042517C,extended,00000004
+// patch=1,EE,00425178,extended,00000005
+// patch=1,EE,0042517C,extended,00000005
+
+[Cheats/Thieves Of The Kingdom]
+// patch=1,EE,00425180,extended,00000000
+// patch=1,EE,00425184,extended,00000000
+// patch=1,EE,00425180,extended,00000001
+// patch=1,EE,00425184,extended,00000001
+// patch=1,EE,00425180,extended,00000002
+// patch=1,EE,00425184,extended,00000002
+// patch=1,EE,00425180,extended,00000003
+// patch=1,EE,00425184,extended,00000003
+// patch=1,EE,00425180,extended,00000004
+// patch=1,EE,00425184,extended,00000004
+// patch=1,EE,00425180,extended,00000005
+// patch=1,EE,00425184,extended,00000005
+
+[Cheats/Julius And The Library]
+// patch=1,EE,00425188,extended,00000000
+// patch=1,EE,0042518C,extended,00000000
+// patch=1,EE,00425188,extended,00000001
+// patch=1,EE,0042518C,extended,00000001
+// patch=1,EE,00425188,extended,00000002
+// patch=1,EE,0042518C,extended,00000002
+// patch=1,EE,00425188,extended,00000003
+// patch=1,EE,0042518C,extended,00000003
+// patch=1,EE,00425188,extended,00000004
+// patch=1,EE,0042518C,extended,00000004
+// patch=1,EE,00425188,extended,00000005
+// patch=1,EE,0042518C,extended,00000005
+
+[Cheats/The Fate Of The Keep]
+// patch=1,EE,00425190,extended,00000000
+// patch=1,EE,00425194,extended,00000000
+// patch=1,EE,00425190,extended,00000001
+// patch=1,EE,00425194,extended,00000001
+// patch=1,EE,00425190,extended,00000002
+// patch=1,EE,00425194,extended,00000002
+// patch=1,EE,00425190,extended,00000003
+// patch=1,EE,00425194,extended,00000003
+// patch=1,EE,00425190,extended,00000004
+// patch=1,EE,00425194,extended,00000004
+// patch=1,EE,00425190,extended,00000005
+// patch=1,EE,00425194,extended,00000005
+
+[Cheats/Marks Of Bravery]
+// patch=1,EE,00425198,extended,00000000
+// patch=1,EE,0042519C,extended,00000000
+// patch=1,EE,00425198,extended,00000001
+// patch=1,EE,0042519C,extended,00000001
+// patch=1,EE,00425198,extended,00000002
+// patch=1,EE,0042519C,extended,00000002
+// patch=1,EE,00425198,extended,00000003
+// patch=1,EE,0042519C,extended,00000003
+// patch=1,EE,00425198,extended,00000004
+// patch=1,EE,0042519C,extended,00000004
+// patch=1,EE,00425198,extended,00000005
+// patch=1,EE,0042519C,extended,00000005
+
+[Cheats/A Devilish Deal]
+// patch=1,EE,004251A0,extended,00000000
+// patch=1,EE,004251A4,extended,00000000
+// patch=1,EE,004251A0,extended,00000001
+// patch=1,EE,004251A4,extended,00000001
+// patch=1,EE,004251A0,extended,00000002
+// patch=1,EE,004251A4,extended,00000002
+// patch=1,EE,004251A0,extended,00000003
+// patch=1,EE,004251A4,extended,00000003
+// patch=1,EE,004251A0,extended,00000004
+// patch=1,EE,004251A4,extended,00000004
+// patch=1,EE,004251A0,extended,00000005
+// patch=1,EE,004251A4,extended,00000005
+
+[Cheats/Raod To Rebentence]
+// patch=1,EE,004251A8,extended,00000000
+// patch=1,EE,004251AC,extended,00000000
+
+[Cheats/Upright Gecklings]
+// patch=1,EE,004251B0,extended,00000000
+// patch=1,EE,004251B4,extended,00000000
+// patch=1,EE,004251B0,extended,00000001
+// patch=1,EE,004251B4,extended,00000001
+// patch=1,EE,004251B0,extended,00000002
+// patch=1,EE,004251B4,extended,00000002
+// patch=1,EE,004251B0,extended,00000003
+// patch=1,EE,004251B4,extended,00000003
+// patch=1,EE,004251B0,extended,00000004
+// patch=1,EE,004251B4,extended,00000004
+// patch=1,EE,004251B0,extended,00000005
+// patch=1,EE,004251B4,extended,00000005
+
+[Cheats/Storm And Kjar Maiden]
+// patch=1,EE,004251B8,extended,00000000
+// patch=1,EE,004251BC,extended,00000000
+// patch=1,EE,004251B8,extended,00000001
+// patch=1,EE,004251BC,extended,00000001
+// patch=1,EE,004251B8,extended,00000002
+// patch=1,EE,004251BC,extended,00000002
+// patch=1,EE,004251B8,extended,00000003
+// patch=1,EE,004251BC,extended,00000003
+// patch=1,EE,004251B8,extended,00000004
+// patch=1,EE,004251BC,extended,00000004
+// patch=1,EE,004251B8,extended,00000005
+// patch=1,EE,004251BC,extended,00000005
+
+[Cheats/The Opal And The Pirate]
+// patch=1,EE,004251C0,extended,00000000
+// patch=1,EE,004251C4,extended,00000000
+// patch=1,EE,004251C0,extended,00000001
+// patch=1,EE,004251C4,extended,00000001
+// patch=1,EE,004251C0,extended,00000002
+// patch=1,EE,004251C4,extended,00000002
+// patch=1,EE,004251C0,extended,00000003
+// patch=1,EE,004251C4,extended,00000003
+// patch=1,EE,004251C0,extended,00000004
+// patch=1,EE,004251C4,extended,00000004
+// patch=1,EE,004251C0,extended,00000005
+// patch=1,EE,004251C4,extended,00000005
+
+[Cheats/Lords Of The Elements]
+// patch=1,EE,004251C8,extended,00000000
+// patch=1,EE,004251CC,extended,00000000
+// patch=1,EE,004251C8,extended,00000001
+// patch=1,EE,004251CC,extended,00000001
+// patch=1,EE,004251C8,extended,00000002
+// patch=1,EE,004251CC,extended,00000002
+// patch=1,EE,004251C8,extended,00000003
+// patch=1,EE,004251CC,extended,00000003
+// patch=1,EE,004251C8,extended,00000004
+// patch=1,EE,004251CC,extended,00000004
+// patch=1,EE,004251C8,extended,00000005
+// patch=1,EE,004251CC,extended,00000005
+
+[Cheats/Mirsa And Aldora 1]
+// patch=1,EE,004251D0,extended,00000000
+// patch=1,EE,004251D4,extended,00000000
+// patch=1,EE,004251D0,extended,00000001
+// patch=1,EE,004251D4,extended,00000001
+// patch=1,EE,004251D0,extended,00000002
+// patch=1,EE,004251D4,extended,00000002
+// patch=1,EE,004251D0,extended,00000003
+// patch=1,EE,004251D4,extended,00000003
+// patch=1,EE,004251D0,extended,00000004
+// patch=1,EE,004251D4,extended,00000004
+// patch=1,EE,004251D0,extended,00000005
+// patch=1,EE,004251D4,extended,00000005
+
+[Cheats/Mirsa And Aldora 2]
+// patch=1,EE,004251D8,extended,00000000
+// patch=1,EE,004251DC,extended,00000000
+// patch=1,EE,004251D8,extended,00000001
+// patch=1,EE,004251DC,extended,00000001
+// patch=1,EE,004251D8,extended,00000002
+// patch=1,EE,004251DC,extended,00000002
+// patch=1,EE,004251D8,extended,00000003
+// patch=1,EE,004251DC,extended,00000003
+// patch=1,EE,004251D8,extended,00000004
+// patch=1,EE,004251DC,extended,00000004
+// patch=1,EE,004251D8,extended,00000005
+// patch=1,EE,004251DC,extended,00000005
+
+[Cheats/Island On The Inner Sea]
+// patch=1,EE,004251E0,extended,00000000
+// patch=1,EE,004251E4,extended,00000000
+// patch=1,EE,004251E0,extended,00000001
+// patch=1,EE,004251E4,extended,00000001
+// patch=1,EE,004251E0,extended,00000002
+// patch=1,EE,004251E4,extended,00000002
+// patch=1,EE,004251E0,extended,00000003
+// patch=1,EE,004251E4,extended,00000003
+// patch=1,EE,004251E0,extended,00000004
+// patch=1,EE,004251E4,extended,00000004
+// patch=1,EE,004251E0,extended,00000005
+// patch=1,EE,004251E4,extended,00000005
+
+[Cheats/The Legendary Lake]
+// patch=1,EE,004251E8,extended,00000000
+// patch=1,EE,004251EC,extended,00000000
+// patch=1,EE,004251E8,extended,00000001
+// patch=1,EE,004251EC,extended,00000001
+// patch=1,EE,004251E8,extended,00000002
+// patch=1,EE,004251EC,extended,00000002
+// patch=1,EE,004251E8,extended,00000003
+// patch=1,EE,004251EC,extended,00000003
+// patch=1,EE,004251E8,extended,00000004
+// patch=1,EE,004251EC,extended,00000004
+// patch=1,EE,004251E8,extended,00000005
+// patch=1,EE,004251EC,extended,00000005
+
+[Cheats/A Tale Of The Butcher]
+// patch=1,EE,004251F0,extended,00000000
+// patch=1,EE,004251F4,extended,00000000
+// patch=1,EE,004251F0,extended,00000001
+// patch=1,EE,004251F4,extended,00000001
+// patch=1,EE,004251F0,extended,00000002
+// patch=1,EE,004251F4,extended,00000002
+// patch=1,EE,004251F0,extended,00000003
+// patch=1,EE,004251F4,extended,00000003
+// patch=1,EE,004251F0,extended,00000004
+// patch=1,EE,004251F4,extended,00000004
+// patch=1,EE,004251F0,extended,00000005
+// patch=1,EE,004251F4,extended,00000005
+
+[Cheats/The Zealots Of Saruin]
+// patch=1,EE,004251F8,extended,00000000
+// patch=1,EE,004251FC,extended,00000000
+// patch=1,EE,004251F8,extended,00000001
+// patch=1,EE,004251FC,extended,00000001
+// patch=1,EE,004251F8,extended,00000002
+// patch=1,EE,004251FC,extended,00000002
+// patch=1,EE,004251F8,extended,00000003
+// patch=1,EE,004251FC,extended,00000003
+// patch=1,EE,004251F8,extended,00000004
+// patch=1,EE,004251FC,extended,00000004
+// patch=1,EE,004251F8,extended,00000005
+// patch=1,EE,004251FC,extended,00000005
+
+[Cheats/Eugen And The Dragon]
+// patch=1,EE,00425200,extended,00000000
+// patch=1,EE,00425204,extended,00000000
+// patch=1,EE,00425200,extended,00000001
+// patch=1,EE,00425204,extended,00000001
+// patch=1,EE,00425200,extended,00000002
+// patch=1,EE,00425204,extended,00000002
+// patch=1,EE,00425200,extended,00000003
+// patch=1,EE,00425204,extended,00000003
+// patch=1,EE,00425200,extended,00000004
+// patch=1,EE,00425204,extended,00000004
+// patch=1,EE,00425200,extended,00000005
+// patch=1,EE,00425204,extended,00000005
+
+[Cheats/Three Gods Of Evil]
+// patch=1,EE,00425208,extended,00000000
+// patch=1,EE,0042520C,extended,00000000
+// patch=1,EE,00425208,extended,00000001
+// patch=1,EE,0042520C,extended,00000001
+// patch=1,EE,00425208,extended,00000002
+// patch=1,EE,0042520C,extended,00000002
+// patch=1,EE,00425208,extended,00000003
+// patch=1,EE,0042520C,extended,00000003
+// patch=1,EE,00425208,extended,00000004
+// patch=1,EE,0042520C,extended,00000004
+// patch=1,EE,00425208,extended,00000005
+// patch=1,EE,0042520C,extended,00000005
+
+[Cheats/Creepy Butterfly]
+// patch=1,EE,00425210,extended,00000000
+// patch=1,EE,00425214,extended,00000000
+// patch=1,EE,00425210,extended,00000001
+// patch=1,EE,00425214,extended,00000001
+// patch=1,EE,00425210,extended,00000002
+// patch=1,EE,00425214,extended,00000002
+// patch=1,EE,00425210,extended,00000003
+// patch=1,EE,00425214,extended,00000003
+// patch=1,EE,00425210,extended,00000004
+// patch=1,EE,00425214,extended,00000004
+// patch=1,EE,00425210,extended,00000005
+// patch=1,EE,00425214,extended,00000005
+
+[Cheats/The Soulgutter]
+// patch=1,EE,00425218,extended,00000000
+// patch=1,EE,0042521C,extended,00000000
+// patch=1,EE,00425218,extended,00000001
+// patch=1,EE,0042521C,extended,00000001
+// patch=1,EE,00425218,extended,00000002
+// patch=1,EE,0042521C,extended,00000002
+// patch=1,EE,00425218,extended,00000003
+// patch=1,EE,0042521C,extended,00000003
+// patch=1,EE,00425218,extended,00000004
+// patch=1,EE,0042521C,extended,00000004
+// patch=1,EE,00425218,extended,00000005
+// patch=1,EE,0042521C,extended,00000005
+
+[Cheats/The Dragon Knight]
+// patch=1,EE,00425220,extended,00000000
+// patch=1,EE,00425224,extended,00000000
+// patch=1,EE,00425220,extended,00000001
+// patch=1,EE,00425224,extended,00000001
+// patch=1,EE,00425220,extended,00000002
+// patch=1,EE,00425224,extended,00000002
+// patch=1,EE,00425220,extended,00000003
+// patch=1,EE,00425224,extended,00000003
+// patch=1,EE,00425220,extended,00000004
+// patch=1,EE,00425224,extended,00000004
+// patch=1,EE,00425220,extended,00000005
+// patch=1,EE,00425224,extended,00000005
+
+[Cheats/A Body Guard For Louie]
+// patch=1,EE,00425228,extended,00000000
+// patch=1,EE,0042522C,extended,00000000
+// patch=1,EE,00425228,extended,00000001
+// patch=1,EE,0042522C,extended,00000001
+// patch=1,EE,00425228,extended,00000002
+// patch=1,EE,0042522C,extended,00000002
+// patch=1,EE,00425228,extended,00000003
+// patch=1,EE,0042522C,extended,00000003
+// patch=1,EE,00425228,extended,00000004
+// patch=1,EE,0042522C,extended,00000004
+// patch=1,EE,00425228,extended,00000005
+// patch=1,EE,0042522C,extended,00000005
+
+[Cheats/Frozen Lake Faerie]
+// patch=1,EE,00425230,extended,00000000
+// patch=1,EE,00425234,extended,00000000
+// patch=1,EE,00425230,extended,00000001
+// patch=1,EE,00425234,extended,00000001
+// patch=1,EE,00425230,extended,00000002
+// patch=1,EE,00425234,extended,00000002
+// patch=1,EE,00425230,extended,00000003
+// patch=1,EE,00425234,extended,00000003
+// patch=1,EE,00425230,extended,00000004
+// patch=1,EE,00425234,extended,00000004
+// patch=1,EE,00425230,extended,00000005
+// patch=1,EE,00425234,extended,00000005
+
+[Cheats/An Unlucky Woman]
+// patch=1,EE,00425238,extended,00000000
+// patch=1,EE,0042523C,extended,00000000
+// patch=1,EE,00425238,extended,00000001
+// patch=1,EE,0042523C,extended,00000001
+// patch=1,EE,00425238,extended,00000002
+// patch=1,EE,0042523C,extended,00000002
+// patch=1,EE,00425238,extended,00000003
+// patch=1,EE,0042523C,extended,00000003
+// patch=1,EE,00425238,extended,00000004
+// patch=1,EE,0042523C,extended,00000004
+// patch=1,EE,00425238,extended,00000005
+// patch=1,EE,0042523C,extended,00000005
+
+[Cheats/Who Am I?]
+// patch=1,EE,00425240,extended,00000000
+// patch=1,EE,00425244,extended,00000000
+// patch=1,EE,00425240,extended,00000001
+// patch=1,EE,00425244,extended,00000001
+// patch=1,EE,00425240,extended,00000002
+// patch=1,EE,00425244,extended,00000002
+// patch=1,EE,00425240,extended,00000003
+// patch=1,EE,00425244,extended,00000003
+// patch=1,EE,00425240,extended,00000004
+// patch=1,EE,00425244,extended,00000004
+// patch=1,EE,00425240,extended,00000005
+// patch=1,EE,00425244,extended,00000005
+
+[Cheats/Faerie's Grove]
+// patch=1,EE,00425248,extended,00000000
+// patch=1,EE,0042524C,extended,00000000
+// patch=1,EE,00425248,extended,00000001
+// patch=1,EE,0042524C,extended,00000001
+// patch=1,EE,00425248,extended,00000002
+// patch=1,EE,0042524C,extended,00000002
+// patch=1,EE,00425248,extended,00000003
+// patch=1,EE,0042524C,extended,00000003
+// patch=1,EE,00425248,extended,00000004
+// patch=1,EE,0042524C,extended,00000004
+// patch=1,EE,00425248,extended,00000005
+// patch=1,EE,0042524C,extended,00000005
+
+[Cheats/Monster Ecology]
+// patch=1,EE,00425250,extended,00000000
+// patch=1,EE,00425254,extended,00000000
+// patch=1,EE,00425250,extended,00000001
+// patch=1,EE,00425254,extended,00000001
+// patch=1,EE,00425250,extended,00000002
+// patch=1,EE,00425254,extended,00000002
+// patch=1,EE,00425250,extended,00000003
+// patch=1,EE,00425254,extended,00000003
+// patch=1,EE,00425250,extended,00000004
+// patch=1,EE,00425254,extended,00000004
+// patch=1,EE,00425250,extended,00000005
+// patch=1,EE,00425254,extended,00000005
+
+[Cheats/Mysteries Of Ecology]
+// patch=1,EE,00425258,extended,00000000
+// patch=1,EE,0042525C,extended,00000000
+// patch=1,EE,00425258,extended,00000001
+// patch=1,EE,0042525C,extended,00000001
+// patch=1,EE,00425258,extended,00000002
+// patch=1,EE,0042525C,extended,00000002
+// patch=1,EE,00425258,extended,00000003
+// patch=1,EE,0042525C,extended,00000003
+// patch=1,EE,00425258,extended,00000004
+// patch=1,EE,0042525C,extended,00000004
+// patch=1,EE,00425258,extended,00000005
+// patch=1,EE,0042525C,extended,00000005
+
+[Cheats/Amethyst Of Visions]
+// patch=1,EE,00425260,extended,00000000
+// patch=1,EE,00425264,extended,00000000
+// patch=1,EE,00425260,extended,00000001
+// patch=1,EE,00425264,extended,00000001
+// patch=1,EE,00425260,extended,00000002
+// patch=1,EE,00425264,extended,00000002
+// patch=1,EE,00425260,extended,00000003
+// patch=1,EE,00425264,extended,00000003
+// patch=1,EE,00425260,extended,00000004
+// patch=1,EE,00425264,extended,00000004
+// patch=1,EE,00425260,extended,00000005
+// patch=1,EE,00425264,extended,00000005
+
+[Cheats/The Netherworld]
+// patch=1,EE,00425268,extended,00000000
+// patch=1,EE,0042526C,extended,00000000
+// patch=1,EE,00425268,extended,00000001
+// patch=1,EE,0042526C,extended,00000001
+// patch=1,EE,00425268,extended,00000002
+// patch=1,EE,0042526C,extended,00000002
+// patch=1,EE,00425268,extended,00000003
+// patch=1,EE,0042526C,extended,00000003
+// patch=1,EE,00425268,extended,00000004
+// patch=1,EE,0042526C,extended,00000004
+// patch=1,EE,00425268,extended,00000005
+// patch=1,EE,0042526C,extended,00000005
+
+[Cheats/Monsters Of The East]
+// patch=1,EE,00424FA8,extended,00000001
+// patch=1,EE,00424FAC,extended,00000001
+// patch=1,EE,00424FA8,extended,00000002
+// patch=1,EE,00424FAC,extended,00000002
+// patch=1,EE,00424FA8,extended,00000003
+// patch=1,EE,00424FAC,extended,00000003
+// patch=1,EE,00424FA8,extended,00000004
+// patch=1,EE,00424FAC,extended,00000004
+// patch=1,EE,00424FA8,extended,00000005
+// patch=1,EE,00424FAC,extended,00000005
+
+[Cheats/Assault On Isthmus Keep]
+// patch=1,EE,00424FB0,extended,00000001
+// patch=1,EE,00424FB4,extended,00000001
+// patch=1,EE,00424FB0,extended,00000002
+// patch=1,EE,00424FB4,extended,00000002
+// patch=1,EE,00424FB0,extended,00000003
+// patch=1,EE,00424FB4,extended,00000003
+// patch=1,EE,00424FB0,extended,00000004
+// patch=1,EE,00424FB4,extended,00000004
+// patch=1,EE,00424FB0,extended,00000005
+// patch=1,EE,00424FB4,extended,00000005
+
+[Cheats/Constance Kidnapped]
+// patch=1,EE,00425038,extended,00000001
+// patch=1,EE,0042503C,extended,00000001
+// patch=1,EE,00425040,extended,00000001
+// patch=1,EE,00425044,extended,00000001
+// patch=1,EE,00425038,extended,00000002
+// patch=1,EE,0042503C,extended,00000002
+// patch=1,EE,00425040,extended,00000002
+// patch=1,EE,00425044,extended,00000002
+// patch=1,EE,00425038,extended,00000003
+// patch=1,EE,0042503C,extended,00000003
+// patch=1,EE,00425040,extended,00000003
+// patch=1,EE,00425044,extended,00000003
+// patch=1,EE,00425038,extended,00000004
+// patch=1,EE,0042503C,extended,00000004
+// patch=1,EE,00425040,extended,00000004
+// patch=1,EE,00425044,extended,00000004
+// patch=1,EE,00425038,extended,00000005
+// patch=1,EE,0042503C,extended,00000005
+// patch=1,EE,00425040,extended,00000005
+// patch=1,EE,00425044,extended,00000005
+
+[Cheats/The Cyclone Shoes]
+// patch=1,EE,004250F0,extended,00000001
+// patch=1,EE,004250F4,extended,00000001
+// patch=1,EE,004250F0,extended,00000002
+// patch=1,EE,004250F4,extended,00000002
+// patch=1,EE,004250F0,extended,00000003
+// patch=1,EE,004250F4,extended,00000003
+// patch=1,EE,004250F0,extended,00000004
+// patch=1,EE,004250F4,extended,00000004
+// patch=1,EE,004250F0,extended,00000005
+// patch=1,EE,004250F4,extended,00000005
+
+[Cheats/Road To Repentance]
+// patch=1,EE,004251A8,extended,00000001
+// patch=1,EE,004251AC,extended,00000001
+// patch=1,EE,004251A8,extended,00000002
+// patch=1,EE,004251AC,extended,00000002
+// patch=1,EE,004251A8,extended,00000003
+// patch=1,EE,004251AC,extended,00000003
+// patch=1,EE,004251A8,extended,00000004
+// patch=1,EE,004251AC,extended,00000004
+// patch=1,EE,004251A8,extended,00000005
+// patch=1,EE,004251AC,extended,00000005
+
+[Cheats/Max Health]
+// patch=1,EE,204193E0,extended,0000270F
+// patch=1,EE,20419840,extended,0000270F
+// patch=1,EE,20419CA0,extended,0000270F
+// patch=1,EE,2041A100,extended,0000270F
+// patch=1,EE,2041A560,extended,0000270F
+// patch=1,EE,2041A9C0,extended,0000270F
+// patch=1,EE,2041AE20,extended,0000270F
+// patch=1,EE,2041B280,extended,0000270F
+// patch=1,EE,2041B6E0,extended,0000270F
+// patch=1,EE,2041BB40,extended,0000270F
+// patch=1,EE,2041BFA0,extended,0000270F
+// patch=1,EE,2041C400,extended,0000270F
+// patch=1,EE,2041C860,extended,0000270F
+// patch=1,EE,2041CCC0,extended,0000270F
+// patch=1,EE,2041D120,extended,0000270F
+// patch=1,EE,2041D580,extended,0000270F
+// patch=1,EE,2041D9E0,extended,0000270F
+// patch=1,EE,2041DE40,extended,0000270F
+// patch=1,EE,2041E2A0,extended,0000270F
+// patch=1,EE,2041E700,extended,0000270F
+// patch=1,EE,2041EB60,extended,0000270F
+// patch=1,EE,2041EFC0,extended,0000270F
+// patch=1,EE,2041F420,extended,0000270F
+// patch=1,EE,2041F880,extended,0000270F
+// patch=1,EE,2041FCE0,extended,0000270F
+// patch=1,EE,20420140,extended,0000270F
+// patch=1,EE,204205A0,extended,0000270F
+// patch=1,EE,20420A00,extended,0000270F
+// patch=1,EE,20420E60,extended,0000270F
+// patch=1,EE,204212C0,extended,0000270F
+// patch=1,EE,20421720,extended,0000270F
+
+[Cheats/Infinite Health]
+// patch=1,EE,204193E4,extended,0000270F
+// patch=1,EE,20419844,extended,0000270F
+// patch=1,EE,20419CA4,extended,0000270F
+// patch=1,EE,2041A104,extended,0000270F
+// patch=1,EE,2041A564,extended,0000270F
+// patch=1,EE,2041A9C4,extended,0000270F
+// patch=1,EE,2041AE24,extended,0000270F
+// patch=1,EE,2041B284,extended,0000270F
+// patch=1,EE,2041B6E4,extended,0000270F
+// patch=1,EE,2041BB44,extended,0000270F
+// patch=1,EE,2041BFA4,extended,0000270F
+// patch=1,EE,2041C404,extended,0000270F
+// patch=1,EE,2041C864,extended,0000270F
+// patch=1,EE,2041CCC4,extended,0000270F
+// patch=1,EE,2041D124,extended,0000270F
+// patch=1,EE,2041D584,extended,0000270F
+// patch=1,EE,2041D9E4,extended,0000270F
+// patch=1,EE,2041DE44,extended,0000270F
+// patch=1,EE,2041E2A4,extended,0000270F
+// patch=1,EE,2041E704,extended,0000270F
+// patch=1,EE,2041EB64,extended,0000270F
+// patch=1,EE,2041EFC4,extended,0000270F
+// patch=1,EE,2041F424,extended,0000270F
+// patch=1,EE,2041F884,extended,0000270F
+// patch=1,EE,2041FCE4,extended,0000270F
+// patch=1,EE,20420144,extended,0000270F
+// patch=1,EE,204205A4,extended,0000270F
+// patch=1,EE,20420A04,extended,0000270F
+// patch=1,EE,20420E64,extended,0000270F
+// patch=1,EE,204212C4,extended,0000270F
+// patch=1,EE,20421724,extended,0000270F
+
+[Cheats/Max LP]
+// patch=1,EE,204193E8,extended,00000063
+// patch=1,EE,20419848,extended,00000063
+// patch=1,EE,20419CA8,extended,00000063
+// patch=1,EE,2041A108,extended,00000063
+// patch=1,EE,2041A568,extended,00000063
+// patch=1,EE,2041A9C8,extended,00000063
+// patch=1,EE,2041AE28,extended,00000063
+// patch=1,EE,2041B288,extended,00000063
+// patch=1,EE,2041B6E8,extended,00000063
+// patch=1,EE,2041BB48,extended,00000063
+// patch=1,EE,2041BFA8,extended,00000063
+// patch=1,EE,2041C408,extended,00000063
+// patch=1,EE,2041C868,extended,00000063
+// patch=1,EE,2041CCC8,extended,00000063
+// patch=1,EE,2041D128,extended,00000063
+// patch=1,EE,2041D588,extended,00000063
+// patch=1,EE,2041D9E8,extended,00000063
+// patch=1,EE,2041DE48,extended,00000063
+// patch=1,EE,2041E2A8,extended,00000063
+// patch=1,EE,2041E708,extended,00000063
+// patch=1,EE,2041EB68,extended,00000063
+// patch=1,EE,2041EFC8,extended,00000063
+// patch=1,EE,2041F428,extended,00000063
+// patch=1,EE,2041F888,extended,00000063
+// patch=1,EE,2041FCE8,extended,00000063
+// patch=1,EE,20420148,extended,00000063
+// patch=1,EE,204205A8,extended,00000063
+// patch=1,EE,20420A08,extended,00000063
+// patch=1,EE,20420E68,extended,00000063
+// patch=1,EE,204212C8,extended,00000063
+// patch=1,EE,20421728,extended,00000063
+
+[Cheats/Max BP]
+// patch=1,EE,204193F4,extended,00000063
+// patch=1,EE,20419854,extended,00000063
+// patch=1,EE,20419CB4,extended,00000063
+// patch=1,EE,2041A114,extended,00000063
+// patch=1,EE,2041A574,extended,00000063
+// patch=1,EE,2041A9D4,extended,00000063
+// patch=1,EE,2041AE34,extended,00000063
+// patch=1,EE,2041B294,extended,00000063
+// patch=1,EE,2041B6F4,extended,00000063
+// patch=1,EE,2041BB54,extended,00000063
+// patch=1,EE,2041BFB4,extended,00000063
+// patch=1,EE,2041C414,extended,00000063
+// patch=1,EE,2041C874,extended,00000063
+// patch=1,EE,2041CCD4,extended,00000063
+// patch=1,EE,2041D134,extended,00000063
+// patch=1,EE,2041D594,extended,00000063
+// patch=1,EE,2041D9F4,extended,00000063
+// patch=1,EE,2041DE54,extended,00000063
+// patch=1,EE,2041E2B4,extended,00000063
+// patch=1,EE,2041E714,extended,00000063
+// patch=1,EE,2041EB74,extended,00000063
+// patch=1,EE,2041EFD4,extended,00000063
+// patch=1,EE,2041F434,extended,00000063
+// patch=1,EE,2041F894,extended,00000063
+// patch=1,EE,2041FCF4,extended,00000063
+// patch=1,EE,20420154,extended,00000063
+// patch=1,EE,204205B4,extended,00000063
+// patch=1,EE,20420A14,extended,00000063
+// patch=1,EE,20420E74,extended,00000063
+// patch=1,EE,204212D4,extended,00000063
+// patch=1,EE,20421734,extended,00000063
+
+[Cheats/Infinite BP]
+// patch=1,EE,204193F8,extended,00000063
+// patch=1,EE,20419858,extended,00000063
+// patch=1,EE,20419CB8,extended,00000063
+// patch=1,EE,2041A118,extended,00000063
+// patch=1,EE,2041A578,extended,00000063
+// patch=1,EE,2041A9D8,extended,00000063
+// patch=1,EE,2041AE38,extended,00000063
+// patch=1,EE,2041B298,extended,00000063
+// patch=1,EE,2041B6F8,extended,00000063
+// patch=1,EE,2041BB58,extended,00000063
+// patch=1,EE,2041BFB8,extended,00000063
+// patch=1,EE,2041C418,extended,00000063
+// patch=1,EE,2041C878,extended,00000063
+// patch=1,EE,2041CCD8,extended,00000063
+// patch=1,EE,2041D138,extended,00000063
+// patch=1,EE,2041D598,extended,00000063
+// patch=1,EE,2041D9F8,extended,00000063
+// patch=1,EE,2041DE58,extended,00000063
+// patch=1,EE,2041E2B8,extended,00000063
+// patch=1,EE,2041E718,extended,00000063
+// patch=1,EE,2041EB78,extended,00000063
+// patch=1,EE,2041EFD8,extended,00000063
+// patch=1,EE,2041F438,extended,00000063
+// patch=1,EE,2041F898,extended,00000063
+// patch=1,EE,2041FCF8,extended,00000063
+// patch=1,EE,20420158,extended,00000063
+// patch=1,EE,204205B8,extended,00000063
+// patch=1,EE,20420A18,extended,00000063
+// patch=1,EE,20420E78,extended,00000063
+// patch=1,EE,204212D8,extended,00000063
+// patch=1,EE,20421738,extended,00000063
+
+[Cheats/Max BP Bonus]
+// patch=1,EE,204193FC,extended,00000063
+// patch=1,EE,2041985C,extended,00000063
+// patch=1,EE,20419CBC,extended,00000063
+// patch=1,EE,2041A11C,extended,00000063
+// patch=1,EE,2041A57C,extended,00000063
+// patch=1,EE,2041A9DC,extended,00000063
+// patch=1,EE,2041AE3C,extended,00000063
+// patch=1,EE,2041B29C,extended,00000063
+// patch=1,EE,2041B6FC,extended,00000063
+// patch=1,EE,2041BB5C,extended,00000063
+// patch=1,EE,2041BFBC,extended,00000063
+// patch=1,EE,2041C41C,extended,00000063
+// patch=1,EE,2041C87C,extended,00000063
+// patch=1,EE,2041CCDC,extended,00000063
+// patch=1,EE,2041D13C,extended,00000063
+// patch=1,EE,2041D59C,extended,00000063
+// patch=1,EE,2041D9FC,extended,00000063
+// patch=1,EE,2041DE5C,extended,00000063
+// patch=1,EE,2041E2BC,extended,00000063
+// patch=1,EE,2041E71C,extended,00000063
+// patch=1,EE,2041EB7C,extended,00000063
+// patch=1,EE,2041EFDC,extended,00000063
+// patch=1,EE,2041F43C,extended,00000063
+// patch=1,EE,2041F89C,extended,00000063
+// patch=1,EE,2041FCFC,extended,00000063
+// patch=1,EE,2042015C,extended,00000063
+// patch=1,EE,204205BC,extended,00000063
+// patch=1,EE,20420A1C,extended,00000063
+// patch=1,EE,20420E7C,extended,00000063
+// patch=1,EE,204212DC,extended,00000063
+// patch=1,EE,2042173C,extended,00000063
+
+[Cheats/Max STR]
+// patch=1,EE,20419410,extended,00000063
+// patch=1,EE,20419870,extended,00000063
+// patch=1,EE,20419CD0,extended,00000063
+// patch=1,EE,2041A130,extended,00000063
+// patch=1,EE,2041A590,extended,00000063
+// patch=1,EE,2041A9F0,extended,00000063
+// patch=1,EE,2041AE50,extended,00000063
+// patch=1,EE,2041B2B0,extended,00000063
+// patch=1,EE,2041B710,extended,00000063
+// patch=1,EE,2041BB70,extended,00000063
+// patch=1,EE,2041BFD0,extended,00000063
+// patch=1,EE,2041C430,extended,00000063
+// patch=1,EE,2041C890,extended,00000063
+// patch=1,EE,2041CCF0,extended,00000063
+// patch=1,EE,2041D150,extended,00000063
+// patch=1,EE,2041D5B0,extended,00000063
+// patch=1,EE,2041DA10,extended,00000063
+// patch=1,EE,2041DE70,extended,00000063
+// patch=1,EE,2041E2D0,extended,00000063
+// patch=1,EE,2041E730,extended,00000063
+// patch=1,EE,2041EB90,extended,00000063
+// patch=1,EE,2041EFF0,extended,00000063
+// patch=1,EE,2041F450,extended,00000063
+// patch=1,EE,2041F8B0,extended,00000063
+// patch=1,EE,2041FD10,extended,00000063
+// patch=1,EE,20420170,extended,00000063
+// patch=1,EE,204205D0,extended,00000063
+// patch=1,EE,20420A30,extended,00000063
+// patch=1,EE,20420E90,extended,00000063
+// patch=1,EE,204212F0,extended,00000063
+// patch=1,EE,20421750,extended,00000063
+
+[Cheats/Max VIT]
+// patch=1,EE,20419414,extended,00000063
+// patch=1,EE,20419874,extended,00000063
+// patch=1,EE,20419CD4,extended,00000063
+// patch=1,EE,2041A134,extended,00000063
+// patch=1,EE,2041A594,extended,00000063
+// patch=1,EE,2041A9F4,extended,00000063
+// patch=1,EE,2041AE54,extended,00000063
+// patch=1,EE,2041B2B4,extended,00000063
+// patch=1,EE,2041B714,extended,00000063
+// patch=1,EE,2041BB74,extended,00000063
+// patch=1,EE,2041BFD4,extended,00000063
+// patch=1,EE,2041C434,extended,00000063
+// patch=1,EE,2041C894,extended,00000063
+// patch=1,EE,2041CCF4,extended,00000063
+// patch=1,EE,2041D154,extended,00000063
+// patch=1,EE,2041D5B4,extended,00000063
+// patch=1,EE,2041DA14,extended,00000063
+// patch=1,EE,2041DE74,extended,00000063
+// patch=1,EE,2041E2D4,extended,00000063
+// patch=1,EE,2041E734,extended,00000063
+// patch=1,EE,2041EB94,extended,00000063
+// patch=1,EE,2041EFF4,extended,00000063
+// patch=1,EE,2041F454,extended,00000063
+// patch=1,EE,2041F8B4,extended,00000063
+// patch=1,EE,2041FD14,extended,00000063
+// patch=1,EE,20420174,extended,00000063
+// patch=1,EE,204205D4,extended,00000063
+// patch=1,EE,20420A34,extended,00000063
+// patch=1,EE,20420E94,extended,00000063
+// patch=1,EE,204212F4,extended,00000063
+// patch=1,EE,20421754,extended,00000063
+
+[Cheats/Max DEX]
+// patch=1,EE,20419418,extended,00000063
+// patch=1,EE,20419878,extended,00000063
+// patch=1,EE,20419CD8,extended,00000063
+// patch=1,EE,2041A138,extended,00000063
+// patch=1,EE,2041A598,extended,00000063
+// patch=1,EE,2041A9F8,extended,00000063
+// patch=1,EE,2041AE58,extended,00000063
+// patch=1,EE,2041B2B8,extended,00000063
+// patch=1,EE,2041B718,extended,00000063
+// patch=1,EE,2041BB78,extended,00000063
+// patch=1,EE,2041BFD8,extended,00000063
+// patch=1,EE,2041C438,extended,00000063
+// patch=1,EE,2041C898,extended,00000063
+// patch=1,EE,2041CCF8,extended,00000063
+// patch=1,EE,2041D158,extended,00000063
+// patch=1,EE,2041D5B8,extended,00000063
+// patch=1,EE,2041DA18,extended,00000063
+// patch=1,EE,2041DE78,extended,00000063
+// patch=1,EE,2041E2D8,extended,00000063
+// patch=1,EE,2041E738,extended,00000063
+// patch=1,EE,2041EB98,extended,00000063
+// patch=1,EE,2041EFF8,extended,00000063
+// patch=1,EE,2041F458,extended,00000063
+// patch=1,EE,2041F8B8,extended,00000063
+// patch=1,EE,2041FD18,extended,00000063
+// patch=1,EE,20420178,extended,00000063
+// patch=1,EE,204205D8,extended,00000063
+// patch=1,EE,20420A38,extended,00000063
+// patch=1,EE,20420E98,extended,00000063
+// patch=1,EE,204212F8,extended,00000063
+// patch=1,EE,20421758,extended,00000063
+
+[Cheats/Max AGI]
+// patch=1,EE,2041941C,extended,00000063
+// patch=1,EE,2041987C,extended,00000063
+// patch=1,EE,20419CDC,extended,00000063
+// patch=1,EE,2041A13C,extended,00000063
+// patch=1,EE,2041A59C,extended,00000063
+// patch=1,EE,2041A9FC,extended,00000063
+// patch=1,EE,2041AE5C,extended,00000063
+// patch=1,EE,2041B2BC,extended,00000063
+// patch=1,EE,2041B71C,extended,00000063
+// patch=1,EE,2041BB7C,extended,00000063
+// patch=1,EE,2041BFDC,extended,00000063
+// patch=1,EE,2041C43C,extended,00000063
+// patch=1,EE,2041C89C,extended,00000063
+// patch=1,EE,2041CCFC,extended,00000063
+// patch=1,EE,2041D15C,extended,00000063
+// patch=1,EE,2041D5BC,extended,00000063
+// patch=1,EE,2041DA1C,extended,00000063
+// patch=1,EE,2041DE7C,extended,00000063
+// patch=1,EE,2041E2DC,extended,00000063
+// patch=1,EE,2041E73C,extended,00000063
+// patch=1,EE,2041EB9C,extended,00000063
+// patch=1,EE,2041EFFC,extended,00000063
+// patch=1,EE,2041F45C,extended,00000063
+// patch=1,EE,2041F8BC,extended,00000063
+// patch=1,EE,2041FD1C,extended,00000063
+// patch=1,EE,2042017C,extended,00000063
+// patch=1,EE,204205DC,extended,00000063
+// patch=1,EE,20420A3C,extended,00000063
+// patch=1,EE,20420E9C,extended,00000063
+// patch=1,EE,204212FC,extended,00000063
+// patch=1,EE,2042175C,extended,00000063
+
+[Cheats/Max INT]
+// patch=1,EE,20419420,extended,00000063
+// patch=1,EE,20419880,extended,00000063
+// patch=1,EE,20419CE0,extended,00000063
+// patch=1,EE,2041A140,extended,00000063
+// patch=1,EE,2041A5A0,extended,00000063
+// patch=1,EE,2041AA00,extended,00000063
+// patch=1,EE,2041AE60,extended,00000063
+// patch=1,EE,2041B2C0,extended,00000063
+// patch=1,EE,2041B720,extended,00000063
+// patch=1,EE,2041BB80,extended,00000063
+// patch=1,EE,2041BFE0,extended,00000063
+// patch=1,EE,2041C440,extended,00000063
+// patch=1,EE,2041C8A0,extended,00000063
+// patch=1,EE,2041CD00,extended,00000063
+// patch=1,EE,2041D160,extended,00000063
+// patch=1,EE,2041D5C0,extended,00000063
+// patch=1,EE,2041DA20,extended,00000063
+// patch=1,EE,2041DE80,extended,00000063
+// patch=1,EE,2041E2E0,extended,00000063
+// patch=1,EE,2041E740,extended,00000063
+// patch=1,EE,2041EBA0,extended,00000063
+// patch=1,EE,2041F000,extended,00000063
+// patch=1,EE,2041F460,extended,00000063
+// patch=1,EE,2041F8C0,extended,00000063
+// patch=1,EE,2041FD20,extended,00000063
+// patch=1,EE,20420180,extended,00000063
+// patch=1,EE,204205E0,extended,00000063
+// patch=1,EE,20420A40,extended,00000063
+// patch=1,EE,20420EA0,extended,00000063
+// patch=1,EE,20421300,extended,00000063
+// patch=1,EE,20421760,extended,00000063
+
+[Cheats/Max WIL]
+// patch=1,EE,20419424,extended,00000063
+// patch=1,EE,20419884,extended,00000063
+// patch=1,EE,20419CE4,extended,00000063
+// patch=1,EE,2041A144,extended,00000063
+// patch=1,EE,2041A5A4,extended,00000063
+// patch=1,EE,2041AA04,extended,00000063
+// patch=1,EE,2041AE64,extended,00000063
+// patch=1,EE,2041B2C4,extended,00000063
+// patch=1,EE,2041B724,extended,00000063
+// patch=1,EE,2041BB84,extended,00000063
+// patch=1,EE,2041BFE4,extended,00000063
+// patch=1,EE,2041C444,extended,00000063
+// patch=1,EE,2041C8A4,extended,00000063
+// patch=1,EE,2041CD04,extended,00000063
+// patch=1,EE,2041D164,extended,00000063
+// patch=1,EE,2041D5C4,extended,00000063
+// patch=1,EE,2041DA24,extended,00000063
+// patch=1,EE,2041DE84,extended,00000063
+// patch=1,EE,2041E2E4,extended,00000063
+// patch=1,EE,2041E744,extended,00000063
+// patch=1,EE,2041EBA4,extended,00000063
+// patch=1,EE,2041F004,extended,00000063
+// patch=1,EE,2041F464,extended,00000063
+// patch=1,EE,2041F8C4,extended,00000063
+// patch=1,EE,2041FD24,extended,00000063
+// patch=1,EE,20420184,extended,00000063
+// patch=1,EE,204205E4,extended,00000063
+// patch=1,EE,20420A44,extended,00000063
+// patch=1,EE,20420EA4,extended,00000063
+// patch=1,EE,20421304,extended,00000063
+// patch=1,EE,20421764,extended,00000063
+
+[Cheats/Max COM]
+// patch=1,EE,20419428,extended,00000063
+// patch=1,EE,20419888,extended,00000063
+// patch=1,EE,20419CE8,extended,00000063
+// patch=1,EE,2041A148,extended,00000063
+// patch=1,EE,2041A5A8,extended,00000063
+// patch=1,EE,2041AA08,extended,00000063
+// patch=1,EE,2041AE68,extended,00000063
+// patch=1,EE,2041B2C8,extended,00000063
+// patch=1,EE,2041B728,extended,00000063
+// patch=1,EE,2041BB88,extended,00000063
+// patch=1,EE,2041BFE8,extended,00000063
+// patch=1,EE,2041C448,extended,00000063
+// patch=1,EE,2041C8A8,extended,00000063
+// patch=1,EE,2041CD08,extended,00000063
+// patch=1,EE,2041D168,extended,00000063
+// patch=1,EE,2041D5C8,extended,00000063
+// patch=1,EE,2041DA28,extended,00000063
+// patch=1,EE,2041DE88,extended,00000063
+// patch=1,EE,2041E2E8,extended,00000063
+// patch=1,EE,2041E748,extended,00000063
+// patch=1,EE,2041EBA8,extended,00000063
+// patch=1,EE,2041F008,extended,00000063
+// patch=1,EE,2041F468,extended,00000063
+// patch=1,EE,2041F8C8,extended,00000063
+// patch=1,EE,2041FD28,extended,00000063
+// patch=1,EE,20420188,extended,00000063
+// patch=1,EE,204205E8,extended,00000063
+// patch=1,EE,20420A48,extended,00000063
+// patch=1,EE,20420EA8,extended,00000063
+// patch=1,EE,20421308,extended,00000063
+// patch=1,EE,20421768,extended,00000063
+
+[Cheats/Max CHA]
+// patch=1,EE,2041942C,extended,00000063
+// patch=1,EE,2041988C,extended,00000063
+// patch=1,EE,20419CEC,extended,00000063
+// patch=1,EE,2041A14C,extended,00000063
+// patch=1,EE,2041A5AC,extended,00000063
+// patch=1,EE,2041AA0C,extended,00000063
+// patch=1,EE,2041AE6C,extended,00000063
+// patch=1,EE,2041B2CC,extended,00000063
+// patch=1,EE,2041B72C,extended,00000063
+// patch=1,EE,2041BB8C,extended,00000063
+// patch=1,EE,2041BFEC,extended,00000063
+// patch=1,EE,2041C44C,extended,00000063
+// patch=1,EE,2041C8AC,extended,00000063
+// patch=1,EE,2041CD0C,extended,00000063
+// patch=1,EE,2041D16C,extended,00000063
+// patch=1,EE,2041D5CC,extended,00000063
+// patch=1,EE,2041DA2C,extended,00000063
+// patch=1,EE,2041DE8C,extended,00000063
+// patch=1,EE,2041E2EC,extended,00000063
+// patch=1,EE,2041E74C,extended,00000063
+// patch=1,EE,2041EBAC,extended,00000063
+// patch=1,EE,2041F00C,extended,00000063
+// patch=1,EE,2041F46C,extended,00000063
+// patch=1,EE,2041F8CC,extended,00000063
+// patch=1,EE,2041FD2C,extended,00000063
+// patch=1,EE,2042018C,extended,00000063
+// patch=1,EE,204205EC,extended,00000063
+// patch=1,EE,20420A4C,extended,00000063
+// patch=1,EE,20420EAC,extended,00000063
+// patch=1,EE,2042130C,extended,00000063
+// patch=1,EE,2042176C,extended,00000063
+
+[Cheats/Max STR Bonus]
+// patch=1,EE,20419430,extended,00000063
+// patch=1,EE,20419890,extended,00000063
+// patch=1,EE,20419CF0,extended,00000063
+// patch=1,EE,2041A150,extended,00000063
+// patch=1,EE,2041A5B0,extended,00000063
+// patch=1,EE,2041AA10,extended,00000063
+// patch=1,EE,2041AE70,extended,00000063
+// patch=1,EE,2041B2D0,extended,00000063
+// patch=1,EE,2041B730,extended,00000063
+// patch=1,EE,2041BB90,extended,00000063
+// patch=1,EE,2041BFF0,extended,00000063
+// patch=1,EE,2041C450,extended,00000063
+// patch=1,EE,2041C8B0,extended,00000063
+// patch=1,EE,2041CD10,extended,00000063
+// patch=1,EE,2041D170,extended,00000063
+// patch=1,EE,2041D5D0,extended,00000063
+// patch=1,EE,2041DA30,extended,00000063
+// patch=1,EE,2041DE90,extended,00000063
+// patch=1,EE,2041E2F0,extended,00000063
+// patch=1,EE,2041E750,extended,00000063
+// patch=1,EE,2041EBB0,extended,00000063
+// patch=1,EE,2041F010,extended,00000063
+// patch=1,EE,2041F470,extended,00000063
+// patch=1,EE,2041F8D0,extended,00000063
+// patch=1,EE,2041FD30,extended,00000063
+// patch=1,EE,20420190,extended,00000063
+// patch=1,EE,204205F0,extended,00000063
+// patch=1,EE,20420A50,extended,00000063
+// patch=1,EE,20420EB0,extended,00000063
+// patch=1,EE,20421310,extended,00000063
+// patch=1,EE,20421770,extended,00000063
+
+[Cheats/Max VIT Bonus]
+// patch=1,EE,20419434,extended,00000063
+// patch=1,EE,20419894,extended,00000063
+// patch=1,EE,20419CF4,extended,00000063
+// patch=1,EE,2041A154,extended,00000063
+// patch=1,EE,2041A5B4,extended,00000063
+// patch=1,EE,2041AA14,extended,00000063
+// patch=1,EE,2041AE74,extended,00000063
+// patch=1,EE,2041B2D4,extended,00000063
+// patch=1,EE,2041B734,extended,00000063
+// patch=1,EE,2041BB94,extended,00000063
+// patch=1,EE,2041BFF4,extended,00000063
+// patch=1,EE,2041C454,extended,00000063
+// patch=1,EE,2041C8B4,extended,00000063
+// patch=1,EE,2041CD14,extended,00000063
+// patch=1,EE,2041D174,extended,00000063
+// patch=1,EE,2041D5D4,extended,00000063
+// patch=1,EE,2041DA34,extended,00000063
+// patch=1,EE,2041DE94,extended,00000063
+// patch=1,EE,2041E2F4,extended,00000063
+// patch=1,EE,2041E754,extended,00000063
+// patch=1,EE,2041EBB4,extended,00000063
+// patch=1,EE,2041F014,extended,00000063
+// patch=1,EE,2041F474,extended,00000063
+// patch=1,EE,2041F8D4,extended,00000063
+// patch=1,EE,2041FD34,extended,00000063
+// patch=1,EE,20420194,extended,00000063
+// patch=1,EE,204205F4,extended,00000063
+// patch=1,EE,20420A54,extended,00000063
+// patch=1,EE,20420EB4,extended,00000063
+// patch=1,EE,20421314,extended,00000063
+// patch=1,EE,20421774,extended,00000063
+
+[Cheats/Max DEX Bonus]
+// patch=1,EE,20419438,extended,00000063
+// patch=1,EE,20419898,extended,00000063
+// patch=1,EE,20419CF8,extended,00000063
+// patch=1,EE,2041A158,extended,00000063
+// patch=1,EE,2041A5B8,extended,00000063
+// patch=1,EE,2041AA18,extended,00000063
+// patch=1,EE,2041AE78,extended,00000063
+// patch=1,EE,2041B2D8,extended,00000063
+// patch=1,EE,2041B738,extended,00000063
+// patch=1,EE,2041BB98,extended,00000063
+// patch=1,EE,2041BFF8,extended,00000063
+// patch=1,EE,2041C458,extended,00000063
+// patch=1,EE,2041C8B8,extended,00000063
+// patch=1,EE,2041CD18,extended,00000063
+// patch=1,EE,2041D178,extended,00000063
+// patch=1,EE,2041D5D8,extended,00000063
+// patch=1,EE,2041DA38,extended,00000063
+// patch=1,EE,2041DE98,extended,00000063
+// patch=1,EE,2041E2F8,extended,00000063
+// patch=1,EE,2041E758,extended,00000063
+// patch=1,EE,2041EBB8,extended,00000063
+// patch=1,EE,2041F018,extended,00000063
+// patch=1,EE,2041F478,extended,00000063
+// patch=1,EE,2041F8D8,extended,00000063
+// patch=1,EE,2041FD38,extended,00000063
+// patch=1,EE,20420198,extended,00000063
+// patch=1,EE,204205F8,extended,00000063
+// patch=1,EE,20420A58,extended,00000063
+// patch=1,EE,20420EB8,extended,00000063
+// patch=1,EE,20421318,extended,00000063
+// patch=1,EE,20421778,extended,00000063
+
+[Cheats/Max AGI Bonus]
+// patch=1,EE,2041943C,extended,00000063
+// patch=1,EE,2041989C,extended,00000063
+// patch=1,EE,20419CFC,extended,00000063
+// patch=1,EE,2041A15C,extended,00000063
+// patch=1,EE,2041A5BC,extended,00000063
+// patch=1,EE,2041AA1C,extended,00000063
+// patch=1,EE,2041AE7C,extended,00000063
+// patch=1,EE,2041B2DC,extended,00000063
+// patch=1,EE,2041B73C,extended,00000063
+// patch=1,EE,2041BB9C,extended,00000063
+// patch=1,EE,2041BFFC,extended,00000063
+// patch=1,EE,2041C45C,extended,00000063
+// patch=1,EE,2041C8BC,extended,00000063
+// patch=1,EE,2041CD1C,extended,00000063
+// patch=1,EE,2041D17C,extended,00000063
+// patch=1,EE,2041D5DC,extended,00000063
+// patch=1,EE,2041DA3C,extended,00000063
+// patch=1,EE,2041DE9C,extended,00000063
+// patch=1,EE,2041E2FC,extended,00000063
+// patch=1,EE,2041E75C,extended,00000063
+// patch=1,EE,2041EBBC,extended,00000063
+// patch=1,EE,2041F01C,extended,00000063
+// patch=1,EE,2041F47C,extended,00000063
+// patch=1,EE,2041F8DC,extended,00000063
+// patch=1,EE,2041FD3C,extended,00000063
+// patch=1,EE,2042019C,extended,00000063
+// patch=1,EE,204205FC,extended,00000063
+// patch=1,EE,20420A5C,extended,00000063
+// patch=1,EE,20420EBC,extended,00000063
+// patch=1,EE,2042131C,extended,00000063
+// patch=1,EE,2042177C,extended,00000063
+
+[Cheats/Max INT Bonus]
+// patch=1,EE,20419440,extended,00000063
+// patch=1,EE,204198A0,extended,00000063
+// patch=1,EE,20419D00,extended,00000063
+// patch=1,EE,2041A160,extended,00000063
+// patch=1,EE,2041A5C0,extended,00000063
+// patch=1,EE,2041AA20,extended,00000063
+// patch=1,EE,2041AE80,extended,00000063
+// patch=1,EE,2041B2E0,extended,00000063
+// patch=1,EE,2041B740,extended,00000063
+// patch=1,EE,2041BBA0,extended,00000063
+// patch=1,EE,2041C000,extended,00000063
+// patch=1,EE,2041C460,extended,00000063
+// patch=1,EE,2041C8C0,extended,00000063
+// patch=1,EE,2041CD20,extended,00000063
+// patch=1,EE,2041D180,extended,00000063
+// patch=1,EE,2041D5E0,extended,00000063
+// patch=1,EE,2041DA40,extended,00000063
+// patch=1,EE,2041DEA0,extended,00000063
+// patch=1,EE,2041E300,extended,00000063
+// patch=1,EE,2041E760,extended,00000063
+// patch=1,EE,2041EBC0,extended,00000063
+// patch=1,EE,2041F020,extended,00000063
+// patch=1,EE,2041F480,extended,00000063
+// patch=1,EE,2041F8E0,extended,00000063
+// patch=1,EE,2041FD40,extended,00000063
+// patch=1,EE,204201A0,extended,00000063
+// patch=1,EE,20420600,extended,00000063
+// patch=1,EE,20420A60,extended,00000063
+// patch=1,EE,20420EC0,extended,00000063
+// patch=1,EE,20421320,extended,00000063
+// patch=1,EE,20421780,extended,00000063
+
+[Cheats/Max WIL Bonus]
+// patch=1,EE,20419444,extended,00000063
+// patch=1,EE,204198A4,extended,00000063
+// patch=1,EE,20419D04,extended,00000063
+// patch=1,EE,2041A164,extended,00000063
+// patch=1,EE,2041A5C4,extended,00000063
+// patch=1,EE,2041AA24,extended,00000063
+// patch=1,EE,2041AE84,extended,00000063
+// patch=1,EE,2041B2E4,extended,00000063
+// patch=1,EE,2041B744,extended,00000063
+// patch=1,EE,2041BBA4,extended,00000063
+// patch=1,EE,2041C004,extended,00000063
+// patch=1,EE,2041C464,extended,00000063
+// patch=1,EE,2041C8C4,extended,00000063
+// patch=1,EE,2041CD24,extended,00000063
+// patch=1,EE,2041D184,extended,00000063
+// patch=1,EE,2041D5E4,extended,00000063
+// patch=1,EE,2041DA44,extended,00000063
+// patch=1,EE,2041DEA4,extended,00000063
+// patch=1,EE,2041E304,extended,00000063
+// patch=1,EE,2041E764,extended,00000063
+// patch=1,EE,2041EBC4,extended,00000063
+// patch=1,EE,2041F024,extended,00000063
+// patch=1,EE,2041F484,extended,00000063
+// patch=1,EE,2041F8E4,extended,00000063
+// patch=1,EE,2041FD44,extended,00000063
+// patch=1,EE,204201A4,extended,00000063
+// patch=1,EE,20420604,extended,00000063
+// patch=1,EE,20420A64,extended,00000063
+// patch=1,EE,20420EC4,extended,00000063
+// patch=1,EE,20421324,extended,00000063
+// patch=1,EE,20421784,extended,00000063
+
+[Cheats/Max COM Bonus]
+// patch=1,EE,20419448,extended,00000063
+// patch=1,EE,204198A8,extended,00000063
+// patch=1,EE,20419D08,extended,00000063
+// patch=1,EE,2041A168,extended,00000063
+// patch=1,EE,2041A5C8,extended,00000063
+// patch=1,EE,2041AA28,extended,00000063
+// patch=1,EE,2041AE88,extended,00000063
+// patch=1,EE,2041B2E8,extended,00000063
+// patch=1,EE,2041B748,extended,00000063
+// patch=1,EE,2041BBA8,extended,00000063
+// patch=1,EE,2041C008,extended,00000063
+// patch=1,EE,2041C468,extended,00000063
+// patch=1,EE,2041C8C8,extended,00000063
+// patch=1,EE,2041CD28,extended,00000063
+// patch=1,EE,2041D188,extended,00000063
+// patch=1,EE,2041D5E8,extended,00000063
+// patch=1,EE,2041DA48,extended,00000063
+// patch=1,EE,2041DEA8,extended,00000063
+// patch=1,EE,2041E308,extended,00000063
+// patch=1,EE,2041E768,extended,00000063
+// patch=1,EE,2041EBC8,extended,00000063
+// patch=1,EE,2041F028,extended,00000063
+// patch=1,EE,2041F488,extended,00000063
+// patch=1,EE,2041F8E8,extended,00000063
+// patch=1,EE,2041FD48,extended,00000063
+// patch=1,EE,204201A8,extended,00000063
+// patch=1,EE,20420608,extended,00000063
+// patch=1,EE,20420A68,extended,00000063
+// patch=1,EE,20420EC8,extended,00000063
+// patch=1,EE,20421328,extended,00000063
+// patch=1,EE,20421788,extended,00000063
+
+[Cheats/Max CHA Bonus]
+// patch=1,EE,2041944C,extended,00000063
+// patch=1,EE,204198AC,extended,00000063
+// patch=1,EE,20419D0C,extended,00000063
+// patch=1,EE,2041A16C,extended,00000063
+// patch=1,EE,2041A5CC,extended,00000063
+// patch=1,EE,2041AA2C,extended,00000063
+// patch=1,EE,2041AE8C,extended,00000063
+// patch=1,EE,2041B2EC,extended,00000063
+// patch=1,EE,2041B74C,extended,00000063
+// patch=1,EE,2041BBAC,extended,00000063
+// patch=1,EE,2041C00C,extended,00000063
+// patch=1,EE,2041C46C,extended,00000063
+// patch=1,EE,2041C8CC,extended,00000063
+// patch=1,EE,2041CD2C,extended,00000063
+// patch=1,EE,2041D18C,extended,00000063
+// patch=1,EE,2041D5EC,extended,00000063
+// patch=1,EE,2041DA4C,extended,00000063
+// patch=1,EE,2041DEAC,extended,00000063
+// patch=1,EE,2041E30C,extended,00000063
+// patch=1,EE,2041E76C,extended,00000063
+// patch=1,EE,2041EBCC,extended,00000063
+// patch=1,EE,2041F02C,extended,00000063
+// patch=1,EE,2041F48C,extended,00000063
+// patch=1,EE,2041F8EC,extended,00000063
+// patch=1,EE,2041FD4C,extended,00000063
+// patch=1,EE,204201AC,extended,00000063
+// patch=1,EE,2042060C,extended,00000063
+// patch=1,EE,20420A6C,extended,00000063
+// patch=1,EE,20420ECC,extended,00000063
+// patch=1,EE,2042132C,extended,00000063
+// patch=1,EE,2042178C,extended,00000063

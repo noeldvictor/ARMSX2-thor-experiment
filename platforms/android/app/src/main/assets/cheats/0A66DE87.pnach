@@ -1,0 +1,266 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Nascar Thunder 2003 [SLUS-20535] [0A66DE87]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Drivers]
+// patch=1,EE,902D51D4,extended,0C09D3F2
+
+[Cheats/Infinite Tire Wear]
+// patch=1,EE,20117D70,extended,10000068
+
+[Cheats/Infinite Fuel]
+// patch=1,EE,201B61C0,extended,00000000
+// patch=1,EE,2017680C,extended,00000000
+
+[Cheats/Max Money (Career Mode)]
+// patch=1,EE,D1F55420,extended,000051AC
+// patch=1,EE,21F55454,extended,0098967F
+
+[Cheats/Press {SELECT} For All Plates (Thunder Plate Menu)]
+// patch=1,EE,200C0220,extended,3C0101FD
+// patch=1,EE,200C0224,extended,3421E470
+// patch=1,EE,200C0228,extended,240200AB
+// patch=1,EE,200C022C,extended,AC220000
+// patch=1,EE,200C0230,extended,3C030010
+// patch=1,EE,200C0234,extended,24640043
+// patch=1,EE,200C0238,extended,24630001
+// patch=1,EE,200C023C,extended,50640001
+// patch=1,EE,200C0240,extended,24630001
+// patch=1,EE,200C0244,extended,AC230050
+// patch=1,EE,200C0248,extended,24210008
+// patch=1,EE,200C024C,extended,1C40FFFA
+// patch=1,EE,200C0250,extended,2442FFFF
+// patch=1,EE,200C0254,extended,03E00008
+// patch=1,EE,200C0258,extended,00000000
+// patch=1,EE,D04D9702,extended,0000FFFE
+// patch=1,EE,202D51EC,extended,08030088
+// patch=1,EE,D04D9702,extended,0010FFFE
+// patch=1,EE,202D51EC,extended,03E00008
+
+[Cheats/George Dennis]
+// patch=1,EE,01F627D6,extended,00000001
+
+[Cheats/Richard Petty]
+// patch=1,EE,01F62986,extended,00000001
+
+[Cheats/Jim Hannigan]
+// patch=1,EE,01F629AA,extended,00000001
+
+[Cheats/Crissy Hillsworth]
+// patch=1,EE,01F62AEE,extended,00000001
+
+[Cheats/Jay Sauter]
+// patch=1,EE,01F62B12,extended,00000001
+
+[Cheats/Troi Hayes]
+// patch=1,EE,01F62B36,extended,00000001
+
+[Cheats/Johnny Sauter]
+// patch=1,EE,01F62B5A,extended,00000001
+
+[Cheats/Benny Parsons]
+// patch=1,EE,01F62B7E,extended,00000001
+
+[Cheats/Audrey Clark]
+// patch=1,EE,01F62BA2,extended,00000001
+
+[Cheats/Daryl Wolfe]
+// patch=1,EE,01F62BC6,extended,00000001
+
+[Cheats/Sasha Soares]
+// patch=1,EE,01F62BEA,extended,00000001
+
+[Cheats/Dick Paysor]
+// patch=1,EE,01F62C0E,extended,00000001
+
+[Cheats/Rick Edwards]
+// patch=1,EE,01F62C32,extended,00000001
+
+[Cheats/Chuck Spicer]
+// patch=1,EE,01F62C56,extended,00000001
+
+[Cheats/Kristi Jones]
+// patch=1,EE,01F62C7A,extended,00000001
+
+[Cheats/Dave Nichols]
+// patch=1,EE,01F62C9E,extended,00000001
+
+[Cheats/Josh Neelon]
+// patch=1,EE,01F62CC2,extended,00000001
+
+[Cheats/Katrina Goode]
+// patch=1,EE,01F62CE6,extended,00000001
+
+[Cheats/Scott Brewer]
+// patch=1,EE,01F62D0A,extended,00000001
+
+[Cheats/Dave Alpern]
+// patch=1,EE,01F62D2E,extended,00000001
+
+[Cheats/Cheryl King]
+// patch=1,EE,01F62D52,extended,00000001
+
+[Cheats/Joey Joulwan]
+// patch=1,EE,01F62D76,extended,00000001
+
+[Cheats/Mandy Misiak]
+// patch=1,EE,01F62D9A,extended,00000001
+
+[Cheats/Ken Patterson]
+// patch=1,EE,01F62DBE,extended,00000001
+
+[Cheats/Rick Humphrey]
+// patch=1,EE,01F62DE2,extended,00000001
+
+[Cheats/Dale Earnhardt]
+// patch=1,EE,01F62E4E,extended,00000001
+
+[Cheats/Greg Biffle #60 Taurus]
+// patch=1,EE,01F62E72,extended,00000001
+
+[Cheats/Jeff Purvis]
+// patch=1,EE,01F62E96,extended,00000001
+
+[Cheats/Shane Hall]
+// patch=1,EE,01F62EBA,extended,00000001
+
+[Cheats/Jamie McMurray]
+// patch=1,EE,01F62F02,extended,00000001
+
+[Cheats/Mike McLaughlin]
+// patch=1,EE,01F62F26,extended,00000001
+
+[Cheats/Michael Waltrip]
+// patch=1,EE,01F62F6E,extended,00000001
+
+[Cheats/Dale Earnhardt Jr. #3 Monte Carlo]
+// patch=1,EE,01F62F92,extended,00000001
+
+[Cheats/Kasey Kahne]
+// patch=1,EE,01F62FB6,extended,00000001
+
+[Cheats/Scott Wimmer]
+// patch=1,EE,01F62FDA,extended,00000001
+
+[Cheats/Kitt Paint]
+// patch=1,EE,01F62FFE,extended,00000001
+
+[Cheats/James Finch]
+// patch=1,EE,01F63046,extended,00000001
+
+[Cheats/Buster Auton]
+// patch=1,EE,01F6306A,extended,00000001
+
+[Cheats/Barney Hall]
+// patch=1,EE,01F630D6,extended,00000001
+
+[Cheats/Linda Latiuk]
+// patch=1,EE,01F630FA,extended,00000001
+
+[Cheats/Amy Hicks]
+// patch=1,EE,01F6311E,extended,00000001
+
+[Cheats/BC Vaught]
+// patch=1,EE,01F63142,extended,00000001
+
+[Cheats/Mike Brown]
+// patch=1,EE,01F63166,extended,00000001
+
+[Cheats/Tom Smith]
+// patch=1,EE,01F6318A,extended,00000001
+
+[Cheats/Mark Jacobs]
+// patch=1,EE,01F631AE,extended,00000001
+
+[Cheats/Bill Sanders]
+// patch=1,EE,01F631D2,extended,00000001
+
+[Cheats/Jeff Jarvis]
+// patch=1,EE,01F631F6,extended,00000001
+
+[Cheats/Robin Wawak]
+// patch=1,EE,01F6321A,extended,00000001
+
+[Cheats/George Williams]
+// patch=1,EE,01F6323E,extended,00000001
+
+[Cheats/Tim Sullivan]
+// patch=1,EE,01F63262,extended,00000001
+
+[Cheats/Pete Cook]
+// patch=1,EE,01F63286,extended,00000001
+
+[Cheats/Jack Rivers]
+// patch=1,EE,01F632AA,extended,00000001
+
+[Cheats/Dave Clark]
+// patch=1,EE,01F632CE,extended,00000001
+
+[Cheats/Trey North]
+// patch=1,EE,01F632F2,extended,00000001
+
+[Cheats/Eli Gold]
+// patch=1,EE,01F63316,extended,00000001
+
+[Cheats/Joe Moore]
+// patch=1,EE,01F6333A,extended,00000001
+
+[Cheats/Al Smith]
+// patch=1,EE,01F6335E,extended,00000001
+
+[Cheats/Junior Johnson]
+// patch=1,EE,01F63382,extended,00000001
+
+[Cheats/Bobby Allison]
+// patch=1,EE,01F633A6,extended,00000001
+
+[Cheats/Tiny Lund]
+// patch=1,EE,01F633CA,extended,00000001
+
+[Cheats/Alan Kulwicki]
+// patch=1,EE,01F633EE,extended,00000001
+
+[Cheats/Elmo Langley]
+// patch=1,EE,01F63412,extended,00000001
+
+[Cheats/Cale Yarborough]
+// patch=1,EE,01F63436,extended,00000001
+
+[Cheats/Jeff Burton #9 Taurus]
+// patch=1,EE,01F6350E,extended,00000001
+
+[Cheats/Coy Gibbs]
+// patch=1,EE,01F63532,extended,00000001
+
+[Cheats/Chad Chaffin]
+// patch=1,EE,01F63556,extended,00000001
+
+[Cheats/Tim Sauter]
+// patch=1,EE,01F6357A,extended,00000001
+
+[Cheats/Ron Hornaday]
+// patch=1,EE,01F6359E,extended,00000001
+
+[Cheats/Kevin Harvick #43 Dodge R/T]
+// patch=1,EE,01F635C2,extended,00000001
+
+[Cheats/Dan Pardus]
+// patch=1,EE,01F635E6,extended,00000001
+
+[Cheats/Brian Vickers]
+// patch=1,EE,01F6360A,extended,00000001
+
+[Cheats/Ashton Lewis Jr.]
+// patch=1,EE,01F6362E,extended,00000001
+
+[Cheats/Sue Finch]
+// patch=1,EE,01F6369A,extended,00000001
+
+[Cheats/Winston Kelley]
+// patch=1,EE,01F636BE,extended,00000001
+
+[Cheats/Scott Hammonds]
+// patch=1,EE,01F636E2,extended,00000001
+
+[Cheats/Joe Killen]
+// patch=1,EE,01F63706,extended,00000001

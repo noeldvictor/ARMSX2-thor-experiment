@@ -1,0 +1,82 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Firefighter F.D. 18 [SLUS-20724] [35092D61]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Medals]
+// patch=1,EE,902A4EFC,extended,0C0A4E64
+
+[Cheats/Infinite HP]
+// patch=1,EE,205C4F94,extended,0000EA60
+// patch=1,EE,205C4F98,extended,0000EA60
+
+[Cheats/Infinite HP (Survivors)]
+// patch=1,EE,201B6BD8,extended,00000000
+
+[Cheats/Max Impulse Ammo]
+// patch=1,EE,205C4FB0,extended,00000063
+
+[Cheats/Infinite Impulse Ammo]
+// patch=1,EE,205C4FB4,extended,00000063
+
+[Cheats/Infinite NZL]
+// patch=1,EE,205C4FC4,extended,00000003
+
+[Cheats/First-Aid Kit SP]
+// patch=1,EE,005A5179,extended,00000063
+
+[Cheats/First-Aid Kit]
+// patch=1,EE,005A517A,extended,00000063
+
+[Cheats/Impulse Tank]
+// patch=1,EE,005A517C,extended,00000063
+
+[Cheats/Bomb]
+// patch=1,EE,005A517D,extended,00000063
+
+[Cheats/Fire Extinguisher]
+// patch=1,EE,005A517E,extended,00000063
+
+[Cheats/Key]
+// patch=1,EE,005A517F,extended,00000063
+
+[Cheats/Keycard]
+// patch=1,EE,005A5180,extended,00000063
+
+[Cheats/Drink]
+// patch=1,EE,005A5181,extended,00000063
+
+[Cheats/Hose]
+// patch=1,EE,005A5182,extended,00000001
+
+[Cheats/Impulse]
+// patch=1,EE,005A5183,extended,00000001
+
+[Cheats/Axe]
+// patch=1,EE,005A5184,extended,00000001
+
+[Cheats/Always Low Time]
+// patch=1,EE,205A511C,extended,00000000
+
+[Cheats/Max Extinguish Points]
+// patch=1,EE,205A5120,extended,0098967F
+
+[Cheats/No Extinguish Points]
+// patch=1,EE,205A5120,extended,00000000
+
+[Cheats/Max Continues Used]
+// patch=1,EE,205A5124,extended,000003E7
+
+[Cheats/No Continues Used]
+// patch=1,EE,205A5124,extended,00000000
+
+[Cheats/Max People Rescued-Unarmed]
+// patch=1,EE,205A5128,extended,000003E7
+
+[Cheats/No People Rescued-Unarmed]
+// patch=1,EE,205A5128,extended,00000000
+
+[Cheats/Max People Rescued-Injured]
+// patch=1,EE,205A512C,extended,000003E7
+
+[Cheats/No People Rescued-Injured]
+// patch=1,EE,205A512C,extended,00000000

@@ -1,0 +1,30 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: World Series Of Poker [SLUS-21301] [F61754B9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/2 Strikes And You Are Out]
+// patch=1,EE,9031F8F0,extended,00832021
+
+[Cheats/Money Doesnt Decrease When Betting]
+// patch=1,EE,20154E88,extended,00000000
+
+[Cheats/Max Current Bankroll]
+// patch=1,EE,205F9648,extended,05F5E0FF
+
+[Cheats/Max Tournaments Entered (Current Year)]
+// patch=1,EE,205F99E0,extended,05F5E0FF
+
+[Cheats/Max Tournaments Entered (Career)]
+// patch=1,EE,205F99A4,extended,05F5E0FF
+
+[Cheats/Max Final Tables (Current Year)]
+// patch=1,EE,205F9A08,extended,05F5E0FF
+
+[Cheats/Max Final Tables (Career)]
+// patch=1,EE,205F99CC,extended,05F5E0FF
+
+[Cheats/Max Tournament Wins (Current Year)]
+// patch=1,EE,205F99F4,extended,05F5E0FF
+
+[Cheats/Max Tournament Wins (Career)]
+// patch=1,EE,205F99A8,extended,05F5E0FF

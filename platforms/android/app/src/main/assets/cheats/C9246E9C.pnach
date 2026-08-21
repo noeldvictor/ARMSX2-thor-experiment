@@ -1,0 +1,34 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tetris Worlds [SLUS-20247] [C9246E9C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/AI Vengeance]
+// patch=1,EE,F0100008,extended,002D207F
+
+[Cheats/Show FPS]
+// patch=1,EE,2018E370,extended,00000000
+
+[Cheats/Show Debug Info]
+// patch=1,EE,2018E3C4,extended,00000000
+
+[Cheats/Quick Level Up (Story Mode)]
+// patch=1,EE,201CFF00,extended,24020001
+// patch=1,EE,201CFF04,extended,44820000
+
+[Cheats/Level 2]
+// patch=1,EE,20237EAC,extended,24020002
+
+[Cheats/Level 3]
+// patch=1,EE,20237EAC,extended,24020003
+
+[Cheats/Level 4]
+// patch=1,EE,20237EAC,extended,24020004
+
+[Cheats/Level 5]
+// patch=1,EE,20237EAC,extended,24020005
+
+[Cheats/Level 10]
+// patch=1,EE,20237EAC,extended,2402000A
+
+[Cheats/Level 20]
+// patch=1,EE,20237EAC,extended,24020014

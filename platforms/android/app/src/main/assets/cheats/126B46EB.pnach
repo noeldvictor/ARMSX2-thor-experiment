@@ -1,0 +1,45 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Top Spin [SLES-53175] [126B46EB]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Level High Scores]
+// patch=1,EE,90133F20,extended,00832021
+
+[Cheats/Display FPS]
+// patch=1,EE,2059073C,extended,00000001
+
+[Cheats/Display Memory Usage]
+// patch=1,EE,20590744,extended,00000001
+
+[Cheats/All Points Score For Team 1]
+// patch=1,EE,E001802D,extended,0062ECD4
+// patch=1,EE,2062ECF4,extended,24050000
+
+[Cheats/All Points Score For Team 2]
+// patch=1,EE,E001802D,extended,0062ECD4
+// patch=1,EE,2062ECF4,extended,24050001
+
+[Cheats/Score Once To Win]
+// patch=1,EE,E001802D,extended,0062ECD4
+// patch=1,EE,2062ED2C,extended,24020004
+
+[Cheats/All Matches Score For Team 1]
+// patch=1,EE,E001802D,extended,0062EB78
+// patch=1,EE,2062EB8C,extended,24420000
+
+[Cheats/All Matches Score For Team 2]
+// patch=1,EE,E001802D,extended,0062EB78
+// patch=1,EE,2062EB8C,extended,24420001
+
+[Cheats/Buying Shop Items Doesnt Decrease Coins]
+// patch=1,EE,E001282D,extended,006F4700
+// patch=1,EE,206F472C,extended,00000000
+
+[Cheats/Buying Shop Items Increases Coins]
+// patch=1,EE,E001282D,extended,006F4700
+// patch=1,EE,206F4728,extended,00621021
+
+[Cheats/Buying Shop Items Increases Coins To Max]
+// patch=1,EE,E002282D,extended,006F4700
+// patch=1,EE,206F4718,extended,3C0205F5
+// patch=1,EE,206F4728,extended,3442E0FF

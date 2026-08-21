@@ -1,0 +1,67 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: RTX Red Rock [SLUS-20491] [E349C1D4]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite HP & MP (In-Battle)]
+// patch=1,EE,901A27F4,extended,0C060B54
+
+[Cheats/Infinite Health]
+// patch=1,EE,201E9B08,extended,3C01447A
+// patch=1,EE,201E9B0C,extended,AE4105A4
+
+[Cheats/Infinite Oxygen]
+// patch=1,EE,20152398,extended,00000000
+
+[Cheats/Buying Items Doesnt Decrease Credit Limit]
+// patch=1,EE,201EF5E8,extended,00000000
+
+[Cheats/Use Item Once For Max Item]
+// patch=1,EE,201DBF08,extended,240203E7
+
+[Cheats/Infinite Time (Iris' World)]
+// patch=1,EE,202483F0,extended,00000000
+
+[Cheats/Infinite Health (Iris' World)]
+// patch=1,EE,202494DC,extended,00000000
+
+[Cheats/Stage 1 Destructor Ammo]
+// patch=1,EE,202180D0,extended,00000000
+
+[Cheats/Fire Extinguisher Ammo]
+// patch=1,EE,2021801C,extended,00000000
+
+[Cheats/All Normal Items]
+// patch=1,EE,201DBF0C,extended,00000000
+
+[Cheats/Unlock All Special Features]
+// patch=1,EE,205D53E0,extended,FFFFFFFF
+
+[Cheats/Level 01-Phobos Station]
+// patch=1,EE,005A2ED0,extended,00000001
+
+[Cheats/Level 02-Thermal Research Outpost]
+// patch=1,EE,005A2ED1,extended,00000001
+
+[Cheats/Level 03-Kuztnetsov Diamond Mine]
+// patch=1,EE,005A2ED2,extended,00000001
+
+[Cheats/Level 04-Chryse Canal Complex]
+// patch=1,EE,005A2ED3,extended,00000001
+
+[Cheats/Level 05-Red Rock Township]
+// patch=1,EE,005A2ED4,extended,00000001
+
+[Cheats/Level 06-Xanthe Terra Power & Light]
+// patch=1,EE,005A2ED5,extended,00000001
+
+[Cheats/Level 07-Red Rock Sally Port Zulu]
+// patch=1,EE,005A2ED6,extended,00000001
+
+[Cheats/Level 08-Red Rock West Gate]
+// patch=1,EE,005A2ED7,extended,00000001
+
+[Cheats/Level 09-Aromatum Chaos]
+// patch=1,EE,005A2ED8,extended,00000001
+
+[Cheats/Level 10-Shalbatana Vallis]
+// patch=1,EE,005A2ED9,extended,00000001

@@ -1,0 +1,784 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Seek And Destroy [SLUS-20606] [71B6ADB9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,901B9004,extended,0C074009
+// patch=1,EE,20153544,extended,00000000
+
+[Cheats/Always 1st Time Saving]
+// patch=1,EE,201EE1F0,extended,00000000
+
+[Cheats/Max Gold]
+// patch=1,EE,2025D1DC,extended,0001869F
+
+[Cheats/Infinite Damage]
+// patch=1,EE,200C0220,extended,240300C8
+// patch=1,EE,200C0224,extended,AC430000
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,8C450010
+// patch=1,EE,20160D44,extended,0C030088
+
+[Cheats/Extra Ammo]
+// patch=1,EE,10153538,extended,00000001
+
+[Cheats/PzKpfw I Ausf.A]
+// patch=1,EE,201ED374,extended,00000001
+// patch=1,EE,201EC198,extended,00000001
+
+[Cheats/PzKpfw II Ausf.C]
+// patch=1,EE,201ED378,extended,00000001
+// patch=1,EE,201EC19C,extended,00000001
+
+[Cheats/PzKpfw II Ausf.F]
+// patch=1,EE,201ED37C,extended,00000001
+// patch=1,EE,201EC1A0,extended,00000001
+
+[Cheats/Auf.Pz.II 'Bison II']
+// patch=1,EE,201ED380,extended,00000001
+// patch=1,EE,201EC1A4,extended,00000001
+
+[Cheats/Wespe]
+// patch=1,EE,201ED384,extended,00000001
+// patch=1,EE,201EC1A8,extended,00000001
+
+[Cheats/Marder II]
+// patch=1,EE,201ED388,extended,00000001
+// patch=1,EE,201EC1AC,extended,00000001
+
+[Cheats/PzKpfw III Ausf.E]
+// patch=1,EE,201ED38C,extended,00000001
+// patch=1,EE,201EC1B0,extended,00000001
+
+[Cheats/PzKpfw III Ausf.G]
+// patch=1,EE,201ED390,extended,00000001
+// patch=1,EE,201EC1B4,extended,00000001
+
+[Cheats/PzKpfw III Ausf.J]
+// patch=1,EE,201ED394,extended,00000001
+// patch=1,EE,201EC1B8,extended,00000001
+
+[Cheats/PzKpfw III Ausf.K]
+// patch=1,EE,201ED398,extended,00000001
+// patch=1,EE,201EC1BC,extended,00000001
+
+[Cheats/Stug III Ausf.C]
+// patch=1,EE,201ED39C,extended,00000001
+// patch=1,EE,201EC1C0,extended,00000001
+
+[Cheats/Stug III Ausf.E]
+// patch=1,EE,201ED3A0,extended,00000001
+// patch=1,EE,201EC1C4,extended,00000001
+
+[Cheats/Stug III Ausf.F]
+// patch=1,EE,201ED3A4,extended,00000001
+// patch=1,EE,201EC1C8,extended,00000001
+
+[Cheats/Stug III Ausf.G]
+// patch=1,EE,201ED3A8,extended,00000001
+// patch=1,EE,201EC1CC,extended,00000001
+
+[Cheats/Grille]
+// patch=1,EE,201ED3AC,extended,00000001
+// patch=1,EE,201EC1D0,extended,00000001
+
+[Cheats/Marder III]
+// patch=1,EE,201ED3B0,extended,00000001
+// patch=1,EE,201EC1D4,extended,00000001
+
+[Cheats/Hetzer]
+// patch=1,EE,201ED3B4,extended,00000001
+// patch=1,EE,201EC1D8,extended,00000001
+
+[Cheats/PzKpfw IV Ausf.D]
+// patch=1,EE,201ED3B8,extended,00000001
+// patch=1,EE,201EC1DC,extended,00000001
+
+[Cheats/PzKpfw IV Ausf.E]
+// patch=1,EE,201ED3BC,extended,00000001
+// patch=1,EE,201EC1E0,extended,00000001
+
+[Cheats/PzKpfw IV Ausf.F]
+// patch=1,EE,201ED3C0,extended,00000001
+// patch=1,EE,201EC1E4,extended,00000001
+
+[Cheats/PzKpfw IV Ausf.G]
+// patch=1,EE,201ED3C4,extended,00000001
+// patch=1,EE,201EC1E8,extended,00000001
+
+[Cheats/PzKpfw IV Ausf.J]
+// patch=1,EE,201ED3C8,extended,00000001
+// patch=1,EE,201EC1EC,extended,00000001
+
+[Cheats/Jagdpanzer IV]
+// patch=1,EE,201ED3CC,extended,00000001
+// patch=1,EE,201EC1F0,extended,00000001
+
+[Cheats/Brummbar Mid Model]
+// patch=1,EE,201ED3D0,extended,00000001
+// patch=1,EE,201EC1F4,extended,00000001
+
+[Cheats/Brummbar Late Model]
+// patch=1,EE,201ED3D4,extended,00000001
+// patch=1,EE,201EC1F8,extended,00000001
+
+[Cheats/Panther Model D]
+// patch=1,EE,201ED3D8,extended,00000001
+// patch=1,EE,201EC1FC,extended,00000001
+
+[Cheats/Panther Model A]
+// patch=1,EE,201ED3DC,extended,00000001
+// patch=1,EE,201EC200,extended,00000001
+
+[Cheats/Panther Model G]
+// patch=1,EE,201ED3E0,extended,00000001
+// patch=1,EE,201EC204,extended,00000001
+
+[Cheats/Panther Model F]
+// patch=1,EE,201ED3E4,extended,00000001
+// patch=1,EE,201EC208,extended,00000001
+
+[Cheats/Panther Model 2]
+// patch=1,EE,201ED3E8,extended,00000001
+// patch=1,EE,201EC20C,extended,00000001
+
+[Cheats/Jagdpanther]
+// patch=1,EE,201ED3EC,extended,00000001
+// patch=1,EE,201EC210,extended,00000001
+
+[Cheats/Panther Krupp]
+// patch=1,EE,201ED3F0,extended,00000001
+// patch=1,EE,201EC214,extended,00000001
+
+[Cheats/Porsche Tiger]
+// patch=1,EE,201ED3F4,extended,00000001
+// patch=1,EE,201EC218,extended,00000001
+
+[Cheats/Maus]
+// patch=1,EE,201ED3F8,extended,00000001
+// patch=1,EE,201EC21C,extended,00000001
+
+[Cheats/Tiger I Early Model]
+// patch=1,EE,201ED3FC,extended,00000001
+// patch=1,EE,201EC220,extended,00000001
+
+[Cheats/Tiger I Late Model]
+// patch=1,EE,201ED400,extended,00000001
+// patch=1,EE,201EC224,extended,00000001
+
+[Cheats/Sturmtiger]
+// patch=1,EE,201ED404,extended,00000001
+// patch=1,EE,201EC228,extended,00000001
+
+[Cheats/Elefant]
+// patch=1,EE,201ED408,extended,00000001
+// patch=1,EE,201EC22C,extended,00000001
+
+[Cheats/Tiger II]
+// patch=1,EE,201ED40C,extended,00000001
+// patch=1,EE,201EC230,extended,00000001
+
+[Cheats/Tiger II (P)]
+// patch=1,EE,201ED410,extended,00000001
+// patch=1,EE,201EC234,extended,00000001
+
+[Cheats/Jagdtiger]
+// patch=1,EE,201ED414,extended,00000001
+// patch=1,EE,201EC238,extended,00000001
+
+[Cheats/Leopard 1A4]
+// patch=1,EE,201ED418,extended,00000001
+// patch=1,EE,201EC23C,extended,00000001
+
+[Cheats/Leopard 2]
+// patch=1,EE,201ED41C,extended,00000001
+// patch=1,EE,201EC240,extended,00000001
+
+[Cheats/Leopard 2 (Improved)]
+// patch=1,EE,201ED420,extended,00000001
+// patch=1,EE,201EC244,extended,00000001
+
+[Cheats/Pzh2000]
+// patch=1,EE,201ED424,extended,00000001
+// patch=1,EE,201EC248,extended,00000001
+
+[Cheats/Stuart]
+// patch=1,EE,201ED428,extended,00000001
+// patch=1,EE,201EC24C,extended,00000001
+
+[Cheats/M5 Stuart]
+// patch=1,EE,201ED42C,extended,00000001
+// patch=1,EE,201EC250,extended,00000001
+
+[Cheats/M18 Hellcat]
+// patch=1,EE,201ED430,extended,00000001
+// patch=1,EE,201EC254,extended,00000001
+
+[Cheats/M4A1]
+// patch=1,EE,201ED434,extended,00000001
+// patch=1,EE,201EC258,extended,00000001
+
+[Cheats/Sherman]
+// patch=1,EE,201ED438,extended,00000001
+// patch=1,EE,201EC25C,extended,00000001
+
+[Cheats/Sherman Jumbo]
+// patch=1,EE,201ED43C,extended,00000001
+// patch=1,EE,201EC260,extended,00000001
+
+[Cheats/M4A 3E8]
+// patch=1,EE,201ED440,extended,00000001
+// patch=1,EE,201EC264,extended,00000001
+
+[Cheats/M7 Priest]
+// patch=1,EE,201ED444,extended,00000001
+// patch=1,EE,201EC268,extended,00000001
+
+[Cheats/M8 Greyhound]
+// patch=1,EE,201ED448,extended,00000001
+// patch=1,EE,201EC26C,extended,00000001
+
+[Cheats/M24 Chaffee]
+// patch=1,EE,201ED44C,extended,00000001
+// patch=1,EE,201EC270,extended,00000001
+
+[Cheats/LVTH6]
+// patch=1,EE,201ED450,extended,00000001
+// patch=1,EE,201EC274,extended,00000001
+
+[Cheats/LVTP7]
+// patch=1,EE,201ED454,extended,00000001
+// patch=1,EE,201EC278,extended,00000001
+
+[Cheats/M551 Sheridan]
+// patch=1,EE,201ED458,extended,00000001
+// patch=1,EE,201EC27C,extended,00000001
+
+[Cheats/M60A1]
+// patch=1,EE,201ED45C,extended,00000001
+// patch=1,EE,201EC280,extended,00000001
+
+[Cheats/M60A2]
+// patch=1,EE,201ED460,extended,00000001
+// patch=1,EE,201EC284,extended,00000001
+
+[Cheats/Bradley]
+// patch=1,EE,201ED464,extended,00000001
+// patch=1,EE,201EC288,extended,00000001
+
+[Cheats/M1A1 Abrams]
+// patch=1,EE,201ED468,extended,00000001
+// patch=1,EE,201EC28C,extended,00000001
+
+[Cheats/KV-1C Heavy Tank]
+// patch=1,EE,201ED46C,extended,00000001
+// patch=1,EE,201EC290,extended,00000001
+
+[Cheats/KV-1B]
+// patch=1,EE,201ED470,extended,00000001
+// patch=1,EE,201EC294,extended,00000001
+
+[Cheats/KV-2A Heavy Tank]
+// patch=1,EE,201ED474,extended,00000001
+// patch=1,EE,201EC298,extended,00000001
+
+[Cheats/JS-1 Heavy Tank]
+// patch=1,EE,201ED478,extended,00000001
+// patch=1,EE,201EC29C,extended,00000001
+
+[Cheats/JS-2 Heavy Tank M]
+// patch=1,EE,201ED47C,extended,00000001
+// patch=1,EE,201EC2A0,extended,00000001
+
+[Cheats/JS-3 Heavy Tank]
+// patch=1,EE,201ED480,extended,00000001
+// patch=1,EE,201EC2A4,extended,00000001
+
+[Cheats/JSU-152 Heavy Assault Gun]
+// patch=1,EE,201ED484,extended,00000001
+// patch=1,EE,201EC2A8,extended,00000001
+
+[Cheats/SU-85]
+// patch=1,EE,201ED488,extended,00000001
+// patch=1,EE,201EC2AC,extended,00000001
+
+[Cheats/T-34/A]
+// patch=1,EE,201ED48C,extended,00000001
+// patch=1,EE,201EC2B0,extended,00000001
+
+[Cheats/T-34/E]
+// patch=1,EE,201ED490,extended,00000001
+// patch=1,EE,201EC2B4,extended,00000001
+
+[Cheats/T-34/76]
+// patch=1,EE,201ED494,extended,00000001
+// patch=1,EE,201EC2B8,extended,00000001
+
+[Cheats/T-34/85]
+// patch=1,EE,201ED498,extended,00000001
+// patch=1,EE,201EC2BC,extended,00000001
+
+[Cheats/T-55A]
+// patch=1,EE,201ED49C,extended,00000001
+// patch=1,EE,201EC2C0,extended,00000001
+
+[Cheats/T-72M1]
+// patch=1,EE,201ED4A0,extended,00000001
+// patch=1,EE,201EC2C4,extended,00000001
+
+[Cheats/T-80U]
+// patch=1,EE,201ED4A4,extended,00000001
+// patch=1,EE,201EC2C8,extended,00000001
+
+[Cheats/Obiekt279]
+// patch=1,EE,201ED4A8,extended,00000001
+// patch=1,EE,201EC2CC,extended,00000001
+
+[Cheats/Matilda II]
+// patch=1,EE,201ED4AC,extended,00000001
+// patch=1,EE,201EC2D0,extended,00000001
+
+[Cheats/Churchill Mk2]
+// patch=1,EE,201ED4B0,extended,00000001
+// patch=1,EE,201EC2D4,extended,00000001
+
+[Cheats/Churchill Mk4]
+// patch=1,EE,201ED4B4,extended,00000001
+// patch=1,EE,201EC2D8,extended,00000001
+
+[Cheats/Churchill AVRE]
+// patch=1,EE,201ED4B8,extended,00000001
+// patch=1,EE,201EC2DC,extended,00000001
+
+[Cheats/Cromwell]
+// patch=1,EE,201ED4BC,extended,00000001
+// patch=1,EE,201EC2E0,extended,00000001
+
+[Cheats/Comet]
+// patch=1,EE,201ED4C0,extended,00000001
+// patch=1,EE,201EC2E4,extended,00000001
+
+[Cheats/Centaur]
+// patch=1,EE,201ED4C4,extended,00000001
+// patch=1,EE,201EC2E8,extended,00000001
+
+[Cheats/Crusader Mk1]
+// patch=1,EE,201ED4C8,extended,00000001
+// patch=1,EE,201EC2EC,extended,00000001
+
+[Cheats/Crusader Mk3]
+// patch=1,EE,201ED4CC,extended,00000001
+// patch=1,EE,201EC2F0,extended,00000001
+
+[Cheats/Centurion Mk3]
+// patch=1,EE,201ED4D0,extended,00000001
+// patch=1,EE,201EC2F4,extended,00000001
+
+[Cheats/Chieftain Mk5]
+// patch=1,EE,201ED4D4,extended,00000001
+// patch=1,EE,201EC2F8,extended,00000001
+
+[Cheats/Challenger]
+// patch=1,EE,201ED4D8,extended,00000001
+// patch=1,EE,201EC2FC,extended,00000001
+
+[Cheats/Firefly]
+// patch=1,EE,201ED4DC,extended,00000001
+// patch=1,EE,201EC300,extended,00000001
+
+[Cheats/Somua S35]
+// patch=1,EE,201ED4E0,extended,00000001
+// patch=1,EE,201EC304,extended,00000001
+
+[Cheats/AMX-30]
+// patch=1,EE,201ED4E4,extended,00000001
+// patch=1,EE,201EC308,extended,00000001
+
+[Cheats/AUF-1]
+// patch=1,EE,201ED4E8,extended,00000001
+// patch=1,EE,201EC30C,extended,00000001
+
+[Cheats/Leclerc]
+// patch=1,EE,201ED4EC,extended,00000001
+// patch=1,EE,201EC310,extended,00000001
+
+[Cheats/M15/42 Medium Tank]
+// patch=1,EE,201ED4F0,extended,00000001
+// patch=1,EE,201EC314,extended,00000001
+
+[Cheats/Semobente M42L]
+// patch=1,EE,201ED4F4,extended,00000001
+// patch=1,EE,201EC318,extended,00000001
+
+[Cheats/Type 97 Chi-Ha (Improved)]
+// patch=1,EE,201ED4F8,extended,00000001
+// patch=1,EE,201EC31C,extended,00000001
+
+[Cheats/Type 2 Ka-Mi]
+// patch=1,EE,201ED4FC,extended,00000001
+// patch=1,EE,201EC320,extended,00000001
+
+[Cheats/Type 2 Ka-Mi Amphibian Tank]
+// patch=1,EE,201ED500,extended,00000001
+// patch=1,EE,201EC324,extended,00000001
+
+[Cheats/Type 61]
+// patch=1,EE,201ED504,extended,00000001
+// patch=1,EE,201EC328,extended,00000001
+
+[Cheats/Type 74]
+// patch=1,EE,201ED508,extended,00000001
+// patch=1,EE,201EC32C,extended,00000001
+
+[Cheats/Type 90]
+// patch=1,EE,201ED50C,extended,00000001
+// patch=1,EE,201EC330,extended,00000001
+
+[Cheats/Bengurion]
+// patch=1,EE,201ED510,extended,00000001
+// patch=1,EE,201EC334,extended,00000001
+
+[Cheats/Merkava I]
+// patch=1,EE,201ED514,extended,00000001
+// patch=1,EE,201EC338,extended,00000001
+
+[Cheats/Merkava II]
+// patch=1,EE,201ED518,extended,00000001
+// patch=1,EE,201EC33C,extended,00000001
+
+[Cheats/S103]
+// patch=1,EE,201ED51C,extended,00000001
+// patch=1,EE,201EC340,extended,00000001
+
+[Cheats/Skoda 35(T)]
+// patch=1,EE,201ED520,extended,00000001
+// patch=1,EE,201EC344,extended,00000001
+
+[Cheats/BHE Tank]
+// patch=1,EE,201ED524,extended,00000001
+// patch=1,EE,201EC348,extended,00000001
+
+[Cheats/Shell]
+// patch=1,EE,201ED194,extended,00000001
+
+[Cheats/SuperShell]
+// patch=1,EE,201ED198,extended,00000001
+
+[Cheats/Torpedo]
+// patch=1,EE,201ED19C,extended,00000001
+
+[Cheats/Crump]
+// patch=1,EE,201ED1A0,extended,00000001
+
+[Cheats/AP Shell]
+// patch=1,EE,201ED1A4,extended,00000001
+
+[Cheats/Drill Shot]
+// patch=1,EE,201ED1A8,extended,00000001
+
+[Cheats/Scatter]
+// patch=1,EE,201ED1AC,extended,00000001
+
+[Cheats/Long Shot]
+// patch=1,EE,201ED1B0,extended,00000001
+
+[Cheats/Retro Bomb]
+// patch=1,EE,201ED1B4,extended,00000001
+
+[Cheats/Sharp Bomb]
+// patch=1,EE,201ED1B8,extended,00000001
+
+[Cheats/Burst Bomb]
+// patch=1,EE,201ED1BC,extended,00000001
+
+[Cheats/Beam]
+// patch=1,EE,201ED1C0,extended,00000001
+
+[Cheats/Hi-Laser]
+// patch=1,EE,201ED1C4,extended,00000001
+
+[Cheats/Flame Shot]
+// patch=1,EE,201ED1C8,extended,00000001
+
+[Cheats/Satellite]
+// patch=1,EE,201ED1CC,extended,00000001
+
+[Cheats/BOTSU]
+// patch=1,EE,201ED1D0,extended,00000001
+
+[Cheats/Graviton]
+// patch=1,EE,201ED1D4,extended,00000001
+
+[Cheats/Positoron]
+// patch=1,EE,201ED1D8,extended,00000001
+
+[Cheats/Grand Bomb]
+// patch=1,EE,201ED1E0,extended,00000001
+
+[Cheats/Air Shell]
+// patch=1,EE,201ED1E4,extended,00000001
+
+[Cheats/Drum Bomb]
+// patch=1,EE,201ED1E8,extended,00000001
+
+[Cheats/Protector]
+// patch=1,EE,201ED1EC,extended,00000001
+
+[Cheats/Side Saw]
+// patch=1,EE,201ED1F0,extended,00000001
+
+[Cheats/Machinegun]
+// patch=1,EE,201ED1F4,extended,00000001
+// patch=1,EE,201ED220,extended,00000001
+
+[Cheats/Flame Gun]
+// patch=1,EE,201ED1F8,extended,00000001
+
+[Cheats/Blaze Gun]
+// patch=1,EE,201ED1FC,extended,00000001
+
+[Cheats/Goliath]
+// patch=1,EE,201ED200,extended,00000001
+
+[Cheats/Blaster]
+// patch=1,EE,201ED204,extended,00000001
+
+[Cheats/Grand Flag]
+// patch=1,EE,201ED208,extended,00000001
+
+[Cheats/Chaff]
+// patch=1,EE,201ED210,extended,00000001
+
+[Cheats/Smoke]
+// patch=1,EE,201ED214,extended,00000001
+
+[Cheats/Srch Light]
+// patch=1,EE,201ED218,extended,00000001
+
+[Cheats/Flare Bomb]
+// patch=1,EE,201ED21C,extended,00000001
+
+[Cheats/Gatling]
+// patch=1,EE,201ED224,extended,00000001
+
+[Cheats/Chain Saw]
+// patch=1,EE,201ED228,extended,00000001
+
+[Cheats/Missile]
+// patch=1,EE,201ED22C,extended,00000001
+
+[Cheats/Bound Bomb]
+// patch=1,EE,201ED230,extended,00000001
+
+[Cheats/Launcher]
+// patch=1,EE,201ED234,extended,00000001
+
+[Cheats/16-Missile]
+// patch=1,EE,201ED238,extended,00000001
+
+[Cheats/AirGatling]
+// patch=1,EE,201ED23C,extended,00000001
+
+[Cheats/Roll Drum]
+// patch=1,EE,201ED240,extended,00000001
+
+[Cheats/Stun Gun]
+// patch=1,EE,201ED244,extended,00000001
+
+[Cheats/Speaker]
+// patch=1,EE,201ED248,extended,00000001
+
+[Cheats/OldSpeaker]
+// patch=1,EE,201ED24C,extended,00000001
+
+[Cheats/Engine 1]
+// patch=1,EE,201ED254,extended,00000001
+
+[Cheats/Engine 2]
+// patch=1,EE,201ED258,extended,00000001
+
+[Cheats/Engine 3]
+// patch=1,EE,201ED25C,extended,00000001
+
+[Cheats/SP Engine]
+// patch=1,EE,201ED260,extended,00000001
+
+[Cheats/Q Charge]
+// patch=1,EE,201ED264,extended,00000001
+
+[Cheats/P Charge]
+// patch=1,EE,201ED268,extended,00000001
+
+[Cheats/Speeder]
+// patch=1,EE,201ED26C,extended,00000001
+
+[Cheats/MachEngine]
+// patch=1,EE,201ED270,extended,00000001
+
+[Cheats/MachCharge]
+// patch=1,EE,201ED274,extended,00000001
+
+[Cheats/Cat 1]
+// patch=1,EE,201ED27C,extended,00000001
+
+[Cheats/Cat 2]
+// patch=1,EE,201ED280,extended,00000001
+
+[Cheats/Cat 3]
+// patch=1,EE,201ED284,extended,00000001
+
+[Cheats/H Cat 1]
+// patch=1,EE,201ED288,extended,00000001
+
+[Cheats/H Cat 2]
+// patch=1,EE,201ED28C,extended,00000001
+
+[Cheats/H Cat 3]
+// patch=1,EE,201ED290,extended,00000001
+
+[Cheats/Super Cat]
+// patch=1,EE,201ED294,extended,00000001
+
+[Cheats/Anti Noise]
+// patch=1,EE,201ED298,extended,00000001
+
+[Cheats/Spiky Cat]
+// patch=1,EE,201ED29C,extended,00000001
+
+[Cheats/Snow Cat]
+// patch=1,EE,201ED2A0,extended,00000001
+
+[Cheats/Hook Cat]
+// patch=1,EE,201ED2A4,extended,00000001
+
+[Cheats/Armor Cat]
+// patch=1,EE,201ED2A8,extended,00000001
+
+[Cheats/Hoverplane]
+// patch=1,EE,201ED2B0,extended,00000001
+
+[Cheats/Booster]
+// patch=1,EE,201ED2B4,extended,00000001
+
+[Cheats/Propeller]
+// patch=1,EE,201ED2B8,extended,00000001
+
+[Cheats/Jet]
+// patch=1,EE,201ED2BC,extended,00000001
+
+[Cheats/Devil Wing]
+// patch=1,EE,201ED2C0,extended,00000001
+
+[Cheats/Angel Wing]
+// patch=1,EE,201ED2C4,extended,00000001
+
+[Cheats/SD Crafter]
+// patch=1,EE,201ED2C8,extended,00000001
+
+[Cheats/Float]
+// patch=1,EE,201ED2CC,extended,00000001
+
+[Cheats/Boat]
+// patch=1,EE,201ED2D0,extended,00000001
+
+[Cheats/WaterScrew]
+// patch=1,EE,201ED2D4,extended,00000001
+
+[Cheats/Sea Motor]
+// patch=1,EE,201ED2D8,extended,00000001
+
+[Cheats/Speed Shot]
+// patch=1,EE,201ED2E0,extended,00000001
+
+[Cheats/Hi-Reload]
+// patch=1,EE,201ED2E4,extended,00000001
+
+[Cheats/NVG]
+// patch=1,EE,201ED2E8,extended,00000001
+
+[Cheats/Slow Gear]
+// patch=1,EE,201ED2F0,extended,00000001
+
+[Cheats/Low Gear]
+// patch=1,EE,201ED2F4,extended,00000001
+
+[Cheats/Mid Gear]
+// patch=1,EE,201ED2F8,extended,00000001
+
+[Cheats/Lt. Gear]
+// patch=1,EE,201ED2FC,extended,00000001
+
+[Cheats/High Gear]
+// patch=1,EE,201ED300,extended,00000001
+
+[Cheats/Top Gear]
+// patch=1,EE,201ED304,extended,00000001
+
+[Cheats/Quick Gear]
+// patch=1,EE,201ED308,extended,00000001
+
+[Cheats/Q Hyper]
+// patch=1,EE,201ED30C,extended,00000001
+
+[Cheats/CPU 1]
+// patch=1,EE,201ED314,extended,00000001
+
+[Cheats/CPU 2]
+// patch=1,EE,201ED318,extended,00000001
+
+[Cheats/CPU 3]
+// patch=1,EE,201ED31C,extended,00000001
+
+[Cheats/CPU 4]
+// patch=1,EE,201ED320,extended,00000001
+
+[Cheats/Hyper CPU]
+// patch=1,EE,201ED324,extended,00000001
+
+[Cheats/Q-Nect CPU]
+// patch=1,EE,201ED328,extended,00000001
+
+[Cheats/Ultra CPU]
+// patch=1,EE,201ED32C,extended,00000001
+
+[Cheats/Sm Radar]
+// patch=1,EE,201ED334,extended,00000001
+
+[Cheats/Mid Radar]
+// patch=1,EE,201ED338,extended,00000001
+
+[Cheats/Big Radar]
+// patch=1,EE,201ED33C,extended,00000001
+
+[Cheats/Sea Radar]
+// patch=1,EE,201ED340,extended,00000001
+
+[Cheats/Sky Radar]
+// patch=1,EE,201ED344,extended,00000001
+
+[Cheats/MultiRadar]
+// patch=1,EE,201ED348,extended,00000001
+
+[Cheats/Multi High]
+// patch=1,EE,201ED34C,extended,00000001
+
+[Cheats/Armor-Off]
+// patch=1,EE,201ED354,extended,00000001
+
+[Cheats/Lg. Armor]
+// patch=1,EE,201ED358,extended,00000001
+
+[Cheats/Hvy. Armor]
+// patch=1,EE,201ED35C,extended,00000001
+
+[Cheats/Strg. Armor]
+// patch=1,EE,201ED360,extended,00000001
+
+[Cheats/SP Armor]
+// patch=1,EE,201ED364,extended,00000001
+
+[Cheats/SP Armor S]
+// patch=1,EE,201ED368,extended,00000001
+
+[Cheats/Heavy Wt.]
+// patch=1,EE,201ED36C,extended,00000001

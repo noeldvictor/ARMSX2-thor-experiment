@@ -1,0 +1,185 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shark Tale [SLUS-20925] [C5535BB8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Movies]
+// patch=1,EE,90289B1C,extended,0C0A7E97
+
+[Cheats/Infinite Money]
+// patch=1,EE,11FDC140,extended,0000FFFF
+// patch=1,EE,11FDB084,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,21FDC140,extended,05F5E0FF
+// patch=1,EE,21FDB084,extended,05F5E0FF
+
+[Cheats/Quick Fame Gain]
+// patch=1,EE,11FDC194,extended,0000FFFF
+
+[Cheats/Max Fame]
+// patch=1,EE,21FDC194,extended,05F5E0FF
+
+[Cheats/Enable Debug Menu (Press {L1}+{R2} To Open/Close)]
+// patch=1,EE,20334C0C,extended,00000001
+
+[Cheats/Occlusion Culling Always On]
+// patch=1,EE,203330F8,extended,00000001
+
+[Cheats/Occlusion Culling Always Off]
+// patch=1,EE,203330F8,extended,00000000
+
+[Cheats/Draw Occlusion Always On]
+// patch=1,EE,203330FC,extended,00000001
+
+[Cheats/Draw Occlusion Always Off]
+// patch=1,EE,203330FC,extended,00000000
+
+[Cheats/Stop Drawing-Particles Always On]
+// patch=1,EE,20333138,extended,00000001
+
+[Cheats/Stop Drawing-Particles Always Off]
+// patch=1,EE,20333138,extended,00000000
+
+[Cheats/Draw Partitions Always On]
+// patch=1,EE,20333190,extended,00000001
+
+[Cheats/Draw Partitions Always Off]
+// patch=1,EE,20333190,extended,00000000
+
+[Cheats/Distortion Wireframe Always On]
+// patch=1,EE,203331FC,extended,00000001
+
+[Cheats/Distortion Wireframe Always Off]
+// patch=1,EE,203331FC,extended,00000000
+
+[Cheats/Overhead View Always On]
+// patch=1,EE,20333248,extended,00000001
+
+[Cheats/Overhead View Always Off]
+// patch=1,EE,20333248,extended,00000000
+
+[Cheats/Free Memory Always On]
+// patch=1,EE,20333EB4,extended,00000001
+
+[Cheats/Free Memory Always Off]
+// patch=1,EE,20333EB4,extended,00000000
+
+[Cheats/Sound System State Always On]
+// patch=1,EE,20333EB8,extended,00000001
+
+[Cheats/Sound System State Always Off]
+// patch=1,EE,20333EB8,extended,00000000
+
+[Cheats/Instance Names Always On]
+// patch=1,EE,20333EBC,extended,00000001
+
+[Cheats/Instance Names Always Off]
+// patch=1,EE,20333EBC,extended,00000000
+
+[Cheats/Depth Complexity Always On]
+// patch=1,EE,2033470C,extended,00000001
+
+[Cheats/Depth Complexity Always Off]
+// patch=1,EE,2033470C,extended,00000000
+
+[Cheats/Draw Collision Cause Spheres Always On]
+// patch=1,EE,20334BF4,extended,00000001
+
+[Cheats/Draw Collision Cause Spheres Always Off]
+// patch=1,EE,20334BF4,extended,00000000
+
+[Cheats/Draw Collision Receive Spheres Always On]
+// patch=1,EE,20334BF8,extended,00000001
+
+[Cheats/Draw Collision Receive Spheres Always Off]
+// patch=1,EE,20334BF8,extended,00000000
+
+[Cheats/Draw Fog Always On]
+// patch=1,EE,20334BFC,extended,00000001
+
+[Cheats/Draw Fog Always Off]
+// patch=1,EE,20334BFC,extended,00000000
+
+[Cheats/Collide With World Always On]
+// patch=1,EE,20334C00,extended,00000001
+
+[Cheats/Collide With World Always Off]
+// patch=1,EE,20334C00,extended,00000000
+
+[Cheats/Draw Safe Frame Always On]
+// patch=1,EE,20334C08,extended,00000001
+
+[Cheats/Draw Safe Frame Always Off]
+// patch=1,EE,20334C08,extended,00000000
+
+[Cheats/Show Background Shader Always On]
+// patch=1,EE,20334C10,extended,00000001
+
+[Cheats/Show Background Shader Always Off]
+// patch=1,EE,20334C10,extended,00000000
+
+[Cheats/Show Newspaper Transitions Always On]
+// patch=1,EE,20334C14,extended,00000001
+
+[Cheats/Show Newspaper Transitions Always Off]
+// patch=1,EE,20334C14,extended,00000000
+
+[Cheats/Skip Moves Always On]
+// patch=1,EE,20334C18,extended,00000001
+
+[Cheats/Skip Moves Always Off]
+// patch=1,EE,20334C18,extended,00000000
+
+[Cheats/Mute PC Audio Always On]
+// patch=1,EE,20334C1C,extended,00000001
+
+[Cheats/Mute PC Audio Always Off]
+// patch=1,EE,20334C1C,extended,00000000
+
+[Cheats/Oscar Invincible Always On]
+// patch=1,EE,20334C20,extended,00000001
+
+[Cheats/Oscar Invincible Always Off]
+// patch=1,EE,20334C20,extended,00000000
+
+[Cheats/Show Skybox Always On]
+// patch=1,EE,20334C24,extended,00000001
+
+[Cheats/Show Skybox Always Off]
+// patch=1,EE,20334C24,extended,00000000
+
+[Cheats/Screen Position Info Always On]
+// patch=1,EE,20334C28,extended,00000001
+
+[Cheats/Screen Position Info Always Off]
+// patch=1,EE,20334C28,extended,00000000
+
+[Cheats/Oscar Super Speed Always On]
+// patch=1,EE,20334C2C,extended,00000001
+
+[Cheats/Oscar Super Speed Always Off]
+// patch=1,EE,20334C2C,extended,00000000
+
+[Cheats/Debug Pause Always On]
+// patch=1,EE,20334C30,extended,00000001
+
+[Cheats/Debug Pause Always Off]
+// patch=1,EE,20334C30,extended,00000000
+
+[Cheats/Particle Mem Msg Always Enabled]
+// patch=1,EE,20334C34,extended,00000001
+
+[Cheats/Particle Mem Msg Always Disabled]
+// patch=1,EE,20334C34,extended,00000000
+
+[Cheats/Draw Instance Bounds Always On]
+// patch=1,EE,20334C54,extended,00000001
+
+[Cheats/Draw Instance Bounds Always Off]
+// patch=1,EE,20334C54,extended,00000000
+
+[Cheats/Performance Metrics Always On]
+// patch=1,EE,2033A54C,extended,00000001
+
+[Cheats/Performance Metrics Always Off]
+// patch=1,EE,2033A54C,extended,00000000

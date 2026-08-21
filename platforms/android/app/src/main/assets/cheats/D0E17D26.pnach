@@ -1,0 +1,97 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: R-Type Final [SLPS-25247] [D0E17D26]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Extras Completed]
+// patch=1,EE,F0100008,extended,001223EF
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,102E6744,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,202E6744,extended,0098967F
+
+[Cheats/Infinite Credits]
+// patch=1,EE,202E6754,extended,00000063
+
+[Cheats/Infinite Lives]
+// patch=1,EE,202E6758,extended,00000009
+
+[Cheats/Extra Lives]
+// patch=1,EE,10182508,extended,00000001
+
+[Cheats/Unlock All Gallery]
+// patch=1,EE,202F354C,extended,FFFFFFFF
+
+[Cheats/Instant Beam High Charge]
+// patch=1,EE,20545790,extended,43480000
+
+[Cheats/Always Have Missles]
+// patch=1,EE,2054636C,extended,00000001
+
+[Cheats/Max Dose]
+// patch=1,EE,20546390,extended,45BB8000
+
+[Cheats/Invincible]
+// patch=1,EE,101C5036,extended,00001000
+// patch=1,EE,101C5E66,extended,00001000
+// patch=1,EE,101C5F86,extended,00001000
+// patch=1,EE,101C60BE,extended,00001000
+// patch=1,EE,101C6F2A,extended,00001000
+
+[Cheats/Invincible (Alternate)]
+// patch=1,EE,2030746C,extended,00000001
+
+[Cheats/Enter R Museum To Unlock All Ships]
+// patch=1,EE,2015CF7C,extended,90410000
+// patch=1,EE,2015CF80,extended,00230825
+// patch=1,EE,2015CF84,extended,A0410000
+// patch=1,EE,2015CF88,extended,24020000
+
+[Cheats/Max Total Play Time]
+// patch=1,EE,202F2C9C,extended,05F5E0FF
+
+[Cheats/Max Total Wave Cannon Energy Points]
+// patch=1,EE,202F2CF4,extended,05F5E0FF
+
+[Cheats/Max Special Weapon Usage Times]
+// patch=1,EE,202F2CF8,extended,0001869F
+
+[Cheats/Max Cleared Times]
+// patch=1,EE,202F2D50,extended,0000270F
+
+[Cheats/Max Launches Times]
+// patch=1,EE,202F2D58,extended,0001869F
+
+[Cheats/Max Current Win Streak]
+// patch=1,EE,202F2D00,extended,0000270F
+
+[Cheats/No Current Losing Streak]
+// patch=1,EE,202F2D04,extended,00000000
+
+[Cheats/Max Longest Win Streak]
+// patch=1,EE,202F2D08,extended,0000270F
+
+[Cheats/NO Longest Losing Streak]
+// patch=1,EE,202F2D0C,extended,00000000
+
+[Cheats/Max Record VS CPU W]
+// patch=1,EE,202F2D10,extended,0000270F
+
+[Cheats/No Record VS CPU L]
+// patch=1,EE,202F2D14,extended,00000000
+
+[Cheats/Max Record VS CPU %]
+// patch=1,EE,202F2D18,extended,0000270F
+
+[Cheats/Max Record VS Pilot W]
+// patch=1,EE,202F2D1C,extended,0000270F
+
+[Cheats/No Record VS Pilot L]
+// patch=1,EE,202F2D20,extended,00000000
+
+[Cheats/Max Record VS Pilot %]
+// patch=1,EE,202F2D24,extended,0000270F
+
+[Cheats/Max Perfect Wins]
+// patch=1,EE,202F2D28,extended,0000270F

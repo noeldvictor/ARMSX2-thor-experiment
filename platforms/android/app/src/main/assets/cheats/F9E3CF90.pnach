@@ -1,0 +1,66 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Half-Life [SLES-50505] [F9E3CF90]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Pictures]
+// patch=1,EE,902D1694,extended,0C0B917D
+
+[Cheats/Max Infinite Ammo Laser/Gauss]
+// patch=1,EE,201629EC,extended,240200FF
+// patch=1,EE,20174724,extended,240300FF
+// patch=1,EE,20174B8C,extended,240300FF
+
+[Cheats/Crossbow]
+// patch=1,EE,20155E9C,extended,00000000
+
+[Cheats/All Pistols]
+// patch=1,EE,2017A0D0,extended,00000000
+// patch=1,EE,201D3D20,extended,00000000
+
+[Cheats/Grenades]
+// patch=1,EE,20180F18,extended,00000000
+
+[Cheats/Hornet Gun]
+// patch=1,EE,2018F2F4,extended,00000000
+// patch=1,EE,2018FB24,extended,00000000
+
+[Cheats/Hand Gun 9MM]
+// patch=1,EE,201AA16C,extended,00000000
+
+[Cheats/Hand Grenades]
+// patch=1,EE,201AA8B8,extended,00000000
+
+[Cheats/RPG]
+// patch=1,EE,201D9278,extended,00000000
+
+[Cheats/Satchel Charge]
+// patch=1,EE,201DAB64,extended,00000000
+
+[Cheats/Shotgun]
+// patch=1,EE,201E3174,extended,00000000
+// patch=1,EE,201E3860,extended,00000000
+// patch=1,EE,201E42D8,extended,00000000
+
+[Cheats/Snark]
+// patch=1,EE,201EDF3C,extended,00000000
+
+[Cheats/Trip Mines]
+// patch=1,EE,2020260C,extended,00000000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2032F04C,extended,3F800000
+
+[Cheats/Invincibility]
+// patch=1,EE,2032F034,extended,3F800000
+
+[Cheats/Invisibility]
+// patch=1,EE,2032F064,extended,3F800000
+
+[Cheats/Slow Motion]
+// patch=1,EE,2032F07C,extended,3F800000
+
+[Cheats/Alien Mode]
+// patch=1,EE,2032F094,extended,3F800000
+
+[Cheats/Xen Gravity]
+// patch=1,EE,2032F01C,extended,3F800000

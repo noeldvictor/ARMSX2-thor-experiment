@@ -1,0 +1,90 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Super Bust-A-Move 2 [SLUS-20460] [3868B082]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Ceiling Never Closes In (Both Players)]
+// patch=1,EE,901E2F9C,extended,0C07DDC1
+// patch=1,EE,201501E0,extended,00000000
+
+[Cheats/Always Low Time (Puzzle Mode)]
+// patch=1,EE,2033E0D8,extended,00000000
+
+[Cheats/Always Have Guide Line (Puzzle Mode Only)]
+// patch=1,EE,1033E1D8,extended,00000001
+
+[Cheats/Always Have Guide Line (All Modes)]
+// patch=1,EE,10146AFE,extended,00001000
+// patch=1,EE,1033E1D8,extended,00000001
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,10350510,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,20350510,extended,05F5E0FF
+
+[Cheats/Infinite Time To Shoot Bubble Out P1]
+// patch=1,EE,10350538,extended,00000000
+
+[Cheats/Never Get Bubbles P1]
+// patch=1,EE,10360BB4,extended,00000000
+
+[Cheats/Always Get Bubbles P1]
+// patch=1,EE,10360BB4,extended,00000230
+
+[Cheats/P1 Needs 1 Win To Win]
+// patch=1,EE,D033E114,extended,00000000
+// patch=1,EE,1033E114,extended,00000001
+// patch=1,EE,D033E116,extended,00000000
+// patch=1,EE,1033E116,extended,00000001
+
+[Cheats/P1 Never Wins]
+// patch=1,EE,1033E114,extended,00000000
+// patch=1,EE,1033E116,extended,00000000
+
+[Cheats/Ceiling Never Closes In P1]
+// patch=1,EE,10470600,extended,00000000
+
+[Cheats/Ceiling Always Closes In P1]
+// patch=1,EE,D0470600,extended,00000000
+// patch=1,EE,10470600,extended,00000008
+
+[Cheats/P1 Press {L3} For Super Bubble]
+// patch=1,EE,D0627A02,extended,0000FFFD
+// patch=1,EE,103520E0,extended,00000020
+
+[Cheats/P1 Press {R3} For Bomb Bubble]
+// patch=1,EE,D0627A02,extended,0000FFFB
+// patch=1,EE,103520E0,extended,00000029
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,103DFB50,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,203DFB50,extended,05F5E0FF
+
+[Cheats/Infinite Time To Shoot Bubble Out P2]
+// patch=1,EE,103DFB78,extended,00000000
+
+[Cheats/Never Get Bubbles P2]
+// patch=1,EE,103F01F4,extended,00000000
+
+[Cheats/Always Get Bubbles P2]
+// patch=1,EE,103F01F4,extended,00000230
+
+[Cheats/Ceiling Never Closes In P2]
+// patch=1,EE,10507E50,extended,00000000
+
+[Cheats/Ceiling Always Closes In P2]
+// patch=1,EE,D0507E50,extended,00000000
+// patch=1,EE,10507E50,extended,00000008
+
+[Cheats/P2 Press {L3} For Super Bubble]
+// patch=1,EE,D0627C02,extended,0000FFFD
+// patch=1,EE,103E1720,extended,00000020
+
+[Cheats/P2 Press {R3} For Bomb Bubble]
+// patch=1,EE,D0627C02,extended,0000FFFB
+// patch=1,EE,103E1720,extended,00000029
+
+[Cheats/Infinite Time To Shoot Bubble Out (Both Players)]
+// patch=1,EE,20138AE4,extended,00000000

@@ -1,0 +1,89 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Digimon World 4 [SLUS-20836] [B871C1D0]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Brawl Types]
+// patch=1,EE,9011834C,extended,0C049C26
+
+[Cheats/Max Bits]
+// patch=1,EE,203D88B8,extended,00000000
+
+[Cheats/Max Data]
+// patch=1,EE,203D88F0,extended,00000000
+
+[Cheats/Max Skill Points]
+// patch=1,EE,203F84E4,extended,2411270F
+
+[Cheats/Max HP]
+// patch=1,EE,203FACA0,extended,00000000
+
+[Cheats/Max MP]
+// patch=1,EE,203FAD80,extended,00000000
+
+[Cheats/Max Strength]
+// patch=1,EE,203FAEC0,extended,00000000
+
+[Cheats/Max Defense]
+// patch=1,EE,203FAFA8,extended,00000000
+
+[Cheats/Max Wisdom]
+// patch=1,EE,203FB090,extended,00000000
+
+[Cheats/Max Spirit]
+// patch=1,EE,203FB178,extended,00000000
+
+[Cheats/Max Speed]
+// patch=1,EE,203FB2B0,extended,00000000
+
+[Cheats/Max Fire Resist]
+// patch=1,EE,203FB448,extended,00000000
+
+[Cheats/Max Ice Resist]
+// patch=1,EE,203FB5E0,extended,00000000
+
+[Cheats/Max Thunder Resist]
+// patch=1,EE,203FB778,extended,00000000
+
+[Cheats/Max Darkness Resist]
+// patch=1,EE,203FB910,extended,00000000
+
+[Cheats/View Status To Refill HP To Max]
+// patch=1,EE,200C0220,extended,3C170001
+// patch=1,EE,200C0224,extended,36F7869F
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,AC57000C
+// patch=1,EE,203D64C8,extended,0C030088
+
+[Cheats/View Status To Refill MP To Max]
+// patch=1,EE,200C0230,extended,3C1E0001
+// patch=1,EE,200C0234,extended,37DE869F
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,AC5E000C
+// patch=1,EE,203D653C,extended,0C03008C
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,200C0240,extended,50E00001
+// patch=1,EE,200C0244,extended,AC60000C
+// patch=1,EE,200C0248,extended,8C63000C
+// patch=1,EE,200C024C,extended,14600003
+// patch=1,EE,200C0250,extended,00000000
+// patch=1,EE,200C0254,extended,03E00008
+// patch=1,EE,200C0258,extended,00000000
+// patch=1,EE,200C025C,extended,08110FBE
+// patch=1,EE,200C0260,extended,00000000
+// patch=1,EE,20443CF4,extended,0C030090
+// patch=1,EE,20443CF8,extended,00000000
+
+[Cheats/Hiting Some Enemies Refills Your HP]
+// patch=1,EE,203FF7D4,extended,3C010001
+// patch=1,EE,203FF7D8,extended,3421869F
+// patch=1,EE,203FF7DC,extended,AC41000C
+
+[Cheats/Infinite Item Usage]
+// patch=1,EE,203CF744,extended,00000000
+
+[Cheats/Max Infinite Items]
+// patch=1,EE,203CF740,extended,24030063
+
+[Cheats/Extra Items]
+// patch=1,EE,103CF740,extended,00000001

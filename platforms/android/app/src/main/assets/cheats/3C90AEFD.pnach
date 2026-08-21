@@ -1,0 +1,42 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Castle Shikigami 2 [SLUS-20962] [3C90AEFD]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Start With Max Gems]
+// patch=1,EE,9020CDBC,extended,0C089003
+
+[Cheats/Infinite Credits]
+// patch=1,EE,202A3010,extended,00000063
+
+[Cheats/Extra Credits]
+// patch=1,EE,10169B50,extended,00000001
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,102C0950,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,202C0950,extended,05F5E0FF
+
+[Cheats/Infinite Bombs (Both Players)]
+// patch=1,EE,2012C998,extended,00000000
+
+[Cheats/Infinite Boss Time]
+// patch=1,EE,20154478,extended,00000000
+
+[Cheats/Infinite Life P1]
+// patch=1,EE,202C0824,extended,00000003
+
+[Cheats/Infinite Bombs P1]
+// patch=1,EE,102C083A,extended,00000003
+
+[Cheats/Max Action Time P1]
+// patch=1,EE,202C0984,extended,0000C350
+
+[Cheats/Infinite Life P2]
+// patch=1,EE,202C08C0,extended,00000003
+
+[Cheats/Infinite Bombs P2]
+// patch=1,EE,102C08D6,extended,00000003
+
+[Cheats/Max Action Time P2]
+// patch=1,EE,202C0988,extended,0000C350

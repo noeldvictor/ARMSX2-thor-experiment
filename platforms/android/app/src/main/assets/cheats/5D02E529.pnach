@@ -1,0 +1,125 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Finding Nemo [SLES-51871] [5D02E529]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max High Score]
+// patch=1,EE,9027D37C,extended,0C0A3D15
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,1043493C,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,2043493C,extended,05F5E0FF
+
+[Cheats/Infinite Health]
+// patch=1,EE,00434940,extended,00000001
+
+[Cheats/Invincible]
+// patch=1,EE,20441A04,extended,42C80000
+
+[Cheats/Field Trip]
+// patch=1,EE,00438CB6,extended,000000FF
+// patch=1,EE,20438CB0,extended,05F5E0FF
+// patch=1,EE,10438CB4,extended,0000FFFF
+// patch=1,EE,10438D8C,extended,0000FFFF
+
+[Cheats/The Drop Off]
+// patch=1,EE,00438CC2,extended,000000FF
+// patch=1,EE,20438CBC,extended,05F5E0FF
+// patch=1,EE,10438CC0,extended,0000FFFF
+// patch=1,EE,10438D98,extended,0000FFFF
+
+[Cheats/Mask Chase]
+// patch=1,EE,00438CCE,extended,000000FF
+// patch=1,EE,20438CC8,extended,05F5E0FF
+// patch=1,EE,10438CCC,extended,0000FFFF
+// patch=1,EE,10438DA4,extended,0000FFFF
+
+[Cheats/Catch Dory]
+// patch=1,EE,00438CDA,extended,000000FF
+// patch=1,EE,20438CD4,extended,05F5E0FF
+// patch=1,EE,10438CD8,extended,0000FFFF
+// patch=1,EE,10438DB0,extended,0000FFFF
+
+[Cheats/Minefield]
+// patch=1,EE,00438CE6,extended,000000FF
+// patch=1,EE,20438CE0,extended,05F5E0FF
+// patch=1,EE,10438CE4,extended,0000FFFF
+// patch=1,EE,10438DBC,extended,0000FFFF
+
+[Cheats/Submarine]
+// patch=1,EE,00438CF2,extended,000000FF
+// patch=1,EE,20438CEC,extended,05F5E0FF
+// patch=1,EE,10438CF0,extended,0000FFFF
+// patch=1,EE,10438DC8,extended,0000FFFF
+
+[Cheats/Hide And Seek]
+// patch=1,EE,00438CFE,extended,000000FF
+// patch=1,EE,20438CF8,extended,05F5E0FF
+// patch=1,EE,10438CFC,extended,0000FFFF
+// patch=1,EE,10438DD4,extended,0000FFFF
+
+[Cheats/Mask Search]
+// patch=1,EE,00438D0A,extended,000000FF
+// patch=1,EE,20438D04,extended,05F5E0FF
+// patch=1,EE,10438D08,extended,0000FFFF
+// patch=1,EE,10438DE0,extended,0000FFFF
+
+[Cheats/Anglerish Chase]
+// patch=1,EE,00438D16,extended,000000FF
+// patch=1,EE,20438D10,extended,05F5E0FF
+// patch=1,EE,10438D14,extended,0000FFFF
+// patch=1,EE,10438DEC,extended,0000FFFF
+
+[Cheats/Mount Wannahockaloogie]
+// patch=1,EE,00438D22,extended,000000FF
+// patch=1,EE,20438D1C,extended,05F5E0FF
+// patch=1,EE,10438D20,extended,0000FFFF
+// patch=1,EE,10438DF8,extended,0000FFFF
+
+[Cheats/Jellyfish Race]
+// patch=1,EE,00438D2E,extended,000000FF
+// patch=1,EE,20438D28,extended,05F5E0FF
+// patch=1,EE,10438D2C,extended,0000FFFF
+// patch=1,EE,10438E04,extended,0000FFFF
+
+[Cheats/Training With Gill]
+// patch=1,EE,00438D3A,extended,000000FF
+// patch=1,EE,20438D34,extended,05F5E0FF
+// patch=1,EE,10438D38,extended,0000FFFF
+// patch=1,EE,10438E10,extended,0000FFFF
+
+[Cheats/East Australian Current]
+// patch=1,EE,00438D46,extended,000000FF
+// patch=1,EE,20438D40,extended,05F5E0FF
+// patch=1,EE,10438D44,extended,0000FFFF
+// patch=1,EE,10438E1C,extended,0000FFFF
+
+[Cheats/The Plan]
+// patch=1,EE,00438D52,extended,000000FF
+// patch=1,EE,20438D4C,extended,05F5E0FF
+// patch=1,EE,10438D50,extended,0000FFFF
+// patch=1,EE,10438E28,extended,0000FFFF
+
+[Cheats/Whale Chase]
+// patch=1,EE,00438D5E,extended,000000FF
+// patch=1,EE,20438D58,extended,05F5E0FF
+// patch=1,EE,10438D5C,extended,0000FFFF
+// patch=1,EE,10438E34,extended,0000FFFF
+
+[Cheats/Treatment Plant]
+// patch=1,EE,00438D6A,extended,000000FF
+// patch=1,EE,20438D64,extended,05F5E0FF
+// patch=1,EE,10438D68,extended,0000FFFF
+// patch=1,EE,10438E40,extended,0000FFFF
+
+[Cheats/Fishing Net Rescue]
+// patch=1,EE,00438D76,extended,000000FF
+// patch=1,EE,20438D70,extended,05F5E0FF
+// patch=1,EE,10438D74,extended,0000FFFF
+// patch=1,EE,10438E4C,extended,0000FFFF
+
+[Cheats/Going To School]
+// patch=1,EE,20438CA4,extended,05F5E0FF
+// patch=1,EE,10438CA8,extended,0000FFFF
+// patch=1,EE,10438D80,extended,0000FFFF

@@ -1,0 +1,136 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Eragon [SLUS-21322] [7E3C6FDE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Hyk 100]
+// patch=1,EE,90117668,extended,00832021
+// patch=1,EE,200C0278,extended,03E00008
+// patch=1,EE,200C027C,extended,8CC70530
+// patch=1,EE,2029FDC0,extended,0C030088
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,24010BB8
+// patch=1,EE,200C0224,extended,ACC10530
+
+[Cheats/Max Health]
+// patch=1,EE,200C0228,extended,24010BB8
+// patch=1,EE,200C022C,extended,ACC10534
+
+[Cheats/Infinite Magic Energy]
+// patch=1,EE,200C0230,extended,24010BB8
+// patch=1,EE,200C0234,extended,ACC10550
+
+[Cheats/Max Magic Energy]
+// patch=1,EE,200C0238,extended,24010BB8
+// patch=1,EE,200C023C,extended,ACC10554
+
+[Cheats/Max Team Meter]
+// patch=1,EE,200C0240,extended,3C013F80
+// patch=1,EE,200C0244,extended,ACC10560
+
+[Cheats/Unlock All Unlockables]
+// patch=1,EE,203AB9C0,extended,FFFFFFFF
+
+[Cheats/Have All Unlockables Viewed]
+// patch=1,EE,203AB9C4,extended,FFFFFFFF
+
+[Cheats/The Spin Mountains]
+// patch=1,EE,003AA3C4,extended,00000001
+// patch=1,EE,003AA3CC,extended,00000001
+// patch=1,EE,003AA3CD,extended,00000001
+// patch=1,EE,003AA3D4,extended,00000002
+
+[Cheats/Carvahall]
+// patch=1,EE,003AA444,extended,00000001
+// patch=1,EE,003AA44C,extended,00000001
+// patch=1,EE,003AA44D,extended,00000001
+// patch=1,EE,003AA454,extended,00000002
+
+[Cheats/Daret Docks]
+// patch=1,EE,003AA4C4,extended,00000001
+// patch=1,EE,003AA4CC,extended,00000001
+// patch=1,EE,003AA4CD,extended,00000001
+// patch=1,EE,003AA4D4,extended,00000002
+
+[Cheats/Daret Town]
+// patch=1,EE,003AA544,extended,00000001
+// patch=1,EE,003AA54C,extended,00000001
+// patch=1,EE,003AA54D,extended,00000001
+// patch=1,EE,003AA554,extended,00000002
+
+[Cheats/Daret Bridge]
+// patch=1,EE,003AA5C4,extended,00000001
+// patch=1,EE,003AA5CC,extended,00000001
+// patch=1,EE,003AA5CD,extended,00000001
+// patch=1,EE,003AA5D4,extended,00000002
+
+[Cheats/Ra'Zac Chase]
+// patch=1,EE,003AA644,extended,00000001
+// patch=1,EE,003AA64C,extended,00000001
+// patch=1,EE,003AA64D,extended,00000001
+// patch=1,EE,003AA654,extended,00000002
+
+[Cheats/Trapped!]
+// patch=1,EE,003AA6C4,extended,00000001
+// patch=1,EE,003AA6CC,extended,00000001
+// patch=1,EE,003AA6CD,extended,00000001
+// patch=1,EE,003AA6D4,extended,00000002
+
+[Cheats/Gil'Ead City]
+// patch=1,EE,003AA744,extended,00000001
+// patch=1,EE,003AA74C,extended,00000001
+// patch=1,EE,003AA74D,extended,00000001
+// patch=1,EE,003AA754,extended,00000002
+
+[Cheats/Gil'Ead Keep]
+// patch=1,EE,003AA7C4,extended,00000001
+// patch=1,EE,003AA7CC,extended,00000001
+// patch=1,EE,003AA7CD,extended,00000001
+// patch=1,EE,003AA7D4,extended,00000002
+
+[Cheats/Durza's Fortress]
+// patch=1,EE,003AA844,extended,00000001
+// patch=1,EE,003AA84C,extended,00000001
+// patch=1,EE,003AA84D,extended,00000001
+// patch=1,EE,003AA854,extended,00000002
+
+[Cheats/The Beor Mountains]
+// patch=1,EE,003AA8C4,extended,00000001
+// patch=1,EE,003AA8CC,extended,00000001
+// patch=1,EE,003AA8CD,extended,00000001
+// patch=1,EE,003AA8D4,extended,00000002
+
+[Cheats/Urgal Encampment]
+// patch=1,EE,003AA944,extended,00000001
+// patch=1,EE,003AA94C,extended,00000001
+// patch=1,EE,003AA94D,extended,00000001
+// patch=1,EE,003AA954,extended,00000002
+
+[Cheats/Misty Gorge]
+// patch=1,EE,003AA9C4,extended,00000001
+// patch=1,EE,003AA9CC,extended,00000001
+// patch=1,EE,003AA9CD,extended,00000001
+// patch=1,EE,003AA9D4,extended,00000002
+
+[Cheats/Urgal Attack!]
+// patch=1,EE,003AAAC4,extended,00000001
+// patch=1,EE,003AAACC,extended,00000001
+// patch=1,EE,003AAACD,extended,00000001
+// patch=1,EE,003AAAD4,extended,00000002
+
+[Cheats/Defend The Varden]
+// patch=1,EE,003AABC4,extended,00000001
+// patch=1,EE,003AABCC,extended,00000001
+// patch=1,EE,003AABCD,extended,00000001
+// patch=1,EE,003AABD4,extended,00000002
+
+[Cheats/Final Battle]
+// patch=1,EE,003AACC4,extended,00000001
+// patch=1,EE,003AACCC,extended,00000001
+// patch=1,EE,003AACCD,extended,00000001
+// patch=1,EE,003AACD4,extended,00000002
+
+[Cheats/The Throne Room]
+// patch=1,EE,003AAD44,extended,00000001
+// patch=1,EE,003AAD4C,extended,00000001
+// patch=1,EE,003AAD54,extended,00000002

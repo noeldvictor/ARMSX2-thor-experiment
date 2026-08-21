@@ -1,0 +1,41 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Warship Gunner 2 [SLUS-21387] [701965CE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Time]
+// patch=1,EE,902754F8,extended,00832021
+
+[Cheats/Infinite HP]
+// patch=1,EE,201223AC,extended,8DEE0038
+// patch=1,EE,201223B0,extended,ADEE0034
+
+[Cheats/Infinite Ammo (All Weapons)]
+// patch=1,EE,2015C8A4,extended,00000000
+
+[Cheats/Infinite Repairs Remaining]
+// patch=1,EE,002AFC7E,extended,00000063
+
+[Cheats/Weapon 1]
+// patch=1,EE,202C381C,extended,0001869F
+
+[Cheats/Weapon 2]
+// patch=1,EE,202C3820,extended,0001869F
+
+[Cheats/Weapon 3]
+// patch=1,EE,202C3824,extended,0001869F
+
+[Cheats/Weapon 4]
+// patch=1,EE,202C3828,extended,0001869F
+
+[Cheats/Weapon 5]
+// patch=1,EE,202C382C,extended,0001869F
+
+[Cheats/Weapon 6]
+// patch=1,EE,202C3830,extended,0001869F
+
+[Cheats/Weapon 7]
+// patch=1,EE,202C3834,extended,0001869F
+
+[Cheats/All Weapons]
+// patch=1,EE,402C381C,extended,00070001
+// patch=1,EE,0001869F,extended,00000000

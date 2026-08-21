@@ -1,0 +1,355 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Need For Speed Underground 2 [SLUS-21065] [F5C7B45F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Stages]
+// patch=1,EE,9042C81C,extended,0C1100EB
+
+[Cheats/Infinite Nitrous Usage]
+// patch=1,EE,2030A6AC,extended,00000000
+
+[Cheats/Max Infinite Nitro]
+// patch=1,EE,2030A374,extended,2403270F
+// patch=1,EE,2030A378,extended,AE030334
+// patch=1,EE,1030A3CE,extended,00001000
+// patch=1,EE,2030A6F4,extended,2403270F
+// patch=1,EE,2030A6FC,extended,AE03042C
+
+[Cheats/Quick Bank Gain]
+// patch=1,EE,104F9A64,extended,0000FFFF
+
+[Cheats/Max Bank]
+// patch=1,EE,204F9A64,extended,05F5E0FF
+
+[Cheats/Quick Max Bank Gain]
+// patch=1,EE,2026E3D0,extended,3C0205F5
+// patch=1,EE,2026E3D4,extended,3442E0FF
+
+[Cheats/Max Races Entered]
+// patch=1,EE,204FB060,extended,000003E7
+
+[Cheats/No Races Entered]
+// patch=1,EE,204FB060,extended,00000000
+
+[Cheats/Max Total Spent On Car]
+// patch=1,EE,20501A88,extended,05F5E0FF
+
+[Cheats/View Event To Have Event Completed (World Map)]
+// patch=1,EE,201EDBF0,extended,24020001
+// patch=1,EE,201EDBF4,extended,AE62001C
+
+[Cheats/Story Races Always Won]
+// patch=1,EE,2026C958,extended,03E00008
+// patch=1,EE,2026C95C,extended,24020001
+
+[Cheats/Drive Thru Cars/Walls]
+// patch=1,EE,2030D828,extended,03E00008
+// patch=1,EE,2030D82C,extended,24020000
+
+[Cheats/Idiot AI-Normal Traffic]
+// patch=1,EE,2056C04C,extended,00000000
+
+[Cheats/P1 Press {L1}+Right To Enable Idiot AI-Normal Traffic]
+// patch=1,EE,D052D502,extended,0000FBDF
+// patch=1,EE,2056C04C,extended,00000000
+
+[Cheats/P1 Press {L1}+Left To Enable Idiot AI-Normal Traffic]
+// patch=1,EE,D052D502,extended,0000FB7F
+// patch=1,EE,2056C04C,extended,41C4B127
+
+[Cheats/Idiot AI-Racers]
+// patch=1,EE,20121B10,extended,03E00008
+// patch=1,EE,20121B14,extended,00000000
+
+[Cheats/P1 Press {L1}+Up To Enable Idiot AI-Racers]
+// patch=1,EE,E002FBEF,extended,0052D502
+// patch=1,EE,20121B10,extended,03E00008
+// patch=1,EE,20121B14,extended,00000000
+
+[Cheats/P1 Press {L1}+Down To Enable Idiot AI-Racers]
+// patch=1,EE,E002FBBF,extended,0052D502
+// patch=1,EE,20121B10,extended,27BDFF70
+// patch=1,EE,20121B14,extended,FFB20020
+
+[Cheats/Unlock All Quick Race Tracks]
+// patch=1,EE,20266078,extended,24020002
+// patch=1,EE,2026607C,extended,03E00008
+// patch=1,EE,20266080,extended,A0820002
+
+[Cheats/Access All Cars]
+// patch=1,EE,20274550,extended,03E00008
+// patch=1,EE,20274554,extended,24020001
+
+[Cheats/Access All Customize Parts (Not Saveable/Non Career)]
+// patch=1,EE,202F01F8,extended,03E00008
+// patch=1,EE,202F01FC,extended,24020001
+
+[Cheats/GTA 1 Mode (Overhead Camera)]
+// patch=1,EE,2056C2FC,extended,42340000
+
+[Cheats/P1 Press {L1}+{SELECT} For Hyper Mode]
+// patch=1,EE,D052D502,extended,0000FBFE
+// patch=1,EE,2056C11C,extended,46000000
+
+[Cheats/P1 Press {L2}+{SELECT} For Slow Motion]
+// patch=1,EE,D052D502,extended,0000FEFE
+// patch=1,EE,2056C11C,extended,30000000
+
+[Cheats/P1 Press {L1}+{L2} For Normal Speed Mode]
+// patch=1,EE,D052D502,extended,0000FAFF
+// patch=1,EE,2056C11C,extended,365FB23B
+
+[Cheats/Stage 1]
+// patch=1,EE,204F9DF0,extended,4CBEBC20
+// patch=1,EE,204F9DF4,extended,00000001
+
+[Cheats/Stage 2]
+// patch=1,EE,204F9EF4,extended,4CBEBC20
+// patch=1,EE,204F9EF8,extended,00000001
+
+[Cheats/Stage 3]
+// patch=1,EE,204F9FF8,extended,4CBEBC20
+// patch=1,EE,204F9FFC,extended,00000001
+
+[Cheats/Stage 4]
+// patch=1,EE,204FA0FC,extended,4CBEBC20
+// patch=1,EE,204FA100,extended,00000001
+
+[Cheats/Stage 5]
+// patch=1,EE,204FA200,extended,4CBEBC20
+// patch=1,EE,204FA204,extended,00000001
+
+[Cheats/10 Laps]
+// patch=1,EE,20548620,extended,0000000A
+
+[Cheats/9 Laps]
+// patch=1,EE,20548620,extended,00000009
+
+[Cheats/8 Laps]
+// patch=1,EE,20548620,extended,00000008
+
+[Cheats/7 Laps]
+// patch=1,EE,20548620,extended,00000007
+
+[Cheats/6 Laps]
+// patch=1,EE,20548620,extended,00000006
+
+[Cheats/5 Laps]
+// patch=1,EE,20548620,extended,00000005
+
+[Cheats/4 Laps]
+// patch=1,EE,20548620,extended,00000004
+
+[Cheats/3 Laps]
+// patch=1,EE,20548620,extended,00000003
+
+[Cheats/2 Laps]
+// patch=1,EE,20548620,extended,00000002
+
+[Cheats/1 Lap]
+// patch=1,EE,20548620,extended,00000001
+
+[Cheats/Have All Body Parts/Interiors/Car Specialties Owned]
+// patch=1,EE,200C0220,extended,24010001
+// patch=1,EE,200C0224,extended,00611804
+// patch=1,EE,200C0228,extended,8C410000
+// patch=1,EE,200C022C,extended,00230825
+// patch=1,EE,200C0230,extended,0809E9F8
+// patch=1,EE,200C0234,extended,AC410000
+// patch=1,EE,2027A7D0,extended,08030088
+
+[Cheats/Own All Performance Parts]
+// patch=1,EE,20501828,extended,FFFFFFFF
+// patch=1,EE,2050182C,extended,FFFFFFFF
+
+[Cheats/Rear Seats]
+// patch=1,EE,70501828,extended,00000001
+
+[Cheats/Interior Panels]
+// patch=1,EE,70501828,extended,00000002
+
+[Cheats/Lightweight Windows]
+// patch=1,EE,70501828,extended,00000004
+
+[Cheats/Lightweight Seats]
+// patch=1,EE,70501828,extended,00000008
+
+[Cheats/Lightweight Doors]
+// patch=1,EE,70501828,extended,00000010
+
+[Cheats/Foam Filled Interior]
+// patch=1,EE,70501828,extended,00000020
+
+[Cheats/All Reduction Parts]
+// patch=1,EE,70501828,extended,0000003F
+
+[Cheats/Short Throw Shift Kit]
+// patch=1,EE,70501828,extended,00000040
+
+[Cheats/Lightweight Flywheel]
+// patch=1,EE,70501828,extended,00000080
+
+[Cheats/Differntial]
+// patch=1,EE,70501829,extended,00000001
+
+[Cheats/Limited Slip Differential]
+// patch=1,EE,70501829,extended,00000002
+
+[Cheats/High Performance Clutch]
+// patch=1,EE,70501829,extended,00000004
+
+[Cheats/6 Speed Transmission]
+// patch=1,EE,70501829,extended,00000008
+
+[Cheats/All Transmissions]
+// patch=1,EE,70501828,extended,00100FC0
+
+[Cheats/Dry Shot Of Notrious Oxide]
+// patch=1,EE,70501829,extended,00000010
+
+[Cheats/Wet Shot Of Notrious Oxide]
+// patch=1,EE,70501829,extended,00000020
+
+[Cheats/Direct Port Nitrious Oxide]
+// patch=1,EE,70501829,extended,00000040
+
+[Cheats/All Nitrous Oxides]
+// patch=1,EE,70501829,extended,00000070
+
+[Cheats/Performance Exhaust]
+// patch=1,EE,70501829,extended,00000080
+
+[Cheats/Cold Air Intake System]
+// patch=1,EE,7050182A,extended,00000001
+
+[Cheats/Replace Headers]
+// patch=1,EE,7050182A,extended,00000002
+
+[Cheats/Mild Camshaft & Cam Gears]
+// patch=1,EE,7050182A,extended,00000004
+
+[Cheats/Cat Back Exhaust System]
+// patch=1,EE,7050182A,extended,00000008
+
+[Cheats/High Flow Intake Manifold]
+// patch=1,EE,7050182A,extended,00000010
+
+[Cheats/Larger Diameter Downpipe]
+// patch=1,EE,7050182A,extended,00000020
+
+[Cheats/Racing Camshaft And Gears]
+// patch=1,EE,7050182A,extended,00000040
+
+[Cheats/Port And Polish Heads]
+// patch=1,EE,7050182A,extended,00000080
+
+[Cheats/Blueprint The Block]
+// patch=1,EE,7050182B,extended,00000001
+
+[Cheats/High Flow Headers]
+// patch=1,EE,7050182B,extended,00000002
+
+[Cheats/All Engines]
+// patch=1,EE,70501829,extended,00000080
+// patch=1,EE,7050182A,extended,001003FF
+
+[Cheats/Stage 1 Turbo Kit]
+// patch=1,EE,7050182B,extended,00000004
+
+[Cheats/Stage 2 Turbo Kit]
+// patch=1,EE,7050182B,extended,00000008
+
+[Cheats/Stage 3 Turbo Kit]
+// patch=1,EE,7050182B,extended,00000010
+
+[Cheats/All Turbos]
+// patch=1,EE,7050182B,extended,0000001C
+
+[Cheats/Sport Springs And Shocks]
+// patch=1,EE,7050182B,extended,00000020
+
+[Cheats/Strut Tower Bar]
+// patch=1,EE,7050182B,extended,00000040
+
+[Cheats/Performance Springs And Shocks]
+// patch=1,EE,7050182B,extended,00000080
+
+[Cheats/Front And Rear Sway Bars]
+// patch=1,EE,7050182C,extended,00000001
+
+[Cheats/Coil Over Suspension System]
+// patch=1,EE,7050182C,extended,00000008
+
+[Cheats/Adjustable Camber Plates]
+// patch=1,EE,7050182C,extended,00000010
+
+[Cheats/Large Diameter Sway Bars]
+// patch=1,EE,7050182C,extended,00000020
+
+[Cheats/All Suspensions]
+// patch=1,EE,7050182B,extended,000000E0
+// patch=1,EE,7050182C,extended,00000039
+
+[Cheats/Street Compound Brake Pads]
+// patch=1,EE,7050182C,extended,00000040
+
+[Cheats/Steel Braided Brake Lines]
+// patch=1,EE,7050182C,extended,00000080
+
+[Cheats/Cross Drilled Rotors]
+// patch=1,EE,7050182D,extended,00000001
+
+[Cheats/Large Diameter Rotors]
+// patch=1,EE,7050182D,extended,00000002
+
+[Cheats/Race Compound Brake Pads]
+// patch=1,EE,7050182D,extended,00000004
+
+[Cheats/Cross Drilled And Slotted Rotors]
+// patch=1,EE,7050182D,extended,00000008
+
+[Cheats/6 Piston Racing Calipers]
+// patch=1,EE,7050182D,extended,00000010
+
+[Cheats/All Brakes]
+// patch=1,EE,7050182C,extended,00101FC0
+
+[Cheats/Top Speed Limiter]
+// patch=1,EE,7050182D,extended,00000020
+
+[Cheats/Performance Chip]
+// patch=1,EE,7050182D,extended,00000040
+
+[Cheats/High Flow Fuel Pump]
+// patch=1,EE,7050182D,extended,00000080
+
+[Cheats/Fuel Pressure Regulator]
+// patch=1,EE,7050182E,extended,00000001
+
+[Cheats/Fuel Rail]
+// patch=1,EE,7050182E,extended,00000002
+
+[Cheats/Fuel Filter]
+// patch=1,EE,7050182E,extended,00000004
+
+[Cheats/Engine Management Unit]
+// patch=1,EE,7050182E,extended,00000008
+
+[Cheats/Fuel Injectors]
+// patch=1,EE,7050182E,extended,00000010
+
+[Cheats/All ECU's]
+// patch=1,EE,7050182D,extended,000000E0
+// patch=1,EE,7050182E,extended,0000001F
+
+[Cheats/Street Performance Tires]
+// patch=1,EE,7050182E,extended,00000020
+
+[Cheats/Pro Performance Tires]
+// patch=1,EE,7050182E,extended,00000040
+
+[Cheats/Extreme Performance Tires]
+// patch=1,EE,7050182E,extended,00000080
+
+[Cheats/All Tires]
+// patch=1,EE,7050182E,extended,000000E0

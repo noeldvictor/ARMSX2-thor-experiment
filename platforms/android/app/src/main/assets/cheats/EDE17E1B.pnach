@@ -1,0 +1,207 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rise Of The Kasai [SCUS-97416] [EDE17E1B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Enemy Troops]
+// patch=1,EE,90355AC0,extended,00832021
+
+[Cheats/Infinite Health]
+// patch=1,EE,20241F20,extended,C600044C
+// patch=1,EE,20241F28,extended,E6000448
+// patch=1,EE,20241F64,extended,C460044C
+// patch=1,EE,20241F6C,extended,E4600448
+
+[Cheats/Disable FMV]
+// patch=1,EE,20359048,extended,24020001
+
+[Cheats/Idiot AI]
+// patch=1,EE,2020D808,extended,03E00008
+// patch=1,EE,2020D80C,extended,00000000
+
+[Cheats/Infinite Arrows]
+// patch=1,EE,20190638,extended,00000000
+
+[Cheats/Max Infinite Arrows]
+// patch=1,EE,20190634,extended,24020063
+
+[Cheats/Extra Arrows]
+// patch=1,EE,10190634,extended,00000001
+
+[Cheats/P1 Press {L1}+{SELECT} To Enable Walk Thru Walls]
+// patch=1,EE,E002FBFE,extended,01D34542
+// patch=1,EE,2014F7A8,extended,03E00008
+// patch=1,EE,2014F7AC,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Disable Walk Thru Walls]
+// patch=1,EE,E002FEFE,extended,01D34542
+// patch=1,EE,2014F7A8,extended,27BDFFC0
+// patch=1,EE,2014F7AC,extended,7FB00030
+
+[Cheats/Disable Weapon Wall Collisions]
+// patch=1,EE,20150D38,extended,03E00008
+// patch=1,EE,20150D3C,extended,00000000
+
+[Cheats/Disable Wall Collisions]
+// patch=1,EE,20151820,extended,03E00008
+// patch=1,EE,20151824,extended,00000000
+
+[Cheats/AI Can�t See/Sense/Hear You]
+// patch=1,EE,2023A0A8,extended,03E00008
+// patch=1,EE,2023A0AC,extended,00000000
+
+[Cheats/AI Can't See You]
+// patch=1,EE,201EA428,extended,00000000
+
+[Cheats/AI Can�t Sense You]
+// patch=1,EE,2023A148,extended,03E00008
+// patch=1,EE,2023A14C,extended,00000000
+
+[Cheats/AI Can�t Hear You]
+// patch=1,EE,2023A168,extended,03E00008
+// patch=1,EE,2023A16C,extended,00000000
+
+[Cheats/Birds Don�t Runaway]
+// patch=1,EE,2010EBF0,extended,03E00008
+// patch=1,EE,2010EBF4,extended,00000000
+
+[Cheats/P1 Press {L1}+Up To Enable Lighting]
+// patch=1,EE,D1D34542,extended,0000FBEF
+// patch=1,EE,003FDC60,extended,00000001
+
+[Cheats/P1 Press {L1}+Down To Disable Lighting]
+// patch=1,EE,D1D34542,extended,0000FBBF
+// patch=1,EE,003FDC60,extended,00000000
+
+[Cheats/P1 Press {L1}+Right To Display Prev Anim Info]
+// patch=1,EE,D1D34542,extended,0000FBDF
+// patch=1,EE,003FDDC0,extended,00000001
+
+[Cheats/P1 Press {L1}+Left To Hide Prev Anim Info]
+// patch=1,EE,D1D34542,extended,0000FB7F
+// patch=1,EE,003FDDC0,extended,00000000
+
+[Cheats/P1 Press {L2}+Up To Display Debug Info]
+// patch=1,EE,D1D34542,extended,0000FEEF
+// patch=1,EE,003FDDCC,extended,00000001
+
+[Cheats/P1 Press {L2}+Down To Hide Debug Info]
+// patch=1,EE,D1D34542,extended,0000FEBF
+// patch=1,EE,003FDDCC,extended,00000000
+
+[Cheats/P1 Press {L2}+Right To Display Player Debug Info]
+// patch=1,EE,D1D34542,extended,0000FEDF
+// patch=1,EE,003FDDCE,extended,00000001
+
+[Cheats/P1 Press {L2}+Right To Hide Player Debug Info]
+// patch=1,EE,D1D34542,extended,0000FE7F
+// patch=1,EE,003FDDCE,extended,00000000
+
+[Cheats/P1 Press {R1}+Up To Display NPC Info]
+// patch=1,EE,D1D34542,extended,0000F7EF
+// patch=1,EE,003FDDD3,extended,00000001
+
+[Cheats/P1 Press {R1}+Down To Hide NPC Info]
+// patch=1,EE,D1D34542,extended,0000F7BF
+// patch=1,EE,003FDDD3,extended,00000000
+
+[Cheats/P1 Press {R1}+Right To Display Pad Info]
+// patch=1,EE,D1D34542,extended,0000F7DF
+// patch=1,EE,003FDDD4,extended,00000001
+
+[Cheats/P1 Press {R1}+Left To Hide Pad Info]
+// patch=1,EE,D1D34542,extended,0000F77F
+// patch=1,EE,003FDDD4,extended,00000000
+
+[Cheats/P1 Press {R2}+Up To Display Death Info]
+// patch=1,EE,D1D34542,extended,0000FDEF
+// patch=1,EE,003FDDD8,extended,00000001
+
+[Cheats/P1 Press {R2}+Down To Hide Death Info]
+// patch=1,EE,D1D34542,extended,0000FDBF
+// patch=1,EE,003FDDD8,extended,00000000
+
+[Cheats/P1 Press {R2}+Right To Display Death Info 2]
+// patch=1,EE,D1D34542,extended,0000FDDF
+// patch=1,EE,003FDDD9,extended,00000001
+
+[Cheats/P1 Press {R2}+Left To Hide Death Info 2]
+// patch=1,EE,D1D34542,extended,0000FD7F
+// patch=1,EE,003FDDD9,extended,00000000
+
+[Cheats/Disable AI]
+// patch=1,EE,003FDDDE,extended,00000000
+// patch=1,EE,003FDDE0,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Enable Flying Mode]
+// patch=1,EE,D1D34542,extended,0000FBFE
+// patch=1,EE,003FDDE5,extended,00000001
+
+[Cheats/P1 Press {L2}+{SELECT} To Disable Flying Mode]
+// patch=1,EE,D1D34542,extended,0000FEFE
+// patch=1,EE,003FDDE5,extended,00000000
+
+[Cheats/Invincibility]
+// patch=1,EE,003FDE0C,extended,00000001
+// patch=1,EE,703F5584,extended,00000004
+
+[Cheats/P1 Press {L3}+Up To Show Memory Info]
+// patch=1,EE,D1D34542,extended,0000FFED
+// patch=1,EE,003FDE10,extended,00000001
+
+[Cheats/P1 Press {L3}+Down To Hide Memory Info]
+// patch=1,EE,D1D34542,extended,0000FFBD
+// patch=1,EE,003FDE10,extended,00000000
+
+[Cheats/P1 Press {L3}+Right To Show Texture Info]
+// patch=1,EE,D1D34542,extended,0000FFDD
+// patch=1,EE,003FDE14,extended,00000001
+
+[Cheats/P1 Press {L3}+Right To Hide Texture Info]
+// patch=1,EE,D1D34542,extended,0000FF7D
+// patch=1,EE,003FDE14,extended,00000000
+
+[Cheats/P1 Press {R3}+Up To Show Excite Info]
+// patch=1,EE,D1D34542,extended,0000FFEB
+// patch=1,EE,003FDE20,extended,00000001
+
+[Cheats/P1 Press {R3}+Down To Hide Excite Info]
+// patch=1,EE,D1D34542,extended,0000FFBB
+// patch=1,EE,003FDE20,extended,00000000
+
+[Cheats/P1 Press {R3}+Right To Enable Env Particles]
+// patch=1,EE,D1D34542,extended,0000FFDB
+// patch=1,EE,003FDE2C,extended,00000001
+
+[Cheats/P1 Press {R3}+Left To Disable Env Particles]
+// patch=1,EE,D1D34542,extended,0000FF7B
+// patch=1,EE,003FDE2C,extended,00000000
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,203F5570,extended,FFFFFFFF
+
+[Cheats/Unlock All Arenas]
+// patch=1,EE,203F5574,extended,FFFFFFFF
+
+[Cheats/Unlock All Outfits]
+// patch=1,EE,203F5578,extended,FFFFFFFF
+
+[Cheats/Unlock All Movies]
+// patch=1,EE,203F557C,extended,FFFFFFFF
+
+[Cheats/Unlock All Cheats]
+// patch=1,EE,203F5580,extended,FFFFFFFF
+
+[Cheats/Tough Enemies]
+// patch=1,EE,703F5584,extended,00000001
+
+[Cheats/Arena AI Off]
+// patch=1,EE,703F5584,extended,00000002
+
+[Cheats/Wimpy Enemies]
+// patch=1,EE,703F5584,extended,00000008
+
+[Cheats/Unlimited Ammo]
+// patch=1,EE,703F5584,extended,00000010
+
+[Cheats/Super Player]
+// patch=1,EE,703F5584,extended,00000020

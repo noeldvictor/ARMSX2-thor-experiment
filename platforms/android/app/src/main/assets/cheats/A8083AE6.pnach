@@ -1,0 +1,17 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: RC Revenge Pro [SLUS-20153] [A8083AE6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Access All Characters]
+// patch=1,EE,901C69D0,extended,0C06DF18
+
+[Cheats/Start On Last Lap & Always Place 1st]
+// patch=1,EE,D078DAC4,extended,00000000
+// patch=1,EE,1078DAC4,extended,00000002
+
+[Cheats/Have All Cups Complete]
+// patch=1,EE,10620B24,extended,00000008
+
+[Cheats/Have All Cars]
+// patch=1,EE,401EBBB4,extended,0010000D
+// patch=1,EE,00000001,extended,00000000

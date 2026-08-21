@@ -1,0 +1,250 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Island Xtreme Stunts [SLUS-20575] [BC910F04]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Characters-All Events]
+// patch=1,EE,F01010F8,extended,0021E31F
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,102D2660,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,202D2660,extended,0098967F
+
+[Cheats/Infinite Time]
+// patch=1,EE,202D2668,extended,0000003B
+// patch=1,EE,202D266C,extended,0000003B
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,2401000A
+// patch=1,EE,200C0224,extended,AE010F3C
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,8E0400C8
+// patch=1,EE,201B7F30,extended,0C030088
+
+[Cheats/1-Hit Death (Opponents)]
+// patch=1,EE,201BD1A8,extended,2403001E
+
+[Cheats/Max Brick Pool]
+// patch=1,EE,202DAEE8,extended,000003E7
+
+[Cheats/Max Brickimals]
+// patch=1,EE,202DAEEC,extended,00000015
+
+[Cheats/Have Road License]
+// patch=1,EE,202DAF04,extended,00000001
+
+[Cheats/Have Sea License]
+// patch=1,EE,202DAF08,extended,00000001
+
+[Cheats/Have Air License]
+// patch=1,EE,202DAF0C,extended,00000001
+
+[Cheats/Have Secret LA F. TA #1]
+// patch=1,EE,202DAF10,extended,00000001
+
+[Cheats/Have Secret LA F. TA #2]
+// patch=1,EE,202DAF14,extended,00000001
+
+[Cheats/Have Golden LA F. TA]
+// patch=1,EE,202DAF18,extended,00000001
+
+[Cheats/Have Platinum LA F. TA]
+// patch=1,EE,202DAF1C,extended,00000001
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,21E8783C,extended,00000001
+
+[Cheats/Pepper Roni]
+// patch=1,EE,01E7140D,extended,00000001
+
+[Cheats/The Brickster]
+// patch=1,EE,01E8DA21,extended,00000001
+
+[Cheats/Brickster-Bot]
+// patch=1,EE,01E8DA45,extended,00000001
+
+[Cheats/Belinda Blink]
+// patch=1,EE,01E8DB65,extended,00000001
+
+[Cheats/The Director]
+// patch=1,EE,01E8DB89,extended,00000001
+
+[Cheats/Shugu]
+// patch=1,EE,01E8DBAD,extended,00000001
+
+[Cheats/Dr Clickitt]
+// patch=1,EE,01E8DBD1,extended,00000001
+
+[Cheats/Dr Jackitt]
+// patch=1,EE,01E8DBF5,extended,00000001
+
+[Cheats/Enter]
+// patch=1,EE,01E8DC19,extended,00000001
+
+[Cheats/Gnarly Bones]
+// patch=1,EE,01E8DC3D,extended,00000001
+
+[Cheats/Rhoda Hogg]
+// patch=1,EE,01E8DC61,extended,00000001
+
+[Cheats/Infomaniac]
+// patch=1,EE,01E8DCA9,extended,00000001
+
+[Cheats/Jack O'Trades]
+// patch=1,EE,01E8DCCD,extended,00000001
+
+[Cheats/Sky Lane]
+// patch=1,EE,01E8DCF1,extended,00000001
+
+[Cheats/Lucky Larry]
+// patch=1,EE,01E8DD15,extended,00000001
+
+[Cheats/Liam Lense]
+// patch=1,EE,01E8DD39,extended,00000001
+
+[Cheats/Laura Brick]
+// patch=1,EE,01E8DD5D,extended,00000001
+
+[Cheats/Ed Mail]
+// patch=1,EE,01E8DD81,extended,00000001
+
+[Cheats/Mama Brickolini]
+// patch=1,EE,01E8DDA5,extended,00000001
+
+[Cheats/Nancy Nubbins]
+// patch=1,EE,01E8DDC9,extended,00000001
+
+[Cheats/Nick Brick]
+// patch=1,EE,01E8DDED,extended,00000001
+
+[Cheats/Nubby Stevens]
+// patch=1,EE,01E8DE11,extended,00000001
+
+[Cheats/Papa Brickolini]
+// patch=1,EE,01E8DE35,extended,00000001
+
+[Cheats/Phil Maker]
+// patch=1,EE,01E8DE59,extended,00000001
+
+[Cheats/Margaret Patricia Post]
+// patch=1,EE,01E8DE7D,extended,00000001
+
+[Cheats/Penelope Puff]
+// patch=1,EE,01E8DEA1,extended,00000001
+
+[Cheats/Red Greenbase]
+// patch=1,EE,01E8DEC5,extended,00000001
+
+[Cheats/Return]
+// patch=1,EE,01E8DEE9,extended,00000001
+
+[Cheats/Snap Lockitt]
+// patch=1,EE,01E8DF0D,extended,00000001
+
+[Cheats/Studz Linkin]
+// patch=1,EE,01E8DF31,extended,00000001
+
+[Cheats/Super Stationmaster]
+// patch=1,EE,01E8DF55,extended,00000001
+
+[Cheats/Technician Bob]
+// patch=1,EE,01E8DF79,extended,00000001
+
+[Cheats/Valergie Stubbins]
+// patch=1,EE,01E8DF9D,extended,00000001
+
+[Cheats/Jenny]
+// patch=1,EE,01E8DFC1,extended,00000001
+
+[Cheats/Jimmy]
+// patch=1,EE,01E8DFE5,extended,00000001
+
+[Cheats/Timmy]
+// patch=1,EE,01E8E009,extended,00000001
+
+[Cheats/Biran Shrimp]
+// patch=1,EE,01E8E2FD,extended,00000001
+
+[Cheats/Air Chase]
+// patch=1,EE,002DAF78,extended,00000001
+// patch=1,EE,002DAF79,extended,00000007
+
+[Cheats/Freeway Frenzy]
+// patch=1,EE,002DAF7C,extended,00000001
+// patch=1,EE,002DAF7D,extended,00000007
+
+[Cheats/Ripcord Rescue]
+// patch=1,EE,002DAF80,extended,00000001
+// patch=1,EE,002DAF81,extended,00000007
+
+[Cheats/Wave Catcher]
+// patch=1,EE,002DAF84,extended,00000001
+// patch=1,EE,002DAF85,extended,00000007
+
+[Cheats/Motorbike Mayhem]
+// patch=1,EE,002DAF88,extended,00000001
+// patch=1,EE,002DAF89,extended,00000007
+
+[Cheats/Dog]
+// patch=1,EE,002EBE1B,extended,00000002
+
+[Cheats/Platypus]
+// patch=1,EE,002EBE1F,extended,00000002
+
+[Cheats/Giraffe]
+// patch=1,EE,002EBE23,extended,00000002
+
+[Cheats/Whale]
+// patch=1,EE,002EBE27,extended,00000002
+
+[Cheats/Goose]
+// patch=1,EE,002EBE2B,extended,00000002
+
+[Cheats/Elephant]
+// patch=1,EE,002EBE2F,extended,00000002
+
+[Cheats/Gazelle]
+// patch=1,EE,002EBE33,extended,00000002
+
+[Cheats/Snamel]
+// patch=1,EE,002EBE37,extended,00000002
+
+[Cheats/Rhino]
+// patch=1,EE,002EBE3B,extended,00000002
+
+[Cheats/Baby Rhino]
+// patch=1,EE,002EBE3F,extended,00000002
+
+[Cheats/Tufted Duck]
+// patch=1,EE,002EBE43,extended,00000002
+
+[Cheats/Bison]
+// patch=1,EE,002EBE47,extended,00000002
+
+[Cheats/Baby Elephant]
+// patch=1,EE,002EBE4B,extended,00000002
+
+[Cheats/Squirrel]
+// patch=1,EE,002EBE4F,extended,00000002
+
+[Cheats/Bill]
+// patch=1,EE,002EBE53,extended,00000002
+
+[Cheats/Pelican]
+// patch=1,EE,002EBE57,extended,00000002
+
+[Cheats/Fish]
+// patch=1,EE,002EBE5B,extended,00000002
+
+[Cheats/Cutesy Duck]
+// patch=1,EE,002EBE5F,extended,00000002
+
+[Cheats/Duck]
+// patch=1,EE,002EBE63,extended,00000002
+
+[Cheats/Speed Boat]
+// patch=1,EE,002EBE67,extended,00000002
+
+[Cheats/Phoenix]
+// patch=1,EE,002EBE6B,extended,00000002

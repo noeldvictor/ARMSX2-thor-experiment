@@ -1,0 +1,97 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Time Crisis 3 [SLUS-20645] [7290669C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Overall Level]
+// patch=1,EE,9026F784,extended,0C0A768E
+
+[Cheats/Unlock Everything]
+// patch=1,EE,219A4AF8,extended,FFFFFFFF
+
+[Cheats/Activate All Cheats]
+// patch=1,EE,219A4AF4,extended,0000003F
+
+[Cheats/Never Reload (Both Players)]
+// patch=1,EE,20175E48,extended,00000000
+
+[Cheats/Max Life (Arcade Mode)]
+// patch=1,EE,219A2E10,extended,00000009
+
+[Cheats/Max Life (Rescue Mission Mode)]
+// patch=1,EE,219A2E14,extended,00000009
+
+[Cheats/Infinite Handgun Ammo (Arcade Mode)]
+// patch=1,EE,719A4AF4,extended,00000001
+
+[Cheats/Infinite Sub Weapon Ammo (Arcade Mode)]
+// patch=1,EE,719A4AF4,extended,00000002
+
+[Cheats/Mirror Mode (Arcade Mode)]
+// patch=1,EE,719A4AF4,extended,00000004
+
+[Cheats/Infinite Handgun Ammo (Rescue Mode)]
+// patch=1,EE,719A4AF4,extended,00000008
+
+[Cheats/Infinite Sub Weapon Ammo (Rescue Mode)]
+// patch=1,EE,719A4AF4,extended,00000010
+
+[Cheats/Mirror Mode (Rescue Mode)]
+// patch=1,EE,719A4AF4,extended,00000020
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,119A6698,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,219A6698,extended,05F5E0FF
+
+[Cheats/Infinite Life P1]
+// patch=1,EE,219A669C,extended,00000009
+
+[Cheats/Handgun]
+// patch=1,EE,219A67E4,extended,00000009
+// patch=1,EE,219A6834,extended,00000009
+
+[Cheats/Machine Gun]
+// patch=1,EE,219A67E8,extended,000003E7
+// patch=1,EE,219A6838,extended,000003E7
+
+[Cheats/Shotgun]
+// patch=1,EE,219A67EC,extended,000003E7
+// patch=1,EE,219A683C,extended,000003E7
+
+[Cheats/Infinite Grenades P1]
+// patch=1,EE,219A67F0,extended,000003E7
+
+[Cheats/Infinite Time P1]
+// patch=1,EE,219A6674,extended,0000752F
+
+[Cheats/P1 Press {L1}+{SELECT} For More Time]
+// patch=1,EE,D1EAE1C2,extended,0000FBFE
+// patch=1,EE,219A6674,extended,0000752F
+
+[Cheats/P1 Press {L2}+{SELECT} For No Time]
+// patch=1,EE,D1EAE1C2,extended,0000FEFE
+// patch=1,EE,219A6674,extended,00000001
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,119A66EC,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,219A66EC,extended,05F5E0FF
+
+[Cheats/Infinite Life P2]
+// patch=1,EE,219A669C,extended,00000009
+
+[Cheats/Infinite Grenades P2]
+// patch=1,EE,219A6840,extended,000003E7
+
+[Cheats/Infinite Time P2]
+// patch=1,EE,219A66C8,extended,0000752F
+
+[Cheats/P2 Press {L1}+{SELECT} For More Time]
+// patch=1,EE,D1EAE5C2,extended,0000FBFE
+// patch=1,EE,219A66C8,extended,0000752F
+
+[Cheats/P2 Press {L2}+{SELECT} For No Time]
+// patch=1,EE,D1EAE5C2,extended,0000FEFE
+// patch=1,EE,219A66C8,extended,00000001

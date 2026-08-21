@@ -1,0 +1,112 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Worms 3D [SLUS-20894] [97E76C44]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Transfer Money Boost]
+// patch=1,EE,904EA2F4,extended,0C145267
+// patch=1,EE,200C0220,extended,24020064
+// patch=1,EE,200C02E4,extended,03E00008
+// patch=1,EE,200C02E8,extended,8C6400A4
+// patch=1,EE,201658F8,extended,0C030088
+
+[Cheats/Infinite Turn Time]
+// patch=1,EE,2023C9D0,extended,00402821
+
+[Cheats/Infinite Match Time]
+// patch=1,EE,2023C880,extended,00402821
+
+[Cheats/Worm 1]
+// patch=1,EE,200C0224,extended,24010000
+// patch=1,EE,200C0228,extended,50310001
+// patch=1,EE,200C022C,extended,A46200AA
+// patch=1,EE,200C022C,extended,A46000AA
+
+[Cheats/Worm 2]
+// patch=1,EE,200C0230,extended,24010001
+// patch=1,EE,200C0234,extended,50310001
+// patch=1,EE,200C0238,extended,A46200AA
+// patch=1,EE,200C0238,extended,A46000AA
+
+[Cheats/Worm 3]
+// patch=1,EE,200C023C,extended,24010002
+// patch=1,EE,200C0240,extended,50310001
+// patch=1,EE,200C0244,extended,A46200AA
+// patch=1,EE,200C0244,extended,A46000AA
+
+[Cheats/Worm 4]
+// patch=1,EE,200C0248,extended,24010003
+// patch=1,EE,200C024C,extended,50310001
+// patch=1,EE,200C0250,extended,A46200AA
+// patch=1,EE,200C0250,extended,A46000AA
+
+[Cheats/Worm 5]
+// patch=1,EE,200C0254,extended,24010004
+// patch=1,EE,200C0258,extended,50310001
+// patch=1,EE,200C025C,extended,A46200AA
+// patch=1,EE,200C025C,extended,A46000AA
+
+[Cheats/Worm 6]
+// patch=1,EE,200C0260,extended,24010005
+// patch=1,EE,200C0264,extended,50310001
+// patch=1,EE,200C0268,extended,A46200AA
+// patch=1,EE,200C0268,extended,A46000AA
+
+[Cheats/Worm 7]
+// patch=1,EE,200C026C,extended,24010006
+// patch=1,EE,200C0270,extended,50310001
+// patch=1,EE,200C0274,extended,A46200AA
+// patch=1,EE,200C0274,extended,A46000AA
+
+[Cheats/Worm 8]
+// patch=1,EE,200C0278,extended,24010007
+// patch=1,EE,200C027C,extended,50310001
+// patch=1,EE,200C0280,extended,A46200AA
+// patch=1,EE,200C0280,extended,A46000AA
+
+[Cheats/Worm 9]
+// patch=1,EE,200C0284,extended,24010008
+// patch=1,EE,200C0288,extended,50310001
+// patch=1,EE,200C028C,extended,A46200AA
+// patch=1,EE,200C028C,extended,A46000AA
+
+[Cheats/Worm 10]
+// patch=1,EE,200C0290,extended,24010009
+// patch=1,EE,200C0294,extended,50310001
+// patch=1,EE,200C0298,extended,A46200AA
+// patch=1,EE,200C0298,extended,A46000AA
+
+[Cheats/Worm 11]
+// patch=1,EE,200C029C,extended,2401000A
+// patch=1,EE,200C02A0,extended,50310001
+// patch=1,EE,200C02A4,extended,A46200AA
+// patch=1,EE,200C02A4,extended,A46000AA
+
+[Cheats/Worm 12]
+// patch=1,EE,200C02A8,extended,2401000B
+// patch=1,EE,200C02AC,extended,50310001
+// patch=1,EE,200C02B0,extended,A46200AA
+// patch=1,EE,200C02B0,extended,A46000AA
+
+[Cheats/Worm 13]
+// patch=1,EE,200C02B4,extended,2401000C
+// patch=1,EE,200C02B8,extended,50310001
+// patch=1,EE,200C02BC,extended,A46200AA
+// patch=1,EE,200C02BC,extended,A46000AA
+
+[Cheats/Worm 14]
+// patch=1,EE,200C02C0,extended,2401000D
+// patch=1,EE,200C02C4,extended,50310001
+// patch=1,EE,200C02C8,extended,A46200AA
+// patch=1,EE,200C02C8,extended,A46000AA
+
+[Cheats/Worm 15]
+// patch=1,EE,200C02CC,extended,2401000E
+// patch=1,EE,200C02D0,extended,50310001
+// patch=1,EE,200C02D4,extended,A46200AA
+// patch=1,EE,200C02D4,extended,A46000AA
+
+[Cheats/Worm 16]
+// patch=1,EE,200C02D8,extended,2401000F
+// patch=1,EE,200C02DC,extended,50310001
+// patch=1,EE,200C02E0,extended,A46200AA
+// patch=1,EE,200C02E0,extended,A46000AA

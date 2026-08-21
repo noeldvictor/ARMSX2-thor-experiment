@@ -1,0 +1,24 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Oni [SLES-50177] [32629F36]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Score P4]
+// patch=1,EE,902B12D0,extended,0C0AECCE
+
+[Cheats/Have Easy Kills]
+// patch=1,EE,0033A932,extended,00000001
+
+[Cheats/Have Gauge Info]
+// patch=1,EE,0033B35C,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,006E55EC,extended,00000063
+
+[Cheats/Infinite Health]
+// patch=1,EE,106E5620,extended,00000190
+
+[Cheats/Infinite Hypos]
+// patch=1,EE,006E578C,extended,00000004
+
+[Cheats/Invisible]
+// patch=1,EE,106E57A2,extended,0000FFFF

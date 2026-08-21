@@ -1,0 +1,34 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mobile Light Force 2 [SLUS-20608] [FE9202B8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Never Gain Wins P2]
+// patch=1,EE,901D8204,extended,0C078945
+
+[Cheats/Infinite Time]
+// patch=1,EE,20287424,extended,0000EA24
+
+[Cheats/Infinite Health]
+// patch=1,EE,1031E03C,extended,00000003
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,1031E060,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,2031E060,extended,05F5E0FF
+
+[Cheats/Infinite Bombs]
+// patch=1,EE,1031E0A6,extended,00000005
+
+[Cheats/Max Items]
+// patch=1,EE,2031E0D8,extended,0001869F
+
+[Cheats/Infinite Credits]
+// patch=1,EE,20285D1C,extended,00000009
+
+[Cheats/Extra Credits]
+// patch=1,EE,101397D0,extended,00000001
+
+[Cheats/Instant Boss Death]
+// patch=1,EE,2018D2E8,extended,24040000
+// patch=1,EE,2018D2EC,extended,AC640014

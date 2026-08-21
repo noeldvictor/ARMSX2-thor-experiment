@@ -1,0 +1,152 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Downhill Domination [SCUS-97177] [7E709DB4]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Geneva]
+// patch=1,EE,9024520C,extended,0C095014
+
+[Cheats/Max Score]
+// patch=1,EE,202B58DC,extended,497423F0
+
+[Cheats/Infinite Energy (Turbo-R3)]
+// patch=1,EE,202B2158,extended,42C80000
+
+[Cheats/Always Low Time]
+// patch=1,EE,2043EEC8,extended,00000000
+
+[Cheats/Max Bank Money]
+// patch=1,EE,204347A8,extended,0BEBC1EC
+
+[Cheats/Intro]
+// patch=1,EE,104C6FAE,extended,00000001
+
+[Cheats/Technical DH]
+// patch=1,EE,104C6FBE,extended,00000001
+
+[Cheats/Mountain Cross]
+// patch=1,EE,104C6FCE,extended,00000001
+
+[Cheats/Freeride]
+// patch=1,EE,104C6FDE,extended,00000001
+
+[Cheats/Crashes]
+// patch=1,EE,104C6FEE,extended,00000001
+
+[Cheats/Tricks]
+// patch=1,EE,104C6FFE,extended,00000001
+
+[Cheats/Credits]
+// patch=1,EE,104C700E,extended,00000001
+
+[Cheats/Rider Profile]
+// patch=1,EE,104C701E,extended,00000001
+// patch=1,EE,2018E7FC,extended,00000000
+
+[Cheats/Rakel-Sweden]
+// patch=1,EE,004B25E3,extended,00000001
+
+[Cheats/Crud-Germany]
+// patch=1,EE,004B25E4,extended,00000001
+
+[Cheats/Eric Carter-USA]
+// patch=1,EE,004B25E5,extended,00000001
+
+[Cheats/Tara Llanes-USA]
+// patch=1,EE,004B25E6,extended,00000001
+
+[Cheats/Richie Schley-Canada]
+// patch=1,EE,004B25E7,extended,00000001
+
+[Cheats/Brian Lopes-USA]
+// patch=1,EE,004B25E8,extended,00000001
+
+[Cheats/Missy Glove-USA]
+// patch=1,EE,004B25E9,extended,00000001
+
+[Cheats/Gamelbak Bonus]
+// patch=1,EE,D036A8D0,extended,00300001
+// patch=1,EE,2036A8D0,extended,00000001
+
+[Cheats/Sparky Tricks]
+// patch=1,EE,D036A8D4,extended,00300001
+// patch=1,EE,2036A8D4,extended,00000001
+
+[Cheats/Stretchy Mode]
+// patch=1,EE,D036A8D8,extended,00300001
+// patch=1,EE,2036A8D8,extended,00000001
+
+[Cheats/Bonus Rider: ?????]
+// patch=1,EE,D036A8DC,extended,00300001
+// patch=1,EE,2036A8DC,extended,00000001
+
+[Cheats/Music 1: 5-Song Variety Pack]
+// patch=1,EE,D036A8E0,extended,00300001
+// patch=1,EE,2036A8E0,extended,00000001
+
+[Cheats/Music 2: 5-Song Variety Pack]
+// patch=1,EE,D036A8E4,extended,00300001
+// patch=1,EE,2036A8E4,extended,00000001
+
+[Cheats/Music 3: 5-Song Variety Pack]
+// patch=1,EE,D036A8E8,extended,00300001
+// patch=1,EE,2036A8E8,extended,00000001
+
+[Cheats/Bonus Level 1: Moshbowl]
+// patch=1,EE,D036A8EC,extended,00300001
+// patch=1,EE,2036A8EC,extended,00000001
+
+[Cheats/Bonus Level 2: Moshbowl]
+// patch=1,EE,D036A8F0,extended,00300001
+// patch=1,EE,2036A8F0,extended,00000001
+
+[Cheats/Bonus Level 3: Moshbowl]
+// patch=1,EE,D036A8F4,extended,00300001
+// patch=1,EE,2036A8F4,extended,00000001
+
+[Cheats/Video 1: Mountain Cross Clip]
+// patch=1,EE,D036A8F8,extended,00300001
+// patch=1,EE,2036A8F8,extended,00000001
+
+[Cheats/Video 2: Freeride Clip]
+// patch=1,EE,D036A8FC,extended,00300001
+// patch=1,EE,2036A8FC,extended,00000001
+
+[Cheats/Video 3: Technical Downhill Clip]
+// patch=1,EE,D036A900,extended,00300001
+// patch=1,EE,2036A900,extended,00000001
+
+[Cheats/Video 4: Crash Clip]
+// patch=1,EE,D036A904,extended,00300001
+// patch=1,EE,2036A904,extended,00000001
+
+[Cheats/Video 5: Trick Clip]
+// patch=1,EE,D036A908,extended,00300001
+// patch=1,EE,2036A908,extended,00000001
+
+[Cheats/Poster Maker]
+// patch=1,EE,D036A90C,extended,00300001
+// patch=1,EE,2036A90C,extended,00000001
+
+[Cheats/Pickup Editor]
+// patch=1,EE,D036A910,extended,00300001
+// patch=1,EE,2036A910,extended,00000001
+
+[Cheats/Fog Editor]
+// patch=1,EE,D036A914,extended,00300001
+// patch=1,EE,2036A914,extended,00000001
+
+[Cheats/Bonus Bike 1: Sheep]
+// patch=1,EE,D036A918,extended,00300001
+// patch=1,EE,2036A918,extended,00000001
+
+[Cheats/Bonus Bike 2: Deer]
+// patch=1,EE,D036A91C,extended,00300001
+// patch=1,EE,2036A91C,extended,00000001
+
+[Cheats/Bonus Bike 3: Llama]
+// patch=1,EE,D036A920,extended,00300001
+// patch=1,EE,2036A920,extended,00000001
+
+[Cheats/Prototype Bike]
+// patch=1,EE,D036A924,extended,00300001
+// patch=1,EE,2036A924,extended,00000001

@@ -1,0 +1,271 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: 187 Ride Or Die [SLES-52276] [83BE7C8E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Value]
+// patch=1,EE,9012DC4C,extended,0C07F8AA
+
+[Cheats/Infinite Life Bar]
+// patch=1,EE,200C0220,extended,8C61035C
+// patch=1,EE,200C0224,extended,AC610320
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,C4640320
+// patch=1,EE,20309228,extended,0C030088
+
+[Cheats/Infinite Life Bar (Escorts)]
+// patch=1,EE,200C0240,extended,8C61035C
+// patch=1,EE,200C0244,extended,AC610320
+// patch=1,EE,200C0248,extended,03E00008
+// patch=1,EE,200C024C,extended,C4630320
+// patch=1,EE,203BA110,extended,0C030090
+
+[Cheats/Infinite Turbo (On Pickup)]
+// patch=1,EE,201B50F8,extended,00000000
+
+[Cheats/Always Max Infinite Turbo]
+// patch=1,EE,200C0230,extended,3C013F80
+// patch=1,EE,200C0234,extended,AC410324
+// patch=1,EE,200C0238,extended,080C34CF
+// patch=1,EE,200C023C,extended,C4410324
+// patch=1,EE,2030D338,extended,0803008C
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,202EAA30,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,202EAA28,extended,46000800
+
+[Cheats/Instant Death (Enemies)]
+// patch=1,EE,200C0250,extended,52200001
+// patch=1,EE,200C0254,extended,44800800
+// patch=1,EE,200C0258,extended,E4610320
+// patch=1,EE,200C025C,extended,03E00008
+// patch=1,EE,200C0260,extended,44800000
+// patch=1,EE,20255704,extended,0C030094
+
+[Cheats/P1 Press {L1}+{SELECT} To Kill Enemy Racers]
+// patch=1,EE,200C0250,extended,52200001
+// patch=1,EE,200C0254,extended,44800800
+// patch=1,EE,200C0258,extended,E4610320
+// patch=1,EE,200C025C,extended,03E00008
+// patch=1,EE,200C0260,extended,44800000
+// patch=1,EE,D0892CC2,extended,0000FBFE
+// patch=1,EE,20255704,extended,0C030094
+// patch=1,EE,D0892CC2,extended,0000FFFF
+// patch=1,EE,20255704,extended,44800000
+
+[Cheats/Access All Cars]
+// patch=1,EE,20466628,extended,24020001
+
+[Cheats/Access All Fighters]
+// patch=1,EE,20466D04,extended,24020001
+
+[Cheats/Access All Missions]
+// patch=1,EE,2048E454,extended,24020001
+// patch=1,EE,2047C838,extended,24020001
+// patch=1,EE,2047C720,extended,24020001
+
+[Cheats/Western-Whip Race]
+// patch=1,EE,2079F58C,extended,00000001
+
+[Cheats/Western Payback-Whip Race]
+// patch=1,EE,2079F594,extended,00000001
+
+[Cheats/Western-Death Race]
+// patch=1,EE,2079F59C,extended,00000001
+
+[Cheats/Western Payback-Mine Field]
+// patch=1,EE,2079F5B4,extended,00000001
+
+[Cheats/The Jungle-Survivor]
+// patch=1,EE,2079F5F4,extended,00000001
+
+[Cheats/Grave Digga Payback-Death Race]
+// patch=1,EE,2079F5D4,extended,00000001
+
+[Cheats/The Coast-Escort]
+// patch=1,EE,2079F754,extended,00000001
+
+[Cheats/Grave Digga-Whip Race]
+// patch=1,EE,2079F5BC,extended,00000001
+
+[Cheats/Grave Digga Payback-Whip Race]
+// patch=1,EE,2079F5C4,extended,00000001
+
+[Cheats/Western Payback-Death Race]
+// patch=1,EE,2079F5A4,extended,00000001
+
+[Cheats/The Lot-Domination]
+// patch=1,EE,2079F764,extended,00000001
+
+[Cheats/Grave Digga-Death Race]
+// patch=1,EE,2079F5CC,extended,00000001
+
+[Cheats/The Jungle-Death Match Warefare]
+// patch=1,EE,2079F5FC,extended,00000001
+
+[Cheats/Po-Po Chase-Strickly Business]
+// patch=1,EE,2079F56C,extended,00000001
+
+[Cheats/The Sticks-Whip Race]
+// patch=1,EE,2079F60C,extended,00000001
+
+[Cheats/Rip Ville-Death Match]
+// patch=1,EE,2079F66C,extended,00000001
+
+[Cheats/The Sticks Payback-Whip Race]
+// patch=1,EE,2079F614,extended,00000001
+
+[Cheats/The Sticks-Death Race]
+// patch=1,EE,2079F61C,extended,00000001
+
+[Cheats/Boondocks Payback-Mine Field]
+// patch=1,EE,2079F664,extended,00000001
+
+[Cheats/Rip Ville-Survivor]
+// patch=1,EE,2079F674,extended,00000001
+
+[Cheats/Boondocks Payback-Death Race]
+// patch=1,EE,2079F654,extended,00000001
+
+[Cheats/The Coast-Bomb]
+// patch=1,EE,2079F74C,extended,00000001
+
+[Cheats/Boondocks-Whip Race]
+// patch=1,EE,2079F63C,extended,00000001
+
+[Cheats/Rip Ville-Death Match Warefare]
+// patch=1,EE,2079F67C,extended,00000001
+
+[Cheats/Boondocks Payback-Whip Race]
+// patch=1,EE,2079F644,extended,00000001
+
+[Cheats/Boondocks-Death Race]
+// patch=1,EE,2079F64C,extended,00000001
+
+[Cheats/The Sticks Payback-Minefield]
+// patch=1,EE,2079F634,extended,00000001
+
+[Cheats/Rip Ville-Survivor Bulletproof]
+// patch=1,EE,2079F684,extended,00000001
+
+[Cheats/The Sticks Payback-Death Race]
+// patch=1,EE,2079F624,extended,00000001
+
+[Cheats/The Lot-Gun Play]
+// patch=1,EE,2079F76C,extended,00000001
+
+[Cheats/Po-Po Chase-Going All Out]
+// patch=1,EE,2079F574,extended,00000001
+
+[Cheats/Grand City-Whip Race]
+// patch=1,EE,2079F68C,extended,00000001
+
+[Cheats/Dillinger Ville-Death Match]
+// patch=1,EE,2079F6EC,extended,00000001
+
+[Cheats/Grand City Payback-Whip Race]
+// patch=1,EE,2079F694,extended,00000001
+
+[Cheats/Clip City Payback-Death Race]
+// patch=1,EE,2079F6D4,extended,00000001
+
+[Cheats/Clip City Payback-Mine Field]
+// patch=1,EE,2079F6E4,extended,00000001
+
+[Cheats/Dillinger Ville-Survivor]
+// patch=1,EE,2079F6F4,extended,00000001
+
+[Cheats/Grand City Payback-Death Race]
+// patch=1,EE,2079F6A4,extended,00000001
+
+[Cheats/The Coast-The Hit]
+// patch=1,EE,2079F75C,extended,00000001
+
+[Cheats/Clip City-Whip Race]
+// patch=1,EE,2079F6BC,extended,00000001
+
+[Cheats/Dillinger Ville-Death Match Warefare]
+// patch=1,EE,2079F6FC,extended,00000001
+
+[Cheats/Clip City Payback-Whip Race]
+// patch=1,EE,2079F6C4,extended,00000001
+
+[Cheats/Grand City-Death Race]
+// patch=1,EE,2079F69C,extended,00000001
+
+[Cheats/Grand City Payback-Mine Field]
+// patch=1,EE,2079F6B4,extended,00000001
+
+[Cheats/Dillinger Ville-Survivor Bulletproof]
+// patch=1,EE,2079F704,extended,00000001
+
+[Cheats/Clip City-Death Race]
+// patch=1,EE,2079F6CC,extended,00000001
+
+[Cheats/The Lot-Predator]
+// patch=1,EE,2079F774,extended,00000001
+
+[Cheats/Po-Po Chase-Mobbin']
+// patch=1,EE,2079F57C,extended,00000001
+
+[Cheats/The Hills-Whip Race]
+// patch=1,EE,2079F70C,extended,00000001
+
+[Cheats/Rollin Heights-Death Match]
+// patch=1,EE,2079F73C,extended,00000001
+
+[Cheats/The Hills Payback-Whip Race]
+// patch=1,EE,2079F714,extended,00000001
+
+[Cheats/The Hills-Death Race]
+// patch=1,EE,2079F71C,extended,00000001
+
+[Cheats/Rollin Heights-Survivor]
+// patch=1,EE,2079F744,extended,00000001
+
+[Cheats/The Hills Payback-Death Race]
+// patch=1,EE,2079F724,extended,00000001
+
+[Cheats/The Lot-The Hard Way]
+// patch=1,EE,2079F77C,extended,00000001
+
+[Cheats/Po-Po Chase-Ride Or Die]
+// patch=1,EE,2079F584,extended,00000001
+
+[Cheats/Western-Mine Field]
+// patch=1,EE,2079F5AC,extended,00000001
+
+[Cheats/Grave Digga-Mine Field]
+// patch=1,EE,2079F5DC,extended,00000001
+
+[Cheats/Grave Digga Payback-Mine Field]
+// patch=1,EE,2079F5E4,extended,00000001
+
+[Cheats/The Jungle-Death Match]
+// patch=1,EE,2079F5EC,extended,00000001
+
+[Cheats/The Jungle-Survivor Bulletproof]
+// patch=1,EE,2079F604,extended,00000001
+
+[Cheats/The Sticks-Mine Field]
+// patch=1,EE,2079F62C,extended,00000001
+
+[Cheats/Boondocks-Mine Field]
+// patch=1,EE,2079F65C,extended,00000001
+
+[Cheats/Grand City-Mine Field]
+// patch=1,EE,2079F6AC,extended,00000001
+
+[Cheats/Clip City-Mine Field]
+// patch=1,EE,2079F6DC,extended,00000001
+
+[Cheats/The Hills-Mine Field]
+// patch=1,EE,2079F72C,extended,00000001
+
+[Cheats/The Hills Payback-Mine Field]
+// patch=1,EE,2079F734,extended,00000001
+
+[Cheats/All Missions Completed]
+// patch=1,EE,4079F56C,extended,00420002
+// patch=1,EE,00000001,extended,00000000

@@ -1,0 +1,142 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Just Cause [SLUS-21436] [34C62B5C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Safari-Jurassic Park Calender]
+// patch=1,EE,904C6920,extended,00832021
+
+[Cheats/Infinite Health]
+// patch=1,EE,2010F940,extended,C5E00044
+// patch=1,EE,2010F944,extended,E5E00048
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20144BA4,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,20144BA8,extended,01D17021
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,20144BA8,extended,240E03E7
+
+[Cheats/Never Reload]
+// patch=1,EE,203043D8,extended,00000000
+
+[Cheats/Never Reload With Max Clip]
+// patch=1,EE,203043D0,extended,240F03E7
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,2013E470,extended,00000000
+
+[Cheats/Extra Grenades]
+// patch=1,EE,1013E46C,extended,00000001
+
+[Cheats/Max Infinite Grenades]
+// patch=1,EE,2013E46C,extended,240F0063
+
+[Cheats/Max Rioja Cartel Relations]
+// patch=1,EE,2183C468,extended,0001869F
+
+[Cheats/Max Guerrilla Relations]
+// patch=1,EE,2183C478,extended,0001869F
+
+[Cheats/Agency Gyrocopter]
+// patch=1,EE,7183D668,extended,00000001
+
+[Cheats/Agency Dirt Bike]
+// patch=1,EE,7183D668,extended,00000002
+
+[Cheats/Agency GP]
+// patch=1,EE,7183D668,extended,00000004
+
+[Cheats/Agency Speed Boat]
+// patch=1,EE,7183D668,extended,00000008
+
+[Cheats/All Heavy Drops]
+// patch=1,EE,7183D668,extended,0000000F
+
+[Cheats/Max Soldiers Killed]
+// patch=1,EE,21838BB8,extended,05F5E0FF
+
+[Cheats/No Soldiers Killed]
+// patch=1,EE,21838BB8,extended,00000000
+
+[Cheats/Max Police Killed]
+// patch=1,EE,21838BBC,extended,05F5E0FF
+
+[Cheats/No Police Killed]
+// patch=1,EE,21838BBC,extended,00000000
+
+[Cheats/Max Black Hand Killed]
+// patch=1,EE,21838BC4,extended,05F5E0FF
+
+[Cheats/No Black Hand Killed]
+// patch=1,EE,21838BC4,extended,00000000
+
+[Cheats/Max Montano Killed]
+// patch=1,EE,21838BC8,extended,05F5E0FF
+
+[Cheats/No Montano Killed]
+// patch=1,EE,21838BC8,extended,00000000
+
+[Cheats/Max Shots Fired]
+// patch=1,EE,21838BE8,extended,05F5E0FF
+
+[Cheats/No Shots Fired]
+// patch=1,EE,21838BE8,extended,00000000
+
+[Cheats/Max Story Missions Completed]
+// patch=1,EE,21838BEC,extended,05F5E0FF
+
+[Cheats/No Story Missions Completed]
+// patch=1,EE,21838BEC,extended,00000000
+
+[Cheats/Max Side Missions Completed]
+// patch=1,EE,21838BF0,extended,05F5E0FF
+
+[Cheats/No Side Missions Completed]
+// patch=1,EE,21838BF0,extended,00000000
+
+[Cheats/Max Roof To Roof Stunts]
+// patch=1,EE,21838BF4,extended,05F5E0FF
+
+[Cheats/No Roof To Roof Stunts]
+// patch=1,EE,21838BF4,extended,00000000
+
+[Cheats/Max Parachute To Roof Stunts]
+// patch=1,EE,21838BF8,extended,05F5E0FF
+
+[Cheats/No Parachute To Roof Stunts]
+// patch=1,EE,21838BF8,extended,00000000
+
+[Cheats/Max Rioja Settlements]
+// patch=1,EE,21838BFC,extended,05F5E0FF
+
+[Cheats/No Rioja Settlements]
+// patch=1,EE,21838BFC,extended,00000000
+
+[Cheats/Max Guerrilla Settlements]
+// patch=1,EE,21838C00,extended,05F5E0FF
+
+[Cheats/No Guerrilla Settlements]
+// patch=1,EE,21838C00,extended,00000000
+
+[Cheats/Always Low Total Time Played]
+// patch=1,EE,21838C0C,extended,00000000
+
+[Cheats/Max Agency Safehouses]
+// patch=1,EE,21838C14,extended,05F5E0FF
+
+[Cheats/No Agency Safehouses]
+// patch=1,EE,21838C14,extended,00000000
+
+[Cheats/Max Guerrilla Safehouses]
+// patch=1,EE,21838C18,extended,05F5E0FF
+
+[Cheats/No Guerrilla Safehouses]
+// patch=1,EE,21838C18,extended,00000000
+
+[Cheats/Max Rioja Safehouses]
+// patch=1,EE,21838C1C,extended,05F5E0FF
+
+[Cheats/No Rioja Safehouses]
+// patch=1,EE,21838C1C,extended,00000000

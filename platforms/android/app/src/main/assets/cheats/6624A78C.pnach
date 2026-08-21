@@ -1,0 +1,86 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Killzone [SCES-52004] [6624A78C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max All Levels]
+// patch=1,EE,902AD0B0,extended,00832021
+
+[Cheats/Always Max Health Can Be Recovered]
+// patch=1,EE,200C0220,extended,3C0144C8
+// patch=1,EE,200C0224,extended,AC410230
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,C4440230
+// patch=1,EE,2047AC08,extended,0C030088
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0230,extended,3C0144C8
+// patch=1,EE,200C0234,extended,AC41022C
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,C441022C
+// patch=1,EE,2047AC10,extended,0C03008C
+
+[Cheats/Infinite Stamina]
+// patch=1,EE,2021B220,extended,E642030C
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,202899D8,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,202899D4,extended,240203E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,202899D4,extended,00431023
+
+[Cheats/Never Reload]
+// patch=1,EE,2028B674,extended,00000000
+
+[Cheats/Guns Never Overheat]
+// patch=1,EE,2028AEF4,extended,AE00010C
+
+[Cheats/Always Max Primary Ammo]
+// patch=1,EE,2047BB0C,extended,240403E7
+// patch=1,EE,2047BB10,extended,AC440000
+
+[Cheats/Always Max Secondary Ammo]
+// patch=1,EE,2047D830,extended,24060063
+// patch=1,EE,2047D834,extended,AC460000
+
+[Cheats/Halo-Legacy Mode Control Setting]
+// patch=1,EE,00416DF0,extended,00000004
+// patch=1,EE,00416EB0,extended,00000006
+
+[Cheats/Always Objective Succeeded]
+// patch=1,EE,201CCDB0,extended,080733AC
+// patch=1,EE,201CCDB4,extended,00000000
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,201D7234,extended,00821821
+// patch=1,EE,201D7238,extended,24020001
+// patch=1,EE,201D723C,extended,AC6202D4
+
+[Cheats/P1 Press {L2}+Up To Skip FMV]
+// patch=1,EE,D07C4602,extended,0000FEEF
+// patch=1,EE,203CD868,extended,24020001
+// patch=1,EE,D07C4602,extended,0000FFFF
+// patch=1,EE,203CD868,extended,8C620000
+
+[Cheats/God Mode]
+// patch=1,EE,005DA45D,extended,00000001
+
+[Cheats/Lock Circle]
+// patch=1,EE,005DA460,extended,00000001
+
+[Cheats/Spread Circle]
+// patch=1,EE,005DA461,extended,00000001
+
+[Cheats/Show Coordinates]
+// patch=1,EE,005DA462,extended,00000001
+
+[Cheats/Big Head Mode]
+// patch=1,EE,00514022,extended,00000001
+
+[Cheats/P1 Press {L2}+{SELECT} For Victory On Current Level]
+// patch=1,EE,D07C4602,extended,0000FEFE
+// patch=1,EE,00514024,extended,00000001
+// patch=1,EE,D07C4602,extended,0000FFFF
+// patch=1,EE,00514024,extended,00000000

@@ -1,0 +1,159 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Technic Beat [SLUS-21019] [34DC8778]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Low Time]
+// patch=1,EE,90117FDC,extended,0C08ECE8
+
+[Cheats/Max Marker King P1]
+// patch=1,EE,2058F554,extended,00000009
+
+[Cheats/No Marker King P1]
+// patch=1,EE,2058F554,extended,00000000
+
+[Cheats/Max Marker King P2]
+// patch=1,EE,20574C14,extended,00000009
+
+[Cheats/No Marker King P2]
+// patch=1,EE,20574C14,extended,00000000
+
+[Cheats/Unlock Game Ending/Sudden Death Ending]
+// patch=1,EE,003D7B02,extended,00000001
+
+[Cheats/Knitty-Sixth Level Color]
+// patch=1,EE,003D7A3C,extended,00000001
+
+[Cheats/Knitty-Death Master's Level Color]
+// patch=1,EE,003D7A3D,extended,00000001
+
+[Cheats/Rain-Sixth Level Color]
+// patch=1,EE,003D7A5A,extended,00000001
+
+[Cheats/Rain-Death Master's Level Color]
+// patch=1,EE,003D7A5B,extended,00000001
+
+[Cheats/Hassy-Sixth Level Color]
+// patch=1,EE,003D7A78,extended,00000001
+
+[Cheats/Hassy-Death Master's Level Color]
+// patch=1,EE,003D7A79,extended,00000001
+
+[Cheats/Bot-Sixth Level Color]
+// patch=1,EE,003D7A96,extended,00000001
+
+[Cheats/Bot-Death Master's Level Color]
+// patch=1,EE,003D7A97,extended,00000001
+
+[Cheats/Cart-Sixth Level Color]
+// patch=1,EE,003D7AB4,extended,00000001
+
+[Cheats/Cart-Death Master's Level Color]
+// patch=1,EE,003D7AB5,extended,00000001
+
+[Cheats/Willie-Sixth Level Color]
+// patch=1,EE,003D7AD2,extended,00000001
+
+[Cheats/Willie-Death Master's Level Color]
+// patch=1,EE,003D7AD3,extended,00000001
+
+[Cheats/Knitty 1]
+// patch=1,EE,003D7AE2,extended,00000001
+
+[Cheats/Knitty 2]
+// patch=1,EE,003D7AE3,extended,00000001
+
+[Cheats/Knitty 3]
+// patch=1,EE,003D7AE4,extended,00000001
+
+[Cheats/Knitty 4]
+// patch=1,EE,003D7AE5,extended,00000001
+
+[Cheats/Knitty 5]
+// patch=1,EE,003D7AE6,extended,00000001
+
+[Cheats/Knitty 6]
+// patch=1,EE,003D7AE7,extended,00000001
+
+[Cheats/Knitty 7]
+// patch=1,EE,003D7AE8,extended,00000001
+
+[Cheats/Knitty 8]
+// patch=1,EE,003D7AE9,extended,00000001
+
+[Cheats/Knitty 9]
+// patch=1,EE,003D7AEA,extended,00000001
+
+[Cheats/Rain 1]
+// patch=1,EE,003D7AEB,extended,00000001
+
+[Cheats/Rain 2]
+// patch=1,EE,003D7AEC,extended,00000001
+
+[Cheats/Rain 3]
+// patch=1,EE,003D7AED,extended,00000001
+
+[Cheats/Rain 4]
+// patch=1,EE,003D7AEE,extended,00000001
+
+[Cheats/Rain 5]
+// patch=1,EE,003D7AEF,extended,00000001
+
+[Cheats/Rain 6]
+// patch=1,EE,003D7AF0,extended,00000001
+
+[Cheats/Rain 7]
+// patch=1,EE,003D7AF1,extended,00000001
+
+[Cheats/Rain 8]
+// patch=1,EE,003D7AF2,extended,00000001
+
+[Cheats/Rain 9]
+// patch=1,EE,003D7AF3,extended,00000001
+
+[Cheats/Hassy 1]
+// patch=1,EE,003D7AF4,extended,00000001
+
+[Cheats/Hassy 2]
+// patch=1,EE,003D7AF5,extended,00000001
+
+[Cheats/Hassy 3]
+// patch=1,EE,003D7AF6,extended,00000001
+
+[Cheats/Bot 1]
+// patch=1,EE,003D7AF7,extended,00000001
+
+[Cheats/Bot 2]
+// patch=1,EE,003D7AF8,extended,00000001
+
+[Cheats/Bot 3]
+// patch=1,EE,003D7AF9,extended,00000001
+
+[Cheats/Cart 1]
+// patch=1,EE,003D7AFA,extended,00000001
+
+[Cheats/Cart 2]
+// patch=1,EE,003D7AFB,extended,00000001
+
+[Cheats/Cart 3]
+// patch=1,EE,003D7AFC,extended,00000001
+
+[Cheats/Willie 1]
+// patch=1,EE,003D7AFD,extended,00000001
+
+[Cheats/Willie 2]
+// patch=1,EE,003D7AFE,extended,00000001
+
+[Cheats/Willie 3]
+// patch=1,EE,003D7AFF,extended,00000001
+
+[Cheats/Poster Illustration 1]
+// patch=1,EE,003D7B00,extended,00000001
+
+[Cheats/Poster Illustration 2]
+// patch=1,EE,003D7B01,extended,00000001
+
+[Cheats/All Gallery]
+// patch=1,EE,103D7AE2,extended,00000101
+// patch=1,EE,403D7AE4,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103D7B00,extended,00000101

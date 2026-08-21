@@ -1,0 +1,32 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ring Of Red [SLES-50113] [9C4BA2CE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Class Race-250 CC]
+// patch=1,EE,9014183C,extended,0C05109F
+
+[Cheats/Max Accuracy]
+// patch=1,EE,20CEFC68,extended,43000000
+
+[Cheats/Always Loaded]
+// patch=1,EE,20CEFC70,extended,00000000
+
+[Cheats/Infinite Health]
+// patch=1,EE,10CEFCDC,extended,0000012C
+
+[Cheats/Infinite Health (Allies)]
+// patch=1,EE,40CEFCEC,extended,00030001
+// patch=1,EE,00000078,extended,00000000
+
+[Cheats/Max Specials]
+// patch=1,EE,10CEFCFA,extended,0000000A
+
+[Cheats/Infinite Specials]
+// patch=1,EE,10CEFCF8,extended,0000000A
+
+[Cheats/Quick Death-Enemies]
+// patch=1,EE,10CF00F8,extended,00000000
+
+[Cheats/No Enemy Troops]
+// patch=1,EE,40CF0108,extended,00030001
+// patch=1,EE,00000000,extended,00000000

@@ -1,0 +1,254 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Bard's Tale, The [SLUS-20803] [E9720D3E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Shoreline Trail 3]
+// patch=1,EE,9016305C,extended,0C05A216
+
+[Cheats/Quick Experience Gain]
+// patch=1,EE,105FBF6C,extended,0000FFFF
+
+[Cheats/Max Experience]
+// patch=1,EE,205FBF6C,extended,05F5E0FF
+
+[Cheats/Infinite Silver]
+// patch=1,EE,105FBF7C,extended,0000FFFF
+
+[Cheats/Max Silver]
+// patch=1,EE,205FBF7C,extended,05F5E0FF
+
+[Cheats/Infinite HP (In Battle)]
+// patch=1,EE,201C426C,extended,3C030060
+// patch=1,EE,201C4270,extended,8464C026
+// patch=1,EE,201C4274,extended,44840000
+// patch=1,EE,201C4278,extended,46800020
+// patch=1,EE,201C427C,extended,E6000068
+
+[Cheats/Infinite Mana Usage]
+// patch=1,EE,201B7978,extended,00000000
+
+[Cheats/Infinite HP]
+// patch=1,EE,105FC024,extended,0000270F
+
+[Cheats/Max HP (Doesnt Show In Stats)]
+// patch=1,EE,105FC026,extended,0000270F
+
+[Cheats/Level 99]
+// patch=1,EE,105FC028,extended,00000063
+
+[Cheats/Max Adderstones]
+// patch=1,EE,105FC02A,extended,0000270F
+
+[Cheats/Infinite Mana]
+// patch=1,EE,105FC02C,extended,0000270F
+
+[Cheats/Max Mana]
+// patch=1,EE,105FC06C,extended,0000270F
+
+[Cheats/Max Strength]
+// patch=1,EE,005FC0AD,extended,00000063
+
+[Cheats/Max Vitality]
+// patch=1,EE,005FC0AE,extended,00000063
+
+[Cheats/Max Luck]
+// patch=1,EE,005FC0AF,extended,00000063
+
+[Cheats/Max Dexterity]
+// patch=1,EE,005FC0B0,extended,00000063
+
+[Cheats/Max Charisma]
+// patch=1,EE,005FC0B1,extended,00000063
+
+[Cheats/Max Rhythm]
+// patch=1,EE,005FC0B2,extended,00000063
+
+[Cheats/Infinite Bonus Points]
+// patch=1,EE,005FC0B3,extended,00000063
+
+[Cheats/Have All Tokens]
+// patch=1,EE,005FC1CB,extended,000000FF
+// patch=1,EE,205FC1CC,extended,FFFFFFFF
+
+[Cheats/Have All Tunes]
+// patch=1,EE,205FC1D0,extended,FFFFFFFF
+
+[Cheats/Have All Talents]
+// patch=1,EE,205FC1D4,extended,FFFFFFFF
+
+[Cheats/Start New Game With 50 Bonus Points]
+// patch=1,EE,2019BA14,extended,24030032
+
+[Cheats/Start New Game With 100 Bonus Points]
+// patch=1,EE,2019BA14,extended,24030064
+
+[Cheats/Start New Game With 150 Bonus Points]
+// patch=1,EE,2019BA14,extended,24030096
+
+[Cheats/Start New Game With 200 Bonus Points]
+// patch=1,EE,2019BA14,extended,240300C8
+
+[Cheats/Start New Game With 250 Bonus Points]
+// patch=1,EE,2019BA14,extended,240300FA
+
+[Cheats/Can Choose New Talent On Each Level Up]
+// patch=1,EE,2019E338,extended,24020001
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,201DE848,extended,248403E7
+
+[Cheats/Super Quick Exp Gain]
+// patch=1,EE,201DE848,extended,2484270F
+
+[Cheats/Hella Quick Exp Gain]
+// patch=1,EE,201DE848,extended,24847FFF
+
+[Cheats/Max Level After 1 Kill]
+// patch=1,EE,201DE848,extended,3C040050
+
+[Cheats/Sword]
+// patch=1,EE,005FC0C2,extended,00000001
+
+[Cheats/Broadsword]
+// patch=1,EE,005FC0C2,extended,00000002
+
+[Cheats/Caladbolg]
+// patch=1,EE,005FC0C2,extended,00000003
+
+[Cheats/Quicksilver Broadsword]
+// patch=1,EE,005FC0C2,extended,00000004
+
+[Cheats/Casgair]
+// patch=1,EE,005FC0C2,extended,00000005
+
+[Cheats/Ravensteel Broadsword]
+// patch=1,EE,005FC0C2,extended,00000006
+
+[Cheats/Flail]
+// patch=1,EE,005FC0C3,extended,00000001
+
+[Cheats/Crannderg]
+// patch=1,EE,005FC0C3,extended,00000002
+
+[Cheats/Granite Flai]
+// patch=1,EE,005FC0C3,extended,00000003
+
+[Cheats/Onyx Flail]
+// patch=1,EE,005FC0C3,extended,00000004
+
+[Cheats/Balor's Eye]
+// patch=1,EE,005FC0C3,extended,00000005
+
+[Cheats/Dirk]
+// patch=1,EE,005FC0C4,extended,00000001
+
+[Cheats/Silver Dirk]
+// patch=1,EE,005FC0C4,extended,00000002
+
+[Cheats/Vipersteel Dirk]
+// patch=1,EE,005FC0C4,extended,00000003
+
+[Cheats/Basluath]
+// patch=1,EE,005FC0C4,extended,00000004
+
+[Cheats/Claymore]
+// patch=1,EE,005FC0C4,extended,00000001
+
+[Cheats/Claidbeamh Soluis]
+// patch=1,EE,005FC0C4,extended,00000002
+
+[Cheats/Lochaber Axe]
+// patch=1,EE,005FC0C4,extended,00000003
+
+[Cheats/Frecraid]
+// patch=1,EE,005FC0C4,extended,00000004
+
+[Cheats/Longbow]
+// patch=1,EE,005FC0C5,extended,00000001
+
+[Cheats/Great Bow]
+// patch=1,EE,005FC0C5,extended,00000002
+
+[Cheats/Glaisne]
+// patch=1,EE,005FC0C5,extended,00000003
+
+[Cheats/Elderwood Bow]
+// patch=1,EE,005FC0C5,extended,00000004
+
+[Cheats/Blackthorn Bow]
+// patch=1,EE,005FC0C5,extended,00000005
+
+[Cheats/Blackthorn Great Bow]
+// patch=1,EE,005FC0C5,extended,00000006
+
+[Cheats/Bow Of Bile Dathi]
+// patch=1,EE,005FC0C5,extended,00000007
+
+[Cheats/Ddraig Goch]
+// patch=1,EE,005FC0C5,extended,00000008
+
+[Cheats/Padden Armor]
+// patch=1,EE,005FC0C6,extended,00000001
+
+[Cheats/Leather Armor]
+// patch=1,EE,005FC0C6,extended,00000002
+
+[Cheats/Studded Leather]
+// patch=1,EE,005FC0C6,extended,00000003
+
+[Cheats/Oak Leaf Armor]
+// patch=1,EE,005FC0C6,extended,00000004
+
+[Cheats/Chainmail]
+// patch=1,EE,005FC0C6,extended,00000005
+
+[Cheats/Scalemail]
+// patch=1,EE,005FC0C6,extended,00000006
+
+[Cheats/Scathach's Mail]
+// patch=1,EE,005FC0C6,extended,00000007
+
+[Cheats/White Bronze Chain Mail]
+// patch=1,EE,005FC0C6,extended,00000008
+
+[Cheats/White Bronze Scale Mail]
+// patch=1,EE,005FC0C6,extended,00000009
+
+[Cheats/Armor Of Lhr]
+// patch=1,EE,005FC0C6,extended,0000000A
+
+[Cheats/Lute]
+// patch=1,EE,005FC0C7,extended,00000001
+
+[Cheats/Harp]
+// patch=1,EE,005FC0C7,extended,00000002
+
+[Cheats/Ornate Lute]
+// patch=1,EE,005FC0C7,extended,00000003
+
+[Cheats/Jeweled Flute]
+// patch=1,EE,005FC0C7,extended,00000004
+
+[Cheats/Silver Harp]
+// patch=1,EE,005FC0C7,extended,00000005
+
+[Cheats/Shadow Axe]
+// patch=1,EE,005FC0C7,extended,00000006
+
+[Cheats/Finn's Lute]
+// patch=1,EE,005FC0C7,extended,00000007
+
+[Cheats/Ancient Flute]
+// patch=1,EE,005FC0C7,extended,00000008
+
+[Cheats/Ego Sword]
+// patch=1,EE,005FC0C7,extended,00000009
+
+[Cheats/Harp Of Ages]
+// patch=1,EE,005FC0C7,extended,0000000A
+
+[Cheats/Gnimb's Flute]
+// patch=1,EE,005FC0C7,extended,0000000B
+
+[Cheats/Ossian's Lute]
+// patch=1,EE,005FC0C7,extended,0000000C

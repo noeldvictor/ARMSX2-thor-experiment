@@ -1,0 +1,379 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: State Of Emergency 2 [SLUS-20966] [6A6BB52F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Stage 19]
+// patch=1,EE,9031E970,extended,00832021
+
+[Cheats/Infinite Health]
+// patch=1,EE,20592F08,extended,437A0000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201A694C,extended,00000000
+// patch=1,EE,204440F8,extended,00000001
+// patch=1,EE,70455871,extended,00000004
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,201A691C,extended,240203E7
+// patch=1,EE,201A6948,extended,240203E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,101A691C,extended,00000001
+// patch=1,EE,101A6948,extended,00000001
+
+[Cheats/Never Reload]
+// patch=1,EE,201A6908,extended,00000000
+
+[Cheats/Always Low Current Time]
+// patch=1,EE,2041B274,extended,00000000
+
+[Cheats/Enable Debug Menu (Press {R3})]
+// patch=1,EE,203D0C90,extended,00000001
+
+[Cheats/Show Debug Info Always On]
+// patch=1,EE,203D6F24,extended,00000001
+
+[Cheats/Show Debug Info Always Off]
+// patch=1,EE,203D6F24,extended,00000000
+
+[Cheats/Show Music Info Always On]
+// patch=1,EE,203D6F28,extended,00000001
+
+[Cheats/Show Music Info Always Off]
+// patch=1,EE,203D6F28,extended,00000000
+
+[Cheats/Show Event Names Always On]
+// patch=1,EE,203D6F2C,extended,00000001
+
+[Cheats/Show Event Names Always Off]
+// patch=1,EE,203D6F2C,extended,00000000
+
+[Cheats/Show Coords Always On]
+// patch=1,EE,203FCEFC,extended,00000001
+
+[Cheats/Show Coords Always Off]
+// patch=1,EE,203FCEFC,extended,00000000
+
+[Cheats/HUD Always On]
+// patch=1,EE,2041E0D8,extended,00000001
+
+[Cheats/HUD Always Off]
+// patch=1,EE,2041E0D8,extended,00000000
+
+[Cheats/Always Max Current Damage]
+// patch=1,EE,204D091C,extended,0098967F
+
+[Cheats/Players Get Tired Sprinting Always On]
+// patch=1,EE,204D4DC0,extended,00000001
+
+[Cheats/Players Get Tired Sprinting Always Off]
+// patch=1,EE,204D4DC0,extended,00000000
+
+[Cheats/Debug Reputation Always On]
+// patch=1,EE,204D4E04,extended,00000001
+
+[Cheats/Debug Reputation Always Off]
+// patch=1,EE,204D4E04,extended,00000000
+
+[Cheats/Target Through Terrain Always On]
+// patch=1,EE,205695D4,extended,00000001
+
+[Cheats/Target Through Terrain Always Off]
+// patch=1,EE,205695D4,extended,00000000
+
+[Cheats/Chapters 1-2]
+// patch=1,EE,20420B7C,extended,00000000
+// patch=1,EE,204214D0,extended,00000001
+
+[Cheats/Chapters 1-3]
+// patch=1,EE,20420B7C,extended,00000000
+// patch=1,EE,204214D0,extended,00000000
+// patch=1,EE,20421E24,extended,00000001
+
+[Cheats/Chapters 1-4]
+// patch=1,EE,40420B7C,extended,00030255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,20422778,extended,00000001
+
+[Cheats/Chapters 1-5]
+// patch=1,EE,40420B7C,extended,00040255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,204230CC,extended,00000001
+
+[Cheats/Chapters 1-6]
+// patch=1,EE,40420B7C,extended,00050255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,20423A20,extended,00000001
+
+[Cheats/Chapters 1-7]
+// patch=1,EE,40420B7C,extended,00060255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,20424374,extended,00000001
+
+[Cheats/Chapters 1-8]
+// patch=1,EE,40420B7C,extended,00070255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,20424CC8,extended,00000001
+
+[Cheats/Chapters 1-9]
+// patch=1,EE,40420B7C,extended,00080255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,2042561C,extended,00000001
+
+[Cheats/Chapters 1-10]
+// patch=1,EE,40420B7C,extended,00090255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,20425F70,extended,00000001
+
+[Cheats/Chapters 1-11]
+// patch=1,EE,40420B7C,extended,000A0255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,204268C4,extended,00000001
+
+[Cheats/Chapters 1-12]
+// patch=1,EE,40420B7C,extended,000B0255
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,20427218,extended,00000001
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,2041B290,extended,00000001
+
+[Cheats/Invulnerable]
+// patch=1,EE,70593160,extended,00000010
+
+[Cheats/Disable Character Collisions]
+// patch=1,EE,70593160,extended,00000040
+
+[Cheats/Disable Wall Collisions]
+// patch=1,EE,70593160,extended,00000080
+
+[Cheats/Disable Terrain Collisions]
+// patch=1,EE,70593161,extended,00000001
+
+[Cheats/Only Damaged By Headshots]
+// patch=1,EE,70593161,extended,00000010
+
+[Cheats/Invulnerable Health]
+// patch=1,EE,70593174,extended,00000020
+
+[Cheats/Character Masks]
+// patch=1,EE,204440D8,extended,00000001
+// patch=1,EE,70455870,extended,00000004
+
+[Cheats/Tiny Characters]
+// patch=1,EE,204440DC,extended,00000001
+// patch=1,EE,70455870,extended,00000008
+
+[Cheats/Huge Characters]
+// patch=1,EE,204440E0,extended,00000001
+// patch=1,EE,70455870,extended,00000010
+
+[Cheats/No Radar]
+// patch=1,EE,204440E4,extended,00000001
+// patch=1,EE,70455870,extended,00000020
+
+[Cheats/Farm Yard Noises]
+// patch=1,EE,204440E8,extended,00000001
+// patch=1,EE,70455870,extended,00000040
+
+[Cheats/One-Shot-Kills]
+// patch=1,EE,204440EC,extended,00000001
+// patch=1,EE,70455870,extended,00000080
+
+[Cheats/Rapid Fire Sniper]
+// patch=1,EE,204440F0,extended,00000001
+// patch=1,EE,70455871,extended,00000001
+
+[Cheats/Invincibility]
+// patch=1,EE,204440F4,extended,00000001
+// patch=1,EE,70455871,extended,00000002
+
+[Cheats/Exploding Death]
+// patch=1,EE,204440FC,extended,00000001
+// patch=1,EE,70455871,extended,00000008
+
+[Cheats/Wireframe]
+// patch=1,EE,20444100,extended,00000001
+// patch=1,EE,70455871,extended,00000010
+
+[Cheats/8-Bit Mode]
+// patch=1,EE,20444104,extended,00000001
+// patch=1,EE,70455871,extended,00000020
+
+[Cheats/All Cheats]
+// patch=1,EE,70455870,extended,00103FFC
+
+[Cheats/Unlock Level]
+// patch=1,EE,2042CEA4,extended,00000000
+// patch=1,EE,2042D7F8,extended,00000000
+// patch=1,EE,2042E14C,extended,00000000
+// patch=1,EE,2042EAA0,extended,00000000
+// patch=1,EE,2042F3F4,extended,00000000
+// patch=1,EE,2042FD48,extended,00000000
+// patch=1,EE,2043069C,extended,00000000
+// patch=1,EE,20430FF0,extended,00000000
+// patch=1,EE,20431944,extended,00000000
+// patch=1,EE,20432298,extended,00000000
+// patch=1,EE,20432BEC,extended,00000000
+// patch=1,EE,20433540,extended,00000000
+// patch=1,EE,20433E94,extended,00000000
+// patch=1,EE,204347E8,extended,00000000
+// patch=1,EE,2043513C,extended,00000000
+
+[Cheats/Low Score Needed-Gold]
+// patch=1,EE,2042CE98,extended,00000001
+// patch=1,EE,2042E140,extended,00000001
+// patch=1,EE,2042EA94,extended,00000001
+// patch=1,EE,20430690,extended,00000001
+// patch=1,EE,204347DC,extended,00000001
+// patch=1,EE,20435130,extended,00000001
+
+[Cheats/Low Score Needed-Silver]
+// patch=1,EE,2042CE9C,extended,00000001
+// patch=1,EE,2042E144,extended,00000001
+// patch=1,EE,2042EA98,extended,00000001
+// patch=1,EE,20430694,extended,00000001
+// patch=1,EE,204347E0,extended,00000001
+// patch=1,EE,20435134,extended,00000001
+
+[Cheats/Low Score Needed-Bronze]
+// patch=1,EE,2042CEA0,extended,00000001
+// patch=1,EE,2042E148,extended,00000001
+// patch=1,EE,2042EA9C,extended,00000001
+// patch=1,EE,20430698,extended,00000001
+// patch=1,EE,204347E4,extended,00000001
+// patch=1,EE,20435138,extended,00000001
+
+[Cheats/Always High Time Needed-Gold]
+// patch=1,EE,2042D7EC,extended,0000EA5F
+// patch=1,EE,2042F3E8,extended,0000EA5F
+// patch=1,EE,2042FD3C,extended,0000EA5F
+// patch=1,EE,20430FE4,extended,0000EA5F
+// patch=1,EE,20431938,extended,0000EA5F
+// patch=1,EE,2043228C,extended,0000EA5F
+// patch=1,EE,20433534,extended,0000EA5F
+// patch=1,EE,20433E88,extended,0000EA5F
+
+[Cheats/Always High Time Needed-Silver]
+// patch=1,EE,2042D7F0,extended,0000EA5F
+// patch=1,EE,2042F3EC,extended,0000EA5F
+// patch=1,EE,2042FD40,extended,0000EA5F
+// patch=1,EE,20430FE8,extended,0000EA5F
+// patch=1,EE,2043193C,extended,0000EA5F
+// patch=1,EE,20432290,extended,0000EA5F
+// patch=1,EE,20433538,extended,0000EA5F
+// patch=1,EE,20433E8C,extended,0000EA5F
+
+[Cheats/Always High Time Needed-Bronze]
+// patch=1,EE,2042D7F4,extended,0000EA5F
+// patch=1,EE,2042F3F0,extended,0000EA5F
+// patch=1,EE,2042FD44,extended,0000EA5F
+// patch=1,EE,20430FEC,extended,0000EA5F
+// patch=1,EE,20431940,extended,0000EA5F
+// patch=1,EE,20432294,extended,0000EA5F
+// patch=1,EE,2043353C,extended,0000EA5F
+// patch=1,EE,20433E90,extended,0000EA5F
+
+[Cheats/Last Man Standing-Prison]
+// patch=1,EE,2043809C,extended,00000001
+
+[Cheats/Last Man Standing-Ghetto]
+// patch=1,EE,204389F0,extended,00000001
+
+[Cheats/Last Man Standing-Worker Zone]
+// patch=1,EE,20439344,extended,00000001
+
+[Cheats/Team Deathmatch-Prison]
+// patch=1,EE,20439C98,extended,00000001
+
+[Cheats/Team Deathmatch-Ghetto]
+// patch=1,EE,2043B894,extended,00000001
+
+[Cheats/Team Deathmatch-Worker Zone]
+// patch=1,EE,2043CB3C,extended,00000001
+
+[Cheats/Deathmatch-Prison]
+// patch=1,EE,2043A5EC,extended,00000001
+
+[Cheats/Deathmatch-Ghetto]
+// patch=1,EE,2043AF40,extended,00000001
+
+[Cheats/Deathmatch-Workers' Zone]
+// patch=1,EE,2043C1E8,extended,00000001
+
+[Cheats/Flag Attack-Prison]
+// patch=1,EE,2043F08C,extended,00000001
+
+[Cheats/Flag Attack-Ghetto]
+// patch=1,EE,2043F9E0,extended,00000001
+
+[Cheats/Flag Attack-Worker Zone]
+// patch=1,EE,20440334,extended,00000001
+
+[Cheats/Battle-Ghetto]
+// patch=1,EE,70455874,extended,00000004
+
+[Cheats/Prison MacNeil]
+// patch=1,EE,70455871,extended,00000040
+
+[Cheats/Prison Bull]
+// patch=1,EE,70455871,extended,00000080
+
+[Cheats/Prison 7366]
+// patch=1,EE,70455872,extended,00000001
+
+[Cheats/Prison Guard]
+// patch=1,EE,70455872,extended,00000002
+
+[Cheats/Spanky]
+// patch=1,EE,70455872,extended,00000004
+
+[Cheats/MacNeil]
+// patch=1,EE,70455872,extended,00000008
+
+[Cheats/Bull]
+// patch=1,EE,70455872,extended,00000010
+
+[Cheats/Libra]
+// patch=1,EE,70455872,extended,00000020
+
+[Cheats/Bob]
+// patch=1,EE,70455872,extended,00000040
+
+[Cheats/Heavy Prison Guard]
+// patch=1,EE,70455872,extended,00000080
+
+[Cheats/Enforcer]
+// patch=1,EE,70455873,extended,00000001
+
+[Cheats/Trey]
+// patch=1,EE,70455873,extended,00000002
+
+[Cheats/Duncan]
+// patch=1,EE,70455873,extended,00000004
+
+[Cheats/Helmut]
+// patch=1,EE,70455873,extended,00000008
+
+[Cheats/Lance]
+// patch=1,EE,70455873,extended,00000010
+
+[Cheats/Piers]
+// patch=1,EE,70455873,extended,00000020
+
+[Cheats/Betty]
+// patch=1,EE,70455873,extended,00000040
+
+[Cheats/Soldier]
+// patch=1,EE,70455873,extended,00000080
+
+[Cheats/Heavy Enforcer]
+// patch=1,EE,70455874,extended,00000001
+
+[Cheats/Freak]
+// patch=1,EE,70455874,extended,00000002
+
+[Cheats/All Characters]
+// patch=1,EE,70455871,extended,000000C0
+// patch=1,EE,10455872,extended,0000FFFF
+// patch=1,EE,70455874,extended,00000003

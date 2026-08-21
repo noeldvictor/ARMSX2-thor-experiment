@@ -1,0 +1,59 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Robots [SLUS-20942] [5931A065]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Rock's Multiplayer Skin]
+// patch=1,EE,902E1C40,extended,0C0BC822
+
+[Cheats/Disable FMV]
+// patch=1,EE,202E81E8,extended,24020001
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0230,extended,C44003D4
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,E44003D0
+// patch=1,EE,201B496C,extended,0C03008C
+
+[Cheats/Health Never Decreases]
+// patch=1,EE,201CAEF0,extended,00000000
+
+[Cheats/Quick Max Scrap]
+// patch=1,EE,20114068,extended,2402270F
+// patch=1,EE,201140C4,extended,2402270F
+
+[Cheats/Scrap Worth x2]
+// patch=1,EE,20114064,extended,24030002
+
+[Cheats/Scrap Worth x3]
+// patch=1,EE,20114064,extended,24030003
+
+[Cheats/Scrap Worth x4]
+// patch=1,EE,20114064,extended,24030004
+
+[Cheats/Scrap Worth x5]
+// patch=1,EE,20114064,extended,24030005
+
+[Cheats/Scrap Worth x10]
+// patch=1,EE,20114064,extended,2403000A
+
+[Cheats/Scrap Worth x25]
+// patch=1,EE,20114064,extended,24030019
+
+[Cheats/Scrap Worth x50]
+// patch=1,EE,20114064,extended,24030032
+
+[Cheats/Scrap Worth x100]
+// patch=1,EE,20114064,extended,24030064
+
+[Cheats/Infinite Scrap Launcher Usage]
+// patch=1,EE,2011DF30,extended,00000000
+
+[Cheats/P1 Press {CROSS} For Moon Jump]
+// patch=1,EE,200C0220,extended,3C0140A0
+// patch=1,EE,200C0224,extended,AE010148
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,C6010148
+// patch=1,EE,D03A4F82,extended,0000BFFF
+// patch=1,EE,2011F27C,extended,0C030088
+// patch=1,EE,D03A4F82,extended,0000FFFF
+// patch=1,EE,2011F27C,extended,C6010148

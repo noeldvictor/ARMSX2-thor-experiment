@@ -1,0 +1,428 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Samurai Western [SLES-53234] [89D8ECCE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Siege Of Osaka Castle]
+// patch=1,EE,9012E4B8,extended,00832021
+
+[Cheats/Infinite Health]
+// patch=1,EE,102E6F1C,extended,000003E7
+
+[Cheats/Max Health]
+// patch=1,EE,102E6F20,extended,000003E7
+
+[Cheats/Max Master Gauge]
+// patch=1,EE,102E6F22,extended,000003E7
+
+[Cheats/Quick Weapon Lv Up]
+// patch=1,EE,20237EAC,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} For Full Master Gauge]
+// patch=1,EE,D02E3F42,extended,0000FBFE
+// patch=1,EE,202E6EF8,extended,4479C000
+
+[Cheats/Infinite Development Points]
+// patch=1,EE,2025F1DC,extended,00000000
+
+[Cheats/Max Infinite Development Points]
+// patch=1,EE,2025F1D8,extended,2403270F
+
+[Cheats/Extra Development Points]
+// patch=1,EE,1025F1D8,extended,00000001
+
+[Cheats/Have All Titles]
+// patch=1,EE,102E6C14,extended,00000064
+
+[Cheats/Unlock All Stages]
+// patch=1,EE,202E76BC,extended,FFFFFFFF
+
+[Cheats/Always Low Play Time]
+// patch=1,EE,202E6EFC,extended,00000000
+
+[Cheats/Max Combo]
+// patch=1,EE,202E7050,extended,0000270F
+
+[Cheats/No Combo]
+// patch=1,EE,202E7050,extended,00000000
+
+[Cheats/Max Kills]
+// patch=1,EE,202E7058,extended,0000270F
+
+[Cheats/No Kills]
+// patch=1,EE,202E7058,extended,00000000
+
+[Cheats/No Damage Taken]
+// patch=1,EE,202E705C,extended,00000000
+
+[Cheats/Faceless]
+// patch=1,EE,002E6BF0,extended,00000001
+// patch=1,EE,002E6C01,extended,00000001
+
+[Cheats/Donald]
+// patch=1,EE,002E6BF1,extended,00000001
+
+[Cheats/Killer]
+// patch=1,EE,002E6BF2,extended,00000001
+
+[Cheats/Nathian]
+// patch=1,EE,002E6BF3,extended,00000001
+
+[Cheats/Jean]
+// patch=1,EE,002E6BF4,extended,00000001
+
+[Cheats/Rando]
+// patch=1,EE,002E6BF5,extended,00000001
+
+[Cheats/Goldgerg]
+// patch=1,EE,002E6BF6,extended,00000001
+
+[Cheats/Goldberg (Evil)]
+// patch=1,EE,002E6BF7,extended,00000001
+
+[Cheats/Harvey]
+// patch=1,EE,002E6BF8,extended,00000001
+
+[Cheats/General]
+// patch=1,EE,002E6BF9,extended,00000001
+
+[Cheats/Lanky]
+// patch=1,EE,002E6BFA,extended,00000001
+
+[Cheats/Oaf]
+// patch=1,EE,002E6BFB,extended,00000001
+
+[Cheats/Ripper]
+// patch=1,EE,002E6BFC,extended,00000001
+
+[Cheats/Eve]
+// patch=1,EE,002E6BFD,extended,00000001
+
+[Cheats/Bart]
+// patch=1,EE,002E6BFE,extended,00000001
+
+[Cheats/Vile]
+// patch=1,EE,002E6BFF,extended,00000001
+
+[Cheats/Little Baby]
+// patch=1,EE,002E6C00,extended,00000001
+
+[Cheats/Claudia]
+// patch=1,EE,002E6C02,extended,00000001
+
+[Cheats/Anne]
+// patch=1,EE,002E6C03,extended,00000001
+
+[Cheats/Joey]
+// patch=1,EE,002E6C04,extended,00000001
+
+[Cheats/Ralph]
+// patch=1,EE,002E6C05,extended,00000001
+
+[Cheats/Urchin]
+// patch=1,EE,002E6C06,extended,00000001
+
+[Cheats/Sweetheart]
+// patch=1,EE,002E6C07,extended,00000001
+
+[Cheats/Brat]
+// patch=1,EE,002E6C08,extended,00000001
+
+[Cheats/Cowgirl]
+// patch=1,EE,002E8258,extended,00000001
+
+[Cheats/Remaining 20 Characters]
+// patch=1,EE,002E6BB1,extended,000000FF
+
+[Cheats/All Characters]
+// patch=1,EE,402E6BF0,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,002E6C08,extended,00000001
+// patch=1,EE,002E6BB1,extended,000000FF
+// patch=1,EE,002E8258,extended,00000001
+
+[Cheats/Demon Horns]
+// patch=1,EE,002E7485,extended,00000001
+
+[Cheats/Samurai Helm]
+// patch=1,EE,002E7486,extended,00000001
+
+[Cheats/Chimney]
+// patch=1,EE,002E7487,extended,00000001
+
+[Cheats/Cat Ears]
+// patch=1,EE,002E7488,extended,00000001
+
+[Cheats/Cowboy Hat]
+// patch=1,EE,002E7489,extended,00000001
+
+[Cheats/Badguy Hat]
+// patch=1,EE,002E748A,extended,00000001
+
+[Cheats/Goodguy Hat]
+// patch=1,EE,002E748B,extended,00000001
+
+[Cheats/Mr. Hopsy]
+// patch=1,EE,002E748C,extended,00000001
+
+[Cheats/Bandana]
+// patch=1,EE,002E748D,extended,00000001
+
+[Cheats/Demon Wings]
+// patch=1,EE,002E748E,extended,00000001
+
+[Cheats/Demon Tail]
+// patch=1,EE,002E748F,extended,00000001
+
+[Cheats/Cat Tail]
+// patch=1,EE,002E7490,extended,00000001
+
+[Cheats/Locomotive]
+// patch=1,EE,002E7491,extended,00000001
+
+[Cheats/Sheriff Badge]
+// patch=1,EE,002E7492,extended,00000001
+
+[Cheats/Samurai Armor]
+// patch=1,EE,002E7493,extended,00000001
+
+[Cheats/Knight Armor]
+// patch=1,EE,002E7494,extended,00000001
+
+[Cheats/Lasso]
+// patch=1,EE,002E7495,extended,00000001
+
+[Cheats/Boxing Belt]
+// patch=1,EE,002E7496,extended,00000001
+
+[Cheats/Steam Engine]
+// patch=1,EE,002E7497,extended,00000001
+
+[Cheats/Guitar]
+// patch=1,EE,002E7498,extended,00000001
+
+[Cheats/Samurai Leg R]
+// patch=1,EE,002E7499,extended,00000001
+
+[Cheats/Samurai Leg L]
+// patch=1,EE,002E749A,extended,00000001
+
+[Cheats/Knight Leg R]
+// patch=1,EE,002E749B,extended,00000001
+
+[Cheats/Knight Leg L]
+// patch=1,EE,002E749C,extended,00000001
+
+[Cheats/Boxing Glove R]
+// patch=1,EE,002E749D,extended,00000001
+
+[Cheats/Boxing Glove L]
+// patch=1,EE,002E749E,extended,00000001
+
+[Cheats/Hopsy Paw R]
+// patch=1,EE,002E749F,extended,00000001
+
+[Cheats/Hopsy Paw L]
+// patch=1,EE,002E74A0,extended,00000001
+
+[Cheats/Cat Paw R]
+// patch=1,EE,002E74A1,extended,00000001
+
+[Cheats/Cat Paw L]
+// patch=1,EE,002E74A2,extended,00000001
+
+[Cheats/Samurai Shldr R]
+// patch=1,EE,002E74A3,extended,00000001
+// patch=1,EE,002E74A4,extended,00000001
+
+[Cheats/Knight Shldr R]
+// patch=1,EE,002E74A5,extended,00000001
+
+[Cheats/Knight Shldr L]
+// patch=1,EE,002E74A6,extended,00000001
+
+[Cheats/Cowboy Boot R]
+// patch=1,EE,002E74A7,extended,00000001
+
+[Cheats/Cowboy Boot L]
+// patch=1,EE,002E74A8,extended,00000001
+
+[Cheats/Showy Boot R]
+// patch=1,EE,002E74A9,extended,00000001
+
+[Cheats/Showy Boot L]
+// patch=1,EE,002E74AA,extended,00000001
+
+[Cheats/Badguy Boot R]
+// patch=1,EE,002E74AB,extended,00000001
+
+[Cheats/Badguy Boot L]
+// patch=1,EE,002E74AC,extended,00000001
+
+[Cheats/Goodguy Boot R]
+// patch=1,EE,002E74AD,extended,00000001
+
+[Cheats/Goodguy Boot L]
+// patch=1,EE,002E74AE,extended,00000001
+
+[Cheats/Afro]
+// patch=1,EE,002E74AF,extended,00000001
+
+[Cheats/Carnival Mask]
+// patch=1,EE,002E74B0,extended,00000001
+
+[Cheats/Spectacles]
+// patch=1,EE,002E74B1,extended,00000001
+
+[Cheats/Fox Mask]
+// patch=1,EE,002E74B2,extended,00000001
+
+[Cheats/Tengu Mask]
+// patch=1,EE,002E74B3,extended,00000001
+
+[Cheats/Lute]
+// patch=1,EE,002E74B4,extended,00000001
+
+[Cheats/Demon Mask]
+// patch=1,EE,002E74B5,extended,00000001
+
+[Cheats/Umbrella]
+// patch=1,EE,002E74B6,extended,00000001
+
+[Cheats/Parrot]
+// patch=1,EE,002E74B7,extended,00000001
+
+[Cheats/Throwing Star]
+// patch=1,EE,002E74B8,extended,00000001
+
+[Cheats/Coffin]
+// patch=1,EE,002E74B9,extended,00000001
+
+[Cheats/Monkey]
+// patch=1,EE,002E74BA,extended,00000001
+
+[Cheats/Hawk]
+// patch=1,EE,002E74BB,extended,00000001
+
+[Cheats/Headband]
+// patch=1,EE,002E74BC,extended,00000001
+
+[Cheats/Eyepatch]
+// patch=1,EE,002E74BD,extended,00000001
+
+[Cheats/Pirate Hat]
+// patch=1,EE,002E74BE,extended,00000001
+
+[Cheats/Pirate Cape]
+// patch=1,EE,002E74BF,extended,00000001
+
+[Cheats/Modern Weapon]
+// patch=1,EE,002E74C0,extended,00000001
+
+[Cheats/Shades]
+// patch=1,EE,002E74C1,extended,00000001
+
+[Cheats/Noh Mask]
+// patch=1,EE,002E74C2,extended,00000001
+
+[Cheats/Flower]
+// patch=1,EE,002E74C3,extended,00000001
+
+[Cheats/Hockey Mask]
+// patch=1,EE,002E74C4,extended,00000001
+
+[Cheats/Chainsaw]
+// patch=1,EE,002E74C5,extended,00000001
+
+[Cheats/Angel Wings]
+// patch=1,EE,002E74C6,extended,00000001
+
+[Cheats/Gas Mask]
+// patch=1,EE,002E74C7,extended,00000001
+
+[Cheats/Halo]
+// patch=1,EE,002E74C8,extended,00000001
+
+[Cheats/Straw Basket]
+// patch=1,EE,002E74C9,extended,00000001
+
+[Cheats/NV Goggles]
+// patch=1,EE,002E74CA,extended,00000001
+
+[Cheats/All Accessories]
+// patch=1,EE,002E7485,extended,00000001
+// patch=1,EE,102E7486,extended,00000101
+// patch=1,EE,402E7488,extended,00100001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,102E74C8,extended,00000101
+// patch=1,EE,002E74CA,extended,00000001
+
+[Cheats/Torakaton]
+// patch=1,EE,002E76D8,extended,00000001
+
+[Cheats/Makiwoari]
+// patch=1,EE,002E76D9,extended,00000001
+
+[Cheats/Hyokki Yoko]
+// patch=1,EE,002E76DA,extended,00000001
+
+[Cheats/Metsu Ryuoto]
+// patch=1,EE,002E76DB,extended,00000001
+
+[Cheats/Nodachi]
+// patch=1,EE,002E76DC,extended,00000001
+
+[Cheats/Gekokujo]
+// patch=1,EE,002E76DD,extended,00000001
+
+[Cheats/Trident]
+// patch=1,EE,002E76DE,extended,00000001
+
+[Cheats/Amatsuyu]
+// patch=1,EE,002E76DF,extended,00000001
+
+[Cheats/Hadarayuki]
+// patch=1,EE,002E76E0,extended,00000001
+
+[Cheats/Oni Dankon]
+// patch=1,EE,002E76E1,extended,00000001
+
+[Cheats/Daihan'nya]
+// patch=1,EE,002E76E2,extended,00000001
+
+[Cheats/Akitsu]
+// patch=1,EE,002E76E3,extended,00000001
+
+[Cheats/Scissor61]
+// patch=1,EE,002E76E4,extended,00000001
+
+[Cheats/Shibuki]
+// patch=1,EE,002E76E5,extended,00000001
+
+[Cheats/Hyokka Ryoran]
+// patch=1,EE,002E76E6,extended,00000001
+
+[Cheats/Sobusho]
+// patch=1,EE,002E76E7,extended,00000001
+
+[Cheats/Shinbutsu-goshiue]
+// patch=1,EE,002E76E8,extended,00000001
+
+[Cheats/Scythe]
+// patch=1,EE,002E76E9,extended,00000001
+
+[Cheats/Murasame]
+// patch=1,EE,002E76EA,extended,00000001
+
+[Cheats/Un'en]
+// patch=1,EE,002E76EB,extended,00000001
+
+[Cheats/Tokefuji]
+// patch=1,EE,002E76EC,extended,00000001
+
+[Cheats/Jumangoku]
+// patch=1,EE,002E76ED,extended,00000001
+
+[Cheats/All Weapons]
+// patch=1,EE,402E76D8,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,102E76EC,extended,00000101

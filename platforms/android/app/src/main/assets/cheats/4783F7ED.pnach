@@ -1,0 +1,47 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Burnout [SLUS-20307] [4783F7ED]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Fortunes Read]
+// patch=1,EE,90126FAC,extended,0C0473AA
+
+[Cheats/Infinite Turbo]
+// patch=1,EE,203A76DC,extended,42C80000
+
+[Cheats/Infinite Credits]
+// patch=1,EE,1037ED50,extended,000003E7
+
+[Cheats/Have Survival]
+// patch=1,EE,0037929C,extended,00000000
+
+[Cheats/Press {R1}+{CROSS} For Nitrous Boost]
+// patch=1,EE,D04EA542,extended,0000B7FF
+// patch=1,EE,203A9134,extended,453B8000
+
+[Cheats/Have All Cars]
+// patch=1,EE,403791F4,extended,000A0001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Have All Tracks]
+// patch=1,EE,4037921C,extended,00100001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Have All Championship Tracks]
+// patch=1,EE,4037925C,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Have All Face Offs]
+// patch=1,EE,4037928C,extended,00040001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,202D2610,extended,00000000
+// patch=1,EE,202D2614,extended,00000000
+// patch=1,EE,202D0EB0,extended,00000000
+// patch=1,EE,202D0EB4,extended,00000000
+
+[Cheats/Always Low Fastest Lap]
+// patch=1,EE,202D26F0,extended,00000000
+// patch=1,EE,202D26F4,extended,00000000
+// patch=1,EE,202D0F90,extended,00000000
+// patch=1,EE,202D0F94,extended,00000000

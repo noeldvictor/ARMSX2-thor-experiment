@@ -1,0 +1,6 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Persona 4 [UNKNOWN] [0DEDC3B7]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Money]
+// patch=1,EE,2079B68C,extended,3B9AC9FF

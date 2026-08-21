@@ -1,0 +1,404 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: FIFA Soccer 2005 [SLUS-21051] [972611BB]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P8 Press {R1}+{R2} To End Half]
+// patch=1,EE,904F7F14,extended,0C0E3D6F
+// patch=1,EE,D0709242,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,20652D38,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,20652D38,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,20652D38,extended,00000000
+
+[Cheats/Home Team Start With 50]
+// patch=1,EE,D0652D38,extended,00000000
+// patch=1,EE,20652D38,extended,00000032
+
+[Cheats/Home Team Start With 20]
+// patch=1,EE,D0652D38,extended,00000000
+// patch=1,EE,20652D38,extended,00000014
+
+[Cheats/Home Team Start With 10]
+// patch=1,EE,D0652D38,extended,00000000
+// patch=1,EE,20652D38,extended,0000000A
+
+[Cheats/Home Team Start With 5]
+// patch=1,EE,D0652D38,extended,00000000
+// patch=1,EE,20652D38,extended,00000005
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,20652D3C,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,20652D3C,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,20652D3C,extended,00000000
+
+[Cheats/Away Team Start With 50]
+// patch=1,EE,D0652D3C,extended,00000000
+// patch=1,EE,20652D3C,extended,00000032
+
+[Cheats/Away Team Start With 20]
+// patch=1,EE,D0652D3C,extended,00000000
+// patch=1,EE,20652D3C,extended,00000014
+
+[Cheats/Away Team Start With 10]
+// patch=1,EE,D0652D3C,extended,00000000
+// patch=1,EE,20652D3C,extended,0000000A
+
+[Cheats/Away Team Start With 5]
+// patch=1,EE,D0652D3C,extended,00000000
+// patch=1,EE,20652D3C,extended,00000005
+
+[Cheats/All Goal's Score For Home Team]
+// patch=1,EE,202087F4,extended,24030000
+
+[Cheats/All Goal's Score For Away Team]
+// patch=1,EE,202087F4,extended,24030004
+
+[Cheats/Goal's Score 10]
+// patch=1,EE,10208800,extended,0000000A
+
+[Cheats/Goal's Score 5]
+// patch=1,EE,10208800,extended,00000005
+
+[Cheats/Goal's Score 2]
+// patch=1,EE,10208800,extended,00000002
+
+[Cheats/Display Debug Info]
+// patch=1,EE,201308C4,extended,24020001
+
+[Cheats/Idiot AI]
+// patch=1,EE,201B0290,extended,03E00008
+// patch=1,EE,201B0294,extended,00000000
+
+[Cheats/Infinite FIFA 2005 Store Points]
+// patch=1,EE,1061ED60,extended,0000FFFF
+
+[Cheats/Max FIFA 2005 Store Points]
+// patch=1,EE,2061ED60,extended,05F5E0FF
+
+[Cheats/Max Staff Upgrade Points]
+// patch=1,EE,200C0220,extended,3C014CBE
+// patch=1,EE,200C0224,extended,3421BC20
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,AC610000
+// patch=1,EE,20183D54,extended,08030088
+
+[Cheats/P1 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0708B42,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/P1 Press {R1}+{R2} To End Half]
+// patch=1,EE,D0708B42,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/P2 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0708C42,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/P2 Press {R1}+{R2} To End Half]
+// patch=1,EE,D0708C42,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/P3 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0708D42,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/P3 Press {R1}+{R2} To End Half]
+// patch=1,EE,D0708D42,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/P4 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0708E42,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/P4 Press {R1}+{R2} To End Half]
+// patch=1,EE,D0708E42,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/P5 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0708F42,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/P5 Press {R1}+{R2} To End Half]
+// patch=1,EE,D0708F42,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/P6 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0709042,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/P6 Press {R1}+{R2} To End Half]
+// patch=1,EE,D0709042,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/P7 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0709142,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/P7 Press {R1}+{R2} To End Half]
+// patch=1,EE,D0709142,extended,0000F5FF
+// patch=1,EE,106559C0,extended,00000170
+
+[Cheats/P8 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0709242,extended,0000FAFF
+// patch=1,EE,106559C0,extended,00000000
+
+[Cheats/Infinite FIFA 2005 Points]
+// patch=1,EE,1061ED60,extended,0000FFFF
+
+[Cheats/Max FIFA 2005 Points]
+// patch=1,EE,2061ED60,extended,05F5E0FF
+
+[Cheats/Max Total Shots]
+// patch=1,EE,20654EEC,extended,00000063
+// patch=1,EE,206552AC,extended,00000063
+
+[Cheats/No Total Shots]
+// patch=1,EE,20654EEC,extended,00000000
+// patch=1,EE,206552AC,extended,00000000
+
+[Cheats/Max Shots On Target]
+// patch=1,EE,20654EF4,extended,00000063
+// patch=1,EE,206552B4,extended,00000063
+
+[Cheats/No Shots On Target]
+// patch=1,EE,20654EF4,extended,00000000
+// patch=1,EE,206552B4,extended,00000000
+
+[Cheats/Max Corners]
+// patch=1,EE,20654EF8,extended,00000063
+// patch=1,EE,206552B8,extended,00000063
+
+[Cheats/No Corners]
+// patch=1,EE,20654EF8,extended,00000000
+// patch=1,EE,206552B8,extended,00000000
+
+[Cheats/Max Bookings]
+// patch=1,EE,20654F04,extended,00000063
+// patch=1,EE,206552C4,extended,00000063
+
+[Cheats/No Bookings]
+// patch=1,EE,20654F04,extended,00000000
+// patch=1,EE,206552C4,extended,00000000
+
+[Cheats/Max Fouls]
+// patch=1,EE,20654F0C,extended,00000063
+// patch=1,EE,206552CC,extended,00000063
+
+[Cheats/No Fouls]
+// patch=1,EE,20654F0C,extended,00000000
+// patch=1,EE,206552CC,extended,00000000
+
+[Cheats/Max Offsides]
+// patch=1,EE,20654F10,extended,00000063
+// patch=1,EE,206552D0,extended,00000063
+
+[Cheats/No Offsides]
+// patch=1,EE,20654F10,extended,00000000
+// patch=1,EE,206552D0,extended,00000000
+
+[Cheats/Max Tackles]
+// patch=1,EE,10654F26,extended,00000063
+// patch=1,EE,106552E6,extended,00000063
+
+[Cheats/No Tackles]
+// patch=1,EE,10654F26,extended,00000000
+// patch=1,EE,106552E6,extended,00000000
+
+[Cheats/AC Milan Alternate Kit]
+// patch=1,EE,2061ED8C,extended,00000001
+
+[Cheats/AS Monaco Alternate Kit]
+// patch=1,EE,2061EDB4,extended,00000001
+
+[Cheats/Bolton Wanderers Alternate Kit]
+// patch=1,EE,2061EE28,extended,00000001
+
+[Cheats/Bordeaux Alternate Kit]
+// patch=1,EE,2061EE4C,extended,00000001
+
+[Cheats/Chelsea Alternate Kit]
+// patch=1,EE,2061EE9C,extended,00000001
+
+[Cheats/Empoli Alternate Kit]
+// patch=1,EE,2061EEE8,extended,00000001
+
+[Cheats/Everton Alternate Kit]
+// patch=1,EE,2061EF10,extended,00000001
+
+[Cheats/FC Barcelona Alternate Kit]
+// patch=1,EE,2061EF34,extended,00000001
+
+[Cheats/FC Hansa Rostock ALternate Kit]
+// patch=1,EE,2061EF5C,extended,00000001
+
+[Cheats/FC Schalke 04 Alternate Kit]
+// patch=1,EE,2061EFAC,extended,00000001
+
+[Cheats/Inter Milan Alternate Kit]
+// patch=1,EE,2061EFFC,extended,00000001
+
+[Cheats/Lazio Alternate Kit]
+// patch=1,EE,2061F024,extended,00000001
+
+[Cheats/Modena Alternate Kit]
+// patch=1,EE,2061F0BC,extended,00000001
+
+[Cheats/Olympique Lyonnais Alternate Kit]
+// patch=1,EE,2061F0E4,extended,00000001
+
+[Cheats/Paris Saint-Germain Alternate Kit]
+// patch=1,EE,2061F10C,extended,00000001
+
+[Cheats/Portsmouth Alternate Kit]
+// patch=1,EE,2061F134,extended,00000001
+
+[Cheats/RC Deportivo La Coruna Alternate Kit]
+// patch=1,EE,2061F184,extended,00000001
+
+[Cheats/Real Betis Alternate Kit]
+// patch=1,EE,2061F1D4,extended,00000001
+
+[Cheats/Reggina Calcie Alternate Kit]
+// patch=1,EE,2061F224,extended,00000001
+
+[Cheats/SV Werder Bremen Alternate Kit]
+// patch=1,EE,2061F274,extended,00000001
+
+[Cheats/Toctenham Hotspur Alternate Kit]
+// patch=1,EE,2061F29C,extended,00000001
+
+[Cheats/VIB Stutlgart Alternate Kit]
+// patch=1,EE,2061F2EC,extended,00000001
+
+[Cheats/INXS-What You Need]
+// patch=1,EE,2061F314,extended,00000001
+
+[Cheats/New Order-Blue Monday]
+// patch=1,EE,2061F33C,extended,00000001
+
+[Cheats/Mitre Ball-ISO England Ultimax]
+// patch=1,EE,2061F3B4,extended,00000001
+
+[Cheats/Mitre Ball (Scottish Premier League)]
+// patch=1,EE,2061F3DC,extended,00000001
+
+[Cheats/Umbro Ball-Digital X (Umbro Teams)]
+// patch=1,EE,2061F404,extended,00000001
+
+[Cheats/PUMA Ball-Veneno (Italy)]
+// patch=1,EE,2061F42C,extended,00000001
+
+[Cheats/Blue Ball (Mexican Premiera Division)]
+// patch=1,EE,2061F454,extended,00000001
+
+[Cheats/Americas Club Championship Ball]
+// patch=1,EE,2061F47C,extended,00000001
+
+[Cheats/Pierlulgi Collina (International Friendlies)]
+// patch=1,EE,2061F4A4,extended,00000001
+
+[Cheats/Urban Training Pitch]
+// patch=1,EE,2061F4C8,extended,00000001
+
+[Cheats/Rural Training Pitch]
+// patch=1,EE,2061F4F0,extended,00000001
+
+[Cheats/Amsterdam Arena-Night]
+// patch=1,EE,2061F518,extended,00000001
+
+[Cheats/Anfield-Night]
+// patch=1,EE,2061F540,extended,00000001
+
+[Cheats/Hamburg Arena-Night]
+// patch=1,EE,2061F568,extended,00000001
+
+[Cheats/BayArena-Night]
+// patch=1,EE,2061F590,extended,00000001
+
+[Cheats/Felix Bollaert-Night]
+// patch=1,EE,2061F5B8,extended,00000001
+
+[Cheats/Calderon-Night]
+// patch=1,EE,2061F5E0,extended,00000001
+
+[Cheats/Delle Alpi-Night]
+// patch=1,EE,2061F608,extended,00000001
+
+[Cheats/Highbury-Night]
+// patch=1,EE,2061F630,extended,00000001
+
+[Cheats/Mestalla-Night]
+// patch=1,EE,2061F658,extended,00000001
+
+[Cheats/Municipal De Gerland-Night]
+// patch=1,EE,2061F680,extended,00000001
+
+[Cheats/Camp Nou-Night]
+// patch=1,EE,2061F6A8,extended,00000001
+
+[Cheats/Old Trafford-Night]
+// patch=1,EE,2061F6D0,extended,00000001
+
+[Cheats/Parc Des Princes-Night]
+// patch=1,EE,2061F6F8,extended,00000001
+
+[Cheats/San Siroc-Night]
+// patch=1,EE,2061F720,extended,00000001
+
+[Cheats/Santiago Bernabeu-Night]
+// patch=1,EE,2061F748,extended,00000001
+
+[Cheats/St. James Park-Night]
+// patch=1,EE,2061F770,extended,00000001
+
+[Cheats/Stamford Bridge-Night]
+// patch=1,EE,2061F798,extended,00000001
+
+[Cheats/Constant Vanden Stock-Night]
+// patch=1,EE,2061F7C0,extended,00000001
+
+[Cheats/Stade- Veledrome-Night]
+// patch=1,EE,2061F7E8,extended,00000001
+
+[Cheats/Westfalenstadion-Night]
+// patch=1,EE,2061F810,extended,00000001
+
+[Cheats/Olympic Style-Night]
+// patch=1,EE,2061F838,extended,00000001
+
+[Cheats/Closed Square Style-Night]
+// patch=1,EE,2061F860,extended,00000001
+
+[Cheats/Open Square Style-Night]
+// patch=1,EE,2061F888,extended,00000001
+
+[Cheats/Oval Style-Night]
+// patch=1,EE,2061F8B0,extended,00000001
+
+[Cheats/Div1 UK Style-Night]
+// patch=1,EE,2061F8D8,extended,00000001
+
+[Cheats/Div1 Euro Style-Night]
+// patch=1,EE,2061F900,extended,00000001
+
+[Cheats/Div2 UK Style-Night]
+// patch=1,EE,2061F928,extended,00000001
+
+[Cheats/Div2 Euro Style-Night]
+// patch=1,EE,2061F950,extended,00000001
+
+[Cheats/Div3 UK Style-Night]
+// patch=1,EE,2061F978,extended,00000001
+
+[Cheats/Div3 Euro Style-Night]
+// patch=1,EE,2061F9A0,extended,00000001

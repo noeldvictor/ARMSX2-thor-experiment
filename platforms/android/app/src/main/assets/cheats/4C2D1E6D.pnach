@@ -1,0 +1,50 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Wipeout Fusion [SLUS-20462] [4C2D1E6D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Master League Funds]
+// patch=1,EE,F0100008,extended,00219097
+
+[Cheats/Unlock All Weapons]
+// patch=1,EE,203A4978,extended,07FFFFFF
+
+[Cheats/Unlock All Leagues]
+// patch=1,EE,203A497C,extended,0000FFFF
+
+[Cheats/Have All Challenges Completed]
+// patch=1,EE,203A5890,extended,FFFFFFFF
+// patch=1,EE,203A5894,extended,FFFFFFFF
+
+[Cheats/Time Playing Always 00'00]
+// patch=1,EE,203A58B8,extended,00000000
+
+[Cheats/Unlock All Teams]
+// patch=1,EE,203A58C0,extended,0000FFFF
+
+[Cheats/Unlock All Challenges]
+// patch=1,EE,203A58C8,extended,FFFFFFFF
+// patch=1,EE,203A58CC,extended,FFFFFFFF
+
+[Cheats/Unlock All Modes]
+// patch=1,EE,203A58D0,extended,00000003
+
+[Cheats/Retro Planes]
+// patch=1,EE,20248AE8,extended,00000001
+
+[Cheats/Animal Ships]
+// patch=1,EE,20248AF0,extended,00000001
+
+[Cheats/Infinite Weapons]
+// patch=1,EE,20248AF4,extended,00000001
+
+[Cheats/Infinite Shield]
+// patch=1,EE,20248AF8,extended,00000001
+
+[Cheats/Super Fast Ship]
+// patch=1,EE,20248AFC,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20248B00,extended,00000001
+
+[Cheats/Features Unlocked]
+// patch=1,EE,20248B04,extended,00000001

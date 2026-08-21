@@ -1,0 +1,150 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Cool Boarders 2001 [SCUS-97108] [0993962D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/005-Archipelago]
+// patch=1,EE,901670EC,extended,0C05F0EF
+
+[Cheats/Gate Misses Dont Count]
+// patch=1,EE,20130430,extended,00000000
+// patch=1,EE,2013114C,extended,00000000
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,10303DCC,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,20303DCC,extended,05F5E0FF
+
+[Cheats/Infinite Time]
+// patch=1,EE,10302288,extended,0000FFFF
+
+[Cheats/Have All Characters]
+// patch=1,EE,2018C65C,extended,FFFFFFFF
+
+[Cheats/Have All Events]
+// patch=1,EE,4018C544,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,4018A690,extended,00100001
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,2018A6D0,extended,FFFFFFFF
+
+[Cheats/Trent-Quick Race-Max All Stats]
+// patch=1,EE,2018C667,extended,0A0A0A0A
+
+[Cheats/Trent-Career-Max All Stats]
+// patch=1,EE,2018A6DC,extended,0A0A0A0A
+
+[Cheats/Cool-Quick Race-Max All Stats]
+// patch=1,EE,2018C668,extended,0A0A0A0A
+
+[Cheats/Cool-Career-Max All Stats]
+// patch=1,EE,2018A6E0,extended,0A0A0A0A
+
+[Cheats/Replay-Quick Race-Max All Stats]
+// patch=1,EE,2018C66C,extended,0A0A0A0A
+
+[Cheats/Replay-Career-Max All Stats]
+// patch=1,EE,2018A6E4,extended,0A0A0A0A
+
+[Cheats/Sasha-Quick Race-Max All Stats]
+// patch=1,EE,2018C670,extended,0A0A0A0A
+
+[Cheats/Sasha-Career-Max All Stats]
+// patch=1,EE,2018A6E8,extended,0A0A0A0A
+
+[Cheats/Max-Quick Race-Max All Stats]
+// patch=1,EE,2018C674,extended,0A0A0A0A
+
+[Cheats/Max-Career-Max All Stats]
+// patch=1,EE,2018A6EC,extended,0A0A0A0A
+
+[Cheats/Karma-Quick Race-Max All Stats]
+// patch=1,EE,2018C678,extended,0A0A0A0A
+
+[Cheats/Karma-Career-Max All Stats]
+// patch=1,EE,2018A6F0,extended,0A0A0A0A
+
+[Cheats/Le Monjello-Quick Race-Max All Stats]
+// patch=1,EE,2018C67C,extended,0A0A0A0A
+
+[Cheats/Le Monjello-Career-Max All Stats]
+// patch=1,EE,2018A6F4,extended,0A0A0A0A
+
+[Cheats/Burg-Quick Race-Max All Stats]
+// patch=1,EE,2018C680,extended,0A0A0A0A
+
+[Cheats/Burg-Career-Max All Stats]
+// patch=1,EE,2018A6F8,extended,0A0A0A0A
+
+[Cheats/Tex-Quick Race-Max All Stats]
+// patch=1,EE,2018C684,extended,0A0A0A0A
+
+[Cheats/Tex-Career-Max All Stats]
+// patch=1,EE,2018A6FC,extended,0A0A0A0A
+
+[Cheats/Gray-Quick Race-Max All Stats]
+// patch=1,EE,2018C688,extended,0A0A0A0A
+
+[Cheats/Gray-Career-Max All Stats]
+// patch=1,EE,2018A700,extended,0A0A0A0A
+
+[Cheats/Jeremy Jones-Quick Race-Max All Stats]
+// patch=1,EE,2018C68C,extended,0A0A0A0A
+
+[Cheats/Jeremy Jones-Career-Max All Stats]
+// patch=1,EE,2018A704,extended,0A0A0A0A
+
+[Cheats/Barrett Christy-Quick Race-Max All Stats]
+// patch=1,EE,2018C690,extended,0A0A0A0A
+
+[Cheats/Barrett Christy-Career-Max All Stats]
+// patch=1,EE,2018A708,extended,0A0A0A0A
+
+[Cheats/Tara Dakides-Quick Race-Max All Stats]
+// patch=1,EE,2018C694,extended,0A0A0A0A
+
+[Cheats/Tara Dakides-Career-Max All Stats]
+// patch=1,EE,2018A70C,extended,0A0A0A0A
+
+[Cheats/Nate Cole-Quick Race-Max All Stats]
+// patch=1,EE,2018C698,extended,0A0A0A0A
+
+[Cheats/Nate Cole-Career-Max All Stats]
+// patch=1,EE,2018A710,extended,0A0A0A0A
+
+[Cheats/Kevin Jones-Quick Race-Max All Stats]
+// patch=1,EE,2018C69C,extended,0A0A0A0A
+
+[Cheats/Kevin Jones-Career-Max All Stats]
+// patch=1,EE,2018A714,extended,0A0A0A0A
+
+[Cheats/Scotty Wittlake-Quick Race-Max All Stats]
+// patch=1,EE,2018C6A0,extended,0A0A0A0A
+
+[Cheats/Scotty Wittlake-Career-Max All Stats]
+// patch=1,EE,2018A718,extended,0A0A0A0A
+
+[Cheats/Travis Parker-Quick Race-Max All Stats]
+// patch=1,EE,2018C6A4,extended,0A0A0A0A
+
+[Cheats/Travis Parker-Career-Max All Stats]
+// patch=1,EE,2018A71C,extended,0A0A0A0A
+
+[Cheats/Michele Taggart-Quick Race-Max All Stats]
+// patch=1,EE,2018C6A8,extended,0A0A0A0A
+
+[Cheats/Michele Taggart-Career-Max All Stats]
+// patch=1,EE,2018A720,extended,0A0A0A0A
+
+[Cheats/Jussi Oksanen-Quick Race-Max All Stats]
+// patch=1,EE,2018C6AC,extended,0A0A0A0A
+
+[Cheats/Jussi Oksanen-Career-Max All Stats]
+// patch=1,EE,2018A724,extended,0A0A0A0A
+
+[Cheats/Todd Richards-Quick Race-Max All Stats]
+// patch=1,EE,2018C6B0,extended,0A0A0A0A
+
+[Cheats/Todd Richards-Career-Max All Stats]
+// patch=1,EE,2018A728,extended,0A0A0A0A

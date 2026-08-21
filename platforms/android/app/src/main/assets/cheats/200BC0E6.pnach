@@ -1,0 +1,29 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: XIII [SLES-51244] [200BC0E6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Culver's Reach-Arabian Ridge Circuit]
+// patch=1,EE,90125154,extended,0C04B906
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,24010096
+// patch=1,EE,200C0224,extended,AC6102B4
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,E68002BC
+// patch=1,EE,20260DD8,extended,0C030088
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,20363B60,extended,24030063
+// patch=1,EE,20363B64,extended,AC830278
+
+[Cheats/Never Reload]
+// patch=1,EE,20153AB0,extended,00000000
+
+[Cheats/P1 Press {L1} For Moon Jump]
+// patch=1,EE,200C0230,extended,3C01437A
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,AEA100EC
+// patch=1,EE,D0444082,extended,0000FBFF
+// patch=1,EE,20240398,extended,0C03008C
+// patch=1,EE,D0444082,extended,0010FBFF
+// patch=1,EE,20240398,extended,E6A400EC

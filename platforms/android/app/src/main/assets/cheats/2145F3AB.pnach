@@ -1,0 +1,101 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Downforce [SLES-50842] [2145F3AB]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max All Stats]
+// patch=1,EE,F0100008,extended,0023B987
+
+[Cheats/Max Points (Championship Mode)]
+// patch=1,EE,103090A6,extended,000003E7
+
+[Cheats/Unlock All Difficulties]
+// patch=1,EE,0030912D,extended,00000002
+
+[Cheats/Pilot]
+// patch=1,EE,00309218,extended,00000001
+
+[Cheats/Kim]
+// patch=1,EE,0030921C,extended,00000001
+
+[Cheats/Kim 2]
+// patch=1,EE,00309220,extended,00000001
+
+[Cheats/Kim 3]
+// patch=1,EE,00309224,extended,00000001
+
+[Cheats/Florida]
+// patch=1,EE,003092B4,extended,00000002
+// patch=1,EE,103090F8,extended,00000000
+
+[Cheats/Tokyo]
+// patch=1,EE,003092BC,extended,00000002
+// patch=1,EE,103090F6,extended,00000000
+
+[Cheats/Sydney]
+// patch=1,EE,003092C8,extended,00000002
+// patch=1,EE,103090FA,extended,00000000
+
+[Cheats/Toronto]
+// patch=1,EE,00309298,extended,00000002
+// patch=1,EE,1030910C,extended,00000000
+
+[Cheats/Tokyo 2]
+// patch=1,EE,003092A0,extended,00000002
+// patch=1,EE,10309106,extended,00000000
+
+[Cheats/Las Vegas 2]
+// patch=1,EE,003092A4,extended,00000002
+// patch=1,EE,10309100,extended,00000000
+
+[Cheats/Singapore 2]
+// patch=1,EE,003092A8,extended,00000002
+// patch=1,EE,10309102,extended,00000000
+
+[Cheats/Sydney 2]
+// patch=1,EE,003092AC,extended,00000002
+// patch=1,EE,1030910A,extended,00000000
+
+[Cheats/Hong Kong 2]
+// patch=1,EE,003092B0,extended,00000002
+// patch=1,EE,10309104,extended,00000000
+
+[Cheats/Florida 2]
+// patch=1,EE,003092D0,extended,00000002
+// patch=1,EE,10309108,extended,00000000
+
+[Cheats/Tokyo 3]
+// patch=1,EE,00309280,extended,00000002
+// patch=1,EE,10309116,extended,00000000
+
+[Cheats/Las Vegas 3]
+// patch=1,EE,00309284,extended,00000002
+// patch=1,EE,10309110,extended,00000000
+
+[Cheats/Singapore 3]
+// patch=1,EE,00309288,extended,00000002
+// patch=1,EE,10309112,extended,00000000
+
+[Cheats/Sydney 3]
+// patch=1,EE,0030928C,extended,00000002
+// patch=1,EE,1030911A,extended,00000000
+
+[Cheats/Hong Kong 3]
+// patch=1,EE,00309290,extended,00000002
+// patch=1,EE,10309114,extended,00000000
+
+[Cheats/Florida 3]
+// patch=1,EE,00309294,extended,00000002
+// patch=1,EE,10309118,extended,00000000
+
+[Cheats/Geneva]
+// patch=1,EE,0030929C,extended,00000002
+// patch=1,EE,1030911C,extended,00000000
+
+[Cheats/Las Vegas]
+// patch=1,EE,103090F0,extended,00000000
+
+[Cheats/Singapore]
+// patch=1,EE,103090F2,extended,00000000
+
+[Cheats/Hong Kong]
+// patch=1,EE,103090F4,extended,00000000

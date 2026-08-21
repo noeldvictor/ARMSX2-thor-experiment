@@ -1,0 +1,236 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mega Man X7 [SLES-51885] [E3D9C115]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/D]
+// patch=1,EE,901049AC,extended,0C061164
+
+[Cheats/Stop Overall Game Timer]
+// patch=1,EE,202EDD68,extended,00000000
+
+[Cheats/Infinite Lives]
+// patch=1,EE,004637A0,extended,00000009
+
+[Cheats/Extra Lives]
+// patch=1,EE,101C0D0C,extended,00000001
+
+[Cheats/Infinite Lives (Alternate)]
+// patch=1,EE,201C0D14,extended,00000000
+
+[Cheats/Always Low Overall Game Timer]
+// patch=1,EE,20E430EC,extended,00000000
+// patch=1,EE,20E430F0,extended,00000000
+
+[Cheats/Have All Characters Selectable]
+// patch=1,EE,20E43568,extended,00000004
+// patch=1,EE,20E435A4,extended,41100000
+// patch=1,EE,20E435CC,extended,42A20000
+// patch=1,EE,20E435F4,extended,43190000
+// patch=1,EE,20E4361C,extended,43610000
+// patch=1,EE,20E43644,extended,43070000
+// patch=1,EE,20E4366C,extended,43948000
+
+[Cheats/Infinite Special Usage]
+// patch=1,EE,2012FA48,extended,00000000
+
+[Cheats/Invincible (Main Character)]
+// patch=1,EE,00E51314,extended,00000001
+
+[Cheats/Infinite Health (Main Character)]
+// patch=1,EE,20E5131C,extended,00000064
+
+[Cheats/Invincible (Sub Character)]
+// patch=1,EE,00E51414,extended,00000001
+
+[Cheats/Infinite Health (Sub Character)]
+// patch=1,EE,20E5141C,extended,00000064
+
+[Cheats/Easy Mission With Num. Targets Left]
+// patch=1,EE,20294AF4,extended,AC400000
+// patch=1,EE,20294AFC,extended,24020000
+
+[Cheats/Infinite Time (To Get Targets)]
+// patch=1,EE,20291600,extended,00000000
+
+[Cheats/Instant Death (Bosses)]
+// patch=1,EE,200C0220,extended,03E00008
+// patch=1,EE,200C0224,extended,24020000
+// patch=1,EE,2019E778,extended,08030088
+// patch=1,EE,2019E77C,extended,AC400000
+
+[Cheats/Reploid 1]
+// patch=1,EE,00E09638,extended,00000001
+
+[Cheats/Reploid 2]
+// patch=1,EE,00E09640,extended,00000001
+
+[Cheats/Reploid 3]
+// patch=1,EE,00E09648,extended,00000001
+
+[Cheats/Reploid 4]
+// patch=1,EE,00E09650,extended,00000001
+
+[Cheats/Reploid 5]
+// patch=1,EE,00E09658,extended,00000001
+
+[Cheats/Reploid 6]
+// patch=1,EE,00E09660,extended,00000001
+
+[Cheats/Reploid 7]
+// patch=1,EE,00E09668,extended,00000001
+
+[Cheats/Reploid 8]
+// patch=1,EE,00E09670,extended,00000001
+
+[Cheats/Reploid 9]
+// patch=1,EE,00E09678,extended,00000001
+
+[Cheats/Reploid 10]
+// patch=1,EE,00E09680,extended,00000001
+
+[Cheats/Reploid 11]
+// patch=1,EE,00E09688,extended,00000001
+
+[Cheats/Reploid 12]
+// patch=1,EE,00E09690,extended,00000001
+
+[Cheats/Reploid 13]
+// patch=1,EE,00E09698,extended,00000001
+
+[Cheats/Reploid 14]
+// patch=1,EE,00E096A0,extended,00000001
+
+[Cheats/Reploid 15]
+// patch=1,EE,00E096A8,extended,00000001
+
+[Cheats/Reploid 16]
+// patch=1,EE,00E096B0,extended,00000001
+
+[Cheats/Main Character-Max Hunted]
+// patch=1,EE,10E6DD6A,extended,000003E7
+
+[Cheats/Main Character-No Hunted]
+// patch=1,EE,10E6DD6A,extended,00000000
+
+[Cheats/Sub Character-Max Hunted]
+// patch=1,EE,10E6DD6E,extended,000003E7
+
+[Cheats/Sub Character-No Hunted]
+// patch=1,EE,10E6DD6E,extended,00000000
+
+[Cheats/Main Character-Max Damaged]
+// patch=1,EE,10E6DD70,extended,000003E7
+
+[Cheats/Main Character-No Damaged]
+// patch=1,EE,10E6DD70,extended,00000000
+
+[Cheats/Sub Character-Max Damaged]
+// patch=1,EE,10E6DD74,extended,000003E7
+
+[Cheats/Sub Character-No Damaged]
+// patch=1,EE,10E6DD74,extended,00000000
+
+[Cheats/Rank UH]
+// patch=1,EE,00E431E0,extended,00000007
+// patch=1,EE,00E431E1,extended,00000007
+// patch=1,EE,00E431E2,extended,00000007
+
+[Cheats/Max Health]
+// patch=1,EE,204ECF24,extended,00000064
+// patch=1,EE,204ED974,extended,00000064
+// patch=1,EE,204EE3C4,extended,00000064
+
+[Cheats/Max Special]
+// patch=1,EE,104EC72E,extended,00000064
+// patch=1,EE,104EC730,extended,00000064
+// patch=1,EE,204ECF30,extended,00000064
+// patch=1,EE,104ED17E,extended,00000064
+// patch=1,EE,104ED180,extended,00000064
+// patch=1,EE,204ED980,extended,00000064
+// patch=1,EE,104EDBCE,extended,00000064
+// patch=1,EE,104EDBD0,extended,00000064
+// patch=1,EE,204EE3D0,extended,00000064
+
+[Cheats/Have All Special Weapons]
+// patch=1,EE,204EC720,extended,FFFFFFFF
+// patch=1,EE,204ED170,extended,FFFFFFFF
+// patch=1,EE,204EDBC0,extended,FFFFFFFF
+
+[Cheats/Max Power/Speed/Special]
+// patch=1,EE,204EC724,extended,FFFFFFFF
+// patch=1,EE,204ED174,extended,FFFFFFFF
+// patch=1,EE,204EDBC4,extended,FFFFFFFF
+
+[Cheats/Quick Weapon Charge]
+// patch=1,EE,204EC758,extended,0003005A
+
+[Cheats/X-Buster]
+// patch=1,EE,104EC732,extended,00000064
+
+[Cheats/Circle Blaze]
+// patch=1,EE,104EC734,extended,00000064
+// patch=1,EE,104EDBD4,extended,00000064
+
+[Cheats/Explosion]
+// patch=1,EE,104EC736,extended,00000064
+// patch=1,EE,104EDBD6,extended,00000064
+
+[Cheats/Volt Tornado]
+// patch=1,EE,104EC738,extended,00000064
+// patch=1,EE,104EDBD8,extended,00000064
+
+[Cheats/Splash Laser]
+// patch=1,EE,104EC73A,extended,00000064
+// patch=1,EE,104EDBDA,extended,00000064
+
+[Cheats/Gaea Shield]
+// patch=1,EE,104EC73C,extended,00000064
+// patch=1,EE,104EDBDC,extended,00000064
+
+[Cheats/Wind Cutter]
+// patch=1,EE,104EC73E,extended,00000064
+// patch=1,EE,104EDBDE,extended,00000064
+
+[Cheats/Sniper Missile]
+// patch=1,EE,104EC740,extended,00000064
+// patch=1,EE,104EDBE0,extended,00000064
+
+[Cheats/Moving Wheel]
+// patch=1,EE,104EC742,extended,00000064
+// patch=1,EE,104EDBE2,extended,00000064
+
+[Cheats/Giga Crash]
+// patch=1,EE,104EC756,extended,00000064
+
+[Cheats/Z-Saber]
+// patch=1,EE,104ED182,extended,00000064
+
+[Cheats/Bakuenjin]
+// patch=1,EE,104ED184,extended,00000064
+
+[Cheats/Haoangeki]
+// patch=1,EE,104ED186,extended,00000064
+
+[Cheats/Raijinshou]
+// patch=1,EE,104ED188,extended,00000064
+
+[Cheats/Suiretusen]
+// patch=1,EE,104ED18A,extended,00000064
+
+[Cheats/Gokumonkey]
+// patch=1,EE,104ED18C,extended,00000064
+
+[Cheats/Souenbu]
+// patch=1,EE,104ED18E,extended,00000064
+
+[Cheats/Hieijin]
+// patch=1,EE,104ED190,extended,00000064
+
+[Cheats/Zankourin]
+// patch=1,EE,104ED182,extended,00000064
+
+[Cheats/Infinite Hover Ability]
+// patch=1,EE,10E43BE4,extended,000001FF
+
+[Cheats/Axl Bullet]
+// patch=1,EE,104EDBD2,extended,00000064

@@ -1,0 +1,18 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Legends Of Wrestling [SLUS-20242] [84235D73]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max All Secondary Breath Upgrades]
+// patch=1,EE,9022023C,extended,0C080F7A
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,2074F834,extended,FFFFFFFF
+
+[Cheats/Infinite Attribute Points]
+// patch=1,EE,2032BBE4,extended,2402001E
+// patch=1,EE,2032BE80,extended,2402001E
+// patch=1,EE,2032C0C8,extended,2407001E
+
+[Cheats/Infinite Ability Points]
+// patch=1,EE,2031F9D8,extended,2402001E
+// patch=1,EE,2031FBB4,extended,2407001E

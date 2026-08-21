@@ -1,0 +1,452 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Armored Core 2 [SLUS-20014] [0D168765]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Southpaw Legacy Controls Mode]
+// patch=1,EE,90289A18,extended,0C0A77E6
+
+[Cheats/Infinite Money]
+// patch=1,EE,103B8C80,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,203B8C80,extended,05F5E0FF
+
+[Cheats/Infinite AP]
+// patch=1,EE,102BB8F4,extended,00009C3C
+
+[Cheats/Infinite Power]
+// patch=1,EE,102BB8F8,extended,00009C3C
+
+[Cheats/Always Low Temperature]
+// patch=1,EE,102BB992,extended,00000000
+
+[Cheats/Infinite Right Ammo]
+// patch=1,EE,102BC1B8,extended,000003E7
+
+[Cheats/Max Right Ammo]
+// patch=1,EE,102BC1BA,extended,000003E7
+
+[Cheats/Max Infinite Right Ammo]
+// patch=1,EE,202BC1B8,extended,03E703E7
+
+[Cheats/Infinite Back Ammo]
+// patch=1,EE,102BC238,extended,00000063
+// patch=1,EE,102BC2B8,extended,00000063
+
+[Cheats/Max Back Ammo]
+// patch=1,EE,102BC23A,extended,00000063
+// patch=1,EE,102BC2BA,extended,00000063
+
+[Cheats/Max Infinite Back Ammo]
+// patch=1,EE,202BC238,extended,00630063
+// patch=1,EE,202BC2B8,extended,00630063
+
+[Cheats/Infinite Inside Ammo]
+// patch=1,EE,102BC338,extended,00000063
+
+[Cheats/Max Inside Ammo]
+// patch=1,EE,102BC33A,extended,00000063
+
+[Cheats/Max Infinite Inside Ammo]
+// patch=1,EE,202BC338,extended,00630063
+
+[Cheats/Infinite Extension Ammo]
+// patch=1,EE,102BC3B8,extended,00000063
+
+[Cheats/Max Extension Ammo]
+// patch=1,EE,102BC3BA,extended,00000063
+
+[Cheats/Max Infinite Extension Ammo]
+// patch=1,EE,202BC3B8,extended,00630063
+
+[Cheats/Infinite Ammo (All Weapons)]
+// patch=1,EE,2014802C,extended,00000000
+
+[Cheats/Extra Ammo (All Weapons)]
+// patch=1,EE,10148028,extended,00000001
+
+[Cheats/Start On Last Mission]
+// patch=1,EE,D03B8C88,extended,00200020
+// patch=1,EE,203B8C88,extended,00000021
+
+[Cheats/Able To Make Overweight Mechs]
+// patch=1,EE,10412820,extended,0000270F
+// patch=1,EE,104125FA,extended,0000270F
+// patch=1,EE,10412488,extended,0000270F
+
+[Cheats/Start In 1st Rank]
+// patch=1,EE,D03B8C94,extended,00300001
+// patch=1,EE,103B8C94,extended,00000001
+
+[Cheats/Human Plus Upgrades]
+// patch=1,EE,103B8C86,extended,0000FFFF
+
+[Cheats/Quick Arena Wins]
+// patch=1,EE,102BF1D4,extended,00000000
+
+[Cheats/Have All Heads]
+// patch=1,EE,404135F0,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,40413DF0,extended,00030001
+
+[Cheats/Have All Torsos]
+// patch=1,EE,20413630,extended,01010101
+// patch=1,EE,10413634,extended,00000101
+// patch=1,EE,20413E30,extended,01010101
+// patch=1,EE,10413E34,extended,00000101
+
+[Cheats/Have All Arms]
+// patch=1,EE,40413670,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10413684,extended,00000101
+// patch=1,EE,00413686,extended,00000001
+// patch=1,EE,40413E70,extended,00050001
+// patch=1,EE,10413E84,extended,00000101
+// patch=1,EE,00413E86,extended,00000001
+
+[Cheats/Have All Legs]
+// patch=1,EE,404136B0,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,104136CC,extended,00000101
+// patch=1,EE,004136CE,extended,00000001
+// patch=1,EE,40413EB0,extended,00070001
+// patch=1,EE,10413ECC,extended,00000101
+// patch=1,EE,00413ECE,extended,00000001
+
+[Cheats/Have All Boosters]
+// patch=1,EE,204136F0,extended,01010101
+// patch=1,EE,104136F4,extended,00000101
+// patch=1,EE,004136F6,extended,00000001
+// patch=1,EE,20413EF0,extended,01010101
+// patch=1,EE,10413EF4,extended,00000101
+// patch=1,EE,00413EF6,extended,00000001
+
+[Cheats/Have All FCS]
+// patch=1,EE,20413730,extended,01010101
+// patch=1,EE,20413734,extended,01010101
+// patch=1,EE,10413738,extended,00000101
+// patch=1,EE,20413F30,extended,01010101
+// patch=1,EE,20413F34,extended,01010101
+// patch=1,EE,10413F38,extended,00000101
+
+[Cheats/Have All Generators]
+// patch=1,EE,20413770,extended,01010101
+// patch=1,EE,20413774,extended,01010101
+// patch=1,EE,20413F70,extended,01010101
+// patch=1,EE,20413F74,extended,01010101
+
+[Cheats/Have All Radiators]
+// patch=1,EE,204137B0,extended,01010101
+// patch=1,EE,204137B4,extended,01010101
+// patch=1,EE,20413FB0,extended,01010101
+// patch=1,EE,20413FB4,extended,01010101
+
+[Cheats/Have All Inside Parts]
+// patch=1,EE,204137F0,extended,01010101
+// patch=1,EE,104137F4,extended,00000101
+// patch=1,EE,004137F6,extended,00000001
+// patch=1,EE,20413FF0,extended,01010101
+// patch=1,EE,10413FF4,extended,00000101
+// patch=1,EE,00413FF6,extended,00000001
+
+[Cheats/Have All Extensions]
+// patch=1,EE,20413830,extended,01010101
+// patch=1,EE,20413834,extended,01010101
+// patch=1,EE,20414030,extended,01010101
+// patch=1,EE,20414034,extended,01010101
+
+[Cheats/Have All Back Units R]
+// patch=1,EE,40413870,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00413885,extended,00000001
+// patch=1,EE,40414070,extended,00050001
+// patch=1,EE,00414085,extended,00000001
+
+[Cheats/Have All Back Units L]
+// patch=1,EE,404138B0,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,004138C5,extended,00000001
+// patch=1,EE,404140B0,extended,00050001
+// patch=1,EE,004140C5,extended,00000001
+
+[Cheats/Have All Misc Back Weapons]
+// patch=1,EE,10413886,extended,00000101
+// patch=1,EE,20413888,extended,01010101
+// patch=1,EE,2041388C,extended,01010101
+// patch=1,EE,104138C6,extended,00000101
+// patch=1,EE,204138C8,extended,01010101
+// patch=1,EE,204138CC,extended,01010101
+
+[Cheats/Have All Arm Units R]
+// patch=1,EE,404138F0,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00413908,extended,00000001
+// patch=1,EE,404140F0,extended,00060001
+// patch=1,EE,00414108,extended,00000001
+
+[Cheats/Have All Arm Units L]
+// patch=1,EE,20413930,extended,01010101
+// patch=1,EE,20413934,extended,01010101
+// patch=1,EE,00413938,extended,00000001
+// patch=1,EE,20414130,extended,01010101
+// patch=1,EE,20414134,extended,01010101
+// patch=1,EE,00414138,extended,00000001
+
+[Cheats/Have All Optional Parts]
+// patch=1,EE,40413970,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,40414170,extended,00040001
+
+[Cheats/Enemies Die Quickly]
+// patch=1,EE,40324DE4,extended,00190060
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Allowed To Use Overweight ACs]
+// patch=1,EE,103B8C84,extended,00000001
+
+[Cheats/Have All Unread Mail]
+// patch=1,EE,403B8D00,extended,000F0001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have More Misc Back Weapons]
+// patch=1,EE,104140C6,extended,00000101
+// patch=1,EE,204140C8,extended,01010101
+// patch=1,EE,204140CC,extended,01010101
+// patch=1,EE,10414086,extended,00000101
+// patch=1,EE,20414088,extended,01010101
+// patch=1,EE,2041408C,extended,01010101
+
+[Cheats/Max Sorties]
+// patch=1,EE,103B8C8C,extended,000003E7
+
+[Cheats/Max Successful Sorties]
+// patch=1,EE,103B8C8E,extended,000003E7
+
+[Cheats/Max Challenge]
+// patch=1,EE,103B8C90,extended,000003E7
+
+[Cheats/Max Victories]
+// patch=1,EE,103B8C92,extended,000003E7
+
+[Cheats/Have Over 100% Achievement]
+// patch=1,EE,103B8C98,extended,00000044
+
+[Cheats/Mail 1]
+// patch=1,EE,003B8D00,extended,00000001
+// patch=1,EE,003B8D00,extended,00000081
+
+[Cheats/Mail 2]
+// patch=1,EE,003B8D01,extended,00000002
+// patch=1,EE,003B8D01,extended,00000082
+
+[Cheats/Mail 3]
+// patch=1,EE,003B8D02,extended,00000003
+// patch=1,EE,003B8D02,extended,00000083
+
+[Cheats/Mail 4]
+// patch=1,EE,003B8D03,extended,00000004
+// patch=1,EE,003B8D03,extended,00000084
+
+[Cheats/Mail 5]
+// patch=1,EE,003B8D04,extended,00000005
+// patch=1,EE,003B8D04,extended,00000085
+
+[Cheats/Mail 6]
+// patch=1,EE,003B8D05,extended,00000006
+// patch=1,EE,003B8D05,extended,00000086
+
+[Cheats/Mail 7]
+// patch=1,EE,003B8D06,extended,00000007
+// patch=1,EE,003B8D06,extended,00000087
+
+[Cheats/Mail 8]
+// patch=1,EE,003B8D07,extended,00000008
+// patch=1,EE,003B8D07,extended,00000088
+
+[Cheats/Mail 9]
+// patch=1,EE,003B8D08,extended,00000009
+// patch=1,EE,003B8D08,extended,00000089
+
+[Cheats/Mail 10]
+// patch=1,EE,003B8D09,extended,0000000A
+// patch=1,EE,003B8D09,extended,0000008A
+
+[Cheats/Mail 11]
+// patch=1,EE,003B8D0A,extended,0000000B
+// patch=1,EE,003B8D0A,extended,0000008B
+
+[Cheats/Mail 12]
+// patch=1,EE,003B8D0B,extended,0000000C
+// patch=1,EE,003B8D0B,extended,0000008C
+
+[Cheats/Mail 13]
+// patch=1,EE,003B8D0C,extended,0000000D
+// patch=1,EE,003B8D0C,extended,0000008D
+
+[Cheats/Mail 14]
+// patch=1,EE,003B8D0D,extended,0000000E
+// patch=1,EE,003B8D0D,extended,0000008E
+
+[Cheats/Mail 15]
+// patch=1,EE,003B8D0E,extended,0000000F
+// patch=1,EE,003B8D0E,extended,0000008F
+
+[Cheats/Mail 16]
+// patch=1,EE,003B8D0F,extended,00000010
+// patch=1,EE,003B8D0F,extended,00000090
+
+[Cheats/Mail 17]
+// patch=1,EE,003B8D10,extended,00000011
+// patch=1,EE,003B8D10,extended,00000091
+
+[Cheats/Mail 18]
+// patch=1,EE,003B8D11,extended,00000012
+// patch=1,EE,003B8D11,extended,00000092
+
+[Cheats/Mail 19]
+// patch=1,EE,003B8D12,extended,00000013
+// patch=1,EE,003B8D12,extended,00000093
+
+[Cheats/Mail 20]
+// patch=1,EE,003B8D13,extended,00000014
+// patch=1,EE,003B8D13,extended,00000094
+
+[Cheats/Mail 21]
+// patch=1,EE,003B8D14,extended,00000015
+// patch=1,EE,003B8D14,extended,00000095
+
+[Cheats/Mail 22]
+// patch=1,EE,003B8D15,extended,00000016
+// patch=1,EE,003B8D15,extended,00000096
+
+[Cheats/Mail 23]
+// patch=1,EE,003B8D16,extended,00000017
+// patch=1,EE,003B8D16,extended,00000097
+
+[Cheats/Mail 24]
+// patch=1,EE,003B8D17,extended,00000018
+// patch=1,EE,003B8D17,extended,00000098
+
+[Cheats/Mail 25]
+// patch=1,EE,003B8D18,extended,00000019
+// patch=1,EE,003B8D18,extended,00000099
+
+[Cheats/Mail 26]
+// patch=1,EE,003B8D19,extended,0000001A
+// patch=1,EE,003B8D19,extended,0000009A
+
+[Cheats/Mail 27]
+// patch=1,EE,003B8D1A,extended,0000001B
+// patch=1,EE,003B8D1A,extended,0000009B
+
+[Cheats/Mail 28]
+// patch=1,EE,003B8D1B,extended,0000001C
+// patch=1,EE,003B8D1B,extended,0000009C
+
+[Cheats/Mail 29]
+// patch=1,EE,003B8D1C,extended,0000001D
+// patch=1,EE,003B8D1C,extended,0000009D
+
+[Cheats/Mail 30]
+// patch=1,EE,003B8D1D,extended,0000001E
+// patch=1,EE,003B8D1D,extended,0000009E
+
+[Cheats/Mail 31]
+// patch=1,EE,003B8D1E,extended,0000001F
+// patch=1,EE,003B8D1E,extended,0000009F
+
+[Cheats/Mail 32]
+// patch=1,EE,003B8D1F,extended,00000020
+// patch=1,EE,003B8D1F,extended,000000A0
+
+[Cheats/Mail 33]
+// patch=1,EE,003B8D20,extended,00000021
+// patch=1,EE,003B8D20,extended,000000A1
+
+[Cheats/Mail 34]
+// patch=1,EE,003B8D21,extended,00000022
+// patch=1,EE,003B8D21,extended,000000A2
+
+[Cheats/Mail 35]
+// patch=1,EE,003B8D22,extended,00000023
+// patch=1,EE,003B8D22,extended,000000A3
+
+[Cheats/Mail 36]
+// patch=1,EE,003B8D23,extended,00000024
+// patch=1,EE,003B8D23,extended,000000A4
+
+[Cheats/Mail 37]
+// patch=1,EE,003B8D24,extended,00000025
+// patch=1,EE,003B8D24,extended,000000A5
+
+[Cheats/Mail 38]
+// patch=1,EE,003B8D25,extended,00000026
+// patch=1,EE,003B8D25,extended,000000A6
+
+[Cheats/Mail 39]
+// patch=1,EE,003B8D26,extended,00000027
+// patch=1,EE,003B8D26,extended,000000A7
+
+[Cheats/Mail 40]
+// patch=1,EE,003B8D27,extended,00000028
+// patch=1,EE,003B8D27,extended,000000A8
+
+[Cheats/Mail 41]
+// patch=1,EE,003B8D28,extended,00000029
+// patch=1,EE,003B8D28,extended,000000A9
+
+[Cheats/Mail 42]
+// patch=1,EE,003B8D29,extended,0000002A
+// patch=1,EE,003B8D29,extended,000000AA
+
+[Cheats/Mail 43]
+// patch=1,EE,003B8D2D,extended,0000002B
+// patch=1,EE,003B8D2D,extended,000000AB
+
+[Cheats/Mail 44]
+// patch=1,EE,003B8D2E,extended,0000002C
+// patch=1,EE,003B8D2E,extended,000000AC
+
+[Cheats/Mail 45]
+// patch=1,EE,003B8D2F,extended,0000002D
+// patch=1,EE,003B8D2F,extended,000000AD
+
+[Cheats/Mail 46]
+// patch=1,EE,003B8D32,extended,0000002E
+// patch=1,EE,003B8D32,extended,000000AE
+
+[Cheats/Mail 47]
+// patch=1,EE,003B8D33,extended,0000002F
+// patch=1,EE,003B8D33,extended,000000AF
+
+[Cheats/Mail 48]
+// patch=1,EE,003B8D34,extended,00000030
+// patch=1,EE,003B8D34,extended,000000B0
+
+[Cheats/Mail 49]
+// patch=1,EE,003B8D35,extended,00000031
+// patch=1,EE,003B8D35,extended,000000B1
+
+[Cheats/Mail 50]
+// patch=1,EE,003B8D36,extended,00000032
+// patch=1,EE,003B8D36,extended,000000B2
+
+[Cheats/Mail 51]
+// patch=1,EE,003B8D37,extended,00000033
+// patch=1,EE,003B8D37,extended,000000B3
+
+[Cheats/Mail 52]
+// patch=1,EE,003B8D38,extended,00000034
+// patch=1,EE,003B8D38,extended,000000B4
+
+[Cheats/Mail 53]
+// patch=1,EE,003B8D39,extended,00000035
+// patch=1,EE,003B8D39,extended,000000B5
+
+[Cheats/Mail 54]
+// patch=1,EE,003B8D3A,extended,00000036
+// patch=1,EE,003B8D3A,extended,000000B6
+
+[Cheats/Mail 55]
+// patch=1,EE,003B8D3B,extended,00000037
+// patch=1,EE,003B8D3B,extended,000000B7

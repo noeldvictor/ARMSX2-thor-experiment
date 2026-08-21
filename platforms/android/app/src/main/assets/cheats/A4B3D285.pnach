@@ -1,0 +1,50 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sims, The [SLUS-20573] [A4B3D285]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Enable COde (Must Be On)]
+// patch=1,EE,901F44DC,extended,0C0B1CBE
+
+[Cheats/Disable Censor Bars (Parental Advisory-17+)]
+// patch=1,EE,201C6650,extended,03E00008
+// patch=1,EE,201C6654,extended,00000000
+
+[Cheats/Max Money]
+// patch=1,EE,201E2100,extended,AC820068
+// patch=1,EE,201E2104,extended,00401821
+
+[Cheats/Ui Sounds Always Disabled]
+// patch=1,EE,2035F3B8,extended,00000000
+
+[Cheats/Ui Sounds Always Enabled]
+// patch=1,EE,2035F3B8,extended,00000001
+
+[Cheats/All Items Are Free]
+// patch=1,EE,2035F3BC,extended,00000001
+
+[Cheats/Display Debug Info]
+// patch=1,EE,2035F3C0,extended,00000001
+
+[Cheats/Unlock All Locked Items/Skins/2-Player Games]
+// patch=1,EE,2035F3C4,extended,00000001
+
+[Cheats/Unlock Party Motel 2-Player Game]
+// patch=1,EE,2035F3C8,extended,00000001
+
+[Cheats/Unlock Play The Sims]
+// patch=1,EE,2035F3CC,extended,00000001
+
+[Cheats/Various Info Displayed]
+// patch=1,EE,2035F3D4,extended,00000001
+
+[Cheats/Fish Eye Cheat Activated]
+// patch=1,EE,2035F3E4,extended,00000001
+
+[Cheats/Big Head Mode]
+// patch=1,EE,2035F3EC,extended,00000001
+
+[Cheats/Smurf Mode]
+// patch=1,EE,2035F3F4,extended,00000001
+
+[Cheats/Max Money For New Family]
+// patch=1,EE,203D02E0,extended,05F5E0FF

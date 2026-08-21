@@ -1,0 +1,131 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: State Of Emergency [SLUS-20214] [158EF23A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Locker Items]
+// patch=1,EE,901B31CC,extended,0C073053
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,101DB6CC,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,201DB6CC,extended,05F5E0FF
+
+[Cheats/Infinite Health]
+// patch=1,EE,201DBC78,extended,00000001
+
+[Cheats/Infinite Time]
+// patch=1,EE,201DBC7C,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201DBC80,extended,00000001
+
+[Cheats/Punches Decapitate]
+// patch=1,EE,201DBC88,extended,00000001
+
+[Cheats/Looting On The Rise]
+// patch=1,EE,201DBC8C,extended,00000001
+
+[Cheats/Press {L1}+{L2} For Huge Player]
+// patch=1,EE,D01DFA42,extended,0000FAFF
+// patch=1,EE,201DBC90,extended,00000002
+
+[Cheats/Press {R1}+{R2} For Tiny Player]
+// patch=1,EE,D01DFA42,extended,0000F5FF
+// patch=1,EE,201DBC90,extended,00000001
+
+[Cheats/Press {L1}+{R1} For Normal Player]
+// patch=1,EE,D01DFA42,extended,0000F3FF
+// patch=1,EE,201DBC90,extended,00000000
+
+[Cheats/Have All Characters]
+// patch=1,EE,201DCFF8,extended,FFFFFFFF
+
+[Cheats/Max Corporation Kills]
+// patch=1,EE,201DD038,extended,0098967F
+
+[Cheats/Max Gang Member Kills]
+// patch=1,EE,201DD040,extended,0098967F
+
+[Cheats/Always Low Overall Time]
+// patch=1,EE,201DB6EC,extended,00000000
+
+[Cheats/Save Slot 1]
+// patch=1,EE,101DC000,extended,0000FFFF
+// patch=1,EE,101DBF88,extended,00000009
+
+[Cheats/Save Slot 2]
+// patch=1,EE,101DC018,extended,0000FFFF
+// patch=1,EE,101DBFA0,extended,00000009
+
+[Cheats/Save Slot 3]
+// patch=1,EE,101DC030,extended,0000FFFF
+// patch=1,EE,101DBFB8,extended,00000009
+
+[Cheats/Save Slot 4]
+// patch=1,EE,101DC048,extended,0000FFFF
+// patch=1,EE,101DBFD0,extended,00000009
+
+[Cheats/Save Slot 5]
+// patch=1,EE,101DC060,extended,0000FFFF
+// patch=1,EE,101DBFE8,extended,00000009
+
+[Cheats/Stage 0]
+// patch=1,EE,201DB87C,extended,00000001
+
+[Cheats/Stage 1]
+// patch=1,EE,201DB880,extended,00000001
+
+[Cheats/Stage 2]
+// patch=1,EE,201DB884,extended,00000001
+
+[Cheats/Stage 3]
+// patch=1,EE,201DB888,extended,00000001
+
+[Cheats/Stage 4]
+// patch=1,EE,201DB88C,extended,00000001
+
+[Cheats/Stage 5]
+// patch=1,EE,201DB890,extended,00000001
+
+[Cheats/Stage 6]
+// patch=1,EE,201DB894,extended,00000001
+
+[Cheats/Stage 7]
+// patch=1,EE,201DB898,extended,00000001
+
+[Cheats/Stage 8]
+// patch=1,EE,201DB89C,extended,00000001
+
+[Cheats/Stage 9]
+// patch=1,EE,201DB8A0,extended,00000001
+
+[Cheats/Stage 10]
+// patch=1,EE,201DB8A4,extended,00000001
+
+[Cheats/Stage 11]
+// patch=1,EE,201DB8A8,extended,00000001
+
+[Cheats/Stage 12]
+// patch=1,EE,201DB8AC,extended,00000001
+
+[Cheats/Stage 13]
+// patch=1,EE,201DB8A0,extended,00000001
+
+[Cheats/Stage 14]
+// patch=1,EE,201DB8B4,extended,00000001
+
+[Cheats/Stage 15]
+// patch=1,EE,201DB8B8,extended,00000001
+
+[Cheats/Stage 16]
+// patch=1,EE,201DB8BC,extended,00000001
+
+[Cheats/Stage 17]
+// patch=1,EE,201DB8C0,extended,00000001
+
+[Cheats/Stage 18]
+// patch=1,EE,201DB8C4,extended,00000001
+
+[Cheats/Stage 19]
+// patch=1,EE,201DB8C8,extended,00000001

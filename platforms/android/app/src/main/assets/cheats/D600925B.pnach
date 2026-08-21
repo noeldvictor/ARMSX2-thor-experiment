@@ -1,0 +1,12 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Great Escape, The [SLUS-20670] [D600925B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Task 10]
+// patch=1,EE,90355F34,extended,0C0FA4AF
+
+[Cheats/Play All Movies Upon Starting Game]
+// patch=1,EE,204EE09C,extended,00000001
+
+[Cheats/Have Level Select]
+// patch=1,EE,204EE0A0,extended,00000001

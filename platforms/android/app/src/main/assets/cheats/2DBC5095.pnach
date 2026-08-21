@@ -1,0 +1,171 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rocky [SLUS-20559] [2DBC5095]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,F0100008,extended,001257FF
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,2022DFF4,extended,000000FF
+
+[Cheats/Infinite Time]
+// patch=1,EE,20244580,extended,43340000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,20279040,extended,3F800000
+
+[Cheats/75% Health P1]
+// patch=1,EE,D0279042,extended,00003F80
+// patch=1,EE,20279040,extended,3F400000
+
+[Cheats/50% Health P1]
+// patch=1,EE,D0279042,extended,00003F80
+// patch=1,EE,20279040,extended,3F000000
+
+[Cheats/25% Health P1]
+// patch=1,EE,D0279042,extended,00003F80
+// patch=1,EE,20279040,extended,3E800000
+
+[Cheats/No Health P1]
+// patch=1,EE,20279040,extended,00000000
+
+[Cheats/Max Health Rebuild P1]
+// patch=1,EE,20279044,extended,3F800000
+
+[Cheats/No Health Rebuild P1]
+// patch=1,EE,20279044,extended,00000000
+
+[Cheats/Infinite Stamina P1]
+// patch=1,EE,20279048,extended,3F800000
+
+[Cheats/Max Stamina Rebuild P1]
+// patch=1,EE,2027904C,extended,3F800000
+
+[Cheats/No Stamina Rebuild P1]
+// patch=1,EE,2027904C,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,20279900,extended,3F800000
+
+[Cheats/75% Health P2]
+// patch=1,EE,D0279902,extended,00003F80
+// patch=1,EE,20279900,extended,3F400000
+
+[Cheats/50% Health P2]
+// patch=1,EE,D0279902,extended,00003F80
+// patch=1,EE,20279900,extended,3F000000
+
+[Cheats/25% Health P2]
+// patch=1,EE,D0279902,extended,00003F80
+// patch=1,EE,20279900,extended,3E800000
+
+[Cheats/No Health P2]
+// patch=1,EE,20279900,extended,00000000
+
+[Cheats/Max Health Rebuild P2]
+// patch=1,EE,20279904,extended,3F800000
+
+[Cheats/No Health Rebuild P2]
+// patch=1,EE,20279904,extended,00000000
+
+[Cheats/Infinite Stamina P2]
+// patch=1,EE,20279908,extended,3F800000
+
+[Cheats/Max Stamina Rebuild P2]
+// patch=1,EE,2027990C,extended,3F800000
+
+[Cheats/No Stamina Rebuild P2]
+// patch=1,EE,2027990C,extended,00000000
+
+[Cheats/Always 0 Knockdowns P1]
+// patch=1,EE,20278EC4,extended,00000000
+
+[Cheats/Start With 1 Knockdown P1]
+// patch=1,EE,D0278EC4,extended,00000000
+// patch=1,EE,20278EC4,extended,00000001
+
+[Cheats/Start With 2 Knockdowns P1]
+// patch=1,EE,D0278EC4,extended,00000000
+// patch=1,EE,20278EC4,extended,00000002
+
+[Cheats/Start With 3 Knockdowns P1]
+// patch=1,EE,D0278EC4,extended,00000000
+// patch=1,EE,20278EC4,extended,00000003
+
+[Cheats/Always 0 Knockdowns P2]
+// patch=1,EE,20279784,extended,00000000
+
+[Cheats/Start With 1 Knockdown P2]
+// patch=1,EE,D0279784,extended,00000000
+// patch=1,EE,20279784,extended,00000001
+
+[Cheats/Start With 2 Knockdowns P2]
+// patch=1,EE,D0279784,extended,00000000
+// patch=1,EE,20279784,extended,00000002
+
+[Cheats/Start With 3 Knockdowns P2]
+// patch=1,EE,D0279784,extended,00000000
+// patch=1,EE,20279784,extended,00000003
+
+[Cheats/Round 2]
+// patch=1,EE,D024457C,extended,00000000
+// patch=1,EE,1024457C,extended,00000001
+
+[Cheats/Round 3]
+// patch=1,EE,D024457C,extended,00000000
+// patch=1,EE,1024457C,extended,00000002
+
+[Cheats/Round 4]
+// patch=1,EE,D024457C,extended,00000000
+// patch=1,EE,1024457C,extended,00000003
+
+[Cheats/Max Strength]
+// patch=1,EE,202DD114,extended,00000064
+
+[Cheats/Max Speed]
+// patch=1,EE,202DD118,extended,00000064
+
+[Cheats/Max Determination]
+// patch=1,EE,202DD11C,extended,00000064
+
+[Cheats/Max Stamina]
+// patch=1,EE,202DD120,extended,00000064
+
+[Cheats/Max Movement]
+// patch=1,EE,202DD124,extended,00000064
+
+[Cheats/Fight 2]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000001
+
+[Cheats/Fight 3]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000002
+
+[Cheats/Fight 4]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000003
+
+[Cheats/Fight 5]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000004
+
+[Cheats/Fight 6]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000005
+
+[Cheats/Fight 7]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000006
+
+[Cheats/Fight 8]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000007
+
+[Cheats/Fight 9]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000008
+
+[Cheats/Fight 10]
+// patch=1,EE,D02DD110,extended,00000000
+// patch=1,EE,102DD110,extended,00000009

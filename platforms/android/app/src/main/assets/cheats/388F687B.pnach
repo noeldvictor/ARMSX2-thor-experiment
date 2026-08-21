@@ -1,0 +1,49 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Yakuza [SLUS-21348] [388F687B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Event Items]
+// patch=1,EE,90126278,extended,0C046A0A
+
+[Cheats/Infinite Money]
+// patch=1,EE,10165B40,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,20165B40,extended,05F5E0FF
+
+[Cheats/Infinite Health]
+// patch=1,EE,101660C8,extended,00000384
+
+[Cheats/Max Health]
+// patch=1,EE,101660CA,extended,00000384
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,201660C8,extended,03840384
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,101660D0,extended,0000FFFF
+
+[Cheats/Max Exp]
+// patch=1,EE,201660D0,extended,05F5E0FF
+
+[Cheats/Quick Max Soul]
+// patch=1,EE,D01660D4,extended,003003E8
+// patch=1,EE,201660D4,extended,000184AC
+
+[Cheats/Quick Max Technique]
+// patch=1,EE,D01660D8,extended,003003E8
+// patch=1,EE,201660D8,extended,000184AC
+
+[Cheats/Quick Max Body]
+// patch=1,EE,D01660DC,extended,003003E8
+// patch=1,EE,201660DC,extended,000184AC
+
+[Cheats/Have All Power Up Skills]
+// patch=1,EE,201660E0,extended,FFFFFFFF
+
+[Cheats/Max Damage Dealt]
+// patch=1,EE,10166102,extended,0000270F
+
+[Cheats/Infinite Weapon Usage]
+// patch=1,EE,D03B6F8C,extended,0000143F
+// patch=1,EE,203B6F94,extended,00000000

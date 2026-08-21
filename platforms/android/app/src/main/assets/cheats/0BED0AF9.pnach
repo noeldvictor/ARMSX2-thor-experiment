@@ -1,0 +1,81 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Devil May cry 3 [UNKNOWN] [0BED0AF9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,205C3870,extended,3C030073
+// patch=1,EE,205C3874,extended,8C6317A8
+// patch=1,EE,205C3878,extended,AC832AD4
+// patch=1,EE,205C387C,extended,03E00008
+// patch=1,EE,202057B4,extended,08170E1C
+
+[Cheats/All Bonus Material Unlocked]
+// patch=1,EE,41CB0520,extended,00030001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/Max Health]
+// patch=1,EE,207317A8,extended,469C4000
+
+[Cheats/Max Red Orbs]
+// patch=1,EE,2073168C,extended,000F423F
+
+[Cheats/Infinite Vital Stars S]
+// patch=1,EE,007316A0,extended,0000001E
+
+[Cheats/Infinite Vital Stars L]
+// patch=1,EE,007316A1,extended,0000001E
+
+[Cheats/Infinite Devil Stars]
+// patch=1,EE,007316A2,extended,0000001E
+
+[Cheats/Infinite Holy Water]
+// patch=1,EE,007316A3,extended,0000001E
+
+[Cheats/Max Vital Stars S]
+// patch=1,EE,01782CDD,extended,0000001E
+
+[Cheats/Max Vital Stars L]
+// patch=1,EE,01782CDC,extended,0000001E
+
+[Cheats/Max Devil Stars]
+// patch=1,EE,01782CDE,extended,0000000A
+
+[Cheats/Max Holy Water]
+// patch=1,EE,01782CDF,extended,0000001E
+
+[Cheats/Max Blue Orbs]
+// patch=1,EE,01782CD3,extended,00000006
+
+[Cheats/Max Purple Orbs]
+// patch=1,EE,01782CD4,extended,00000007
+
+[Cheats/Max Yellow Orbs]
+// patch=1,EE,01782CD2,extended,00000063
+
+[Cheats/Mission end - Low Time]
+// patch=1,EE,207316F8,extended,3F800000
+
+[Cheats/Mission end - Max Orbs]
+// patch=1,EE,20731700,extended,000F423F
+
+[Cheats/Mission end - Max Stylish PTS.]
+// patch=1,EE,207317B4,extended,4A000000
+
+[Cheats/Mission end - No Damage]
+// patch=1,EE,207316FC,extended,00000000
+
+[Cheats/Mission end - No Items Used]
+// patch=1,EE,20731704,extended,00000000
+
+[Cheats/Mission end - All Weapons]
+// patch=1,EE,107316A6,extended,00000101
+// patch=1,EE,207316A8,extended,01010101
+// patch=1,EE,107316AC,extended,00000101
+// patch=1,EE,007316AE,extended,00000001
+
+[Cheats/Mission end - All Levels]
+// patch=1,EE,007316E1,extended,00000005
+// patch=1,EE,107316E2,extended,00000505
+// patch=1,EE,407316E4,extended,00040001
+// patch=1,EE,05050505,extended,00000000
+// patch=1,EE,007316F4,extended,00000005

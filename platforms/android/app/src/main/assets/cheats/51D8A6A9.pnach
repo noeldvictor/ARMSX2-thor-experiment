@@ -1,0 +1,60 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: GTC Africa [SLES-50472] [51D8A6A9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Skills]
+// patch=1,EE,F0100008,extended,001465C7
+
+[Cheats/Lap 2]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000001
+
+[Cheats/Lap 3]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000002
+
+[Cheats/Lap 4]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000003
+
+[Cheats/Lap 5]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000004
+
+[Cheats/Lap 6]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000005
+
+[Cheats/Lap 7]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000006
+
+[Cheats/Lap 8]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000007
+
+[Cheats/Lap 9]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000008
+
+[Cheats/Lap 10]
+// patch=1,EE,D03EBD8C,extended,00000001
+// patch=1,EE,103EBD8C,extended,00000009
+
+[Cheats/Max Points (Championship Mode)]
+// patch=1,EE,10518DF4,extended,000003E7
+// patch=1,EE,11C3DF1C,extended,000003E7
+
+[Cheats/Have All Cars (Single Race)]
+// patch=1,EE,21C3DD88,extended,00000009
+
+[Cheats/Have All Championship Modes]
+// patch=1,EE,21C3EAD4,extended,00000003
+
+[Cheats/Have All Cars-All Teams]
+// patch=1,EE,41C3DF34,extended,00060063
+// patch=1,EE,00000004,extended,00000000
+
+[Cheats/Unlock All Challenges]
+// patch=1,EE,41C3EBF4,extended,000F0043
+// patch=1,EE,00000001,extended,00000000

@@ -1,0 +1,42 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sega Soccer Slam [SLUS-20509] [F9DCF583]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Low Lap Time]
+// patch=1,EE,F03845B0,extended,003C8DE7
+
+[Cheats/Infinite Turbo (All Players)]
+// patch=1,EE,2025F580,extended,00000000
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,21D3B464,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,21D3B464,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,21D3B464,extended,00000000
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,21D3B468,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,21D3B468,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,21D3B468,extended,00000000
+
+[Cheats/All Goals Score For Home Team]
+// patch=1,EE,20290DB8,extended,24040000
+
+[Cheats/All Goals Score For Away Team]
+// patch=1,EE,20290DB8,extended,24040004
+
+[Cheats/Goal's Score 10]
+// patch=1,EE,10290DD4,extended,0000000A
+
+[Cheats/Goal's Score 5]
+// patch=1,EE,10290DD4,extended,00000005
+
+[Cheats/Goal's Score 2]
+// patch=1,EE,10290DD4,extended,00000002

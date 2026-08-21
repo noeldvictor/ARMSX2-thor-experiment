@@ -1,0 +1,66 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Dragon Rage [SLUS-20195] [37878C74]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slot 396]
+// patch=1,EE,901EA674,extended,0C070E09
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,2401270F
+// patch=1,EE,200C0224,extended,0805DE8E
+// patch=1,EE,200C0228,extended,AE4100CC
+// patch=1,EE,20179CE0,extended,0C030088
+
+[Cheats/Max Health]
+// patch=1,EE,200C0230,extended,2401270F
+// patch=1,EE,200C0234,extended,0805DEDC
+// patch=1,EE,200C0238,extended,AE4105EC
+// patch=1,EE,20179CEC,extended,0C03008C
+
+[Cheats/Infinite Mana]
+// patch=1,EE,200C0240,extended,2401270F
+// patch=1,EE,200C0244,extended,0805E9CA
+// patch=1,EE,200C0248,extended,AE410618
+// patch=1,EE,20179CF8,extended,0C030090
+
+[Cheats/Max Mana]
+// patch=1,EE,200C0250,extended,2401270F
+// patch=1,EE,200C0254,extended,0805E4BC
+// patch=1,EE,200C0258,extended,AE4105F0
+// patch=1,EE,20179D04,extended,0C030094
+
+[Cheats/Infinite Lives]
+// patch=1,EE,0022E2E4,extended,00000008
+
+[Cheats/Max Fire Level]
+// patch=1,EE,004B717C,extended,000000FF
+
+[Cheats/Max Water Level]
+// patch=1,EE,004B717D,extended,000000FF
+
+[Cheats/Max Air Level]
+// patch=1,EE,004B717E,extended,000000FF
+
+[Cheats/Max Earth Level]
+// patch=1,EE,004B717F,extended,000000FF
+
+[Cheats/Max Strength]
+// patch=1,EE,204B7188,extended,0000270F
+
+[Cheats/Max Endurance]
+// patch=1,EE,204B718C,extended,0000270F
+
+[Cheats/Max Agility]
+// patch=1,EE,204B7190,extended,0000270F
+
+[Cheats/Max Intelligence]
+// patch=1,EE,204B7194,extended,0000270F
+
+[Cheats/Max Wisdom]
+// patch=1,EE,204B7198,extended,0000270F
+
+[Cheats/Max Presence]
+// patch=1,EE,204B719C,extended,0000270F
+
+[Cheats/Have All Levels]
+// patch=1,EE,00489EC6,extended,0000000F

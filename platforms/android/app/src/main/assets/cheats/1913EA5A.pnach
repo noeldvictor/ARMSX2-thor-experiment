@@ -1,0 +1,86 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Torino 2006 [SLES-53901] [1913EA5A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Buying Shop Items Increases Coins To Max]
+// patch=1,EE,9020F478,extended,00832021
+
+[Cheats/Max Overall Score]
+// patch=1,EE,20402E70,extended,05F5E0FF
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,10402E74,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,20402E74,extended,05F5E0FF
+
+[Cheats/Always Max Gold Medals]
+// patch=1,EE,20402EE4,extended,0000000F
+
+[Cheats/Always No Gold Medals]
+// patch=1,EE,20402EE4,extended,00000000
+
+[Cheats/Always Max Silver Medals]
+// patch=1,EE,20402EE8,extended,0000000F
+
+[Cheats/Always No Silver Medals]
+// patch=1,EE,20402EE8,extended,00000000
+
+[Cheats/Always Max Bronze Medals]
+// patch=1,EE,20402EEC,extended,0000000F
+
+[Cheats/Always No Bronze Medals]
+// patch=1,EE,20402EEC,extended,00000000
+
+[Cheats/Always Low Time]
+// patch=1,EE,2041E3E4,extended,00000000
+// patch=1,EE,2041F3CC,extended,00000000
+// patch=1,EE,2041F670,extended,00000000
+
+[Cheats/No Gate Faults]
+// patch=1,EE,2041F68C,extended,00000000
+
+[Cheats/Winner]
+// patch=1,EE,7040D888,extended,00000001
+
+[Cheats/Legend]
+// patch=1,EE,7040D888,extended,00000002
+
+[Cheats/Ace]
+// patch=1,EE,7040D888,extended,00000004
+
+[Cheats/Rhythm]
+// patch=1,EE,7040D888,extended,00000008
+
+[Cheats/Precision]
+// patch=1,EE,7040D888,extended,00000001
+
+[Cheats/Style]
+// patch=1,EE,7040D888,extended,00000002
+
+[Cheats/Froce]
+// patch=1,EE,7040D888,extended,00000004
+
+[Cheats/Alpine Speed]
+// patch=1,EE,7040D888,extended,00000008
+
+[Cheats/Ski Jumping Distance]
+// patch=1,EE,7040D889,extended,00000001
+
+[Cheats/Skating Speed]
+// patch=1,EE,7040D889,extended,00000002
+
+[Cheats/Cross Country Speed]
+// patch=1,EE,7040D889,extended,00000004
+
+[Cheats/Biathion Speed]
+// patch=1,EE,7040D889,extended,00000008
+
+[Cheats/Bobsleigh Speed]
+// patch=1,EE,7040D889,extended,00000001
+
+[Cheats/Luge Speed]
+// patch=1,EE,7040D889,extended,00000002
+
+[Cheats/All Challenges]
+// patch=1,EE,7040D888,extended,00103FFF

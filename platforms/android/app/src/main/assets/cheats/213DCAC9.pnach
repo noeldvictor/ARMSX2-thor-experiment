@@ -1,0 +1,37 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Snoopy Vs. The Red Baron [SLUS-21380] [213DCAC9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Infinite Saves Left]
+// patch=1,EE,90165370,extended,0C040BB0
+
+[Cheats/Infinite Health]
+// patch=1,EE,201BC618,extended,8C820040
+// patch=1,EE,201BC61C,extended,AC82003C
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20132440,extended,00000000
+
+[Cheats/Infinite Stunt Meter]
+// patch=1,EE,20142960,extended,00000000
+
+[Cheats/Max Piggy Bank]
+// patch=1,EE,202906C8,extended,0000270F
+
+[Cheats/Max Health Upgrade]
+// patch=1,EE,202906CC,extended,00000003
+
+[Cheats/Max Machine Gun Upgrade]
+// patch=1,EE,202906D4,extended,00000003
+
+[Cheats/Max Stunt Upgrade]
+// patch=1,EE,202906D8,extended,00000003
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,202906E0,extended,FFFFFFFF
+
+[Cheats/Unlock All Weapons]
+// patch=1,EE,202906E4,extended,FFFFFFFF
+
+[Cheats/Infinite Lives]
+// patch=1,EE,20295498,extended,00000000

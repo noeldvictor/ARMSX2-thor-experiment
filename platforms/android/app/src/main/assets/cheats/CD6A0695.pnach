@@ -1,0 +1,69 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: WWE Crush Hour [SLUS-20385] [CD6A0695]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Money]
+// patch=1,EE,90121EB4,extended,0C04C592
+
+[Cheats/Unlock All Wrestlers]
+// patch=1,EE,2075D8D0,extended,FFFFFFFF
+
+[Cheats/Unlock All Arenas]
+// patch=1,EE,2075D8D4,extended,0000FFFF
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,20999A24,extended,447A0000
+
+[Cheats/No Health P1]
+// patch=1,EE,20999A24,extended,00000000
+
+[Cheats/Infinite Turbo P1]
+// patch=1,EE,2099C0FC,extended,00000003
+
+[Cheats/No Turbo P1]
+// patch=1,EE,2099C0FC,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,2099C524,extended,447A0000
+
+[Cheats/No Health P2]
+// patch=1,EE,2099C524,extended,00000000
+
+[Cheats/Infinite Turbo P2]
+// patch=1,EE,2099EBFC,extended,00000003
+
+[Cheats/No Turbo P2]
+// patch=1,EE,2099EBFC,extended,00000000
+
+[Cheats/Infinite Health P3]
+// patch=1,EE,2099F024,extended,447A0000
+
+[Cheats/No Health P3]
+// patch=1,EE,2099F024,extended,00000000
+
+[Cheats/Infinite Turbo P3]
+// patch=1,EE,209A16FC,extended,00000003
+
+[Cheats/No Turbo P3]
+// patch=1,EE,209A16FC,extended,00000000
+
+[Cheats/Infinite Health P4]
+// patch=1,EE,209A1B24,extended,447A0000
+
+[Cheats/No Health P4]
+// patch=1,EE,209A1B24,extended,00000000
+
+[Cheats/Infinite Turbo P4]
+// patch=1,EE,209A41FC,extended,00000003
+
+[Cheats/No Turbo P4]
+// patch=1,EE,209A41FC,extended,00000000
+
+[Cheats/Health Doesnt Regenerate]
+// patch=1,EE,201A14F0,extended,00000000
+
+[Cheats/Infinite Turbos (All Players)]
+// patch=1,EE,201E1B88,extended,00000000
+
+[Cheats/Extra Turbos (All Players)]
+// patch=1,EE,101E1B8C,extended,00000001

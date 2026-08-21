@@ -1,0 +1,398 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Urban Reign [SLUS-21209] [BDD9BAAD]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Detective]
+// patch=1,EE,9031740C,extended,0C0CA827
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,105A5FC8,extended,000005DC
+
+[Cheats/75% Health P1]
+// patch=1,EE,D05A5FC8,extended,000005DC
+// patch=1,EE,105A5FC8,extended,00000465
+
+[Cheats/50% Health P1]
+// patch=1,EE,D05A5FC8,extended,000005DC
+// patch=1,EE,105A5FC8,extended,000002EE
+
+[Cheats/25% Health P1]
+// patch=1,EE,D05A5FC8,extended,000005DC
+// patch=1,EE,105A5FC8,extended,00000177
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,D05A5FC8,extended,000005DC
+// patch=1,EE,105A5FC8,extended,00000001
+
+[Cheats/No Health P1]
+// patch=1,EE,105A5FC8,extended,00000000
+
+[Cheats/Head Always Good Condition P1]
+// patch=1,EE,105A5FCC,extended,0000013B
+// patch=1,EE,105A5FD2,extended,0000013B
+
+[Cheats/Head Always Bad Condition P1]
+// patch=1,EE,105A5FCC,extended,00000000
+// patch=1,EE,105A5FD2,extended,0000013B
+
+[Cheats/Torso Always Good Condition P1]
+// patch=1,EE,105A5FCE,extended,0000013B
+// patch=1,EE,105A5FD4,extended,0000013B
+
+[Cheats/Torso Always Bad Condition P1]
+// patch=1,EE,105A5FCE,extended,00000000
+// patch=1,EE,105A5FD4,extended,0000013B
+
+[Cheats/Legs Always Good Condition P1]
+// patch=1,EE,105A5FD0,extended,0000013B
+// patch=1,EE,105A5FD6,extended,0000013B
+
+[Cheats/Legs Always Bad Condition P1]
+// patch=1,EE,105A5FD0,extended,00000000
+// patch=1,EE,105A5FD6,extended,0000013B
+
+[Cheats/Max Special Arts Gauge P1]
+// patch=1,EE,105A5FF2,extended,000003E8
+
+[Cheats/No Special Arts Gauge P1]
+// patch=1,EE,105A5FF2,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,105AF718,extended,000005DC
+
+[Cheats/75% Health P2]
+// patch=1,EE,D05AF718,extended,000005DC
+// patch=1,EE,105AF718,extended,00000465
+
+[Cheats/50% Health P2]
+// patch=1,EE,D05AF718,extended,000005DC
+// patch=1,EE,105AF718,extended,000002EE
+
+[Cheats/25% Health P2]
+// patch=1,EE,D05AF718,extended,000005DC
+// patch=1,EE,105AF718,extended,00000177
+
+[Cheats/1-Hit Death P2]
+// patch=1,EE,D05AF718,extended,000005DC
+// patch=1,EE,105AF718,extended,00000001
+
+[Cheats/No Health P2]
+// patch=1,EE,105AF718,extended,00000000
+
+[Cheats/Head Always Good Condition P2]
+// patch=1,EE,105AF71C,extended,0000013B
+// patch=1,EE,105AF722,extended,0000013B
+
+[Cheats/Head Always Bad Condition P2]
+// patch=1,EE,105AF71C,extended,00000000
+// patch=1,EE,105AF722,extended,0000013B
+
+[Cheats/Torso Always Good Condition P2]
+// patch=1,EE,105AF71E,extended,0000013B
+// patch=1,EE,105AF724,extended,0000013B
+
+[Cheats/Torso Always Bad Condition P2]
+// patch=1,EE,105AF71E,extended,00000000
+// patch=1,EE,105AF724,extended,0000013B
+
+[Cheats/Legs Always Good Condition P2]
+// patch=1,EE,105AF720,extended,0000013B
+// patch=1,EE,105AF726,extended,0000013B
+
+[Cheats/Legs Always Bad Condition P2]
+// patch=1,EE,105AF720,extended,00000000
+// patch=1,EE,105AF726,extended,0000013B
+
+[Cheats/Max Special Arts Gauge P2]
+// patch=1,EE,105AF742,extended,000003E8
+
+[Cheats/No Special Arts Gauge P2]
+// patch=1,EE,105AF742,extended,00000000
+
+[Cheats/Load Game To For Mission 100]
+// patch=1,EE,10946D70,extended,0000003B
+
+[Cheats/Save Story Mode For Mission Completion 100%]
+// patch=1,EE,10946D72,extended,00000001
+// patch=1,EE,40946D74,extended,00310001
+// patch=1,EE,00010001,extended,00000000
+// patch=1,EE,10946E38,extended,00000001
+
+[Cheats/Unlock Free Mode]
+// patch=1,EE,10946634,extended,00000001
+
+[Cheats/Unlock Challenge Mode]
+// patch=1,EE,10946636,extended,00000001
+
+[Cheats/2x4]
+// patch=1,EE,1094663A,extended,00000001
+
+[Cheats/Copper Pipe]
+// patch=1,EE,1094663C,extended,00000001
+
+[Cheats/Chinese Sword]
+// patch=1,EE,1094663E,extended,00000001
+
+[Cheats/Chinese Saber]
+// patch=1,EE,10946640,extended,00000001
+
+[Cheats/Lin's Saber]
+// patch=1,EE,10946642,extended,00000001
+
+[Cheats/Barbwire Bat]
+// patch=1,EE,10946644,extended,00000001
+
+[Cheats/Steel Bat]
+// patch=1,EE,10946646,extended,00000001
+
+[Cheats/Wood Bat]
+// patch=1,EE,10946648,extended,00000001
+
+[Cheats/Spiked Club]
+// patch=1,EE,1094664A,extended,00000001
+
+[Cheats/Sledgehammer]
+// patch=1,EE,1094664C,extended,00000001
+
+[Cheats/4x4]
+// patch=1,EE,1094664E,extended,00000001
+
+[Cheats/Wood Sword(S)]
+// patch=1,EE,10946650,extended,00000001
+
+[Cheats/Wood Sword(L)]
+// patch=1,EE,10946652,extended,00000001
+
+[Cheats/Katana]
+// patch=1,EE,10946654,extended,00000001
+
+[Cheats/Shinkai's Katana]
+// patch=1,EE,10946656,extended,00000001
+
+[Cheats/Sai]
+// patch=1,EE,10946658,extended,00000001
+
+[Cheats/Butterfly Sword]
+// patch=1,EE,1094665A,extended,00000001
+
+[Cheats/Knife]
+// patch=1,EE,1094665C,extended,00000001
+
+[Cheats/Hunter Knife]
+// patch=1,EE,1094665E,extended,00000001
+
+[Cheats/Butterfly Knife]
+// patch=1,EE,10946660,extended,00000001
+
+[Cheats/Bottle]
+// patch=1,EE,10946662,extended,00000001
+
+[Cheats/Axe]
+// patch=1,EE,1094666A,extended,00000001
+
+[Cheats/Wrench(S)]
+// patch=1,EE,1094666C,extended,00000001
+
+[Cheats/Wrench(L)]
+// patch=1,EE,1094666E,extended,00000001
+
+[Cheats/Crowbar]
+// patch=1,EE,10946670,extended,00000001
+
+[Cheats/Galvanized Pipe]
+// patch=1,EE,10946672,extended,00000001
+
+[Cheats/Shovel]
+// patch=1,EE,10946674,extended,00000001
+
+[Cheats/All Weapons]
+// patch=1,EE,1094663A,extended,00000001
+// patch=1,EE,4094663C,extended,000E0001
+// patch=1,EE,00010001,extended,00000000
+// patch=1,EE,10946674,extended,00000001
+
+[Cheats/Brad Hawk]
+// patch=1,EE,1094668E,extended,00000001
+
+[Cheats/Glen]
+// patch=1,EE,10946694,extended,00000001
+
+[Cheats/Torque]
+// patch=1,EE,10946696,extended,00000001
+
+[Cheats/Rod]
+// patch=1,EE,10946698,extended,00000001
+
+[Cheats/Seth]
+// patch=1,EE,1094669A,extended,00000001
+
+[Cheats/Nas-Tiii]
+// patch=1,EE,1094669C,extended,00000001
+
+[Cheats/Em Cee]
+// patch=1,EE,1094669E,extended,00000001
+
+[Cheats/Real Deal]
+// patch=1,EE,109466A0,extended,00000001
+
+[Cheats/Ty]
+// patch=1,EE,109466A2,extended,00000001
+
+[Cheats/Miguel]
+// patch=1,EE,109466A4,extended,00000001
+
+[Cheats/Ramon]
+// patch=1,EE,109466A6,extended,00000001
+
+[Cheats/Jose]
+// patch=1,EE,109466A8,extended,00000001
+
+[Cheats/Emilio]
+// patch=1,EE,109466AA,extended,00000001
+
+[Cheats/Kadonashi]
+// patch=1,EE,109466AC,extended,00000001
+
+[Cheats/Reggie]
+// patch=1,EE,109466AE,extended,00000001
+
+[Cheats/Zach]
+// patch=1,EE,109466B0,extended,00000001
+
+[Cheats/Colin]
+// patch=1,EE,109466B2,extended,00000001
+
+[Cheats/Jake]
+// patch=1,EE,109466B4,extended,00000001
+
+[Cheats/Tong Yoon]
+// patch=1,EE,109466B6,extended,00000001
+
+[Cheats/Grimm]
+// patch=1,EE,109466B8,extended,00000001
+
+[Cheats/BK]
+// patch=1,EE,109466BA,extended,00000001
+
+[Cheats/Grave Digga']
+// patch=1,EE,109466BC,extended,00000001
+
+[Cheats/Bones]
+// patch=1,EE,109466BE,extended,00000001
+
+[Cheats/Booma]
+// patch=1,EE,109466C0,extended,00000001
+
+[Cheats/Busta]
+// patch=1,EE,109466C2,extended,00000001
+
+[Cheats/Spider]
+// patch=1,EE,109466C4,extended,00000001
+
+[Cheats/Pain Killah]
+// patch=1,EE,109466C6,extended,00000001
+
+[Cheats/Dwayne]
+// patch=1,EE,109466C8,extended,00000001
+
+[Cheats/Dwayne 2?]
+// patch=1,EE,109466CA,extended,00000001
+
+[Cheats/Shun Ying Lee]
+// patch=1,EE,109466CC,extended,00000001
+
+[Cheats/GD-05]
+// patch=1,EE,109466CE,extended,00000001
+
+[Cheats/DR-88]
+// patch=1,EE,109466D0,extended,00000001
+
+[Cheats/FK-71]
+// patch=1,EE,109466D2,extended,00000001
+
+[Cheats/PT-22]
+// patch=1,EE,109466D4,extended,00000001
+
+[Cheats/Bain]
+// patch=1,EE,109466D6,extended,00000001
+
+[Cheats/Cooper]
+// patch=1,EE,109466D8,extended,00000001
+
+[Cheats/Anderson]
+// patch=1,EE,109466DA,extended,00000001
+
+[Cheats/Taylor]
+// patch=1,EE,109466DC,extended,00000001
+
+[Cheats/Chris]
+// patch=1,EE,109466DE,extended,00000001
+
+[Cheats/Park]
+// patch=1,EE,109466E0,extended,00000001
+
+[Cheats/Alex]
+// patch=1,EE,109466E2,extended,00000001
+
+[Cheats/McKinzie]
+// patch=1,EE,109466E4,extended,00000001
+
+[Cheats/Napalm 99]
+// patch=1,EE,109466E6,extended,00000001
+
+[Cheats/Golem]
+// patch=1,EE,109466E8,extended,00000001
+
+[Cheats/Riki]
+// patch=1,EE,109466EA,extended,00000001
+
+[Cheats/Masa]
+// patch=1,EE,109466EC,extended,00000001
+
+[Cheats/Hiro]
+// patch=1,EE,109466EE,extended,00000001
+
+[Cheats/Ryuji]
+// patch=1,EE,109466F0,extended,00000001
+
+[Cheats/Ye Wei]
+// patch=1,EE,109466F2,extended,00000001
+
+[Cheats/Sha Ying]
+// patch=1,EE,109466F4,extended,00000001
+
+[Cheats/Yan Jun]
+// patch=1,EE,109466F6,extended,00000001
+
+[Cheats/Shinkai]
+// patch=1,EE,109466F8,extended,00000001
+
+[Cheats/Lin Fong Lee]
+// patch=1,EE,109466FA,extended,00000001
+
+[Cheats/Bordin]
+// patch=1,EE,109466FC,extended,00000001
+
+[Cheats/Lilian]
+// patch=1,EE,109466FE,extended,00000001
+
+[Cheats/Kelly]
+// patch=1,EE,10946700,extended,00000001
+
+[Cheats/Vera Ross]
+// patch=1,EE,10946702,extended,00000001
+
+[Cheats/Paul Phoenix]
+// patch=1,EE,10946704,extended,00000001
+
+[Cheats/Marshall Law]
+// patch=1,EE,10946706,extended,00000001
+
+[Cheats/KG]
+// patch=1,EE,10946718,extended,00000001
+
+[Cheats/All Fighter/Files]
+// patch=1,EE,1094668E,extended,00000001
+// patch=1,EE,40946694,extended,001D0001
+// patch=1,EE,00010001,extended,00000000
+// patch=1,EE,10946718,extended,00000001

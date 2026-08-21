@@ -1,0 +1,2453 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Soul Calibur III [SLUS-21216] [027C604C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Chapters]
+// patch=1,EE,90422238,extended,00832021
+
+[Cheats/Infinite Time]
+// patch=1,EE,204ED754,extended,00000063
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,204B5F24,extended,43700000
+
+[Cheats/75% Health P1]
+// patch=1,EE,D04B5F26,extended,00004370
+// patch=1,EE,204B5F24,extended,43340000
+
+[Cheats/50% Health P1]
+// patch=1,EE,D04B5F26,extended,00004370
+// patch=1,EE,204B5F24,extended,42F00000
+
+[Cheats/25% Health P1]
+// patch=1,EE,D04B5F26,extended,00004370
+// patch=1,EE,204B5F24,extended,42700000
+
+[Cheats/No Health P1]
+// patch=1,EE,204B5F24,extended,00000000
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,D04B5F26,extended,00004370
+// patch=1,EE,204B5F24,extended,3F800000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,204D36A4,extended,43700000
+
+[Cheats/75% Health P2]
+// patch=1,EE,D04D36A6,extended,00004370
+// patch=1,EE,204D36A4,extended,43340000
+
+[Cheats/50% Health P2]
+// patch=1,EE,D04D36A6,extended,00004370
+// patch=1,EE,204D36A4,extended,42F00000
+
+[Cheats/25% Health P2]
+// patch=1,EE,D04D36A6,extended,00004370
+// patch=1,EE,204D36A4,extended,42700000
+
+[Cheats/No Health P2]
+// patch=1,EE,204D36A4,extended,00000000
+
+[Cheats/1-Hit Death P2]
+// patch=1,EE,D04D36A6,extended,00004370
+// patch=1,EE,204D36A4,extended,3F800000
+
+[Cheats/P1 Starts With 1 Match Win]
+// patch=1,EE,D04B5EFC,extended,00000000
+// patch=1,EE,104B5EFC,extended,00000001
+
+[Cheats/P1 Starts With 2 Match Wins]
+// patch=1,EE,D04B5EFC,extended,00000000
+// patch=1,EE,104B5EFC,extended,00000002
+
+[Cheats/P1 Never Wins]
+// patch=1,EE,104B5EFC,extended,00000000
+
+[Cheats/P2 Starts With 1 Match Win]
+// patch=1,EE,D04D367C,extended,00000000
+// patch=1,EE,104D367C,extended,00000001
+
+[Cheats/P2 Starts With 2 Match Wins]
+// patch=1,EE,D04D367C,extended,00000000
+// patch=1,EE,104D367C,extended,00000002
+
+[Cheats/P2 Never Wins]
+// patch=1,EE,104D367C,extended,00000000
+
+[Cheats/Hit Anywhere P1/P2 Cant Hit P1]
+// patch=1,EE,201D89E4,extended,32250080
+// patch=1,EE,201D89E8,extended,10A00064
+
+[Cheats/Hit Anywhere P2/P1 Cant Hit P2]
+// patch=1,EE,201D89E4,extended,32250080
+// patch=1,EE,201D89E8,extended,14A00064
+
+[Cheats/Hit Anywhere]
+// patch=1,EE,201D89E8,extended,00000000
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,40504118,extended,00050001
+// patch=1,EE,66666666,extended,00000000
+// patch=1,EE,1050412C,extended,00006666
+
+[Cheats/Unlock All Modes]
+// patch=1,EE,0050413D,extended,00000066
+// patch=1,EE,1050413E,extended,00006666
+// patch=1,EE,20504140,extended,66666666
+// patch=1,EE,20504144,extended,66666666
+// patch=1,EE,10504148,extended,00006666
+
+[Cheats/Unlock All Weapons]
+// patch=1,EE,0050414D,extended,00000066
+// patch=1,EE,1050414E,extended,00006666
+// patch=1,EE,40504150,extended,00260001
+// patch=1,EE,66666666,extended,00000000
+
+[Cheats/Unlock All Art Gallery]
+// patch=1,EE,005041E7,extended,00000066
+// patch=1,EE,405041E8,extended,00240001
+// patch=1,EE,66666666,extended,00000000
+// patch=1,EE,10504278,extended,00006666
+
+[Cheats/Unlock All Movies]
+// patch=1,EE,1050427A,extended,00006666
+// patch=1,EE,1050427C,extended,00006666
+
+[Cheats/Unlock All Exhibition Theater]
+// patch=1,EE,1050427E,extended,00006666
+// patch=1,EE,20504280,extended,66666666
+// patch=1,EE,20504284,extended,66666666
+// patch=1,EE,10504288,extended,00006666
+// patch=1,EE,0050428A,extended,00000066
+
+[Cheats/Unlock All Character Profiles]
+// patch=1,EE,40504290,extended,00030001
+// patch=1,EE,66666666,extended,00000000
+// patch=1,EE,1050429C,extended,00006666
+
+[Cheats/Unlock All Single Player-Soul Arena Missions]
+// patch=1,EE,10504386,extended,00006666
+// patch=1,EE,40504388,extended,00060001
+// patch=1,EE,66666666,extended,00000000
+
+[Cheats/Unlock All Armor]
+// patch=1,EE,405043B8,extended,00860001
+// patch=1,EE,66666666,extended,00000000
+
+[Cheats/Unlock Everything]
+// patch=1,EE,40504118,extended,012E0001
+// patch=1,EE,66666666,extended,00000000
+
+[Cheats/Infinite Gold]
+// patch=1,EE,104ED894,extended,0000FFFF
+
+[Cheats/Max Gold]
+// patch=1,EE,204ED894,extended,0098967F
+
+[Cheats/Buying Items Doesnt Decrease Gold]
+// patch=1,EE,2038E698,extended,00000000
+
+[Cheats/Buying Items Increases Gold]
+// patch=1,EE,2038E68C,extended,00431021
+
+[Cheats/All Items Cost $0]
+// patch=1,EE,200C0220,extended,24060001
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,ACE60010
+// patch=1,EE,2038F2B0,extended,0C030088
+
+[Cheats/Mitsurugi]
+// patch=1,EE,70504118,extended,00000006
+// patch=1,EE,70504118,extended,002000F6
+// patch=1,EE,7050427E,extended,00000006
+// patch=1,EE,7050427E,extended,002000F6
+// patch=1,EE,70504290,extended,00000060
+// patch=1,EE,70504290,extended,0020006F
+
+[Cheats/Seong Mi-Na]
+// patch=1,EE,70504118,extended,00000060
+// patch=1,EE,70504118,extended,0020006F
+// patch=1,EE,7050427E,extended,00000060
+// patch=1,EE,7050427E,extended,0020006F
+// patch=1,EE,70504291,extended,00000006
+// patch=1,EE,70504291,extended,002000F6
+
+[Cheats/Taki]
+// patch=1,EE,70504119,extended,00000006
+// patch=1,EE,70504119,extended,002000F6
+// patch=1,EE,7050427F,extended,00000006
+// patch=1,EE,7050427F,extended,002000F6
+// patch=1,EE,70504291,extended,00000060
+// patch=1,EE,70504291,extended,0020006F
+
+[Cheats/Maxi]
+// patch=1,EE,70504119,extended,00000060
+// patch=1,EE,70504119,extended,0020006F
+// patch=1,EE,7050427F,extended,00000060
+// patch=1,EE,7050427F,extended,0020006F
+// patch=1,EE,70504292,extended,00000006
+// patch=1,EE,70504292,extended,002000F6
+
+[Cheats/Voldo]
+// patch=1,EE,7050411A,extended,00000006
+// patch=1,EE,7050411A,extended,002000F6
+// patch=1,EE,70504280,extended,00000006
+// patch=1,EE,70504280,extended,002000F6
+// patch=1,EE,70504292,extended,00000060
+// patch=1,EE,70504292,extended,0020006F
+
+[Cheats/Sophitia]
+// patch=1,EE,7050411A,extended,00000060
+// patch=1,EE,7050411A,extended,0020006F
+// patch=1,EE,70504280,extended,00000060
+// patch=1,EE,70504280,extended,0020006F
+// patch=1,EE,70504293,extended,00000006
+// patch=1,EE,70504293,extended,002000F6
+
+[Cheats/Siegfried]
+// patch=1,EE,7050411B,extended,00000006
+// patch=1,EE,7050411B,extended,002000F6
+// patch=1,EE,70504281,extended,00000006
+// patch=1,EE,70504281,extended,002000F6
+// patch=1,EE,70504293,extended,00000060
+// patch=1,EE,70504293,extended,0020006F
+
+[Cheats/Rock]
+// patch=1,EE,7050411B,extended,00000060
+// patch=1,EE,7050411B,extended,0020006F
+// patch=1,EE,70504281,extended,00000060
+// patch=1,EE,70504281,extended,0020006F
+// patch=1,EE,70504294,extended,00000006
+// patch=1,EE,70504294,extended,002000F6
+
+[Cheats/Ivy]
+// patch=1,EE,7050411C,extended,00000006
+// patch=1,EE,7050411C,extended,002000F6
+// patch=1,EE,70504282,extended,00000006
+// patch=1,EE,70504282,extended,002000F6
+// patch=1,EE,70504294,extended,00000060
+// patch=1,EE,70504294,extended,0020006F
+
+[Cheats/Kilik]
+// patch=1,EE,7050411C,extended,00000060
+// patch=1,EE,7050411C,extended,0020006F
+// patch=1,EE,70504282,extended,00000060
+// patch=1,EE,70504282,extended,0020006F
+// patch=1,EE,70504295,extended,00000006
+// patch=1,EE,70504295,extended,002000F6
+
+[Cheats/Xianghu]
+// patch=1,EE,7050411D,extended,00000006
+// patch=1,EE,7050411D,extended,002000F6
+
+[Cheats/Lizardman]
+// patch=1,EE,7050411D,extended,00000060
+// patch=1,EE,7050411D,extended,0020006F
+// patch=1,EE,70504283,extended,00000060
+// patch=1,EE,70504283,extended,0020006F
+// patch=1,EE,70504296,extended,00000006
+// patch=1,EE,70504296,extended,002000F6
+
+[Cheats/Yoshimitsu]
+// patch=1,EE,7050411E,extended,00000006
+// patch=1,EE,7050411E,extended,002000F6
+// patch=1,EE,70504284,extended,00000006
+// patch=1,EE,70504284,extended,002000F6
+// patch=1,EE,70504296,extended,00000060
+// patch=1,EE,70504296,extended,0020006F
+
+[Cheats/Nightmare]
+// patch=1,EE,7050411E,extended,00000060
+// patch=1,EE,7050411E,extended,0020006F
+// patch=1,EE,70504284,extended,00000060
+// patch=1,EE,70504284,extended,0020006F
+// patch=1,EE,70504297,extended,00000006
+// patch=1,EE,70504297,extended,002000F6
+
+[Cheats/Astaroth]
+// patch=1,EE,7050411F,extended,00000006
+// patch=1,EE,7050411F,extended,002000F6
+// patch=1,EE,70504285,extended,00000006
+// patch=1,EE,70504285,extended,002000F6
+// patch=1,EE,70504297,extended,00000060
+// patch=1,EE,70504297,extended,0020006F
+
+[Cheats/Cervantes]
+// patch=1,EE,7050411F,extended,00000060
+// patch=1,EE,7050411F,extended,0020006F
+// patch=1,EE,70504285,extended,00000060
+// patch=1,EE,70504285,extended,0020006F
+// patch=1,EE,70504298,extended,00000006
+// patch=1,EE,70504298,extended,002000F6
+
+[Cheats/Raphael]
+// patch=1,EE,70504120,extended,00000006
+// patch=1,EE,70504120,extended,002000F6
+// patch=1,EE,70504286,extended,00000006
+// patch=1,EE,70504286,extended,002000F6
+// patch=1,EE,70504298,extended,00000060
+// patch=1,EE,70504298,extended,0020006F
+
+[Cheats/Talim]
+// patch=1,EE,70504120,extended,00000060
+// patch=1,EE,70504120,extended,0020006F
+// patch=1,EE,70504286,extended,00000060
+// patch=1,EE,70504286,extended,0020006F
+// patch=1,EE,70504299,extended,00000006
+// patch=1,EE,70504299,extended,002000F6
+
+[Cheats/Cassandra]
+// patch=1,EE,70504121,extended,00000006
+// patch=1,EE,70504121,extended,002000F6
+// patch=1,EE,70504287,extended,00000006
+// patch=1,EE,70504287,extended,002000F6
+// patch=1,EE,70504299,extended,00000060
+// patch=1,EE,70504299,extended,0020006F
+
+[Cheats/Yun-Seong]
+// patch=1,EE,70504121,extended,00000060
+// patch=1,EE,70504121,extended,0020006F
+// patch=1,EE,70504287,extended,00000060
+// patch=1,EE,70504287,extended,0020006F
+// patch=1,EE,7050429A,extended,00000006
+// patch=1,EE,7050429A,extended,002000F6
+
+[Cheats/Setsuka]
+// patch=1,EE,70504122,extended,00000060
+// patch=1,EE,70504122,extended,0020006F
+// patch=1,EE,70504288,extended,00000006
+// patch=1,EE,70504288,extended,002000F6
+// patch=1,EE,7050429A,extended,00000060
+// patch=1,EE,7050429A,extended,0020006F
+
+[Cheats/Tira]
+// patch=1,EE,70504123,extended,00000006
+// patch=1,EE,70504123,extended,002000F6
+// patch=1,EE,70504288,extended,00000060
+// patch=1,EE,70504288,extended,0020006F
+// patch=1,EE,7050429B,extended,00000006
+// patch=1,EE,7050429B,extended,002000F6
+
+[Cheats/Zasalamel]
+// patch=1,EE,70504123,extended,00000060
+// patch=1,EE,70504123,extended,0020006F
+// patch=1,EE,70504289,extended,00000006
+// patch=1,EE,70504289,extended,002000F6
+// patch=1,EE,7050429B,extended,00000060
+// patch=1,EE,7050429B,extended,0020006F
+
+[Cheats/Olcadan]
+// patch=1,EE,70504124,extended,00000006
+// patch=1,EE,70504124,extended,002000F6
+// patch=1,EE,70504289,extended,00000060
+// patch=1,EE,70504289,extended,0020006F
+// patch=1,EE,7050429C,extended,00000006
+// patch=1,EE,7050429C,extended,002000F6
+
+[Cheats/Abyss]
+// patch=1,EE,70504124,extended,00000060
+// patch=1,EE,70504124,extended,0020006F
+// patch=1,EE,7050428A,extended,00000006
+// patch=1,EE,7050428A,extended,002000F6
+// patch=1,EE,7050429C,extended,00000060
+// patch=1,EE,7050429C,extended,0020006F
+
+[Cheats/Miser]
+// patch=1,EE,70504125,extended,00000060
+// patch=1,EE,70504125,extended,0020006F
+
+[Cheats/Greed]
+// patch=1,EE,70504126,extended,00000006
+// patch=1,EE,70504126,extended,002000F6
+
+[Cheats/Arthur]
+// patch=1,EE,70504126,extended,00000060
+// patch=1,EE,70504126,extended,0020006F
+
+[Cheats/Hwang]
+// patch=1,EE,70504127,extended,00000006
+// patch=1,EE,70504127,extended,002000F6
+
+[Cheats/Luna]
+// patch=1,EE,70504127,extended,00000060
+// patch=1,EE,70504127,extended,0020006F
+
+[Cheats/Valeria]
+// patch=1,EE,70504128,extended,00000006
+// patch=1,EE,70504128,extended,002000F6
+
+[Cheats/Hualin]
+// patch=1,EE,70504128,extended,00000060
+// patch=1,EE,70504128,extended,0020006F
+
+[Cheats/Girardot]
+// patch=1,EE,70504129,extended,00000006
+// patch=1,EE,70504129,extended,002000F6
+
+[Cheats/Demuth]
+// patch=1,EE,70504129,extended,00000060
+// patch=1,EE,70504129,extended,0020006F
+
+[Cheats/Aurelia]
+// patch=1,EE,7050412A,extended,00000006
+// patch=1,EE,7050412A,extended,002000F6
+
+[Cheats/Chester]
+// patch=1,EE,7050412A,extended,00000060
+// patch=1,EE,7050412A,extended,0020006F
+
+[Cheats/Strife]
+// patch=1,EE,7050412B,extended,00000006
+// patch=1,EE,7050412B,extended,002000F6
+
+[Cheats/Abelia]
+// patch=1,EE,7050412B,extended,00000060
+// patch=1,EE,7050412B,extended,0020006F
+
+[Cheats/Lynette]
+// patch=1,EE,7050412C,extended,00000006
+// patch=1,EE,7050412C,extended,002000F6
+
+[Cheats/Li Long]
+// patch=1,EE,7050412C,extended,00000060
+// patch=1,EE,7050412C,extended,0020006F
+
+[Cheats/Revenant]
+// patch=1,EE,7050412D,extended,00000006
+// patch=1,EE,7050412D,extended,002000F6
+
+[Cheats/Amy]
+// patch=1,EE,7050412D,extended,00000060
+// patch=1,EE,7050412D,extended,0020006F
+
+[Cheats/Single Player-Tales Of Souls]
+// patch=1,EE,7050413D,extended,00000006
+// patch=1,EE,7050413D,extended,002000F6
+
+[Cheats/Single Player-Chronicles Of The Sword]
+// patch=1,EE,7050413D,extended,00000060
+// patch=1,EE,7050413D,extended,0020006F
+
+[Cheats/Single Player-World Competition]
+// patch=1,EE,7050413E,extended,00000006
+// patch=1,EE,7050413E,extended,002000F6
+
+[Cheats/Single Player-Soul Arena-Quick Play]
+// patch=1,EE,7050413E,extended,00000060
+// patch=1,EE,7050413E,extended,0020006F
+
+[Cheats/Single Player-Soul Arena-Mission]
+// patch=1,EE,7050413F,extended,00000006
+// patch=1,EE,7050413F,extended,002000F6
+
+[Cheats/Single Player-Practice-Tutorial]
+// patch=1,EE,70504140,extended,00000006
+// patch=1,EE,70504140,extended,002000F6
+
+[Cheats/Single Player-Practice-Free Training]
+// patch=1,EE,70504140,extended,00000060
+// patch=1,EE,70504140,extended,0020006F
+
+[Cheats/Single Player-Practice-Glossary]
+// patch=1,EE,70504141,extended,00000006
+// patch=1,EE,70504141,extended,002000F6
+
+[Cheats/Single Player-Museum-Art Gallery]
+// patch=1,EE,70504141,extended,00000060
+// patch=1,EE,70504141,extended,0020006F
+
+[Cheats/Single Player-Museum-Battle Theater]
+// patch=1,EE,70504142,extended,00000006
+// patch=1,EE,70504142,extended,002000F6
+
+[Cheats/Single Player-Museum-Exhibition Theater]
+// patch=1,EE,70504142,extended,00000060
+// patch=1,EE,70504142,extended,0020006F
+
+[Cheats/Single Player-Museum-Character Profiles]
+// patch=1,EE,70504143,extended,00000006
+// patch=1,EE,70504143,extended,002000F6
+
+[Cheats/Single Player-Museum-Event Viewer]
+// patch=1,EE,70504143,extended,00000060
+// patch=1,EE,70504143,extended,0020006F
+
+[Cheats/Single Player-Character Creation-Custom]
+// patch=1,EE,70504145,extended,00000060
+// patch=1,EE,70504145,extended,0020006F
+
+[Cheats/Single Player-Character Creation-Standard]
+// patch=1,EE,70504146,extended,00000006
+// patch=1,EE,70504146,extended,002000F6
+
+[Cheats/VS-VS Standard]
+// patch=1,EE,70504146,extended,00000060
+// patch=1,EE,70504146,extended,0020006F
+
+[Cheats/VS-VS Special]
+// patch=1,EE,70504147,extended,00000006
+// patch=1,EE,70504147,extended,002000F6
+
+[Cheats/VS-VS Competition]
+// patch=1,EE,70504147,extended,00000060
+// patch=1,EE,70504147,extended,0020006F
+
+[Cheats/Shop-Weapons Shop]
+// patch=1,EE,70504148,extended,00000006
+// patch=1,EE,70504148,extended,002000F6
+
+[Cheats/Shop-Armor Shop]
+// patch=1,EE,70504148,extended,00000060
+// patch=1,EE,70504148,extended,0020006F
+
+[Cheats/Shop-Items Shop]
+// patch=1,EE,70504149,extended,00000006
+// patch=1,EE,70504149,extended,002000F6
+
+[Cheats/Mitsurugi-Na-Shishi-Oh]
+// patch=1,EE,7050414D,extended,00000006
+// patch=1,EE,7050414D,extended,002000F6
+
+[Cheats/Mitsurugi-Na-Shishi-Oh 2]
+// patch=1,EE,7050414D,extended,00000060
+// patch=1,EE,7050414D,extended,0020006F
+
+[Cheats/Mitsurugi-Na-Two-Handed Sword]
+// patch=1,EE,7050414E,extended,00000006
+// patch=1,EE,7050414E,extended,002000F6
+
+[Cheats/Mitsurugi-Na-Masamune]
+// patch=1,EE,7050414E,extended,00000060
+// patch=1,EE,7050414E,extended,0020006F
+
+[Cheats/Mitsurugi-Na-Damascus Sword]
+// patch=1,EE,7050414F,extended,00000006
+// patch=1,EE,7050414F,extended,002000F6
+
+[Cheats/Mitsurugi-Na-Soul Edge]
+// patch=1,EE,7050414F,extended,00000060
+// patch=1,EE,7050414F,extended,0020006F
+
+[Cheats/Mitsurugi-Na-Souvenir Gift]
+// patch=1,EE,70504150,extended,00000006
+// patch=1,EE,70504150,extended,002000F6
+
+[Cheats/Mitsurugi-Na-The Ancient]
+// patch=1,EE,70504150,extended,00000060
+// patch=1,EE,70504150,extended,0020006F
+
+[Cheats/Seong Mi-Na-Scarlet Thunder]
+// patch=1,EE,70504151,extended,00000006
+// patch=1,EE,70504151,extended,002000F6
+
+[Cheats/Seong Mi-Na-Scarlet Thunder 2]
+// patch=1,EE,70504151,extended,00000060
+// patch=1,EE,70504151,extended,0020006F
+
+[Cheats/Seong Mi-Na-Defender]
+// patch=1,EE,70504152,extended,00000006
+// patch=1,EE,70504152,extended,002000F6
+
+[Cheats/Seong Mi-Na-Hyup Do]
+// patch=1,EE,70504152,extended,00000060
+// patch=1,EE,70504152,extended,0020006F
+
+[Cheats/Seong Mi-Na-Halberd]
+// patch=1,EE,70504153,extended,00000006
+// patch=1,EE,70504153,extended,002000F6
+
+[Cheats/Seong Mi-Na-Hraesvelgr]
+// patch=1,EE,70504153,extended,00000060
+// patch=1,EE,70504153,extended,0020006F
+
+[Cheats/Seong Mi-Na-Feather Broom]
+// patch=1,EE,70504154,extended,00000006
+// patch=1,EE,70504154,extended,002000F6
+
+[Cheats/Seong Mi-Na-The Ancient]
+// patch=1,EE,70504154,extended,00000060
+// patch=1,EE,70504154,extended,0020006F
+
+[Cheats/Taki-Rekki-Maru & Mekki-Maru]
+// patch=1,EE,70504155,extended,00000006
+// patch=1,EE,70504155,extended,002000F6
+
+[Cheats/Taki-Rekki-Maru & Mekki-Maru 2]
+// patch=1,EE,70504155,extended,00000060
+// patch=1,EE,70504155,extended,0020006F
+
+[Cheats/Taki-Kagenui]
+// patch=1,EE,70504156,extended,00000006
+// patch=1,EE,70504156,extended,002000F6
+
+[Cheats/Taki-Kagekiri]
+// patch=1,EE,70504156,extended,00000060
+// patch=1,EE,70504156,extended,0020006F
+
+[Cheats/Taki-Fumakugi]
+// patch=1,EE,70504157,extended,00000006
+// patch=1,EE,70504157,extended,002000F6
+
+[Cheats/Taki-Kris Naga]
+// patch=1,EE,70504157,extended,00000060
+// patch=1,EE,70504157,extended,0020006F
+
+[Cheats/Taki-Tobacco Pipes]
+// patch=1,EE,70504158,extended,00000006
+// patch=1,EE,70504158,extended,002000F6
+
+[Cheats/Taki-The Ancient]
+// patch=1,EE,70504158,extended,00000060
+// patch=1,EE,70504158,extended,0020006F
+
+[Cheats/Maxi-Soryuju]
+// patch=1,EE,70504159,extended,00000006
+// patch=1,EE,70504159,extended,002000F6
+
+[Cheats/Maxi-Soryuju 2]
+// patch=1,EE,70504159,extended,00000060
+// patch=1,EE,70504159,extended,0020006F
+
+[Cheats/Maxi-Tetsuryu]
+// patch=1,EE,7050415A,extended,00000006
+// patch=1,EE,7050415A,extended,002000F6
+
+[Cheats/Maxi-Chained Kozuka]
+// patch=1,EE,7050415A,extended,00000060
+// patch=1,EE,7050415A,extended,0020006F
+
+[Cheats/Maxi-Raimei]
+// patch=1,EE,7050415B,extended,00000006
+// patch=1,EE,7050415B,extended,002000F6
+
+[Cheats/Maxi-Vajra]
+// patch=1,EE,7050415B,extended,00000060
+// patch=1,EE,7050415B,extended,0020006F
+
+[Cheats/Maxi-Termite Snack]
+// patch=1,EE,7050415C,extended,00000006
+// patch=1,EE,7050415C,extended,002000F6
+
+[Cheats/Maxi-The Ancient]
+// patch=1,EE,70504159,extended,00000060
+// patch=1,EE,70504159,extended,0020006F
+
+[Cheats/Voldo-Manas & Ayus]
+// patch=1,EE,7050415D,extended,00000006
+// patch=1,EE,7050415D,extended,002000F6
+
+[Cheats/Voldo-Manas & Ayus 2]
+// patch=1,EE,7050415D,extended,00000060
+// patch=1,EE,7050415D,extended,0020006F
+
+[Cheats/Voldo-Cat Claws]
+// patch=1,EE,7050415E,extended,00000006
+// patch=1,EE,7050415E,extended,002000F6
+
+[Cheats/Voldo-Tofana Scissors]
+// patch=1,EE,7050415E,extended,00000060
+// patch=1,EE,7050415E,extended,0020006F
+
+[Cheats/Voldo-Iron Ram]
+// patch=1,EE,7050415F,extended,00000006
+// patch=1,EE,7050415F,extended,002000F6
+
+[Cheats/Voldo-Guillotine]
+// patch=1,EE,7050415F,extended,00000060
+// patch=1,EE,7050415F,extended,0020006F
+
+[Cheats/Voldo-Tamborines]
+// patch=1,EE,70504160,extended,00000006
+// patch=1,EE,70504160,extended,002000F6
+
+[Cheats/Voldo-The Ancient]
+// patch=1,EE,70504160,extended,00000060
+// patch=1,EE,70504160,extended,0020006F
+
+[Cheats/Sophitia-Sword & Elk Shield]
+// patch=1,EE,70504161,extended,00000006
+// patch=1,EE,70504161,extended,002000F6
+
+[Cheats/Sophitia-Sword & Elk Shield 2]
+// patch=1,EE,70504161,extended,00000060
+// patch=1,EE,70504161,extended,0020006F
+
+[Cheats/Sophitia-Fire Blade]
+// patch=1,EE,70504162,extended,00000006
+// patch=1,EE,70504162,extended,002000F6
+
+[Cheats/Sophitia-Blue Crystal Rod]
+// patch=1,EE,70504162,extended,00000060
+// patch=1,EE,70504162,extended,0020006F
+
+[Cheats/Sophitia-Orichalcum]
+// patch=1,EE,70504163,extended,00000006
+// patch=1,EE,70504163,extended,002000F6
+
+[Cheats/Sophitia-Soul Calibur]
+// patch=1,EE,70504163,extended,00000060
+// patch=1,EE,70504163,extended,0020006F
+
+[Cheats/Sophitia-Memento]
+// patch=1,EE,70504164,extended,00000006
+// patch=1,EE,70504164,extended,002000F6
+
+[Cheats/Sophitia-The Ancient]
+// patch=1,EE,70504164,extended,00000060
+// patch=1,EE,70504164,extended,0020006F
+
+[Cheats/Siegfried-Requiem]
+// patch=1,EE,70504165,extended,00000006
+// patch=1,EE,70504165,extended,002000F6
+
+[Cheats/Siegfried-Requiem 2]
+// patch=1,EE,70504165,extended,00000060
+// patch=1,EE,70504165,extended,0020006F
+
+[Cheats/Siegfried-Flamberge]
+// patch=1,EE,70504166,extended,00000006
+// patch=1,EE,70504166,extended,002000F6
+
+[Cheats/Siegfried-Glam]
+// patch=1,EE,70504166,extended,00000060
+// patch=1,EE,70504166,extended,0020006F
+
+[Cheats/Siegfried-Faust]
+// patch=1,EE,70504167,extended,00000006
+// patch=1,EE,70504167,extended,002000F6
+
+[Cheats/Siegfried-Soul Calibur]
+// patch=1,EE,70504167,extended,00000060
+// patch=1,EE,70504167,extended,0020006F
+
+[Cheats/Siegfried-Galley Oar]
+// patch=1,EE,70504168,extended,00000006
+// patch=1,EE,70504168,extended,002000F6
+
+[Cheats/Siegfried-The Ancient]
+// patch=1,EE,70504168,extended,00000060
+// patch=1,EE,70504168,extended,0020006F
+
+[Cheats/Rock-Onslaught]
+// patch=1,EE,70504169,extended,00000006
+// patch=1,EE,70504169,extended,002000F6
+
+[Cheats/Rock-Onslaught 2]
+// patch=1,EE,70504169,extended,00000060
+// patch=1,EE,70504169,extended,0020006F
+
+[Cheats/Rock-Giant Mace]
+// patch=1,EE,7050416A,extended,00000006
+// patch=1,EE,7050416A,extended,002000F6
+
+[Cheats/Rock-Ropalon]
+// patch=1,EE,7050416A,extended,00000060
+// patch=1,EE,7050416A,extended,0020006F
+
+[Cheats/Rock-Juggernaut]
+// patch=1,EE,7050416B,extended,00000006
+// patch=1,EE,7050416B,extended,002000F6
+
+[Cheats/Rock-Wayakin]
+// patch=1,EE,7050416B,extended,00000060
+// patch=1,EE,7050416B,extended,0020006F
+
+[Cheats/Rock-Iron Fists]
+// patch=1,EE,7050416C,extended,00000006
+// patch=1,EE,7050416C,extended,002000F6
+
+[Cheats/Rock-The Ancient]
+// patch=1,EE,7050416C,extended,00000060
+// patch=1,EE,7050416C,extended,0020006F
+
+[Cheats/Ivy-Valentine]
+// patch=1,EE,7050416D,extended,00000006
+// patch=1,EE,7050416D,extended,002000F6
+
+[Cheats/Ivy-Valentine 2]
+// patch=1,EE,7050416D,extended,00000060
+// patch=1,EE,7050416D,extended,0020006F
+
+[Cheats/Ivy-Viper Edge]
+// patch=1,EE,7050416E,extended,00000006
+// patch=1,EE,7050416E,extended,002000F6
+
+[Cheats/Ivy-Dream Blade]
+// patch=1,EE,7050416E,extended,00000060
+// patch=1,EE,7050416E,extended,0020006F
+
+[Cheats/Ivy-Alraune]
+// patch=1,EE,7050416F,extended,00000006
+// patch=1,EE,7050416F,extended,002000F6
+
+[Cheats/Ivy-Kaleidoscope]
+// patch=1,EE,7050416F,extended,00000060
+// patch=1,EE,7050416F,extended,0020006F
+
+[Cheats/Ivy-Prototype Ivy Blade]
+// patch=1,EE,70504170,extended,00000006
+// patch=1,EE,70504170,extended,002000F6
+
+[Cheats/Ivy-The Ancient]
+// patch=1,EE,70504170,extended,00000060
+// patch=1,EE,70504170,extended,0020006F
+
+[Cheats/Kilik-Kali-Yuga]
+// patch=1,EE,70504171,extended,00000006
+// patch=1,EE,70504171,extended,002000F6
+
+[Cheats/Kilik-Kali-Yuga 2]
+// patch=1,EE,70504171,extended,00000060
+// patch=1,EE,70504171,extended,0020006F
+
+[Cheats/Kilik-Ling-Sheng Su Bo]
+// patch=1,EE,70504172,extended,00000006
+// patch=1,EE,70504172,extended,002000F6
+
+[Cheats/Kilik-Amud]
+// patch=1,EE,70504172,extended,00000060
+// patch=1,EE,70504172,extended,0020006F
+
+[Cheats/Kilik-Jingu Staff]
+// patch=1,EE,70504173,extended,00000006
+// patch=1,EE,70504173,extended,002000F6
+
+[Cheats/Kilik-Soul Calibur]
+// patch=1,EE,70504173,extended,00000060
+// patch=1,EE,70504173,extended,0020006F
+
+[Cheats/Kilik-Bamboo Staff]
+// patch=1,EE,70504174,extended,00000006
+// patch=1,EE,70504174,extended,002000F6
+
+[Cheats/Kilik-The Ancient]
+// patch=1,EE,70504174,extended,00000060
+// patch=1,EE,70504174,extended,0020006F
+
+[Cheats/Xianghu-No Name]
+// patch=1,EE,70504175,extended,00000006
+// patch=1,EE,70504175,extended,002000F6
+
+[Cheats/Xianghu-No Name 2]
+// patch=1,EE,70504175,extended,00000060
+// patch=1,EE,70504175,extended,0020006F
+
+[Cheats/Xianghu-Kard]
+// patch=1,EE,70504176,extended,00000006
+// patch=1,EE,70504176,extended,002000F6
+
+[Cheats/Xianghu-Northern Star]
+// patch=1,EE,70504176,extended,00000060
+// patch=1,EE,70504176,extended,0020006F
+
+[Cheats/Xianghu-Kopis]
+// patch=1,EE,70504177,extended,00000006
+// patch=1,EE,70504177,extended,002000F6
+
+[Cheats/Xianghu-Soul Calibur]
+// patch=1,EE,70504177,extended,00000060
+// patch=1,EE,70504177,extended,0020006F
+
+[Cheats/Xianghu-Calligraphy Brush]
+// patch=1,EE,70504178,extended,00000006
+// patch=1,EE,70504178,extended,002000F6
+
+[Cheats/Xianghu-The Ancient]
+// patch=1,EE,70504178,extended,00000060
+// patch=1,EE,70504178,extended,0020006F
+
+[Cheats/Lizardman-Grudge Ax & Aya Shield]
+// patch=1,EE,70504179,extended,00000006
+// patch=1,EE,70504179,extended,002000F6
+
+[Cheats/Lizardman-Grudge Ax & Aya Shield 2]
+// patch=1,EE,70504179,extended,00000060
+// patch=1,EE,70504179,extended,0020006F
+
+[Cheats/Lizardman-Tabarzin]
+// patch=1,EE,7050417A,extended,00000006
+// patch=1,EE,7050417A,extended,002000F6
+
+[Cheats/Lizardman-Lunatic]
+// patch=1,EE,7050417A,extended,00000060
+// patch=1,EE,7050417A,extended,0020006F
+
+[Cheats/Lizardman-Kora]
+// patch=1,EE,7050417B,extended,00000006
+// patch=1,EE,7050417B,extended,002000F6
+
+[Cheats/Lizardman-Soul Edge]
+// patch=1,EE,7050417B,extended,00000060
+// patch=1,EE,7050417B,extended,0020006F
+
+[Cheats/Lizardman-Boned Meat]
+// patch=1,EE,7050417C,extended,00000006
+// patch=1,EE,7050417C,extended,002000F6
+
+[Cheats/Lizardman-The Ancient]
+// patch=1,EE,7050417C,extended,00000060
+// patch=1,EE,7050417C,extended,0020006F
+
+[Cheats/Yoshimitsu-Yoshimitsu]
+// patch=1,EE,7050417D,extended,00000006
+// patch=1,EE,7050417D,extended,002000F6
+
+[Cheats/Yoshimitsu-Yoshimitsu 2]
+// patch=1,EE,7050417D,extended,00000060
+// patch=1,EE,7050417D,extended,0020006F
+
+[Cheats/Yoshimitsu-Kastane]
+// patch=1,EE,7050417E,extended,00000006
+// patch=1,EE,7050417E,extended,002000F6
+
+[Cheats/Yoshimitsu-Pakayun]
+// patch=1,EE,7050417E,extended,00000060
+// patch=1,EE,7050417E,extended,0020006F
+
+[Cheats/Yoshimitsu-Kagekiyo]
+// patch=1,EE,7050417F,extended,00000006
+// patch=1,EE,7050417F,extended,002000F6
+
+[Cheats/Yoshimitsu-Hihiirokane]
+// patch=1,EE,7050417F,extended,00000060
+// patch=1,EE,7050417F,extended,0020006F
+
+[Cheats/Yoshimitsu-Shepherd's Crook]
+// patch=1,EE,70504180,extended,00000006
+// patch=1,EE,70504180,extended,002000F6
+
+[Cheats/Yoshimitsu-The Ancient]
+// patch=1,EE,70504180,extended,00000060
+// patch=1,EE,70504180,extended,0020006F
+
+[Cheats/Nightmare-Soul Edge (Phantom)]
+// patch=1,EE,70504181,extended,00000006
+// patch=1,EE,70504181,extended,002000F6
+
+[Cheats/Nightmare-Soul Edge (Phantom) 2]
+// patch=1,EE,70504181,extended,00000060
+// patch=1,EE,70504181,extended,0020006F
+
+[Cheats/Nightmare-Steel Paddle]
+// patch=1,EE,70504182,extended,00000006
+// patch=1,EE,70504182,extended,002000F6
+
+[Cheats/Nightmare-Soul Edge (Larvae)]
+// patch=1,EE,70504182,extended,00000060
+// patch=1,EE,70504182,extended,0020006F
+
+[Cheats/Nightmare-Soul Edge (Cocoon)]
+// patch=1,EE,70504183,extended,00000006
+// patch=1,EE,70504183,extended,002000F6
+
+[Cheats/Nightmare-Soul Edge]
+// patch=1,EE,70504183,extended,00000060
+// patch=1,EE,70504183,extended,0020006F
+
+[Cheats/Nightmare-Giant Squid]
+// patch=1,EE,70504184,extended,00000006
+// patch=1,EE,70504184,extended,002000F6
+
+[Cheats/Nightmare-The Ancient]
+// patch=1,EE,70504184,extended,00000060
+// patch=1,EE,70504184,extended,0020006F
+
+[Cheats/Astaroth-Kulutues]
+// patch=1,EE,70504185,extended,00000006
+// patch=1,EE,70504185,extended,002000F6
+
+[Cheats/Astaroth-Kulutues 2]
+// patch=1,EE,70504185,extended,00000060
+// patch=1,EE,70504185,extended,0020006F
+
+[Cheats/Astaroth-Terror Moon]
+// patch=1,EE,70504186,extended,00000006
+// patch=1,EE,70504186,extended,002000F6
+
+[Cheats/Astaroth-Great Maul]
+// patch=1,EE,70504186,extended,00000060
+// patch=1,EE,70504186,extended,0020006F
+
+[Cheats/Astaroth-Nanbanfu]
+// patch=1,EE,70504187,extended,00000006
+// patch=1,EE,70504187,extended,002000F6
+
+[Cheats/Astaroth-Soul Edge]
+// patch=1,EE,70504187,extended,00000060
+// patch=1,EE,70504187,extended,0020006F
+
+[Cheats/Astaroth-Stone Slab]
+// patch=1,EE,70504188,extended,00000006
+// patch=1,EE,70504188,extended,002000F6
+
+[Cheats/Astaroth-The Ancient]
+// patch=1,EE,70504188,extended,00000060
+// patch=1,EE,70504188,extended,0020006F
+
+[Cheats/Cervantes-Soul Edge & Nirvana]
+// patch=1,EE,70504189,extended,00000006
+// patch=1,EE,70504189,extended,002000F6
+
+[Cheats/Cervantes-Soul Edge & Nirvana 2]
+// patch=1,EE,70504189,extended,00000060
+// patch=1,EE,70504189,extended,0020006F
+
+[Cheats/Cervantes-Styx]
+// patch=1,EE,7050418A,extended,00000006
+// patch=1,EE,7050418A,extended,002000F6
+
+[Cheats/Cervantes-Erlang's Blade]
+// patch=1,EE,7050418A,extended,00000060
+// patch=1,EE,7050418A,extended,0020006F
+
+[Cheats/Cervantes-Phlegethon]
+// patch=1,EE,7050418B,extended,00000006
+// patch=1,EE,7050418B,extended,002000F6
+
+[Cheats/Cervantes-Soul Edge]
+// patch=1,EE,7050418B,extended,00000060
+// patch=1,EE,7050418B,extended,0020006F
+
+[Cheats/Cervantes-Imitation Sword]
+// patch=1,EE,7050418C,extended,00000006
+// patch=1,EE,7050418C,extended,002000F6
+
+[Cheats/Cervantes-The Ancient]
+// patch=1,EE,7050418C,extended,00000060
+// patch=1,EE,7050418C,extended,0020006F
+
+[Cheats/Raphael-Flambert]
+// patch=1,EE,7050418D,extended,00000006
+// patch=1,EE,7050418D,extended,002000F6
+
+[Cheats/Raphael-Flambert 2]
+// patch=1,EE,7050418D,extended,00000060
+// patch=1,EE,7050418D,extended,0020006F
+
+[Cheats/Raphael-Epee]
+// patch=1,EE,7050418E,extended,00000006
+// patch=1,EE,7050418E,extended,002000F6
+
+[Cheats/Raphael-Holy Antler]
+// patch=1,EE,7050418E,extended,00000060
+// patch=1,EE,7050418E,extended,0020006F
+
+[Cheats/Raphael-Estoc]
+// patch=1,EE,7050418F,extended,00000006
+// patch=1,EE,7050418F,extended,002000F6
+
+[Cheats/Raphael-Queen's Guard]
+// patch=1,EE,7050418F,extended,00000060
+// patch=1,EE,7050418F,extended,0020006F
+
+[Cheats/Raphael-Cane]
+// patch=1,EE,70504190,extended,00000006
+// patch=1,EE,70504190,extended,002000F6
+
+[Cheats/Raphael-The Ancient]
+// patch=1,EE,70504190,extended,00000060
+// patch=1,EE,70504190,extended,0020006F
+
+[Cheats/Talim-Syi Salika & Loka Luha]
+// patch=1,EE,70504191,extended,00000006
+// patch=1,EE,70504191,extended,002000F6
+
+[Cheats/Talim-Syi Salika & Loka Luha 2]
+// patch=1,EE,70504191,extended,00000060
+// patch=1,EE,70504191,extended,0020006F
+
+[Cheats/Talim-Tonfa]
+// patch=1,EE,70504192,extended,00000006
+// patch=1,EE,70504192,extended,002000F6
+
+[Cheats/Talim-Side Harpe]
+// patch=1,EE,70504192,extended,00000060
+// patch=1,EE,70504192,extended,0020006F
+
+[Cheats/Talim-Double Crescent Blade]
+// patch=1,EE,70504193,extended,00000006
+// patch=1,EE,70504193,extended,002000F6
+
+[Cheats/Talim-Soul Calibur]
+// patch=1,EE,70504193,extended,00000060
+// patch=1,EE,70504193,extended,0020006F
+
+[Cheats/Talim-Weight]
+// patch=1,EE,70504194,extended,00000006
+// patch=1,EE,70504194,extended,002000F6
+
+[Cheats/Talim-The Ancient]
+// patch=1,EE,70504194,extended,00000060
+// patch=1,EE,70504194,extended,0020006F
+
+[Cheats/Cassandra-Digamma Sword & Nemea Shield]
+// patch=1,EE,70504195,extended,00000006
+// patch=1,EE,70504195,extended,002000F6
+
+[Cheats/Cassandra-Digamma Sword & Nemea Shield 2]
+// patch=1,EE,70504195,extended,00000060
+// patch=1,EE,70504195,extended,0020006F
+
+[Cheats/Cassandra-Ivan The Terrible]
+// patch=1,EE,70504196,extended,00000006
+// patch=1,EE,70504196,extended,002000F6
+
+[Cheats/Cassandra-Spine Blade]
+// patch=1,EE,70504196,extended,00000060
+// patch=1,EE,70504196,extended,0020006F
+
+[Cheats/Cassandra-Dark Blade]
+// patch=1,EE,70504197,extended,00000006
+// patch=1,EE,70504197,extended,002000F6
+
+[Cheats/Cassandra-Valkyrie]
+// patch=1,EE,70504197,extended,00000060
+// patch=1,EE,70504197,extended,0020006F
+
+[Cheats/Cassandra-Broken Sword]
+// patch=1,EE,70504198,extended,00000006
+// patch=1,EE,70504198,extended,002000F6
+
+[Cheats/Cassandra-The Ancient]
+// patch=1,EE,70504198,extended,00000060
+// patch=1,EE,70504198,extended,0020006F
+
+[Cheats/Yun-Seong-White Storm]
+// patch=1,EE,70504199,extended,00000006
+// patch=1,EE,70504199,extended,002000F6
+
+[Cheats/Yun-Seong-White Storm 2]
+// patch=1,EE,70504199,extended,00000060
+// patch=1,EE,70504199,extended,0020006F
+
+[Cheats/Yun-Seong-Giant Butcher Knife]
+// patch=1,EE,7050419A,extended,00000006
+// patch=1,EE,7050419A,extended,002000F6
+
+[Cheats/Yun-Seong-Cheng Ying]
+// patch=1,EE,7050419A,extended,00000060
+// patch=1,EE,7050419A,extended,0020006F
+
+[Cheats/Yun-Seong-Ramdao]
+// patch=1,EE,7050419B,extended,00000006
+// patch=1,EE,7050419B,extended,002000F6
+
+[Cheats/Yun-Seong-Han Guang]
+// patch=1,EE,7050419B,extended,00000060
+// patch=1,EE,7050419B,extended,0020006F
+
+[Cheats/Yun-Seong-Child's Sword]
+// patch=1,EE,7050419C,extended,00000006
+// patch=1,EE,7050419C,extended,002000F6
+
+[Cheats/Yun-Seong-The Ancient]
+// patch=1,EE,7050419C,extended,00000060
+// patch=1,EE,7050419C,extended,0020006F
+
+[Cheats/Setsuka-Ugetsu Kageuchi]
+// patch=1,EE,7050419D,extended,00000006
+// patch=1,EE,7050419D,extended,002000F6
+
+[Cheats/Setsuka-Ugetsu Kageuchi 2]
+// patch=1,EE,7050419D,extended,00000060
+// patch=1,EE,7050419D,extended,0020006F
+
+[Cheats/Setsuka-Ridicule]
+// patch=1,EE,7050419E,extended,00000006
+// patch=1,EE,7050419E,extended,002000F6
+
+[Cheats/Setsuka-Shiranamigasumi]
+// patch=1,EE,7050419E,extended,00000060
+// patch=1,EE,7050419E,extended,0020006F
+
+[Cheats/Setsuka-Moonlight]
+// patch=1,EE,7050419F,extended,00000006
+// patch=1,EE,7050419F,extended,002000F6
+
+[Cheats/Setsuka-Ugetsu Shinuchi]
+// patch=1,EE,7050419F,extended,00000060
+// patch=1,EE,7050419F,extended,0020006F
+
+[Cheats/Setsuka-Broken Bamboo Sword]
+// patch=1,EE,705041A0,extended,00000006
+// patch=1,EE,705041A0,extended,002000F6
+
+[Cheats/Setsuka-The Ancient]
+// patch=1,EE,705041A0,extended,00000060
+// patch=1,EE,705041A0,extended,0020006F
+
+[Cheats/Tira-Aiselne Drossel]
+// patch=1,EE,705041A1,extended,00000006
+// patch=1,EE,705041A1,extended,002000F6
+
+[Cheats/Tira-Aiselne Drossel 2]
+// patch=1,EE,705041A1,extended,00000060
+// patch=1,EE,705041A1,extended,0020006F
+
+[Cheats/Tira-Bifrost]
+// patch=1,EE,705041A2,extended,00000006
+// patch=1,EE,705041A2,extended,002000F6
+
+[Cheats/Tira-Ixion]
+// patch=1,EE,705041A2,extended,00000060
+// patch=1,EE,705041A2,extended,0020006F
+
+[Cheats/Tira-Vimana]
+// patch=1,EE,705041A3,extended,00000006
+// patch=1,EE,705041A3,extended,002000F6
+
+[Cheats/Tira-Soul Edge]
+// patch=1,EE,705041A3,extended,00000060
+// patch=1,EE,705041A3,extended,0020006F
+
+[Cheats/Tira-Cogwheel]
+// patch=1,EE,705041A4,extended,00000006
+// patch=1,EE,705041A4,extended,002000F6
+
+[Cheats/Tira-The Ancient]
+// patch=1,EE,705041A4,extended,00000060
+// patch=1,EE,705041A4,extended,0020006F
+
+[Cheats/Zasalamel-Kafziel]
+// patch=1,EE,705041A5,extended,00000006
+// patch=1,EE,705041A5,extended,002000F6
+
+[Cheats/Zasalamel-Kafziel 2]
+// patch=1,EE,705041A5,extended,00000060
+// patch=1,EE,705041A5,extended,0020006F
+
+[Cheats/Zasalamel-Ankou]
+// patch=1,EE,705041A6,extended,00000006
+// patch=1,EE,705041A6,extended,002000F6
+
+[Cheats/Zasalamel-Balor]
+// patch=1,EE,705041A6,extended,00000060
+// patch=1,EE,705041A6,extended,0020006F
+
+[Cheats/Zasalamel-Mrtyu]
+// patch=1,EE,705041A7,extended,00000006
+// patch=1,EE,705041A7,extended,002000F6
+
+[Cheats/Zasalamel-Irkalla]
+// patch=1,EE,705041A7,extended,00000060
+// patch=1,EE,705041A7,extended,0020006F
+
+[Cheats/Zasalamel-Beak]
+// patch=1,EE,705041A8,extended,00000006
+// patch=1,EE,705041A8,extended,002000F6
+
+[Cheats/Zasalamel-The Ancient]
+// patch=1,EE,705041A8,extended,00000060
+// patch=1,EE,705041A8,extended,0020006F
+
+[Cheats/Olcadan-The Silent]
+// patch=1,EE,705041A9,extended,00000006
+// patch=1,EE,705041A9,extended,002000F6
+
+[Cheats/Olcadan-The Mute]
+// patch=1,EE,705041A9,extended,00000060
+// patch=1,EE,705041A9,extended,0020006F
+
+[Cheats/Olcadan-The Perceptive]
+// patch=1,EE,705041AA,extended,00000006
+// patch=1,EE,705041AA,extended,002000F6
+
+[Cheats/Olcadan-The Fierce]
+// patch=1,EE,705041AA,extended,00000060
+// patch=1,EE,705041AA,extended,0020006F
+
+[Cheats/Olcadan-The Savage]
+// patch=1,EE,705041AB,extended,00000006
+// patch=1,EE,705041AB,extended,002000F6
+
+[Cheats/Olcadan-The Hidden]
+// patch=1,EE,705041AB,extended,00000060
+// patch=1,EE,705041AB,extended,0020006F
+
+[Cheats/Olcadan-The Tease]
+// patch=1,EE,705041AC,extended,00000006
+// patch=1,EE,705041AC,extended,002000F6
+
+[Cheats/Olcadan-The Ancient]
+// patch=1,EE,705041AC,extended,00000060
+// patch=1,EE,705041AC,extended,0020006F
+
+[Cheats/Abyss-Irkalla]
+// patch=1,EE,705041AD,extended,00000006
+// patch=1,EE,705041AD,extended,002000F6
+
+[Cheats/Abyss-Irkalla 2]
+// patch=1,EE,705041AD,extended,00000060
+// patch=1,EE,705041AD,extended,0020006F
+
+[Cheats/Miser-Onimaro & Tobikage]
+// patch=1,EE,705041AE,extended,00000060
+// patch=1,EE,705041AE,extended,0020006F
+
+[Cheats/Miser-Tsubanari & Ryusei]
+// patch=1,EE,705041AF,extended,00000006
+// patch=1,EE,705041AF,extended,002000F6
+
+[Cheats/Miser-Suigetsutou & Ukifune]
+// patch=1,EE,705041AF,extended,00000060
+// patch=1,EE,705041AF,extended,0020006F
+
+[Cheats/Miser-Genma & Kokuen]
+// patch=1,EE,705041B0,extended,00000006
+// patch=1,EE,705041B0,extended,002000F6
+
+[Cheats/Miser-Totsuka & Tatsugashira]
+// patch=1,EE,705041B0,extended,00000060
+// patch=1,EE,705041B0,extended,0020006F
+
+[Cheats/Miser-Red Crow & Rusty Wing]
+// patch=1,EE,705041B1,extended,00000006
+// patch=1,EE,705041B1,extended,002000F6
+
+[Cheats/Greed-Kunai]
+// patch=1,EE,705041B1,extended,00000060
+// patch=1,EE,705041B1,extended,0020006F
+
+[Cheats/Greed-Kaiken]
+// patch=1,EE,705041B2,extended,00000006
+// patch=1,EE,705041B2,extended,002000F6
+
+[Cheats/Greed-Kazekirimaru]
+// patch=1,EE,705041B2,extended,00000060
+// patch=1,EE,705041B2,extended,0020006F
+
+[Cheats/Greed-Nakinue]
+// patch=1,EE,705041B3,extended,00000006
+// patch=1,EE,705041B3,extended,002000F6
+
+[Cheats/Greed-Shutensou]
+// patch=1,EE,705041B3,extended,00000060
+// patch=1,EE,705041B3,extended,0020006F
+
+[Cheats/Greed-Austere & Void]
+// patch=1,EE,705041B4,extended,00000006
+// patch=1,EE,705041B4,extended,002000F6
+
+[Cheats/Greed-Galeforce]
+// patch=1,EE,705041B4,extended,00000060
+// patch=1,EE,705041B4,extended,0020006F
+
+[Cheats/Arthur-Zantetsuken]
+// patch=1,EE,705041B5,extended,00000006
+// patch=1,EE,705041B5,extended,002000F6
+
+[Cheats/Arthur-Wo Dao]
+// patch=1,EE,705041B5,extended,00000060
+// patch=1,EE,705041B5,extended,0020006F
+
+[Cheats/Arthur-Monohoshizao]
+// patch=1,EE,705041B6,extended,00000006
+// patch=1,EE,705041B6,extended,002000F6
+
+[Cheats/Arthur-Shiranui]
+// patch=1,EE,705041B6,extended,00000060
+// patch=1,EE,705041B6,extended,0020006F
+
+[Cheats/Arthur-Murasame]
+// patch=1,EE,705041B7,extended,00000006
+// patch=1,EE,705041B7,extended,002000F6
+
+[Cheats/Arthur-Gassan]
+// patch=1,EE,705041B7,extended,00000060
+// patch=1,EE,705041B7,extended,0020006F
+
+[Cheats/Arthur-Kokuenra]
+// patch=1,EE,705041B8,extended,00000006
+// patch=1,EE,705041B8,extended,002000F6
+
+[Cheats/Hwang-Qing Long]
+// patch=1,EE,705041B8,extended,00000060
+// patch=1,EE,705041B8,extended,0020006F
+
+[Cheats/Hwang-Po Shan]
+// patch=1,EE,705041B9,extended,00000006
+// patch=1,EE,705041B9,extended,002000F6
+
+[Cheats/Hwang-Falchion]
+// patch=1,EE,705041B9,extended,00000060
+// patch=1,EE,705041B9,extended,0020006F
+
+[Cheats/Hwang-Lei Yan]
+// patch=1,EE,705041BA,extended,00000006
+// patch=1,EE,705041BA,extended,002000F6
+
+[Cheats/Hwang-Bonebreaker Sword]
+// patch=1,EE,705041BA,extended,00000060
+// patch=1,EE,705041BA,extended,0020006F
+
+[Cheats/Hwang-Blue Thunder]
+// patch=1,EE,705041BB,extended,00000006
+// patch=1,EE,705041BB,extended,002000F6
+
+[Cheats/Hwang-Dragon Sword]
+// patch=1,EE,705041BB,extended,00000060
+// patch=1,EE,705041BB,extended,0020006F
+
+[Cheats/Luna-Heisheng Jian]
+// patch=1,EE,705041BC,extended,00000006
+// patch=1,EE,705041BC,extended,002000F6
+
+[Cheats/Luna-Huan Luo]
+// patch=1,EE,705041BC,extended,00000060
+// patch=1,EE,705041BC,extended,0020006F
+
+[Cheats/Luna-Jiaotu Jian]
+// patch=1,EE,705041BD,extended,00000006
+// patch=1,EE,705041BD,extended,002000F6
+
+[Cheats/Luna-Rune Blade]
+// patch=1,EE,705041BD,extended,00000060
+// patch=1,EE,705041BD,extended,0020006F
+
+[Cheats/Luna-Dujiao Gui]
+// patch=1,EE,705041BE,extended,00000006
+// patch=1,EE,705041BE,extended,002000F6
+
+[Cheats/Luna-Dystopia]
+// patch=1,EE,705041BE,extended,00000060
+// patch=1,EE,705041BE,extended,0020006F
+
+[Cheats/Luna-Soul Calibur]
+// patch=1,EE,705041BF,extended,00000006
+// patch=1,EE,705041BF,extended,002000F6
+
+[Cheats/Luna-Midnight]
+// patch=1,EE,705041BF,extended,00000060
+// patch=1,EE,705041BF,extended,0020006F
+
+[Cheats/Valeria-Kick Edge]
+// patch=1,EE,705041C0,extended,00000006
+// patch=1,EE,705041C0,extended,002000F6
+
+[Cheats/Valeria-Grieve Edge]
+// patch=1,EE,705041C0,extended,00000060
+// patch=1,EE,705041C0,extended,0020006F
+
+[Cheats/Valeria-Senjinsoku]
+// patch=1,EE,705041C1,extended,00000006
+// patch=1,EE,705041C1,extended,002000F6
+
+[Cheats/Valeria-Cailleach Bheur]
+// patch=1,EE,705041C1,extended,00000060
+// patch=1,EE,705041C1,extended,0020006F
+
+[Cheats/Valeria-Svadilfari]
+// patch=1,EE,705041C2,extended,00000006
+// patch=1,EE,705041C2,extended,002000F6
+
+[Cheats/Valeria-Cepheus Seal]
+// patch=1,EE,705041C2,extended,00000060
+// patch=1,EE,705041C2,extended,0020006F
+
+[Cheats/Valeria-Hell's Design]
+// patch=1,EE,705041C3,extended,00000006
+// patch=1,EE,705041C3,extended,002000F6
+
+[Cheats/Hualin-Mushakuboh]
+// patch=1,EE,705041C3,extended,00000060
+// patch=1,EE,705041C3,extended,0020006F
+
+[Cheats/Hualin-Quarterstaff]
+// patch=1,EE,705041C4,extended,00000006
+// patch=1,EE,705041C4,extended,002000F6
+
+[Cheats/Hualin-Iron Staff]
+// patch=1,EE,705041C4,extended,00000060
+// patch=1,EE,705041C4,extended,0020006F
+
+[Cheats/Hualin-Duel Rod]
+// patch=1,EE,705041C5,extended,00000006
+// patch=1,EE,705041C5,extended,002000F6
+
+[Cheats/Hualin-Kunlun Bamboo]
+// patch=1,EE,705041C5,extended,00000060
+// patch=1,EE,705041C5,extended,0020006F
+
+[Cheats/Hualin-Cepheus Seal]
+// patch=1,EE,705041C6,extended,00000006
+// patch=1,EE,705041C6,extended,002000F6
+
+[Cheats/Girardot-Heavy Lance]
+// patch=1,EE,705041C6,extended,00000060
+// patch=1,EE,705041C6,extended,0020006F
+
+[Cheats/Girardot-Pilum Muralis]
+// patch=1,EE,705041C7,extended,00000006
+// patch=1,EE,705041C7,extended,002000F6
+
+[Cheats/Girardot-Bourdanasse]
+// patch=1,EE,705041C7,extended,00000060
+// patch=1,EE,705041C7,extended,0020006F
+
+[Cheats/Girardot-Ahlspiess]
+// patch=1,EE,705041C8,extended,00000006
+// patch=1,EE,705041C8,extended,002000F6
+
+[Cheats/Girardot-Dreadnought]
+// patch=1,EE,705041C8,extended,00000060
+// patch=1,EE,705041C8,extended,0020006F
+
+[Cheats/Girardot-Absolution]
+// patch=1,EE,705041C9,extended,00000006
+// patch=1,EE,705041C9,extended,002000F6
+
+[Cheats/Girardot-Blazecleaver]
+// patch=1,EE,705041C9,extended,00000060
+// patch=1,EE,705041C9,extended,0020006F
+
+[Cheats/Girardot-Sacrifice]
+// patch=1,EE,705041CA,extended,00000006
+// patch=1,EE,705041CA,extended,002000F6
+
+[Cheats/Demuth-Steel Fan]
+// patch=1,EE,705041CA,extended,00000060
+// patch=1,EE,705041CA,extended,0020006F
+
+[Cheats/Demuth-Kamaitachi]
+// patch=1,EE,705041CB,extended,00000006
+// patch=1,EE,705041CB,extended,002000F6
+
+[Cheats/Demuth-Fujin Fan]
+// patch=1,EE,705041CB,extended,00000060
+// patch=1,EE,705041CB,extended,0020006F
+
+[Cheats/Demuth-Zephyrus]
+// patch=1,EE,705041CC,extended,00000006
+// patch=1,EE,705041CC,extended,002000F6
+
+[Cheats/Demuth-Basho Fan]
+// patch=1,EE,705041CC,extended,00000060
+// patch=1,EE,705041CC,extended,0020006F
+
+[Cheats/Demuth-Baindigart]
+// patch=1,EE,705041CD,extended,00000006
+// patch=1,EE,705041CD,extended,002000F6
+
+[Cheats/Aurelia-Sickle]
+// patch=1,EE,705041CD,extended,00000060
+// patch=1,EE,705041CD,extended,0020006F
+
+[Cheats/Aurelia-Kogarashi]
+// patch=1,EE,705041CE,extended,00000006
+// patch=1,EE,705041CE,extended,002000F6
+
+[Cheats/Aurelia-Mizuchi]
+// patch=1,EE,705041CE,extended,00000060
+// patch=1,EE,705041CE,extended,0020006F
+
+[Cheats/Aurelia-Yaesumuji]
+// patch=1,EE,705041CF,extended,00000006
+// patch=1,EE,705041CF,extended,002000F6
+
+[Cheats/Aurelia-Chains Of Hades]
+// patch=1,EE,705041CF,extended,00000060
+// patch=1,EE,705041CF,extended,0020006F
+
+[Cheats/Aurelia-Black Widow]
+// patch=1,EE,705041D0,extended,00000006
+// patch=1,EE,705041D0,extended,002000F6
+
+[Cheats/Chester-Jambiya]
+// patch=1,EE,705041D0,extended,00000060
+// patch=1,EE,705041D0,extended,0020006F
+
+[Cheats/Chester-Assassin Dagger]
+// patch=1,EE,705041D1,extended,00000006
+// patch=1,EE,705041D1,extended,002000F6
+
+[Cheats/Chester-Kris]
+// patch=1,EE,705041D1,extended,00000060
+// patch=1,EE,705041D1,extended,0020006F
+
+[Cheats/Chester-Misericorde]
+// patch=1,EE,705041D2,extended,00000006
+// patch=1,EE,705041D2,extended,002000F6
+
+[Cheats/Chester-Tongue Of Tanatiuh]
+// patch=1,EE,705041D2,extended,00000060
+// patch=1,EE,705041D2,extended,0020006F
+
+[Cheats/Chester-Kingslayer]
+// patch=1,EE,705041D3,extended,00000006
+// patch=1,EE,705041D3,extended,002000F6
+
+[Cheats/Strife-Great Sword]
+// patch=1,EE,705041D3,extended,00000060
+// patch=1,EE,705041D3,extended,0020006F
+
+[Cheats/Strife-Claymore]
+// patch=1,EE,705041D4,extended,00000006
+// patch=1,EE,705041D4,extended,002000F6
+
+[Cheats/Strife-Demon Knife]
+// patch=1,EE,705041D4,extended,00000060
+// patch=1,EE,705041D4,extended,0020006F
+
+[Cheats/Strife-Hercules Sword]
+// patch=1,EE,705041D5,extended,00000006
+// patch=1,EE,705041D5,extended,002000F6
+
+[Cheats/Strife-Alondite]
+// patch=1,EE,705041D5,extended,00000060
+// patch=1,EE,705041D5,extended,0020006F
+
+[Cheats/Strife-Ambition]
+// patch=1,EE,705041D6,extended,00000006
+// patch=1,EE,705041D6,extended,002000F6
+
+[Cheats/Strife-Soul Edge]
+// patch=1,EE,705041D6,extended,00000060
+// patch=1,EE,705041D6,extended,0020006F
+
+[Cheats/Strife-Brutal Terra]
+// patch=1,EE,705041D7,extended,00000006
+// patch=1,EE,705041D7,extended,002000F6
+
+[Cheats/Abelia-Gladius]
+// patch=1,EE,705041D7,extended,00000060
+// patch=1,EE,705041D7,extended,0020006F
+
+[Cheats/Abelia-Ice Blade]
+// patch=1,EE,705041D8,extended,00000006
+// patch=1,EE,705041D8,extended,002000F6
+
+[Cheats/Abelia-Katzbalger]
+// patch=1,EE,705041D8,extended,00000060
+// patch=1,EE,705041D8,extended,0020006F
+
+[Cheats/Abelia-Excalibur]
+// patch=1,EE,705041D9,extended,00000006
+// patch=1,EE,705041D9,extended,002000F6
+
+[Cheats/Abelia-Valkyrie]
+// patch=1,EE,705041D9,extended,00000060
+// patch=1,EE,705041D9,extended,0020006F
+
+[Cheats/Abelia-Eternal Rest]
+// patch=1,EE,705041DA,extended,00000006
+// patch=1,EE,705041DA,extended,002000F6
+
+[Cheats/Abelia-Lilia]
+// patch=1,EE,705041DA,extended,00000060
+// patch=1,EE,705041DA,extended,0020006F
+
+[Cheats/Lynette-Melody Ring]
+// patch=1,EE,705041DB,extended,00000006
+// patch=1,EE,705041DB,extended,002000F6
+
+[Cheats/Lynette-Mazurka]
+// patch=1,EE,705041DB,extended,00000060
+// patch=1,EE,705041DB,extended,0020006F
+
+[Cheats/Lynette-Tarantella]
+// patch=1,EE,705041DC,extended,00000006
+// patch=1,EE,705041DC,extended,002000F6
+
+[Cheats/Lynette-Menard]
+// patch=1,EE,705041DC,extended,00000060
+// patch=1,EE,705041DC,extended,0020006F
+
+[Cheats/Lynette-Terpsichore]
+// patch=1,EE,705041DD,extended,00000006
+// patch=1,EE,705041DD,extended,002000F6
+
+[Cheats/Lynette-Cepheus Seal]
+// patch=1,EE,705041DD,extended,00000060
+// patch=1,EE,705041DD,extended,0020006F
+
+[Cheats/Li Long-Nunchaku]
+// patch=1,EE,705041DE,extended,00000006
+// patch=1,EE,705041DE,extended,002000F6
+
+[Cheats/Li Long-Gemini Rod]
+// patch=1,EE,705041DE,extended,00000060
+// patch=1,EE,705041DE,extended,0020006F
+
+[Cheats/Li Long-Zhongkui]
+// patch=1,EE,705041DF,extended,00000006
+// patch=1,EE,705041DF,extended,002000F6
+
+[Cheats/Li Long-Huoshen]
+// patch=1,EE,705041DF,extended,00000060
+// patch=1,EE,705041DF,extended,0020006F
+
+[Cheats/Li Long-Shuang Lei]
+// patch=1,EE,705041E0,extended,00000006
+// patch=1,EE,705041E0,extended,002000F6
+
+[Cheats/Li Long-Falcon]
+// patch=1,EE,705041E0,extended,00000060
+// patch=1,EE,705041E0,extended,0020006F
+
+[Cheats/Revenant-Wave Sword]
+// patch=1,EE,705041E1,extended,00000006
+// patch=1,EE,705041E1,extended,002000F6
+
+[Cheats/Revenant-Mantis Blade]
+// patch=1,EE,705041E1,extended,00000060
+// patch=1,EE,705041E1,extended,0020006F
+
+[Cheats/Revenant-Double Fang]
+// patch=1,EE,705041E2,extended,00000006
+// patch=1,EE,705041E2,extended,002000F6
+
+[Cheats/Revenant-Aya & Hongya]
+// patch=1,EE,705041E2,extended,00000060
+// patch=1,EE,705041E2,extended,0020006F
+
+[Cheats/Revenant-Atropos]
+// patch=1,EE,705041E3,extended,00000006
+// patch=1,EE,705041E3,extended,002000F6
+
+[Cheats/Revenant-Gatekeeper]
+// patch=1,EE,705041E3,extended,00000060
+// patch=1,EE,705041E3,extended,0020006F
+
+[Cheats/Revenant-Leviathan]
+// patch=1,EE,705041E4,extended,00000006
+// patch=1,EE,705041E4,extended,002000F6
+
+[Cheats/Amy-Schweitzer]
+// patch=1,EE,705041E4,extended,00000060
+// patch=1,EE,705041E4,extended,0020006F
+
+[Cheats/Amy-Rapier]
+// patch=1,EE,705041E5,extended,00000006
+// patch=1,EE,705041E5,extended,002000F6
+
+[Cheats/Amy-Falleng Antler]
+// patch=1,EE,705041E5,extended,00000060
+// patch=1,EE,705041E5,extended,0020006F
+
+[Cheats/Amy-Tuck]
+// patch=1,EE,705041E6,extended,00000006
+// patch=1,EE,705041E6,extended,002000F6
+
+[Cheats/Amy-Unicorn]
+// patch=1,EE,705041E6,extended,00000060
+// patch=1,EE,705041E6,extended,0020006F
+
+[Cheats/Amy-Albion]
+// patch=1,EE,705041E7,extended,00000006
+// patch=1,EE,705041E7,extended,002000F6
+
+[Cheats/Xianghua]
+// patch=1,EE,70504283,extended,00000006
+// patch=1,EE,70504283,extended,002000F6
+// patch=1,EE,70504295,extended,00000060
+// patch=1,EE,70504295,extended,0020006F
+
+[Cheats/Night Terror]
+// patch=1,EE,7050429D,extended,00000006
+// patch=1,EE,7050429D,extended,002000F6
+
+[Cheats/Image 1]
+// patch=1,EE,705041E7,extended,00000060
+// patch=1,EE,705041E7,extended,0020006F
+// patch=1,EE,705041FC,extended,00000060
+// patch=1,EE,705041FC,extended,0020006F
+// patch=1,EE,7050424B,extended,00000060
+// patch=1,EE,7050424B,extended,0020006F
+// patch=1,EE,70504258,extended,00000006
+// patch=1,EE,70504258,extended,002000F6
+// patch=1,EE,70504262,extended,00000006
+// patch=1,EE,70504262,extended,002000F6
+
+[Cheats/Image 2]
+// patch=1,EE,705041E8,extended,00000060
+// patch=1,EE,705041E8,extended,0020006F
+// patch=1,EE,705041FD,extended,00000006
+// patch=1,EE,705041FD,extended,002000F6
+// patch=1,EE,7050424C,extended,00000006
+// patch=1,EE,7050424C,extended,002000F6
+// patch=1,EE,70504258,extended,00000060
+// patch=1,EE,70504258,extended,0020006F
+// patch=1,EE,70504262,extended,00000060
+// patch=1,EE,70504262,extended,0020006F
+
+[Cheats/Image 3]
+// patch=1,EE,705041E9,extended,00000060
+// patch=1,EE,705041E9,extended,0020006F
+// patch=1,EE,705041FD,extended,00000060
+// patch=1,EE,705041FD,extended,0020006F
+// patch=1,EE,7050424C,extended,00000060
+// patch=1,EE,7050424C,extended,0020006F
+// patch=1,EE,70504259,extended,00000006
+// patch=1,EE,70504259,extended,002000F6
+// patch=1,EE,70504267,extended,00000006
+// patch=1,EE,70504267,extended,002000F6
+
+[Cheats/Image 4]
+// patch=1,EE,705041EA,extended,00000060
+// patch=1,EE,705041EA,extended,0020006F
+// patch=1,EE,705041FE,extended,00000006
+// patch=1,EE,705041FE,extended,002000F6
+// patch=1,EE,7050424D,extended,00000006
+// patch=1,EE,7050424D,extended,002000F6
+// patch=1,EE,7050425A,extended,00000006
+// patch=1,EE,7050425A,extended,002000F6
+// patch=1,EE,70504267,extended,00000060
+// patch=1,EE,70504267,extended,0020006F
+
+[Cheats/Image 5]
+// patch=1,EE,705041EB,extended,00000060
+// patch=1,EE,705041EB,extended,0020006F
+// patch=1,EE,705041FE,extended,00000060
+// patch=1,EE,705041FE,extended,0020006F
+// patch=1,EE,7050424D,extended,00000060
+// patch=1,EE,7050424D,extended,0020006F
+// patch=1,EE,7050425A,extended,00000060
+// patch=1,EE,7050425A,extended,0020006F
+// patch=1,EE,70504268,extended,00000006
+// patch=1,EE,70504268,extended,002000F6
+
+[Cheats/Image 6]
+// patch=1,EE,705041EE,extended,00000006
+// patch=1,EE,705041EE,extended,002000F6
+// patch=1,EE,705041FF,extended,00000006
+// patch=1,EE,705041FF,extended,002000F6
+// patch=1,EE,7050424E,extended,00000006
+// patch=1,EE,7050424E,extended,002000F6
+// patch=1,EE,7050425B,extended,00000060
+// patch=1,EE,7050425B,extended,0020006F
+// patch=1,EE,7050426D,extended,00000006
+// patch=1,EE,7050426D,extended,002000F6
+
+[Cheats/Image 7]
+// patch=1,EE,705041EE,extended,00000060
+// patch=1,EE,705041EE,extended,0020006F
+// patch=1,EE,705041FF,extended,00000060
+// patch=1,EE,705041FF,extended,0020006F
+// patch=1,EE,7050424E,extended,00000060
+// patch=1,EE,7050424E,extended,0020006F
+// patch=1,EE,7050425C,extended,00000006
+// patch=1,EE,7050425C,extended,002000F6
+// patch=1,EE,7050426D,extended,00000060
+// patch=1,EE,7050426D,extended,0020006F
+
+[Cheats/Image 8]
+// patch=1,EE,705041F0,extended,00000060
+// patch=1,EE,705041F0,extended,0020006F
+// patch=1,EE,70504200,extended,00000006
+// patch=1,EE,70504200,extended,002000F6
+// patch=1,EE,7050424F,extended,00000006
+// patch=1,EE,7050424F,extended,002000F6
+// patch=1,EE,7050425C,extended,00000060
+// patch=1,EE,7050425C,extended,0020006F
+// patch=1,EE,7050426E,extended,00000006
+// patch=1,EE,7050426E,extended,002000F6
+
+[Cheats/Image 9]
+// patch=1,EE,705041F1,extended,00000060
+// patch=1,EE,705041F1,extended,0020006F
+// patch=1,EE,70504200,extended,00000060
+// patch=1,EE,70504200,extended,0020006F
+// patch=1,EE,70504250,extended,00000060
+// patch=1,EE,70504250,extended,0020006F
+// patch=1,EE,7050425E,extended,00000006
+// patch=1,EE,7050425E,extended,002000F6
+// patch=1,EE,70504276,extended,00000060
+// patch=1,EE,70504276,extended,0020006F
+
+[Cheats/Image 10]
+// patch=1,EE,705041F2,extended,00000006
+// patch=1,EE,705041F2,extended,002000F6
+// patch=1,EE,70504201,extended,00000006
+// patch=1,EE,70504201,extended,002000F6
+// patch=1,EE,70504251,extended,00000006
+// patch=1,EE,70504251,extended,002000F6
+// patch=1,EE,70504261,extended,00000060
+// patch=1,EE,70504261,extended,0020006F
+// patch=1,EE,70504277,extended,00000006
+// patch=1,EE,70504277,extended,002000F6
+
+[Cheats/Image 11]
+// patch=1,EE,705041F2,extended,00000060
+// patch=1,EE,705041F2,extended,0020006F
+// patch=1,EE,70504201,extended,00000060
+// patch=1,EE,70504201,extended,0020006F
+// patch=1,EE,70504251,extended,00000060
+// patch=1,EE,70504251,extended,0020006F
+// patch=1,EE,70504277,extended,00000060
+// patch=1,EE,70504277,extended,0020006F
+
+[Cheats/Image 12]
+// patch=1,EE,705041F5,extended,00000006
+// patch=1,EE,705041F5,extended,002000F6
+// patch=1,EE,70504202,extended,00000006
+// patch=1,EE,70504202,extended,002000F6
+// patch=1,EE,70504252,extended,00000006
+// patch=1,EE,70504252,extended,002000F6
+// patch=1,EE,70504278,extended,00000060
+// patch=1,EE,70504278,extended,0020006F
+
+[Cheats/Image 13]
+// patch=1,EE,705041F5,extended,00000060
+// patch=1,EE,705041F5,extended,0020006F
+// patch=1,EE,70504202,extended,00000060
+// patch=1,EE,70504202,extended,0020006F
+// patch=1,EE,70504252,extended,00000060
+// patch=1,EE,70504252,extended,0020006F
+// patch=1,EE,70504279,extended,00000006
+// patch=1,EE,70504279,extended,002000F6
+
+[Cheats/Image 14]
+// patch=1,EE,705041F6,extended,00000006
+// patch=1,EE,705041F6,extended,002000F6
+// patch=1,EE,70504203,extended,00000006
+// patch=1,EE,70504203,extended,002000F6
+// patch=1,EE,70504255,extended,00000060
+// patch=1,EE,70504255,extended,0020006F
+// patch=1,EE,70504279,extended,00000060
+// patch=1,EE,70504279,extended,0020006F
+
+[Cheats/Image 15]
+// patch=1,EE,705041F6,extended,00000060
+// patch=1,EE,705041F6,extended,0020006F
+// patch=1,EE,70504203,extended,00000060
+// patch=1,EE,70504203,extended,0020006F
+// patch=1,EE,70504256,extended,00000060
+// patch=1,EE,70504256,extended,0020006F
+
+[Cheats/Image 16]
+// patch=1,EE,705041F7,extended,00000006
+// patch=1,EE,705041F7,extended,002000F6
+// patch=1,EE,70504204,extended,00000006
+// patch=1,EE,70504204,extended,002000F6
+
+[Cheats/Image 17]
+// patch=1,EE,70504204,extended,00000060
+// patch=1,EE,70504204,extended,0020006F
+
+[Cheats/Image 18]
+// patch=1,EE,70504205,extended,00000006
+// patch=1,EE,70504205,extended,002000F6
+
+[Cheats/Image 19]
+// patch=1,EE,70504205,extended,00000060
+// patch=1,EE,70504205,extended,0020006F
+
+[Cheats/Image 20]
+// patch=1,EE,70504206,extended,00000006
+// patch=1,EE,70504206,extended,002000F6
+
+[Cheats/Image 21]
+// patch=1,EE,70504206,extended,00000060
+// patch=1,EE,70504206,extended,0020006F
+
+[Cheats/Image 22]
+// patch=1,EE,70504207,extended,00000006
+// patch=1,EE,70504207,extended,002000F6
+
+[Cheats/Image 23]
+// patch=1,EE,70504207,extended,00000060
+// patch=1,EE,70504207,extended,0020006F
+
+[Cheats/Image 24]
+// patch=1,EE,70504208,extended,00000006
+// patch=1,EE,70504208,extended,002000F6
+
+[Cheats/Image 25]
+// patch=1,EE,70504208,extended,00000060
+// patch=1,EE,70504208,extended,0020006F
+
+[Cheats/Image 26]
+// patch=1,EE,70504209,extended,00000006
+// patch=1,EE,70504209,extended,002000F6
+
+[Cheats/Image 27]
+// patch=1,EE,70504209,extended,00000060
+// patch=1,EE,70504209,extended,0020006F
+
+[Cheats/Image 28]
+// patch=1,EE,7050420A,extended,00000006
+// patch=1,EE,7050420A,extended,002000F6
+
+[Cheats/Image 29]
+// patch=1,EE,7050420A,extended,00000060
+// patch=1,EE,7050420A,extended,0020006F
+
+[Cheats/Image 30]
+// patch=1,EE,7050420B,extended,00000006
+// patch=1,EE,7050420B,extended,002000F6
+
+[Cheats/Image 31]
+// patch=1,EE,7050420B,extended,00000060
+// patch=1,EE,7050420B,extended,0020006F
+
+[Cheats/Image 32]
+// patch=1,EE,7050420C,extended,00000006
+// patch=1,EE,7050420C,extended,002000F6
+
+[Cheats/Image 33]
+// patch=1,EE,7050420C,extended,00000060
+// patch=1,EE,7050420C,extended,0020006F
+
+[Cheats/Image 34]
+// patch=1,EE,7050420D,extended,00000006
+// patch=1,EE,7050420D,extended,002000F6
+
+[Cheats/Image 35]
+// patch=1,EE,7050420D,extended,00000060
+// patch=1,EE,7050420D,extended,0020006F
+
+[Cheats/Image 36]
+// patch=1,EE,7050420E,extended,00000006
+// patch=1,EE,7050420E,extended,002000F6
+
+[Cheats/Image 37]
+// patch=1,EE,7050420E,extended,00000060
+// patch=1,EE,7050420E,extended,0020006F
+
+[Cheats/Image 38]
+// patch=1,EE,7050420F,extended,00000006
+// patch=1,EE,7050420F,extended,002000F6
+
+[Cheats/Image 39]
+// patch=1,EE,7050420F,extended,00000060
+// patch=1,EE,7050420F,extended,0020006F
+
+[Cheats/Image 40]
+// patch=1,EE,70504210,extended,00000006
+// patch=1,EE,70504210,extended,002000F6
+
+[Cheats/Image 41]
+// patch=1,EE,70504210,extended,00000060
+// patch=1,EE,70504210,extended,0020006F
+
+[Cheats/Image 42]
+// patch=1,EE,70504211,extended,00000006
+// patch=1,EE,70504211,extended,002000F6
+
+[Cheats/Image 43]
+// patch=1,EE,70504211,extended,00000060
+// patch=1,EE,70504211,extended,0020006F
+
+[Cheats/Image 44]
+// patch=1,EE,70504212,extended,00000006
+// patch=1,EE,70504212,extended,002000F6
+
+[Cheats/Image 45]
+// patch=1,EE,70504212,extended,00000060
+// patch=1,EE,70504212,extended,0020006F
+
+[Cheats/Image 46]
+// patch=1,EE,70504213,extended,00000006
+// patch=1,EE,70504213,extended,002000F6
+
+[Cheats/Image 47]
+// patch=1,EE,70504213,extended,00000060
+// patch=1,EE,70504213,extended,0020006F
+
+[Cheats/Image 48]
+// patch=1,EE,70504214,extended,00000006
+// patch=1,EE,70504214,extended,002000F6
+
+[Cheats/Image 49]
+// patch=1,EE,70504214,extended,00000060
+// patch=1,EE,70504214,extended,0020006F
+
+[Cheats/Image 50]
+// patch=1,EE,70504215,extended,00000006
+// patch=1,EE,70504215,extended,002000F6
+
+[Cheats/Image 51]
+// patch=1,EE,70504215,extended,00000060
+// patch=1,EE,70504215,extended,0020006F
+
+[Cheats/Image 52]
+// patch=1,EE,70504216,extended,00000006
+// patch=1,EE,70504216,extended,002000F6
+
+[Cheats/Image 53]
+// patch=1,EE,70504216,extended,00000060
+// patch=1,EE,70504216,extended,0020006F
+
+[Cheats/Image 54]
+// patch=1,EE,70504217,extended,00000006
+// patch=1,EE,70504217,extended,002000F6
+
+[Cheats/Image 55]
+// patch=1,EE,70504217,extended,00000060
+// patch=1,EE,70504217,extended,0020006F
+
+[Cheats/Image 56]
+// patch=1,EE,70504218,extended,00000006
+// patch=1,EE,70504218,extended,002000F6
+
+[Cheats/Image 57]
+// patch=1,EE,70504218,extended,00000060
+// patch=1,EE,70504218,extended,0020006F
+
+[Cheats/Image 58]
+// patch=1,EE,70504219,extended,00000006
+// patch=1,EE,70504219,extended,002000F6
+
+[Cheats/Image 59]
+// patch=1,EE,70504219,extended,00000060
+// patch=1,EE,70504219,extended,0020006F
+
+[Cheats/Image 60]
+// patch=1,EE,7050421A,extended,00000006
+// patch=1,EE,7050421A,extended,002000F6
+
+[Cheats/Image 61]
+// patch=1,EE,7050421A,extended,00000060
+// patch=1,EE,7050421A,extended,0020006F
+
+[Cheats/Image 62]
+// patch=1,EE,7050421B,extended,00000006
+// patch=1,EE,7050421B,extended,002000F6
+
+[Cheats/Image 63]
+// patch=1,EE,7050421B,extended,00000060
+// patch=1,EE,7050421B,extended,0020006F
+
+[Cheats/Image 64]
+// patch=1,EE,7050421C,extended,00000006
+// patch=1,EE,7050421C,extended,002000F6
+
+[Cheats/Image 65]
+// patch=1,EE,7050421C,extended,00000060
+// patch=1,EE,7050421C,extended,0020006F
+
+[Cheats/Image 66]
+// patch=1,EE,7050421D,extended,00000006
+// patch=1,EE,7050421D,extended,002000F6
+
+[Cheats/Image 67]
+// patch=1,EE,7050421D,extended,00000060
+// patch=1,EE,7050421D,extended,0020006F
+
+[Cheats/Image 68]
+// patch=1,EE,7050421E,extended,00000006
+// patch=1,EE,7050421E,extended,002000F6
+
+[Cheats/Image 69]
+// patch=1,EE,7050421E,extended,00000060
+// patch=1,EE,7050421E,extended,0020006F
+
+[Cheats/Image 70]
+// patch=1,EE,7050421F,extended,00000006
+// patch=1,EE,7050421F,extended,002000F6
+
+[Cheats/Image 71]
+// patch=1,EE,7050421F,extended,00000060
+// patch=1,EE,7050421F,extended,0020006F
+
+[Cheats/Image 72]
+// patch=1,EE,70504220,extended,00000006
+// patch=1,EE,70504220,extended,002000F6
+
+[Cheats/Image 73]
+// patch=1,EE,70504220,extended,00000060
+// patch=1,EE,70504220,extended,0020006F
+
+[Cheats/Image 74]
+// patch=1,EE,70504221,extended,00000006
+// patch=1,EE,70504221,extended,002000F6
+
+[Cheats/Image 75]
+// patch=1,EE,70504221,extended,00000060
+// patch=1,EE,70504221,extended,0020006F
+
+[Cheats/Image 76]
+// patch=1,EE,70504222,extended,00000006
+// patch=1,EE,70504222,extended,002000F6
+
+[Cheats/Image 77]
+// patch=1,EE,70504222,extended,00000060
+// patch=1,EE,70504222,extended,0020006F
+
+[Cheats/Image 78]
+// patch=1,EE,70504223,extended,00000006
+// patch=1,EE,70504223,extended,002000F6
+
+[Cheats/Image 79]
+// patch=1,EE,70504223,extended,00000060
+// patch=1,EE,70504223,extended,0020006F
+
+[Cheats/Image 80]
+// patch=1,EE,70504224,extended,00000006
+// patch=1,EE,70504224,extended,002000F6
+
+[Cheats/Image 81]
+// patch=1,EE,70504224,extended,00000060
+// patch=1,EE,70504224,extended,0020006F
+
+[Cheats/Image 82]
+// patch=1,EE,70504225,extended,00000006
+// patch=1,EE,70504225,extended,002000F6
+
+[Cheats/Image 83]
+// patch=1,EE,70504225,extended,00000060
+// patch=1,EE,70504225,extended,0020006F
+
+[Cheats/Image 84]
+// patch=1,EE,70504226,extended,00000006
+// patch=1,EE,70504226,extended,002000F6
+
+[Cheats/Image 85]
+// patch=1,EE,70504226,extended,00000060
+// patch=1,EE,70504226,extended,0020006F
+
+[Cheats/Image 86]
+// patch=1,EE,70504227,extended,00000006
+// patch=1,EE,70504227,extended,002000F6
+
+[Cheats/Image 87]
+// patch=1,EE,70504234,extended,00000006
+// patch=1,EE,70504234,extended,002000F6
+
+[Cheats/Image 88]
+// patch=1,EE,70504234,extended,00000060
+// patch=1,EE,70504234,extended,0020006F
+
+[Cheats/Image 89]
+// patch=1,EE,70504235,extended,00000006
+// patch=1,EE,70504235,extended,002000F6
+
+[Cheats/Image 90]
+// patch=1,EE,70504235,extended,00000060
+// patch=1,EE,70504235,extended,0020006F
+
+[Cheats/Image 91]
+// patch=1,EE,70504236,extended,00000006
+// patch=1,EE,70504236,extended,002000F6
+
+[Cheats/Image 92]
+// patch=1,EE,70504236,extended,00000060
+// patch=1,EE,70504236,extended,0020006F
+
+[Cheats/Image 93]
+// patch=1,EE,70504237,extended,00000006
+// patch=1,EE,70504237,extended,002000F6
+
+[Cheats/Image 94]
+// patch=1,EE,70504237,extended,00000060
+// patch=1,EE,70504237,extended,0020006F
+
+[Cheats/Image 95]
+// patch=1,EE,70504238,extended,00000006
+// patch=1,EE,70504238,extended,002000F6
+
+[Cheats/Image 96]
+// patch=1,EE,70504238,extended,00000060
+// patch=1,EE,70504238,extended,0020006F
+
+[Cheats/Image 97]
+// patch=1,EE,70504239,extended,00000006
+// patch=1,EE,70504239,extended,002000F6
+
+[Cheats/Image 98]
+// patch=1,EE,70504239,extended,00000060
+// patch=1,EE,70504239,extended,0020006F
+
+[Cheats/Image 99]
+// patch=1,EE,7050423A,extended,00000006
+// patch=1,EE,7050423A,extended,002000F6
+
+[Cheats/Image 100]
+// patch=1,EE,7050423A,extended,00000060
+// patch=1,EE,7050423A,extended,0020006F
+
+[Cheats/Image 101]
+// patch=1,EE,7050423B,extended,00000006
+// patch=1,EE,7050423B,extended,002000F6
+
+[Cheats/Image 102]
+// patch=1,EE,7050423B,extended,00000060
+// patch=1,EE,7050423B,extended,0020006F
+
+[Cheats/Image 103]
+// patch=1,EE,7050423C,extended,00000006
+// patch=1,EE,7050423C,extended,002000F6
+
+[Cheats/Image 104]
+// patch=1,EE,7050423D,extended,00000060
+// patch=1,EE,7050423D,extended,0020006F
+
+[Cheats/Image 105]
+// patch=1,EE,7050423E,extended,00000006
+// patch=1,EE,7050423E,extended,002000F6
+
+[Cheats/Movie 1]
+// patch=1,EE,7050427A,extended,00000006
+// patch=1,EE,7050427A,extended,002000F6
+
+[Cheats/Movie 2]
+// patch=1,EE,7050427A,extended,00000060
+// patch=1,EE,7050427A,extended,0020006F
+
+[Cheats/Movie 3]
+// patch=1,EE,7050427B,extended,00000060
+// patch=1,EE,7050427B,extended,0020006F
+
+[Cheats/Movie 4]
+// patch=1,EE,7050427C,extended,00000006
+// patch=1,EE,7050427C,extended,002000F6
+
+[Cheats/Movie 5]
+// patch=1,EE,7050427D,extended,00000060
+// patch=1,EE,7050427D,extended,0020006F
+
+[Cheats/Mission 1-Easy]
+// patch=1,EE,70504386,extended,00000060
+// patch=1,EE,70504386,extended,0020006F
+
+[Cheats/Mission 2-Easy]
+// patch=1,EE,70504388,extended,00000006
+// patch=1,EE,70504388,extended,002000F6
+
+[Cheats/Mission 3-Easy]
+// patch=1,EE,7050439A,extended,00000006
+// patch=1,EE,7050439A,extended,002000F6
+
+[Cheats/Mission 4-Easy]
+// patch=1,EE,7050438C,extended,00000060
+// patch=1,EE,7050438C,extended,0020006F
+
+[Cheats/Mission 5-Easy]
+// patch=1,EE,7050438B,extended,00000006
+// patch=1,EE,7050438B,extended,002000F6
+
+[Cheats/Mission 6-Easy]
+// patch=1,EE,70504389,extended,00000060
+// patch=1,EE,70504389,extended,0020006F
+
+[Cheats/Mission 7-Easy]
+// patch=1,EE,70504395,extended,00000060
+// patch=1,EE,70504395,extended,0020006F
+
+[Cheats/Mission 8-Easy]
+// patch=1,EE,70504397,extended,00000006
+// patch=1,EE,70504397,extended,002000F6
+
+[Cheats/Mission 9-Easy]
+// patch=1,EE,70504398,extended,00000060
+// patch=1,EE,70504398,extended,0020006F
+
+[Cheats/Mission 10-Easy]
+// patch=1,EE,70504385,extended,00000006
+// patch=1,EE,70504385,extended,002000F6
+
+[Cheats/Mission 11-Easy]
+// patch=1,EE,70504391,extended,00000006
+// patch=1,EE,70504391,extended,002000F6
+
+[Cheats/Mission 12-Easy]
+// patch=1,EE,7050439E,extended,00000060
+// patch=1,EE,7050439E,extended,0020006F
+
+[Cheats/Mission 1-Normal]
+// patch=1,EE,70504387,extended,00000006
+// patch=1,EE,70504387,extended,002000F6
+
+[Cheats/Mission 2-Normal]
+// patch=1,EE,70504388,extended,00000060
+// patch=1,EE,70504388,extended,0020006F
+
+[Cheats/Mission 3-Normal]
+// patch=1,EE,7050439A,extended,00000060
+// patch=1,EE,7050439A,extended,0020006F
+
+[Cheats/Mission 4-Normal]
+// patch=1,EE,7050438D,extended,00000006
+// patch=1,EE,7050438D,extended,002000F6
+
+[Cheats/Mission 5-Normal]
+// patch=1,EE,7050438B,extended,00000060
+// patch=1,EE,7050438B,extended,0020006F
+
+[Cheats/Mission 6-Normal]
+// patch=1,EE,7050438A,extended,00000006
+// patch=1,EE,7050438A,extended,002000F6
+
+[Cheats/Mission 7-Normal]
+// patch=1,EE,70504396,extended,00000006
+// patch=1,EE,70504396,extended,002000F6
+
+[Cheats/Mission 8-Normal]
+// patch=1,EE,70504397,extended,00000060
+// patch=1,EE,70504397,extended,0020006F
+
+[Cheats/Mission 9-Normal]
+// patch=1,EE,70504399,extended,00000006
+// patch=1,EE,70504399,extended,002000F6
+
+[Cheats/Mission 10-Normal]
+// patch=1,EE,70504385,extended,00000060
+// patch=1,EE,70504385,extended,0020006F
+
+[Cheats/Mission 11-Normal]
+// patch=1,EE,70504391,extended,00000060
+// patch=1,EE,70504391,extended,0020006F
+
+[Cheats/Mission 12-Normal]
+// patch=1,EE,7050439F,extended,00000006
+// patch=1,EE,7050439F,extended,002000F6
+
+[Cheats/Mission 1-Hard]
+// patch=1,EE,70504387,extended,00000060
+// patch=1,EE,70504387,extended,0020006F
+
+[Cheats/Mission 2-Hard]
+// patch=1,EE,70504389,extended,00000006
+// patch=1,EE,70504389,extended,002000F6
+
+[Cheats/Mission 3-Hard]
+// patch=1,EE,7050439B,extended,00000006
+// patch=1,EE,7050439B,extended,002000F6
+
+[Cheats/Mission 4-Hard]
+// patch=1,EE,7050438D,extended,00000060
+// patch=1,EE,7050438D,extended,0020006F
+
+[Cheats/Mission 5-Hard]
+// patch=1,EE,7050438C,extended,00000006
+// patch=1,EE,7050438C,extended,002000F6
+
+[Cheats/Mission 6-Hard]
+// patch=1,EE,7050438A,extended,00000060
+// patch=1,EE,7050438A,extended,0020006F
+
+[Cheats/Mission 7-Hard]
+// patch=1,EE,70504396,extended,00000060
+// patch=1,EE,70504396,extended,0020006F
+
+[Cheats/Mission 8-Hard]
+// patch=1,EE,70504398,extended,00000006
+// patch=1,EE,70504398,extended,002000F6
+
+[Cheats/Mission 9-Hard]
+// patch=1,EE,70504399,extended,00000060
+// patch=1,EE,70504399,extended,0020006F
+
+[Cheats/Mission 10-Hard]
+// patch=1,EE,70504386,extended,00000006
+// patch=1,EE,70504386,extended,002000F6
+
+[Cheats/Mission 11-Hard]
+// patch=1,EE,70504392,extended,00000006
+// patch=1,EE,70504392,extended,002000F6
+
+[Cheats/Mission 12-Hard]
+// patch=1,EE,7050439F,extended,00000060
+// patch=1,EE,7050439F,extended,0020006F
+
+[Cheats/Maximum Cash]
+// patch=1,EE,204F3014,extended,05F00000
+
+[Cheats/Unlock Characters/Weapons]
+// patch=1,EE,40509898,extended,00CB0001
+// patch=1,EE,66666666,extended,00000000
+// patch=1,EE,10509BC4,extended,00006666
+
+[Cheats/Unlock All Costumes/Class/Slots for Character Creation]
+// patch=1,EE,40509B38,extended,00740001
+// patch=1,EE,66666666,extended,00000000

@@ -1,0 +1,13 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Cartoon Network Racing [SLUS-21438] [EAE72CFE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Low Total Time]
+// patch=1,EE,903BA700,extended,00832021
+
+[Cheats/Always Low Time]
+// patch=1,EE,202DECD4,extended,AE000010
+
+[Cheats/Unlock All Gallery]
+// patch=1,EE,4059ED28,extended,000C0002
+// patch=1,EE,00001D4C,extended,00000001

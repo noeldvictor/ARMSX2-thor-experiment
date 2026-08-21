@@ -1,0 +1,321 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Gran Turismo 3 A-Spec [SCUS-97102] [85AE91B3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Captures Remaining]
+// patch=1,EE,9027219C,extended,0C09F664
+
+[Cheats/Low Times (Time Trial)]
+// patch=1,EE,D1FC9A40,extended,0030F000
+// patch=1,EE,21FC9A40,extended,00005000
+
+[Cheats/Instant Win (Single Race)]
+// patch=1,EE,E0080000,extended,01FBCB74
+// patch=1,EE,D1FA1E5C,extended,00000002
+// patch=1,EE,01FBCB74,extended,00000002
+// patch=1,EE,D1FA1E5C,extended,00000003
+// patch=1,EE,01FBCB74,extended,00000003
+// patch=1,EE,D1FA1E5C,extended,00000004
+// patch=1,EE,01FBCB74,extended,00000004
+// patch=1,EE,D1FA1E5C,extended,00000005
+// patch=1,EE,01FBCB74,extended,00000005
+// patch=1,EE,01FA3F7C,extended,00000003
+// patch=1,EE,01FCBB55,extended,00000003
+// patch=1,EE,D1FBEC94,extended,00000000
+// patch=1,EE,01FBEC94,extended,00000003
+
+[Cheats/Always Simulation Day 1]
+// patch=1,EE,20958EE8,extended,00000001
+
+[Cheats/Always Simulation Day 9999]
+// patch=1,EE,20958EE8,extended,0000270F
+
+[Cheats/Max Races]
+// patch=1,EE,20958EEC,extended,0000270F
+
+[Cheats/Max Wins]
+// patch=1,EE,20958EF4,extended,0000270F
+
+[Cheats/Max Money]
+// patch=1,EE,20958EF8,extended,D4A50FFF
+// patch=1,EE,20958EFC,extended,000000E8
+
+[Cheats/Only 1 Lap To Finish Race (Single Race)]
+// patch=1,EE,01FA3F7C,extended,00000003
+// patch=1,EE,01FCBB55,extended,00000003
+// patch=1,EE,D1FBEC94,extended,00000000
+// patch=1,EE,01FBEC94,extended,00000002
+
+[Cheats/Always Good Tires]
+// patch=1,EE,41FBE960,extended,00040029
+// patch=1,EE,C69C4000,extended,00000000
+
+[Cheats/Max Series Points]
+// patch=1,EE,D1FCB1B0,extended,00000000
+// patch=1,EE,11FCB1B0,extended,0000270F
+
+[Cheats/Low License Times]
+// patch=1,EE,D1FFF734,extended,00305000
+// patch=1,EE,21FFF734,extended,00005000
+
+[Cheats/Have All Licenses-Gold Trophies]
+// patch=1,EE,40978430,extended,00300065
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Have All Licenses-Silver Trophies]
+// patch=1,EE,40978430,extended,00300065
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Licenses-Bronze Trophies]
+// patch=1,EE,40978430,extended,00300065
+// patch=1,EE,00000002,extended,00000000
+
+[Cheats/4WD Challenge]
+// patch=1,EE,4097C490,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C4A8,extended,00030001
+// patch=1,EE,4097C49C,extended,00030001
+
+[Cheats/80's Sports Car Cup]
+// patch=1,EE,4097C4B4,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Altezza Race]
+// patch=1,EE,4097C4CC,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Beetle Cup]
+// patch=1,EE,4097C4FC,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Evolution Meeting]
+// patch=1,EE,4097C5E4,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C5F0,extended,00030001
+
+[Cheats/FF Challenge]
+// patch=1,EE,4097C628,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C640,extended,00030001
+// patch=1,EE,4097C634,extended,00030001
+
+[Cheats/FR Challenge]
+// patch=1,EE,4097C64C,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C664,extended,00030001
+// patch=1,EE,4097C658,extended,00030001
+
+[Cheats/GT World Championship]
+// patch=1,EE,4097C6E0,extended,000B0001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C738,extended,000B0001
+// patch=1,EE,4097C70C,extended,000B0001
+
+[Cheats/Lightweight Sports Car Cup]
+// patch=1,EE,4097C7DC,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Legend Of Silver Arrow]
+// patch=1,EE,4097C7E8,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C7F4,extended,00030001
+
+[Cheats/MR Challenge]
+// patch=1,EE,4097C800,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C818,extended,00030001
+// patch=1,EE,4097C80C,extended,00030001
+
+[Cheats/Race Of NA Sports]
+// patch=1,EE,4097C824,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C83C,extended,00030001
+// patch=1,EE,4097C830,extended,00030001
+
+[Cheats/Spider & Roadster]
+// patch=1,EE,4097C874,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C880,extended,00030001
+
+[Cheats/Stars & Stripes]
+// patch=1,EE,4097C88C,extended,00040001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C89C,extended,00040001
+
+[Cheats/Sunday Cup]
+// patch=1,EE,4097C8AC,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Audi TT Race]
+// patch=1,EE,4097C8B8,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Race Of Turbo Sports]
+// patch=1,EE,4097C8E8,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C900,extended,00030001
+// patch=1,EE,4097C8F4,extended,00030001
+
+[Cheats/Type-R Meeting]
+// patch=1,EE,4097C924,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C93C,extended,00060001
+
+[Cheats/Vitz Race]
+// patch=1,EE,4097C96C,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C984,extended,00060001
+
+[Cheats/80's Sport Car Cup]
+// patch=1,EE,4097C4C0,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Altezza Championship]
+// patch=1,EE,4097C4E4,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Boxer Spirit]
+// patch=1,EE,4097C520,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C514,extended,00030001
+
+[Cheats/German Touring Car Championships]
+// patch=1,EE,4097C55C,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Dream Car Championship]
+// patch=1,EE,4097C594,extended,00080001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C574,extended,00080001
+
+[Cheats/European Championship]
+// patch=1,EE,4097C5CC,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Gran Turismo All Stars]
+// patch=1,EE,4097C69C,extended,000B0001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C670,extended,000B0001
+
+[Cheats/Race Of Red Emblem]
+// patch=1,EE,4097C6D4,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C6C8,extended,00030001
+
+[Cheats/Japanese Championship]
+// patch=1,EE,4097C76C,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/All Japan GT Championship]
+// patch=1,EE,4097C7B0,extended,000B0001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,4097C784,extended,000B0001
+
+[Cheats/Tourist Trophy]
+// patch=1,EE,4097C8D0,extended,00050001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/American Championship]
+// patch=1,EE,4097C954,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/British GT Car Cup]
+// patch=1,EE,4097C52C,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Cilo Trophy]
+// patch=1,EE,4097C538,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Elise Trophy]
+// patch=1,EE,4097C5B4,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Formula GT]
+// patch=1,EE,4097C5FC,extended,000B0001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Italian Avant Grade]
+// patch=1,EE,4097C764,extended,00020001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Polyphony Digital Cup]
+// patch=1,EE,4097C848,extended,000B0001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Tuscan Challenge]
+// patch=1,EE,4097C90C,extended,00060001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Like The Wind]
+// patch=1,EE,2097C99C,extended,00000000
+
+[Cheats/Super Speical Route 5 (Wet) II]
+// patch=1,EE,4097C3F0,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Smokey Mountain Rally II]
+// patch=1,EE,4097C3FC,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Rally Of Alps II]
+// patch=1,EE,4097C408,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Rally Challenge II]
+// patch=1,EE,4097C414,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Tahiti Maze II]
+// patch=1,EE,4097C420,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Super Special Route 5 (Wet)]
+// patch=1,EE,4097C42C,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Smokey Mountain Rally]
+// patch=1,EE,4097C438,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Rally Of Alps]
+// patch=1,EE,4097C444,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Rally Challenge]
+// patch=1,EE,4097C450,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Tahiti Maze]
+// patch=1,EE,4097C45C,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Tokyo Route 246-Trophy 1]
+// patch=1,EE,2097C468,extended,00000000
+
+[Cheats/Grand Valley-Trophy 1]
+// patch=1,EE,2097C46C,extended,00000000
+
+[Cheats/Laguna Seca 200 Endurance-Trophy 1]
+// patch=1,EE,2097C470,extended,00000000
+
+[Cheats/Mistral 78 Laps-Trophy 1]
+// patch=1,EE,2097C474,extended,00000000
+
+[Cheats/Roadster Endurance-Trophy 1]
+// patch=1,EE,2097C478,extended,00000000
+
+[Cheats/Passage To Colosseo-Trophy 1]
+// patch=1,EE,2097C47C,extended,00000000
+
+[Cheats/Special Stage Route 11-Trophy 1]
+// patch=1,EE,2097C480,extended,00000000
+
+[Cheats/Seattle 100 Miles-Trophy 1]
+// patch=1,EE,2097C484,extended,00000000
+
+[Cheats/Super Speedway 150 Miles-Trophy 1]
+// patch=1,EE,2097C488,extended,00000000
+
+[Cheats/Trial Mountain Endurance-Trophy 1]
+// patch=1,EE,2097C48C,extended,00000000

@@ -1,0 +1,110 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: God Of War [SCUS-97399] [D6385328]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Techniques]
+// patch=1,EE,9027BA70,extended,0C0A24A5
+
+[Cheats/P1 Press {SELECT} To Skip FMV]
+// patch=1,EE,D02FDA9C,extended,0000FFFE
+// patch=1,EE,2026FF78,extended,24020001
+// patch=1,EE,D02FDA9C,extended,0010FFFE
+// patch=1,EE,2026FF78,extended,8C620000
+
+[Cheats/Infinite Health]
+// patch=1,EE,E001453B,extended,1079597E
+// patch=1,EE,20795978,extended,43480000
+
+[Cheats/Max Health]
+// patch=1,EE,E001453B,extended,1079597E
+// patch=1,EE,2079597C,extended,43480000
+
+[Cheats/P1 Press {L1}+Left For Quick Last Boss Death]
+// patch=1,EE,E002FB7F,extended,002FDA9C
+// patch=1,EE,E001453B,extended,0079597E
+// patch=1,EE,20795978,extended,453B7FFF
+
+[Cheats/Infinite Magic]
+// patch=1,EE,20302D1C,extended,42C80000
+
+[Cheats/P1 Press {L1}+Right To Refill Rage Of The Gods Meter]
+// patch=1,EE,D02FDA9C,extended,0000FBDF
+// patch=1,EE,20302D20,extended,42C80000
+
+[Cheats/Max Power-Up Meter]
+// patch=1,EE,20302D28,extended,0000EA60
+
+[Cheats/Have All Gorgon Eyes]
+// patch=1,EE,00302D3F,extended,00000018
+
+[Cheats/Have All Phoenix Feathers]
+// patch=1,EE,00302D40,extended,00000018
+
+[Cheats/Have All Muse Keys]
+// patch=1,EE,00302D41,extended,00000002
+
+[Cheats/Have All Powerups/Moves]
+// patch=1,EE,10302D42,extended,0000FFFF
+
+[Cheats/P1 Press {L1}+Up To Kill Enemies]
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,86020060
+// patch=1,EE,201B4D84,extended,0C03008C
+// patch=1,EE,201B4D88,extended,8E700000
+// patch=1,EE,D02FDA9C,extended,0000FBEF
+// patch=1,EE,200C0230,extended,AE600178
+// patch=1,EE,D02FDA9C,extended,0010FBEF
+// patch=1,EE,200C0230,extended,00000000
+
+[Cheats/P1 Press {L1}+Down To Refill Health For Your Family]
+// patch=1,EE,200C0220,extended,8E61017C
+// patch=1,EE,200C0224,extended,AE610178
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,8E700000
+// patch=1,EE,D02FDA9C,extended,0000FBBF
+// patch=1,EE,201B4E5C,extended,0C030088
+// patch=1,EE,D02FDA9C,extended,0010FBBF
+// patch=1,EE,201B4E5C,extended,8E700000
+
+[Cheats/Max Combo Hits]
+// patch=1,EE,2076D650,extended,0000270F
+
+[Cheats/Max Red Orbs]
+// patch=1,EE,2076D7D8,extended,0000EA60
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,201E8E2C,extended,00000000
+
+[Cheats/Unlock All Treasures]
+// patch=1,EE,202A12C8,extended,FFFFFFFF
+
+[Cheats/Poseidon's Rage]
+// patch=1,EE,2076D7DC,extended,00002710
+// patch=1,EE,2076D7F4,extended,00000002
+
+[Cheats/Medusa's Gaze]
+// patch=1,EE,2076D7E0,extended,00002710
+// patch=1,EE,2076D7F8,extended,00000002
+
+[Cheats/Zeus' Fury]
+// patch=1,EE,2076D7E4,extended,00002710
+// patch=1,EE,2076D7FC,extended,00000002
+
+[Cheats/Army Of Hades]
+// patch=1,EE,2076D7E8,extended,00002710
+// patch=1,EE,2076D800,extended,00000002
+
+[Cheats/Blade Of Artemis]
+// patch=1,EE,2076D7EC,extended,00002710
+// patch=1,EE,2076D804,extended,00000002
+
+[Cheats/Blades Of Chaos]
+// patch=1,EE,2076D7F0,extended,00002710
+// patch=1,EE,2076D808,extended,00000005
+
+[Cheats/All Power-Ups]
+// patch=1,EE,4076D7DC,extended,00060001
+// patch=1,EE,00002710,extended,00000000
+// patch=1,EE,4076D7F4,extended,00050001
+// patch=1,EE,00000002,extended,00000000
+// patch=1,EE,2076D808,extended,00000005

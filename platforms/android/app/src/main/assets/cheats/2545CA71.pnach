@@ -1,0 +1,54 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Full Spectrum Warrior [SLUS-21145] [2545CA71]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Invincible]
+// patch=1,EE,9043ECD8,extended,0C11B5D9
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,208BFD68,extended,FFFFFFFF
+
+[Cheats/Unlock All Bonus Material]
+// patch=1,EE,208BFD6C,extended,FFFFFFFF
+
+[Cheats/God Mode]
+// patch=1,EE,0070D12A,extended,00000001
+
+[Cheats/Unknown Cheat 1]
+// patch=1,EE,201662D8,extended,24020001
+// patch=1,EE,20166460,extended,24020001
+// patch=1,EE,201C9A6C,extended,24020001
+
+[Cheats/Unknown Cheat 2]
+// patch=1,EE,2016625C,extended,24020001
+// patch=1,EE,201C4D08,extended,24020001
+// patch=1,EE,201C9A88,extended,24020001
+// patch=1,EE,201D4030,extended,24020001
+
+[Cheats/Authentic Mode]
+// patch=1,EE,20165E8C,extended,24020001
+// patch=1,EE,20165E90,extended,24020001
+
+[Cheats/Transparent Characters]
+// patch=1,EE,201092A8,extended,24020001
+// patch=1,EE,2023C774,extended,24020001
+
+[Cheats/Unknown Cheat 3]
+// patch=1,EE,20216434,extended,24020001
+// patch=1,EE,20216438,extended,24020001
+
+[Cheats/Unknown Cheat 4]
+// patch=1,EE,2019E350,extended,24020001
+// patch=1,EE,2019E354,extended,24020001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2011E440,extended,24020001
+// patch=1,EE,2011F614,extended,24020001
+// patch=1,EE,2013B248,extended,24020001
+
+[Cheats/Unknown Cheat 5]
+// patch=1,EE,2013B29C,extended,24020001
+
+[Cheats/Big Head Mode]
+// patch=1,EE,20106238,extended,24020001
+// patch=1,EE,2010B154,extended,24020001

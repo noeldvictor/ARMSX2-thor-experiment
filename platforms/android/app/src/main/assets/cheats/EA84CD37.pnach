@@ -1,0 +1,54 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Fighter Maker 2 [SLUS-20524] [EA84CD37]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Gain About 10 Chin Rating]
+// patch=1,EE,902AA2B4,extended,0C0B2867
+
+[Cheats/Infinite Time]
+// patch=1,EE,2027DB64,extended,00000000
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,2027F0A4,extended,00000000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,200C0220,extended,240100C8
+// patch=1,EE,200C0224,extended,AC810038
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,248508F0
+// patch=1,EE,2027CB74,extended,0C030088
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,200C0220,extended,24010001
+// patch=1,EE,200C0224,extended,AC810038
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,248508F0
+// patch=1,EE,2027CB74,extended,0C030088
+
+[Cheats/No Health P1]
+// patch=1,EE,200C0220,extended,24010000
+// patch=1,EE,200C0224,extended,AC810038
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,248508F0
+// patch=1,EE,2027CB74,extended,0C030088
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,200C0230,extended,240100C8
+// patch=1,EE,200C0234,extended,AC81003C
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,01034021
+// patch=1,EE,2027CB7C,extended,0C03008C
+
+[Cheats/1-Hit Death P2]
+// patch=1,EE,200C0230,extended,24010001
+// patch=1,EE,200C0234,extended,AC81003C
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,01034021
+// patch=1,EE,2027CB7C,extended,0C03008C
+
+[Cheats/No Health P2]
+// patch=1,EE,200C0230,extended,24010000
+// patch=1,EE,200C0234,extended,AC81003C
+// patch=1,EE,200C0238,extended,03E00008
+// patch=1,EE,200C023C,extended,01034021
+// patch=1,EE,2027CB7C,extended,0C03008C

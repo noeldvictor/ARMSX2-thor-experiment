@@ -1,0 +1,176 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Freaky Flyers [SLUS-20284] [9D1BA44D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Lap 20]
+// patch=1,EE,9012B6D4,extended,0C047B76
+
+[Cheats/Infinite Machine Gun]
+// patch=1,EE,20170AC4,extended,00000000
+
+[Cheats/Unlock All Adventure Levels]
+// patch=1,EE,21FFD4BC,extended,0000000A
+
+[Cheats/Closing Movie]
+// patch=1,EE,21FFD124,extended,00000001
+
+[Cheats/Play All]
+// patch=1,EE,21FFD128,extended,00000001
+
+[Cheats/Johnny Turbine]
+// patch=1,EE,21FFD12C,extended,00000001
+// patch=1,EE,21FFD070,extended,00000001
+
+[Cheats/Traci Torpedoes]
+// patch=1,EE,21FFD168,extended,00000001
+// patch=1,EE,21FFD05C,extended,00000001
+
+[Cheats/Myrna Bookbottom]
+// patch=1,EE,21FFD1A4,extended,00000001
+// patch=1,EE,21FFD074,extended,00000001
+
+[Cheats/Mick Bungadoo]
+// patch=1,EE,21FFD1E0,extended,00000001
+// patch=1,EE,21FFD060,extended,00000001
+
+[Cheats/Pauli Atchi]
+// patch=1,EE,21FFD21C,extended,00000001
+// patch=1,EE,21FFD06C,extended,00000001
+
+[Cheats/Andre Latoilette]
+// patch=1,EE,21FFD258,extended,00000001
+
+[Cheats/Sheik Abdul]
+// patch=1,EE,21FFD294,extended,00000001
+// patch=1,EE,21FFD0A8,extended,00000001
+
+[Cheats/Prof. Gutentaag]
+// patch=1,EE,21FFD2D0,extended,00000001
+
+[Cheats/Cactus Rose]
+// patch=1,EE,21FFD30C,extended,00000001
+// patch=1,EE,21FFD094,extended,00000001
+
+[Cheats/Sammy Wasabi]
+// patch=1,EE,21FFD348,extended,00000001
+// patch=1,EE,21FFD090,extended,00000001
+
+[Cheats/Baron Von Slaughter]
+// patch=1,EE,21FFD384,extended,00000001
+// patch=1,EE,21FFD0A4,extended,00000001
+
+[Cheats/Island Jack]
+// patch=1,EE,21FFD3C0,extended,00000001
+// patch=1,EE,21FFD07C,extended,00000001
+
+[Cheats/Marcels Moreso]
+// patch=1,EE,21FFD3FC,extended,00000001
+// patch=1,EE,21FFD098,extended,00000001
+
+[Cheats/Atomic Andre]
+// patch=1,EE,21FFD04C,extended,00000001
+
+[Cheats/Pilot X]
+// patch=1,EE,21FFD050,extended,00000001
+
+[Cheats/Atomic Johnny]
+// patch=1,EE,21FFD054,extended,00000001
+
+[Cheats/Human Baron]
+// patch=1,EE,21FFD058,extended,00000001
+
+[Cheats/Lt. Island Jack]
+// patch=1,EE,21FFD064,extended,00000001
+
+[Cheats/La Diabla Chiquita]
+// patch=1,EE,21FFD068,extended,00000001
+
+[Cheats/Chicken Hut Sheik]
+// patch=1,EE,21FFD078,extended,00000001
+
+[Cheats/Andre Lat Oilette]
+// patch=1,EE,21FFD080,extended,00000001
+
+[Cheats/Prof. Gutent Aag]
+// patch=1,EE,21FFD084,extended,00000001
+
+[Cheats/Margaret Basher]
+// patch=1,EE,21FFD088,extended,00000001
+
+[Cheats/Chef Mick]
+// patch=1,EE,21FFD08C,extended,00000001
+
+[Cheats/S.V.E.N. With Monkey]
+// patch=1,EE,21FFD09C,extended,00000001
+
+[Cheats/The Marcel Clowns]
+// patch=1,EE,21FFD0A0,extended,00000001
+
+[Cheats/Sambot 5000]
+// patch=1,EE,21FFD0AC,extended,00000001
+
+[Cheats/Monkey Pie]
+// patch=1,EE,21FFD0B0,extended,00000001
+
+[Cheats/Stew Ardess Traci]
+// patch=1,EE,21FFD0B4,extended,00000001
+
+[Cheats/Random]
+// patch=1,EE,21FFD0B8,extended,00000001
+
+[Cheats/Sanit Ation Pauli]
+// patch=1,EE,21FFD0BC,extended,00000001
+
+[Cheats/Bigfoot]
+// patch=1,EE,21FFD0C0,extended,00000001
+
+[Cheats/Andrew B. Pirate]
+// patch=1,EE,21FFD0C4,extended,00000001
+
+[Cheats/Olga Von Slaughter]
+// patch=1,EE,21FFD0C8,extended,00000001
+
+[Cheats/Harem Dogfighter]
+// patch=1,EE,21FFD0CC,extended,00000001
+
+[Cheats/Chester Money Maker]
+// patch=1,EE,21FFD0D0,extended,00000001
+
+[Cheats/Wally Gremlin]
+// patch=1,EE,21FFD0D4,extended,00000001
+
+[Cheats/Bigfoot Mtn.]
+// patch=1,EE,21FFD0D8,extended,00000001
+
+[Cheats/Coyote Canyon]
+// patch=1,EE,21FFD0DC,extended,00000001
+
+[Cheats/Thugsville]
+// patch=1,EE,21FFD0E0,extended,00000001
+
+[Cheats/Cave Of Blunders]
+// patch=1,EE,21FFD0E4,extended,00000001
+
+[Cheats/Danger Island]
+// patch=1,EE,21FFD0E8,extended,00000001
+
+[Cheats/Monster Isle]
+// patch=1,EE,21FFD0EC,extended,00000001
+
+[Cheats/Bombsburg]
+// patch=1,EE,21FFD0F0,extended,00000001
+
+[Cheats/Grave Danger]
+// patch=1,EE,21FFD0F4,extended,00000001
+
+[Cheats/Bandito Attack]
+// patch=1,EE,21FFD0F8,extended,00000001
+
+[Cheats/Intestinal]
+// patch=1,EE,21FFD0FC,extended,00000001
+
+[Cheats/Torpedo Run]
+// patch=1,EE,21FFD100,extended,00000001
+
+[Cheats/X]
+// patch=1,EE,21FFD104,extended,00000001

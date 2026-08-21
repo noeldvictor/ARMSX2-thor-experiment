@@ -1,0 +1,2300 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Micro Machines V4 [SLUS-21402] [5C99960E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max 120% Approval Rating]
+// patch=1,EE,902E5418,extended,00832021
+
+[Cheats/Always Low Time]
+// patch=1,EE,2070B5CC,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Win Race Cups]
+// patch=1,EE,D086DF02,extended,0000FBFE
+// patch=1,EE,20703BB8,extended,00000003
+
+[Cheats/P1 Always Wins]
+// patch=1,EE,20708EF0,extended,0000000C
+
+[Cheats/P1 Never Wins]
+// patch=1,EE,20708EF0,extended,00000000
+
+[Cheats/P2 Always Wins]
+// patch=1,EE,20708EF4,extended,0000000C
+
+[Cheats/P2 Never Wins]
+// patch=1,EE,20708EF4,extended,00000000
+
+[Cheats/P3 Always Wins]
+// patch=1,EE,20708EF8,extended,0000000C
+
+[Cheats/P3 Never Wins]
+// patch=1,EE,20708EF8,extended,00000000
+
+[Cheats/P4 Always Wins]
+// patch=1,EE,20708EFC,extended,0000000C
+
+[Cheats/P4 Never Wins]
+// patch=1,EE,20708EFC,extended,00000000
+
+[Cheats/Save Profile To Unlock All Challenges]
+// patch=1,EE,2053863C,extended,24040001
+// patch=1,EE,20538648,extended,AC6400AC
+
+[Cheats/Save Profile To Complete All Challenges]
+// patch=1,EE,2053863C,extended,24040003
+// patch=1,EE,20538648,extended,AC6400AC
+
+[Cheats/Vehicle 1]
+// patch=1,EE,007B43F4,extended,00000001
+
+[Cheats/Vehicle 2]
+// patch=1,EE,007B43F5,extended,00000001
+
+[Cheats/Vehicle 3]
+// patch=1,EE,007B43F6,extended,00000001
+
+[Cheats/Vehicle 4]
+// patch=1,EE,007B43F7,extended,00000001
+
+[Cheats/Vehicle 5]
+// patch=1,EE,007B43F8,extended,00000001
+
+[Cheats/Vehicle 6]
+// patch=1,EE,007B43F9,extended,00000001
+
+[Cheats/Vehicle 7]
+// patch=1,EE,007B43FA,extended,00000001
+
+[Cheats/Vehicle 8]
+// patch=1,EE,007B43FB,extended,00000001
+
+[Cheats/Vehicle 9]
+// patch=1,EE,007B43FC,extended,00000001
+
+[Cheats/Vehicle 10]
+// patch=1,EE,007B43FD,extended,00000001
+
+[Cheats/Vehicle 11]
+// patch=1,EE,007B43FE,extended,00000001
+
+[Cheats/Vehicle 12]
+// patch=1,EE,007B43FF,extended,00000001
+
+[Cheats/Vehicle 13]
+// patch=1,EE,007B4400,extended,00000001
+
+[Cheats/Vehicle 14]
+// patch=1,EE,007B4401,extended,00000001
+
+[Cheats/Vehicle 15]
+// patch=1,EE,007B4402,extended,00000001
+
+[Cheats/Vehicle 16]
+// patch=1,EE,007B4403,extended,00000001
+
+[Cheats/Vehicle 17]
+// patch=1,EE,007B4404,extended,00000001
+
+[Cheats/Vehicle 18]
+// patch=1,EE,007B4405,extended,00000001
+
+[Cheats/Vehicle 19]
+// patch=1,EE,007B4406,extended,00000001
+
+[Cheats/Vehicle 20]
+// patch=1,EE,007B4407,extended,00000001
+
+[Cheats/Vehicle 21]
+// patch=1,EE,007B4408,extended,00000001
+
+[Cheats/Vehicle 22]
+// patch=1,EE,007B4409,extended,00000001
+
+[Cheats/Vehicle 23]
+// patch=1,EE,007B440A,extended,00000001
+
+[Cheats/Vehicle 24]
+// patch=1,EE,007B440B,extended,00000001
+
+[Cheats/Vehicle 25]
+// patch=1,EE,007B440C,extended,00000001
+
+[Cheats/Vehicle 26]
+// patch=1,EE,007B440D,extended,00000001
+
+[Cheats/Vehicle 27]
+// patch=1,EE,007B440E,extended,00000001
+
+[Cheats/Vehicle 28]
+// patch=1,EE,007B440F,extended,00000001
+
+[Cheats/Vehicle 29]
+// patch=1,EE,007B4410,extended,00000001
+
+[Cheats/Vehicle 30]
+// patch=1,EE,007B4411,extended,00000001
+
+[Cheats/Vehicle 31]
+// patch=1,EE,007B4412,extended,00000001
+
+[Cheats/Vehicle 32]
+// patch=1,EE,007B4413,extended,00000001
+
+[Cheats/Vehicle 33]
+// patch=1,EE,007B4414,extended,00000001
+
+[Cheats/Vehicle 34]
+// patch=1,EE,007B4415,extended,00000001
+
+[Cheats/Vehicle 35]
+// patch=1,EE,007B4416,extended,00000001
+
+[Cheats/Vehicle 36]
+// patch=1,EE,007B4417,extended,00000001
+
+[Cheats/Vehicle 37]
+// patch=1,EE,007B4418,extended,00000001
+
+[Cheats/Vehicle 38]
+// patch=1,EE,007B4419,extended,00000001
+
+[Cheats/Vehicle 39]
+// patch=1,EE,007B441A,extended,00000001
+
+[Cheats/Vehicle 40]
+// patch=1,EE,007B441B,extended,00000001
+
+[Cheats/Vehicle 41]
+// patch=1,EE,007B441C,extended,00000001
+
+[Cheats/Vehicle 42]
+// patch=1,EE,007B441D,extended,00000001
+
+[Cheats/Vehicle 43]
+// patch=1,EE,007B441E,extended,00000001
+
+[Cheats/Vehicle 44]
+// patch=1,EE,007B441F,extended,00000001
+
+[Cheats/Vehicle 45]
+// patch=1,EE,007B4420,extended,00000001
+
+[Cheats/Vehicle 46]
+// patch=1,EE,007B4421,extended,00000001
+
+[Cheats/Vehicle 47]
+// patch=1,EE,007B4422,extended,00000001
+
+[Cheats/Vehicle 48]
+// patch=1,EE,007B4423,extended,00000001
+
+[Cheats/Vehicle 49]
+// patch=1,EE,007B4424,extended,00000001
+
+[Cheats/Vehicle 50]
+// patch=1,EE,007B4425,extended,00000001
+
+[Cheats/Vehicle 51]
+// patch=1,EE,007B4426,extended,00000001
+
+[Cheats/Vehicle 52]
+// patch=1,EE,007B4427,extended,00000001
+
+[Cheats/Vehicle 53]
+// patch=1,EE,007B4428,extended,00000001
+
+[Cheats/Vehicle 54]
+// patch=1,EE,007B4429,extended,00000001
+
+[Cheats/Vehicle 55]
+// patch=1,EE,007B442A,extended,00000001
+
+[Cheats/Vehicle 56]
+// patch=1,EE,007B442B,extended,00000001
+
+[Cheats/Vehicle 57]
+// patch=1,EE,007B442C,extended,00000001
+
+[Cheats/Vehicle 58]
+// patch=1,EE,007B442D,extended,00000001
+
+[Cheats/Vehicle 59]
+// patch=1,EE,007B442E,extended,00000001
+
+[Cheats/Vehicle 60]
+// patch=1,EE,007B442F,extended,00000001
+
+[Cheats/Vehicle 61]
+// patch=1,EE,007B4430,extended,00000001
+
+[Cheats/Vehicle 62]
+// patch=1,EE,007B4431,extended,00000001
+
+[Cheats/Vehicle 63]
+// patch=1,EE,007B4432,extended,00000001
+
+[Cheats/Vehicle 64]
+// patch=1,EE,007B4433,extended,00000001
+
+[Cheats/Vehicle 65]
+// patch=1,EE,007B4434,extended,00000001
+
+[Cheats/Vehicle 66]
+// patch=1,EE,007B4435,extended,00000001
+
+[Cheats/Vehicle 67]
+// patch=1,EE,007B4436,extended,00000001
+
+[Cheats/Vehicle 68]
+// patch=1,EE,007B4437,extended,00000001
+
+[Cheats/Vehicle 69]
+// patch=1,EE,007B4438,extended,00000001
+
+[Cheats/Vehicle 70]
+// patch=1,EE,007B4439,extended,00000001
+
+[Cheats/Vehicle 71]
+// patch=1,EE,007B443A,extended,00000001
+
+[Cheats/Vehicle 72]
+// patch=1,EE,007B443B,extended,00000001
+
+[Cheats/Vehicle 73]
+// patch=1,EE,007B443C,extended,00000001
+
+[Cheats/Vehicle 74]
+// patch=1,EE,007B443D,extended,00000001
+
+[Cheats/Vehicle 75]
+// patch=1,EE,007B443E,extended,00000001
+
+[Cheats/Vehicle 76]
+// patch=1,EE,007B443F,extended,00000001
+
+[Cheats/Vehicle 77]
+// patch=1,EE,007B4440,extended,00000001
+
+[Cheats/Vehicle 78]
+// patch=1,EE,007B4441,extended,00000001
+
+[Cheats/Vehicle 79]
+// patch=1,EE,007B4442,extended,00000001
+
+[Cheats/Vehicle 80]
+// patch=1,EE,007B4443,extended,00000001
+
+[Cheats/Vehicle 81]
+// patch=1,EE,007B4444,extended,00000001
+
+[Cheats/Vehicle 82]
+// patch=1,EE,007B4445,extended,00000001
+
+[Cheats/Vehicle 83]
+// patch=1,EE,007B4446,extended,00000001
+
+[Cheats/Vehicle 84]
+// patch=1,EE,007B4447,extended,00000001
+
+[Cheats/Vehicle 85]
+// patch=1,EE,007B4448,extended,00000001
+
+[Cheats/Vehicle 86]
+// patch=1,EE,007B4449,extended,00000001
+
+[Cheats/Vehicle 87]
+// patch=1,EE,007B444A,extended,00000001
+
+[Cheats/Vehicle 88]
+// patch=1,EE,007B444B,extended,00000001
+
+[Cheats/Vehicle 89]
+// patch=1,EE,007B444C,extended,00000001
+
+[Cheats/Vehicle 90]
+// patch=1,EE,007B444D,extended,00000001
+
+[Cheats/Vehicle 91]
+// patch=1,EE,007B444E,extended,00000001
+
+[Cheats/Vehicle 92]
+// patch=1,EE,007B444F,extended,00000001
+
+[Cheats/Vehicle 93]
+// patch=1,EE,007B4450,extended,00000001
+
+[Cheats/Vehicle 94]
+// patch=1,EE,007B4451,extended,00000001
+
+[Cheats/Vehicle 95]
+// patch=1,EE,007B4452,extended,00000001
+
+[Cheats/Vehicle 96]
+// patch=1,EE,007B4453,extended,00000001
+
+[Cheats/Vehicle 97]
+// patch=1,EE,007B4454,extended,00000001
+
+[Cheats/Vehicle 98]
+// patch=1,EE,007B4455,extended,00000001
+
+[Cheats/Vehicle 99]
+// patch=1,EE,007B4456,extended,00000001
+
+[Cheats/Vehicle 100]
+// patch=1,EE,007B4457,extended,00000001
+
+[Cheats/Vehicle 101]
+// patch=1,EE,007B4458,extended,00000001
+
+[Cheats/Vehicle 102]
+// patch=1,EE,007B4459,extended,00000001
+
+[Cheats/Vehicle 103]
+// patch=1,EE,007B445A,extended,00000001
+
+[Cheats/Vehicle 104]
+// patch=1,EE,007B445B,extended,00000001
+
+[Cheats/Vehicle 105]
+// patch=1,EE,007B445C,extended,00000001
+
+[Cheats/Vehicle 106]
+// patch=1,EE,007B445D,extended,00000001
+
+[Cheats/Vehicle 107]
+// patch=1,EE,007B445E,extended,00000001
+
+[Cheats/Vehicle 108]
+// patch=1,EE,007B445F,extended,00000001
+
+[Cheats/Vehicle 109]
+// patch=1,EE,007B4460,extended,00000001
+
+[Cheats/Vehicle 110]
+// patch=1,EE,007B4461,extended,00000001
+
+[Cheats/Vehicle 111]
+// patch=1,EE,007B4462,extended,00000001
+
+[Cheats/Vehicle 112]
+// patch=1,EE,007B4463,extended,00000001
+
+[Cheats/Vehicle 113]
+// patch=1,EE,007B4464,extended,00000001
+
+[Cheats/Vehicle 114]
+// patch=1,EE,007B4465,extended,00000001
+
+[Cheats/Vehicle 115]
+// patch=1,EE,007B4466,extended,00000001
+
+[Cheats/Vehicle 116]
+// patch=1,EE,007B4467,extended,00000001
+
+[Cheats/Vehicle 117]
+// patch=1,EE,007B4468,extended,00000001
+
+[Cheats/Vehicle 118]
+// patch=1,EE,007B4469,extended,00000001
+
+[Cheats/Vehicle 119]
+// patch=1,EE,007B446A,extended,00000001
+
+[Cheats/Vehicle 120]
+// patch=1,EE,007B446B,extended,00000001
+
+[Cheats/Vehicle 121]
+// patch=1,EE,007B446C,extended,00000001
+
+[Cheats/Vehicle 122]
+// patch=1,EE,007B446D,extended,00000001
+
+[Cheats/Vehicle 123]
+// patch=1,EE,007B446E,extended,00000001
+
+[Cheats/Vehicle 124]
+// patch=1,EE,007B446F,extended,00000001
+
+[Cheats/Vehicle 125]
+// patch=1,EE,007B4470,extended,00000001
+
+[Cheats/Vehicle 126]
+// patch=1,EE,007B4471,extended,00000001
+
+[Cheats/Vehicle 127]
+// patch=1,EE,007B4472,extended,00000001
+
+[Cheats/Vehicle 128]
+// patch=1,EE,007B4473,extended,00000001
+
+[Cheats/Vehicle 129]
+// patch=1,EE,007B4474,extended,00000001
+
+[Cheats/Vehicle 130]
+// patch=1,EE,007B4475,extended,00000001
+
+[Cheats/Vehicle 131]
+// patch=1,EE,007B4476,extended,00000001
+
+[Cheats/Vehicle 132]
+// patch=1,EE,007B4477,extended,00000001
+
+[Cheats/Vehicle 133]
+// patch=1,EE,007B4478,extended,00000001
+
+[Cheats/Vehicle 134]
+// patch=1,EE,007B4479,extended,00000001
+
+[Cheats/Vehicle 135]
+// patch=1,EE,007B447A,extended,00000001
+
+[Cheats/Vehicle 136]
+// patch=1,EE,007B447B,extended,00000001
+
+[Cheats/Vehicle 137]
+// patch=1,EE,007B447C,extended,00000001
+
+[Cheats/Vehicle 138]
+// patch=1,EE,007B447D,extended,00000001
+
+[Cheats/Vehicle 139]
+// patch=1,EE,007B447E,extended,00000001
+
+[Cheats/Vehicle 140]
+// patch=1,EE,007B447F,extended,00000001
+
+[Cheats/Vehicle 141]
+// patch=1,EE,007B4480,extended,00000001
+
+[Cheats/Vehicle 142]
+// patch=1,EE,007B4481,extended,00000001
+
+[Cheats/Vehicle 143]
+// patch=1,EE,007B4482,extended,00000001
+
+[Cheats/Vehicle 144]
+// patch=1,EE,007B4483,extended,00000001
+
+[Cheats/Vehicle 145]
+// patch=1,EE,007B4484,extended,00000001
+
+[Cheats/Vehicle 146]
+// patch=1,EE,007B4485,extended,00000001
+
+[Cheats/Vehicle 147]
+// patch=1,EE,007B4486,extended,00000001
+
+[Cheats/Vehicle 148]
+// patch=1,EE,007B4487,extended,00000001
+
+[Cheats/Vehicle 149]
+// patch=1,EE,007B4488,extended,00000001
+
+[Cheats/Vehicle 150]
+// patch=1,EE,007B4489,extended,00000001
+
+[Cheats/Vehicle 151]
+// patch=1,EE,007B448A,extended,00000001
+
+[Cheats/Vehicle 152]
+// patch=1,EE,007B448B,extended,00000001
+
+[Cheats/Vehicle 153]
+// patch=1,EE,007B448C,extended,00000001
+
+[Cheats/Vehicle 154]
+// patch=1,EE,007B448D,extended,00000001
+
+[Cheats/Vehicle 155]
+// patch=1,EE,007B448E,extended,00000001
+
+[Cheats/Vehicle 156]
+// patch=1,EE,007B448F,extended,00000001
+
+[Cheats/Vehicle 157]
+// patch=1,EE,007B4490,extended,00000001
+
+[Cheats/Vehicle 158]
+// patch=1,EE,007B4491,extended,00000001
+
+[Cheats/Vehicle 159]
+// patch=1,EE,007B4492,extended,00000001
+
+[Cheats/Vehicle 160]
+// patch=1,EE,007B4493,extended,00000001
+
+[Cheats/Vehicle 161]
+// patch=1,EE,007B4494,extended,00000001
+
+[Cheats/Vehicle 162]
+// patch=1,EE,007B4495,extended,00000001
+
+[Cheats/Vehicle 163]
+// patch=1,EE,007B4496,extended,00000001
+
+[Cheats/Vehicle 164]
+// patch=1,EE,007B4497,extended,00000001
+
+[Cheats/Vehicle 165]
+// patch=1,EE,007B4498,extended,00000001
+
+[Cheats/Vehicle 166]
+// patch=1,EE,007B4499,extended,00000001
+
+[Cheats/Vehicle 167]
+// patch=1,EE,007B449A,extended,00000001
+
+[Cheats/Vehicle 168]
+// patch=1,EE,007B449B,extended,00000001
+
+[Cheats/Vehicle 169]
+// patch=1,EE,007B449C,extended,00000001
+
+[Cheats/Vehicle 170]
+// patch=1,EE,007B449D,extended,00000001
+
+[Cheats/Vehicle 171]
+// patch=1,EE,007B449E,extended,00000001
+
+[Cheats/Vehicle 172]
+// patch=1,EE,007B449F,extended,00000001
+
+[Cheats/Vehicle 173]
+// patch=1,EE,007B44A0,extended,00000001
+
+[Cheats/Vehicle 174]
+// patch=1,EE,007B44A1,extended,00000001
+
+[Cheats/Vehicle 175]
+// patch=1,EE,007B44A2,extended,00000001
+
+[Cheats/Vehicle 176]
+// patch=1,EE,007B44A3,extended,00000001
+
+[Cheats/Vehicle 177]
+// patch=1,EE,007B44A4,extended,00000001
+
+[Cheats/Vehicle 178]
+// patch=1,EE,007B44A5,extended,00000001
+
+[Cheats/Vehicle 179]
+// patch=1,EE,007B44A6,extended,00000001
+
+[Cheats/Vehicle 180]
+// patch=1,EE,007B44A7,extended,00000001
+
+[Cheats/Vehicle 181]
+// patch=1,EE,007B44A8,extended,00000001
+
+[Cheats/Vehicle 182]
+// patch=1,EE,007B44A9,extended,00000001
+
+[Cheats/Vehicle 183]
+// patch=1,EE,007B44AA,extended,00000001
+
+[Cheats/Vehicle 184]
+// patch=1,EE,007B44AB,extended,00000001
+
+[Cheats/Vehicle 185]
+// patch=1,EE,007B44AC,extended,00000001
+
+[Cheats/Vehicle 186]
+// patch=1,EE,007B44AD,extended,00000001
+
+[Cheats/Vehicle 187]
+// patch=1,EE,007B44AE,extended,00000001
+
+[Cheats/Vehicle 188]
+// patch=1,EE,007B44AF,extended,00000001
+
+[Cheats/Vehicle 189]
+// patch=1,EE,007B44B0,extended,00000001
+
+[Cheats/Vehicle 190]
+// patch=1,EE,007B44B1,extended,00000001
+
+[Cheats/Vehicle 191]
+// patch=1,EE,007B44B2,extended,00000001
+
+[Cheats/Vehicle 192]
+// patch=1,EE,007B44B3,extended,00000001
+
+[Cheats/Vehicle 193]
+// patch=1,EE,007B44B4,extended,00000001
+
+[Cheats/Vehicle 194]
+// patch=1,EE,007B44B5,extended,00000001
+
+[Cheats/Vehicle 195]
+// patch=1,EE,007B44B6,extended,00000001
+
+[Cheats/Vehicle 196]
+// patch=1,EE,007B44B7,extended,00000001
+
+[Cheats/Vehicle 197]
+// patch=1,EE,007B44B8,extended,00000001
+
+[Cheats/Vehicle 198]
+// patch=1,EE,007B44B9,extended,00000001
+
+[Cheats/Vehicle 199]
+// patch=1,EE,007B44BA,extended,00000001
+
+[Cheats/Vehicle 200]
+// patch=1,EE,007B44BB,extended,00000001
+
+[Cheats/Vehicle 201]
+// patch=1,EE,007B44BC,extended,00000001
+
+[Cheats/Vehicle 202]
+// patch=1,EE,007B44BD,extended,00000001
+
+[Cheats/Vehicle 203]
+// patch=1,EE,007B44BE,extended,00000001
+
+[Cheats/Vehicle 204]
+// patch=1,EE,007B44BF,extended,00000001
+
+[Cheats/Vehicle 205]
+// patch=1,EE,007B44C0,extended,00000001
+
+[Cheats/Vehicle 206]
+// patch=1,EE,007B44C1,extended,00000001
+
+[Cheats/Vehicle 207]
+// patch=1,EE,007B44C2,extended,00000001
+
+[Cheats/Vehicle 208]
+// patch=1,EE,007B44C3,extended,00000001
+
+[Cheats/Vehicle 209]
+// patch=1,EE,007B44C4,extended,00000001
+
+[Cheats/Vehicle 210]
+// patch=1,EE,007B44C5,extended,00000001
+
+[Cheats/Vehicle 211]
+// patch=1,EE,007B44C6,extended,00000001
+
+[Cheats/Vehicle 212]
+// patch=1,EE,007B44C7,extended,00000001
+
+[Cheats/Vehicle 213]
+// patch=1,EE,007B44C8,extended,00000001
+
+[Cheats/Vehicle 214]
+// patch=1,EE,007B44C9,extended,00000001
+
+[Cheats/Vehicle 215]
+// patch=1,EE,007B44CA,extended,00000001
+
+[Cheats/Vehicle 216]
+// patch=1,EE,007B44CB,extended,00000001
+
+[Cheats/Vehicle 217]
+// patch=1,EE,007B44CC,extended,00000001
+
+[Cheats/Vehicle 218]
+// patch=1,EE,007B44CD,extended,00000001
+
+[Cheats/Vehicle 219]
+// patch=1,EE,007B44CE,extended,00000001
+
+[Cheats/Vehicle 220]
+// patch=1,EE,007B44CF,extended,00000001
+
+[Cheats/Vehicle 221]
+// patch=1,EE,007B44D0,extended,00000001
+
+[Cheats/Vehicle 222]
+// patch=1,EE,007B44D1,extended,00000001
+
+[Cheats/Vehicle 223]
+// patch=1,EE,007B44D2,extended,00000001
+
+[Cheats/Vehicle 224]
+// patch=1,EE,007B44D3,extended,00000001
+
+[Cheats/Vehicle 225]
+// patch=1,EE,007B44D4,extended,00000001
+
+[Cheats/Vehicle 226]
+// patch=1,EE,007B44D5,extended,00000001
+
+[Cheats/Vehicle 227]
+// patch=1,EE,007B44D6,extended,00000001
+
+[Cheats/Vehicle 228]
+// patch=1,EE,007B44D7,extended,00000001
+
+[Cheats/Vehicle 229]
+// patch=1,EE,007B44D8,extended,00000001
+
+[Cheats/Vehicle 230]
+// patch=1,EE,007B44D9,extended,00000001
+
+[Cheats/Vehicle 231]
+// patch=1,EE,007B44DA,extended,00000001
+
+[Cheats/Vehicle 232]
+// patch=1,EE,007B44DB,extended,00000001
+
+[Cheats/Vehicle 233]
+// patch=1,EE,007B44DC,extended,00000001
+
+[Cheats/Vehicle 234]
+// patch=1,EE,007B44DD,extended,00000001
+
+[Cheats/Vehicle 235]
+// patch=1,EE,007B44DE,extended,00000001
+
+[Cheats/Vehicle 236]
+// patch=1,EE,007B44DF,extended,00000001
+
+[Cheats/Vehicle 237]
+// patch=1,EE,007B44E0,extended,00000001
+
+[Cheats/Vehicle 238]
+// patch=1,EE,007B44E1,extended,00000001
+
+[Cheats/Vehicle 239]
+// patch=1,EE,007B44E2,extended,00000001
+
+[Cheats/Vehicle 240]
+// patch=1,EE,007B44E3,extended,00000001
+
+[Cheats/Vehicle 241]
+// patch=1,EE,007B44E4,extended,00000001
+
+[Cheats/Vehicle 242]
+// patch=1,EE,007B44E5,extended,00000001
+
+[Cheats/Vehicle 243]
+// patch=1,EE,007B44E6,extended,00000001
+
+[Cheats/Vehicle 244]
+// patch=1,EE,007B44E7,extended,00000001
+
+[Cheats/Vehicle 245]
+// patch=1,EE,007B44E8,extended,00000001
+
+[Cheats/Vehicle 246]
+// patch=1,EE,007B44E9,extended,00000001
+
+[Cheats/Vehicle 247]
+// patch=1,EE,007B44EA,extended,00000001
+
+[Cheats/Vehicle 248]
+// patch=1,EE,007B44EB,extended,00000001
+
+[Cheats/Vehicle 249]
+// patch=1,EE,007B44EC,extended,00000001
+
+[Cheats/Vehicle 250]
+// patch=1,EE,007B44ED,extended,00000001
+
+[Cheats/Vehicle 251]
+// patch=1,EE,007B44EE,extended,00000001
+
+[Cheats/Vehicle 252]
+// patch=1,EE,007B44EF,extended,00000001
+
+[Cheats/Vehicle 253]
+// patch=1,EE,007B44F0,extended,00000001
+
+[Cheats/Vehicle 254]
+// patch=1,EE,007B44F1,extended,00000001
+
+[Cheats/Vehicle 255]
+// patch=1,EE,007B44F2,extended,00000001
+
+[Cheats/Vehicle 256]
+// patch=1,EE,007B44F3,extended,00000001
+
+[Cheats/Vehicle 257]
+// patch=1,EE,007B44F4,extended,00000001
+
+[Cheats/Vehicle 258]
+// patch=1,EE,007B44F5,extended,00000001
+
+[Cheats/Vehicle 259]
+// patch=1,EE,007B44F6,extended,00000001
+
+[Cheats/Vehicle 260]
+// patch=1,EE,007B44F7,extended,00000001
+
+[Cheats/Vehicle 261]
+// patch=1,EE,007B44F8,extended,00000001
+
+[Cheats/Vehicle 262]
+// patch=1,EE,007B44F9,extended,00000001
+
+[Cheats/Vehicle 263]
+// patch=1,EE,007B44FA,extended,00000001
+
+[Cheats/Vehicle 264]
+// patch=1,EE,007B44FB,extended,00000001
+
+[Cheats/Vehicle 265]
+// patch=1,EE,007B44FC,extended,00000001
+
+[Cheats/Vehicle 266]
+// patch=1,EE,007B44FD,extended,00000001
+
+[Cheats/Vehicle 267]
+// patch=1,EE,007B44FE,extended,00000001
+
+[Cheats/Vehicle 268]
+// patch=1,EE,007B44FF,extended,00000001
+
+[Cheats/Vehicle 269]
+// patch=1,EE,007B4500,extended,00000001
+
+[Cheats/Vehicle 270]
+// patch=1,EE,007B4501,extended,00000001
+
+[Cheats/Vehicle 271]
+// patch=1,EE,007B4502,extended,00000001
+
+[Cheats/Vehicle 272]
+// patch=1,EE,007B4503,extended,00000001
+
+[Cheats/Vehicle 273]
+// patch=1,EE,007B4504,extended,00000001
+
+[Cheats/Vehicle 274]
+// patch=1,EE,007B4505,extended,00000001
+
+[Cheats/Vehicle 275]
+// patch=1,EE,007B4506,extended,00000001
+
+[Cheats/Vehicle 276]
+// patch=1,EE,007B4507,extended,00000001
+
+[Cheats/Vehicle 277]
+// patch=1,EE,007B4508,extended,00000001
+
+[Cheats/Vehicle 278]
+// patch=1,EE,007B4509,extended,00000001
+
+[Cheats/Vehicle 279]
+// patch=1,EE,007B450A,extended,00000001
+
+[Cheats/Vehicle 280]
+// patch=1,EE,007B450B,extended,00000001
+
+[Cheats/Vehicle 281]
+// patch=1,EE,007B450C,extended,00000001
+
+[Cheats/Vehicle 282]
+// patch=1,EE,007B450D,extended,00000001
+
+[Cheats/Vehicle 283]
+// patch=1,EE,007B450E,extended,00000001
+
+[Cheats/Vehicle 284]
+// patch=1,EE,007B450F,extended,00000001
+
+[Cheats/Vehicle 285]
+// patch=1,EE,007B4510,extended,00000001
+
+[Cheats/Vehicle 286]
+// patch=1,EE,007B4511,extended,00000001
+
+[Cheats/Vehicle 287]
+// patch=1,EE,007B4512,extended,00000001
+
+[Cheats/Vehicle 288]
+// patch=1,EE,007B4513,extended,00000001
+
+[Cheats/Vehicle 289]
+// patch=1,EE,007B4514,extended,00000001
+
+[Cheats/Vehicle 290]
+// patch=1,EE,007B4515,extended,00000001
+
+[Cheats/Vehicle 291]
+// patch=1,EE,007B4516,extended,00000001
+
+[Cheats/Vehicle 292]
+// patch=1,EE,007B4517,extended,00000001
+
+[Cheats/Vehicle 293]
+// patch=1,EE,007B4518,extended,00000001
+
+[Cheats/Vehicle 294]
+// patch=1,EE,007B4519,extended,00000001
+
+[Cheats/Vehicle 295]
+// patch=1,EE,007B451A,extended,00000001
+
+[Cheats/Vehicle 296]
+// patch=1,EE,007B451B,extended,00000001
+
+[Cheats/Vehicle 297]
+// patch=1,EE,007B451C,extended,00000001
+
+[Cheats/Vehicle 298]
+// patch=1,EE,007B451D,extended,00000001
+
+[Cheats/Vehicle 299]
+// patch=1,EE,007B451E,extended,00000001
+
+[Cheats/Vehicle 300]
+// patch=1,EE,007B451F,extended,00000001
+
+[Cheats/Vehicle 301]
+// patch=1,EE,007B4520,extended,00000001
+
+[Cheats/Vehicle 302]
+// patch=1,EE,007B4521,extended,00000001
+
+[Cheats/Vehicle 303]
+// patch=1,EE,007B4522,extended,00000001
+
+[Cheats/Vehicle 304]
+// patch=1,EE,007B4523,extended,00000001
+
+[Cheats/Vehicle 305]
+// patch=1,EE,007B4524,extended,00000001
+
+[Cheats/Vehicle 306]
+// patch=1,EE,007B4525,extended,00000001
+
+[Cheats/Vehicle 307]
+// patch=1,EE,007B4526,extended,00000001
+
+[Cheats/Vehicle 308]
+// patch=1,EE,007B4527,extended,00000001
+
+[Cheats/Vehicle 309]
+// patch=1,EE,007B4528,extended,00000001
+
+[Cheats/Vehicle 310]
+// patch=1,EE,007B4529,extended,00000001
+
+[Cheats/Vehicle 311]
+// patch=1,EE,007B452A,extended,00000001
+
+[Cheats/Vehicle 312]
+// patch=1,EE,007B452B,extended,00000001
+
+[Cheats/Vehicle 313]
+// patch=1,EE,007B452C,extended,00000001
+
+[Cheats/Vehicle 314]
+// patch=1,EE,007B452D,extended,00000001
+
+[Cheats/Vehicle 315]
+// patch=1,EE,007B452E,extended,00000001
+
+[Cheats/Vehicle 316]
+// patch=1,EE,007B452F,extended,00000001
+
+[Cheats/Vehicle 317]
+// patch=1,EE,007B4530,extended,00000001
+
+[Cheats/Vehicle 318]
+// patch=1,EE,007B4531,extended,00000001
+
+[Cheats/Vehicle 319]
+// patch=1,EE,007B4532,extended,00000001
+
+[Cheats/Vehicle 320]
+// patch=1,EE,007B4533,extended,00000001
+
+[Cheats/Vehicle 321]
+// patch=1,EE,007B4534,extended,00000001
+
+[Cheats/Vehicle 322]
+// patch=1,EE,007B4535,extended,00000001
+
+[Cheats/Vehicle 323]
+// patch=1,EE,007B4536,extended,00000001
+
+[Cheats/Vehicle 324]
+// patch=1,EE,007B4537,extended,00000001
+
+[Cheats/Vehicle 325]
+// patch=1,EE,007B4538,extended,00000001
+
+[Cheats/Vehicle 326]
+// patch=1,EE,007B4539,extended,00000001
+
+[Cheats/Vehicle 327]
+// patch=1,EE,007B453A,extended,00000001
+
+[Cheats/Vehicle 328]
+// patch=1,EE,007B453B,extended,00000001
+
+[Cheats/Vehicle 329]
+// patch=1,EE,007B453C,extended,00000001
+
+[Cheats/Vehicle 330]
+// patch=1,EE,007B453D,extended,00000001
+
+[Cheats/Vehicle 331]
+// patch=1,EE,007B453E,extended,00000001
+
+[Cheats/Vehicle 332]
+// patch=1,EE,007B453F,extended,00000001
+
+[Cheats/Vehicle 333]
+// patch=1,EE,007B4540,extended,00000001
+
+[Cheats/Vehicle 334]
+// patch=1,EE,007B4541,extended,00000001
+
+[Cheats/Vehicle 335]
+// patch=1,EE,007B4542,extended,00000001
+
+[Cheats/Vehicle 336]
+// patch=1,EE,007B4543,extended,00000001
+
+[Cheats/Vehicle 337]
+// patch=1,EE,007B4544,extended,00000001
+
+[Cheats/Vehicle 338]
+// patch=1,EE,007B4545,extended,00000001
+
+[Cheats/Vehicle 339]
+// patch=1,EE,007B4546,extended,00000001
+
+[Cheats/Vehicle 340]
+// patch=1,EE,007B4547,extended,00000001
+
+[Cheats/Vehicle 341]
+// patch=1,EE,007B4548,extended,00000001
+
+[Cheats/Vehicle 342]
+// patch=1,EE,007B4549,extended,00000001
+
+[Cheats/Vehicle 343]
+// patch=1,EE,007B454A,extended,00000001
+
+[Cheats/Vehicle 344]
+// patch=1,EE,007B454B,extended,00000001
+
+[Cheats/Vehicle 345]
+// patch=1,EE,007B454C,extended,00000001
+
+[Cheats/Vehicle 346]
+// patch=1,EE,007B454D,extended,00000001
+
+[Cheats/Vehicle 347]
+// patch=1,EE,007B454E,extended,00000001
+
+[Cheats/Vehicle 348]
+// patch=1,EE,007B454F,extended,00000001
+
+[Cheats/Vehicle 349]
+// patch=1,EE,007B4550,extended,00000001
+
+[Cheats/Vehicle 350]
+// patch=1,EE,007B4551,extended,00000001
+
+[Cheats/Vehicle 351]
+// patch=1,EE,007B4552,extended,00000001
+
+[Cheats/Vehicle 352]
+// patch=1,EE,007B4553,extended,00000001
+
+[Cheats/Vehicle 353]
+// patch=1,EE,007B4554,extended,00000001
+
+[Cheats/Vehicle 354]
+// patch=1,EE,007B4555,extended,00000001
+
+[Cheats/Vehicle 355]
+// patch=1,EE,007B4556,extended,00000001
+
+[Cheats/Vehicle 356]
+// patch=1,EE,007B4557,extended,00000001
+
+[Cheats/Vehicle 357]
+// patch=1,EE,007B4558,extended,00000001
+
+[Cheats/Vehicle 358]
+// patch=1,EE,007B4559,extended,00000001
+
+[Cheats/Vehicle 359]
+// patch=1,EE,007B455A,extended,00000001
+
+[Cheats/Vehicle 360]
+// patch=1,EE,007B455B,extended,00000001
+
+[Cheats/Vehicle 361]
+// patch=1,EE,007B455C,extended,00000001
+
+[Cheats/Vehicle 362]
+// patch=1,EE,007B455D,extended,00000001
+
+[Cheats/Vehicle 363]
+// patch=1,EE,007B455E,extended,00000001
+
+[Cheats/Vehicle 364]
+// patch=1,EE,007B455F,extended,00000001
+
+[Cheats/Vehicle 365]
+// patch=1,EE,007B4560,extended,00000001
+
+[Cheats/Vehicle 366]
+// patch=1,EE,007B4561,extended,00000001
+
+[Cheats/Vehicle 367]
+// patch=1,EE,007B4562,extended,00000001
+
+[Cheats/Vehicle 368]
+// patch=1,EE,007B4563,extended,00000001
+
+[Cheats/Vehicle 369]
+// patch=1,EE,007B4564,extended,00000001
+
+[Cheats/Vehicle 370]
+// patch=1,EE,007B4565,extended,00000001
+
+[Cheats/Vehicle 371]
+// patch=1,EE,007B4566,extended,00000001
+
+[Cheats/Vehicle 372]
+// patch=1,EE,007B4567,extended,00000001
+
+[Cheats/Vehicle 373]
+// patch=1,EE,007B4568,extended,00000001
+
+[Cheats/Vehicle 374]
+// patch=1,EE,007B4569,extended,00000001
+
+[Cheats/Vehicle 375]
+// patch=1,EE,007B456A,extended,00000001
+
+[Cheats/Vehicle 376]
+// patch=1,EE,007B456B,extended,00000001
+
+[Cheats/Vehicle 377]
+// patch=1,EE,007B456C,extended,00000001
+
+[Cheats/Vehicle 378]
+// patch=1,EE,007B456D,extended,00000001
+
+[Cheats/Vehicle 379]
+// patch=1,EE,007B456E,extended,00000001
+
+[Cheats/Vehicle 380]
+// patch=1,EE,007B456F,extended,00000001
+
+[Cheats/Vehicle 381]
+// patch=1,EE,007B4570,extended,00000001
+
+[Cheats/Vehicle 382]
+// patch=1,EE,007B4571,extended,00000001
+
+[Cheats/Vehicle 383]
+// patch=1,EE,007B4572,extended,00000001
+
+[Cheats/Vehicle 384]
+// patch=1,EE,007B4573,extended,00000001
+
+[Cheats/Vehicle 385]
+// patch=1,EE,007B4574,extended,00000001
+
+[Cheats/Vehicle 386]
+// patch=1,EE,007B4575,extended,00000001
+
+[Cheats/Vehicle 387]
+// patch=1,EE,007B4576,extended,00000001
+
+[Cheats/Vehicle 388]
+// patch=1,EE,007B4577,extended,00000001
+
+[Cheats/Vehicle 389]
+// patch=1,EE,007B4578,extended,00000001
+
+[Cheats/Vehicle 390]
+// patch=1,EE,007B4579,extended,00000001
+
+[Cheats/Vehicle 391]
+// patch=1,EE,007B457A,extended,00000001
+
+[Cheats/Vehicle 392]
+// patch=1,EE,007B457B,extended,00000001
+
+[Cheats/Vehicle 393]
+// patch=1,EE,007B457C,extended,00000001
+
+[Cheats/Vehicle 394]
+// patch=1,EE,007B457D,extended,00000001
+
+[Cheats/Vehicle 395]
+// patch=1,EE,007B457E,extended,00000001
+
+[Cheats/Vehicle 396]
+// patch=1,EE,007B457F,extended,00000001
+
+[Cheats/Vehicle 397]
+// patch=1,EE,007B4580,extended,00000001
+
+[Cheats/Vehicle 398]
+// patch=1,EE,007B4581,extended,00000001
+
+[Cheats/Vehicle 399]
+// patch=1,EE,007B4582,extended,00000001
+
+[Cheats/Vehicle 400]
+// patch=1,EE,007B4583,extended,00000001
+
+[Cheats/Vehicle 401]
+// patch=1,EE,007B4584,extended,00000001
+
+[Cheats/Vehicle 402]
+// patch=1,EE,007B4585,extended,00000001
+
+[Cheats/Vehicle 403]
+// patch=1,EE,007B4586,extended,00000001
+
+[Cheats/Vehicle 404]
+// patch=1,EE,007B4587,extended,00000001
+
+[Cheats/Vehicle 405]
+// patch=1,EE,007B4588,extended,00000001
+
+[Cheats/Vehicle 406]
+// patch=1,EE,007B4589,extended,00000001
+
+[Cheats/Vehicle 407]
+// patch=1,EE,007B458A,extended,00000001
+
+[Cheats/Vehicle 408]
+// patch=1,EE,007B458B,extended,00000001
+
+[Cheats/Vehicle 409]
+// patch=1,EE,007B458C,extended,00000001
+
+[Cheats/Vehicle 410]
+// patch=1,EE,007B458D,extended,00000001
+
+[Cheats/Vehicle 411]
+// patch=1,EE,007B458E,extended,00000001
+
+[Cheats/Vehicle 412]
+// patch=1,EE,007B458F,extended,00000001
+
+[Cheats/Vehicle 413]
+// patch=1,EE,007B4590,extended,00000001
+
+[Cheats/Vehicle 414]
+// patch=1,EE,007B4591,extended,00000001
+
+[Cheats/Vehicle 415]
+// patch=1,EE,007B4592,extended,00000001
+
+[Cheats/Vehicle 416]
+// patch=1,EE,007B4593,extended,00000001
+
+[Cheats/Vehicle 417]
+// patch=1,EE,007B4594,extended,00000001
+
+[Cheats/Vehicle 418]
+// patch=1,EE,007B4595,extended,00000001
+
+[Cheats/Vehicle 419]
+// patch=1,EE,007B4596,extended,00000001
+
+[Cheats/Vehicle 420]
+// patch=1,EE,007B4597,extended,00000001
+
+[Cheats/Vehicle 421]
+// patch=1,EE,007B4598,extended,00000001
+
+[Cheats/Vehicle 422]
+// patch=1,EE,007B4599,extended,00000001
+
+[Cheats/Vehicle 423]
+// patch=1,EE,007B459A,extended,00000001
+
+[Cheats/Vehicle 424]
+// patch=1,EE,007B459B,extended,00000001
+
+[Cheats/Vehicle 425]
+// patch=1,EE,007B459C,extended,00000001
+
+[Cheats/Vehicle 426]
+// patch=1,EE,007B459D,extended,00000001
+
+[Cheats/Vehicle 427]
+// patch=1,EE,007B459E,extended,00000001
+
+[Cheats/Vehicle 428]
+// patch=1,EE,007B459F,extended,00000001
+
+[Cheats/Vehicle 429]
+// patch=1,EE,007B45A0,extended,00000001
+
+[Cheats/Vehicle 430]
+// patch=1,EE,007B45A1,extended,00000001
+
+[Cheats/Vehicle 431]
+// patch=1,EE,007B45A2,extended,00000001
+
+[Cheats/Vehicle 432]
+// patch=1,EE,007B45A3,extended,00000001
+
+[Cheats/Vehicle 433]
+// patch=1,EE,007B45A4,extended,00000001
+
+[Cheats/Vehicle 434]
+// patch=1,EE,007B45A5,extended,00000001
+
+[Cheats/Vehicle 435]
+// patch=1,EE,007B45A6,extended,00000001
+
+[Cheats/Vehicle 436]
+// patch=1,EE,007B45A7,extended,00000001
+
+[Cheats/Vehicle 437]
+// patch=1,EE,007B45A8,extended,00000001
+
+[Cheats/Vehicle 438]
+// patch=1,EE,007B45A9,extended,00000001
+
+[Cheats/Vehicle 439]
+// patch=1,EE,007B45AA,extended,00000001
+
+[Cheats/Vehicle 440]
+// patch=1,EE,007B45AB,extended,00000001
+
+[Cheats/Vehicle 441]
+// patch=1,EE,007B45AC,extended,00000001
+
+[Cheats/Vehicle 442]
+// patch=1,EE,007B45AD,extended,00000001
+
+[Cheats/Vehicle 443]
+// patch=1,EE,007B45AE,extended,00000001
+
+[Cheats/Vehicle 444]
+// patch=1,EE,007B45AF,extended,00000001
+
+[Cheats/Vehicle 445]
+// patch=1,EE,007B45B0,extended,00000001
+
+[Cheats/Vehicle 446]
+// patch=1,EE,007B45B1,extended,00000001
+
+[Cheats/Vehicle 447]
+// patch=1,EE,007B45B2,extended,00000001
+
+[Cheats/Vehicle 448]
+// patch=1,EE,007B45B3,extended,00000001
+
+[Cheats/Vehicle 449]
+// patch=1,EE,007B45B4,extended,00000001
+
+[Cheats/Vehicle 450]
+// patch=1,EE,007B45B5,extended,00000001
+
+[Cheats/Vehicle 451]
+// patch=1,EE,007B45B6,extended,00000001
+
+[Cheats/Vehicle 452]
+// patch=1,EE,007B45B7,extended,00000001
+
+[Cheats/Vehicle 453]
+// patch=1,EE,007B45B8,extended,00000001
+
+[Cheats/Vehicle 454]
+// patch=1,EE,007B45B9,extended,00000001
+
+[Cheats/Vehicle 455]
+// patch=1,EE,007B45BA,extended,00000001
+
+[Cheats/Vehicle 456]
+// patch=1,EE,007B45BB,extended,00000001
+
+[Cheats/Vehicle 457]
+// patch=1,EE,007B45BC,extended,00000001
+
+[Cheats/Vehicle 458]
+// patch=1,EE,007B45BD,extended,00000001
+
+[Cheats/Vehicle 459]
+// patch=1,EE,007B45BE,extended,00000001
+
+[Cheats/Vehicle 460]
+// patch=1,EE,007B45BF,extended,00000001
+
+[Cheats/Vehicle 461]
+// patch=1,EE,007B45C0,extended,00000001
+
+[Cheats/Vehicle 462]
+// patch=1,EE,007B45C1,extended,00000001
+
+[Cheats/Vehicle 463]
+// patch=1,EE,007B45C2,extended,00000001
+
+[Cheats/Vehicle 464]
+// patch=1,EE,007B45C3,extended,00000001
+
+[Cheats/Vehicle 465]
+// patch=1,EE,007B45C4,extended,00000001
+
+[Cheats/Vehicle 466]
+// patch=1,EE,007B45C5,extended,00000001
+
+[Cheats/Vehicle 467]
+// patch=1,EE,007B45C6,extended,00000001
+
+[Cheats/Vehicle 468]
+// patch=1,EE,007B45C7,extended,00000001
+
+[Cheats/Vehicle 469]
+// patch=1,EE,007B45C8,extended,00000001
+
+[Cheats/Vehicle 470]
+// patch=1,EE,007B45C9,extended,00000001
+
+[Cheats/Vehicle 471]
+// patch=1,EE,007B45CA,extended,00000001
+
+[Cheats/Vehicle 472]
+// patch=1,EE,007B45CB,extended,00000001
+
+[Cheats/Vehicle 473]
+// patch=1,EE,007B45CC,extended,00000001
+
+[Cheats/Vehicle 474]
+// patch=1,EE,007B45CD,extended,00000001
+
+[Cheats/Vehicle 475]
+// patch=1,EE,007B45CE,extended,00000001
+
+[Cheats/Vehicle 476]
+// patch=1,EE,007B45CF,extended,00000001
+
+[Cheats/Vehicle 477]
+// patch=1,EE,007B45D0,extended,00000001
+
+[Cheats/Vehicle 478]
+// patch=1,EE,007B45D1,extended,00000001
+
+[Cheats/Vehicle 479]
+// patch=1,EE,007B45D2,extended,00000001
+
+[Cheats/Vehicle 480]
+// patch=1,EE,007B45D3,extended,00000001
+
+[Cheats/Vehicle 481]
+// patch=1,EE,007B45D4,extended,00000001
+
+[Cheats/Vehicle 482]
+// patch=1,EE,007B45D5,extended,00000001
+
+[Cheats/Vehicle 483]
+// patch=1,EE,007B45D6,extended,00000001
+
+[Cheats/Vehicle 484]
+// patch=1,EE,007B45D7,extended,00000001
+
+[Cheats/Vehicle 485]
+// patch=1,EE,007B45D8,extended,00000001
+
+[Cheats/Vehicle 486]
+// patch=1,EE,007B45D9,extended,00000001
+
+[Cheats/Vehicle 487]
+// patch=1,EE,007B45DA,extended,00000001
+
+[Cheats/Vehicle 488]
+// patch=1,EE,007B45DB,extended,00000001
+
+[Cheats/Vehicle 489]
+// patch=1,EE,007B45DC,extended,00000001
+
+[Cheats/Vehicle 490]
+// patch=1,EE,007B45DD,extended,00000001
+
+[Cheats/Vehicle 491]
+// patch=1,EE,007B45DE,extended,00000001
+
+[Cheats/Vehicle 492]
+// patch=1,EE,007B45DF,extended,00000001
+
+[Cheats/Vehicle 493]
+// patch=1,EE,007B45E0,extended,00000001
+
+[Cheats/Vehicle 494]
+// patch=1,EE,007B45E1,extended,00000001
+
+[Cheats/Vehicle 495]
+// patch=1,EE,007B45E2,extended,00000001
+
+[Cheats/Vehicle 496]
+// patch=1,EE,007B45E3,extended,00000001
+
+[Cheats/Vehicle 497]
+// patch=1,EE,007B45E4,extended,00000001
+
+[Cheats/Vehicle 498]
+// patch=1,EE,007B45E5,extended,00000001
+
+[Cheats/Vehicle 499]
+// patch=1,EE,007B45E6,extended,00000001
+
+[Cheats/Vehicle 500]
+// patch=1,EE,007B45E7,extended,00000001
+
+[Cheats/Vehicle 501]
+// patch=1,EE,007B45E8,extended,00000001
+
+[Cheats/Vehicle 502]
+// patch=1,EE,007B45E9,extended,00000001
+
+[Cheats/Vehicle 503]
+// patch=1,EE,007B45EA,extended,00000001
+
+[Cheats/Vehicle 504]
+// patch=1,EE,007B45EB,extended,00000001
+
+[Cheats/Vehicle 505]
+// patch=1,EE,007B45EC,extended,00000001
+
+[Cheats/Vehicle 506]
+// patch=1,EE,007B45ED,extended,00000001
+
+[Cheats/Vehicle 507]
+// patch=1,EE,007B45EE,extended,00000001
+
+[Cheats/Vehicle 508]
+// patch=1,EE,007B45EF,extended,00000001
+
+[Cheats/Vehicle 509]
+// patch=1,EE,007B45F0,extended,00000001
+
+[Cheats/Vehicle 510]
+// patch=1,EE,007B45F1,extended,00000001
+
+[Cheats/Vehicle 511]
+// patch=1,EE,007B45F2,extended,00000001
+
+[Cheats/Vehicle 512]
+// patch=1,EE,007B45F3,extended,00000001
+
+[Cheats/Vehicle 513]
+// patch=1,EE,007B45F4,extended,00000001
+
+[Cheats/Vehicle 514]
+// patch=1,EE,007B45F5,extended,00000001
+
+[Cheats/Vehicle 515]
+// patch=1,EE,007B45F6,extended,00000001
+
+[Cheats/Vehicle 516]
+// patch=1,EE,007B45F7,extended,00000001
+
+[Cheats/Vehicle 517]
+// patch=1,EE,007B45F8,extended,00000001
+
+[Cheats/Vehicle 518]
+// patch=1,EE,007B45F9,extended,00000001
+
+[Cheats/Vehicle 519]
+// patch=1,EE,007B45FA,extended,00000001
+
+[Cheats/Vehicle 520]
+// patch=1,EE,007B45FB,extended,00000001
+
+[Cheats/Vehicle 521]
+// patch=1,EE,007B45FC,extended,00000001
+
+[Cheats/Vehicle 522]
+// patch=1,EE,007B45FD,extended,00000001
+
+[Cheats/Vehicle 523]
+// patch=1,EE,007B45FE,extended,00000001
+
+[Cheats/Vehicle 524]
+// patch=1,EE,007B45FF,extended,00000001
+
+[Cheats/Vehicle 525]
+// patch=1,EE,007B4600,extended,00000001
+
+[Cheats/Vehicle 526]
+// patch=1,EE,007B4601,extended,00000001
+
+[Cheats/Vehicle 527]
+// patch=1,EE,007B4602,extended,00000001
+
+[Cheats/Vehicle 528]
+// patch=1,EE,007B4603,extended,00000001
+
+[Cheats/Vehicle 529]
+// patch=1,EE,007B4604,extended,00000001
+
+[Cheats/Vehicle 530]
+// patch=1,EE,007B4605,extended,00000001
+
+[Cheats/Vehicle 531]
+// patch=1,EE,007B4606,extended,00000001
+
+[Cheats/Vehicle 532]
+// patch=1,EE,007B4607,extended,00000001
+
+[Cheats/Vehicle 533]
+// patch=1,EE,007B4608,extended,00000001
+
+[Cheats/Vehicle 534]
+// patch=1,EE,007B4609,extended,00000001
+
+[Cheats/Vehicle 535]
+// patch=1,EE,007B460A,extended,00000001
+
+[Cheats/Vehicle 536]
+// patch=1,EE,007B460B,extended,00000001
+
+[Cheats/Vehicle 537]
+// patch=1,EE,007B460C,extended,00000001
+
+[Cheats/Vehicle 538]
+// patch=1,EE,007B460D,extended,00000001
+
+[Cheats/Vehicle 539]
+// patch=1,EE,007B460E,extended,00000001
+
+[Cheats/Vehicle 540]
+// patch=1,EE,007B460F,extended,00000001
+
+[Cheats/Vehicle 541]
+// patch=1,EE,007B4610,extended,00000001
+
+[Cheats/Vehicle 542]
+// patch=1,EE,007B4611,extended,00000001
+
+[Cheats/Vehicle 543]
+// patch=1,EE,007B4612,extended,00000001
+
+[Cheats/Vehicle 544]
+// patch=1,EE,007B4613,extended,00000001
+
+[Cheats/Vehicle 545]
+// patch=1,EE,007B4614,extended,00000001
+
+[Cheats/Vehicle 546]
+// patch=1,EE,007B4615,extended,00000001
+
+[Cheats/Vehicle 547]
+// patch=1,EE,007B4616,extended,00000001
+
+[Cheats/Vehicle 548]
+// patch=1,EE,007B4617,extended,00000001
+
+[Cheats/Vehicle 549]
+// patch=1,EE,007B4618,extended,00000001
+
+[Cheats/Vehicle 550]
+// patch=1,EE,007B4619,extended,00000001
+
+[Cheats/Vehicle 551]
+// patch=1,EE,007B461A,extended,00000001
+
+[Cheats/Vehicle 552]
+// patch=1,EE,007B461B,extended,00000001
+
+[Cheats/Vehicle 553]
+// patch=1,EE,007B461C,extended,00000001
+
+[Cheats/Vehicle 554]
+// patch=1,EE,007B461D,extended,00000001
+
+[Cheats/Vehicle 555]
+// patch=1,EE,007B461E,extended,00000001
+
+[Cheats/Vehicle 556]
+// patch=1,EE,007B461F,extended,00000001
+
+[Cheats/Vehicle 557]
+// patch=1,EE,007B4620,extended,00000001
+
+[Cheats/Vehicle 558]
+// patch=1,EE,007B4621,extended,00000001
+
+[Cheats/Vehicle 559]
+// patch=1,EE,007B4622,extended,00000001
+
+[Cheats/Vehicle 560]
+// patch=1,EE,007B4623,extended,00000001
+
+[Cheats/Vehicle 561]
+// patch=1,EE,007B4624,extended,00000001
+
+[Cheats/Vehicle 562]
+// patch=1,EE,007B4625,extended,00000001
+
+[Cheats/Vehicle 563]
+// patch=1,EE,007B4626,extended,00000001
+
+[Cheats/Vehicle 564]
+// patch=1,EE,007B4627,extended,00000001
+
+[Cheats/Vehicle 565]
+// patch=1,EE,007B4628,extended,00000001
+
+[Cheats/Vehicle 566]
+// patch=1,EE,007B4629,extended,00000001
+
+[Cheats/Vehicle 567]
+// patch=1,EE,007B462A,extended,00000001
+
+[Cheats/Vehicle 568]
+// patch=1,EE,007B462B,extended,00000001
+
+[Cheats/Vehicle 569]
+// patch=1,EE,007B462C,extended,00000001
+
+[Cheats/Vehicle 570]
+// patch=1,EE,007B462D,extended,00000001
+
+[Cheats/Vehicle 571]
+// patch=1,EE,007B462E,extended,00000001
+
+[Cheats/Vehicle 572]
+// patch=1,EE,007B462F,extended,00000001
+
+[Cheats/Vehicle 573]
+// patch=1,EE,007B4630,extended,00000001
+
+[Cheats/Vehicle 574]
+// patch=1,EE,007B4631,extended,00000001
+
+[Cheats/Vehicle 575]
+// patch=1,EE,007B4632,extended,00000001
+
+[Cheats/Vehicle 576]
+// patch=1,EE,007B4633,extended,00000001
+
+[Cheats/Vehicle 577]
+// patch=1,EE,007B4634,extended,00000001
+
+[Cheats/Vehicle 578]
+// patch=1,EE,007B4635,extended,00000001
+
+[Cheats/Vehicle 579]
+// patch=1,EE,007B4636,extended,00000001
+
+[Cheats/Vehicle 580]
+// patch=1,EE,007B4637,extended,00000001
+
+[Cheats/Vehicle 581]
+// patch=1,EE,007B4638,extended,00000001
+
+[Cheats/Vehicle 582]
+// patch=1,EE,007B4639,extended,00000001
+
+[Cheats/Vehicle 583]
+// patch=1,EE,007B463A,extended,00000001
+
+[Cheats/Vehicle 584]
+// patch=1,EE,007B463B,extended,00000001
+
+[Cheats/Vehicle 585]
+// patch=1,EE,007B463C,extended,00000001
+
+[Cheats/Vehicle 586]
+// patch=1,EE,007B463D,extended,00000001
+
+[Cheats/Vehicle 587]
+// patch=1,EE,007B463E,extended,00000001
+
+[Cheats/Vehicle 588]
+// patch=1,EE,007B463F,extended,00000001
+
+[Cheats/Vehicle 589]
+// patch=1,EE,007B4640,extended,00000001
+
+[Cheats/Vehicle 590]
+// patch=1,EE,007B4641,extended,00000001
+
+[Cheats/Vehicle 591]
+// patch=1,EE,007B4642,extended,00000001
+
+[Cheats/Vehicle 592]
+// patch=1,EE,007B4643,extended,00000001
+
+[Cheats/Vehicle 593]
+// patch=1,EE,007B4644,extended,00000001
+
+[Cheats/Vehicle 594]
+// patch=1,EE,007B4645,extended,00000001
+
+[Cheats/Vehicle 595]
+// patch=1,EE,007B4646,extended,00000001
+
+[Cheats/Vehicle 596]
+// patch=1,EE,007B4647,extended,00000001
+
+[Cheats/Vehicle 597]
+// patch=1,EE,007B4648,extended,00000001
+
+[Cheats/Vehicle 598]
+// patch=1,EE,007B4649,extended,00000001
+
+[Cheats/Vehicle 599]
+// patch=1,EE,007B464A,extended,00000001
+
+[Cheats/Vehicle 600]
+// patch=1,EE,007B464B,extended,00000001
+
+[Cheats/Vehicle 601]
+// patch=1,EE,007B464C,extended,00000001
+
+[Cheats/Vehicle 602]
+// patch=1,EE,007B464D,extended,00000001
+
+[Cheats/Vehicle 603]
+// patch=1,EE,007B464E,extended,00000001
+
+[Cheats/Vehicle 604]
+// patch=1,EE,007B464F,extended,00000001
+
+[Cheats/Vehicle 605]
+// patch=1,EE,007B4650,extended,00000001
+
+[Cheats/Vehicle 606]
+// patch=1,EE,007B4651,extended,00000001
+
+[Cheats/Vehicle 607]
+// patch=1,EE,007B4652,extended,00000001
+
+[Cheats/Vehicle 608]
+// patch=1,EE,007B4653,extended,00000001
+
+[Cheats/Vehicle 609]
+// patch=1,EE,007B4654,extended,00000001
+
+[Cheats/Vehicle 610]
+// patch=1,EE,007B4655,extended,00000001
+
+[Cheats/Vehicle 611]
+// patch=1,EE,007B4656,extended,00000001
+
+[Cheats/Vehicle 612]
+// patch=1,EE,007B4657,extended,00000001
+
+[Cheats/Vehicle 613]
+// patch=1,EE,007B4658,extended,00000001
+
+[Cheats/Vehicle 614]
+// patch=1,EE,007B4659,extended,00000001
+
+[Cheats/Vehicle 615]
+// patch=1,EE,007B465A,extended,00000001
+
+[Cheats/Vehicle 616]
+// patch=1,EE,007B465B,extended,00000001
+
+[Cheats/Vehicle 617]
+// patch=1,EE,007B465C,extended,00000001
+
+[Cheats/Vehicle 618]
+// patch=1,EE,007B465D,extended,00000001
+
+[Cheats/Vehicle 619]
+// patch=1,EE,007B465E,extended,00000001
+
+[Cheats/Vehicle 620]
+// patch=1,EE,007B465F,extended,00000001
+
+[Cheats/Vehicle 621]
+// patch=1,EE,007B4660,extended,00000001
+
+[Cheats/Vehicle 622]
+// patch=1,EE,007B4661,extended,00000001
+
+[Cheats/Vehicle 623]
+// patch=1,EE,007B4662,extended,00000001
+
+[Cheats/Vehicle 624]
+// patch=1,EE,007B4663,extended,00000001
+
+[Cheats/Vehicle 625]
+// patch=1,EE,007B4664,extended,00000001
+
+[Cheats/Vehicle 626]
+// patch=1,EE,007B4665,extended,00000001
+
+[Cheats/Vehicle 627]
+// patch=1,EE,007B4666,extended,00000001
+
+[Cheats/Vehicle 628]
+// patch=1,EE,007B4667,extended,00000001
+
+[Cheats/Vehicle 629]
+// patch=1,EE,007B4668,extended,00000001
+
+[Cheats/Vehicle 630]
+// patch=1,EE,007B4669,extended,00000001
+
+[Cheats/Vehicle 631]
+// patch=1,EE,007B466A,extended,00000001
+
+[Cheats/Vehicle 632]
+// patch=1,EE,007B466B,extended,00000001
+
+[Cheats/Vehicle 633]
+// patch=1,EE,007B466C,extended,00000001
+
+[Cheats/Vehicle 634]
+// patch=1,EE,007B466D,extended,00000001
+
+[Cheats/Vehicle 635]
+// patch=1,EE,007B466E,extended,00000001
+
+[Cheats/Vehicle 636]
+// patch=1,EE,007B466F,extended,00000001
+
+[Cheats/Vehicle 637]
+// patch=1,EE,007B4670,extended,00000001
+
+[Cheats/Vehicle 638]
+// patch=1,EE,007B4671,extended,00000001
+
+[Cheats/Vehicle 639]
+// patch=1,EE,007B4672,extended,00000001
+
+[Cheats/Vehicle 640]
+// patch=1,EE,007B4673,extended,00000001
+
+[Cheats/Vehicle 641]
+// patch=1,EE,007B4674,extended,00000001
+
+[Cheats/Vehicle 642]
+// patch=1,EE,007B4675,extended,00000001
+
+[Cheats/Vehicle 643]
+// patch=1,EE,007B4676,extended,00000001
+
+[Cheats/Vehicle 644]
+// patch=1,EE,007B4677,extended,00000001
+
+[Cheats/Vehicle 645]
+// patch=1,EE,007B4678,extended,00000001
+
+[Cheats/Vehicle 646]
+// patch=1,EE,007B4679,extended,00000001
+
+[Cheats/Vehicle 647]
+// patch=1,EE,007B467A,extended,00000001
+
+[Cheats/Vehicle 648]
+// patch=1,EE,007B467B,extended,00000001
+
+[Cheats/Vehicle 649]
+// patch=1,EE,007B467C,extended,00000001
+
+[Cheats/Vehicle 650]
+// patch=1,EE,007B467D,extended,00000001
+
+[Cheats/Vehicle 651]
+// patch=1,EE,007B467E,extended,00000001
+
+[Cheats/Vehicle 652]
+// patch=1,EE,007B467F,extended,00000001
+
+[Cheats/Vehicle 653]
+// patch=1,EE,007B4680,extended,00000001
+
+[Cheats/Vehicle 654]
+// patch=1,EE,007B4681,extended,00000001
+
+[Cheats/Vehicle 655]
+// patch=1,EE,007B4682,extended,00000001
+
+[Cheats/Vehicle 656]
+// patch=1,EE,007B4683,extended,00000001
+
+[Cheats/Vehicle 657]
+// patch=1,EE,007B4684,extended,00000001
+
+[Cheats/Vehicle 658]
+// patch=1,EE,007B4685,extended,00000001
+
+[Cheats/Vehicle 659]
+// patch=1,EE,007B4686,extended,00000001
+
+[Cheats/Vehicle 660]
+// patch=1,EE,007B4687,extended,00000001
+
+[Cheats/Vehicle 661]
+// patch=1,EE,007B4688,extended,00000001
+
+[Cheats/Vehicle 662]
+// patch=1,EE,007B4689,extended,00000001
+
+[Cheats/Vehicle 663]
+// patch=1,EE,007B468A,extended,00000001
+
+[Cheats/Vehicle 664]
+// patch=1,EE,007B468B,extended,00000001
+
+[Cheats/Vehicle 665]
+// patch=1,EE,007B468C,extended,00000001
+
+[Cheats/Vehicle 666]
+// patch=1,EE,007B468D,extended,00000001
+
+[Cheats/Vehicle 667]
+// patch=1,EE,007B468E,extended,00000001
+
+[Cheats/Vehicle 668]
+// patch=1,EE,007B468F,extended,00000001
+
+[Cheats/Vehicle 669]
+// patch=1,EE,007B4690,extended,00000001
+
+[Cheats/Vehicle 670]
+// patch=1,EE,007B4691,extended,00000001
+
+[Cheats/Vehicle 671]
+// patch=1,EE,007B4692,extended,00000001
+
+[Cheats/Vehicle 672]
+// patch=1,EE,007B4693,extended,00000001
+
+[Cheats/Vehicle 673]
+// patch=1,EE,007B4694,extended,00000001
+
+[Cheats/Vehicle 674]
+// patch=1,EE,007B4695,extended,00000001
+
+[Cheats/Vehicle 675]
+// patch=1,EE,007B4696,extended,00000001
+
+[Cheats/Vehicle 676]
+// patch=1,EE,007B4697,extended,00000001
+
+[Cheats/Vehicle 677]
+// patch=1,EE,007B4698,extended,00000001
+
+[Cheats/Vehicle 678]
+// patch=1,EE,007B4699,extended,00000001
+
+[Cheats/Vehicle 679]
+// patch=1,EE,007B469A,extended,00000001
+
+[Cheats/Vehicle 680]
+// patch=1,EE,007B469B,extended,00000001
+
+[Cheats/Vehicle 681]
+// patch=1,EE,007B469C,extended,00000001
+
+[Cheats/Vehicle 682]
+// patch=1,EE,007B469D,extended,00000001
+
+[Cheats/Vehicle 683]
+// patch=1,EE,007B469E,extended,00000001
+
+[Cheats/Vehicle 684]
+// patch=1,EE,007B469F,extended,00000001
+
+[Cheats/Vehicle 685]
+// patch=1,EE,007B46A0,extended,00000001
+
+[Cheats/Vehicle 686]
+// patch=1,EE,007B46A1,extended,00000001
+
+[Cheats/Vehicle 687]
+// patch=1,EE,007B46A2,extended,00000001
+
+[Cheats/Vehicle 688]
+// patch=1,EE,007B46A3,extended,00000001
+
+[Cheats/Vehicle 689]
+// patch=1,EE,007B46A4,extended,00000001
+
+[Cheats/Vehicle 690]
+// patch=1,EE,007B46A5,extended,00000001
+
+[Cheats/Vehicle 691]
+// patch=1,EE,007B46A6,extended,00000001
+
+[Cheats/Vehicle 692]
+// patch=1,EE,007B46A7,extended,00000001
+
+[Cheats/Vehicle 693]
+// patch=1,EE,007B46A8,extended,00000001
+
+[Cheats/Vehicle 694]
+// patch=1,EE,007B46A9,extended,00000001
+
+[Cheats/Vehicle 695]
+// patch=1,EE,007B46AA,extended,00000001
+
+[Cheats/Vehicle 696]
+// patch=1,EE,007B46AB,extended,00000001
+
+[Cheats/Vehicle 697]
+// patch=1,EE,007B46AC,extended,00000001
+
+[Cheats/Vehicle 698]
+// patch=1,EE,007B46AD,extended,00000001
+
+[Cheats/Vehicle 699]
+// patch=1,EE,007B46AE,extended,00000001
+
+[Cheats/Vehicle 700]
+// patch=1,EE,007B46AF,extended,00000001
+
+[Cheats/Vehicle 701]
+// patch=1,EE,007B46B0,extended,00000001
+
+[Cheats/Vehicle 702]
+// patch=1,EE,007B46B1,extended,00000001
+
+[Cheats/Vehicle 703]
+// patch=1,EE,007B46B2,extended,00000001
+
+[Cheats/Vehicle 704]
+// patch=1,EE,007B46B3,extended,00000001
+
+[Cheats/Vehicle 705]
+// patch=1,EE,007B46B4,extended,00000001
+
+[Cheats/Vehicle 706]
+// patch=1,EE,007B46B5,extended,00000001
+
+[Cheats/Vehicle 707]
+// patch=1,EE,007B46B6,extended,00000001
+
+[Cheats/Vehicle 708]
+// patch=1,EE,007B46B7,extended,00000001
+
+[Cheats/Vehicle 709]
+// patch=1,EE,007B46B8,extended,00000001
+
+[Cheats/Vehicle 710]
+// patch=1,EE,007B46B9,extended,00000001
+
+[Cheats/Vehicle 711]
+// patch=1,EE,007B46BA,extended,00000001
+
+[Cheats/Vehicle 712]
+// patch=1,EE,007B46BB,extended,00000001
+
+[Cheats/Vehicle 713]
+// patch=1,EE,007B46BC,extended,00000001
+
+[Cheats/Vehicle 714]
+// patch=1,EE,007B46BD,extended,00000001
+
+[Cheats/Vehicle 715]
+// patch=1,EE,007B46BE,extended,00000001
+
+[Cheats/Vehicle 716]
+// patch=1,EE,007B46BF,extended,00000001
+
+[Cheats/Vehicle 717]
+// patch=1,EE,007B46C0,extended,00000001
+
+[Cheats/Vehicle 718]
+// patch=1,EE,007B46C1,extended,00000001
+
+[Cheats/Vehicle 719]
+// patch=1,EE,007B46C2,extended,00000001
+
+[Cheats/Vehicle 720]
+// patch=1,EE,007B46C3,extended,00000001
+
+[Cheats/Vehicle 721]
+// patch=1,EE,007B46C4,extended,00000001
+
+[Cheats/Vehicle 722]
+// patch=1,EE,007B46C5,extended,00000001
+
+[Cheats/Vehicle 723]
+// patch=1,EE,007B46C6,extended,00000001
+
+[Cheats/Vehicle 724]
+// patch=1,EE,007B46C7,extended,00000001
+
+[Cheats/Vehicle 725]
+// patch=1,EE,007B46C8,extended,00000001
+
+[Cheats/Vehicle 726]
+// patch=1,EE,007B46C9,extended,00000001
+
+[Cheats/Vehicle 727]
+// patch=1,EE,007B46CA,extended,00000001
+
+[Cheats/Vehicle 728]
+// patch=1,EE,007B46CB,extended,00000001
+
+[Cheats/Vehicle 729]
+// patch=1,EE,007B46CC,extended,00000001
+
+[Cheats/Vehicle 730]
+// patch=1,EE,007B46CD,extended,00000001
+
+[Cheats/Vehicle 731]
+// patch=1,EE,007B46CE,extended,00000001
+
+[Cheats/Vehicle 732]
+// patch=1,EE,007B46CF,extended,00000001
+
+[Cheats/Vehicle 733]
+// patch=1,EE,007B46D0,extended,00000001
+
+[Cheats/Vehicle 734]
+// patch=1,EE,007B46D1,extended,00000001
+
+[Cheats/Vehicle 735]
+// patch=1,EE,007B46D2,extended,00000001
+
+[Cheats/Vehicle 736]
+// patch=1,EE,007B46D3,extended,00000001
+
+[Cheats/Vehicle 737]
+// patch=1,EE,007B46D4,extended,00000001
+
+[Cheats/Vehicle 738]
+// patch=1,EE,007B46D5,extended,00000001
+
+[Cheats/Vehicle 739]
+// patch=1,EE,007B46D6,extended,00000001
+
+[Cheats/Vehicle 740]
+// patch=1,EE,007B46D7,extended,00000001
+
+[Cheats/Vehicle 741]
+// patch=1,EE,007B46D8,extended,00000001
+
+[Cheats/Vehicle 742]
+// patch=1,EE,007B46D9,extended,00000001
+
+[Cheats/Vehicle 743]
+// patch=1,EE,007B46DA,extended,00000001
+
+[Cheats/Vehicle 744]
+// patch=1,EE,007B46DB,extended,00000001
+
+[Cheats/Vehicle 745]
+// patch=1,EE,007B46DC,extended,00000001
+
+[Cheats/Vehicle 746]
+// patch=1,EE,007B46DD,extended,00000001
+
+[Cheats/Vehicle 747]
+// patch=1,EE,007B46DE,extended,00000001
+
+[Cheats/Vehicle 748]
+// patch=1,EE,007B46DF,extended,00000001
+
+[Cheats/Vehicle 749]
+// patch=1,EE,007B46E0,extended,00000001
+
+[Cheats/Vehicle 750]
+// patch=1,EE,007B46E1,extended,00000001
+
+[Cheats/All Vehicles]
+// patch=1,EE,407B43F4,extended,00BB0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,107B46E0,extended,00000101

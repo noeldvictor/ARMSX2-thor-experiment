@@ -1,0 +1,122 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Getaway, The [SCES-51159] [5DFBE144]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Start On Last Level]
+// patch=1,EE,9030E6BC,extended,0C0C4639
+
+[Cheats/Idiot AI]
+// patch=1,EE,2015D644,extended,00000000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201751C0,extended,00000000
+
+[Cheats/Enemies Dont Shoot]
+// patch=1,EE,20178E70,extended,03E00008
+// patch=1,EE,20178E74,extended,00000000
+
+[Cheats/Never Reload]
+// patch=1,EE,201AD938,extended,00000000
+// patch=1,EE,201AD9D0,extended,00000000
+
+[Cheats/Infinite Health]
+// patch=1,EE,2018E4CC,extended,3C0140C0
+// patch=1,EE,2018E4DC,extended,AE010360
+
+[Cheats/Immune To Bullets]
+// patch=1,EE,201ACBA0,extended,03E00008
+// patch=1,EE,201ACBA4,extended,00000000
+
+[Cheats/Unlock Extra Features]
+// patch=1,EE,20392708,extended,00000002
+
+[Cheats/Drive Thru Cars]
+// patch=1,EE,202EA530,extended,00000000
+
+[Cheats/Drive Thru Telephone Polls/Stop Lights/Lamp Posts]
+// patch=1,EE,202F4814,extended,00000000
+
+[Cheats/Walk Thru Walls]
+// patch=1,EE,101CE69E,extended,00001000
+// patch=1,EE,101D0D9E,extended,00001000
+
+[Cheats/Drive Thru Walls]
+// patch=1,EE,101C15B6,extended,00001000
+
+[Cheats/Walk & Drive Thru Walls]
+// patch=1,EE,001C60E4,extended,00000000
+
+[Cheats/Load Game To Access All Levels]
+// patch=1,EE,103932B2,extended,00000018
+
+[Cheats/Civilians Turn Into Cops On Foot]
+// patch=1,EE,00104EB4,extended,00000002
+
+[Cheats/Civilians Turn Into Cops In Cars]
+// patch=1,EE,00104EB4,extended,00000003
+
+[Cheats/Civilians Turn Into Nurses]
+// patch=1,EE,00104EB4,extended,00000004
+
+[Cheats/Civilians Turn Into Pure Generics]
+// patch=1,EE,00104EB4,extended,00000005
+
+[Cheats/Cops On Foot Turn Into Civilians]
+// patch=1,EE,00104F24,extended,00000001
+
+[Cheats/Cops On Foot Turn Into Cops In Cars]
+// patch=1,EE,00104F24,extended,00000003
+
+[Cheats/Cops On Foot Turn Into Nurses]
+// patch=1,EE,00104F24,extended,00000004
+
+[Cheats/Cops On Foot Turn Into Pure Generics]
+// patch=1,EE,00104F24,extended,00000005
+
+[Cheats/Cops In Cars Turn Into Civilians]
+// patch=1,EE,00104EF0,extended,00000001
+
+[Cheats/Cops In Cars Turn Into Cops On Foot]
+// patch=1,EE,00104EF0,extended,00000002
+
+[Cheats/Cops In Cars Turn Into Nurses]
+// patch=1,EE,00104EF0,extended,00000004
+
+[Cheats/Cops In Cars Turn Into Pure Generics]
+// patch=1,EE,00104EF0,extended,00000005
+
+[Cheats/Nurses Turn Into Civilians]
+// patch=1,EE,00104ED4,extended,00000001
+
+[Cheats/Nurses Turn Into Cops On Foot]
+// patch=1,EE,00104ED4,extended,00000002
+
+[Cheats/Nurses Turn Into Cops In Cars]
+// patch=1,EE,00104ED4,extended,00000003
+
+[Cheats/Nurses Turn Into Pure Generics]
+// patch=1,EE,00104ED4,extended,00000005
+
+[Cheats/Pure Generics Turn Into Civilians]
+// patch=1,EE,00104F14,extended,00000001
+
+[Cheats/Pure Generics Turn Into Cops On Foot]
+// patch=1,EE,00104F14,extended,00000002
+
+[Cheats/Pure Generics Turn Into Cops In Cars]
+// patch=1,EE,00104F14,extended,00000003
+
+[Cheats/Pure Generics Turn Into Nurses]
+// patch=1,EE,00104F14,extended,00000004
+
+[Cheats/Faster Characters]
+// patch=1,EE,203741F8,extended,42000000
+
+[Cheats/Ultra Fast Characters]
+// patch=1,EE,203741F8,extended,41C00000
+
+[Cheats/Hella Ultra Fast Characters]
+// patch=1,EE,203741F8,extended,42C80000
+
+[Cheats/Super Slow Characters]
+// patch=1,EE,203741F8,extended,3F000000

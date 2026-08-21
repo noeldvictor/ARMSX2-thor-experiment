@@ -1,0 +1,132 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Virtua Fighter 4 [SLUS-20323] [EA131B57]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {L1}+Down To Disble 1-Hit Deaths (Enemies)]
+// patch=1,EE,902E0AF4,extended,0C0BE111
+
+[Cheats/Infinite Time]
+// patch=1,EE,20315E0C,extended,44E10000
+
+[Cheats/Always Low Overall Time]
+// patch=1,EE,20315E08,extended,00000000
+
+[Cheats/Have All Training Trial Missions Complete]
+// patch=1,EE,205EB3B8,extended,FFFFFFFF
+// patch=1,EE,205EB3BC,extended,FFFFFFFF
+// patch=1,EE,205EB3C0,extended,FFFFFFFF
+
+[Cheats/Start On Final Stage (Arcade Mode)]
+// patch=1,EE,D0315E76,extended,00000000
+// patch=1,EE,00315E77,extended,0000000C
+
+[Cheats/Start On Bonus Stage (Arcade Mode)]
+// patch=1,EE,D0315E76,extended,00000000
+// patch=1,EE,00315E77,extended,0000000D
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,10879C20,extended,000000C9
+
+[Cheats/No Health P1]
+// patch=1,EE,10879C20,extended,00000000
+
+[Cheats/75% Health P1]
+// patch=1,EE,D0879C20,extended,000000C9
+// patch=1,EE,10879C20,extended,00000096
+
+[Cheats/50% Health P1]
+// patch=1,EE,D0879C20,extended,000000C9
+// patch=1,EE,10879C20,extended,00000064
+
+[Cheats/25% Health P1]
+// patch=1,EE,D0879C20,extended,000000C9
+// patch=1,EE,10879C20,extended,00000032
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,D0879C20,extended,000000C9
+// patch=1,EE,10879C20,extended,00000001
+
+[Cheats/P1 Never Wins]
+// patch=1,EE,00315E68,extended,00000000
+
+[Cheats/P1 Starts With 1 Win]
+// patch=1,EE,D0315E68,extended,00000000
+// patch=1,EE,00315E68,extended,00000001
+
+[Cheats/P1 Starts With 2 Wins]
+// patch=1,EE,D0315E68,extended,00000000
+// patch=1,EE,00315E68,extended,00000002
+
+[Cheats/P1 Starts With 3 Wins]
+// patch=1,EE,D0315E68,extended,00000000
+// patch=1,EE,00315E68,extended,00000003
+
+[Cheats/P1 Starts With 4 Wins]
+// patch=1,EE,D0315E68,extended,00000000
+// patch=1,EE,00315E68,extended,00000004
+
+[Cheats/P1 Always Dural]
+// patch=1,EE,0056E190,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,1087A3C8,extended,000000C9
+
+[Cheats/No Health P2]
+// patch=1,EE,1087A3C8,extended,00000000
+
+[Cheats/75% Health P2]
+// patch=1,EE,D087A3C8,extended,000000C9
+// patch=1,EE,1087A3C8,extended,00000096
+
+[Cheats/50% Health P2]
+// patch=1,EE,D087A3C8,extended,000000C9
+// patch=1,EE,1087A3C8,extended,00000064
+
+[Cheats/25% Health P2]
+// patch=1,EE,D087A3C8,extended,000000C9
+// patch=1,EE,1087A3C8,extended,00000032
+
+[Cheats/1-Hit Death P2]
+// patch=1,EE,D087A3C8,extended,000000C9
+// patch=1,EE,1087A3C8,extended,00000001
+
+[Cheats/P2 Never Wins]
+// patch=1,EE,00315E69,extended,00000000
+
+[Cheats/P2 Starts With 1 Wins]
+// patch=1,EE,D0315E69,extended,00000000
+// patch=1,EE,00315E69,extended,00000001
+
+[Cheats/P2 Starts With 2 Wins]
+// patch=1,EE,D0315E69,extended,00000000
+// patch=1,EE,00315E69,extended,00000002
+
+[Cheats/P2 Starts With 3 Wins]
+// patch=1,EE,D0315E69,extended,00000000
+// patch=1,EE,00315E69,extended,00000003
+
+[Cheats/P2 Starts With 4 Wins]
+// patch=1,EE,D0315E69,extended,00000000
+// patch=1,EE,00315E69,extended,00000004
+
+[Cheats/P2 Always Dural]
+// patch=1,EE,0056E191,extended,00000000
+
+[Cheats/Always Grandmaster Rank]
+// patch=1,EE,1087869C,extended,0000001A
+
+[Cheats/Max Wins]
+// patch=1,EE,108786A0,extended,0000C350
+
+[Cheats/No Wins]
+// patch=1,EE,108786A0,extended,00000000
+
+[Cheats/Max Losses]
+// patch=1,EE,108786A0,extended,0000C350
+
+[Cheats/No Losses]
+// patch=1,EE,108786A0,extended,00000000
+
+[Cheats/Have All Items]
+// patch=1,EE,40590A64,extended,00280001
+// patch=1,EE,00000001,extended,00000000

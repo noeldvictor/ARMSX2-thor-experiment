@@ -1,0 +1,46 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Heroes Of The Pacific [SLUS-20943] [83FB515E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Raise Control]
+// patch=1,EE,901597B0,extended,00832021
+
+[Cheats/Infinite Warspeed]
+// patch=1,EE,2021EA24,extended,00000000
+// patch=1,EE,20711A08,extended,00000001
+
+[Cheats/Infinite Torpedos]
+// patch=1,EE,202B0F5C,extended,00000000
+
+[Cheats/Infinite Bombs]
+// patch=1,EE,202B1570,extended,00000000
+
+[Cheats/Infinite Rockets]
+// patch=1,EE,202B1C3C,extended,00000000
+
+[Cheats/Rapid Fire]
+// patch=1,EE,202B26E0,extended,00000000
+
+[Cheats/Always Low Mission Time]
+// patch=1,EE,202292E0,extended,AE000040
+
+[Cheats/Buying Plane Upgrades Doesnt Decrease Points]
+// patch=1,EE,2054DB94,extended,00000000
+
+[Cheats/Buying Plane Upgrades Increases Points]
+// patch=1,EE,2054DB8C,extended,00701021
+
+[Cheats/Access More Missions/Planes]
+// patch=1,EE,20731188,extended,00000001
+
+[Cheats/Infinite Plane Upgrade Points]
+// patch=1,EE,10A18050,extended,0000FFFF
+
+[Cheats/Max Plane Upgrade Points]
+// patch=1,EE,20A18050,extended,05F5E0FF
+
+[Cheats/Invulnerability]
+// patch=1,EE,2071A9B0,extended,00000001
+
+[Cheats/Max Warspeed]
+// patch=1,EE,20711A00,extended,00000001

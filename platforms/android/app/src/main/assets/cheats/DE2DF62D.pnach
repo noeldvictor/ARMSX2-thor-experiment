@@ -1,0 +1,64 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Super Dragonball Z [SLUS-21442] [DE2DF62D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Ceiling Never Closes In (Both Players)]
+// patch=1,EE,901884F8,extended,00832021
+
+[Cheats/Infinite Time]
+// patch=1,EE,203EA578,extended,00000000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A1C,extended,000000FA
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A54,extended,000000FA
+
+[Cheats/No Health P1]
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A1C,extended,00000000
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A54,extended,00000000
+
+[Cheats/Infinite Ultimate Gauge P1]
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A2C,extended,000000FA
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A64,extended,000000FA
+
+[Cheats/No Ultimate Gauge P1]
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A2C,extended,00000000
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A64,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A1C,extended,000000FA
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A54,extended,000000FA
+
+[Cheats/No Health P2]
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A1C,extended,00000000
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A54,extended,00000000
+
+[Cheats/Infinite Ultimate Gauge P2]
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A2C,extended,000000FA
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A64,extended,000000FA
+
+[Cheats/No Ultimate Gauge P2]
+// patch=1,EE,D05B2E70,extended,0000FFFF
+// patch=1,EE,205B1A2C,extended,00000000
+// patch=1,EE,D05B2E70,extended,00000000
+// patch=1,EE,205B1A64,extended,00000000
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,205E6B30,extended,FFFFFFFF
+
+[Cheats/Have All Dragon Balls-All Characters]
+// patch=1,EE,405E7BAC,extended,001E0029
+// patch=1,EE,FFFFFFFF,extended,00000000

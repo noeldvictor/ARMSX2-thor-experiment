@@ -1,0 +1,16 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Jonny Moseley Mad Trix [SLUS-20229] [AE94FAF8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Extras]
+// patch=1,EE,F0100008,extended,0025EB97
+
+[Cheats/Max Score]
+// patch=1,EE,203A2D44,extended,4B18967F
+
+[Cheats/Infinite Time]
+// patch=1,EE,2044B398,extended,4415FF5C
+
+[Cheats/Have All Levels]
+// patch=1,EE,21F43534,extended,00000000
+// patch=1,EE,21F4337C,extended,00000000

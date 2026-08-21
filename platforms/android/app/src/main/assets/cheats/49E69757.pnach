@@ -1,0 +1,49 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Auto Modellista [SLUS-20642] [49E69757]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,90120E90,extended,0C06A806
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,2053F1BC,extended,00000000
+
+[Cheats/Unlock All Cars]
+// patch=1,EE,20503CBC,extended,FFFFFFFF
+
+[Cheats/Unlock All Tune-Up Options]
+// patch=1,EE,20503CC0,extended,FFFFFFFF
+
+[Cheats/Unlock All Dress-Up Options]
+// patch=1,EE,20503CC4,extended,FFFFFFFF
+
+[Cheats/Unlock All Garage Items]
+// patch=1,EE,204DD3D8,extended,FFFFFFFF
+// patch=1,EE,204DD3DC,extended,FFFFFFFF
+// patch=1,EE,204DD3E0,extended,FFFFFFFF
+// patch=1,EE,204DD3E4,extended,FFFFFFFF
+// patch=1,EE,204DD3E8,extended,FFFFFFFF
+
+[Cheats/Unlock All Race Levels]
+// patch=1,EE,004DD7FE,extended,00000006
+
+[Cheats/Level 1 Completed]
+// patch=1,EE,004DD7FF,extended,000000FF
+
+[Cheats/Level 2 Completed]
+// patch=1,EE,004DD800,extended,000000FF
+
+[Cheats/Level 3 Completed]
+// patch=1,EE,004DD801,extended,000000FF
+
+[Cheats/Level 4 Completed]
+// patch=1,EE,004DD802,extended,000000FF
+
+[Cheats/Level 5 Completed]
+// patch=1,EE,004DD803,extended,000000FF
+
+[Cheats/Level 6 Completed]
+// patch=1,EE,004DD804,extended,000000FF
+
+[Cheats/Final Completed]
+// patch=1,EE,004DD805,extended,000000FF

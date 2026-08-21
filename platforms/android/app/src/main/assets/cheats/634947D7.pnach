@@ -1,0 +1,96 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Viewtiful Joe [SLPM-65699] [634947D7]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Never Reload]
+// patch=1,EE,902CAC28,extended,0C0B7DCA
+
+[Cheats/Unlock All Difficulties]
+// patch=1,EE,0178FA38,extended,000000FF
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,0178FA39,extended,000000FF
+
+[Cheats/Infinite VFX Gauge]
+// patch=1,EE,1178FA4C,extended,000005DC
+
+[Cheats/Max VFX Gauge]
+// patch=1,EE,1178FA4E,extended,000005DC
+
+[Cheats/Max Infinite VFX Gauge]
+// patch=1,EE,2178FA4C,extended,05DC05DC
+
+[Cheats/Infinite Health]
+// patch=1,EE,1178FA50,extended,0000000F
+
+[Cheats/Max Health]
+// patch=1,EE,1178FA52,extended,0000000F
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,2178FA50,extended,000F000F
+
+[Cheats/Have Mac Speed Level 3]
+// patch=1,EE,0178FA5C,extended,00000002
+
+[Cheats/Infinite Lives]
+// patch=1,EE,1178FA5E,extended,00000063
+
+[Cheats/Have All Upgrades]
+// patch=1,EE,1178FA60,extended,0000FFFF
+
+[Cheats/Max V-Points]
+// patch=1,EE,2178FA64,extended,000F423F
+
+[Cheats/Extra Lives]
+// patch=1,EE,10210FF8,extended,00000001
+
+[Cheats/Infinite V-Boomerangs]
+// patch=1,EE,1178FA68,extended,00000063
+
+[Cheats/Infinite Bombs]
+// patch=1,EE,1178FA6A,extended,00000063
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,201FC170,extended,00000000
+
+[Cheats/Max V-Films]
+// patch=1,EE,217903C0,extended,00000063
+// patch=1,EE,217903C4,extended,00000063
+
+[Cheats/Always V Defense Rating]
+// patch=1,EE,21790668,extended,00000000
+
+[Cheats/Always V Time Rating]
+// patch=1,EE,2179068C,extended,00000000
+
+[Cheats/Infinite Time]
+// patch=1,EE,21790694,extended,470C9F00
+
+[Cheats/Max V-Point Bonus]
+// patch=1,EE,017F9C6B,extended,000000FF
+
+[Cheats/Invincible]
+// patch=1,EE,717F8E40,extended,00000010
+
+[Cheats/Always On Fire]
+// patch=1,EE,217F983C,extended,0000270F
+
+[Cheats/P1 Press {L1}+Up For Wider Vision Range]
+// patch=1,EE,D1E0E31C,extended,0000FBEF
+// patch=1,EE,0178FA11,extended,00000001
+
+[Cheats/P1 Press {L1}+Right For Normal Vision Range]
+// patch=1,EE,D1E0E31C,extended,0000FBDF
+// patch=1,EE,0178FA11,extended,00000002
+
+[Cheats/P1 Press {L1}+Down For Less Vision Range]
+// patch=1,EE,D1E0E31C,extended,0000FBBF
+// patch=1,EE,0178FA11,extended,00000003
+
+[Cheats/P1 Press {L2}+Up To Enable 1-Hit Deaths (Enemies)]
+// patch=1,EE,D1E0E31C,extended,0000FEEF
+// patch=1,EE,201A01F0,extended,A60011F4
+
+[Cheats/P1 Press {L1}+Down To Disble 1-Hit Deaths (Enemies)]
+// patch=1,EE,D1E0E31C,extended,0000FBEF
+// patch=1,EE,201A01F0,extended,A60411F4

@@ -1,0 +1,100 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shadow Of Destiny [SLUS-20146] [F14DFE0A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Items]
+// patch=1,EE,90227ED4,extended,0C08B774
+// patch=1,EE,4035C4B0,extended,00070001
+// patch=1,EE,09090909,extended,00000000
+// patch=1,EE,0035C4CC,extended,00000009
+
+[Cheats/Infinite Energy Units]
+// patch=1,EE,2035C5D0,extended,0000000A
+// patch=1,EE,1035CD32,extended,0000000A
+
+[Cheats/Digipad]
+// patch=1,EE,0035C4B0,extended,00000009
+
+[Cheats/Cell Phone]
+// patch=1,EE,0035C4B1,extended,00000009
+
+[Cheats/Egg Ornament With Paper Inside]
+// patch=1,EE,0035C4B2,extended,00000009
+
+[Cheats/Egg Ornament]
+// patch=1,EE,0035C4B3,extended,00000009
+
+[Cheats/Frying Pan]
+// patch=1,EE,0035C4B4,extended,00000009
+
+[Cheats/Iron Plate]
+// patch=1,EE,0035C4B5,extended,00000009
+
+[Cheats/Lighter]
+// patch=1,EE,0035C4B6,extended,00000009
+
+[Cheats/Picture Of Mr. Eckart]
+// patch=1,EE,0035C4B7,extended,00000009
+
+[Cheats/Picture Of Mr. Eckart 2]
+// patch=1,EE,0035C4B8,extended,00000009
+
+[Cheats/Red Stone]
+// patch=1,EE,0035C4B9,extended,00000009
+
+[Cheats/Rope]
+// patch=1,EE,0035C4BA,extended,00000009
+
+[Cheats/Old Rope]
+// patch=1,EE,0035C4BB,extended,00000009
+
+[Cheats/Juggling Balls]
+// patch=1,EE,0035C4BC,extended,00000009
+
+[Cheats/Antique Comb]
+// patch=1,EE,0035C4BD,extended,00000009
+
+[Cheats/Old Book]
+// patch=1,EE,0035C4BE,extended,00000009
+
+[Cheats/Medallion]
+// patch=1,EE,0035C4BF,extended,00000009
+
+[Cheats/Egg-Shaped Pocket Watch]
+// patch=1,EE,0035C4C0,extended,00000009
+
+[Cheats/Male Sea-Hare Antidote]
+// patch=1,EE,0035C4C1,extended,00000009
+
+[Cheats/Dog Meat]
+// patch=1,EE,0035C4C2,extended,00000009
+
+[Cheats/Chocolate]
+// patch=1,EE,0035C4C3,extended,00000009
+
+[Cheats/Lab Basement Key]
+// patch=1,EE,0035C4C4,extended,00000009
+
+[Cheats/Tower Key]
+// patch=1,EE,0035C4C5,extended,00000009
+
+[Cheats/Memo By Cafe Door]
+// patch=1,EE,0035C4C6,extended,00000009
+
+[Cheats/Kitten]
+// patch=1,EE,0035C4C7,extended,00000009
+
+[Cheats/Town Map]
+// patch=1,EE,0035C4C8,extended,00000009
+
+[Cheats/Ladder]
+// patch=1,EE,0035C4C9,extended,00000009
+
+[Cheats/Old Town Map]
+// patch=1,EE,0035C4CA,extended,00000009
+
+[Cheats/Notebook]
+// patch=1,EE,0035C4CB,extended,00000009
+
+[Cheats/Postcard By Karl Franssen]
+// patch=1,EE,0035C4CC,extended,00000009

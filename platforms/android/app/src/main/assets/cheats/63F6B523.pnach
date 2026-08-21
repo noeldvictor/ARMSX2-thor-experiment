@@ -1,0 +1,12 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Yu-Gi-oh! Capsule Monster Coliseum [UNKNOWN] [63F6B523]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite monster points]
+// patch=1,EE,5C768AC7,extended,E782879C
+
+[Cheats/Max AP]
+// patch=1,EE,18531AEC,extended,0CA5E485
+
+[Cheats/Max MP]
+// patch=1,EE,18531A68,extended,0CA5E485

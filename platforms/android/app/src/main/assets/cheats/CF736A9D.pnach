@@ -1,0 +1,18 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Aqua Aqua [SLUS-20162] [CF736A9D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Health P4]
+// patch=1,EE,901CB420,extended,0C075C51
+
+[Cheats/Access Story Puzzle]
+// patch=1,EE,2020401C,extended,00000000
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,20101E48,extended,3405270F
+
+[Cheats/Infinite Time]
+// patch=1,EE,202006B4,extended,00000000
+
+[Cheats/Water Drain Meter Never Fills]
+// patch=1,EE,20103974,extended,00000000

@@ -1,0 +1,10 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Gran Turismo 4 [UNKNOWN] [44A61C8F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always 1 Lap]
+// patch=1,EE,200FFF88,extended,8C830000
+// patch=1,EE,200FFF8C,extended,24050001
+// patch=1,EE,200FFF90,extended,AC650000
+// patch=1,EE,2039B838,extended,0803FFE0
+// patch=1,EE,200FFF94,extended,080E6E10

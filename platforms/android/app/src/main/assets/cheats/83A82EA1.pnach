@@ -1,0 +1,283 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Destruction Derby Arenas [SCES-50781] [83A82EA1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Upgrade Points]
+// patch=1,EE,9020761C,extended,0C098C01
+
+[Cheats/Infinite Nitro Usage (Upon Pickup)]
+// patch=1,EE,20273644,extended,00000000
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,105D5054,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,205D5054,extended,05F5E0FF
+
+[Cheats/Infinite Nitro P1]
+// patch=1,EE,105D541E,extended,00001388
+
+[Cheats/Access All Cars/Tracks]
+// patch=1,EE,2011E630,extended,00000000
+
+[Cheats/Max Score (All Players)]
+// patch=1,EE,200C0240,extended,3C0605F5
+// patch=1,EE,200C0244,extended,34C6E0FF
+// patch=1,EE,200C0248,extended,08080198
+// patch=1,EE,200C024C,extended,AC4601D4
+// patch=1,EE,2011FD80,extended,08030090
+
+[Cheats/Lap 2]
+// patch=1,EE,200C0220,extended,9061014E
+// patch=1,EE,200C0224,extended,14200004
+// patch=1,EE,200C0228,extended,24010001
+// patch=1,EE,200C022C,extended,14220002
+// patch=1,EE,200C0230,extended,24010002
+// patch=1,EE,200C0234,extended,AC610140
+// patch=1,EE,200C0238,extended,0806DE16
+// patch=1,EE,200C023C,extended,00000000
+// patch=1,EE,2011FDF4,extended,0C030088
+// patch=1,EE,200C0240,extended,9061014E
+// patch=1,EE,200C0244,extended,14200004
+// patch=1,EE,200C0248,extended,24010001
+// patch=1,EE,200C024C,extended,14220002
+// patch=1,EE,200C0250,extended,24010002
+// patch=1,EE,200C0254,extended,AC610140
+// patch=1,EE,200C0258,extended,0806DE16
+// patch=1,EE,200C025C,extended,00000000
+// patch=1,EE,201201A0,extended,0C030090
+
+[Cheats/Lap 3]
+// patch=1,EE,200C0220,extended,9061014E
+// patch=1,EE,200C0224,extended,14200004
+// patch=1,EE,200C0228,extended,24010001
+// patch=1,EE,200C022C,extended,14220002
+// patch=1,EE,200C0230,extended,24010003
+// patch=1,EE,200C0234,extended,AC610140
+// patch=1,EE,200C0238,extended,0806DE16
+// patch=1,EE,200C023C,extended,00000000
+// patch=1,EE,2011FDF4,extended,0C030088
+// patch=1,EE,200C0240,extended,9061014E
+// patch=1,EE,200C0244,extended,14200004
+// patch=1,EE,200C0248,extended,24010001
+// patch=1,EE,200C024C,extended,14220002
+// patch=1,EE,200C0250,extended,24010003
+// patch=1,EE,200C0254,extended,AC610140
+// patch=1,EE,200C0258,extended,0806DE16
+// patch=1,EE,200C025C,extended,00000000
+// patch=1,EE,201201A0,extended,0C030090
+
+[Cheats/Lap 4]
+// patch=1,EE,200C0220,extended,9061014E
+// patch=1,EE,200C0224,extended,14200004
+// patch=1,EE,200C0228,extended,24010001
+// patch=1,EE,200C022C,extended,14220002
+// patch=1,EE,200C0230,extended,24010004
+// patch=1,EE,200C0234,extended,AC610140
+// patch=1,EE,200C0238,extended,0806DE16
+// patch=1,EE,200C023C,extended,00000000
+// patch=1,EE,2011FDF4,extended,0C030088
+// patch=1,EE,200C0240,extended,9061014E
+// patch=1,EE,200C0244,extended,14200004
+// patch=1,EE,200C0248,extended,24010001
+// patch=1,EE,200C024C,extended,14220002
+// patch=1,EE,200C0250,extended,24010004
+// patch=1,EE,200C0254,extended,AC610140
+// patch=1,EE,200C0258,extended,0806DE16
+// patch=1,EE,200C025C,extended,00000000
+// patch=1,EE,201201A0,extended,0C030090
+
+[Cheats/Right Rear]
+// patch=1,EE,205D509C,extended,00000000
+// patch=1,EE,205D509C,extended,3F800000
+// patch=1,EE,205D564C,extended,00000000
+// patch=1,EE,205D564C,extended,3F800000
+
+[Cheats/Left Rear]
+// patch=1,EE,205D50A4,extended,00000000
+// patch=1,EE,205D50A4,extended,3F800000
+// patch=1,EE,205D5654,extended,00000000
+// patch=1,EE,205D5654,extended,3F800000
+
+[Cheats/Right Front]
+// patch=1,EE,205D50AC,extended,00000000
+// patch=1,EE,205D50AC,extended,3F800000
+// patch=1,EE,205D565C,extended,00000000
+// patch=1,EE,205D565C,extended,3F800000
+
+[Cheats/Left Front]
+// patch=1,EE,205D50B4,extended,00000000
+// patch=1,EE,205D50B4,extended,3F800000
+// patch=1,EE,205D5664,extended,00000000
+// patch=1,EE,205D5664,extended,3F800000
+
+[Cheats/Right Side]
+// patch=1,EE,205D50BC,extended,00000000
+// patch=1,EE,205D50BC,extended,3F800000
+// patch=1,EE,205D566C,extended,00000000
+// patch=1,EE,205D566C,extended,3F800000
+
+[Cheats/Left Side]
+// patch=1,EE,205D50C4,extended,00000000
+// patch=1,EE,205D50C4,extended,3F800000
+// patch=1,EE,205D5674,extended,00000000
+// patch=1,EE,205D5674,extended,3F800000
+
+[Cheats/Whole Car]
+// patch=1,EE,405D509C,extended,00060002
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,3F800000,extended,00000000
+// patch=1,EE,405D564C,extended,00060002
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,105D5604,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,205D5604,extended,05F5E0FF
+
+[Cheats/Infinite Nitro P2]
+// patch=1,EE,105D59CE,extended,00001388
+
+[Cheats/Airfield]
+// patch=1,EE,003095F4,extended,00000001
+
+[Cheats/Chinatown]
+// patch=1,EE,003095F5,extended,00000001
+
+[Cheats/Steelworks]
+// patch=1,EE,003095F6,extended,00000001
+
+[Cheats/Casino]
+// patch=1,EE,003095F7,extended,00000001
+
+[Cheats/Harbor]
+// patch=1,EE,003095F8,extended,00000001
+
+[Cheats/South Central]
+// patch=1,EE,003095F9,extended,00000001
+
+[Cheats/Under Construction]
+// patch=1,EE,003095FA,extended,00000001
+
+[Cheats/Chinatown 2]
+// patch=1,EE,003095FB,extended,00000001
+
+[Cheats/Refinery]
+// patch=1,EE,003095FC,extended,00000001
+
+[Cheats/South Central 2]
+// patch=1,EE,003095FD,extended,00000001
+
+[Cheats/Subway]
+// patch=1,EE,003095FE,extended,00000001
+
+[Cheats/Casino 2]
+// patch=1,EE,003095FF,extended,00000001
+
+[Cheats/Dam]
+// patch=1,EE,00309600,extended,00000001
+
+[Cheats/All Tracks]
+// patch=1,EE,403095F4,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00309600,extended,00000001
+
+[Cheats/BMovie]
+// patch=1,EE,00309601,extended,00000001
+
+[Cheats/Colosseum]
+// patch=1,EE,00309602,extended,00000001
+
+[Cheats/Redline]
+// patch=1,EE,00309603,extended,00000001
+
+[Cheats/Titan]
+// patch=1,EE,00309604,extended,00000001
+
+[Cheats/Rough Justice]
+// patch=1,EE,00309605,extended,00000001
+
+[Cheats/All Arenas]
+// patch=1,EE,00309601,extended,00000001
+// patch=1,EE,10309602,extended,00000101
+// patch=1,EE,10309604,extended,00000101
+
+[Cheats/Mariah]
+// patch=1,EE,00309618,extended,00000001
+
+[Cheats/Brennan]
+// patch=1,EE,00309619,extended,00000001
+
+[Cheats/Red Widow]
+// patch=1,EE,0030961A,extended,00000001
+
+[Cheats/Johnson]
+// patch=1,EE,0030961B,extended,00000001
+
+[Cheats/Set]
+// patch=1,EE,0030961C,extended,00000001
+
+[Cheats/Mako]
+// patch=1,EE,0030961D,extended,00000001
+
+[Cheats/Victim]
+// patch=1,EE,0030961E,extended,00000001
+
+[Cheats/Toffee]
+// patch=1,EE,0030961F,extended,00000001
+
+[Cheats/Cadence]
+// patch=1,EE,00309620,extended,00000001
+
+[Cheats/Scratch]
+// patch=1,EE,00309621,extended,00000001
+
+[Cheats/Jeremiah]
+// patch=1,EE,00309622,extended,00000001
+
+[Cheats/Yin Yang]
+// patch=1,EE,00309623,extended,00000001
+
+[Cheats/Carver]
+// patch=1,EE,00309624,extended,00000001
+
+[Cheats/Fortune]
+// patch=1,EE,00309625,extended,00000001
+
+[Cheats/Cassandra]
+// patch=1,EE,00309626,extended,00000001
+
+[Cheats/Makucha]
+// patch=1,EE,00309627,extended,00000001
+
+[Cheats/Crane]
+// patch=1,EE,00309628,extended,00000001
+
+[Cheats/Noire]
+// patch=1,EE,00309629,extended,00000001
+
+[Cheats/Canvas]
+// patch=1,EE,0030962A,extended,00000001
+
+[Cheats/Underdog]
+// patch=1,EE,0030962B,extended,00000001
+
+[Cheats/Bonus Car 1]
+// patch=1,EE,0030962C,extended,00000001
+
+[Cheats/Bonus Car 2]
+// patch=1,EE,0030962D,extended,00000001
+
+[Cheats/Bonus Car 3]
+// patch=1,EE,0030962E,extended,00000001
+
+[Cheats/Bonus Car 4]
+// patch=1,EE,0030962F,extended,00000001
+
+[Cheats/Bonus Car 5]
+// patch=1,EE,00309630,extended,00000001
+
+[Cheats/All Drivers/Cars]
+// patch=1,EE,40309618,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00309630,extended,00000001

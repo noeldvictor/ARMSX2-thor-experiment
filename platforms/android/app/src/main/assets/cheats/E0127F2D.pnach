@@ -1,0 +1,184 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Flatout [SLUS-20901] [E0127F2D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Reels]
+// patch=1,EE,901F7BE8,extended,0C0AF7DA
+
+[Cheats/Infinite Money]
+// patch=1,EE,108CA4FC,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,208CA4FC,extended,05F5E0FF
+
+[Cheats/Buying Items Doesnt Decrease Money]
+// patch=1,EE,2016923C,extended,00000000
+
+[Cheats/Buying Items Increases Money]
+// patch=1,EE,20169228,extended,00C53021
+
+[Cheats/Unlock Everything]
+// patch=1,EE,408CA590,extended,00040001
+// patch=1,EE,00000001,extended,00000000
+// patch=1,EE,408CA550,extended,00100001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Bronze]
+// patch=1,EE,208CA590,extended,00000001
+
+[Cheats/Silver]
+// patch=1,EE,208CA594,extended,00000001
+
+[Cheats/Gold]
+// patch=1,EE,208CA598,extended,00000001
+
+[Cheats/Bonus]
+// patch=1,EE,208CA59C,extended,00000001
+
+[Cheats/All Classes]
+// patch=1,EE,408CA590,extended,00040001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Woodland Havoc]
+// patch=1,EE,008CA551,extended,00000000
+
+[Cheats/Finchley Trial Run]
+// patch=1,EE,008CA552,extended,00000000
+
+[Cheats/Bunker Challenge]
+// patch=1,EE,008CA554,extended,00000000
+
+[Cheats/Brad's Pit Crash]
+// patch=1,EE,008CA555,extended,00000000
+
+[Cheats/Bay Amateur Run]
+// patch=1,EE,008CA557,extended,00000000
+
+[Cheats/Woodland Mayhem]
+// patch=1,EE,008CA56C,extended,00000000
+
+[Cheats/Bunker Hill Havoc]
+// patch=1,EE,008CA56F,extended,00000000
+
+[Cheats/Fairgrass Run]
+// patch=1,EE,008CA573,extended,00000000
+
+[Cheats/Brad's Super Dustup]
+// patch=1,EE,008CA57C,extended,00000000
+
+[Cheats/Pinewood Crashcup]
+// patch=1,EE,008CA553,extended,00000000
+
+[Cheats/Fairgrass Cup]
+// patch=1,EE,008CA558,extended,00000000
+
+[Cheats/Whitefish Rally]
+// patch=1,EE,008CA55E,extended,00000000
+
+[Cheats/Whattahoo Roadrun]
+// patch=1,EE,008CA55F,extended,00000000
+
+[Cheats/Whitefish Ice Run]
+// patch=1,EE,008CA562,extended,00000000
+
+[Cheats/Pinewood Qualifier]
+// patch=1,EE,008CA56E,extended,00000000
+
+[Cheats/Bay Cup Run]
+// patch=1,EE,008CA572,extended,00000000
+
+[Cheats/Whattahoo Rush Hour]
+// patch=1,EE,008CA574,extended,00000000
+
+[Cheats/Whitefish Run]
+// patch=1,EE,008CA577,extended,00000000
+
+[Cheats/Pinewood Challenge]
+// patch=1,EE,008CA57A,extended,00000000
+
+[Cheats/Bunker Bigbang Run]
+// patch=1,EE,008CA57B,extended,00000000
+
+[Cheats/Gravel Rock Run]
+// patch=1,EE,008CA57D,extended,00000000
+
+[Cheats/Mound Mayhem]
+// patch=1,EE,008CA556,extended,00000000
+
+[Cheats/Bay Challenge]
+// patch=1,EE,008CA559,extended,00000000
+
+[Cheats/Fairgrass Challenge]
+// patch=1,EE,008CA55A,extended,00000000
+
+[Cheats/Whattahoo Wham]
+// patch=1,EE,008CA55B,extended,00000000
+
+[Cheats/Hayville Havoc]
+// patch=1,EE,008CA55C,extended,00000000
+
+[Cheats/Redpine Race Dash]
+// patch=1,EE,008CA55D,extended,00000000
+
+[Cheats/Hayville Haystakker]
+// patch=1,EE,008CA560,extended,00000000
+
+[Cheats/Redpine Zero Course]
+// patch=1,EE,008CA561,extended,00000000
+
+[Cheats/Finchley Challenge]
+// patch=1,EE,008CA56D,extended,00000000
+
+[Cheats/Brad's Sandrun]
+// patch=1,EE,008CA570,extended,00000000
+
+[Cheats/Gravel Supersmash]
+// patch=1,EE,008CA571,extended,00000000
+
+[Cheats/Hayville Farmdash]
+// patch=1,EE,008CA575,extended,00000000
+
+[Cheats/Redpine Run]
+// patch=1,EE,008CA576,extended,00000000
+
+[Cheats/Woodland Challenge]
+// patch=1,EE,008CA578,extended,00000000
+
+[Cheats/Finchley Timberdash]
+// patch=1,EE,008CA579,extended,00000000
+
+[Cheats/Longjump]
+// patch=1,EE,008CA563,extended,00000000
+
+[Cheats/Highjump]
+// patch=1,EE,008CA564,extended,00000000
+
+[Cheats/Demolition Dash]
+// patch=1,EE,008CA566,extended,00000000
+
+[Cheats/Super Mud Mayhem]
+// patch=1,EE,008CA567,extended,00000000
+
+[Cheats/Demoltion Sandpit]
+// patch=1,EE,008CA568,extended,00000000
+
+[Cheats/Circle Of Eight]
+// patch=1,EE,008CA569,extended,00000000
+
+[Cheats/Super Roundabout]
+// patch=1,EE,008CA56A,extended,00000000
+
+[Cheats/Crashalley Run]
+// patch=1,EE,008CA56B,extended,00000000
+
+[Cheats/Bullseye]
+// patch=1,EE,008CA57E,extended,00000000
+
+[Cheats/Bowling]
+// patch=1,EE,008CA57F,extended,00000000
+
+[Cheats/Darts]
+// patch=1,EE,008CA580,extended,00000000
+
+[Cheats/Clown]
+// patch=1,EE,008CA581,extended,00000000

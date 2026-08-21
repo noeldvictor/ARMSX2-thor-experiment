@@ -1,0 +1,40 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Secret Weapons Over Normandy [SLUS-20762] [47197D6B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Mucky Feet]
+// patch=1,EE,90164958,extended,0C04B438
+
+[Cheats/Infinite Health]
+// patch=1,EE,2043AC20,extended,3C01457A
+// patch=1,EE,2043AC2C,extended,AC410160
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20235DF0,extended,00000000
+// patch=1,EE,205A2B70,extended,00000001
+
+[Cheats/Enter Campaign Hangar To Unlock All Aircraft]
+// patch=1,EE,2047B454,extended,34630010
+// patch=1,EE,2047B458,extended,A2430045
+
+[Cheats/Enter Campaign Hangar For All Aircraft Upgrades]
+// patch=1,EE,2047B45C,extended,2401FFFF
+// patch=1,EE,2047B460,extended,AE410040
+
+[Cheats/Unlock All Missions]
+// patch=1,EE,205BF8A0,extended,0000000E
+
+[Cheats/Unlock All Gallery]
+// patch=1,EE,105BF932,extended,00000010
+
+[Cheats/Max Points]
+// patch=1,EE,205BF928,extended,000003E7
+
+[Cheats/Infinite Points Usage]
+// patch=1,EE,2047A460,extended,00000000
+
+[Cheats/Extra Points]
+// patch=1,EE,1047A458,extended,00000001
+
+[Cheats/Invulnerability]
+// patch=1,EE,205A2B6C,extended,00000001

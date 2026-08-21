@@ -1,0 +1,191 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Spy Fiction [SLUS-20856] [9551DBB1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Inselberg Speedway]
+// patch=1,EE,901209F4,extended,0C04983A
+
+[Cheats/Infinite Ammo (All Weapons)]
+// patch=1,EE,202E587C,extended,00000000
+
+[Cheats/Extra Ammo (All Weapons)]
+// patch=1,EE,102E5878,extended,00000001
+
+[Cheats/ERS .4D]
+// patch=1,EE,1021FB7E,extended,00000001
+// patch=1,EE,1021FBE6,extended,00000063
+// patch=1,EE,1021FC06,extended,00000063
+
+[Cheats/Handley 17G]
+// patch=1,EE,1021FB80,extended,00000001
+// patch=1,EE,1021FBE8,extended,00000063
+// patch=1,EE,1021FC08,extended,00000063
+
+[Cheats/Hekloch P9]
+// patch=1,EE,1021FB82,extended,00000001
+
+[Cheats/Orion 44Mag]
+// patch=1,EE,1021FB84,extended,00000001
+// patch=1,EE,1021FBEC,extended,00000063
+// patch=1,EE,1021FC0C,extended,00000063
+
+[Cheats/Tragerri M11]
+// patch=1,EE,1021FB86,extended,00000001
+// patch=1,EE,1021FBEE,extended,00000063
+// patch=1,EE,1021FC0E,extended,00000063
+
+[Cheats/T17 Carbine]
+// patch=1,EE,1021FB88,extended,00000001
+// patch=1,EE,1021FBF0,extended,00000063
+// patch=1,EE,1021FC10,extended,00000063
+
+[Cheats/Galeili MAR]
+// patch=1,EE,1021FB8A,extended,00000001
+// patch=1,EE,1021FBF2,extended,00000063
+// patch=1,EE,1021FC12,extended,00000063
+
+[Cheats/OSK]
+// patch=1,EE,1021FB8C,extended,00000001
+// patch=1,EE,1021FBF4,extended,00000063
+// patch=1,EE,1021FC14,extended,00000063
+
+[Cheats/G-Butterfly]
+// patch=1,EE,1021FB8E,extended,00000001
+// patch=1,EE,1021FBF6,extended,00000063
+// patch=1,EE,1021FC16,extended,00000063
+
+[Cheats/G.N.Ring]
+// patch=1,EE,1021FB98,extended,00000001
+// patch=1,EE,1021FBF8,extended,00000063
+// patch=1,EE,1021FC18,extended,00000063
+
+[Cheats/Stun Shaver]
+// patch=1,EE,1021FB9A,extended,00000001
+// patch=1,EE,1021FC30,extended,00000064
+
+[Cheats/Bomb Switch]
+// patch=1,EE,1021FBA6,extended,00000001
+
+[Cheats/Grenade]
+// patch=1,EE,1021FB90,extended,00000063
+
+[Cheats/Stun Grenade]
+// patch=1,EE,1021FB92,extended,00000063
+
+[Cheats/Stink Bomb]
+// patch=1,EE,1021FB94,extended,00000063
+
+[Cheats/Flash Pencil]
+// patch=1,EE,1021FB96,extended,00000063
+
+[Cheats/Boomerang Card]
+// patch=1,EE,1021FB9C,extended,00000063
+
+[Cheats/Cig-Torch]
+// patch=1,EE,1021FB9E,extended,00000063
+
+[Cheats/Jammer]
+// patch=1,EE,1021FBA2,extended,00000063
+
+[Cheats/Bandage Bomb]
+// patch=1,EE,1021FBA4,extended,00000063
+
+[Cheats/Button Transmitter]
+// patch=1,EE,1021FBA8,extended,00000063
+
+[Cheats/Mini Cam]
+// patch=1,EE,1021FBAA,extended,00000063
+
+[Cheats/3DA Cam]
+// patch=1,EE,1021FBAE,extended,00000001
+
+[Cheats/Rappelling Kit]
+// patch=1,EE,1021FBB0,extended,00000001
+
+[Cheats/Spider Grip]
+// patch=1,EE,1021FBB2,extended,00000001
+
+[Cheats/Body Armor]
+// patch=1,EE,1021FBB4,extended,00000001
+
+[Cheats/Rebound Armor]
+// patch=1,EE,1021FBB6,extended,00000001
+
+[Cheats/Mine Detector]
+// patch=1,EE,1021FBB8,extended,00000001
+
+[Cheats/Bio Sensor]
+// patch=1,EE,1021FBBA,extended,00000001
+
+[Cheats/Toe Blade]
+// patch=1,EE,1021FBBC,extended,00000001
+
+[Cheats/Recovery (S)]
+// patch=1,EE,1021FBBE,extended,00000001
+
+[Cheats/Recovery (M)]
+// patch=1,EE,1021FBC0,extended,00000001
+
+[Cheats/Recovery (L)]
+// patch=1,EE,1021FBC2,extended,00000001
+
+[Cheats/Current Lottery Ticket]
+// patch=1,EE,1021FBC6,extended,00000001
+
+[Cheats/Expired Lotto Ticket]
+// patch=1,EE,1021FBC8,extended,00000001
+
+[Cheats/Old Lotto Ticket]
+// patch=1,EE,1021FBCA,extended,00000001
+
+[Cheats/Very Old Lotto Ticket]
+// patch=1,EE,1021FBCC,extended,00000001
+
+[Cheats/Tattered Lottery Ticket]
+// patch=1,EE,1021FBCE,extended,00000001
+
+[Cheats/Retina Goggles]
+// patch=1,EE,1021FBD0,extended,00000001
+
+[Cheats/Sports Weekly]
+// patch=1,EE,1021FBD2,extended,00000001
+
+[Cheats/LV 1 Card]
+// patch=1,EE,1021FBD4,extended,00000001
+
+[Cheats/LV 2 Card]
+// patch=1,EE,1021FBD6,extended,00000001
+
+[Cheats/Retina Scanner]
+// patch=1,EE,1021FBD8,extended,00000001
+
+[Cheats/Cooling Spray]
+// patch=1,EE,1021FBDA,extended,00000001
+
+[Cheats/Optical Disk]
+// patch=1,EE,1021FBDC,extended,00000001
+
+[Cheats/Message Card And Cocktail]
+// patch=1,EE,1021FBE0,extended,00000001
+
+[Cheats/Password Memo]
+// patch=1,EE,1021FBE2,extended,00000001
+
+[Cheats/Scanning Switch]
+// patch=1,EE,1021FBE4,extended,00000001
+
+[Cheats/Security Tag]
+// patch=1,EE,1021FBE0,extended,00000063
+
+[Cheats/Heklock P9]
+// patch=1,EE,1021FBEA,extended,00000063
+// patch=1,EE,1021FC0A,extended,00000063
+
+[Cheats/Map]
+// patch=1,EE,1021FBFC,extended,00000001
+
+[Cheats/File Screen]
+// patch=1,EE,1021FBFE,extended,00000001
+
+[Cheats/Ultimatum Video]
+// patch=1,EE,1021FC00,extended,00000001

@@ -1,0 +1,44 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Crouching Tiger Hidden Dragon [SLUS-20523] [71BE05FA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slot 24]
+// patch=1,EE,F0100008,extended,00217587
+
+[Cheats/Disable FMV]
+// patch=1,EE,20210590,extended,24020001
+
+[Cheats/Infinite HP]
+// patch=1,EE,2023B158,extended,42C80000
+
+[Cheats/Max Infinite HP]
+// patch=1,EE,2023B150,extended,4479C000
+// patch=1,EE,2023B158,extended,4479C000
+
+[Cheats/Max Attack]
+// patch=1,EE,2023B168,extended,40C00000
+
+[Cheats/Max Defense]
+// patch=1,EE,2023B16C,extended,3F460000
+
+[Cheats/Have All Special Moves]
+// patch=1,EE,2023B180,extended,FFFFFFFF
+
+[Cheats/Unarmed Level 30]
+// patch=1,EE,2023B184,extended,0000001E
+
+[Cheats/Weapons Level 30]
+// patch=1,EE,2023B18C,extended,0000001E
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,D023B3CC,extended,00000002
+// patch=1,EE,2023B3CC,extended,00000001
+
+[Cheats/Infinite Continues]
+// patch=1,EE,2023BA2C,extended,00000009
+
+[Cheats/Max Continues]
+// patch=1,EE,2023BA2C,extended,00000063
+
+[Cheats/Extra Continues]
+// patch=1,EE,101B9EC8,extended,00000001

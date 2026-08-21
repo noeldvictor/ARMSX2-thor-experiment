@@ -1,0 +1,149 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Silent Hill 3 [SLPM-65257] [8CFE667F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Low Total Damage]
+// patch=1,EE,9011F5C0,extended,0C04412C
+
+[Cheats/Infinite Health]
+// patch=1,EE,203D4AEC,extended,43480000
+// patch=1,EE,203D4AF0,extended,43480000
+// patch=1,EE,203D4AF4,extended,42C80000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2016D91C,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,1016D918,extended,00000001
+
+[Cheats/Have All Weapons & Supplies]
+// patch=1,EE,21D31BF0,extended,8D7FFFFE
+
+[Cheats/Have All Items]
+// patch=1,EE,21D31BF4,extended,FFFFFFFC
+// patch=1,EE,21D31BF8,extended,FFFFFFFF
+// patch=1,EE,21D31BFC,extended,00000FFF
+
+[Cheats/Always Number Of Saves 0]
+// patch=1,EE,201998E4,extended,24040000
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,2022EF78,extended,AC80019C
+
+[Cheats/Access All Maps]
+// patch=1,EE,202D1898,extended,24020001
+
+[Cheats/Have Maps For Current Level]
+// patch=1,EE,202D1888,extended,24010001
+// patch=1,EE,202D1890,extended,00410804
+// patch=1,EE,202D1894,extended,00611825
+// patch=1,EE,202D1898,extended,AE030000
+// patch=1,EE,202D189C,extended,24020001
+// patch=1,EE,202D18A0,extended,7BB00000
+// patch=1,EE,202D18A4,extended,03E00008
+// patch=1,EE,202D18A8,extended,27BD0020
+
+[Cheats/Never Tired]
+// patch=1,EE,21D87F6C,extended,00000000
+
+[Cheats/No Saves Recorded]
+// patch=1,EE,11D87FDC,extended,00000000
+
+[Cheats/Enemy Attacks Do No Damage]
+// patch=1,EE,103D4AFE,extended,00000000
+
+[Cheats/1-Hit Kills]
+// patch=1,EE,203D4AF8,extended,42C80000
+
+[Cheats/Invincible (Cant Be Hit)]
+// patch=1,EE,203D4AD8,extended,42C80000
+
+[Cheats/Stun Gun]
+// patch=1,EE,11D31C10,extended,000003E7
+
+[Cheats/Handgun]
+// patch=1,EE,11D31C12,extended,000003E7
+
+[Cheats/Shotgun]
+// patch=1,EE,11D31C14,extended,000003E7
+
+[Cheats/Submachine Gun]
+// patch=1,EE,11D31C16,extended,000003E7
+
+[Cheats/Stun Gun Battery]
+// patch=1,EE,11D31C1A,extended,000003E7
+
+[Cheats/Handgun Bullets]
+// patch=1,EE,11D31C1C,extended,000003E7
+
+[Cheats/Shotgun Shells]
+// patch=1,EE,11D31C1E,extended,000003E7
+
+[Cheats/Submachine Gun Bullets]
+// patch=1,EE,11D31C20,extended,000003E7
+
+[Cheats/Health Drinks]
+// patch=1,EE,11D31C22,extended,000003E7
+
+[Cheats/First-Aid Kits]
+// patch=1,EE,11D31C24,extended,000003E7
+
+[Cheats/Ampoules]
+// patch=1,EE,11D31C26,extended,000003E7
+
+[Cheats/Beef Jerky]
+// patch=1,EE,11D31C28,extended,000003E7
+
+[Cheats/Max Clear Number]
+// patch=1,EE,01D87FD0,extended,00000063
+
+[Cheats/No Clear Number]
+// patch=1,EE,01D87FD0,extended,00000000
+
+[Cheats/Max Items]
+// patch=1,EE,11D87FE0,extended,0000270F
+
+[Cheats/No Items]
+// patch=1,EE,11D87FE0,extended,00000000
+
+[Cheats/Max Enemies Defeated By Shooting]
+// patch=1,EE,11D87FE2,extended,0000270F
+
+[Cheats/No Enemies Defeated By Shooting]
+// patch=1,EE,11D87FE2,extended,00000000
+
+[Cheats/Max Enemies Defeated By Fighting]
+// patch=1,EE,11D87FE4,extended,0000270F
+
+[Cheats/No Enemies Defeated By Fighting]
+// patch=1,EE,11D87FE4,extended,00000000
+
+[Cheats/Always Low Clear Time]
+// patch=1,EE,21D87FEC,extended,00000000
+
+[Cheats/Always Low Walking Distance]
+// patch=1,EE,21D87FF0,extended,00000000
+
+[Cheats/Always Low Running Distance]
+// patch=1,EE,21D87FF4,extended,00000000
+
+[Cheats/Max Total Damage]
+// patch=1,EE,21D87FF8,extended,497423F0
+
+[Cheats/No Total Damage]
+// patch=1,EE,21D87FF8,extended,00000000
+
+[Cheats/Always Low Split Worm Kill Time]
+// patch=1,EE,21D87FFC,extended,00000000
+
+[Cheats/Always Low Missionary Kill TIme]
+// patch=1,EE,21D88000,extended,00000000
+
+[Cheats/Always Low Leonard Kill Time]
+// patch=1,EE,21D88004,extended,00000000
+
+[Cheats/Always Low Memory Of Alessa Kill Time]
+// patch=1,EE,21D88008,extended,00000000
+
+[Cheats/Always Low The God Kill Time]
+// patch=1,EE,21D8800C,extended,00000000

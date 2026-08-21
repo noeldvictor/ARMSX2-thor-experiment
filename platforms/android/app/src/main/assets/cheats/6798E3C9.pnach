@@ -1,0 +1,73 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: McFarlane's Evil Prophecy [SLUS-20657] [6798E3C9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have Cow Boxers]
+// patch=1,EE,90229604,extended,0C08FC51
+
+[Cheats/Have All Monster Cards]
+// patch=1,EE,40318A94,extended,00040001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/Have All Movie Interviews]
+// patch=1,EE,20318AB4,extended,FFFFFFFF
+
+[Cheats/Have All Gallery]
+// patch=1,EE,20319B00,extended,FFFFFFFF
+
+[Cheats/Max Record Hit Chain]
+// patch=1,EE,10318D38,extended,0000270F
+
+[Cheats/Max Kills]
+// patch=1,EE,10318FF0,extended,0000270F
+
+[Cheats/Max Hit Chain (Current)]
+// patch=1,EE,10319A06,extended,000003E7
+
+[Cheats/Max Max Hit Chain (Overall)]
+// patch=1,EE,10319A08,extended,000003E7
+
+[Cheats/Kills Worth 100]
+// patch=1,EE,101348E8,extended,00000064
+
+[Cheats/Kills Worth 50]
+// patch=1,EE,101348E8,extended,00000032
+
+[Cheats/Kills Worth 10]
+// patch=1,EE,101348E8,extended,0000000A
+
+[Cheats/Kills Worth 5]
+// patch=1,EE,101348E8,extended,00000005
+
+[Cheats/Kills Worth 4]
+// patch=1,EE,101348E8,extended,00000004
+
+[Cheats/Kills Worth 3]
+// patch=1,EE,101348E8,extended,00000003
+
+[Cheats/Kills Worth 2]
+// patch=1,EE,101348E8,extended,00000002
+
+[Cheats/Infinite MP (All Characters)]
+// patch=1,EE,201382A4,extended,00000000
+
+[Cheats/Infinite Ammo (All Characters-On Pickup)]
+// patch=1,EE,20116E80,extended,00000000
+
+[Cheats/Max HP]
+// patch=1,EE,102B2B86,extended,0000270F
+// patch=1,EE,102BF1E6,extended,0000270F
+// patch=1,EE,102CB846,extended,0000270F
+// patch=1,EE,102D7EA6,extended,0000270F
+
+[Cheats/Infinite HP]
+// patch=1,EE,102B2B88,extended,0000270F
+// patch=1,EE,102BF1E8,extended,0000270F
+// patch=1,EE,102CB848,extended,0000270F
+// patch=1,EE,102D7EA8,extended,0000270F
+
+[Cheats/Infinite Ammo (On Pickup)]
+// patch=1,EE,102B2C30,extended,00000006
+// patch=1,EE,102BF290,extended,00000006
+// patch=1,EE,102CB8F0,extended,00000006
+// patch=1,EE,102D7F50,extended,00000006

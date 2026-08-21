@@ -1,0 +1,290 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mega Man Anniversary Collection [SLUS-20833] [3DB65A75]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Supercarrier Sabotage]
+// patch=1,EE,90148DC0,extended,0C055E7F
+
+[Cheats/Megaman]
+// patch=1,EE,00209400,extended,00000001
+
+[Cheats/Megaman 2]
+// patch=1,EE,00209401,extended,00000001
+
+[Cheats/Megaman 3]
+// patch=1,EE,00209402,extended,00000001
+
+[Cheats/Megaman 4]
+// patch=1,EE,00209403,extended,00000001
+
+[Cheats/Megaman 5]
+// patch=1,EE,00209404,extended,00000001
+
+[Cheats/Megaman 6]
+// patch=1,EE,00209405,extended,00000001
+
+[Cheats/Megaman 7]
+// patch=1,EE,00209406,extended,00000001
+
+[Cheats/Megaman 8]
+// patch=1,EE,00209407,extended,00000001
+
+[Cheats/Megaman-The Power Battle]
+// patch=1,EE,00209408,extended,00000001
+
+[Cheats/Megaman 2-The Power Fighters]
+// patch=1,EE,00209409,extended,00000001
+
+[Cheats/Infinite Health]
+// patch=1,EE,E005EC18,extended,00648A14
+// patch=1,EE,200C0000,extended,3C037000
+// patch=1,EE,200C0004,extended,2401001C
+// patch=1,EE,200C0008,extended,081B4A8C
+// patch=1,EE,200C000C,extended,A0610B02
+// patch=1,EE,20648A18,extended,0C030000
+// patch=1,EE,00B62218,extended,0000001C
+// patch=1,EE,E005882D,extended,007EEA00
+// patch=1,EE,200C0200,extended,3C037000
+// patch=1,EE,200C0204,extended,2401009C
+// patch=1,EE,200C0208,extended,08046B72
+// patch=1,EE,200C020C,extended,A0610B3A
+// patch=1,EE,207EEA04,extended,0C030080
+// patch=1,EE,E005882D,extended,008E2E8C
+// patch=1,EE,200C0300,extended,3C037000
+// patch=1,EE,200C0304,extended,2401009C
+// patch=1,EE,200C0308,extended,08046B72
+// patch=1,EE,200C030C,extended,A0610B48
+// patch=1,EE,208E2E90,extended,0C0300C0
+// patch=1,EE,E005882D,extended,009A91E0
+// patch=1,EE,200C0400,extended,3C037000
+// patch=1,EE,200C0404,extended,2401009C
+// patch=1,EE,200C0408,extended,08046B72
+// patch=1,EE,200C040C,extended,A0610B48
+// patch=1,EE,209A91E4,extended,0C030100
+// patch=1,EE,00EC13D3,extended,0000001C
+// patch=1,EE,0075EA8F,extended,00000028
+
+[Cheats/Infinite Lives]
+// patch=1,EE,E005B424,extended,00648A48
+// patch=1,EE,200C0010,extended,3C037000
+// patch=1,EE,200C0014,extended,24010063
+// patch=1,EE,200C0018,extended,081B4AAE
+// patch=1,EE,200C001C,extended,A0610B3E
+// patch=1,EE,20648A4C,extended,0C030004
+// patch=1,EE,E005F038,extended,006E0B84
+// patch=1,EE,200C0100,extended,3C037000
+// patch=1,EE,200C0104,extended,24010064
+// patch=1,EE,200C0108,extended,08046B72
+// patch=1,EE,200C010C,extended,A0610B40
+// patch=1,EE,206E0BB4,extended,0C030040
+// patch=1,EE,E005802D,extended,007EEA0C
+// patch=1,EE,200C0210,extended,3C037000
+// patch=1,EE,200C0214,extended,24010099
+// patch=1,EE,200C0218,extended,08046B72
+// patch=1,EE,200C021C,extended,A0610B46
+// patch=1,EE,207EEA10,extended,0C030084
+// patch=1,EE,E005802D,extended,008E2E98
+// patch=1,EE,200C0310,extended,3C037000
+// patch=1,EE,200C0314,extended,24010009
+// patch=1,EE,200C0318,extended,08046B72
+// patch=1,EE,200C031C,extended,A0610B39
+// patch=1,EE,208E2E9C,extended,0C0300C4
+// patch=1,EE,E005802D,extended,009A91EC
+// patch=1,EE,200C0410,extended,3C037000
+// patch=1,EE,200C0414,extended,24010009
+// patch=1,EE,200C0418,extended,08046B72
+// patch=1,EE,200C041C,extended,A0610B57
+// patch=1,EE,209A91F0,extended,0C030104
+// patch=1,EE,00EC1321,extended,00000009
+// patch=1,EE,0075E96C,extended,00000009
+
+[Cheats/1-Hit Death (Bosses)]
+// patch=1,EE,10B62218,extended,00000000
+
+[Cheats/Infinite Life]
+// patch=1,EE,00B61F3D,extended,0000001B
+
+[Cheats/Y. Spear]
+// patch=1,EE,00B621E1,extended,0000001B
+
+[Cheats/W. Storm]
+// patch=1,EE,00B621E2,extended,0000001B
+
+[Cheats/B. Attack]
+// patch=1,EE,00B621E3,extended,0000001B
+
+[Cheats/F. Blast]
+// patch=1,EE,00B621E4,extended,0000001B
+
+[Cheats/Plant. B]
+// patch=1,EE,00B621E5,extended,0000001B
+
+[Cheats/Knight. C]
+// patch=1,EE,00B621E6,extended,0000001B
+
+[Cheats/Silver. T]
+// patch=1,EE,00B621E7,extended,0000001B
+
+[Cheats/C. Flash]
+// patch=1,EE,00B621E8,extended,0000001B
+
+[Cheats/Beat]
+// patch=1,EE,00B621E9,extended,0000001B
+
+[Cheats/All Weapons]
+// patch=1,EE,20B621E0,extended,1B1B1B1B
+// patch=1,EE,20B621E4,extended,1B1B1B1B
+// patch=1,EE,10B621E8,extended,00001B1B
+
+[Cheats/Infinite EN]
+// patch=1,EE,00EC1340,extended,00000004
+
+[Cheats/Infinite WP]
+// patch=1,EE,00EC1341,extended,00000004
+
+[Cheats/Infinite SP]
+// patch=1,EE,00EC1342,extended,00000001
+
+[Cheats/Have RUSH & Exit]
+// patch=1,EE,10EC1344,extended,0000FFFF
+
+[Cheats/Max BO]
+// patch=1,EE,10EC1346,extended,000003E7
+
+[Cheats/Freeze. C]
+// patch=1,EE,00EC1325,extended,0000009C
+
+[Cheats/T. Bolt]
+// patch=1,EE,00EC1327,extended,0000009C
+
+[Cheats/J. Shield]
+// patch=1,EE,00EC1329,extended,0000009C
+
+[Cheats/S. Wheel]
+// patch=1,EE,00EC132B,extended,0000009C
+
+[Cheats/S. Claw]
+// patch=1,EE,00EC132D,extended,0000009C
+
+[Cheats/Noise. C]
+// patch=1,EE,00EC132F,extended,0000009C
+
+[Cheats/D. Wrap]
+// patch=1,EE,00EC1331,extended,0000009C
+
+[Cheats/W. Coil]
+// patch=1,EE,00EC1333,extended,0000009C
+
+[Cheats/P. Shield]
+// patch=1,EE,00EC1335,extended,0000009C
+
+[Cheats/R. Search]
+// patch=1,EE,00EC1337,extended,0000009C
+
+[Cheats/R. Jet]
+// patch=1,EE,00EC1339,extended,0000009C
+
+[Cheats/R. Coil]
+// patch=1,EE,00EC133B,extended,0000009C
+
+[Cheats/Beat?]
+// patch=1,EE,00EC133D,extended,0000009C
+
+[Cheats/S. Adapt]
+// patch=1,EE,00EC133F,extended,0000009C
+
+[Cheats/Max Bolts]
+// patch=1,EE,0075E9A0,extended,00000063
+
+[Cheats/Have EX]
+// patch=1,EE,0075E9FC,extended,00000001
+
+[Cheats/Mega Ball]
+// patch=1,EE,0075E9BC,extended,00000001
+// patch=1,EE,0075E9BF,extended,00000028
+
+[Cheats/Flash Bomb]
+// patch=1,EE,0075E9C0,extended,00000001
+// patch=1,EE,0075E9C3,extended,00000028
+
+[Cheats/Thunder Claw]
+// patch=1,EE,0075E9C4,extended,00000001
+// patch=1,EE,0075E9C7,extended,00000028
+
+[Cheats/Ice Wave]
+// patch=1,EE,0075E9C8,extended,00000001
+// patch=1,EE,0075E9CB,extended,00000028
+
+[Cheats/Tornado Hold]
+// patch=1,EE,0075E9CC,extended,00000001
+// patch=1,EE,0075E9CF,extended,00000028
+
+[Cheats/Water Balloon]
+// patch=1,EE,0075E9D0,extended,00000001
+// patch=1,EE,0075E9D3,extended,00000028
+
+[Cheats/Flame Sword]
+// patch=1,EE,0075E9D4,extended,00000001
+// patch=1,EE,0075E9D7,extended,00000028
+
+[Cheats/Homing Sniper]
+// patch=1,EE,0075E9D8,extended,00000001
+// patch=1,EE,0075E9DB,extended,00000028
+
+[Cheats/Astro Crush]
+// patch=1,EE,0075E9DC,extended,00000001
+// patch=1,EE,0075E9DF,extended,00000028
+
+[Cheats/Item 1]
+// patch=1,EE,0075EA0A,extended,00000001
+
+[Cheats/Item 2]
+// patch=1,EE,0075EA0B,extended,00000001
+
+[Cheats/Item 3]
+// patch=1,EE,0075EA0C,extended,00000001
+
+[Cheats/Item 4]
+// patch=1,EE,0075EA0D,extended,00000001
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,11190BB0,extended,00000010
+// patch=1,EE,11290BE0,extended,00000020
+
+[Cheats/75% Health P1]
+// patch=1,EE,D1190BB0,extended,00000010
+// patch=1,EE,11190BB0,extended,0000000C
+// patch=1,EE,D1290BE0,extended,00000020
+// patch=1,EE,11290BE0,extended,00000018
+
+[Cheats/50% Health P1]
+// patch=1,EE,D1190BB0,extended,00000010
+// patch=1,EE,11190BB0,extended,00000008
+// patch=1,EE,D1290BE0,extended,00000020
+// patch=1,EE,11290BE0,extended,00000010
+
+[Cheats/25% Health P1]
+// patch=1,EE,D1190BB0,extended,00000010
+// patch=1,EE,11190BB0,extended,00000004
+// patch=1,EE,D1290BE0,extended,00000020
+// patch=1,EE,11290BE0,extended,00000008
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,D1190BB0,extended,00000010
+// patch=1,EE,11190BB0,extended,00000001
+// patch=1,EE,D1290BE0,extended,00000020
+// patch=1,EE,11290BE0,extended,00000001
+
+[Cheats/No Health P1]
+// patch=1,EE,11190BB0,extended,00000010
+// patch=1,EE,11290BE0,extended,00000000
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,11195FB0,extended,00000000
+// patch=1,EE,111960B0,extended,00000000
+// patch=1,EE,111961B0,extended,00000000
+// patch=1,EE,111962B0,extended,00000000
+// patch=1,EE,112953E0,extended,00000000
+// patch=1,EE,112954E0,extended,00000000
+// patch=1,EE,112955E0,extended,00000000
+// patch=1,EE,112956E0,extended,00000000

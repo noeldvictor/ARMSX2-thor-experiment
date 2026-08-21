@@ -1,0 +1,73 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: PES 2011 [UNKNOWN] [DBAAB66D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always have 9999 PES (after at least 1 match)]
+// patch=1,EE,21893CE4,extended,0001869F
+
+[Cheats/Select+Up to go to extra time (Select+up to disable)]
+// patch=1,EE,D054CDC2,extended,0000FFEE
+// patch=1,EE,20263E90,extended,ACA0094C
+// patch=1,EE,D054CDC2,extended,0000FFBE
+// patch=1,EE,20263E90,extended,ACA4094C
+
+[Cheats/Block time(Select+triangle to enable,Select+X to disable)]
+// patch=1,EE,E002EFFE,extended,0054CDC2
+// patch=1,EE,D0D2E530,extended,00006E69
+// patch=1,EE,20263E84,extended,00000000
+// patch=1,EE,D054CDC2,extended,0000BFFE
+// patch=1,EE,20263E84,extended,2484FFFF
+
+[Cheats/Home team score to 99 (Select+ right)]
+// patch=1,EE,E006FFDE,extended,0054CDC2
+// patch=1,EE,E0036E69,extended,00D2E530
+// patch=1,EE,D03E1080,extended,00000000
+// patch=1,EE,00D33AE8,extended,00000063
+// patch=1,EE,D03E1080,extended,00000001
+// patch=1,EE,00D33DDC,extended,00000063
+
+[Cheats/Home team score to 0 (Select+Left)]
+// patch=1,EE,E006FF7E,extended,0054CDC2
+// patch=1,EE,E0036E69,extended,00D2E530
+// patch=1,EE,D03E1080,extended,00000000
+// patch=1,EE,00D33AE8,extended,00000000
+// patch=1,EE,D03E1080,extended,00000001
+// patch=1,EE,00D33DDC,extended,00000000
+
+[Cheats/Outside team score to 99 (Select + O)]
+// patch=1,EE,E006DFFE,extended,0054CDC2
+// patch=1,EE,E0036E69,extended,00D2E530
+// patch=1,EE,D03E1080,extended,00100000
+// patch=1,EE,00D33AE8,extended,00000063
+// patch=1,EE,D03E1080,extended,00100001
+// patch=1,EE,00D33DDC,extended,00000063
+
+[Cheats/Outside team score to 0 (Select + square)]
+// patch=1,EE,E0067FFE,extended,0054CDC2
+// patch=1,EE,E0036E69,extended,00D2E530
+// patch=1,EE,D03E1080,extended,00100000
+// patch=1,EE,00D33AE8,extended,00000000
+// patch=1,EE,D03E1080,extended,00100001
+// patch=1,EE,00D33DDC,extended,00000000
+
+[Cheats/Master league - Max money]
+// patch=1,EE,D099C820,extended,0000656C
+// patch=1,EE,208D39EC,extended,000F423F
+
+[Cheats/Master league - More team Exp]
+// patch=1,EE,E002656C,extended,0099C820
+// patch=1,EE,20B3BFFC,extended,00000000
+// patch=1,EE,20B3C000,extended,241003E8
+
+[Cheats/Master league - More players exp]
+// patch=1,EE,D099C820,extended,0000656C
+// patch=1,EE,20BDF420,extended,0040200A
+
+[Cheats/Be a legend - Unlimited points]
+// patch=1,EE,E004AE43,extended,00C55EBA
+// patch=1,EE,20A69DF4,extended,0001869F
+// patch=1,EE,20A69DF8,extended,0001869F
+// patch=1,EE,20A69E00,extended,00000000
+
+[Cheats/Be a legend - Skills don't decrease]
+// patch=1,EE,20A69500,extended,00000000

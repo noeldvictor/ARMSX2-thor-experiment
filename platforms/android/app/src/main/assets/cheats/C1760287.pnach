@@ -1,0 +1,59 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tokyo Xtreme Racer Zero [SLUS-20189] [C1760287]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Monster Duel]
+// patch=1,EE,901121AC,extended,0C047936
+
+[Cheats/Infinite Money]
+// patch=1,EE,1037DD88,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,2037DD88,extended,000F423F
+
+[Cheats/Quick Odometer Meter Gain]
+// patch=1,EE,1037DC60,extended,0000FFFF
+
+[Cheats/Max Odometer Meter]
+// patch=1,EE,2037DC60,extended,6022ED00
+
+[Cheats/Max Days]
+// patch=1,EE,1037DD86,extended,0000270F
+
+[Cheats/Max Total Mileage]
+// patch=1,EE,2037DDB8,extended,6022ED00
+
+[Cheats/Always Low Time]
+// patch=1,EE,D07508B2,extended,00000075
+// patch=1,EE,20750900,extended,00000000
+
+[Cheats/Max Trip Meter]
+// patch=1,EE,D0742372,extended,00000074
+// patch=1,EE,20742B68,extended,00189BC6
+
+[Cheats/Auto Pilot Never On]
+// patch=1,EE,D0742372,extended,00000074
+// patch=1,EE,10742380,extended,00000000
+
+[Cheats/Auto Pilot Always On]
+// patch=1,EE,D0742372,extended,00000074
+// patch=1,EE,10742380,extended,00000004
+
+[Cheats/Opponent Always Loses SP]
+// patch=1,EE,20188FF4,extended,00000000
+
+[Cheats/Infinite SP P1]
+// patch=1,EE,D07508B2,extended,00000075
+// patch=1,EE,207508F8,extended,004C4B40
+
+[Cheats/No SP P1]
+// patch=1,EE,D07508B2,extended,00000075
+// patch=1,EE,207508F8,extended,00000000
+
+[Cheats/Infinite SP Rival]
+// patch=1,EE,D07508B2,extended,00000075
+// patch=1,EE,207508FC,extended,004C4B40
+
+[Cheats/No SP Rival]
+// patch=1,EE,D07508B2,extended,00000075
+// patch=1,EE,207508FC,extended,00000000

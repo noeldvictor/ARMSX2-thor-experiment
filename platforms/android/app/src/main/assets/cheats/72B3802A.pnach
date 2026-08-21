@@ -1,0 +1,52 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Street Fighter EX3 [SLUS-20130] [72B3802A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Score P2]
+// patch=1,EE,902E8670,extended,0C0BE860
+
+[Cheats/Max Exp]
+// patch=1,EE,204E59B8,extended,0001869F
+
+[Cheats/Have All Trials Complete]
+// patch=1,EE,204E5A08,extended,FFFFFFFF
+// patch=1,EE,204E5A0C,extended,FFFFFFFF
+// patch=1,EE,204E5A18,extended,FFFFFFFF
+// patch=1,EE,204E5A1C,extended,FFFFFFFF
+// patch=1,EE,204E5A28,extended,FFFFFFFF
+
+[Cheats/Have All Moves Bought]
+// patch=1,EE,404E59BC,extended,00130001
+// patch=1,EE,00010001,extended,00000000
+
+[Cheats/Infinite Super P1]
+// patch=1,EE,10C1D400,extended,00000960
+// patch=1,EE,10C209B0,extended,00000960
+
+[Cheats/No Super P1]
+// patch=1,EE,10C1D400,extended,00000000
+// patch=1,EE,10C209B0,extended,00000000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,10C1D40C,extended,0000BF00
+// patch=1,EE,10C209BC,extended,0000BF00
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,10C23F6C,extended,0000BF00
+// patch=1,EE,10C2751C,extended,0000BF00
+
+[Cheats/Infinite Super P2]
+// patch=1,EE,10C27510,extended,00000960
+// patch=1,EE,10C23F60,extended,00000960
+
+[Cheats/No Super P2]
+// patch=1,EE,10C27510,extended,00000000
+// patch=1,EE,10C23F60,extended,00000000
+
+[Cheats/Infinite Stand]
+// patch=1,EE,10E59378,extended,00006400
+// patch=1,EE,10E59414,extended,00006400
+
+[Cheats/No Stand]
+// patch=1,EE,10E59378,extended,00000000
+// patch=1,EE,10E59414,extended,00000000

@@ -1,0 +1,133 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: FIFA Soccer 2002 [SLUS-20280] [3E59A196]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P8 Press {R1}+{R2} To End Half]
+// patch=1,EE,F0100008,extended,0032DB6F
+// patch=1,EE,D060DA02,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,1035BCB0,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,1035BCB0,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,1035BCB0,extended,00000000
+
+[Cheats/Home Team Start With Score 50]
+// patch=1,EE,D035BCB0,extended,00000000
+// patch=1,EE,1035BCB0,extended,00000032
+
+[Cheats/Home Team Start With Score 20]
+// patch=1,EE,D035BCB0,extended,00000000
+// patch=1,EE,1035BCB0,extended,00000014
+
+[Cheats/Home Team Start With Score 10]
+// patch=1,EE,D035BCB0,extended,00000000
+// patch=1,EE,1035BCB0,extended,0000000A
+
+[Cheats/Home Team Start With Score 5]
+// patch=1,EE,D035BCB0,extended,00000000
+// patch=1,EE,1035BCB0,extended,00000005
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,1035BCB4,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,1035BCB4,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,1035BCB4,extended,00000000
+
+[Cheats/Away Team Start With Score 50]
+// patch=1,EE,D035BCB4,extended,00000000
+// patch=1,EE,1035BCB4,extended,00000032
+
+[Cheats/Away Team Start With Score 20]
+// patch=1,EE,D035BCB4,extended,00000000
+// patch=1,EE,1035BCB4,extended,00000014
+
+[Cheats/Away Team Start With Score 10]
+// patch=1,EE,D035BCB4,extended,00000000
+// patch=1,EE,1035BCB4,extended,0000000A
+
+[Cheats/Away Team Start With Score 5]
+// patch=1,EE,D035BCB4,extended,00000000
+// patch=1,EE,1035BCB4,extended,00000005
+
+[Cheats/All Goal's Score For Home Team]
+// patch=1,EE,20176C04,extended,24030000
+
+[Cheats/All Goal's Score For Away Team]
+// patch=1,EE,20176C04,extended,24030004
+
+[Cheats/Goal's Score 10]
+// patch=1,EE,10176C10,extended,0000000A
+
+[Cheats/Goal's Score 5]
+// patch=1,EE,10176C10,extended,00000005
+
+[Cheats/Goal's Score 2]
+// patch=1,EE,10176C10,extended,00000002
+
+[Cheats/P1 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060D302,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000
+
+[Cheats/P1 Press {R1}+{R2} To End Half]
+// patch=1,EE,D060D302,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/P2 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060D402,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000
+
+[Cheats/P2 Press {R1}+{R2} To End Half]
+// patch=1,EE,D060D402,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/P3 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060D502,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000
+
+[Cheats/P3 Press {R1}+{R2} To End Half]
+// patch=1,EE,D060D502,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/P4 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060D602,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000
+
+[Cheats/P4 Press {R1}+{R2} To End Half]
+// patch=1,EE,D060D602,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/P5 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060D702,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000
+
+[Cheats/P5 Press {R1}+{R2} To End Half]
+// patch=1,EE,D060D702,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/P6 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060D802,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000
+
+[Cheats/P6 Press {R1}+{R2} To End Half]
+// patch=1,EE,D060D802,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/P7 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060D902,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000
+
+[Cheats/P7 Press {R1}+{R2} To End Half]
+// patch=1,EE,D060D902,extended,0000F5FF
+// patch=1,EE,1035C570,extended,000000FF
+
+[Cheats/P8 Press {L1}+{L2} For More Time]
+// patch=1,EE,D060DA02,extended,0000FAFF
+// patch=1,EE,1035C570,extended,00000000

@@ -1,0 +1,90 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Bloody Roar 3 [SLES-50203] [880AA922]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Chapters]
+// patch=1,EE,901DB534,extended,0C07AE45
+
+[Cheats/Enable Extra Modes]
+// patch=1,EE,1020D5F4,extended,0000FFFF
+// patch=1,EE,101F5C2C,extended,0000FFFF
+
+[Cheats/Alice]
+// patch=1,EE,101F539E,extended,00000001
+// patch=1,EE,101F53F6,extended,00000001
+
+[Cheats/Bakuryu]
+// patch=1,EE,101F539E,extended,00000002
+// patch=1,EE,101F53F6,extended,00000002
+
+[Cheats/Busuzima]
+// patch=1,EE,101F539E,extended,00000003
+// patch=1,EE,101F53F6,extended,00000003
+
+[Cheats/Gado]
+// patch=1,EE,101F539E,extended,00000004
+// patch=1,EE,101F53F6,extended,00000004
+
+[Cheats/Jenny]
+// patch=1,EE,101F539E,extended,00000005
+// patch=1,EE,101F53F6,extended,00000005
+
+[Cheats/Long]
+// patch=1,EE,101F539E,extended,00000006
+// patch=1,EE,101F53F6,extended,00000006
+
+[Cheats/Shiva]
+// patch=1,EE,101F539E,extended,00000007
+// patch=1,EE,101F53F6,extended,00000007
+
+[Cheats/Shenlong]
+// patch=1,EE,101F539E,extended,00000008
+// patch=1,EE,101F53F6,extended,00000008
+
+[Cheats/Xion]
+// patch=1,EE,101F539E,extended,00000009
+// patch=1,EE,101F53F6,extended,00000009
+
+[Cheats/Stun]
+// patch=1,EE,101F539E,extended,0000000A
+// patch=1,EE,101F53F6,extended,0000000A
+
+[Cheats/Uriko]
+// patch=1,EE,101F539E,extended,0000000B
+// patch=1,EE,101F53F6,extended,0000000B
+
+[Cheats/Yugo]
+// patch=1,EE,101F539E,extended,0000000C
+// patch=1,EE,101F53F6,extended,0000000C
+
+[Cheats/Kohryu]
+// patch=1,EE,101F539E,extended,0000000D
+// patch=1,EE,101F53F6,extended,0000000D
+
+[Cheats/Uranus]
+// patch=1,EE,101F539E,extended,0000000E
+// patch=1,EE,101F53F6,extended,0000000E
+
+[Cheats/Sudden Death]
+// patch=1,EE,1020D5F0,extended,00000001
+
+[Cheats/No Guard]
+// patch=1,EE,1020D5F0,extended,00000002
+
+[Cheats/Hard Mode]
+// patch=1,EE,1020D5F0,extended,00000003
+
+[Cheats/Knock Down Mode]
+// patch=1,EE,1020D5F0,extended,00000004
+
+[Cheats/High Speed Mode]
+// patch=1,EE,1020D5F0,extended,00000005
+
+[Cheats/Low Speed Mode]
+// patch=1,EE,1020D5F0,extended,00000006
+
+[Cheats/H Beast Mode]
+// patch=1,EE,1020D5F0,extended,00000007
+
+[Cheats/Sumo Mode]
+// patch=1,EE,1020D5F0,extended,00000008

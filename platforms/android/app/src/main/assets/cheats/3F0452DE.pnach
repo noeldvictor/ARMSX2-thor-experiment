@@ -1,0 +1,334 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Flatout 2 [SLES-54002] [3F0452DE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Clown]
+// patch=1,EE,902C0228,extended,0C0F9C30
+
+[Cheats/Infinite Nitro Usage]
+// patch=1,EE,2010E34C,extended,00000000
+
+[Cheats/Max Infinite Nitro]
+// patch=1,EE,20110F3C,extended,3C0140A0
+// patch=1,EE,20110F44,extended,AD810284
+
+[Cheats/Always Low Lap Time]
+// patch=1,EE,201A6DA4,extended,AC80106C
+
+[Cheats/Start On Lap 2]
+// patch=1,EE,D0DB8EE8,extended,00000000
+// patch=1,EE,20DB8EE8,extended,00000001
+
+[Cheats/Start On Lap 3]
+// patch=1,EE,D0DB8EE8,extended,00000000
+// patch=1,EE,20DB8EE8,extended,00000003
+
+[Cheats/Infinite Money]
+// patch=1,EE,00CA8781,extended,000000FF
+// patch=1,EE,00CA8782,extended,000000FF
+
+[Cheats/Max Money]
+// patch=1,EE,00CA8781,extended,000000FF
+// patch=1,EE,10CA8782,extended,0000F5E0
+// patch=1,EE,00CA8784,extended,00000005
+
+[Cheats/Buying Cars Doesnt Decrease Money]
+// patch=1,EE,201ACAA0,extended,00000000
+// patch=1,EE,201ACAA4,extended,00000000
+
+[Cheats/Buying Cars Increases Money]
+// patch=1,EE,201ACA9C,extended,00471021
+
+[Cheats/Buying Upgrades Doesnt Decrease Money]
+// patch=1,EE,201ACB20,extended,00000000
+// patch=1,EE,201ACB24,extended,00000000
+
+[Cheats/Buying Upgrades Increases Money]
+// patch=1,EE,201ACB1C,extended,00471021
+
+[Cheats/Unlock All Races]
+// patch=1,EE,20184928,extended,AC850510
+// patch=1,EE,2018492C,extended,24010001
+// patch=1,EE,20184950,extended,AC410068
+
+[Cheats/Have All Races Completed]
+// patch=1,EE,20184978,extended,AC850510
+// patch=1,EE,2018497C,extended,24010001
+// patch=1,EE,201849A0,extended,AC41006C
+
+[Cheats/Have All Cups/Events Completed]
+// patch=1,EE,40CAC3C0,extended,000D0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10CAC3F4,extended,00000101
+
+[Cheats/Derby Class-Chili]
+// patch=1,EE,00CABE60,extended,00000000
+// patch=1,EE,00CABE64,extended,00000001
+
+[Cheats/Derby Class-Malice]
+// patch=1,EE,00CABE7D,extended,00000000
+// patch=1,EE,00CABE81,extended,00000001
+
+[Cheats/Derby Class-Roamer]
+// patch=1,EE,00CABE9A,extended,00000000
+// patch=1,EE,00CABE9E,extended,00000001
+
+[Cheats/Derby Class-Shaker]
+// patch=1,EE,00CABEB7,extended,00000000
+// patch=1,EE,00CABEBB,extended,00000001
+
+[Cheats/Derby Class-Blaster XL]
+// patch=1,EE,00CABED4,extended,00000000
+// patch=1,EE,00CABED8,extended,00000001
+
+[Cheats/Derby Class-Banger]
+// patch=1,EE,00CABEF1,extended,00000000
+// patch=1,EE,00CABEF5,extended,00000001
+
+[Cheats/Derby Class-Splitter]
+// patch=1,EE,00CABF0E,extended,00000000
+// patch=1,EE,00CABF12,extended,00000001
+
+[Cheats/Derby Class-Switchblade]
+// patch=1,EE,00CABF2B,extended,00000000
+// patch=1,EE,00CABF2F,extended,00000001
+
+[Cheats/Derby Class-Venom]
+// patch=1,EE,00CABF48,extended,00000000
+// patch=1,EE,00CABF4C,extended,00000001
+
+[Cheats/Race Class-CTR]
+// patch=1,EE,00CABF65,extended,00000000
+// patch=1,EE,00CABF69,extended,00000001
+
+[Cheats/Race Class-Boxer]
+// patch=1,EE,00CABF82,extended,00000000
+// patch=1,EE,00CABF86,extended,00000001
+
+[Cheats/Race Class-Mad Rash]
+// patch=1,EE,00CABF9F,extended,00000000
+// patch=1,EE,00CABFA3,extended,00000001
+
+[Cheats/Race Class-Nevada]
+// patch=1,EE,00CABFBC,extended,00000000
+// patch=1,EE,00CABFC0,extended,00000001
+
+[Cheats/Race Class-Lancea]
+// patch=1,EE,00CABFD9,extended,00000000
+// patch=1,EE,00CABFDD,extended,00000001
+
+[Cheats/Race Class-Fortune]
+// patch=1,EE,00CABFF6,extended,00000000
+// patch=1,EE,00CABFFA,extended,00000001
+
+[Cheats/Race Class-Daytana]
+// patch=1,EE,00CAC013,extended,00000000
+// patch=1,EE,00CAC017,extended,00000001
+
+[Cheats/Race Class-Bullet]
+// patch=1,EE,00CAC030,extended,00000000
+// patch=1,EE,00CAC034,extended,00000001
+
+[Cheats/Race Class-Lentus]
+// patch=1,EE,00CAC04D,extended,00000000
+// patch=1,EE,00CAC051,extended,00000001
+
+[Cheats/Race Class-Ventura]
+// patch=1,EE,00CAC06A,extended,00000000
+// patch=1,EE,00CAC06E,extended,00000001
+
+[Cheats/Race Class-Insetta]
+// patch=1,EE,00CAC087,extended,00000000
+// patch=1,EE,00CAC08B,extended,00000001
+
+[Cheats/Street Class-Chili Pepper]
+// patch=1,EE,00CAC0A4,extended,00000000
+// patch=1,EE,00CAC0A8,extended,00000001
+
+[Cheats/Street Class-Scorpion]
+// patch=1,EE,00CAC0C1,extended,00000000
+// patch=1,EE,00CAC0C5,extended,00000001
+
+[Cheats/Street Class-Insetta Sport]
+// patch=1,EE,00CAC0DE,extended,00000000
+// patch=1,EE,00CAC0E2,extended,00000001
+
+[Cheats/Street Class-Sparrowhawk]
+// patch=1,EE,00CAC0FB,extended,00000000
+// patch=1,EE,00CAC0FF,extended,00000001
+
+[Cheats/Street Class-Crusader]
+// patch=1,EE,00CAC118,extended,00000000
+// patch=1,EE,00CAC11C,extended,00000001
+
+[Cheats/Street Class-CTR Sport]
+// patch=1,EE,00CAC135,extended,00000000
+// patch=1,EE,00CAC139,extended,00000001
+
+[Cheats/Street Class-Vexter XS]
+// patch=1,EE,00CAC152,extended,00000000
+// patch=1,EE,00CAC156,extended,00000001
+
+[Cheats/Street Class-Speedshifter]
+// patch=1,EE,00CAC16F,extended,00000000
+// patch=1,EE,00CAC173,extended,00000001
+
+[Cheats/Street Class-Canyon]
+// patch=1,EE,00CAC18C,extended,00000000
+// patch=1,EE,00CAC190,extended,00000001
+
+[Cheats/Street Class-Terrator]
+// patch=1,EE,00CAC1A9,extended,00000000
+// patch=1,EE,00CAC1AD,extended,00000001
+
+[Cheats/Street Class-Sunray]
+// patch=1,EE,00CAC1C6,extended,00000000
+// patch=1,EE,00CAC1CA,extended,00000001
+
+[Cheats/Street Class-Speedevil]
+// patch=1,EE,00CAC1E3,extended,00000000
+// patch=1,EE,00CAC1E7,extended,00000001
+
+[Cheats/Street Class-Road King]
+// patch=1,EE,00CAC200,extended,00000000
+// patch=1,EE,00CAC204,extended,00000001
+
+[Cheats/Street Class-Bullet GT]
+// patch=1,EE,00CAC21D,extended,00000000
+// patch=1,EE,00CAC221,extended,00000001
+
+[Cheats/Starflight]
+// patch=1,EE,00CAC23A,extended,00000000
+// patch=1,EE,00CAC23E,extended,00000001
+
+[Cheats/Trailblazer]
+// patch=1,EE,00CAC257,extended,00000000
+// patch=1,EE,00CAC25B,extended,00000001
+
+[Cheats/Afterburner]
+// patch=1,EE,00CAC274,extended,00000000
+// patch=1,EE,00CAC278,extended,00000001
+
+[Cheats/Rocket]
+// patch=1,EE,00CAC291,extended,00000000
+// patch=1,EE,00CAC33F,extended,00000000
+// patch=1,EE,00CAC295,extended,00000001
+// patch=1,EE,00CAC343,extended,00000001
+
+[Cheats/Nucleon]
+// patch=1,EE,00CAC2AE,extended,00000000
+// patch=1,EE,00CAC2B2,extended,00000001
+
+[Cheats/Pimpster]
+// patch=1,EE,00CAC2CB,extended,00000000
+// patch=1,EE,00CAC2CF,extended,00000001
+
+[Cheats/Flatmobile]
+// patch=1,EE,00CAC2E8,extended,00000000
+// patch=1,EE,00CAC2EC,extended,00000001
+
+[Cheats/Mob Car]
+// patch=1,EE,00CAC305,extended,00000000
+// patch=1,EE,00CAC309,extended,00000001
+
+[Cheats/School Bus]
+// patch=1,EE,00CAC322,extended,00000000
+// patch=1,EE,00CAC326,extended,00000001
+
+[Cheats/Truck]
+// patch=1,EE,00CAC35C,extended,00000000
+// patch=1,EE,00CAC360,extended,00000001
+
+[Cheats/Cup 1]
+// patch=1,EE,00CAC3C0,extended,00000001
+// patch=1,EE,00CAC3D0,extended,00000001
+// patch=1,EE,00CAC3E2,extended,00000001
+
+[Cheats/Cup 2]
+// patch=1,EE,00CAC3C1,extended,00000001
+// patch=1,EE,00CAC3D1,extended,00000001
+// patch=1,EE,00CAC3E3,extended,00000001
+
+[Cheats/Cup 3]
+// patch=1,EE,00CAC3C2,extended,00000001
+// patch=1,EE,00CAC3D2,extended,00000001
+// patch=1,EE,00CAC3E4,extended,00000001
+
+[Cheats/Cup 4]
+// patch=1,EE,00CAC3C3,extended,00000001
+// patch=1,EE,00CAC3D3,extended,00000001
+// patch=1,EE,00CAC3E5,extended,00000001
+
+[Cheats/Cup 5]
+// patch=1,EE,00CAC3C4,extended,00000001
+// patch=1,EE,00CAC3D4,extended,00000001
+// patch=1,EE,00CAC3E6,extended,00000001
+
+[Cheats/Cup 6]
+// patch=1,EE,00CAC3C5,extended,00000001
+// patch=1,EE,00CAC3D5,extended,00000001
+// patch=1,EE,00CAC3E7,extended,00000001
+
+[Cheats/Cup 7]
+// patch=1,EE,00CAC3C6,extended,00000001
+// patch=1,EE,00CAC3D6,extended,00000001
+// patch=1,EE,00CAC3E8,extended,00000001
+
+[Cheats/Cup 8]
+// patch=1,EE,00CAC3C7,extended,00000001
+// patch=1,EE,00CAC3D7,extended,00000001
+// patch=1,EE,00CAC3E9,extended,00000001
+
+[Cheats/Event 1]
+// patch=1,EE,00CAC3C8,extended,00000001
+// patch=1,EE,00CAC3D9,extended,00000001
+// patch=1,EE,00CAC3EC,extended,00000001
+
+[Cheats/Event 2]
+// patch=1,EE,00CAC3C9,extended,00000001
+// patch=1,EE,00CAC3DA,extended,00000001
+// patch=1,EE,00CAC3ED,extended,00000001
+
+[Cheats/Event 3]
+// patch=1,EE,00CAC3CA,extended,00000001
+// patch=1,EE,00CAC3DB,extended,00000001
+// patch=1,EE,00CAC3EE,extended,00000001
+
+[Cheats/Event 4]
+// patch=1,EE,00CAC3CB,extended,00000001
+// patch=1,EE,00CAC3DC,extended,00000001
+// patch=1,EE,00CAC3EF,extended,00000001
+
+[Cheats/Event 5]
+// patch=1,EE,00CAC3CC,extended,00000001
+// patch=1,EE,00CAC3DD,extended,00000001
+// patch=1,EE,00CAC3F0,extended,00000001
+
+[Cheats/Event 6]
+// patch=1,EE,00CAC3CD,extended,00000001
+// patch=1,EE,00CAC3DE,extended,00000001
+// patch=1,EE,00CAC3F1,extended,00000001
+
+[Cheats/Event 7]
+// patch=1,EE,00CAC3CE,extended,00000001
+// patch=1,EE,00CAC3DF,extended,00000001
+// patch=1,EE,00CAC3F2,extended,00000001
+
+[Cheats/Event 8]
+// patch=1,EE,00CAC3CF,extended,00000001
+// patch=1,EE,00CAC3E0,extended,00000001
+// patch=1,EE,00CAC3F3,extended,00000001
+
+[Cheats/Cup 9]
+// patch=1,EE,00CAC3D8,extended,00000001
+// patch=1,EE,00CAC3EA,extended,00000001
+
+[Cheats/Event 9]
+// patch=1,EE,00CAC3E1,extended,00000001
+// patch=1,EE,00CAC3F4,extended,00000001
+
+[Cheats/Cup 10]
+// patch=1,EE,00CAC3EB,extended,00000001
+
+[Cheats/Event 10]
+// patch=1,EE,00CAC3F5,extended,00000001

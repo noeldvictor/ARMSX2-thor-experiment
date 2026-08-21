@@ -1,0 +1,429 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Over The Hedge [SLUS-21300] [E328D848]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Flagman Stages]
+// patch=1,EE,903D22E8,extended,00832021
+
+[Cheats/P1 Press {L1}+{SELECT} To Enable Infinite Health]
+// patch=1,EE,D04DF642,extended,0000FBFE
+// patch=1,EE,202B276C,extended,C4EC0004
+
+[Cheats/P1 Press {L2}+{SELECT} To Disable Infinite Health]
+// patch=1,EE,D04DF642,extended,0000FEFE
+// patch=1,EE,202B276C,extended,46000307
+
+[Cheats/Unlock All Extras]
+// patch=1,EE,409B79C0,extended,00860003
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/R.C. Rally-Track 4]
+// patch=1,EE,209B7628,extended,00000001
+
+[Cheats/BumperCarts-Arena 2]
+// patch=1,EE,209B7658,extended,00000001
+
+[Cheats/BumperCarts-Arena 3]
+// patch=1,EE,209B76A8,extended,00000001
+
+[Cheats/Range Driver-Course 1]
+// patch=1,EE,209B76B8,extended,00000001
+// patch=1,EE,209B7828,extended,00000001
+
+[Cheats/R.C. Rally-Track 1]
+// patch=1,EE,209B76C8,extended,00000001
+
+[Cheats/R.C. Rally-Track 3]
+// patch=1,EE,209B7708,extended,00000001
+
+[Cheats/BumperCarts-Arena 1]
+// patch=1,EE,209B7748,extended,00000001
+
+[Cheats/BumperCarts-Arena 4]
+// patch=1,EE,209B7788,extended,00000001
+
+[Cheats/R.C. Rally-Track 2]
+// patch=1,EE,209B77D8,extended,00000001
+
+[Cheats/Stella Spin]
+// patch=1,EE,209B79C0,extended,00000001
+
+[Cheats/Mole Spin]
+// patch=1,EE,209B79CC,extended,00000001
+
+[Cheats/Protect The Woods!]
+// patch=1,EE,209B79E4,extended,00000001
+
+[Cheats/RJ Spin]
+// patch=1,EE,209B79FC,extended,00000001
+
+[Cheats/Badger Spin]
+// patch=1,EE,209B7A08,extended,00000001
+
+[Cheats/Vincent's Den]
+// patch=1,EE,209B7A14,extended,00000001
+
+[Cheats/Conner Escape Finale]
+// patch=1,EE,209B7A20,extended,00000001
+
+[Cheats/Exterminator Spin]
+// patch=1,EE,209B7A2C,extended,00000001
+
+[Cheats/Gladys Heist, Pt. 1]
+// patch=1,EE,209B7A44,extended,00000001
+
+[Cheats/Heather Spin]
+// patch=1,EE,209B7A5C,extended,00000001
+
+[Cheats/The Woods]
+// patch=1,EE,209B7A68,extended,00000001
+// patch=1,EE,209B7A38,extended,00000001
+
+[Cheats/Vincent's Den Storyboard]
+// patch=1,EE,209B7A74,extended,00000001
+
+[Cheats/Tin Toys Spin]
+// patch=1,EE,209B7A8C,extended,00000001
+
+[Cheats/Escape! Storyboard]
+// patch=1,EE,209B7AA4,extended,00000001
+
+[Cheats/The Depelter]
+// patch=1,EE,209B7AB0,extended,00000001
+
+[Cheats/Martin Heist, Pt. 1]
+// patch=1,EE,209B7AE0,extended,00000001
+
+[Cheats/Cave Interiors]
+// patch=1,EE,209B7AF8,extended,00000001
+
+[Cheats/Martin Escape Finale]
+// patch=1,EE,209B7B04,extended,00000001
+
+[Cheats/Caught In The Hedge!]
+// patch=1,EE,209B7B1C,extended,00000001
+
+[Cheats/Maintenance Room Finale]
+// patch=1,EE,209B7B34,extended,00000001
+
+[Cheats/Smith Escape Finale]
+// patch=1,EE,209B7B40,extended,00000001
+
+[Cheats/Martin House]
+// patch=1,EE,209B7B64,extended,00000001
+
+[Cheats/Maintenance Room]
+// patch=1,EE,209B7B70,extended,00000001
+
+[Cheats/Gladys' Back Yard]
+// patch=1,EE,209B7B7C,extended,00000001
+
+[Cheats/Caught! Finale]
+// patch=1,EE,209B7BA0,extended,00000001
+
+[Cheats/Martin Escape]
+// patch=1,EE,209B7BAC,extended,00000001
+
+[Cheats/Archer Trap]
+// patch=1,EE,209B7BB8,extended,00000001
+
+[Cheats/Caught! Storyboard]
+// patch=1,EE,209B7BC4,extended,00000001
+
+[Cheats/Vincent Spin]
+// patch=1,EE,209B7BDC,extended,00000001
+
+[Cheats/Tiger Spin]
+// patch=1,EE,209B7BE8,extended,00000001
+
+[Cheats/Vincent's Den Storyboard 2]
+// patch=1,EE,209B7C00,extended,00000001
+
+[Cheats/The Dog Chase]
+// patch=1,EE,209B7C0C,extended,00000001
+
+[Cheats/Depelter Spin]
+// patch=1,EE,209B7C30,extended,00000001
+
+[Cheats/Conner Escape]
+// patch=1,EE,209B7C3C,extended,00000001
+
+[Cheats/Below Vincent's Den]
+// patch=1,EE,209B7C48,extended,00000001
+
+[Cheats/Armadillo Spin]
+// patch=1,EE,209B7C54,extended,00000001
+
+[Cheats/Hammy Spin]
+// patch=1,EE,209B7C6C,extended,00000001
+
+[Cheats/Roller Coaster Escape]
+// patch=1,EE,209B7C78,extended,00000001
+
+[Cheats/Smith Girl Spin]
+// patch=1,EE,209B7C90,extended,00000001
+
+[Cheats/Ratso Spin]
+// patch=1,EE,209B7C9C,extended,00000001
+
+[Cheats/Rescue Heather!]
+// patch=1,EE,209B7CB4,extended,00000001
+// patch=1,EE,209B7FB4,extended,00000001
+
+[Cheats/Gladys Escape]
+// patch=1,EE,209B7CC0,extended,00000001
+
+[Cheats/Lou Spin]
+// patch=1,EE,209B7CD8,extended,00000001
+
+[Cheats/Chihuahuas Spin]
+// patch=1,EE,209B7CFC,extended,00000001
+
+[Cheats/Vincent's Den Finale]
+// patch=1,EE,209B7D08,extended,00000001
+
+[Cheats/Mini-Golf Course]
+// patch=1,EE,209B7D14,extended,00000001
+
+[Cheats/Gladys Spin]
+// patch=1,EE,209B7D2C,extended,00000001
+
+[Cheats/Ozzie Spin]
+// patch=1,EE,209B7D50,extended,00000001
+
+[Cheats/Protect The Woods! Finale]
+// patch=1,EE,209B7D5C,extended,00000001
+
+[Cheats/Rottweiler Spin]
+// patch=1,EE,209B7D68,extended,00000001
+
+[Cheats/Steam Train Intro]
+// patch=1,EE,209B7D8C,extended,00000001
+
+[Cheats/Projector Heist]
+// patch=1,EE,209B7DA4,extended,00000001
+
+[Cheats/Escape! Intro]
+// patch=1,EE,209B7DBC,extended,00000001
+
+[Cheats/Birthday Party Intro]
+// patch=1,EE,209B7DD4,extended,00000001
+
+[Cheats/RJ And Verne]
+// patch=1,EE,209B7DE0,extended,00000001
+
+[Cheats/The Vermtech Van]
+// patch=1,EE,209B7E28,extended,00000001
+
+[Cheats/VermTech 2000 Spin]
+// patch=1,EE,209B7E34,extended,00000001
+
+[Cheats/Gladys' House]
+// patch=1,EE,209B7E58,extended,00000001
+
+[Cheats/Martin Escape Storyboard]
+// patch=1,EE,209B7E64,extended,00000001
+
+[Cheats/Martin House Storyboard]
+// patch=1,EE,209B7E94,extended,00000001
+
+[Cheats/The Storage Log]
+// patch=1,EE,209B7EA0,extended,00000001
+
+[Cheats/Verne Spin]
+// patch=1,EE,209B7EC4,extended,00000001
+
+[Cheats/Verne]
+// patch=1,EE,209B7ED0,extended,00000001
+// patch=1,EE,209B7ABC,extended,00000001
+// patch=1,EE,209B7D20,extended,00000001
+
+[Cheats/Smith Escape]
+// patch=1,EE,209B7EE8,extended,00000001
+
+[Cheats/Shooting Gallery Intro]
+// patch=1,EE,209B7F30,extended,00000001
+
+[Cheats/Smith Boy Spin]
+// patch=1,EE,209B7F6C,extended,00000001
+
+[Cheats/Vermtech Heist]
+// patch=1,EE,209B7F78,extended,00000001
+
+[Cheats/Rabbit Spin]
+// patch=1,EE,209B7F84,extended,00000001
+
+[Cheats/Gopher Spin]
+// patch=1,EE,209B7FCC,extended,00000001
+
+[Cheats/Roller Coaster Tracks]
+// patch=1,EE,209B7FE4,extended,00000001
+
+[Cheats/Conner Heist, Pt. 1]
+// patch=1,EE,209B7FF0,extended,00000001
+
+[Cheats/Chipmunk Spin]
+// patch=1,EE,209B7FFC,extended,00000001
+
+[Cheats/Trash Turret]
+// patch=1,EE,209B79D8,extended,00000001
+
+[Cheats/Roller Coaster]
+// patch=1,EE,209B79F0,extended,00000001
+
+[Cheats/Group Shot]
+// patch=1,EE,209B7A80,extended,00000001
+
+[Cheats/Verne In The Yard]
+// patch=1,EE,209B7A98,extended,00000001
+
+[Cheats/RJ Observes]
+// patch=1,EE,209B7B10,extended,00000001
+
+[Cheats/Hammy]
+// patch=1,EE,209B7B28,extended,00000001
+// patch=1,EE,209B7F0C,extended,00000001
+
+[Cheats/Porcupine Family]
+// patch=1,EE,209B7B88,extended,00000001
+
+[Cheats/Heist]
+// patch=1,EE,209B7B94,extended,00000001
+
+[Cheats/Ozzie]
+// patch=1,EE,209B7BD0,extended,00000001
+
+[Cheats/Entrance]
+// patch=1,EE,209B7BF4,extended,00000001
+
+[Cheats/Nugent And Verne]
+// patch=1,EE,209B7C24,extended,00000001
+
+[Cheats/Ringmaster]
+// patch=1,EE,209B7CA8,extended,00000001
+
+[Cheats/Tiki Hot Tub]
+// patch=1,EE,209B7CCC,extended,00000001
+
+[Cheats/Weapon Stand]
+// patch=1,EE,209B7D44,extended,00000001
+
+[Cheats/Mole]
+// patch=1,EE,209B7D74,extended,00000001
+
+[Cheats/Weasel]
+// patch=1,EE,209B7D80,extended,00000001
+
+[Cheats/Gladys]
+// patch=1,EE,209B7D98,extended,00000001
+
+[Cheats/Barry Kitchet]
+// patch=1,EE,209B7DC8,extended,00000001
+
+[Cheats/Mad Cow Car]
+// patch=1,EE,209B7E04,extended,00000001
+
+[Cheats/Hammy 2]
+// patch=1,EE,209B7E1C,extended,00000001
+
+[Cheats/Vincent]
+// patch=1,EE,209B7E40,extended,00000001
+
+[Cheats/Meeting Steve]
+// patch=1,EE,209B7E4C,extended,00000001
+
+[Cheats/Minigolf Detail]
+// patch=1,EE,209B7E7C,extended,00000001
+
+[Cheats/Suburbia]
+// patch=1,EE,209B7EAC,extended,00000001
+
+[Cheats/RJ]
+// patch=1,EE,209B7EB8,extended,00000001
+
+[Cheats/Verne And RJ]
+// patch=1,EE,209B7EDC,extended,00000001
+
+[Cheats/Cave Exterior]
+// patch=1,EE,209B7F00,extended,00000001
+
+[Cheats/RJ And Vincent]
+// patch=1,EE,209B7F48,extended,00000001
+
+[Cheats/Rat]
+// patch=1,EE,209B7F60,extended,00000001
+
+[Cheats/Vacuum Enemy]
+// patch=1,EE,209B7F90,extended,00000001
+
+[Cheats/Windup Lizard]
+// patch=1,EE,209B7F9C,extended,00000001
+
+[Cheats/Laser Grid]
+// patch=1,EE,209B7A50,extended,00000001
+
+[Cheats/Escape The Hedge!]
+// patch=1,EE,209B7C60,extended,00000001
+
+[Cheats/Race Tracke 3]
+// patch=1,EE,209B7C84,extended,00000001
+
+[Cheats/Wild Wild Life (Instrumental)]
+// patch=1,EE,209B7CE4,extended,00000001
+
+[Cheats/The Roller Coaster]
+// patch=1,EE,209B7CF0,extended,00000001
+
+[Cheats/Mountain Climbing]
+// patch=1,EE,209B7D38,extended,00000001
+
+[Cheats/Rockin' The Suburbs (Instrumental)]
+// patch=1,EE,209B7FC0,extended,00000001
+
+[Cheats/Chip-Man (Conner Heist)]
+// patch=1,EE,209B7FD8,extended,00000001
+
+[Cheats/Original Comic 13]
+// patch=1,EE,209B7AC8,extended,00000001
+
+[Cheats/Original Comic 7]
+// patch=1,EE,209B7AD4,extended,00000001
+
+[Cheats/Original Comic 3]
+// patch=1,EE,209B7AEC,extended,00000001
+
+[Cheats/Original Comic 4]
+// patch=1,EE,209B7B4C,extended,00000001
+
+[Cheats/Original Comic 8]
+// patch=1,EE,209B7B58,extended,00000001
+
+[Cheats/Original Comic 14]
+// patch=1,EE,209B7C18,extended,00000001
+
+[Cheats/Original Comic 10]
+// patch=1,EE,209B7DB0,extended,00000001
+
+[Cheats/Original Comic 6]
+// patch=1,EE,209B7DEC,extended,00000001
+
+[Cheats/Original Comic 2]
+// patch=1,EE,209B7DF8,extended,00000001
+
+[Cheats/Original Comic 12]
+// patch=1,EE,209B7E10,extended,00000001
+
+[Cheats/Original Comic 11]
+// patch=1,EE,209B7E70,extended,00000001
+
+[Cheats/Original Comic 15]
+// patch=1,EE,209B7E88,extended,00000001
+
+[Cheats/Original Comic 9]
+// patch=1,EE,209B7F24,extended,00000001
+
+[Cheats/Original Comic 1]
+// patch=1,EE,209B7F3C,extended,00000001
+
+[Cheats/Original Comic 5]
+// patch=1,EE,209B7F54,extended,00000001

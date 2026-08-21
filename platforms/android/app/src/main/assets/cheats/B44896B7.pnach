@@ -1,0 +1,230 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sonic Riders [SLUS-21331] [B44896B7]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Score P2]
+// patch=1,EE,9010F0A0,extended,00832021
+
+[Cheats/Always Low Time]
+// patch=1,EE,20488070,extended,00000000
+
+[Cheats/Max Air Tank]
+// patch=1,EE,20499FD8,extended,00030D40
+
+[Cheats/Max Rings]
+// patch=1,EE,2049A1EC,extended,00000064
+
+[Cheats/Start On Lap 2]
+// patch=1,EE,D049A6D2,extended,00000001
+// patch=1,EE,0049A6D2,extended,00000002
+
+[Cheats/Start On Lap 3]
+// patch=1,EE,D049A6D2,extended,00000001
+// patch=1,EE,0049A6D2,extended,00000003
+
+[Cheats/Max Gear Shop Rings]
+// patch=1,EE,2095D528,extended,000F423F
+
+[Cheats/D. Eggman]
+// patch=1,EE,0095D1E9,extended,00000001
+
+[Cheats/Shadow The Hedgehog]
+// patch=1,EE,0095D1EA,extended,00000001
+
+[Cheats/Main Theme-Catch Me If You Can]
+// patch=1,EE,0095CE42,extended,00000001
+
+[Cheats/Stage BGM-Theme Of Babylon Garden]
+// patch=1,EE,0095CE49,extended,00000001
+
+[Cheats/Stage BGM-Theme Of Digital Dimension]
+// patch=1,EE,0095CE4A,extended,00000001
+
+[Cheats/Stage BGM-Theme Of SEGA Carnival]
+// patch=1,EE,0095CE4B,extended,00000001
+
+[Cheats/All AUdio Room]
+// patch=1,EE,0095CE42,extended,00000001
+// patch=1,EE,0095CE49,extended,00000001
+// patch=1,EE,1095CE4A,extended,00000101
+
+[Cheats/Title]
+// patch=1,EE,0095D1D8,extended,00000001
+
+[Cheats/Opening]
+// patch=1,EE,0095D1D9,extended,00000001
+
+[Cheats/Insert]
+// patch=1,EE,0095D1DA,extended,00000001
+
+[Cheats/Ending]
+// patch=1,EE,0095D1DB,extended,00000001
+
+[Cheats/Tutorial]
+// patch=1,EE,0095D1DC,extended,00000001
+
+[Cheats/All Theater]
+// patch=1,EE,2095D1D8,extended,01010101
+// patch=1,EE,0095D1DC,extended,00000001
+
+[Cheats/Gear 1]
+// patch=1,EE,0095D1E0,extended,00000001
+
+[Cheats/Gear 2]
+// patch=1,EE,0095D1E1,extended,00000001
+
+[Cheats/Gear 3]
+// patch=1,EE,0095D1E2,extended,00000001
+
+[Cheats/Gear 4]
+// patch=1,EE,0095D1E3,extended,00000001
+
+[Cheats/Gear 5]
+// patch=1,EE,0095D1E4,extended,00000001
+
+[Cheats/Gear 6]
+// patch=1,EE,0095D1E5,extended,00000001
+
+[Cheats/Gear 7]
+// patch=1,EE,0095D1E6,extended,00000001
+
+[Cheats/Gear 8]
+// patch=1,EE,0095D1E8,extended,00000001
+
+[Cheats/Gear 9]
+// patch=1,EE,0095D1E9,extended,00000001
+
+[Cheats/Gear 10]
+// patch=1,EE,0095D189,extended,00000001
+
+[Cheats/Gear 11]
+// patch=1,EE,0095D18A,extended,00000001
+
+[Cheats/Gear 12]
+// patch=1,EE,0095D18B,extended,00000001
+
+[Cheats/Gear 13]
+// patch=1,EE,0095D18C,extended,00000001
+
+[Cheats/Gear 14]
+// patch=1,EE,0095D18D,extended,00000001
+
+[Cheats/Gear 15]
+// patch=1,EE,0095D18E,extended,00000001
+
+[Cheats/Gear 16]
+// patch=1,EE,0095D18F,extended,00000001
+
+[Cheats/Gear 17]
+// patch=1,EE,0095D190,extended,00000001
+
+[Cheats/Gear 18]
+// patch=1,EE,0095D191,extended,00000001
+
+[Cheats/Gear 19]
+// patch=1,EE,0095D192,extended,00000001
+
+[Cheats/Gear 20]
+// patch=1,EE,0095D193,extended,00000001
+
+[Cheats/Gear 21]
+// patch=1,EE,0095D194,extended,00000001
+
+[Cheats/Gear 22]
+// patch=1,EE,0095D195,extended,00000001
+
+[Cheats/Gear 23]
+// patch=1,EE,0095D196,extended,00000001
+
+[Cheats/Gear 24]
+// patch=1,EE,0095D197,extended,00000001
+
+[Cheats/Gear 25]
+// patch=1,EE,0095D198,extended,00000001
+
+[Cheats/Gear 26]
+// patch=1,EE,0095D199,extended,00000001
+
+[Cheats/Gear 27]
+// patch=1,EE,0095D19A,extended,00000001
+
+[Cheats/Gear 28]
+// patch=1,EE,0095D19B,extended,00000001
+
+[Cheats/Gear 29]
+// patch=1,EE,0095D19C,extended,00000001
+
+[Cheats/Gear 30]
+// patch=1,EE,0095D19D,extended,00000001
+
+[Cheats/Gear 31]
+// patch=1,EE,0095D19E,extended,00000001
+
+[Cheats/Gear 32]
+// patch=1,EE,0095D19F,extended,00000001
+
+[Cheats/Gear 33]
+// patch=1,EE,0095D1EC,extended,00000001
+
+[Cheats/Gear 34]
+// patch=1,EE,0095D1ED,extended,00000001
+
+[Cheats/Gear 35]
+// patch=1,EE,0095D1EF,extended,00000001
+
+[Cheats/Gear 36]
+// patch=1,EE,0095D1F0,extended,00000001
+
+[Cheats/Gear 37]
+// patch=1,EE,0095D1EE,extended,00000001
+
+[Cheats/Gear 38]
+// patch=1,EE,0095D1A0,extended,00000001
+
+[Cheats/Gear 39]
+// patch=1,EE,0095D1B0,extended,00000001
+
+[Cheats/Gear 40]
+// patch=1,EE,0095D1B1,extended,00000001
+
+[Cheats/Gear 41]
+// patch=1,EE,0095D1B2,extended,00000001
+
+[Cheats/Gear 42]
+// patch=1,EE,0095D1B3,extended,00000001
+
+[Cheats/Gear 43]
+// patch=1,EE,0095D1B4,extended,00000001
+
+[Cheats/Gear 44]
+// patch=1,EE,0095D1B5,extended,00000001
+
+[Cheats/Gear 45]
+// patch=1,EE,0095D1B6,extended,00000001
+
+[Cheats/Gear 46]
+// patch=1,EE,0095D1B7,extended,00000001
+
+[Cheats/Gear 47]
+// patch=1,EE,0095D1B8,extended,00000001
+
+[Cheats/Gear 48]
+// patch=1,EE,0095D1B9,extended,00000001
+
+[Cheats/Gear 49]
+// patch=1,EE,0095D1CE,extended,00000001
+
+[Cheats/Gear 50]
+// patch=1,EE,0095D1CF,extended,00000001
+
+[Cheats/Gear 51]
+// patch=1,EE,0095D1D0,extended,00000001
+
+[Cheats/Gear 52]
+// patch=1,EE,0095D1D1,extended,00000001
+
+[Cheats/Gear 53]
+// patch=1,EE,0095D1D2,extended,00000001
+
+[Cheats/Gear 54]
+// patch=1,EE,0095D1D3,extended,00000001

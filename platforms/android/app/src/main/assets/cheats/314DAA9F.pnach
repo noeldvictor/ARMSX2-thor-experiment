@@ -1,0 +1,690 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Constantine [SLUS-21142] [314DAA9F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Super Slow Speed]
+// patch=1,EE,903E2CB8,extended,0C101B69
+
+[Cheats/Infinite Health]
+// patch=1,EE,2017C544,extended,C4800014
+// patch=1,EE,2017C54C,extended,E4800018
+
+[Cheats/Health Never Decreases]
+// patch=1,EE,20318A58,extended,00000000
+// patch=1,EE,20318A5C,extended,00000000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2015F830,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,2015F82C,extended,240203E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,2015F82C,extended,00451021
+
+[Cheats/Never Reload]
+// patch=1,EE,2015F844,extended,00000000
+
+[Cheats/Infinite Flash Of Enlightenment Usage]
+// patch=1,EE,2015F7A4,extended,00000000
+
+[Cheats/Infinite Spell Usage]
+// patch=1,EE,20318C44,extended,00000000
+
+[Cheats/Have All Bonus Material]
+// patch=1,EE,405848E8,extended,00340001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Witch's Curse]
+// patch=1,EE,204CD69C,extended,00000000
+// patch=1,EE,0058499F,extended,00000001
+
+[Cheats/Holy Water Bombs]
+// patch=1,EE,204CD6C8,extended,00000000
+
+[Cheats/Flask Of Enlightenment]
+// patch=1,EE,204CD6F4,extended,00000000
+
+[Cheats/Amityville Screech Beetle]
+// patch=1,EE,204CD720,extended,00000000
+
+[Cheats/Knuckledusters]
+// patch=1,EE,204CD74C,extended,00000000
+
+[Cheats/Crucifier]
+// patch=1,EE,204CD778,extended,00000000
+// patch=1,EE,0058492B,extended,00000001
+
+[Cheats/Dragon's Breath]
+// patch=1,EE,204CD7A4,extended,00000000
+// patch=1,EE,0058492C,extended,00000001
+
+[Cheats/Holy Shotgun]
+// patch=1,EE,204CD7D0,extended,00000000
+
+[Cheats/Purger]
+// patch=1,EE,204CD7FC,extended,00000000
+// patch=1,EE,0058494B,extended,00000001
+
+[Cheats/Moses Shroup]
+// patch=1,EE,204CD828,extended,00000000
+
+[Cheats/Cross Of Isteria]
+// patch=1,EE,204CD854,extended,00000000
+
+[Cheats/Spear Of Destiny]
+// patch=1,EE,204CD880,extended,00000000
+
+[Cheats/All Artifacts]
+// patch=1,EE,404CD69C,extended,000C000B
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Gateway]
+// patch=1,EE,204CE440,extended,00000000
+
+[Cheats/True Sight]
+// patch=1,EE,204CE46C,extended,00000000
+
+[Cheats/Storm Crow]
+// patch=1,EE,204CE498,extended,00000000
+
+[Cheats/Exorcism]
+// patch=1,EE,204CE4C4,extended,00000000
+
+[Cheats/Hunger]
+// patch=1,EE,204CE51C,extended,00000000
+
+[Cheats/Protection]
+// patch=1,EE,204CE548,extended,00000000
+
+[Cheats/Confusion]
+// patch=1,EE,204CE574,extended,00000000
+
+[Cheats/Gargoyle]
+// patch=1,EE,204CE5A0,extended,00000000
+
+[Cheats/Demon Leech]
+// patch=1,EE,204CE5CC,extended,00000000
+
+[Cheats/All Spells]
+// patch=1,EE,404CE440,extended,000A000B
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Scavenger Scout]
+// patch=1,EE,204CF18C,extended,00000000
+// patch=1,EE,005848BE,extended,00000001
+
+[Cheats/Scavenger Soldier]
+// patch=1,EE,204CF1B8,extended,00000000
+// patch=1,EE,005848DB,extended,00000001
+
+[Cheats/Scavenger Warrior]
+// patch=1,EE,204CF1E4,extended,00000000
+
+[Cheats/Seplavite]
+// patch=1,EE,204CF210,extended,00000000
+// patch=1,EE,005848F8,extended,00000001
+
+[Cheats/Half Breed]
+// patch=1,EE,204CF23C,extended,00000000
+
+[Cheats/Vermin]
+// patch=1,EE,204CF268,extended,00000000
+
+[Cheats/Scavenger Crawler]
+// patch=1,EE,204CF294,extended,00000000
+
+[Cheats/Bile'Riz]
+// patch=1,EE,204CF2C0,extended,00000000
+
+[Cheats/Host]
+// patch=1,EE,204CF2EC,extended,00000000
+
+[Cheats/Vermin Demon]
+// patch=1,EE,204CF318,extended,00000000
+
+[Cheats/Kan-Gore]
+// patch=1,EE,204CF344,extended,00000000
+
+[Cheats/Impaler]
+// patch=1,EE,204CF39C,extended,00000000
+// patch=1,EE,00584916,extended,00000001
+
+[Cheats/Bastado]
+// patch=1,EE,204CF3C8,extended,00000000
+// patch=1,EE,00584952,extended,00000001
+
+[Cheats/Behemoth]
+// patch=1,EE,204CF3F4,extended,00000000
+// patch=1,EE,00584925,extended,00000001
+
+[Cheats/Cleaver]
+// patch=1,EE,204CF420,extended,00000000
+// patch=1,EE,00584935,extended,00000001
+
+[Cheats/Balthazar]
+// patch=1,EE,204CF44C,extended,00000000
+
+[Cheats/Gabriel]
+// patch=1,EE,204CF478,extended,00000000
+
+[Cheats/Mammon]
+// patch=1,EE,204CF4A4,extended,00000000
+
+[Cheats/All Demons]
+// patch=1,EE,404CF18C,extended,0013000B
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Comic 1]
+// patch=1,EE,005848BB,extended,00000001
+
+[Cheats/Story Movie 1]
+// patch=1,EE,005848BC,extended,00000001
+
+[Cheats/Story Movie 2]
+// patch=1,EE,005848BD,extended,00000001
+
+[Cheats/Concept 1]
+// patch=1,EE,005848BF,extended,00000001
+
+[Cheats/Concept 2]
+// patch=1,EE,005848C0,extended,00000001
+
+[Cheats/Concept 3]
+// patch=1,EE,005848CA,extended,00000001
+
+[Cheats/Concept 4]
+// patch=1,EE,005848CB,extended,00000001
+
+[Cheats/Interview]
+// patch=1,EE,005848CC,extended,00000001
+
+[Cheats/Movie 1]
+// patch=1,EE,005848CD,extended,00000001
+
+[Cheats/Movie 2]
+// patch=1,EE,005848CE,extended,00000001
+
+[Cheats/Quote]
+// patch=1,EE,005848CF,extended,00000001
+
+[Cheats/All Elriu's Apartment]
+// patch=1,EE,005848BB,extended,00000001
+// patch=1,EE,205848BC,extended,01010101
+// patch=1,EE,005848C0,extended,00000001
+// patch=1,EE,105848CA,extended,00000101
+// patch=1,EE,205848CC,extended,01010101
+
+[Cheats/Comic 2]
+// patch=1,EE,005848D9,extended,00000001
+
+[Cheats/Story Movie 3]
+// patch=1,EE,005848DA,extended,00000001
+
+[Cheats/Concept 5]
+// patch=1,EE,005848DC,extended,00000001
+
+[Cheats/Concept 6]
+// patch=1,EE,005848DD,extended,00000001
+
+[Cheats/Concept 7]
+// patch=1,EE,005848DE,extended,00000001
+
+[Cheats/Movie 3]
+// patch=1,EE,005848E8,extended,00000001
+
+[Cheats/Movie 4]
+// patch=1,EE,005848E9,extended,00000001
+
+[Cheats/Movie 5]
+// patch=1,EE,005848EA,extended,00000001
+
+[Cheats/Movie 6]
+// patch=1,EE,005848EB,extended,00000001
+
+[Cheats/Movie 7]
+// patch=1,EE,005848EC,extended,00000001
+
+[Cheats/The Damned 1]
+// patch=1,EE,005848ED,extended,00000001
+
+[Cheats/All Elriu's Basement]
+// patch=1,EE,005848D9,extended,00000001
+// patch=1,EE,105848DA,extended,00000101
+// patch=1,EE,105848DC,extended,00000101
+// patch=1,EE,005848DE,extended,00000001
+// patch=1,EE,205848E8,extended,01010101
+// patch=1,EE,105848EC,extended,00000101
+
+[Cheats/Comic 3]
+// patch=1,EE,005848F7,extended,00000001
+
+[Cheats/Story Movie 4]
+// patch=1,EE,005848F9,extended,00000001
+
+[Cheats/Concept 8]
+// patch=1,EE,005848FA,extended,00000001
+
+[Cheats/Concept 9]
+// patch=1,EE,005848FB,extended,00000001
+
+[Cheats/Concept 10]
+// patch=1,EE,005848FC,extended,00000001
+
+[Cheats/Concept 11]
+// patch=1,EE,005848FD,extended,00000001
+
+[Cheats/Concept 12]
+// patch=1,EE,005848FE,extended,00000001
+
+[Cheats/Movie 8]
+// patch=1,EE,005848FF,extended,00000001
+
+[Cheats/Movie 9]
+// patch=1,EE,00584900,extended,00000001
+
+[Cheats/Movie 10]
+// patch=1,EE,00584901,extended,00000001
+
+[Cheats/The Damned 2]
+// patch=1,EE,00584902,extended,00000001
+
+[Cheats/All Edward Crowley Memory Library]
+// patch=1,EE,005848F7,extended,00000001
+// patch=1,EE,205848F8,extended,01010101
+// patch=1,EE,205848FC,extended,01010101
+// patch=1,EE,10584900,extended,00000101
+// patch=1,EE,00584902,extended,00000001
+
+[Cheats/Comic 4]
+// patch=1,EE,00584906,extended,00000001
+
+[Cheats/Story Movie 5]
+// patch=1,EE,00584907,extended,00000001
+
+[Cheats/Concept 13]
+// patch=1,EE,00584908,extended,00000001
+
+[Cheats/Concept 14]
+// patch=1,EE,00584909,extended,00000001
+
+[Cheats/Concept 15]
+// patch=1,EE,0058490A,extended,00000001
+
+[Cheats/Concept 16]
+// patch=1,EE,0058490B,extended,00000001
+
+[Cheats/Concept 17]
+// patch=1,EE,0058490C,extended,00000001
+
+[Cheats/Movie 11]
+// patch=1,EE,0058490D,extended,00000001
+
+[Cheats/Movie 12]
+// patch=1,EE,0058490E,extended,00000001
+
+[Cheats/Movie 13]
+// patch=1,EE,0058490F,extended,00000001
+
+[Cheats/Movie 14]
+// patch=1,EE,00584910,extended,00000001
+
+[Cheats/Movie 15]
+// patch=1,EE,00584911,extended,00000001
+
+[Cheats/All The Mortuary]
+// patch=1,EE,10584906,extended,00000101
+// patch=1,EE,20584908,extended,01010101
+// patch=1,EE,2058490C,extended,01010101
+// patch=1,EE,10584910,extended,00000101
+
+[Cheats/Comic 5]
+// patch=1,EE,00584915,extended,00000001
+
+[Cheats/Story Movie 6]
+// patch=1,EE,00584917,extended,00000001
+
+[Cheats/Comic]
+// patch=1,EE,00584918,extended,00000001
+
+[Cheats/Movie 16]
+// patch=1,EE,00584919,extended,00000001
+
+[Cheats/Movie 17]
+// patch=1,EE,0058491A,extended,00000001
+
+[Cheats/Movie 18]
+// patch=1,EE,0058491B,extended,00000001
+
+[Cheats/Movie 19]
+// patch=1,EE,0058491C,extended,00000001
+
+[Cheats/Movie 20]
+// patch=1,EE,0058491D,extended,00000001
+
+[Cheats/Movie 21]
+// patch=1,EE,0058491E,extended,00000001
+
+[Cheats/Movie 22]
+// patch=1,EE,0058491F,extended,00000001
+
+[Cheats/Movie 23]
+// patch=1,EE,00584920,extended,00000001
+
+[Cheats/All 13th Precinct House]
+// patch=1,EE,10584915,extended,00000001
+// patch=1,EE,10584916,extended,00000101
+// patch=1,EE,20584918,extended,01010101
+// patch=1,EE,2058491C,extended,01010101
+// patch=1,EE,00584920,extended,00000001
+
+[Cheats/Comic 6]
+// patch=1,EE,00584924,extended,00000001
+
+[Cheats/Story Movie 7]
+// patch=1,EE,00584926,extended,00000001
+
+[Cheats/Concept 18]
+// patch=1,EE,00584927,extended,00000001
+
+[Cheats/Concept 19]
+// patch=1,EE,00584928,extended,00000001
+
+[Cheats/Concept 20]
+// patch=1,EE,00584929,extended,00000001
+
+[Cheats/Concept 21]
+// patch=1,EE,0058492A,extended,00000001
+
+[Cheats/Movie 24]
+// patch=1,EE,0058492D,extended,00000001
+
+[Cheats/Movie 25]
+// patch=1,EE,0058492E,extended,00000001
+
+[Cheats/Movie 26]
+// patch=1,EE,0058492F,extended,00000001
+
+[Cheats/All Journey To Papa Midnite's]
+// patch=1,EE,40584924,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Comic 7]
+// patch=1,EE,00584933,extended,00000001
+
+[Cheats/Concept 21A]
+// patch=1,EE,00584934,extended,00000001
+
+[Cheats/Story Movie 8]
+// patch=1,EE,00584936,extended,00000001
+
+[Cheats/Story Movie 9]
+// patch=1,EE,00584937,extended,00000001
+
+[Cheats/Concept 22]
+// patch=1,EE,00584938,extended,00000001
+
+[Cheats/Movie 27]
+// patch=1,EE,00584939,extended,00000001
+
+[Cheats/Movie 28]
+// patch=1,EE,0058493A,extended,00000001
+
+[Cheats/Movie 29]
+// patch=1,EE,0058493B,extended,00000001
+
+[Cheats/Movie 30]
+// patch=1,EE,0058493C,extended,00000001
+
+[Cheats/The Damned 3]
+// patch=1,EE,0058493D,extended,00000001
+
+[Cheats/Interview 2]
+// patch=1,EE,0058493E,extended,00000001
+
+[Cheats/All Hell's Museum]
+// patch=1,EE,00584933,extended,00000001
+// patch=1,EE,20584934,extended,01010101
+// patch=1,EE,20584938,extended,01010101
+// patch=1,EE,1058493C,extended,00000101
+// patch=1,EE,0058493E,extended,00000001
+
+[Cheats/Comic 8]
+// patch=1,EE,00584942,extended,00000001
+
+[Cheats/Warrior]
+// patch=1,EE,00584943,extended,00000001
+
+[Cheats/Story Movie 10]
+// patch=1,EE,00584944,extended,00000001
+
+[Cheats/Concept 23]
+// patch=1,EE,00584945,extended,00000001
+
+[Cheats/Concept 24]
+// patch=1,EE,00584946,extended,00000001
+
+[Cheats/Concept 25]
+// patch=1,EE,00584947,extended,00000001
+
+[Cheats/Concept 26]
+// patch=1,EE,00584948,extended,00000001
+
+[Cheats/Concept 27]
+// patch=1,EE,00584949,extended,00000001
+// patch=1,EE,00584954,extended,00000001
+
+[Cheats/Lexicon]
+// patch=1,EE,0058494A,extended,00000001
+
+[Cheats/Movie 31]
+// patch=1,EE,0058494C,extended,00000001
+
+[Cheats/Movie 32]
+// patch=1,EE,0058494D,extended,00000001
+
+[Cheats/All 20 Lanes Bowling Alley]
+// patch=1,EE,10584942,extended,00000101
+// patch=1,EE,20584944,extended,01010101
+// patch=1,EE,20584948,extended,01010101
+// patch=1,EE,1058494C,extended,00000101
+
+[Cheats/Comic 9]
+// patch=1,EE,00584951,extended,00000001
+
+[Cheats/Sotry Movie 11]
+// patch=1,EE,00584953,extended,00000001
+
+[Cheats/Concept 28]
+// patch=1,EE,00584955,extended,00000001
+
+[Cheats/Concept 29]
+// patch=1,EE,00584956,extended,00000001
+
+[Cheats/Concept 30]
+// patch=1,EE,00584957,extended,00000001
+
+[Cheats/Movie 33]
+// patch=1,EE,00584958,extended,00000001
+
+[Cheats/Movie 34]
+// patch=1,EE,00584959,extended,00000001
+
+[Cheats/Movie 35]
+// patch=1,EE,0058495A,extended,00000001
+
+[Cheats/Movie 36]
+// patch=1,EE,0058495B,extended,00000001
+
+[Cheats/Interview 3]
+// patch=1,EE,0058495C,extended,00000001
+
+[Cheats/All Hell's Highway]
+// patch=1,EE,00584951,extended,00000001
+// patch=1,EE,10584952,extended,00000101
+// patch=1,EE,20584954,extended,01010101
+// patch=1,EE,20584958,extended,01010101
+// patch=1,EE,0058495C,extended,00000001
+
+[Cheats/Comic 10]
+// patch=1,EE,00584960,extended,00000001
+
+[Cheats/Concept 31]
+// patch=1,EE,00584961,extended,00000001
+
+[Cheats/Concept 32]
+// patch=1,EE,00584962,extended,00000001
+
+[Cheats/Condept 33]
+// patch=1,EE,00584963,extended,00000001
+
+[Cheats/Concept 34]
+// patch=1,EE,00584964,extended,00000001
+
+[Cheats/Concept 35]
+// patch=1,EE,00584965,extended,00000001
+
+[Cheats/Concept 36]
+// patch=1,EE,00584966,extended,00000001
+
+[Cheats/Concept 37]
+// patch=1,EE,00584967,extended,00000001
+
+[Cheats/Concept 38]
+// patch=1,EE,00584968,extended,00000001
+
+[Cheats/Concept 39]
+// patch=1,EE,00584969,extended,00000001
+
+[Cheats/Shotgun]
+// patch=1,EE,0058496A,extended,00000001
+
+[Cheats/Movie 37]
+// patch=1,EE,0058496B,extended,00000001
+
+[Cheats/All Hell's Temple]
+// patch=1,EE,40584960,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Comic 11]
+// patch=1,EE,0058496F,extended,00000001
+
+[Cheats/Story Movie 12]
+// patch=1,EE,00584970,extended,00000001
+
+[Cheats/Concept 40]
+// patch=1,EE,00584971,extended,00000001
+
+[Cheats/Concept 41]
+// patch=1,EE,00584972,extended,00000001
+
+[Cheats/Concept 42]
+// patch=1,EE,00584973,extended,00000001
+
+[Cheats/Concept 43]
+// patch=1,EE,00584974,extended,00000001
+
+[Cheats/Concept 44]
+// patch=1,EE,0058497E,extended,00000001
+
+[Cheats/Concept 45]
+// patch=1,EE,0058497F,extended,00000001
+
+[Cheats/Concept 46]
+// patch=1,EE,00584980,extended,00000001
+// patch=1,EE,20584980,extended,01010101
+
+[Cheats/Concept 47]
+// patch=1,EE,00584981,extended,00000001
+
+[Cheats/Movie 38]
+// patch=1,EE,00584982,extended,00000001
+
+[Cheats/The Damned 4]
+// patch=1,EE,00584983,extended,00000001
+
+[Cheats/All Balthazar Zymergy Registry Inc.]
+// patch=1,EE,0058496F,extended,00000001
+// patch=1,EE,20584970,extended,01010101
+// patch=1,EE,00584974,extended,00000001
+// patch=1,EE,1058497E,extended,00000101
+
+[Cheats/Comic 12]
+// patch=1,EE,2058498D,extended,00000001
+
+[Cheats/Story Movie 13]
+// patch=1,EE,2058498E,extended,00000001
+
+[Cheats/Concept 48]
+// patch=1,EE,2058498F,extended,00000001
+
+[Cheats/Concept 49]
+// patch=1,EE,20584990,extended,00000001
+
+[Cheats/COncept 50]
+// patch=1,EE,20584991,extended,00000001
+
+[Cheats/Comic 13]
+// patch=1,EE,20584992,extended,00000001
+
+[Cheats/Movie 39]
+// patch=1,EE,20584993,extended,00000001
+
+[Cheats/Movie 40]
+// patch=1,EE,20584994,extended,00000001
+
+[Cheats/Movie 41]
+// patch=1,EE,20584995,extended,00000001
+
+[Cheats/Movie 42]
+// patch=1,EE,20584996,extended,00000001
+
+[Cheats/Movie 43]
+// patch=1,EE,20584997,extended,00000001
+
+[Cheats/Movie 44]
+// patch=1,EE,20584998,extended,00000001
+
+[Cheats/All Ravenscar Hospital]
+// patch=1,EE,0058498D,extended,00000001
+// patch=1,EE,1058498E,extended,00000101
+// patch=1,EE,20584990,extended,01010101
+// patch=1,EE,20584994,extended,01010101
+// patch=1,EE,00584998,extended,00000001
+
+[Cheats/Story Movie 14]
+// patch=1,EE,0058499C,extended,00000001
+
+[Cheats/Story Movie 15]
+// patch=1,EE,0058499D,extended,00000001
+
+[Cheats/Concept 51]
+// patch=1,EE,0058499E,extended,00000001
+
+[Cheats/Movie 45]
+// patch=1,EE,005849A0,extended,00000001
+
+[Cheats/Movie 46]
+// patch=1,EE,005849A1,extended,00000001
+
+[Cheats/Movie 47]
+// patch=1,EE,005849A2,extended,00000001
+
+[Cheats/Movie 48]
+// patch=1,EE,005849A3,extended,00000001
+
+[Cheats/Movie 49]
+// patch=1,EE,005849A4,extended,00000001
+
+[Cheats/Movie 50]
+// patch=1,EE,005849A5,extended,00000001
+
+[Cheats/Movie 51]
+// patch=1,EE,005849A6,extended,00000001
+
+[Cheats/Movie 52]
+// patch=1,EE,005849A7,extended,00000001
+
+[Cheats/All Hydrotheraphy Pool Codes]
+// patch=1,EE,4058499C,extended,00030001
+// patch=1,EE,01010101,extended,00000000

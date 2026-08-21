@@ -1,0 +1,574 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Dynasty Warriors 3 [SLES-50641] [CACDA6A0]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Idiot AI]
+// patch=1,EE,901A88BC,extended,0C06D264
+
+[Cheats/Infinite Health (All Human Players)]
+// patch=1,EE,200C0220,extended,94C70220
+// patch=1,EE,200C0224,extended,08074A02
+// patch=1,EE,200C0228,extended,A4C7021C
+// patch=1,EE,201D2800,extended,08030088
+
+[Cheats/Infinite Musou (All Human Players)]
+// patch=1,EE,200C0230,extended,24070FFF
+// patch=1,EE,200C0234,extended,08074A1F
+// patch=1,EE,200C0238,extended,A4C70222
+// patch=1,EE,201D2874,extended,0803008C
+
+[Cheats/Have All Movies]
+// patch=1,EE,20326184,extended,FFFFFFFF
+
+[Cheats/Have All Levels]
+// patch=1,EE,20326120,extended,FFFFFFFF
+// patch=1,EE,20326124,extended,FFFFFFFF
+// patch=1,EE,20326128,extended,FFFFFFFF
+// patch=1,EE,2032612C,extended,FFFFFFFF
+// patch=1,EE,20326130,extended,FFFFFFFF
+// patch=1,EE,20326134,extended,FFFFFFFF
+// patch=1,EE,20326138,extended,FFFFFFFF
+// patch=1,EE,2032613C,extended,FFFFFFFF
+// patch=1,EE,20326140,extended,FFFFFFFF
+// patch=1,EE,20326144,extended,FFFFFFFF
+// patch=1,EE,20326148,extended,FFFFFFFF
+// patch=1,EE,2032614C,extended,FFFFFFFF
+// patch=1,EE,20326150,extended,FFFFFFFF
+// patch=1,EE,20326154,extended,FFFFFFFF
+// patch=1,EE,20326158,extended,FFFFFFFF
+
+[Cheats/Aggressive Enemies/Allies]
+// patch=1,EE,101445D8,extended,00000001
+
+[Cheats/Enemies Swarm Around You Harmlessly]
+// patch=1,EE,10179D78,extended,00000001
+// patch=1,EE,10179FE4,extended,00000001
+
+[Cheats/Horses Have Semi-Walk Through Walls Ability]
+// patch=1,EE,1014918E,extended,00000001
+
+[Cheats/Gate Captains Gates Never Close]
+// patch=1,EE,10144630,extended,00000001
+
+[Cheats/Easy Stat Up For Character]
+// patch=1,EE,1014D93E,extended,00000001
+
+[Cheats/Have All Weapons]
+// patch=1,EE,40325904,extended,00820004
+// patch=1,EE,00000000,extended,01010000
+
+[Cheats/Have All Characters]
+// patch=1,EE,0032615F,extended,00000001
+// patch=1,EE,40326160,extended,00080001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,00326180,extended,00000001
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,108E9AAC,extended,0000012C
+
+[Cheats/No Health P1]
+// patch=1,EE,108E9AAC,extended,00000000
+
+[Cheats/Max Health P1]
+// patch=1,EE,108E9AB0,extended,0000012C
+
+[Cheats/Infinite Musou P1]
+// patch=1,EE,108E9AB2,extended,0000012C
+
+[Cheats/No Musou P1]
+// patch=1,EE,108E9AB2,extended,00000000
+
+[Cheats/Max Musou P1]
+// patch=1,EE,108E9AE2,extended,0000012C
+
+[Cheats/Infinite Arrows P1]
+// patch=1,EE,108E9AE0,extended,00000063
+
+[Cheats/No Arrows P1]
+// patch=1,EE,108E9AE0,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,108E9D2C,extended,0000012C
+
+[Cheats/No Health P2]
+// patch=1,EE,108E9D2C,extended,00000000
+
+[Cheats/Max Health P2]
+// patch=1,EE,108E9D30,extended,0000012C
+
+[Cheats/Infinite Musou P2]
+// patch=1,EE,108E9D32,extended,0000012C
+
+[Cheats/No Musou P2]
+// patch=1,EE,108E9D32,extended,00000000
+
+[Cheats/Max Musou P2]
+// patch=1,EE,108E9D62,extended,0000012C
+
+[Cheats/Infinite Arrows P2]
+// patch=1,EE,108E9D60,extended,00000063
+
+[Cheats/No Arrows P2]
+// patch=1,EE,108E9D60,extended,00000000
+
+[Cheats/Speed Scroll]
+// patch=1,EE,103258C8,extended,00006300
+
+[Cheats/Boots]
+// patch=1,EE,103258CA,extended,00006301
+
+[Cheats/Dragon Amulet]
+// patch=1,EE,103258CC,extended,00006302
+
+[Cheats/Peacock Urn]
+// patch=1,EE,103258CE,extended,00006303
+
+[Cheats/Tiger Amulet]
+// patch=1,EE,103258D0,extended,00006304
+
+[Cheats/Tortoise Amulet]
+// patch=1,EE,103258D2,extended,00006305
+
+[Cheats/Huangs Bow]
+// patch=1,EE,103258D4,extended,00006306
+
+[Cheats/Shell Armor]
+// patch=1,EE,103258D6,extended,00006307
+
+[Cheats/Horned Helm]
+// patch=1,EE,103258D8,extended,00006308
+
+[Cheats/Cavalry Armor]
+// patch=1,EE,103258DA,extended,00006309
+
+[Cheats/Seven Star Orb]
+// patch=1,EE,103258DC,extended,0000630A
+
+[Cheats/Wind Scroll]
+// patch=1,EE,103258DE,extended,0000630B
+
+[Cheats/Elixir]
+// patch=1,EE,103258E0,extended,0000630C
+
+[Cheats/Red Hare Saddle]
+// patch=1,EE,103258E2,extended,0000630D
+
+[Cheats/Hex Mark Saddle]
+// patch=1,EE,103258E4,extended,0000630E
+
+[Cheats/Imperial Saddle]
+// patch=1,EE,103258E6,extended,0000630F
+
+[Cheats/The Art Of War]
+// patch=1,EE,103258E8,extended,00006310
+
+[Cheats/Bodyguard Manual]
+// patch=1,EE,103258EA,extended,00006311
+
+[Cheats/The Way Of Musou]
+// patch=1,EE,103258EC,extended,00006312
+
+[Cheats/Survival Guide]
+// patch=1,EE,103258EE,extended,00006313
+
+[Cheats/Defender]
+// patch=1,EE,103258F0,extended,00006314
+
+[Cheats/Fire Arrows]
+// patch=1,EE,103258F2,extended,00006315
+
+[Cheats/Buckler]
+// patch=1,EE,103258F4,extended,00006316
+
+[Cheats/Power Scroll]
+// patch=1,EE,103258F6,extended,00006317
+
+[Cheats/Gold Harness]
+// patch=1,EE,103258F8,extended,00006318
+
+[Cheats/Iron Sword]
+// patch=1,EE,10325906,extended,00000000
+
+[Cheats/Steel Sword]
+// patch=1,EE,10325916,extended,00000101
+
+[Cheats/Board Sword]
+// patch=1,EE,10325926,extended,00000202
+
+[Cheats/Long Sword]
+// patch=1,EE,10325936,extended,00000303
+
+[Cheats/Scimitar]
+// patch=1,EE,10325946,extended,00000404
+
+[Cheats/Great Scimitar]
+// patch=1,EE,10325956,extended,00000505
+
+[Cheats/Spear]
+// patch=1,EE,10325966,extended,00000606
+
+[Cheats/Long Spear]
+// patch=1,EE,10325976,extended,00000707
+
+[Cheats/Halberd]
+// patch=1,EE,10325986,extended,00000808
+
+[Cheats/Great Halberd]
+// patch=1,EE,10325996,extended,00000909
+
+[Cheats/Hand Aze]
+// patch=1,EE,103259A6,extended,00000A0A
+
+[Cheats/Strike Axe]
+// patch=1,EE,103259B6,extended,00000B0B
+
+[Cheats/Club]
+// patch=1,EE,103259C6,extended,00000C0C
+
+[Cheats/Spiked Club]
+// patch=1,EE,103259D6,extended,00000D0D
+
+[Cheats/Twin Sabers]
+// patch=1,EE,103259E6,extended,00000E0E
+
+[Cheats/Wing Sabers]
+// patch=1,EE,103259F6,extended,00000F0F
+
+[Cheats/Twin Rods]
+// patch=1,EE,10325A06,extended,00001010
+
+[Cheats/Spira Rods]
+// patch=1,EE,10325A16,extended,00001111
+
+[Cheats/Mace]
+// patch=1,EE,10325A26,extended,00001212
+
+[Cheats/Great Mace]
+// patch=1,EE,10325A36,extended,00001313
+
+[Cheats/War Fan]
+// patch=1,EE,10325A46,extended,00001414
+
+[Cheats/Warlord Fan]
+// patch=1,EE,10325A56,extended,00001515
+
+[Cheats/Chakram]
+// patch=1,EE,10325A66,extended,00001616
+
+[Cheats/Crescent Chakram]
+// patch=1,EE,10325A76,extended,00001717
+
+[Cheats/Battle Axe]
+// patch=1,EE,10325A86,extended,00001818
+
+[Cheats/War Axe]
+// patch=1,EE,10325A96,extended,00001919
+
+[Cheats/Bronze Claw]
+// patch=1,EE,10325AA6,extended,00001A1A
+
+[Cheats/Steel Claw]
+// patch=1,EE,10325AB6,extended,00001B1B
+
+[Cheats/Iron Flute]
+// patch=1,EE,10325AC6,extended,00001C1C
+
+[Cheats/Steel Flute]
+// patch=1,EE,10325AD6,extended,00001D1D
+
+[Cheats/Iron Rod]
+// patch=1,EE,10325AE6,extended,00001E1E
+
+[Cheats/Steel Rod]
+// patch=1,EE,10325AF6,extended,00001F1F
+
+[Cheats/Tonfa]
+// patch=1,EE,10325B06,extended,00002020
+
+[Cheats/Studded Tonfa]
+// patch=1,EE,10325B16,extended,00002121
+
+[Cheats/Double Voulge]
+// patch=1,EE,10325B26,extended,00002222
+
+[Cheats/Strike Voulge]
+// patch=1,EE,10325B36,extended,00002323
+
+[Cheats/Staff]
+// patch=1,EE,10325B46,extended,00002424
+
+[Cheats/Mirage Staff]
+// patch=1,EE,10325B56,extended,00002525
+
+[Cheats/Nanman Gauntlet]
+// patch=1,EE,10325B66,extended,00002626
+
+[Cheats/Beast Gauntlet]
+// patch=1,EE,10325B76,extended,00002727
+
+[Cheats/Boomerang]
+// patch=1,EE,10325B86,extended,00002828
+
+[Cheats/Hawk Boomberang]
+// patch=1,EE,10325B96,extended,00002929
+
+[Cheats/Twin Fans]
+// patch=1,EE,10325BA6,extended,00002A2A
+
+[Cheats/Violet Fans]
+// patch=1,EE,10325BB6,extended,00002B2B
+
+[Cheats/Bastard Sword]
+// patch=1,EE,10325BC6,extended,00002C2C
+
+[Cheats/Great Sword]
+// patch=1,EE,10325BD6,extended,00002D2D
+
+[Cheats/Rapier]
+// patch=1,EE,10325BE6,extended,00002E2E
+
+[Cheats/Swift Rapier]
+// patch=1,EE,10325BF6,extended,00002F2F
+
+[Cheats/Dragon Spear]
+// patch=1,EE,10325C06,extended,00003030
+
+[Cheats/Blue Dragon]
+// patch=1,EE,10325C16,extended,00003131
+
+[Cheats/Snake Blade]
+// patch=1,EE,10325C26,extended,00003232
+
+[Cheats/Kirin Sword]
+// patch=1,EE,10325C36,extended,00003333
+
+[Cheats/Bull]
+// patch=1,EE,10325C46,extended,00003434
+
+[Cheats/Bone Crusher]
+// patch=1,EE,10325C56,extended,00003535
+
+[Cheats/Elder Sword]
+// patch=1,EE,10325C66,extended,00003636
+
+[Cheats/Eagle]
+// patch=1,EE,10325C76,extended,00003737
+
+[Cheats/Wolf Slayer]
+// patch=1,EE,10325C86,extended,00003838
+
+[Cheats/Gold Orb]
+// patch=1,EE,10325C96,extended,00003939
+
+[Cheats/White Feather]
+// patch=1,EE,10325CA6,extended,00003A3A
+
+[Cheats/Sword Of Heaven]
+// patch=1,EE,10325CB6,extended,00003B3B
+
+[Cheats/Sky Piercer]
+// patch=1,EE,10325CC6,extended,00003C3C
+
+[Cheats/Luna Charm]
+// patch=1,EE,10325CD6,extended,00003D3D
+
+[Cheats/Gold Dragon]
+// patch=1,EE,10325CE6,extended,00003E3E
+
+[Cheats/Lone Wolf]
+// patch=1,EE,10325CF6,extended,00003F3F
+
+[Cheats/King Wolf]
+// patch=1,EE,10325D06,extended,00004040
+
+[Cheats/Star Sword]
+// patch=1,EE,10325D16,extended,00004141
+
+[Cheats/Master Sword]
+// patch=1,EE,10325D26,extended,00004242
+
+[Cheats/Steel Stallion]
+// patch=1,EE,10325D36,extended,00004343
+
+[Cheats/Sage Sword]
+// patch=1,EE,10325D46,extended,00004444
+
+[Cheats/Demon Sword]
+// patch=1,EE,10325D56,extended,00004545
+
+[Cheats/Dragon Blade]
+// patch=1,EE,10325D66,extended,00004646
+
+[Cheats/Black Feather]
+// patch=1,EE,10325D76,extended,00004747
+
+[Cheats/Tiger Hook]
+// patch=1,EE,10325D86,extended,00004848
+
+[Cheats/River Master]
+// patch=1,EE,10325D96,extended,00004949
+
+[Cheats/Vapor]
+// patch=1,EE,10325DA6,extended,00004A4A
+
+[Cheats/Staff Of Fire]
+// patch=1,EE,10325DB6,extended,00004B4B
+
+[Cheats/Destroyer]
+// patch=1,EE,10325DC6,extended,00004C4C
+
+[Cheats/Peacock Claw]
+// patch=1,EE,10325DD6,extended,00004D4D
+
+[Cheats/Moon Flute]
+// patch=1,EE,10325DE6,extended,00004E4E
+
+[Cheats/Shadow Rod]
+// patch=1,EE,10325DF6,extended,00004F4F
+
+[Cheats/Conqueror]
+// patch=1,EE,10325E06,extended,00005050
+
+[Cheats/Double Star]
+// patch=1,EE,10325E16,extended,00005151
+
+[Cheats/Staff Of Wind]
+// patch=1,EE,10325E26,extended,00005252
+
+[Cheats/Beast Master]
+// patch=1,EE,10325E36,extended,00005353
+
+[Cheats/Fire Wheel]
+// patch=1,EE,10325E46,extended,00005454
+
+[Cheats/Beauty]
+// patch=1,EE,10325E56,extended,00005555
+
+[Cheats/Grace]
+// patch=1,EE,10325E66,extended,00005656
+
+[Cheats/Holy Avenger]
+// patch=1,EE,10325E76,extended,00005757
+
+[Cheats/Celestial Blade]
+// patch=1,EE,10325E86,extended,00005858
+
+[Cheats/Fierce Dragon]
+// patch=1,EE,10325E96,extended,00005959
+
+[Cheats/Blue Moon Dragon]
+// patch=1,EE,10325EA6,extended,00005A5A
+
+[Cheats/Viper Blade]
+// patch=1,EE,10325EB6,extended,00005B5B
+
+[Cheats/Kirin Fang]
+// patch=1,EE,10325EC6,extended,00005C5C
+
+[Cheats/Mad Bull]
+// patch=1,EE,10325ED6,extended,00005D5D
+
+[Cheats/Stone Crusher]
+// patch=1,EE,10325EE6,extended,00005E5E
+
+[Cheats/Ancients Sword]
+// patch=1,EE,10325EF6,extended,00005F5F
+
+[Cheats/Falcon]
+// patch=1,EE,10325F06,extended,00006060
+
+[Cheats/Tiger Slayer]
+// patch=1,EE,10325F16,extended,00006161
+
+[Cheats/Gold Globe]
+// patch=1,EE,10325F26,extended,00006262
+
+[Cheats/Peacock Feather]
+// patch=1,EE,10325F36,extended,00006363
+
+[Cheats/Wrath Of Heaven]
+// patch=1,EE,10325F46,extended,00006464
+
+[Cheats/Sky Scorcher]
+// patch=1,EE,10325F56,extended,00006565
+
+[Cheats/Sol Chakram]
+// patch=1,EE,10325F66,extended,00006666
+
+[Cheats/Gold Moon Dragon]
+// patch=1,EE,10325F76,extended,00006767
+
+[Cheats/Master Wolf]
+// patch=1,EE,10325F96,extended,00006969
+
+[Cheats/Grand Star]
+// patch=1,EE,10325FA6,extended,00006A6A
+
+[Cheats/Grand Master]
+// patch=1,EE,10325FB6,extended,00006B6B
+
+[Cheats/Steel Dragon]
+// patch=1,EE,10325FC6,extended,00006C6C
+
+[Cheats/Oracle Sword]
+// patch=1,EE,10325FD6,extended,00006D6D
+
+[Cheats/Demon Fang]
+// patch=1,EE,10325FE6,extended,00006E6E
+
+[Cheats/Dragon Breath]
+// patch=1,EE,10325FF6,extended,00006F6F
+
+[Cheats/Dark Feather]
+// patch=1,EE,10326006,extended,00007070
+
+[Cheats/White Tiger]
+// patch=1,EE,10326016,extended,00007171
+
+[Cheats/Sea Master]
+// patch=1,EE,10326026,extended,00007272
+
+[Cheats/Blink]
+// patch=1,EE,10326036,extended,00007373
+
+[Cheats/Volcano Staff]
+// patch=1,EE,10326046,extended,00007474
+
+[Cheats/Marauder]
+// patch=1,EE,10326056,extended,00007575
+
+[Cheats/Peacock Talon]
+// patch=1,EE,10326066,extended,00007676
+
+[Cheats/Dark Moon Flute]
+// patch=1,EE,10326076,extended,00007777
+
+[Cheats/Black Shadow]
+// patch=1,EE,10326086,extended,00007878
+
+[Cheats/Overlord]
+// patch=1,EE,10326096,extended,00007979
+
+[Cheats/Double Comet]
+// patch=1,EE,103260A6,extended,00007A7A
+
+[Cheats/Tornado Staff]
+// patch=1,EE,103260B6,extended,00007B7B
+
+[Cheats/King Of Beasts]
+// patch=1,EE,103260C6,extended,00007C7C
+
+[Cheats/Magma Wheel]
+// patch=1,EE,103260D6,extended,00007D7D
+
+[Cheats/True Beauty]
+// patch=1,EE,103260E6,extended,00007E7E
+
+[Cheats/True Grace]
+// patch=1,EE,103260F6,extended,00007F7F
+
+[Cheats/Fu Xis Sword]
+// patch=1,EE,10326106,extended,00008080
+
+[Cheats/Nu Was Rapier]
+// patch=1,EE,10326116,extended,00008181

@@ -1,0 +1,82 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: MX Superfly [SLUS-20381] [0CD3C2F6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/9 Opponents]
+// patch=1,EE,F0100008,extended,0012C6A7
+
+[Cheats/Max Race Points]
+// patch=1,EE,1041FEE4,extended,000003E7
+
+[Cheats/Infinite Money]
+// patch=1,EE,104204A8,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,204204A8,extended,05F5E0FF
+
+[Cheats/Idiot AI]
+// patch=1,EE,201E0C10,extended,03E00008
+// patch=1,EE,201E0C14,extended,00000000
+
+[Cheats/Have All Riders]
+// patch=1,EE,20412D20,extended,00000000
+
+[Cheats/Have All Bikes]
+// patch=1,EE,20412D24,extended,0000FFFF
+
+[Cheats/Have All Mini-Games]
+// patch=1,EE,20412D28,extended,0000FFFF
+
+[Cheats/1 Lap]
+// patch=1,EE,20412340,extended,00000000
+
+[Cheats/2 Laps]
+// patch=1,EE,20412340,extended,00000001
+
+[Cheats/3 Laps]
+// patch=1,EE,20412340,extended,00000002
+
+[Cheats/4 Laps]
+// patch=1,EE,20412340,extended,00000003
+
+[Cheats/5 Laps]
+// patch=1,EE,20412340,extended,00000004
+
+[Cheats/6 Laps]
+// patch=1,EE,20412340,extended,00000005
+
+[Cheats/7 Laps]
+// patch=1,EE,20412340,extended,00000006
+
+[Cheats/8 Laps]
+// patch=1,EE,20412340,extended,00000007
+
+[Cheats/9 Laps]
+// patch=1,EE,20412340,extended,00000008
+
+[Cheats/10 Laps]
+// patch=1,EE,20412340,extended,00000009
+
+[Cheats/No Opponents]
+// patch=1,EE,2041232C,extended,00000000
+
+[Cheats/1 Opponent]
+// patch=1,EE,2041232C,extended,00000001
+
+[Cheats/2 Opponents]
+// patch=1,EE,2041232C,extended,00000002
+
+[Cheats/3 Opponents]
+// patch=1,EE,2041232C,extended,00000003
+
+[Cheats/4 Opponents]
+// patch=1,EE,2041232C,extended,00000004
+
+[Cheats/5 Opponents]
+// patch=1,EE,2041232C,extended,00000005
+
+[Cheats/6 Opponents]
+// patch=1,EE,2041232C,extended,00000006
+
+[Cheats/7 Opponents]
+// patch=1,EE,2041232C,extended,00000007

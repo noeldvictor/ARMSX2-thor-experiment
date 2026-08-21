@@ -1,0 +1,45 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Gitaroo Man [SLPM-65012] [C1767D64]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Missions]
+// patch=1,EE,F0100008,extended,001350A7
+
+[Cheats/Have All Collection]
+// patch=1,EE,2029C0A0,extended,FFFFFFFF
+
+[Cheats/Movie 1]
+// patch=1,EE,2026EA20,extended,00000001
+
+[Cheats/Movie 2]
+// patch=1,EE,2026EA30,extended,00000001
+
+[Cheats/Movie 3]
+// patch=1,EE,2026EA40,extended,00000001
+
+[Cheats/Movie 4]
+// patch=1,EE,2026EA50,extended,00000001
+
+[Cheats/Movie 5]
+// patch=1,EE,2026EA60,extended,00000001
+
+[Cheats/Movie 6]
+// patch=1,EE,2026EA70,extended,00000001
+
+[Cheats/Movie 7]
+// patch=1,EE,2026EA80,extended,00000001
+
+[Cheats/Movie 8]
+// patch=1,EE,2026EA90,extended,00000001
+
+[Cheats/Movie 9]
+// patch=1,EE,2026EAA0,extended,00000001
+
+[Cheats/Movie 10]
+// patch=1,EE,2026EAB0,extended,00000001
+
+[Cheats/Movie 11]
+// patch=1,EE,2026EAC0,extended,00000001
+
+[Cheats/Movie 12]
+// patch=1,EE,2026EAD0,extended,00000001

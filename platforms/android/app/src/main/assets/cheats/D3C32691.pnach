@@ -1,0 +1,76 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sled Storm [SLUS-20363] [D3C32691]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Scores]
+// patch=1,EE,902D7DE4,extended,0C0B9BDD
+
+[Cheats/Max Points]
+// patch=1,EE,20B0C2B0,extended,0098967F
+
+[Cheats/Start On Last Lap]
+// patch=1,EE,200C0220,extended,8C820028
+// patch=1,EE,200C0224,extended,14400003
+// patch=1,EE,200C0228,extended,00000000
+// patch=1,EE,200C022C,extended,24020002
+// patch=1,EE,200C0230,extended,AC820028
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,00000000
+// patch=1,EE,2019993C,extended,0C030088
+
+[Cheats/Have All Characters]
+// patch=1,EE,20B0CD40,extended,01010101
+// patch=1,EE,20B0CD44,extended,01010101
+// patch=1,EE,00B0CD48,extended,00000001
+
+[Cheats/Have All Single Player Levels]
+// patch=1,EE,00B0CD49,extended,00000001
+// patch=1,EE,10B0CD4A,extended,00000101
+// patch=1,EE,10B0CD4C,extended,00000101
+// patch=1,EE,00B0CD4E,extended,00000001
+
+[Cheats/Have All Gold Medals]
+// patch=1,EE,00B0D087,extended,00000001
+// patch=1,EE,40B0D088,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Championship Levels]
+// patch=1,EE,00B0CDE1,extended,00000001
+// patch=1,EE,10B0CDE2,extended,00000101
+// patch=1,EE,10B0CDE4,extended,00000101
+// patch=1,EE,00B0CDE6,extended,00000001
+// patch=1,EE,00B0CE45,extended,00000001
+// patch=1,EE,10B0CE46,extended,00000101
+// patch=1,EE,10B0CE48,extended,00000101
+// patch=1,EE,00B0CE4A,extended,00000001
+// patch=1,EE,00B0CD7D,extended,00000001
+// patch=1,EE,10B0CD7E,extended,00000101
+// patch=1,EE,10B0CD80,extended,00000101
+// patch=1,EE,00B0CD82,extended,00000001
+// patch=1,EE,00B0CEA9,extended,00000001
+// patch=1,EE,10B0CEAA,extended,00000101
+// patch=1,EE,10B0CEAC,extended,00000101
+// patch=1,EE,00B0CEAE,extended,00000001
+// patch=1,EE,00B0CE77,extended,00000001
+// patch=1,EE,20B0CE78,extended,01010101
+// patch=1,EE,00B0CE7C,extended,00000001
+// patch=1,EE,00B0CDAF,extended,00000001
+// patch=1,EE,20B0CDB0,extended,01010101
+// patch=1,EE,00B0CDB4,extended,00000001
+// patch=1,EE,00B0CEDB,extended,00000001
+// patch=1,EE,20B0CEDC,extended,01010101
+// patch=1,EE,00B0CEE0,extended,00000001
+// patch=1,EE,00B0CE13,extended,00000001
+// patch=1,EE,20B0CE14,extended,01010101
+// patch=1,EE,00B0CE18,extended,00000001
+
+[Cheats/Unlock All Sleds]
+// patch=1,EE,40B0CDB8,extended,000B0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,40B0CE1C,extended,000B0001
+// patch=1,EE,40B0CD54,extended,000B0001
+// patch=1,EE,40B0CE80,extended,000B0001
+// patch=1,EE,40B0CE4C,extended,000B0001
+// patch=1,EE,40B0CD84,extended,000B0001
+// patch=1,EE,40B0CEB0,extended,000B0001
+// patch=1,EE,40B0CDEC,extended,000B0001

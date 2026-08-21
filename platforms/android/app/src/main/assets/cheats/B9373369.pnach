@@ -1,0 +1,36 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: World Rally Championship [SCES-50139] [B9373369]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Showdowns Won]
+// patch=1,EE,901A1124,extended,0C0620CA
+
+[Cheats/Upside Down Cameras]
+// patch=1,EE,00B959DC,extended,00000001
+
+[Cheats/Increased Acceleration And Top Speed]
+// patch=1,EE,00B959DD,extended,00000001
+
+[Cheats/Speeded Up Codriver Calls]
+// patch=1,EE,00B959DE,extended,00000001
+
+[Cheats/Underwater Visual Effect]
+// patch=1,EE,00B959DF,extended,00000001
+
+[Cheats/Top Down Camera]
+// patch=1,EE,00B959E0,extended,00000001
+
+[Cheats/Removed Car Shell]
+// patch=1,EE,00B959E1,extended,00000001
+
+[Cheats/Flying Car In Replay]
+// patch=1,EE,00B959E2,extended,00000001
+
+[Cheats/Psychadelic Visual Effect]
+// patch=1,EE,00B959E3,extended,00000001
+
+[Cheats/All Bonus Stages Unlocked]
+// patch=1,EE,00B959E4,extended,00000001
+
+[Cheats/Everything Unlocked]
+// patch=1,EE,00B959E5,extended,00000001

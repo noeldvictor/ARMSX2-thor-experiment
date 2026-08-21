@@ -1,0 +1,41 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Kinetica [SCUS-97132] [D39C08F5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {L2}+{SELECT} For Victory On Current Level]
+// patch=1,EE,901ACF94,extended,0C07076B
+
+[Cheats/Infinite Retries]
+// patch=1,EE,201FCB6C,extended,00000009
+// patch=1,EE,2020ABD8,extended,00000009
+
+[Cheats/Extra Retries]
+// patch=1,EE,101236D0,extended,00000001
+
+[Cheats/Infinite Boost]
+// patch=1,EE,200C0220,extended,E6A302A4
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,C6A102A4
+// patch=1,EE,201251E4,extended,0C030088
+
+[Cheats/Have All Seasons Complete]
+// patch=1,EE,201FCE80,extended,00000004
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,2020AE74,extended,00000000
+
+[Cheats/Always Low Lap Time]
+// patch=1,EE,2020AEA0,extended,00000000
+
+[Cheats/All Races Are 1 Lap]
+// patch=1,EE,2012B138,extended,24060001
+
+[Cheats/All Races Are 5 Laps]
+// patch=1,EE,2012B138,extended,24060005
+
+[Cheats/All Races Are 10 Laps]
+// patch=1,EE,2012B138,extended,2406000A
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,401FCE2C,extended,00120001
+// patch=1,EE,00000001,extended,00000000

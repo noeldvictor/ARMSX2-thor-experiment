@@ -1,0 +1,554 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rumble Roses [SLES-52535] [81C67E91]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Press {L1}+{L2} For More Time]
+// patch=1,EE,90121E08,extended,00832021
+
+[Cheats/Infinite Time]
+// patch=1,EE,20382944,extended,00000000
+
+[Cheats/Stop Timer]
+// patch=1,EE,201C3994,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Timer]
+// patch=1,EE,D1D75F42,extended,0000FBFE
+// patch=1,EE,201C3994,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Restart Timer]
+// patch=1,EE,D1D75F42,extended,0000FEFE
+// patch=1,EE,201C3994,extended,AF8384D4
+
+[Cheats/Infinite Lethal Moves P1]
+// patch=1,EE,216D6EEC,extended,00000005
+
+[Cheats/No Lethal Moves P1]
+// patch=1,EE,216D6EEC,extended,00000000
+
+[Cheats/Always Full Lethal Move Indicator P1]
+// patch=1,EE,216D6EF4,extended,00000064
+
+[Cheats/Always Empty Lethal Move Indicator P1]
+// patch=1,EE,216D6EF4,extended,00000000
+
+[Cheats/Always No Humiliation P1]
+// patch=1,EE,216D6FC8,extended,00000000
+// patch=1,EE,216D6FCC,extended,00000000
+// patch=1,EE,216D6FD0,extended,00000000
+
+[Cheats/Always Max Humilation P1]
+// patch=1,EE,216D6FC8,extended,0000000A
+// patch=1,EE,216D6FCC,extended,41C80000
+// patch=1,EE,216D6FD0,extended,000003E7
+
+[Cheats/Infinite Lethal Moves P2]
+// patch=1,EE,2156AEEC,extended,00000005
+
+[Cheats/No Lethal Moves P2]
+// patch=1,EE,2156AEEC,extended,00000000
+
+[Cheats/Always Full Lethal Move Indicator P2]
+// patch=1,EE,2156AEF4,extended,00000064
+
+[Cheats/Always Empty Lethal Move Indicator P2]
+// patch=1,EE,2156AEF4,extended,00000000
+
+[Cheats/Always No Humiliation P2]
+// patch=1,EE,2156AFC8,extended,00000000
+// patch=1,EE,2156AFCC,extended,00000000
+// patch=1,EE,2156AFD0,extended,00000000
+
+[Cheats/Always Max Humilation P2]
+// patch=1,EE,2156AFC8,extended,0000000A
+// patch=1,EE,2156AFCC,extended,41C80000
+// patch=1,EE,2156AFD0,extended,000003E7
+
+[Cheats/Unlock All Costumes]
+// patch=1,EE,403DA8A0,extended,00070001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/Disable Shadows]
+// patch=1,EE,201F1048,extended,00000000
+
+[Cheats/Disable Pinfall Victories]
+// patch=1,EE,201C449C,extended,00000000
+
+[Cheats/P1 Press {R1}+{SELECT} To Reset Pin Count To Zero]
+// patch=1,EE,D1D75F42,extended,0000F7FE
+// patch=1,EE,201C4498,extended,24030000
+// patch=1,EE,D1D75F42,extended,0000FFFF
+// patch=1,EE,201C4498,extended,24630001
+
+[Cheats/P1 Press {R2}+{SELECT} To For 3-Count]
+// patch=1,EE,D1D75F42,extended,0000FDFE
+// patch=1,EE,201C4498,extended,240300FF
+// patch=1,EE,D1D75F42,extended,0000FFFF
+// patch=1,EE,201C4498,extended,24630001
+
+[Cheats/First Player To Do A Submission/Humilation Wins]
+// patch=1,EE,2022DD78,extended,00000000
+
+[Cheats/Infinite Time To Break Submission/Humilation]
+// patch=1,EE,2022DDE4,extended,00000000
+
+[Cheats/Can Use All Costumes In Mad Mud Match]
+// patch=1,EE,102841EA,extended,00001000
+
+[Cheats/Disable HUD]
+// patch=1,EE,2029E560,extended,03E00008
+// patch=1,EE,2029E564,extended,00000000
+
+[Cheats/P1 Press {L1}+{L2} To Disable HUD]
+// patch=1,EE,E002FAFF,extended,01D75F42
+// patch=1,EE,2029E560,extended,03E00008
+// patch=1,EE,2029E564,extended,00000000
+
+[Cheats/P1 Press {R1}+{R2} To Re-Enable HUD]
+// patch=1,EE,E002FAFF,extended,01D75F42
+// patch=1,EE,2029E560,extended,27BDFE40
+// patch=1,EE,2029E564,extended,FFBF0090
+
+[Cheats/Disable Health Bars]
+// patch=1,EE,2029EEA0,extended,03E00008
+// patch=1,EE,2029EEA4,extended,00000000
+
+[Cheats/Idiot AI]
+// patch=1,EE,202DE260,extended,03E00008
+// patch=1,EE,202DE264,extended,00000000
+
+[Cheats/Gallery Camera Can Zoom More]
+// patch=1,EE,10304A36,extended,00001000
+// patch=1,EE,20304A54,extended,00000000
+
+[Cheats/P1 Press {L1}+{R1} To Freeze Characters]
+// patch=1,EE,D1D75F42,extended,0000F3FF
+// patch=1,EE,203829A0,extended,00000001
+
+[Cheats/P1 Press {L1}+{R2} To Unfreeze Characters]
+// patch=1,EE,D1D75F42,extended,0000FCFF
+// patch=1,EE,203829A0,extended,00000000
+
+[Cheats/Activation Code (Use With Frozen Characters)]
+// patch=1,EE,200C0020,extended,3C07000C
+// patch=1,EE,200C0024,extended,24020003
+// patch=1,EE,200C0028,extended,00A03021
+// patch=1,EE,200C002C,extended,C4C00030
+// patch=1,EE,200C0030,extended,C4E10000
+// patch=1,EE,200C0034,extended,46000800
+// patch=1,EE,200C0038,extended,E4C00030
+// patch=1,EE,200C003C,extended,24C60004
+// patch=1,EE,200C0040,extended,24E70004
+// patch=1,EE,200C0044,extended,2442FFFF
+// patch=1,EE,200C0048,extended,1C40FFF8
+// patch=1,EE,200C004C,extended,00000000
+// patch=1,EE,200C0050,extended,C6400164
+// patch=1,EE,200C0054,extended,C4E10000
+// patch=1,EE,200C0058,extended,46000800
+// patch=1,EE,200C005C,extended,E6400164
+// patch=1,EE,200C0060,extended,03E00008
+// patch=1,EE,200C0064,extended,3C0340F0
+// patch=1,EE,201B5C20,extended,0C030008
+// patch=1,EE,E002FFFF,extended,01D75F42
+// patch=1,EE,400C0000,extended,00040001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,200C0080,extended,3C07000C
+// patch=1,EE,200C0084,extended,C6A00054
+// patch=1,EE,200C0088,extended,C4E10010
+// patch=1,EE,200C008C,extended,46000800
+// patch=1,EE,200C0090,extended,E6A00054
+// patch=1,EE,200C0094,extended,C6A00058
+// patch=1,EE,200C0098,extended,C4E10014
+// patch=1,EE,200C009C,extended,46000800
+// patch=1,EE,200C00A0,extended,0806D779
+// patch=1,EE,200C00A4,extended,E6A00058
+// patch=1,EE,E006FFFF,extended,01D75F42
+// patch=1,EE,200C0010,extended,00000000
+// patch=1,EE,200C0014,extended,00000000
+// patch=1,EE,201B5DAC,extended,00000000
+// patch=1,EE,201B5DC4,extended,00000000
+// patch=1,EE,201B5DD0,extended,00000000
+// patch=1,EE,201B5DD8,extended,08030020
+// patch=1,EE,E004FFF9,extended,01D75F42
+// patch=1,EE,201B5DAC,extended,AEA30054
+// patch=1,EE,201B5DC4,extended,AEA30054
+// patch=1,EE,201B5DD0,extended,AEA30054
+// patch=1,EE,201B5DD8,extended,3C03BE68
+
+[Cheats/P1 Press {R1}+Right To Increase X-Position]
+// patch=1,EE,D1D75F42,extended,0000F7DF
+// patch=1,EE,200C0000,extended,3E000000
+
+[Cheats/P1 Press {L1}+Right To Increase X-Position Slower]
+// patch=1,EE,D1D75F42,extended,0000FBDF
+// patch=1,EE,200C0000,extended,3D000000
+
+[Cheats/P1 Press {R1}+Left To Decrease X-Position]
+// patch=1,EE,D1D75F42,extended,0000F77F
+// patch=1,EE,200C0000,extended,BE000000
+
+[Cheats/P1 Press {L1}+Left To Decrease X-Position Slower]
+// patch=1,EE,D1D75F42,extended,0000FB7F
+// patch=1,EE,200C0000,extended,BD000000
+
+[Cheats/P1 Press {R1}+Up To Increase Y-Position]
+// patch=1,EE,D1D75F42,extended,0000F7EF
+// patch=1,EE,200C0004,extended,3E000000
+
+[Cheats/P1 Press {L1}+Up To Increase Y-Position Slower]
+// patch=1,EE,D1D75F42,extended,0000FBEF
+// patch=1,EE,200C0004,extended,3D000000
+
+[Cheats/P1 Press {R1}+Down To Decrease Y-Position]
+// patch=1,EE,D1D75F42,extended,0000F7BF
+// patch=1,EE,200C0004,extended,BE000000
+
+[Cheats/P1 Press {L1}+Down To Decrease Y-Position Slower]
+// patch=1,EE,D1D75F42,extended,0000FBBF
+// patch=1,EE,200C0004,extended,BD000000
+
+[Cheats/P1 Press {R2}+Right To Increase Z-Position]
+// patch=1,EE,D1D75F42,extended,0000FDDF
+// patch=1,EE,200C0008,extended,3E000000
+
+[Cheats/P1 Press {L2}+Right To Increase Z-Position Slower]
+// patch=1,EE,D1D75F42,extended,0000FEDF
+// patch=1,EE,200C0008,extended,3D000000
+
+[Cheats/P1 Press {R2}+Left To Decrease Z-Position]
+// patch=1,EE,D1D75F42,extended,0000FD7F
+// patch=1,EE,200C0008,extended,BE000000
+
+[Cheats/P1 Press {L2}+Left To Decrease Z-Position Slower]
+// patch=1,EE,D1D75F42,extended,0000FE7F
+// patch=1,EE,200C0008,extended,BD000000
+
+[Cheats/P1 Press {R2}+Up To Zoom Out]
+// patch=1,EE,D1D75F42,extended,0000FDEF
+// patch=1,EE,200C000C,extended,3D000000
+
+[Cheats/P1 Press {L2}+Up To Zoom Out Slower]
+// patch=1,EE,D1D75F42,extended,0000FEEF
+// patch=1,EE,200C000C,extended,3C000000
+
+[Cheats/P1 Press {R2}+Down To Zoom In]
+// patch=1,EE,D1D75F42,extended,0000FDBF
+// patch=1,EE,200C000C,extended,BD000000
+
+[Cheats/P1 Press {L2}+Down To Zoom In Slower]
+// patch=1,EE,D1D75F42,extended,0000FEBF
+// patch=1,EE,200C000C,extended,BC000000
+
+[Cheats/P1 Press {R3}+Up To Scale Up]
+// patch=1,EE,D1D75F42,extended,0000FFEB
+// patch=1,EE,200C0010,extended,3B800000
+
+[Cheats/P1 Press {L3}+Up To Scale Up Slower]
+// patch=1,EE,D1D75F42,extended,0000FFED
+// patch=1,EE,200C0010,extended,3A800000
+
+[Cheats/P1 Press {R3}+Down To Scale Down]
+// patch=1,EE,D1D75F42,extended,0000FFBB
+// patch=1,EE,200C0010,extended,BB800000
+
+[Cheats/P1 Press {R3}+Down To Scale Down Slower]
+// patch=1,EE,D1D75F42,extended,0000FFBD
+// patch=1,EE,200C0010,extended,BA800000
+
+[Cheats/P1 Press {R3}+Right To Rotate Right]
+// patch=1,EE,D1D75F42,extended,0000FFDB
+// patch=1,EE,200C0014,extended,3B800000
+
+[Cheats/P1 Press {L3}+Right To Rotate Right Slower]
+// patch=1,EE,D1D75F42,extended,0000FFDD
+// patch=1,EE,200C0014,extended,3A800000
+
+[Cheats/P1 Press {R3}+Left To Rotate Left]
+// patch=1,EE,D1D75F42,extended,0000FF7B
+// patch=1,EE,200C0014,extended,BB800000
+
+[Cheats/P1 Press {L3}+Left To Rotate Left Slower]
+// patch=1,EE,D1D75F42,extended,0000FF7D
+// patch=1,EE,200C0014,extended,BA800000
+
+[Cheats/Reiko Hinomoto]
+// patch=1,EE,003DA852,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000000
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000000
+
+[Cheats/Rowdy Reiko]
+// patch=1,EE,003DA853,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000064
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000064
+
+[Cheats/Makoto Aihara]
+// patch=1,EE,003DA854,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000000C8
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000000C8
+
+[Cheats/The Black Belt Demon]
+// patch=1,EE,003DA855,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,0000012C
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,0000012C
+
+[Cheats/Noble Rose]
+// patch=1,EE,003DA856,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000190
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000190
+
+[Cheats/Evil Rose]
+// patch=1,EE,003DA857,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000001F4
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000001F4
+
+[Cheats/Judgment]
+// patch=1,EE,003DA858,extended,00000001
+
+[Cheats/Bloody Shadow]
+// patch=1,EE,003DA859,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000002BC
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000002BC
+
+[Cheats/Aigle]
+// patch=1,EE,003DA85A,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000320
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000320
+
+[Cheats/Killer Khan]
+// patch=1,EE,003DA85B,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000384
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000384
+
+[Cheats/Dixie Clemets]
+// patch=1,EE,003DA85C,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000003E8
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000003E8
+
+[Cheats/Sgt. Clemets]
+// patch=1,EE,003DA85D,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,0000044C
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,0000044C
+
+[Cheats/Becky]
+// patch=1,EE,003DA85E,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000004B0
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000004B0
+
+[Cheats/Candy Cane]
+// patch=1,EE,003DA85F,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000514
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000514
+
+[Cheats/Miss Spencer]
+// patch=1,EE,003DA860,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000578
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000578
+
+[Cheats/Mistress Spencer]
+// patch=1,EE,003DA861,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000005DC
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000005DC
+
+[Cheats/Anesthesia]
+// patch=1,EE,003DA862,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000640
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000640
+
+[Cheats/Dr. Cutter]
+// patch=1,EE,003DA863,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000006A4
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000006A4
+
+[Cheats/Aisha]
+// patch=1,EE,003DA864,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000708
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000708
+
+[Cheats/Showbiz]
+// patch=1,EE,003DA865,extended,00000001
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,0000076C
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,0000076C
+
+[Cheats/All Story Mode Characters]
+// patch=1,EE,103DA852,extended,00000101
+// patch=1,EE,403DA854,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103DA864,extended,00000101
+
+[Cheats/Unlock All Exhibition Mode Characters]
+// patch=1,EE,403DA86C,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103DA880,extended,00000101
+
+[Cheats/Unlock All Gallery]
+// patch=1,EE,103DA886,extended,00000101
+// patch=1,EE,403DA888,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103DA898,extended,00000101
+
+[Cheats/Exhibition-Ring 1]
+// patch=1,EE,003D7CE0,extended,00000000
+
+[Cheats/Exhibition-Ring 2]
+// patch=1,EE,003D7CE0,extended,00000001
+
+[Cheats/Exhibition-Ring 3]
+// patch=1,EE,003D7CE0,extended,00000002
+
+[Cheats/Beach-Ring 1]
+// patch=1,EE,003D7CE0,extended,00000003
+
+[Cheats/Mad Mud-Stage]
+// patch=1,EE,003D7CE0,extended,00000009
+
+[Cheats/Back Stage]
+// patch=1,EE,003D7CE0,extended,0000000A
+
+[Cheats/Back Stage 2]
+// patch=1,EE,003D7CE0,extended,0000000B
+
+[Cheats/Warehouse Stage]
+// patch=1,EE,003D7CE0,extended,0000000C
+
+[Cheats/Beach Stage]
+// patch=1,EE,003D7CE0,extended,0000000D
+
+[Cheats/Judgement]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000258
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000258
+
+[Cheats/Lady X]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000007D0
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000007D0
+
+[Cheats/Lady X Substance]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000834
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000834
+
+[Cheats/Back Dancer 1]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000898
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000898
+
+[Cheats/Back Dancer 2]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000008FC
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000008FC
+
+[Cheats/Manager]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000960
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000960
+
+[Cheats/Dance Par Teachers]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,000009C4
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,000009C4
+
+[Cheats/Back Cheer 1]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000A28
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000A28
+
+[Cheats/Back Cheer 2]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000A8C
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000A8C
+
+[Cheats/Tiny Character?]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000AF0
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000AF0
+
+[Cheats/Huge Character?]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000B54
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000B54
+
+[Cheats/Invisible Character?]
+// patch=1,EE,003D7BC6,extended,00000000
+// patch=1,EE,D1D75F42,extended,0000BBFF
+// patch=1,EE,21D5548C,extended,00000BB8
+// patch=1,EE,D1D76602,extended,0000BBFF
+// patch=1,EE,21D556FC,extended,00000BB8

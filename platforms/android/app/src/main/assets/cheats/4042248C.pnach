@@ -1,0 +1,388 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Def Jam Vendetta [SLUS-20639] [4042248C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Stick It To The Other Hunters!]
+// patch=1,EE,901FB69C,extended,0C0837D7
+
+[Cheats/Unlock All Characters (All User Slots)]
+// patch=1,EE,201570E0,extended,24030001
+// patch=1,EE,201570E4,extended,A0430000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,202301B0,extended,43FA0000
+// patch=1,EE,202301B4,extended,43FA0000
+// patch=1,EE,202301B8,extended,43FA0000
+
+[Cheats/No Health P1]
+// patch=1,EE,202301B0,extended,00000000
+
+[Cheats/No Health Regeneration P1]
+// patch=1,EE,202301B8,extended,00000000
+
+[Cheats/Max Momentum P1]
+// patch=1,EE,202301C0,extended,42C80000
+
+[Cheats/No Momentum P1]
+// patch=1,EE,202301C0,extended,00000000
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,10230280,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,20230280,extended,05F5E0FF
+
+[Cheats/Infinite Head Health P1]
+// patch=1,EE,2023034C,extended,42480000
+
+[Cheats/No Head Health P1]
+// patch=1,EE,2023034C,extended,00000000
+
+[Cheats/Infinite Arm Health P1]
+// patch=1,EE,20230354,extended,42480000
+
+[Cheats/No Arm Health P1]
+// patch=1,EE,20230354,extended,00000000
+
+[Cheats/Infinite Leg Health P1]
+// patch=1,EE,20230358,extended,42480000
+
+[Cheats/No Leg Health P1]
+// patch=1,EE,20230358,extended,00000000
+
+[Cheats/Max Tap Any Button P1]
+// patch=1,EE,2023037C,extended,00000000
+
+[Cheats/No Tap Any Button P1]
+// patch=1,EE,2023037C,extended,42C80000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,20230E88,extended,43FA0000
+// patch=1,EE,20230E8C,extended,43FA0000
+// patch=1,EE,20230E90,extended,43FA0000
+
+[Cheats/No Health P2]
+// patch=1,EE,20230E88,extended,00000000
+
+[Cheats/No Health Regeneration P2]
+// patch=1,EE,20230E90,extended,00000000
+
+[Cheats/Max Momentum P2]
+// patch=1,EE,20230E98,extended,42C80000
+
+[Cheats/No Momentum P2]
+// patch=1,EE,20230E98,extended,00000000
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,10230F58,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,20230F58,extended,05F5E0FF
+
+[Cheats/Infinite Head Health P2]
+// patch=1,EE,20231024,extended,42480000
+
+[Cheats/No Head Health P2]
+// patch=1,EE,20231024,extended,00000000
+
+[Cheats/Infinite Arm Health P2]
+// patch=1,EE,2023102C,extended,42480000
+
+[Cheats/No Arm Health P2]
+// patch=1,EE,2023102C,extended,00000000
+
+[Cheats/Infinite Leg Health P2]
+// patch=1,EE,20231030,extended,42480000
+
+[Cheats/No Leg Health P2]
+// patch=1,EE,20231030,extended,00000000
+
+[Cheats/Max Tap Any Button P2]
+// patch=1,EE,20231054,extended,00000000
+
+[Cheats/No Tap Any Button P2]
+// patch=1,EE,20231054,extended,42C80000
+
+[Cheats/Infinite Health P3]
+// patch=1,EE,20231B60,extended,43FA0000
+// patch=1,EE,20231B64,extended,43FA0000
+// patch=1,EE,20231B68,extended,43FA0000
+
+[Cheats/No Health P3]
+// patch=1,EE,20231B60,extended,00000000
+
+[Cheats/No Health Regeneration P3]
+// patch=1,EE,20231B68,extended,00000000
+
+[Cheats/Max Momentum P3]
+// patch=1,EE,20231B70,extended,42C80000
+
+[Cheats/No Momentum P3]
+// patch=1,EE,20231B70,extended,00000000
+
+[Cheats/Quick Score Gain P3]
+// patch=1,EE,10231C30,extended,0000FFFF
+
+[Cheats/Max Score P3]
+// patch=1,EE,20231C30,extended,05F5E0FF
+
+[Cheats/Infinite Head Health P3]
+// patch=1,EE,20231CFC,extended,42480000
+
+[Cheats/No Head Health P3]
+// patch=1,EE,20231CFC,extended,00000000
+
+[Cheats/Infinite Arm Health P3]
+// patch=1,EE,20231D04,extended,42480000
+
+[Cheats/No Arm Health P3]
+// patch=1,EE,20231D04,extended,00000000
+
+[Cheats/Infinite Leg Health P3]
+// patch=1,EE,20231D08,extended,42480000
+
+[Cheats/No Leg Health P3]
+// patch=1,EE,20231D08,extended,00000000
+
+[Cheats/Max Tap Any Button P3]
+// patch=1,EE,20231D2C,extended,00000000
+
+[Cheats/No Tap Any Button P3]
+// patch=1,EE,20231D2C,extended,42C80000
+
+[Cheats/Infinite Health P4]
+// patch=1,EE,20232838,extended,43FA0000
+// patch=1,EE,2023283C,extended,43FA0000
+// patch=1,EE,20232840,extended,43FA0000
+
+[Cheats/No Health P4]
+// patch=1,EE,20232838,extended,00000000
+
+[Cheats/No Health Regeneration P4]
+// patch=1,EE,20232840,extended,00000000
+
+[Cheats/Max Momentum P4]
+// patch=1,EE,20232848,extended,42C80000
+
+[Cheats/No Momentum P4]
+// patch=1,EE,20232848,extended,00000000
+
+[Cheats/Quick Score Gain P4]
+// patch=1,EE,10232908,extended,0000FFFF
+
+[Cheats/Max Score P4]
+// patch=1,EE,20232908,extended,05F5E0FF
+
+[Cheats/Infinite Head Health P4]
+// patch=1,EE,202329D4,extended,42480000
+
+[Cheats/No Head Health P4]
+// patch=1,EE,202329D4,extended,00000000
+
+[Cheats/Infinite Arm Health P4]
+// patch=1,EE,202329DC,extended,42480000
+
+[Cheats/No Arm Health P4]
+// patch=1,EE,202329DC,extended,00000000
+
+[Cheats/Infinite Leg Health P4]
+// patch=1,EE,202329E0,extended,42480000
+
+[Cheats/No Leg Health P4]
+// patch=1,EE,202329E0,extended,00000000
+
+[Cheats/Max Tap Any Button P4]
+// patch=1,EE,20232A04,extended,00000000
+
+[Cheats/No Tap Any Button P4]
+// patch=1,EE,20232A04,extended,42C80000
+
+[Cheats/Max Score]
+// patch=1,EE,202A02F0,extended,05F5E0FF
+
+[Cheats/Max Submission Bonus]
+// patch=1,EE,202A02F4,extended,05F5E0FF
+
+[Cheats/Max Time Bonus]
+// patch=1,EE,202A02F8,extended,05F5E0FF
+
+[Cheats/Max Health Bonus]
+// patch=1,EE,202A02FC,extended,05F5E0FF
+
+[Cheats/Max Total Points]
+// patch=1,EE,202A0300,extended,05F5E0FF
+
+[Cheats/Max Cash From Points]
+// patch=1,EE,202A0304,extended,05F5E0FF
+
+[Cheats/Max Fight Purse]
+// patch=1,EE,202A0308,extended,05F5E0FF
+
+[Cheats/Max Total Earnings]
+// patch=1,EE,202A030C,extended,05F5E0FF
+
+[Cheats/Final Grade Always A+]
+// patch=1,EE,202A0310,extended,00000000
+
+[Cheats/Max Funds]
+// patch=1,EE,2029EB2C,extended,05F5E0FF
+
+[Cheats/Max Power]
+// patch=1,EE,2029E5DC,extended,0000001E
+// patch=1,EE,2029E734,extended,0000001E
+// patch=1,EE,2029E7E0,extended,0000001E
+// patch=1,EE,2029E688,extended,0000001E
+
+[Cheats/Max Speed]
+// patch=1,EE,2029E5E0,extended,0000001E
+// patch=1,EE,2029E738,extended,0000001E
+// patch=1,EE,2029E7E4,extended,0000001E
+// patch=1,EE,2029E68C,extended,0000001E
+
+[Cheats/Max Grapple]
+// patch=1,EE,2029E5E4,extended,0000001E
+// patch=1,EE,2029E73C,extended,0000001E
+// patch=1,EE,2029E7E8,extended,0000001E
+// patch=1,EE,2029E690,extended,0000001E
+
+[Cheats/Max Defense]
+// patch=1,EE,2029E5E8,extended,0000001E
+// patch=1,EE,2029E740,extended,0000001E
+// patch=1,EE,2029E7EC,extended,0000001E
+// patch=1,EE,2029E694,extended,0000001E
+
+[Cheats/Max Stamina]
+// patch=1,EE,2029E5EC,extended,0000001E
+// patch=1,EE,2029E744,extended,0000001E
+// patch=1,EE,2029E7F0,extended,0000001E
+// patch=1,EE,2029E698,extended,0000001E
+
+[Cheats/Max Charisma]
+// patch=1,EE,2029E5F0,extended,0000001E
+// patch=1,EE,2029E748,extended,0000001E
+// patch=1,EE,2029E7F4,extended,0000001E
+// patch=1,EE,2029E69C,extended,0000001E
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,40241108,extended,000B0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,40241314,extended,000B0001
+// patch=1,EE,40241520,extended,000B0001
+// patch=1,EE,4024172C,extended,000B0001
+// patch=1,EE,40241938,extended,000B0001
+// patch=1,EE,40241B44,extended,000B0001
+// patch=1,EE,40241D50,extended,000B0001
+// patch=1,EE,40241F5C,extended,000B0001
+// patch=1,EE,40242168,extended,000B0001
+
+[Cheats/Unlock All Stages]
+// patch=1,EE,40241138,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,40241344,extended,00030001
+// patch=1,EE,40241550,extended,00030001
+// patch=1,EE,4024175C,extended,00030001
+// patch=1,EE,40241968,extended,00030001
+// patch=1,EE,40241B74,extended,00030001
+// patch=1,EE,40241D80,extended,00030001
+// patch=1,EE,40241F8C,extended,00030001
+// patch=1,EE,40242198,extended,00030001
+
+[Cheats/Unlock All Deja Pics]
+// patch=1,EE,40241144,extended,00060001
+// patch=1,EE,0100F0A1,extended,00000000
+// patch=1,EE,40241350,extended,00060001
+// patch=1,EE,0100F2AD,extended,00000000
+// patch=1,EE,4024155C,extended,00060001
+// patch=1,EE,0100F4B9,extended,00000000
+// patch=1,EE,40241768,extended,00060001
+// patch=1,EE,0100F6C5,extended,00000000
+// patch=1,EE,40241974,extended,00060001
+// patch=1,EE,0100F8D1,extended,00000000
+// patch=1,EE,40241B80,extended,00060001
+// patch=1,EE,0100FADD,extended,00000000
+// patch=1,EE,40241D8C,extended,00060001
+// patch=1,EE,0100FCE9,extended,00000000
+// patch=1,EE,40241F98,extended,00060001
+// patch=1,EE,0100FEF5,extended,00000000
+// patch=1,EE,402421A4,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Unlock All T'ai Pics]
+// patch=1,EE,4024115C,extended,00060001
+// patch=1,EE,0100F0A1,extended,00000000
+// patch=1,EE,40241368,extended,00060001
+// patch=1,EE,0100F2AD,extended,00000000
+// patch=1,EE,40241574,extended,00060001
+// patch=1,EE,0100F4B9,extended,00000000
+// patch=1,EE,40241780,extended,00060001
+// patch=1,EE,0100F6C5,extended,00000000
+// patch=1,EE,4024198C,extended,00060001
+// patch=1,EE,0100F8D1,extended,00000000
+// patch=1,EE,40241B98,extended,00060001
+// patch=1,EE,0100FADD,extended,00000000
+// patch=1,EE,40241DA4,extended,00060001
+// patch=1,EE,0100FCE9,extended,00000000
+// patch=1,EE,40241FB0,extended,00060001
+// patch=1,EE,0100FEF5,extended,00000000
+// patch=1,EE,402421BC,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Unlock All Opal Pics]
+// patch=1,EE,40241174,extended,00060001
+// patch=1,EE,0100F0A1,extended,00000000
+// patch=1,EE,40241380,extended,00060001
+// patch=1,EE,0100F2AD,extended,00000000
+// patch=1,EE,4024158C,extended,00060001
+// patch=1,EE,0100F4B9,extended,00000000
+// patch=1,EE,40241798,extended,00060001
+// patch=1,EE,0100F6C5,extended,00000000
+// patch=1,EE,402419A4,extended,00060001
+// patch=1,EE,0100F8D1,extended,00000000
+// patch=1,EE,40241BB0,extended,00060001
+// patch=1,EE,0100FADD,extended,00000000
+// patch=1,EE,40241DBC,extended,00060001
+// patch=1,EE,0100FCE9,extended,00000000
+// patch=1,EE,40241FC8,extended,00060001
+// patch=1,EE,0100FEF5,extended,00000000
+// patch=1,EE,402421D4,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Unlock All Penny Pics]
+// patch=1,EE,4024118C,extended,00060001
+// patch=1,EE,0100F0A1,extended,00000000
+// patch=1,EE,40241398,extended,00060001
+// patch=1,EE,0100F2AD,extended,00000000
+// patch=1,EE,402415A4,extended,00060001
+// patch=1,EE,0100F4B9,extended,00000000
+// patch=1,EE,402417B0,extended,00060001
+// patch=1,EE,0100F6C5,extended,00000000
+// patch=1,EE,402419BC,extended,00060001
+// patch=1,EE,0100F8D1,extended,00000000
+// patch=1,EE,40241BC8,extended,00060001
+// patch=1,EE,0100FADD,extended,00000000
+// patch=1,EE,40241DD4,extended,00060001
+// patch=1,EE,0100FCE9,extended,00000000
+// patch=1,EE,40241FE0,extended,00060001
+// patch=1,EE,0100FEF5,extended,00000000
+// patch=1,EE,402421EC,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Unlock All Angel Pics]
+// patch=1,EE,402411A4,extended,00060001
+// patch=1,EE,0100F0A1,extended,00000000
+// patch=1,EE,402413B0,extended,00060001
+// patch=1,EE,0100F2AD,extended,00000000
+// patch=1,EE,402415BC,extended,00060001
+// patch=1,EE,0100F4B9,extended,00000000
+// patch=1,EE,402417C8,extended,00060001
+// patch=1,EE,0100F6C5,extended,00000000
+// patch=1,EE,402419D4,extended,00060001
+// patch=1,EE,0100F8D1,extended,00000000
+// patch=1,EE,40241BE0,extended,00060001
+// patch=1,EE,0100FADD,extended,00000000
+// patch=1,EE,40241DEC,extended,00060001
+// patch=1,EE,0100FCE9,extended,00000000
+// patch=1,EE,40241FF8,extended,00060001
+// patch=1,EE,0100FEF5,extended,00000000
+// patch=1,EE,40242204,extended,00060001
+// patch=1,EE,01010101,extended,00000000

@@ -1,0 +1,53 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rule Of Rule [UNKNOWN] [52585249]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,200FFF00,extended,3C01007D
+// patch=1,EE,200FFF04,extended,8C21D250
+// patch=1,EE,200FFF08,extended,24020BB8
+// patch=1,EE,200FFF0C,extended,A4220126
+// patch=1,EE,200FFF10,extended,03E00008
+// patch=1,EE,20291D0C,extended,0803FFC0
+
+[Cheats/Quicker Character]
+// patch=1,EE,203004A0,extended,3FC00000
+
+[Cheats/Even Quicker Character]
+// patch=1,EE,203004A0,extended,40000000
+
+[Cheats/Infinite Items Slot 1]
+// patch=1,EE,107C58CA,extended,00000032
+
+[Cheats/Infinite Items Slot 2]
+// patch=1,EE,107C58DA,extended,00000032
+
+[Cheats/Infinite Items Slot 3]
+// patch=1,EE,107C58EA,extended,00000032
+
+[Cheats/Infinite Items Slot 4]
+// patch=1,EE,107C58FA,extended,00000032
+
+[Cheats/Infinite Items Slot 5]
+// patch=1,EE,107C590A,extended,00000032
+
+[Cheats/Infinite Items Slot 6]
+// patch=1,EE,107C591A,extended,00000032
+
+[Cheats/Infinite Items Slot 7]
+// patch=1,EE,107C592A,extended,00000032
+
+[Cheats/Infinite Items Slot 8]
+// patch=1,EE,107C593A,extended,00000032
+
+[Cheats/Infinite Items Slot 9]
+// patch=1,EE,107C594A,extended,00000032
+
+[Cheats/Infinite Items Slot 10]
+// patch=1,EE,107C595A,extended,00000032
+
+[Cheats/Infinite Items Slot 11]
+// patch=1,EE,107C596A,extended,00000032
+
+[Cheats/Infinite Items Slot 12]
+// patch=1,EE,107C597A,extended,00000032

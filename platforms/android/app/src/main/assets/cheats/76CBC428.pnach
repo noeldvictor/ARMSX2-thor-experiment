@@ -1,0 +1,33 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Stuntman [SLUS-20250] [76CBC428]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Tracks]
+// patch=1,EE,90243D24,extended,0C093BD7
+
+[Cheats/Infinite Time]
+// patch=1,EE,21F0EDE4,extended,0000FFFF
+
+[Cheats/Invisible Walls]
+// patch=1,EE,2026640C,extended,00000001
+// patch=1,EE,20266410,extended,00000001
+
+[Cheats/Have All Cars]
+// patch=1,EE,40311784,extended,00330001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Nitrous Boost]
+// patch=1,EE,200C0220,extended,3C01437A
+// patch=1,EE,200C0224,extended,AC41000C
+// patch=1,EE,200C0228,extended,AC410010
+// patch=1,EE,200C022C,extended,03E00008
+// patch=1,EE,200C0230,extended,C441000C
+// patch=1,EE,201C6468,extended,0C030088
+
+[Cheats/Have All Toys-All Levels]
+// patch=1,EE,4031171C,extended,00180001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Max % Complete-All Levels]
+// patch=1,EE,40311444,extended,001D0001
+// patch=1,EE,00000064,extended,00000000

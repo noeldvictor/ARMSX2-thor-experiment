@@ -1,0 +1,343 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Phantom Brave [SLUS-20955] [B43000A1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Timers Never Increase]
+// patch=1,EE,901156A4,extended,0C046B58
+// patch=1,EE,20143D3C,extended,10000006
+
+[Cheats/Infinite BOR]
+// patch=1,EE,10286940,extended,0000FFFF
+
+[Cheats/Max BOR]
+// patch=1,EE,20286940,extended,05F5E0FF
+
+[Cheats/Super Max BOR]
+// patch=1,EE,20286940,extended,4E729FFF
+// patch=1,EE,20286944,extended,00000918
+
+[Cheats/Quick EXP Gain (In-Battle)]
+// patch=1,EE,201824E8,extended,64427FFF
+
+[Cheats/Quick EXP Gain (Town Healer)]
+// patch=1,EE,20212524,extended,64627FFF
+
+[Cheats/Quick Skill EXP Gain Modifier]
+// patch=1,EE,2017DB34,extended,244203E7
+
+[Cheats/Quick Skill Affinity EXP Gain Modifier]
+// patch=1,EE,2017DE3C,extended,244203E7
+
+[Cheats/Phantoms Never Removed From Battle]
+// patch=1,EE,201AD980,extended,00000000
+
+[Cheats/All Phantoms Stay For 99 Turns]
+// patch=1,EE,2015B2C8,extended,24020063
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,10286960,extended,0000FFFF
+
+[Cheats/Super Quick Exp Gain]
+// patch=1,EE,10286960,extended,0000FFFF
+// patch=1,EE,00286962,extended,000000FF
+
+[Cheats/Infinite HP]
+// patch=1,EE,202869DC,extended,0001869F
+
+[Cheats/Max HP]
+// patch=1,EE,202869E4,extended,0001869F
+
+[Cheats/Max ATK]
+// patch=1,EE,202869EC,extended,0000270F
+// patch=1,EE,20286A0C,extended,0000270F
+
+[Cheats/Max DEF]
+// patch=1,EE,202869F0,extended,0000270F
+// patch=1,EE,20286A10,extended,0000270F
+
+[Cheats/Max INT]
+// patch=1,EE,202869F4,extended,0000270F
+// patch=1,EE,20286A14,extended,0000270F
+
+[Cheats/Max RES]
+// patch=1,EE,202869F8,extended,0000270F
+// patch=1,EE,20286A18,extended,0000270F
+
+[Cheats/Max SPD]
+// patch=1,EE,202869FC,extended,0000270F
+// patch=1,EE,20286A1C,extended,0000270F
+
+[Cheats/Infinite Mana]
+// patch=1,EE,20286A2C,extended,0000270F
+
+[Cheats/Max Equip HP+]
+// patch=1,EE,20286A50,extended,00002710
+// patch=1,EE,20286A70,extended,00002710
+
+[Cheats/Max Equip ATK+]
+// patch=1,EE,10286A54,extended,00002710
+// patch=1,EE,10286A74,extended,00002710
+
+[Cheats/Max Equip DEF+]
+// patch=1,EE,10286A56,extended,00002710
+// patch=1,EE,10286A76,extended,00002710
+
+[Cheats/Max Equip INT+]
+// patch=1,EE,10286A58,extended,00002710
+// patch=1,EE,10286A78,extended,00002710
+
+[Cheats/Max Equip RES+]
+// patch=1,EE,10286A5A,extended,00002710
+// patch=1,EE,10286A7A,extended,00002710
+
+[Cheats/Max Equip SPD+]
+// patch=1,EE,10286A5C,extended,00002710
+// patch=1,EE,10286A7C,extended,00002710
+
+[Cheats/Max Fire Resistance]
+// patch=1,EE,10286A80,extended,000003E7
+
+[Cheats/Max Wind Resistance]
+// patch=1,EE,10286A82,extended,000003E7
+
+[Cheats/Max Ice Resistance]
+// patch=1,EE,10286A84,extended,000003E7
+
+[Cheats/Level 100]
+// patch=1,EE,10286BF0,extended,00000064
+
+[Cheats/Level 999]
+// patch=1,EE,10286BF0,extended,000003E7
+
+[Cheats/Level 9999]
+// patch=1,EE,10286BF0,extended,0000270F
+
+[Cheats/Physical Skill Affinity Max Current SP]
+// patch=1,EE,10286B90,extended,000003E7
+
+[Cheats/Physical Skill Affinity Max Overall SP]
+// patch=1,EE,10286B92,extended,000003E7
+
+[Cheats/Physical Skill Affinity Rank S]
+// patch=1,EE,20286B94,extended,000000FF
+
+[Cheats/Physical Skill Affinity Max EXP]
+// patch=1,EE,20286B98,extended,001A0000
+
+[Cheats/Energy Skill Affinity Max Current SP]
+// patch=1,EE,10286B9C,extended,000003E7
+
+[Cheats/Energy Skill Affinity Max Overall SP]
+// patch=1,EE,10286B9E,extended,000003E7
+
+[Cheats/Energy Skill Affinity Rank S]
+// patch=1,EE,20286BA0,extended,000000FF
+
+[Cheats/Energy Skill Affinity Max EXP]
+// patch=1,EE,20286BA4,extended,001A0000
+
+[Cheats/Elemental Magic Skill Affinity Max Current SP]
+// patch=1,EE,10286BA8,extended,000003E7
+
+[Cheats/Elemental Magic Skill Affinity Max Overall SP]
+// patch=1,EE,10286BAA,extended,000003E7
+
+[Cheats/Elemental Magic Skill Affinity Rank S]
+// patch=1,EE,20286BAC,extended,000000FF
+
+[Cheats/Elemental Magic Skill Affinity Max EXP]
+// patch=1,EE,20286BB0,extended,001A0000
+
+[Cheats/Physical Magic Skill Affinity Max Current SP]
+// patch=1,EE,10286BB4,extended,000003E7
+
+[Cheats/Physical Magic Skill Affinity Max Overall SP]
+// patch=1,EE,10286BB6,extended,000003E7
+
+[Cheats/Physical Magic Skill Affinity Rank S]
+// patch=1,EE,20286BB8,extended,000000FF
+
+[Cheats/Physical Magic Skill Affinity Max EXP]
+// patch=1,EE,20286BBC,extended,001A0000
+
+[Cheats/Space-Time Skill Affinity Max Current SP]
+// patch=1,EE,10286BC0,extended,000003E7
+
+[Cheats/Space-Time Skill Affinity Max Overall SP]
+// patch=1,EE,10286BC2,extended,000003E7
+
+[Cheats/Space-Time Skill Affinity Rank S]
+// patch=1,EE,20286BC4,extended,000000FF
+
+[Cheats/Space-Time Skill Affinity Max EXP]
+// patch=1,EE,20286BC8,extended,001A0000
+
+[Cheats/Stat-Altering Skill Affinity Max Current SP]
+// patch=1,EE,10286BCC,extended,000003E7
+
+[Cheats/Stat-Altering Skill Affinity Max Overall SP]
+// patch=1,EE,10286BCE,extended,000003E7
+
+[Cheats/Stat-Altering Skill Affinity Rank S]
+// patch=1,EE,20286BD0,extended,000000FF
+
+[Cheats/Stat-Altering Skill Affinity Max EXP]
+// patch=1,EE,20286BD4,extended,001A0000
+
+[Cheats/Healing Skill Affinity Max Current SP]
+// patch=1,EE,10286BD8,extended,000003E7
+
+[Cheats/Healing Skill Affinity Max Overall SP]
+// patch=1,EE,10286BDA,extended,000003E7
+
+[Cheats/Healing Skill Affinity Rank S]
+// patch=1,EE,20286BDC,extended,000000FF
+
+[Cheats/Healing Skill Affinity Max EXP]
+// patch=1,EE,20286BE0,extended,001A0000
+
+[Cheats/Max Mv]
+// patch=1,EE,00286C12,extended,000000FF
+
+[Cheats/Max Dark Alignment]
+// patch=1,EE,0028C61E,extended,00000063
+
+[Cheats/No Dark Alignment]
+// patch=1,EE,0028C61E,extended,00000000
+
+[Cheats/Max Remove (# Of Turns Available In Battle)]
+// patch=1,EE,00286C22,extended,000000FF
+
+[Cheats/Max Steal Rate]
+// patch=1,EE,10286C26,extended,0000270F
+
+[Cheats/Max Guard Rate]
+// patch=1,EE,10286C30,extended,0000270F
+
+[Cheats/Slot 1]
+// patch=1,EE,10286A92,extended,00000063
+// patch=1,EE,20286A94,extended,000128C0
+
+[Cheats/Slot 2]
+// patch=1,EE,10286A9A,extended,00000063
+// patch=1,EE,20286A9C,extended,000128C0
+
+[Cheats/Slot 3]
+// patch=1,EE,10286AA2,extended,00000063
+// patch=1,EE,20286AA4,extended,000128C0
+
+[Cheats/Slot 4]
+// patch=1,EE,10286AAA,extended,00000063
+// patch=1,EE,20286AAC,extended,000128C0
+
+[Cheats/Slot 5]
+// patch=1,EE,10286AB2,extended,00000063
+// patch=1,EE,20286AB4,extended,000128C0
+
+[Cheats/Slot 6]
+// patch=1,EE,10286ABA,extended,00000063
+// patch=1,EE,20286ABC,extended,000128C0
+
+[Cheats/Slot 7]
+// patch=1,EE,10286AC2,extended,00000063
+// patch=1,EE,20286AC4,extended,000128C0
+
+[Cheats/Slot 8]
+// patch=1,EE,10286ACA,extended,00000063
+// patch=1,EE,20286ACC,extended,000128C0
+
+[Cheats/Slot 9]
+// patch=1,EE,10286AD2,extended,00000063
+// patch=1,EE,20286AD4,extended,000128C0
+
+[Cheats/Slot 10]
+// patch=1,EE,10286ADA,extended,00000063
+// patch=1,EE,20286ADC,extended,000128C0
+
+[Cheats/Slot 11]
+// patch=1,EE,10286AE2,extended,00000063
+// patch=1,EE,20286AE4,extended,000128C0
+
+[Cheats/Slot 12]
+// patch=1,EE,10286AEA,extended,00000063
+// patch=1,EE,20286AEC,extended,000128C0
+
+[Cheats/Slot 13]
+// patch=1,EE,10286AF2,extended,00000063
+// patch=1,EE,20286AF4,extended,000128C0
+
+[Cheats/Slot 14]
+// patch=1,EE,10286AFA,extended,00000063
+// patch=1,EE,20286AFC,extended,000128C0
+
+[Cheats/Slot 15]
+// patch=1,EE,10286B02,extended,00000063
+// patch=1,EE,20286B04,extended,000128C0
+
+[Cheats/Slot 16]
+// patch=1,EE,10286B0A,extended,00000063
+// patch=1,EE,20286B0C,extended,000128C0
+
+[Cheats/Slot 17]
+// patch=1,EE,10286B12,extended,00000063
+// patch=1,EE,20286B14,extended,000128C0
+
+[Cheats/Slot 18]
+// patch=1,EE,10286B1A,extended,00000063
+// patch=1,EE,20286B1C,extended,000128C0
+
+[Cheats/Slot 19]
+// patch=1,EE,10286B22,extended,00000063
+// patch=1,EE,20286B24,extended,000128C0
+
+[Cheats/Slot 20]
+// patch=1,EE,10286B2A,extended,00000063
+// patch=1,EE,20286B2C,extended,000128C0
+
+[Cheats/Slot 21]
+// patch=1,EE,10286B32,extended,00000063
+// patch=1,EE,20286B34,extended,000128C0
+
+[Cheats/Slot 22]
+// patch=1,EE,10286B3A,extended,00000063
+// patch=1,EE,20286B3C,extended,000128C0
+
+[Cheats/Slot 23]
+// patch=1,EE,10286B42,extended,00000063
+// patch=1,EE,20286B44,extended,000128C0
+
+[Cheats/Slot 24]
+// patch=1,EE,10286B4A,extended,00000063
+// patch=1,EE,20286B4C,extended,000128C0
+
+[Cheats/Slot 25]
+// patch=1,EE,10286B52,extended,00000063
+// patch=1,EE,20286B54,extended,000128C0
+
+[Cheats/Slot 26]
+// patch=1,EE,10286B5A,extended,00000063
+// patch=1,EE,20286B5C,extended,000128C0
+
+[Cheats/Slot 27]
+// patch=1,EE,10286B62,extended,00000063
+// patch=1,EE,20286B64,extended,000128C0
+
+[Cheats/Slot 28]
+// patch=1,EE,10286B6A,extended,00000063
+// patch=1,EE,20286B6C,extended,000128C0
+
+[Cheats/Slot 29]
+// patch=1,EE,10286B72,extended,00000063
+// patch=1,EE,20286B74,extended,000128C0
+
+[Cheats/Slot 30]
+// patch=1,EE,10286B7A,extended,00000063
+// patch=1,EE,20286B7C,extended,000128C0
+
+[Cheats/Slot 31]
+// patch=1,EE,10286B82,extended,00000063
+// patch=1,EE,20286B84,extended,000128C0
+
+[Cheats/Slot 32]
+// patch=1,EE,10286B8A,extended,00000063
+// patch=1,EE,20286B8C,extended,000128C0

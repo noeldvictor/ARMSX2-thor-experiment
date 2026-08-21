@@ -1,0 +1,55 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Saturday Night Speedway [SLUS-20640] [487F15A9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Weapons]
+// patch=1,EE,F0100008,extended,003AE52F
+
+[Cheats/Disable FMV]
+// patch=1,EE,203B03A0,extended,24020001
+
+[Cheats/Infinite Balance]
+// patch=1,EE,10B49818,extended,0000FFFF
+
+[Cheats/Max Balance]
+// patch=1,EE,20B49818,extended,05F5E0FF
+
+[Cheats/Balance Doesnt Decrease When Buying]
+// patch=1,EE,201EB710,extended,00000000
+
+[Cheats/Balance Increases When Buying]
+// patch=1,EE,201EB708,extended,0045102D
+
+[Cheats/Lower Lap Times]
+// patch=1,EE,D045DE34,extended,00300300
+// patch=1,EE,2045DE34,extended,00000300
+
+[Cheats/Start On Lap 5]
+// patch=1,EE,D045DE80,extended,00000000
+// patch=1,EE,2045DE80,extended,00000005
+
+[Cheats/Start On Lap 4]
+// patch=1,EE,D045DE80,extended,00000000
+// patch=1,EE,2045DE80,extended,00000004
+
+[Cheats/Start On Lap 3]
+// patch=1,EE,D045DE80,extended,00000000
+// patch=1,EE,2045DE80,extended,00000003
+
+[Cheats/Start On Lap 2]
+// patch=1,EE,D045DE80,extended,00000000
+// patch=1,EE,2045DE80,extended,00000002
+
+[Cheats/Max Current Tear Offs]
+// patch=1,EE,20485F00,extended,00000063
+
+[Cheats/Max Overall Tear Offs]
+// patch=1,EE,20485F08,extended,00000063
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Lap Timer]
+// patch=1,EE,D08B1B42,extended,0000FBFE
+// patch=1,EE,20155954,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Resume Lap Timer]
+// patch=1,EE,D08B1B42,extended,0000FEFE
+// patch=1,EE,20155954,extended,AC62DE34

@@ -1,0 +1,417 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ford Racing 3 [SLES-52720] [9AB1CAE9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Ford Collection Cars]
+// patch=1,EE,90244778,extended,0C097915
+
+[Cheats/Infinite Time]
+// patch=1,EE,20368F50,extended,4560F000
+
+[Cheats/Always Perfect Drafting]
+// patch=1,EE,20368F60,extended,00000000
+
+[Cheats/Infinite Boost (Boost Races)]
+// patch=1,EE,201F50BC,extended,00000000
+
+[Cheats/Infinite Constant Boost (Boost Races)]
+// patch=1,EE,201F4DBC,extended,00000000
+
+[Cheats/Infinite Boost (Racing Line Races)]
+// patch=1,EE,203691C0,extended,40A00000
+
+[Cheats/Unlock All Ford Challenge Themes]
+// patch=1,EE,403C89E0,extended,000D0001
+// patch=1,EE,07070707,extended,00000000
+// patch=1,EE,103C8A14,extended,00000707
+// patch=1,EE,003C8A16,extended,00000007
+
+[Cheats/Movie Car Chases]
+// patch=1,EE,003C8A91,extended,00000007
+
+[Cheats/Off Road Rumblings]
+// patch=1,EE,003C8A92,extended,00000007
+
+[Cheats/A Classic Competition]
+// patch=1,EE,003C8A93,extended,00000007
+
+[Cheats/Truck Trials]
+// patch=1,EE,003C8A94,extended,00000007
+
+[Cheats/Special Vehicles Team]
+// patch=1,EE,003C8A95,extended,00000007
+
+[Cheats/Battle Of The Coupes]
+// patch=1,EE,003C8A96,extended,00000007
+
+[Cheats/Global Gears]
+// patch=1,EE,003C8A97,extended,00000007
+
+[Cheats/Focus VS. GT]
+// patch=1,EE,003C8A98,extended,00000007
+
+[Cheats/Original Races]
+// patch=1,EE,003C8A99,extended,00000007
+
+[Cheats/Design Concepts]
+// patch=1,EE,003C8A9A,extended,00000007
+
+[Cheats/Rally VS. Trucks]
+// patch=1,EE,003C8A9B,extended,00000007
+
+[Cheats/The Stock Car Circuit]
+// patch=1,EE,003C8A9C,extended,00000007
+
+[Cheats/Size Matters]
+// patch=1,EE,003C8A9D,extended,00000007
+
+[Cheats/The GT World]
+// patch=1,EE,003C8A9E,extended,00000007
+
+[Cheats/All Ford Competition Types]
+// patch=1,EE,003C8A91,extended,00000007
+// patch=1,EE,103C8A92,extended,00000707
+// patch=1,EE,203C8A94,extended,07070707
+// patch=1,EE,203C8A98,extended,07070707
+// patch=1,EE,103C8A9C,extended,00000707
+// patch=1,EE,003C8A9E,extended,00000007
+
+[Cheats/Standard Race]
+// patch=1,EE,003C8B91,extended,00000007
+
+[Cheats/Boost]
+// patch=1,EE,003C8B92,extended,00000007
+
+[Cheats/Elimination]
+// patch=1,EE,003C8B93,extended,00000007
+
+[Cheats/Overtake]
+// patch=1,EE,003C8B94,extended,00000007
+
+[Cheats/Duel]
+// patch=1,EE,003C8B95,extended,00000007
+
+[Cheats/Draftiing]
+// patch=1,EE,003C8B96,extended,00000007
+
+[Cheats/Racing Line]
+// patch=1,EE,003C8B97,extended,00000007
+
+[Cheats/Relay]
+// patch=1,EE,003C8B98,extended,00000007
+
+[Cheats/Driving Skills]
+// patch=1,EE,003C8B99,extended,00000007
+
+[Cheats/Seconds Out]
+// patch=1,EE,003C8B9A,extended,00000007
+
+[Cheats/Time Attack]
+// patch=1,EE,003C8B9B,extended,00000007
+
+[Cheats/All Ford Collection Types]
+// patch=1,EE,003C8B91,extended,00000007
+// patch=1,EE,103C8B92,extended,00000707
+// patch=1,EE,203C8B94,extended,07070707
+// patch=1,EE,203C8B98,extended,07070707
+
+[Cheats/1923 Model T Sedan]
+// patch=1,EE,003C8930,extended,00000007
+
+[Cheats/1931 Model A Roadster]
+// patch=1,EE,003C8931,extended,00000007
+
+[Cheats/All Vintage Vehicles]
+// patch=1,EE,103C8930,extended,00000707
+
+[Cheats/'68 Mustang]
+// patch=1,EE,003C8932,extended,00000007
+
+[Cheats/'46 Convertible]
+// patch=1,EE,003C8933,extended,00000007
+
+[Cheats/'49]
+// patch=1,EE,003C8934,extended,00000007
+
+[Cheats/'49 Coupe]
+// patch=1,EE,003C8935,extended,00000007
+
+[Cheats/1970 Capril Mk I RS2600]
+// patch=1,EE,003C8936,extended,00000007
+
+[Cheats/'66 Fairlane GT]
+// patch=1,EE,003C8937,extended,00000007
+
+[Cheats/'73 KB Falcon GT]
+// patch=1,EE,003C8938,extended,00000007
+
+[Cheats/'64 Galaxie 500]
+// patch=1,EE,003C8939,extended,00000007
+
+[Cheats/'75 Torino Sport]
+// patch=1,EE,003C893A,extended,00000007
+
+[Cheats/'71 Mustang Mach I]
+// patch=1,EE,003C893B,extended,00000007
+
+[Cheats/'73 Mustang Mach I]
+// patch=1,EE,003C893C,extended,00000007
+
+[Cheats/'68 Mustang GT]
+// patch=1,EE,003C893D,extended,00000007
+
+[Cheats/'72 Ranchero GT]
+// patch=1,EE,003C893E,extended,00000007
+
+[Cheats/'55 Thunderbird]
+// patch=1,EE,003C893F,extended,00000007
+
+[Cheats/'66 Thunderbird]
+// patch=1,EE,003C8940,extended,00000007
+
+[Cheats/All Classic Vehicles]
+// patch=1,EE,103C8932,extended,00000707
+// patch=1,EE,403C8934,extended,00030001
+// patch=1,EE,07070707,extended,00000000
+// patch=1,EE,003C8940,extended,00000007
+
+[Cheats/1978 Capri MK III 3.05]
+// patch=1,EE,003C8941,extended,00000007
+
+[Cheats/2000 Ford SVT Cobra R]
+// patch=1,EE,003C8942,extended,00000007
+
+[Cheats/2002 Crown Victoria]
+// patch=1,EE,003C8943,extended,00000007
+
+[Cheats/2003 Falcon XR8]
+// patch=1,EE,003C8944,extended,00000007
+
+[Cheats/2002 SVT Focus]
+// patch=1,EE,003C8945,extended,00000007
+
+[Cheats/2001 Fortynine Concept]
+// patch=1,EE,003C8946,extended,00000007
+
+[Cheats/2002 SVT Lightning]
+// patch=1,EE,003C8947,extended,00000007
+
+[Cheats/SVT Lightning Concept]
+// patch=1,EE,003C8948,extended,00000007
+
+[Cheats/2004 Mondeo ST220]
+// patch=1,EE,003C8949,extended,00000007
+
+[Cheats/1999 Racing Puma]
+// patch=1,EE,003C894A,extended,00000007
+
+[Cheats/1994 Powerstroke Concept]
+// patch=1,EE,003C894B,extended,00000007
+
+[Cheats/2002 Thunderbird Convertible]
+// patch=1,EE,003C894C,extended,00000007
+
+[Cheats/2003 Limited Edition Thunderbird]
+// patch=1,EE,003C894D,extended,00000007
+
+[Cheats/All Modern Vehicles]
+// patch=1,EE,003C8941,extended,00000007
+// patch=1,EE,103C8942,extended,00000707
+// patch=1,EE,203C8944,extended,07070707
+// patch=1,EE,203C8948,extended,07070707
+// patch=1,EE,103C894C,extended,00000707
+
+[Cheats/1987 Sierra RS500]
+// patch=1,EE,003C894E,extended,00000007
+
+[Cheats/1992 Escort RS Cosworth]
+// patch=1,EE,003C894F,extended,00000007
+
+[Cheats/2005 Air Force Reserve Ford Focus]
+// patch=1,EE,003C8950,extended,00000007
+
+[Cheats/Ford GT Concept]
+// patch=1,EE,003C8951,extended,00000007
+
+[Cheats/1971 GT70 Concept]
+// patch=1,EE,003C8952,extended,00000007
+
+[Cheats/2003 FR100 Concept]
+// patch=1,EE,003C8953,extended,00000007
+
+[Cheats/2001 Focus FR200]
+// patch=1,EE,003C8954,extended,00000007
+
+[Cheats/1999 Mustang FR500]
+// patch=1,EE,003C8955,extended,00000007
+
+[Cheats/1995 GT90 Concept]
+// patch=1,EE,003C8956,extended,00000007
+
+[Cheats/1996 Indigo Concept]
+// patch=1,EE,003C8957,extended,00000007
+
+[Cheats/1992 Mustang Mach III Concept]
+// patch=1,EE,003C8958,extended,00000007
+
+[Cheats/2005 Mustang GT]
+// patch=1,EE,003C8959,extended,00000007
+
+[Cheats/2004 Mustang GT-R Concept]
+// patch=1,EE,003C895A,extended,00000007
+
+[Cheats/2002 Tarus Stock Car]
+// patch=1,EE,003C895B,extended,00000007
+
+[Cheats/All Performance Vehicles]
+// patch=1,EE,103C894E,extended,00000707
+// patch=1,EE,403C8950,extended,00030001
+// patch=1,EE,07070707,extended,00000000
+
+[Cheats/1973 Escort RS2000]
+// patch=1,EE,003C895C,extended,00000007
+
+[Cheats/2001 EX Concept]
+// patch=1,EE,003C895D,extended,00000007
+
+[Cheats/2002 Explorer Sport Trac XLT]
+// patch=1,EE,003C895E,extended,00000007
+
+[Cheats/2004 F-150 FX4]
+// patch=1,EE,003C895F,extended,00000007
+
+[Cheats/'48 F1]
+// patch=1,EE,003C8960,extended,00000007
+
+[Cheats/'56 F-100]
+// patch=1,EE,003C8961,extended,00000007
+
+[Cheats/'65 F-100]
+// patch=1,EE,003C8962,extended,00000007
+
+[Cheats/1998 F-150 4X4]
+// patch=1,EE,003C8963,extended,00000007
+
+[Cheats/2002 Flareside F-350 XLT Sport]
+// patch=1,EE,003C8964,extended,00000007
+
+[Cheats/1999 Focus Rally Car]
+// patch=1,EE,003C8965,extended,00000007
+
+[Cheats/1985 RS200]
+// patch=1,EE,003C8966,extended,00000007
+
+[Cheats/All Off Road Vehicles]
+// patch=1,EE,203C895C,extended,07070707
+// patch=1,EE,203C8960,extended,07070707
+// patch=1,EE,103C8964,extended,00000707
+// patch=1,EE,003C8966,extended,00000007
+
+[Cheats/All Vehicles]
+// patch=1,EE,403C8930,extended,000D0001
+// patch=1,EE,07070707,extended,00000000
+// patch=1,EE,103C8964,extended,00000707
+// patch=1,EE,003C8966,extended,00000007
+
+[Cheats/Pacific Drive-Theme 1]
+// patch=1,EE,003C8DF0,extended,00000007
+
+[Cheats/Pacific Drive-Theme 2]
+// patch=1,EE,003C8DF1,extended,00000007
+
+[Cheats/Pacific Drive-Theme 3]
+// patch=1,EE,003C8DF2,extended,00000007
+
+[Cheats/Pacific Drive-Theme 4]
+// patch=1,EE,003C8DF3,extended,00000007
+
+[Cheats/Pacific Drive-Theme 5]
+// patch=1,EE,003C8DF4,extended,00000007
+
+[Cheats/Pacific Drive-Theme 6]
+// patch=1,EE,003C8DF5,extended,00000007
+
+[Cheats/Arctic Breeze-Theme 1]
+// patch=1,EE,003C8DF6,extended,00000007
+
+[Cheats/Arctic Breeze-Theme 2]
+// patch=1,EE,003C8DF7,extended,00000007
+
+[Cheats/Arctic Breeze-Theme 3]
+// patch=1,EE,003C8DF8,extended,00000007
+
+[Cheats/Arctic Breeze-Theme 4]
+// patch=1,EE,003C8DF9,extended,00000007
+
+[Cheats/Arctic Breeze-Theme 5]
+// patch=1,EE,003C8DFA,extended,00000007
+
+[Cheats/Arctic Breeze-Theme 6]
+// patch=1,EE,003C8DFB,extended,00000007
+
+[Cheats/Colonial Run-Theme 1]
+// patch=1,EE,003C8DFC,extended,00000007
+
+[Cheats/Colonial Run-Theme 2]
+// patch=1,EE,003C8DFD,extended,00000007
+
+[Cheats/Colonial Run-Theme 3]
+// patch=1,EE,003C8DFE,extended,00000007
+
+[Cheats/Colonial Run-Theme 4]
+// patch=1,EE,003C8DFF,extended,00000007
+
+[Cheats/Colonial Run-Theme 5]
+// patch=1,EE,003C8E00,extended,00000007
+
+[Cheats/Colonial Run-Theme 6]
+// patch=1,EE,003C8E01,extended,00000007
+
+[Cheats/Asuka Battle-Theme 1]
+// patch=1,EE,003C8E02,extended,00000007
+
+[Cheats/Asuka Battle-Theme 2]
+// patch=1,EE,003C8E03,extended,00000007
+
+[Cheats/Asuka Battle-Theme 3]
+// patch=1,EE,003C8E04,extended,00000007
+
+[Cheats/Asuka Battle-Theme 4]
+// patch=1,EE,003C8E05,extended,00000007
+
+[Cheats/Asuka Battle-Theme 5]
+// patch=1,EE,003C8E06,extended,00000007
+
+[Cheats/Asuka Battle-Theme 6]
+// patch=1,EE,003C8E07,extended,00000007
+
+[Cheats/Raceways-Theme 1]
+// patch=1,EE,003C8E08,extended,00000007
+
+[Cheats/Raceways-Theme 2]
+// patch=1,EE,003C8E09,extended,00000007
+
+[Cheats/All Track Themes]
+// patch=1,EE,403C8DF0,extended,00060001
+// patch=1,EE,07070707,extended,00000000
+// patch=1,EE,103C8E08,extended,00000707
+
+[Cheats/Have All Ford Challenge Tokens]
+// patch=1,EE,403C8D40,extended,000D0001
+// patch=1,EE,07070707,extended,00000000
+// patch=1,EE,103C8D74,extended,00000707
+// patch=1,EE,003C8D76,extended,00000007
+
+[Cheats/Have All Ford Challenge Shields]
+// patch=1,EE,203C8CC0,extended,07070707
+// patch=1,EE,203C8CC4,extended,07070707
+
+[Cheats/Have All Ford Competition Cups]
+// patch=1,EE,403C8B10,extended,00030001
+// patch=1,EE,07070707,extended,00000000
+// patch=1,EE,103C8B1C,extended,00000707
+// patch=1,EE,003C8B1E,extended,00000007
+
+[Cheats/Have All Ford Racing Trophies]
+// patch=1,EE,203C8E80,extended,07070707
+// patch=1,EE,003C8E84,extended,00000007

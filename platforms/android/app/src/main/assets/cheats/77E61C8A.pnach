@@ -1,0 +1,30 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Gran Turismo [UNKNOWN] [77E61C8A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Gold B License]
+// patch=1,EE,4A167736,extended,B284A2F2
+// patch=1,EE,0AEE74E2,extended,00000000
+
+[Cheats/All Gold A License]
+// patch=1,EE,4A16B736,extended,B284A332
+// patch=1,EE,0AEE74E2,extended,00000000
+
+[Cheats/All Gold IB License]
+// patch=1,EE,4A16F736,extended,B284A372
+// patch=1,EE,0AEE74E2,extended,00000000
+
+[Cheats/All Gold IA License]
+// patch=1,EE,4A173736,extended,B284A3B2
+// patch=1,EE,0AEE74E2,extended,00000000
+
+[Cheats/All Gold S License]
+// patch=1,EE,4A177736,extended,B284A3F2
+// patch=1,EE,0AEE74E2,extended,00000000
+
+[Cheats/Always 10 Laps]
+// patch=1,EE,2ADD73BC,extended,8C830000
+// patch=1,EE,2ADD6FBC,extended,2405000A
+// patch=1,EE,2ADD8BBC,extended,AC650000
+// patch=1,EE,2A9CE392,extended,0803FFE0
+// patch=1,EE,2ADD87BC,extended,080E6E10

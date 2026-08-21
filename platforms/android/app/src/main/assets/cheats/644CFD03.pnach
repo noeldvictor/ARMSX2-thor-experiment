@@ -1,0 +1,131 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Jak 3 [SCUS-97330] [644CFD03]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Free 7 Scout Flies]
+// patch=1,EE,90120118,extended,0C047FEE
+// patch=1,EE,200FF000,extended,3C012000
+// patch=1,EE,200FF004,extended,03212025
+// patch=1,EE,200FF008,extended,3C053C04
+// patch=1,EE,200FF00C,extended,34A50008
+// patch=1,EE,200FF010,extended,24062000
+// patch=1,EE,200FF014,extended,8C830000
+// patch=1,EE,200FF018,extended,14650002
+// patch=1,EE,200FF01C,extended,34630004
+// patch=1,EE,200FF020,extended,AC830000
+// patch=1,EE,200FF024,extended,24C6FFFC
+// patch=1,EE,200FF028,extended,1CC0FFFA
+// patch=1,EE,200FF02C,extended,24840004
+// patch=1,EE,200FF030,extended,03200008
+// patch=1,EE,200FF034,extended,00000000
+// patch=1,EE,201091DC,extended,0C03FC00
+
+[Cheats/Infinite Health]
+// patch=1,EE,20180360,extended,41000000
+
+[Cheats/Max Metal Head Skull Gems (Current)]
+// patch=1,EE,205C05E4,extended,4479C000
+
+[Cheats/Max Precursor Orbs (Current)]
+// patch=1,EE,205C05EC,extended,44160000
+
+[Cheats/Max Precursor Orbs (Overall)]
+// patch=1,EE,205C05F0,extended,44160000
+
+[Cheats/Infinite Dark Eco Meter]
+// patch=1,EE,205C0604,extended,42C80000
+
+[Cheats/Infinite Light Eco Meter]
+// patch=1,EE,205C060C,extended,42C80000
+
+[Cheats/Unlock All Secrets]
+// patch=1,EE,205C0650,extended,FFFFFFFF
+// patch=1,EE,205C0654,extended,FFFFFFFF
+
+[Cheats/Infinite Ammo (Scatter Gun)]
+// patch=1,EE,205C0660,extended,42480000
+
+[Cheats/Infinite Ammo (Blaster Mod)]
+// patch=1,EE,205C0664,extended,42C80000
+
+[Cheats/Infinite Ammo (Vulcan Fury)]
+// patch=1,EE,205C0668,extended,40A00000
+
+[Cheats/Infinite Ammo (Peace Maker)]
+// patch=1,EE,205C066C,extended,42C80000
+
+[Cheats/Japanese]
+// patch=1,EE,A0111408,extended,03E00008
+// patch=1,EE,A011140C,extended,24020000
+
+[Cheats/English]
+// patch=1,EE,A0111408,extended,03E00008
+// patch=1,EE,A011140C,extended,24020001
+
+[Cheats/French]
+// patch=1,EE,A0111408,extended,03E00008
+// patch=1,EE,A011140C,extended,24020002
+
+[Cheats/Spanish]
+// patch=1,EE,A0111408,extended,03E00008
+// patch=1,EE,A011140C,extended,24020003
+
+[Cheats/German]
+// patch=1,EE,A0111408,extended,03E00008
+// patch=1,EE,A011140C,extended,24020004
+
+[Cheats/Italian]
+// patch=1,EE,A0111408,extended,03E00008
+// patch=1,EE,A011140C,extended,24020005
+
+[Cheats/Portuguese]
+// patch=1,EE,A0111408,extended,03E00008
+// patch=1,EE,A011140C,extended,24020007
+
+[Cheats/Toggle Jak's Goatee]
+// patch=1,EE,705C0649,extended,00000040
+
+[Cheats/Mirror World]
+// patch=1,EE,705C0649,extended,00000080
+
+[Cheats/Unlimited Ammo]
+// patch=1,EE,705C064A,extended,00000001
+
+[Cheats/Invulnerability]
+// patch=1,EE,705C064A,extended,00000002
+
+[Cheats/Unlimited Dark Jak]
+// patch=1,EE,705C064A,extended,00000004
+
+[Cheats/Unlimited Light Jak]
+// patch=1,EE,705C064A,extended,00000008
+
+[Cheats/Big Head Mode]
+// patch=1,EE,705C064A,extended,00000080
+
+[Cheats/Small Head Mode]
+// patch=1,EE,705C064B,extended,00000001
+
+[Cheats/Fast Movies]
+// patch=1,EE,705C064B,extended,00000002
+
+[Cheats/Slow Movies]
+// patch=1,EE,705C064B,extended,00000004
+
+[Cheats/Unlimited Vehicle Turbos]
+// patch=1,EE,705C064B,extended,00000008
+
+[Cheats/Upgrade Vehicle Toughness]
+// patch=1,EE,705C064B,extended,00000010
+
+[Cheats/Turbo JetBoard In Desert]
+// patch=1,EE,705C064B,extended,00000020
+
+[Cheats/Kleiver's Diaper]
+// patch=1,EE,705C064C,extended,00000002
+
+[Cheats/Bad Weather]
+// patch=1,EE,705C064C,extended,00000004
+
+[Cheats/Dark Jak Homing Attacks]
+// patch=1,EE,705C064C,extended,00000020

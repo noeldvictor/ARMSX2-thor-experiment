@@ -1,0 +1,126 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Formula One 2001 [SCUS-97150] [272F1C14]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slot 16]
+// patch=1,EE,9029EF84,extended,0C0ACD05
+
+[Cheats/Lap 1]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000001
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000001
+
+[Cheats/Lap 2]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000002
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000002
+
+[Cheats/Lap 3]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000003
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000003
+
+[Cheats/Lap 4]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000004
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000004
+
+[Cheats/Lap 5]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000005
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000005
+
+[Cheats/Lap 6]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000006
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000006
+
+[Cheats/Lap 7]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000007
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000007
+
+[Cheats/Lap 8]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000008
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000008
+
+[Cheats/Lap 9]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000009
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000009
+
+[Cheats/Lap 10]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,0000000A
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,0000000A
+
+[Cheats/Lap 11]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,0000000B
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,0000000B
+
+[Cheats/Lap 12]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,0000000C
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,0000000C
+
+[Cheats/Lap 13]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,0000000D
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,0000000D
+
+[Cheats/Lap 14]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,0000000E
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,0000000E
+
+[Cheats/Lap 15]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,0000000F
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,0000000F
+
+[Cheats/Lap 16]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000010
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000010
+
+[Cheats/Lap 17]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000011
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000011
+
+[Cheats/Lap 18]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000012
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000012
+
+[Cheats/Lap 19]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000013
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000013
+
+[Cheats/Lap 20]
+// patch=1,EE,D094E774,extended,00000001
+// patch=1,EE,1094E774,extended,00000014
+// patch=1,EE,D0955DB4,extended,00000001
+// patch=1,EE,10955DB4,extended,00000014

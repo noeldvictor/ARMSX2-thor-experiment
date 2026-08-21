@@ -1,0 +1,135 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Cy Girls [SLUS-20697] [302797DF]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Movie Replays]
+// patch=1,EE,F0100008,extended,001164EF
+
+[Cheats/Infinite Vital]
+// patch=1,EE,103C3F8C,extended,000003E7
+// patch=1,EE,104A6F9C,extended,000003E7
+
+[Cheats/Max Vital]
+// patch=1,EE,103C3F8E,extended,000003E7
+// patch=1,EE,104A6F9E,extended,000003E7
+
+[Cheats/Max Infinite Vital]
+// patch=1,EE,203C3F8C,extended,03E703E7
+// patch=1,EE,204A6F9C,extended,03E703E7
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20169E80,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,20169E7C,extended,00441021
+
+[Cheats/Never Reload]
+// patch=1,EE,2041D790,extended,00630063
+
+[Cheats/Max Night Vision (On Pickup)]
+// patch=1,EE,1041D798,extended,00000063
+
+[Cheats/Max Bio-Charge (On Pickup)]
+// patch=1,EE,1041D8FC,extended,00000063
+// patch=1,EE,0050090C,extended,00000063
+
+[Cheats/Max HF Energy Pack (On Pickup)]
+// patch=1,EE,1041D90A,extended,00000063
+
+[Cheats/Max Data Chip (On Pickup)]
+// patch=1,EE,1041DA34,extended,00000063
+
+[Cheats/Can Equip RAM-630B/Overdose/HM6400]
+// patch=1,EE,1025A156,extended,00001000
+
+[Cheats/P1 Hold X For Infinite Double Jumps]
+// patch=1,EE,D0396902,extended,0000BFFF
+// patch=1,EE,10396F54,extended,000000C9
+
+[Cheats/HG15]
+// patch=1,EE,0041D751,extended,00000001
+
+[Cheats/Dual HG15]
+// patch=1,EE,0041D751,extended,00000002
+
+[Cheats/Maggy Hammer]
+// patch=1,EE,0041D752,extended,00000001
+// patch=1,EE,1041D77A,extended,000003E7
+
+[Cheats/Dual Maggy Hammer]
+// patch=1,EE,0041D752,extended,00000002
+
+[Cheats/Flip-Lip]
+// patch=1,EE,0041D753,extended,00000001
+// patch=1,EE,1041D77C,extended,000003E7
+
+[Cheats/A699]
+// patch=1,EE,0041D754,extended,00000001
+
+[Cheats/Dual A699]
+// patch=1,EE,0041D754,extended,00000002
+
+[Cheats/Space Gun]
+// patch=1,EE,0041D755,extended,00000001
+
+[Cheats/Dual Space Gun]
+// patch=1,EE,0041D755,extended,00000002
+
+[Cheats/MP2100]
+// patch=1,EE,0041D756,extended,00000001
+
+[Cheats/Shockgun]
+// patch=1,EE,0041D757,extended,00000001
+// patch=1,EE,1041D776,extended,000003E7
+
+[Cheats/Pegasus 8]
+// patch=1,EE,0041D758,extended,00000001
+
+[Cheats/MML229]
+// patch=1,EE,0041D759,extended,00000001
+// patch=1,EE,1041D782,extended,000003E7
+
+[Cheats/AR100]
+// patch=1,EE,0041D75A,extended,00000001
+
+[Cheats/R33V]
+// patch=1,EE,0041D75B,extended,00000001
+
+[Cheats/SP700]
+// patch=1,EE,0041D75C,extended,00000001
+// patch=1,EE,1041D786,extended,000003E7
+
+[Cheats/GR2]
+// patch=1,EE,0041D75D,extended,00000001
+// patch=1,EE,1041D788,extended,000003E7
+
+[Cheats/RAM-630B]
+// patch=1,EE,0041D75E,extended,00000001
+// patch=1,EE,1041D78E,extended,000003E7
+
+[Cheats/Overdose]
+// patch=1,EE,0041D75F,extended,00000001
+// patch=1,EE,1041D78A,extended,000003E7
+
+[Cheats/HM6400]
+// patch=1,EE,0041D760,extended,00000001
+// patch=1,EE,1041D78C,extended,000003E7
+
+[Cheats/DBS1010]
+// patch=1,EE,0041D761,extended,00000001
+// patch=1,EE,1041D780,extended,000003E7
+
+[Cheats/HG15/MP2100/A699]
+// patch=1,EE,1041D778,extended,000003E7
+
+[Cheats/Space Gun/Pegasus 8]
+// patch=1,EE,1041D77E,extended,000003E7
+
+[Cheats/AR100/R33V]
+// patch=1,EE,1041D784,extended,000003E7
+
+[Cheats/Max Shuriken (On Pickup)]
+// patch=1,EE,005008D8,extended,00000063
+
+[Cheats/Max Kunai (On Pickup)]
+// patch=1,EE,005008DC,extended,00000063

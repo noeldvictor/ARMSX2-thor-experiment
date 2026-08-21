@@ -1,0 +1,363 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Whirl Tour [SLUS-20489] [43E749A2]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Abilities & Powerups]
+// patch=1,EE,90253054,extended,0C08BD17
+
+[Cheats/Infinite Time]
+// patch=1,EE,201BDDD4,extended,00000000
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,201739D0,extended,2463270F
+
+[Cheats/Hella Score Gain]
+// patch=1,EE,201739D0,extended,24637FFF
+
+[Cheats/Infinite Health]
+// patch=1,EE,2017DA7C,extended,3C0142C8
+// patch=1,EE,2017DA84,extended,AE410070
+
+[Cheats/Max Special]
+// patch=1,EE,2017D9DC,extended,3C0145BC
+// patch=1,EE,2017D9E4,extended,AE410074
+// patch=1,EE,2017D9F0,extended,AE410074
+
+[Cheats/Perfect Horizontal Balance]
+// patch=1,EE,2017AFE8,extended,00000000
+// patch=1,EE,2017B018,extended,00000000
+
+[Cheats/Perfect Vertical Balance]
+// patch=1,EE,2017A308,extended,00000000
+// patch=1,EE,2017A338,extended,00000000
+// patch=1,EE,2017C3A4,extended,00000000
+// patch=1,EE,2017C3D0,extended,00000000
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,21CBD47C,extended,00000007
+
+[Cheats/Unlock All Costumes]
+// patch=1,EE,41CBD630,extended,00090001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Scooters]
+// patch=1,EE,41CBD56C,extended,000A0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Scooter Colors]
+// patch=1,EE,41CBD654,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,01CBD684,extended,00000001
+
+[Cheats/Have All Red Packages]
+// patch=1,EE,41CBD594,extended,00080001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Red Package Gold Cups]
+// patch=1,EE,41CBD5B4,extended,00080001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Castle]
+// patch=1,EE,21CBD60C,extended,00000001
+
+[Cheats/Theme Park]
+// patch=1,EE,21CBD610,extended,00000001
+
+[Cheats/Suburbia]
+// patch=1,EE,21CBD614,extended,00000001
+
+[Cheats/City In The Sky]
+// patch=1,EE,21CBD618,extended,00000001
+
+[Cheats/Subway]
+// patch=1,EE,21CBD61C,extended,00000001
+
+[Cheats/Deep Water Rig]
+// patch=1,EE,21CBD620,extended,00000001
+
+[Cheats/Movie Set]
+// patch=1,EE,21CBD624,extended,00000001
+// patch=1,EE,21CBD62C,extended,00000001
+
+[Cheats/Castle-Unlock Roxie]
+// patch=1,EE,21CBD5F4,extended,00000001
+
+[Cheats/Theme Park-Unlock Lunk]
+// patch=1,EE,21CBD5F8,extended,00000001
+
+[Cheats/Suburbia-Unlock Vixen]
+// patch=1,EE,21CBD5FC,extended,00000001
+
+[Cheats/City In The Sky-Unlock Stig]
+// patch=1,EE,21CBD600,extended,00000001
+
+[Cheats/Subway-Unlock Rica]
+// patch=1,EE,21CBD604,extended,00000001
+
+[Cheats/Deep Water Rig-Unlock Ice-Mocha]
+// patch=1,EE,21CBD608,extended,00000001
+
+[Cheats/Have 7 Objectives Completed]
+// patch=1,EE,21CBD308,extended,00000007
+// patch=1,EE,21CBD314,extended,00000007
+// patch=1,EE,21CBD320,extended,00000007
+// patch=1,EE,21CBD32C,extended,00000007
+// patch=1,EE,21CBD338,extended,00000007
+// patch=1,EE,21CBD344,extended,00000007
+// patch=1,EE,21CBD350,extended,00000007
+
+[Cheats/Finish All Objectives]
+// patch=1,EE,21CBD30C,extended,01010101
+// patch=1,EE,21CBD310,extended,00010101
+// patch=1,EE,21CBD318,extended,01010101
+// patch=1,EE,21CBD31C,extended,00010101
+// patch=1,EE,21CBD324,extended,01010101
+// patch=1,EE,21CBD328,extended,00010101
+// patch=1,EE,21CBD330,extended,01010101
+// patch=1,EE,21CBD334,extended,00010101
+// patch=1,EE,21CBD33C,extended,01010101
+// patch=1,EE,21CBD340,extended,00010101
+// patch=1,EE,21CBD348,extended,01010101
+// patch=1,EE,21CBD34C,extended,00010101
+// patch=1,EE,21CBD354,extended,01010101
+// patch=1,EE,21CBD358,extended,00010101
+
+[Cheats/Slot 1]
+// patch=1,EE,01CBD4C8,extended,00000001
+// patch=1,EE,01CBD52C,extended,00000001
+
+[Cheats/Slot 2]
+// patch=1,EE,01CBD4C9,extended,00000001
+// patch=1,EE,01CBD52D,extended,00000001
+
+[Cheats/Slot 3]
+// patch=1,EE,01CBD4CA,extended,00000001
+// patch=1,EE,01CBD52E,extended,00000001
+
+[Cheats/Slot 4]
+// patch=1,EE,01CBD4CB,extended,00000001
+// patch=1,EE,01CBD52F,extended,00000001
+
+[Cheats/Slot 5]
+// patch=1,EE,01CBD4CC,extended,00000001
+// patch=1,EE,01CBD530,extended,00000001
+
+[Cheats/Slot 6]
+// patch=1,EE,01CBD4CD,extended,00000001
+// patch=1,EE,01CBD531,extended,00000001
+
+[Cheats/Slot 7]
+// patch=1,EE,01CBD4CE,extended,00000001
+// patch=1,EE,01CBD532,extended,00000001
+
+[Cheats/Slot 8]
+// patch=1,EE,01CBD4CF,extended,00000001
+// patch=1,EE,01CBD533,extended,00000001
+
+[Cheats/Slot 9]
+// patch=1,EE,01CBD4D0,extended,00000001
+// patch=1,EE,01CBD534,extended,00000001
+
+[Cheats/Slot 10]
+// patch=1,EE,01CBD4D1,extended,00000001
+// patch=1,EE,01CBD535,extended,00000001
+
+[Cheats/Slot 11]
+// patch=1,EE,01CBD4D2,extended,00000001
+// patch=1,EE,01CBD536,extended,00000001
+
+[Cheats/Slot 12]
+// patch=1,EE,01CBD4D3,extended,00000001
+// patch=1,EE,01CBD537,extended,00000001
+
+[Cheats/Slot 13]
+// patch=1,EE,01CBD4D4,extended,00000001
+// patch=1,EE,01CBD538,extended,00000001
+
+[Cheats/Slot 14]
+// patch=1,EE,01CBD4D5,extended,00000001
+// patch=1,EE,01CBD539,extended,00000001
+
+[Cheats/Slot 15]
+// patch=1,EE,01CBD4D6,extended,00000001
+// patch=1,EE,01CBD53A,extended,00000001
+
+[Cheats/Slot 16]
+// patch=1,EE,01CBD4D7,extended,00000001
+// patch=1,EE,01CBD53B,extended,00000001
+
+[Cheats/Slot 17]
+// patch=1,EE,01CBD4D8,extended,00000001
+// patch=1,EE,01CBD53C,extended,00000001
+
+[Cheats/Slot 18]
+// patch=1,EE,01CBD4D9,extended,00000001
+// patch=1,EE,01CBD53D,extended,00000001
+
+[Cheats/Slot 19]
+// patch=1,EE,01CBD4DA,extended,00000001
+// patch=1,EE,01CBD53E,extended,00000001
+
+[Cheats/Slot 20]
+// patch=1,EE,01CBD4DB,extended,00000001
+// patch=1,EE,01CBD53F,extended,00000001
+
+[Cheats/Scooter 1]
+// patch=1,EE,01CBD4DC,extended,00000001
+// patch=1,EE,01CBD4F0,extended,00000001
+// patch=1,EE,01CBD504,extended,00000001
+// patch=1,EE,01CBD518,extended,00000001
+// patch=1,EE,01CBD540,extended,00000001
+// patch=1,EE,01CBD554,extended,00000001
+
+[Cheats/Scooter 2]
+// patch=1,EE,01CBD4DD,extended,00000001
+// patch=1,EE,01CBD4F1,extended,00000001
+// patch=1,EE,01CBD505,extended,00000001
+// patch=1,EE,01CBD519,extended,00000001
+// patch=1,EE,01CBD541,extended,00000001
+// patch=1,EE,01CBD555,extended,00000001
+
+[Cheats/Scooter 3]
+// patch=1,EE,01CBD4DE,extended,00000001
+// patch=1,EE,01CBD4F2,extended,00000001
+// patch=1,EE,01CBD506,extended,00000001
+// patch=1,EE,01CBD51A,extended,00000001
+// patch=1,EE,01CBD542,extended,00000001
+// patch=1,EE,01CBD556,extended,00000001
+
+[Cheats/Scooter 4]
+// patch=1,EE,01CBD4DF,extended,00000001
+// patch=1,EE,01CBD4F3,extended,00000001
+// patch=1,EE,01CBD507,extended,00000001
+// patch=1,EE,01CBD51B,extended,00000001
+// patch=1,EE,01CBD543,extended,00000001
+// patch=1,EE,01CBD557,extended,00000001
+
+[Cheats/Scooter 5]
+// patch=1,EE,01CBD4E0,extended,00000001
+// patch=1,EE,01CBD4F4,extended,00000001
+// patch=1,EE,01CBD508,extended,00000001
+// patch=1,EE,01CBD51C,extended,00000001
+// patch=1,EE,01CBD544,extended,00000001
+// patch=1,EE,01CBD558,extended,00000001
+
+[Cheats/Scooter 6]
+// patch=1,EE,01CBD4E1,extended,00000001
+// patch=1,EE,01CBD4F5,extended,00000001
+// patch=1,EE,01CBD509,extended,00000001
+// patch=1,EE,01CBD51D,extended,00000001
+// patch=1,EE,01CBD545,extended,00000001
+// patch=1,EE,01CBD559,extended,00000001
+
+[Cheats/Scooter 7]
+// patch=1,EE,01CBD4E2,extended,00000001
+// patch=1,EE,01CBD4F6,extended,00000001
+// patch=1,EE,01CBD50A,extended,00000001
+// patch=1,EE,01CBD51E,extended,00000001
+// patch=1,EE,01CBD546,extended,00000001
+// patch=1,EE,01CBD55A,extended,00000001
+
+[Cheats/Scooter 8]
+// patch=1,EE,01CBD4E3,extended,00000001
+// patch=1,EE,01CBD4F7,extended,00000001
+// patch=1,EE,01CBD50B,extended,00000001
+// patch=1,EE,01CBD51F,extended,00000001
+// patch=1,EE,01CBD547,extended,00000001
+// patch=1,EE,01CBD55B,extended,00000001
+
+[Cheats/Scooter 9]
+// patch=1,EE,01CBD4E4,extended,00000001
+// patch=1,EE,01CBD4F8,extended,00000001
+// patch=1,EE,01CBD50C,extended,00000001
+// patch=1,EE,01CBD520,extended,00000001
+// patch=1,EE,01CBD548,extended,00000001
+// patch=1,EE,01CBD55C,extended,00000001
+
+[Cheats/Scooter 10]
+// patch=1,EE,01CBD4E5,extended,00000001
+// patch=1,EE,01CBD4F9,extended,00000001
+// patch=1,EE,01CBD50D,extended,00000001
+// patch=1,EE,01CBD521,extended,00000001
+// patch=1,EE,01CBD549,extended,00000001
+// patch=1,EE,01CBD55D,extended,00000001
+
+[Cheats/Scooter 11]
+// patch=1,EE,01CBD4E6,extended,00000001
+// patch=1,EE,01CBD4FA,extended,00000001
+// patch=1,EE,01CBD50E,extended,00000001
+// patch=1,EE,01CBD522,extended,00000001
+// patch=1,EE,01CBD54A,extended,00000001
+// patch=1,EE,01CBD55E,extended,00000001
+
+[Cheats/Scooter 12]
+// patch=1,EE,01CBD4E7,extended,00000001
+// patch=1,EE,01CBD4FB,extended,00000001
+// patch=1,EE,01CBD50F,extended,00000001
+// patch=1,EE,01CBD523,extended,00000001
+// patch=1,EE,01CBD54B,extended,00000001
+// patch=1,EE,01CBD55F,extended,00000001
+
+[Cheats/Scooter 13]
+// patch=1,EE,01CBD4E8,extended,00000001
+// patch=1,EE,01CBD4FC,extended,00000001
+// patch=1,EE,01CBD510,extended,00000001
+// patch=1,EE,01CBD524,extended,00000001
+// patch=1,EE,01CBD54C,extended,00000001
+// patch=1,EE,01CBD560,extended,00000001
+
+[Cheats/Scooter 14]
+// patch=1,EE,01CBD4E9,extended,00000001
+// patch=1,EE,01CBD4FD,extended,00000001
+// patch=1,EE,01CBD511,extended,00000001
+// patch=1,EE,01CBD525,extended,00000001
+// patch=1,EE,01CBD54D,extended,00000001
+// patch=1,EE,01CBD561,extended,00000001
+
+[Cheats/Scooter 15]
+// patch=1,EE,01CBD4EA,extended,00000001
+// patch=1,EE,01CBD4FE,extended,00000001
+// patch=1,EE,01CBD512,extended,00000001
+// patch=1,EE,01CBD526,extended,00000001
+// patch=1,EE,01CBD54E,extended,00000001
+// patch=1,EE,01CBD562,extended,00000001
+
+[Cheats/Scooter 16]
+// patch=1,EE,01CBD4EB,extended,00000001
+// patch=1,EE,01CBD4FF,extended,00000001
+// patch=1,EE,01CBD513,extended,00000001
+// patch=1,EE,01CBD527,extended,00000001
+// patch=1,EE,01CBD54F,extended,00000001
+// patch=1,EE,01CBD563,extended,00000001
+
+[Cheats/Scooter 17]
+// patch=1,EE,01CBD4EC,extended,00000001
+// patch=1,EE,01CBD500,extended,00000001
+// patch=1,EE,01CBD514,extended,00000001
+// patch=1,EE,01CBD528,extended,00000001
+// patch=1,EE,01CBD550,extended,00000001
+// patch=1,EE,01CBD564,extended,00000001
+
+[Cheats/Scooter 18]
+// patch=1,EE,01CBD4ED,extended,00000001
+// patch=1,EE,01CBD501,extended,00000001
+// patch=1,EE,01CBD515,extended,00000001
+// patch=1,EE,01CBD529,extended,00000001
+// patch=1,EE,01CBD551,extended,00000001
+// patch=1,EE,01CBD565,extended,00000001
+
+[Cheats/Scooter 19]
+// patch=1,EE,01CBD4EE,extended,00000001
+// patch=1,EE,01CBD502,extended,00000001
+// patch=1,EE,01CBD516,extended,00000001
+// patch=1,EE,01CBD52A,extended,00000001
+// patch=1,EE,01CBD552,extended,00000001
+// patch=1,EE,01CBD566,extended,00000001
+
+[Cheats/Scooter 20]
+// patch=1,EE,01CBD4EF,extended,00000001
+// patch=1,EE,01CBD503,extended,00000001
+// patch=1,EE,01CBD517,extended,00000001
+// patch=1,EE,01CBD52B,extended,00000001
+// patch=1,EE,01CBD553,extended,00000001
+// patch=1,EE,01CBD567,extended,00000001

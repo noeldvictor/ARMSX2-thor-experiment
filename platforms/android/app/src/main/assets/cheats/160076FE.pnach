@@ -1,0 +1,15 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Grandia 2 [UNKNOWN] [160076FE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max gold]
+// patch=1,EE,11352BE4,extended,0000FFFF
+
+[Cheats/Infinite Special Coins]
+// patch=1,EE,11352BE8,extended,0000FFFF
+
+[Cheats/Infinite Magic Coins]
+// patch=1,EE,11352BEC,extended,0000FFFF
+
+[Cheats/Ryudo Quick Level Up]
+// patch=1,EE,11353276,extended,00000063

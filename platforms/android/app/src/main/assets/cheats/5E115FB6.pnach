@@ -1,0 +1,50 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Grand Theft Auto III [UNKNOWN] [5E115FB6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Armor]
+// patch=1,EE,10B65316,extended,000042C8
+
+[Cheats/Infinite Health]
+// patch=1,EE,10B65312,extended,000042C8
+
+[Cheats/Max Money]
+// patch=1,EE,20510428,extended,05F5E0FF
+// patch=1,EE,2051042C,extended,05F5E0FF
+
+[Cheats/Infinite Rockets]
+// patch=1,EE,10B65468,extended,00000063
+
+[Cheats/Infinite Run]
+// patch=1,EE,20510490,extended,00000064
+
+[Cheats/Infinite AK-47 Ammo]
+// patch=1,EE,10B65428,extended,00000063
+// patch=1,EE,10B6542C,extended,000003E7
+
+[Cheats/Infinite M16 Ammo]
+// patch=1,EE,10B6543C,extended,00000063
+// patch=1,EE,10B65440,extended,000003E7
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,10B654A4,extended,00000063
+
+[Cheats/Infinite Sniper Ammo]
+// patch=1,EE,10B65454,extended,000003E7
+
+[Cheats/Infinite Uzi Ammo]
+// patch=1,EE,10B65400,extended,00000063
+// patch=1,EE,10B65404,extended,000003E7
+
+[Cheats/Daily Timer Stopped]
+// patch=1,EE,20268860,extended,03E00008
+// patch=1,EE,20268864,extended,00000000
+
+[Cheats/Semi-Auto Rockets]
+// patch=1,EE,10B65468,extended,00000063
+// patch=1,EE,10B6546C,extended,000003E7
+
+[Cheats/Semi-Auto Sniper - Causes Vehicle Gravity to be removed]
+// patch=1,EE,10B65450,extended,00000063
+// patch=1,EE,10B65454,extended,000003E7
+// patch=1,EE,201B239C,extended,00000000

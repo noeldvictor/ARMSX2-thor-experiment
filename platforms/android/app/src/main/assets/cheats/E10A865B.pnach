@@ -1,0 +1,19 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ant Bully, The [SLUS-21415] [E10A865B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Blastlands-Komputer Kontroller]
+// patch=1,EE,9011DDA4,extended,0C04AC18
+
+[Cheats/Infinite Health]
+// patch=1,EE,207BFC40,extended,3F800000
+
+[Cheats/Max Health]
+// patch=1,EE,207BFC48,extended,3F800000
+
+[Cheats/Start With 99 Fire Crystals]
+// patch=1,EE,D07BFB98,extended,00000000
+// patch=1,EE,207BFB98,extended,00000063
+
+[Cheats/Always Max Fire Crystals]
+// patch=1,EE,207BFB98,extended,00000064

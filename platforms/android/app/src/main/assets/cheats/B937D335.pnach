@@ -1,0 +1,64 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Unison [SLPS-25010] [B937D335]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Levels]
+// patch=1,EE,F0100008,extended,001E5267
+
+[Cheats/Always Have Broadcast]
+// patch=1,EE,0028ECA4,extended,00000001
+
+[Cheats/Always Rank A]
+// patch=1,EE,20281B70,extended,00000000
+// patch=1,EE,20281738,extended,00000000
+// patch=1,EE,20281FA8,extended,00000000
+
+[Cheats/Max Perfects]
+// patch=1,EE,1098410C,extended,000003E7
+// patch=1,EE,109840E8,extended,000003E7
+// patch=1,EE,10984130,extended,000003E7
+
+[Cheats/Max Cools]
+// patch=1,EE,10984110,extended,000003E7
+// patch=1,EE,109840EC,extended,000003E7
+// patch=1,EE,10984134,extended,000003E7
+
+[Cheats/Max Goods]
+// patch=1,EE,10984114,extended,000003E7
+// patch=1,EE,109840F0,extended,000003E7
+// patch=1,EE,10984138,extended,000003E7
+
+[Cheats/Max Bads]
+// patch=1,EE,10984118,extended,000003E7
+// patch=1,EE,109840F4,extended,000003E7
+// patch=1,EE,1098413C,extended,000003E7
+
+[Cheats/Max Misses]
+// patch=1,EE,1098411C,extended,000003E7
+// patch=1,EE,109840F8,extended,000003E7
+// patch=1,EE,10984140,extended,000003E7
+
+[Cheats/No Perfects]
+// patch=1,EE,1098410C,extended,00000000
+// patch=1,EE,109840E8,extended,00000000
+// patch=1,EE,10984130,extended,00000000
+
+[Cheats/No Cools]
+// patch=1,EE,10984110,extended,00000000
+// patch=1,EE,109840EC,extended,00000000
+// patch=1,EE,10984134,extended,00000000
+
+[Cheats/No Goods]
+// patch=1,EE,10984114,extended,00000000
+// patch=1,EE,109840F0,extended,00000000
+// patch=1,EE,10984138,extended,00000000
+
+[Cheats/No Bads]
+// patch=1,EE,10984118,extended,00000000
+// patch=1,EE,109840F4,extended,00000000
+// patch=1,EE,1098413C,extended,00000000
+
+[Cheats/No Misses]
+// patch=1,EE,1098411C,extended,00000000
+// patch=1,EE,109840F8,extended,00000000
+// patch=1,EE,10984140,extended,00000000

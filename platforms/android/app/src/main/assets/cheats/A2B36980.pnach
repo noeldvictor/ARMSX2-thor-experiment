@@ -1,0 +1,26 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Spy Hunter 2 [SLUS-20590] [A2B36980]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Mission 14]
+// patch=1,EE,902FCD1C,extended,0C0BB6A4
+
+[Cheats/Infinite Time]
+// patch=1,EE,20117678,extended,00000000
+
+[Cheats/Infinite Health]
+// patch=1,EE,201A56C4,extended,ACA00018
+
+[Cheats/Infinite Nitros]
+// patch=1,EE,201AA55C,extended,00000000
+
+[Cheats/Machine Guns Never Overheat]
+// patch=1,EE,201B8D44,extended,00000000
+
+[Cheats/Infinite Secondary Weapons]
+// patch=1,EE,201B91D4,extended,00000000
+
+[Cheats/Have All Mission Completed]
+// patch=1,EE,1041ECC6,extended,00000101
+// patch=1,EE,4041ECC8,extended,00040001
+// patch=1,EE,01010101,extended,00000000

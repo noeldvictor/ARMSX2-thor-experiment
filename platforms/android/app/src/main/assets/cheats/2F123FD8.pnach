@@ -1,0 +1,203 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: God Of War II [SCUS-97481] [2F123FD8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,20959698,extended,43480000
+// patch=1,EE,2095A3D8,extended,42C80000
+
+[Cheats/Infinite Amulet of the Fates Power]
+// patch=1,EE,20335844,extended,42C80000
+
+[Cheats/Infinite Rage of the Titans]
+// patch=1,EE,20335848,extended,42C80000
+// patch=1,EE,002D86AC,extended,00000001
+
+[Cheats/Infinite Magic]
+// patch=1,EE,20335840,extended,43480000
+// patch=1,EE,002D86A8,extended,00000001
+
+[Cheats/Max / Infinite Red Orbs]
+// patch=1,EE,2071C3BC,extended,000F423F
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,2022662C,extended,00000000
+
+[Cheats/Weapons Can Turn Enemies to Stone]
+// patch=1,EE,002D86B0,extended,00000001
+
+[Cheats/10x Orb Multiplier]
+// patch=1,EE,002D86B8,extended,00000001
+
+[Cheats/Extend Combo Time]
+// patch=1,EE,002D86BC,extended,00000001
+
+[Cheats/Replace Chrono' Rage with Posedion's Rage]
+// patch=1,EE,002D86B4,extended,00000001
+
+[Cheats/Treasure Room Complete]
+// patch=1,EE,102D90BC,extended,000001FF
+
+[Cheats/All Gorgon Eyes]
+// patch=1,EE,00335876,extended,00000012
+
+[Cheats/Have All Phoenix Feathers]
+// patch=1,EE,00335877,extended,00000012
+
+[Cheats/Have All 20 Cyclopse Eyes]
+// patch=1,EE,0033587C,extended,00000014
+
+[Cheats/Disable AI (R2+Up to disable AI, R2+Down to enable AI)]
+// patch=1,EE,D02D8080,extended,00001002
+// patch=1,EE,20201C6C,extended,24100000
+// patch=1,EE,D02D8080,extended,00004002
+// patch=1,EE,20201C6C,extended,0080802D
+
+[Cheats/Gravity - Low gravity]
+// patch=1,EE,202D86C8,extended,41A00000
+
+[Cheats/Gravity - Lower gravity]
+// patch=1,EE,202D86C8,extended,41000000
+
+[Cheats/Gravity - Super Low gravity]
+// patch=1,EE,202D86C8,extended,40800000
+
+[Cheats/Speed - Always 1/2 Speed]
+// patch=1,EE,202D80BC,extended,3F000000
+
+[Cheats/Speed - Always 2x Speed]
+// patch=1,EE,202D80BC,extended,40000000
+
+[Cheats/Speed - Always 3x Speed]
+// patch=1,EE,202D80BC,extended,40400000
+
+[Cheats/Speed - Always Insane Speed]
+// patch=1,EE,202D80BC,extended,40A00000
+
+[Cheats/Speed - Hyper Mode (R3+Right)]
+// patch=1,EE,D02D8080,extended,00002400
+// patch=1,EE,2018A238,extended,3C0141E0
+
+[Cheats/Speed - Quicker Game (R3+Up)]
+// patch=1,EE,D02D8080,extended,00001400
+// patch=1,EE,2018A238,extended,3C014230
+
+[Cheats/Speed - Slow Motion (R3+Down)]
+// patch=1,EE,D02D8080,extended,00004400
+// patch=1,EE,2018A238,extended,3C014300
+
+[Cheats/Speed - Normal Speed (R3+Left)]
+// patch=1,EE,D02D8080,extended,00008400
+// patch=1,EE,2018A238,extended,3C014270
+
+[Cheats/Infinite Health (Near ennemies)]
+// patch=1,EE,200FFF00,extended,3C014348
+// patch=1,EE,200FFF08,extended,AC810178
+// patch=1,EE,200FFF04,extended,8C640008
+// patch=1,EE,20201C68,extended,0803FFC0
+// patch=1,EE,200FFF1C,extended,0808071B
+
+[Cheats/Maniac Runner (Near ennemies)]
+// patch=1,EE,200FFF14,extended,3C014000
+// patch=1,EE,200FFF18,extended,AC81016C
+// patch=1,EE,200FFF04,extended,8C640008
+// patch=1,EE,20201C68,extended,0803FFC0
+// patch=1,EE,200FFF1C,extended,0808071B
+
+[Cheats/Size - Mini Player]
+// patch=1,EE,200FFF0C,extended,3C013F00
+// patch=1,EE,200FFF10,extended,AC810168
+// patch=1,EE,200FFF04,extended,8C640008
+// patch=1,EE,20201C68,extended,0803FFC0
+// patch=1,EE,200FFF1C,extended,0808071B
+
+[Cheats/Size - Tiny Player]
+// patch=1,EE,200FFF0C,extended,3C013F40
+// patch=1,EE,200FFF10,extended,AC810168
+// patch=1,EE,200FFF04,extended,8C640008
+// patch=1,EE,20201C68,extended,0803FFC0
+// patch=1,EE,200FFF1C,extended,0808071B
+
+[Cheats/Size - Giant Player]
+// patch=1,EE,200FFF0C,extended,3C013FE0
+// patch=1,EE,200FFF10,extended,AC810168
+// patch=1,EE,200FFF04,extended,8C640008
+// patch=1,EE,20201C68,extended,0803FFC0
+// patch=1,EE,200FFF1C,extended,0808071B
+
+[Cheats/Size - Massive Player]
+// patch=1,EE,200FFF0C,extended,3C014010
+// patch=1,EE,200FFF10,extended,AC810168
+// patch=1,EE,200FFF04,extended,8C640008
+// patch=1,EE,20201C68,extended,0803FFC0
+// patch=1,EE,200FFF1C,extended,0808071B
+
+[Cheats/Difficulty - L3 + DOWN: Mortal (Easy)]
+// patch=1,EE,D02D8080,extended,00004200
+// patch=1,EE,002D86E0,extended,00000000
+
+[Cheats/Difficulty - L3 + LEFT: Spartan (Normal)]
+// patch=1,EE,D02D8080,extended,00008200
+// patch=1,EE,002D86E0,extended,00000001
+
+[Cheats/Difficulty - L3 + RIGHT: God (Hard)]
+// patch=1,EE,D02D8080,extended,00002200
+// patch=1,EE,002D86E0,extended,00000002
+
+[Cheats/Difficulty - L3 + UP: Titan (Very Hard)]
+// patch=1,EE,D02D8080,extended,00001200
+// patch=1,EE,002D86E0,extended,00000003
+
+[Cheats/Max Total Play Time]
+// patch=1,EE,202D86E8,extended,0003CA50
+
+[Cheats/Low Total Play Time]
+// patch=1,EE,202D86E8,extended,00000000
+
+[Cheats/Max Total Deaths]
+// patch=1,EE,2036B0C8,extended,3B9AC9FF
+
+[Cheats/No Total Deaths]
+// patch=1,EE,2036B0C8,extended,00000000
+
+[Cheats/Max Total Kills]
+// patch=1,EE,2036B108,extended,3B9AC9FF
+
+[Cheats/No Total Kills]
+// patch=1,EE,2036B108,extended,00000000
+
+[Cheats/Max Total Saves]
+// patch=1,EE,2036B0CC,extended,3B9AC9FF
+
+[Cheats/No Total Saves]
+// patch=1,EE,2036B0CC,extended,00000000
+
+[Cheats/Max Brutal Kills]
+// patch=1,EE,2036B10C,extended,3B9AC9FF
+
+[Cheats/No Brutal Kills]
+// patch=1,EE,2036B10C,extended,00000000
+
+[Cheats/Max Maximum Combo]
+// patch=1,EE,2036B0F4,extended,3B9AC9FF
+
+[Cheats/No Maximum Combo]
+// patch=1,EE,2036B0F4,extended,00000000
+
+[Cheats/Max Dismember Kills]
+// patch=1,EE,2036B114,extended,3B9AC9FF
+
+[Cheats/No Dismember Kills]
+// patch=1,EE,2036B114,extended,00000000
+
+[Cheats/Max Red Orbs Collected]
+// patch=1,EE,2036B0D8,extended,3B9AC9FF
+
+[Cheats/No Red Orbs Collected]
+// patch=1,EE,2036B0D8,extended,00000000
+
+[Cheats/Max Shatter Kills]
+// patch=1,EE,2036B118,extended,3B9AC9FF
+
+[Cheats/No Shatter Kills]
+// patch=1,EE,2036B118,extended,00000000

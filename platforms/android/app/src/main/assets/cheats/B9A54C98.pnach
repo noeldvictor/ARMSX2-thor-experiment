@@ -1,0 +1,37 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mummy Returns, The [SLES-50510] [B9A54C98]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Riders]
+// patch=1,EE,90220DBC,extended,0C0855A6
+
+[Cheats/Infinite Health]
+// patch=1,EE,002CBBB0,extended,00000001
+
+[Cheats/Infinite Health (Enemies)]
+// patch=1,EE,002CBBB1,extended,00000001
+
+[Cheats/Transparency]
+// patch=1,EE,002CBBB2,extended,00000001
+
+[Cheats/Press {R1}+{R2} To Activate]
+// patch=1,EE,D02DE842,extended,0000F5FF
+// patch=1,EE,002CBBB3,extended,00000001
+
+[Cheats/Press {L1}+{L2} To Deactivate]
+// patch=1,EE,D02DE842,extended,0000FAFF
+// patch=1,EE,002CBBB3,extended,00000000
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,002CBBB4,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,002CBBB5,extended,00000001
+
+[Cheats/Press {L1}+{R1} To Display]
+// patch=1,EE,D02DE842,extended,0000F3FF
+// patch=1,EE,002CAA2D,extended,00000001
+
+[Cheats/Press {L1}+{R2} To Hide]
+// patch=1,EE,D02DE842,extended,0000FCFF
+// patch=1,EE,002CAA2D,extended,00000000

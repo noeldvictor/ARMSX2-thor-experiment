@@ -1,0 +1,77 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tokyo Xtreme Racer 3 [SLUS-20831] [0F932D81]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Buying Items Increases Money]
+// patch=1,EE,9014B700,extended,0C04ADFA
+
+[Cheats/Infinite Money (Start A Race)]
+// patch=1,EE,103AEBB0,extended,0000FFFF
+
+[Cheats/Max Money (Start A Race)]
+// patch=1,EE,203AEBB0,extended,05F5E0FF
+
+[Cheats/Infinite Money (Alternate)]
+// patch=1,EE,108153B0,extended,0000FFFF
+
+[Cheats/Max Money (Alternate)]
+// patch=1,EE,208153B0,extended,05F5E0FF
+
+[Cheats/Days 999]
+// patch=1,EE,208153B4,extended,000003E7
+
+[Cheats/Max Days]
+// patch=1,EE,103AEBB4,extended,000003E7
+
+[Cheats/Quick Odometer Meter Gain]
+// patch=1,EE,103AEB54,extended,0000FFFF
+
+[Cheats/Max Odometer Meter]
+// patch=1,EE,203AEB54,extended,3B9AC9FF
+
+[Cheats/Always Low Time]
+// patch=1,EE,D041E8D2,extended,00000041
+// patch=1,EE,2041EAC0,extended,00000000
+
+[Cheats/Max Trip Meter]
+// patch=1,EE,D041E8D2,extended,00000041
+// patch=1,EE,2041EABC,extended,00189BC6
+
+[Cheats/Infinite SP P1]
+// patch=1,EE,D041E8D2,extended,00000041
+// patch=1,EE,2041E958,extended,004C4B40
+
+[Cheats/No SP P1]
+// patch=1,EE,D041E8D2,extended,00000041
+// patch=1,EE,2041E958,extended,00000000
+
+[Cheats/Infinite SP Rival]
+// patch=1,EE,D041E8D2,extended,00000041
+// patch=1,EE,2041E9A8,extended,004C4B40
+
+[Cheats/No SP Rival]
+// patch=1,EE,D041E8D2,extended,00000041
+// patch=1,EE,2041E9A8,extended,00000000
+
+[Cheats/Rival Always Loses SP Over Time]
+// patch=1,EE,20165B18,extended,24090BB8
+// patch=1,EE,10165B22,extended,00001000
+
+[Cheats/Never Lose SP Over Time P1]
+// patch=1,EE,20165B60,extended,00000000
+// patch=1,EE,20165B68,extended,00000000
+
+[Cheats/Never Lose SP From Damage P1]
+// patch=1,EE,201653F0,extended,00000000
+
+[Cheats/Access All Cars (Free Mode)]
+// patch=1,EE,201D338C,extended,00000000
+
+[Cheats/Access All Cars For Sale]
+// patch=1,EE,201D36E8,extended,00000000
+
+[Cheats/Money Doesnt Decrease When Buying Cars]
+// patch=1,EE,2020D8DC,extended,00000000
+
+[Cheats/Money Increases When Buying Cars]
+// patch=1,EE,2020D8D8,extended,00451021

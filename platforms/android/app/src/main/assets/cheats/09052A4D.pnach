@@ -1,0 +1,54 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Madagascar [SLUS-21015] [09052A4D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Normal Difficulty Story Rank S-All Stages]
+// patch=1,EE,902D3A00,extended,00832021
+
+[Cheats/Infinite Zoovenir Coins]
+// patch=1,EE,207321BC,extended,0000044C
+
+[Cheats/Infinite Lives]
+// patch=1,EE,2073218C,extended,00000063
+
+[Cheats/Max Maximum Health]
+// patch=1,EE,2073209C,extended,00000064
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,20BB39AC,extended,0000000C
+
+[Cheats/Total Coins Collected]
+// patch=1,EE,20BB3B8C,extended,0000044C
+
+[Cheats/Jungle]
+// patch=1,EE,2073374C,extended,00000064
+
+[Cheats/Lemurs]
+// patch=1,EE,2073377C,extended,00000064
+
+[Cheats/King Of NY]
+// patch=1,EE,207337AC,extended,00000064
+
+[Cheats/Coming Of Age]
+// patch=1,EE,207337DC,extended,00000064
+
+[Cheats/Beach]
+// patch=1,EE,2073380C,extended,00000064
+
+[Cheats/Rescue]
+// patch=1,EE,2073383C,extended,00000064
+
+[Cheats/Battle]
+// patch=1,EE,2073386C,extended,00000064
+
+[Cheats/Banquet]
+// patch=1,EE,20733A4C,extended,00000064
+
+[Cheats/Escape]
+// patch=1,EE,20BB3BBC,extended,00000064
+
+[Cheats/Street Chase]
+// patch=1,EE,20BB3BEC,extended,00000064
+
+[Cheats/Mutiny]
+// patch=1,EE,20BB3C1C,extended,00000064

@@ -1,0 +1,61 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Harry Potter And The Goblet Of Fire [SLUS-21325] [B38CC628]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/View Tasks To Have All Magic Cards]
+// patch=1,EE,904596B8,extended,00832021
+
+[Cheats/Infinite Health (Everyone)]
+// patch=1,EE,200C0220,extended,8C810008
+// patch=1,EE,200C0224,extended,30210010
+// patch=1,EE,200C0228,extended,50200001
+// patch=1,EE,200C022C,extended,E4810020
+// patch=1,EE,200C0230,extended,080D378B
+// patch=1,EE,200C0234,extended,00000000
+// patch=1,EE,2034DE24,extended,08030088
+
+[Cheats/Max Beans-Harry]
+// patch=1,EE,21E3F760,extended,000F423F
+
+[Cheats/Max Beans-Hermione]
+// patch=1,EE,21E3F764,extended,000F423F
+
+[Cheats/Max Beans-Ron]
+// patch=1,EE,21E3F768,extended,000F423F
+
+[Cheats/Buying Cards Doesnt Decrease Beans]
+// patch=1,EE,203038F8,extended,00000000
+
+[Cheats/Buying Cards Increases Beans]
+// patch=1,EE,203038F8,extended,00D13021
+
+[Cheats/Press {L1}+{L1}+{R1}+{R2} For Debug Menu]
+// patch=1,EE,010243DD,extended,00000001
+
+[Cheats/Have All Spells]
+// patch=1,EE,2105FF8C,extended,FFFFFFFF
+// patch=1,EE,2105FF90,extended,FFFFFFFF
+
+[Cheats/Have All Harry's Cards For Purchase]
+// patch=1,EE,2105FEB8,extended,FFFFFFFF
+// patch=1,EE,1105FEBC,extended,0000FFFF
+
+[Cheats/Have All Ron's Cards For Purchase]
+// patch=1,EE,1105FEBE,extended,0000FFFF
+// patch=1,EE,2105FEC0,extended,FFFFFFFF
+
+[Cheats/Have All Hermione's Cards For Purchase]
+// patch=1,EE,2105FEC4,extended,FFFFFFFF
+// patch=1,EE,1105FEC8,extended,0000FFFF
+
+[Cheats/Have All Harry's Cards]
+// patch=1,EE,2105FED4,extended,FFFFFFFF
+// patch=1,EE,1105FED8,extended,0000FFFF
+
+[Cheats/Have All Ron's Cards]
+// patch=1,EE,1105FEDA,extended,0000FFFF
+// patch=1,EE,2105FEDC,extended,FFFFFFFF
+
+[Cheats/Have All Hermione's Cards]
+// patch=1,EE,2105FEE0,extended,FFFFFFFF
+// patch=1,EE,1105FEE4,extended,0000FFFF

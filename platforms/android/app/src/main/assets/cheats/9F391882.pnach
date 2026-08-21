@@ -1,0 +1,74 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Steambot Chronicles [SLUS-21344] [9F391882]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Characters]
+// patch=1,EE,902581A0,extended,00832021
+
+[Cheats/Infinite Money]
+// patch=1,EE,10587408,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,20587408,extended,05F5E0FF
+
+[Cheats/Buying Items Doesnt Decrease Money]
+// patch=1,EE,20167458,extended,00000000
+
+[Cheats/Buying Items Increases Money]
+// patch=1,EE,20167454,extended,2442270F
+
+[Cheats/Max HP]
+// patch=1,EE,2058F6F0,extended,447A0000
+
+[Cheats/Infinite HP]
+// patch=1,EE,2058F6F4,extended,447A0000
+
+[Cheats/Max Fuel]
+// patch=1,EE,2058F6FC,extended,447A0000
+
+[Cheats/Infinite Fuel]
+// patch=1,EE,2058F700,extended,447A0000
+
+[Cheats/Infinite Fuel Usage]
+// patch=1,EE,201F377C,extended,00000000
+
+[Cheats/Max Boost]
+// patch=1,EE,2058F704,extended,43200000
+
+[Cheats/Infinite Boost]
+// patch=1,EE,2058F708,extended,43200000
+// patch=1,EE,D058F706,extended,00004320
+// patch=1,EE,101F36CC,extended,00004320
+
+[Cheats/Infinite Boost Usage]
+// patch=1,EE,201F364C,extended,00000000
+
+[Cheats/Starving]
+// patch=1,EE,20587404,extended,00000000
+
+[Cheats/Hungry]
+// patch=1,EE,20587404,extended,00000001
+
+[Cheats/Snacking]
+// patch=1,EE,20587404,extended,00000002
+
+[Cheats/Sated]
+// patch=1,EE,20587404,extended,00000003
+
+[Cheats/Stuffed]
+// patch=1,EE,20587404,extended,00000004
+
+[Cheats/Lousy]
+// patch=1,EE,20587404,extended,00000005
+
+[Cheats/Have All Albums]
+// patch=1,EE,00607785,extended,00000000
+// patch=1,EE,10607786,extended,00000201
+// patch=1,EE,40607788,extended,00040001
+// patch=1,EE,06050403,extended,04040404
+// patch=1,EE,10607798,extended,00001413
+// patch=1,EE,006077E9,extended,00000004
+// patch=1,EE,106077EA,extended,00000404
+// patch=1,EE,406077EC,extended,00110001
+// patch=1,EE,04040404,extended,00000000
+// patch=1,EE,00607830,extended,00000004

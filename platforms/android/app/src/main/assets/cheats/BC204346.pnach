@@ -1,0 +1,318 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Punisher, The [SLUS-20864] [BC204346]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/CANON-D]
+// patch=1,EE,901B927C,extended,0C08C85A
+
+[Cheats/Infinite Health]
+// patch=1,EE,201283F4,extended,3C0143FA
+// patch=1,EE,20128460,extended,AE410284
+
+[Cheats/No Recoil]
+// patch=1,EE,2017D380,extended,03E00008
+// patch=1,EE,2017D384,extended,00000000
+
+[Cheats/Infinite Ammo-Shotguns]
+// patch=1,EE,2028CD08,extended,00000000
+
+[Cheats/Max Infinite Ammo-Shotguns]
+// patch=1,EE,2028CD04,extended,240303E7
+
+[Cheats/Extra Ammo-Shotguns]
+// patch=1,EE,1028CD04,extended,00000001
+
+[Cheats/Infinite Ammo-Tank/Grenade]
+// patch=1,EE,2028E7A8,extended,00000000
+
+[Cheats/Max Infinite Ammo-Tank/Grenade]
+// patch=1,EE,2028E7A4,extended,240203E7
+
+[Cheats/Extra Ammo-Tank/Grenade]
+// patch=1,EE,1028E7A4,extended,00000001
+
+[Cheats/Infinite Ammo-Flame Thrower]
+// patch=1,EE,202E5B88,extended,00000000
+
+[Cheats/Max Infinite Ammo-Flame Thrower]
+// patch=1,EE,202E5B84,extended,240203E7
+
+[Cheats/Extra Ammo-Flame Thrower]
+// patch=1,EE,102E5B84,extended,00000001
+
+[Cheats/Infinite Ammo-All Other]
+// patch=1,EE,201ECE48,extended,00000000
+// patch=1,EE,201ECE44,extended,240203E7
+
+[Cheats/Extra Ammo-All Other]
+// patch=1,EE,101ECE44,extended,00000001
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,2023C988,extended,00000000
+
+[Cheats/Max Infinite Grenades]
+// patch=1,EE,2023C984,extended,24030063
+
+[Cheats/Extra Grenades]
+// patch=1,EE,1023C984,extended,00000001
+
+[Cheats/Infinite Slaughter Mode]
+// patch=1,EE,2053B73C,extended,42C80000
+
+[Cheats/Quick Max Score]
+// patch=1,EE,2053B7D4,extended,05F5E0FF
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,1053B7D4,extended,0000FFFF
+
+[Cheats/Score x10000]
+// patch=1,EE,2053B7EC,extended,00002710
+
+[Cheats/Score x5000]
+// patch=1,EE,2053B7EC,extended,00001388
+
+[Cheats/Score x1000]
+// patch=1,EE,2053B7EC,extended,000003E8
+
+[Cheats/Score x500]
+// patch=1,EE,2053B7EC,extended,000001F4
+
+[Cheats/Score x100]
+// patch=1,EE,2053B7EC,extended,00000064
+
+[Cheats/Score x50]
+// patch=1,EE,2053B7EC,extended,00000032
+
+[Cheats/Score x10]
+// patch=1,EE,2053B7EC,extended,0000000A
+
+[Cheats/Score x5]
+// patch=1,EE,2053B7EC,extended,00000005
+
+[Cheats/Score x2]
+// patch=1,EE,2053B7EC,extended,00000002
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,41B426D8,extended,00100007
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Levels Complete]
+// patch=1,EE,41B426E4,extended,00100007
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Max High Score-All Levels]
+// patch=1,EE,41B426EC,extended,00100007
+// patch=1,EE,05F5E0FF,extended,00000000
+
+[Cheats/Totally Uncensored Executions]
+// patch=1,EE,004344F0,extended,00000000
+// patch=1,EE,0020B7E0,extended,00000070
+// patch=1,EE,202C88D0,extended,03E00008
+// patch=1,EE,202C88D4,extended,00000000
+
+[Cheats/Infinite Unspent Points]
+// patch=1,EE,11B426D0,extended,0000FFFF
+
+[Cheats/Max Unspent Points]
+// patch=1,EE,21B426D0,extended,05F5E0FF
+
+[Cheats/Infinite Unspent Points Usage]
+// patch=1,EE,2031F16C,extended,00000000
+
+[Cheats/Extra Unspent Points]
+// patch=1,EE,2031F168,extended,00501021
+
+[Cheats/Max Body Armor]
+// patch=1,EE,21B42C3C,extended,00000004
+
+[Cheats/Kill Recovery]
+// patch=1,EE,21B42C40,extended,00000001
+
+[Cheats/Max Longer Slaughter Mode]
+// patch=1,EE,21B42C44,extended,00000004
+
+[Cheats/Max Increase Accuracy]
+// patch=1,EE,21B42C48,extended,00000004
+
+[Cheats/Max Increase Ammo Capacity]
+// patch=1,EE,21B42C4C,extended,00000003
+
+[Cheats/Increase Grenade Capacity]
+// patch=1,EE,21B42C50,extended,00000001
+
+[Cheats/Attach Scope]
+// patch=1,EE,21B42C54,extended,00000001
+
+[Cheats/Attach Silencer]
+// patch=1,EE,21B42C58,extended,00000001
+
+[Cheats/Attach Grenade Launcher]
+// patch=1,EE,21B42C5C,extended,00000001
+
+[Cheats/Increase Magazine Size]
+// patch=1,EE,21B42C60,extended,00000001
+
+[Cheats/Unlock Level]
+// patch=1,EE,21B426D8,extended,00000001
+// patch=1,EE,21B426F4,extended,00000001
+// patch=1,EE,21B42710,extended,00000001
+// patch=1,EE,21B42748,extended,00000001
+// patch=1,EE,21B42764,extended,00000001
+// patch=1,EE,21B42780,extended,00000001
+// patch=1,EE,21B4279C,extended,00000001
+// patch=1,EE,21B427B8,extended,00000001
+// patch=1,EE,21B427D4,extended,00000001
+// patch=1,EE,21B427F0,extended,00000001
+// patch=1,EE,21B4280C,extended,00000001
+// patch=1,EE,21B42828,extended,00000001
+// patch=1,EE,21B42844,extended,00000001
+// patch=1,EE,21B42860,extended,00000001
+// patch=1,EE,21B4287C,extended,00000001
+
+[Cheats/Have Level Completed]
+// patch=1,EE,21B426E4,extended,00000001
+// patch=1,EE,21B42700,extended,00000001
+// patch=1,EE,21B4271C,extended,00000001
+// patch=1,EE,21B42754,extended,00000001
+// patch=1,EE,21B42770,extended,00000001
+// patch=1,EE,21B4278C,extended,00000001
+// patch=1,EE,21B427A8,extended,00000001
+// patch=1,EE,21B427C4,extended,00000001
+// patch=1,EE,21B427E0,extended,00000001
+// patch=1,EE,21B427FC,extended,00000001
+// patch=1,EE,21B42818,extended,00000001
+// patch=1,EE,21B42834,extended,00000001
+// patch=1,EE,21B42850,extended,00000001
+// patch=1,EE,21B4286C,extended,00000001
+// patch=1,EE,21B42888,extended,00000001
+
+[Cheats/Max High Score]
+// patch=1,EE,21B426EC,extended,05F5E0FF
+// patch=1,EE,21B42708,extended,05F5E0FF
+// patch=1,EE,21B42724,extended,05F5E0FF
+// patch=1,EE,21B4275C,extended,05F5E0FF
+// patch=1,EE,21B42778,extended,05F5E0FF
+// patch=1,EE,21B42794,extended,05F5E0FF
+// patch=1,EE,21B427B0,extended,05F5E0FF
+// patch=1,EE,21B427CC,extended,05F5E0FF
+// patch=1,EE,21B427E8,extended,05F5E0FF
+// patch=1,EE,21B42804,extended,05F5E0FF
+// patch=1,EE,21B42820,extended,05F5E0FF
+// patch=1,EE,21B4283C,extended,05F5E0FF
+// patch=1,EE,21B42858,extended,05F5E0FF
+// patch=1,EE,21B42874,extended,05F5E0FF
+// patch=1,EE,21B42890,extended,05F5E0FF
+
+[Cheats/Flashback 1-1]
+// patch=1,EE,01B42C72,extended,00000001
+
+[Cheats/Flashback 2-1]
+// patch=1,EE,01B42C73,extended,00000001
+
+[Cheats/Flashback 1-2]
+// patch=1,EE,01B42C74,extended,00000001
+
+[Cheats/Flashback 2-2]
+// patch=1,EE,01B42C75,extended,00000001
+
+[Cheats/Flashback 1-3]
+// patch=1,EE,01B42C76,extended,00000001
+
+[Cheats/Flashback 2-3]
+// patch=1,EE,01B42C77,extended,00000001
+
+[Cheats/Flashback 1-4]
+// patch=1,EE,01B42C78,extended,00000001
+
+[Cheats/Flashback 2-4]
+// patch=1,EE,01B42C79,extended,00000001
+
+[Cheats/Flashback 1-5]
+// patch=1,EE,01B42C7A,extended,00000001
+
+[Cheats/Flashback 2-5]
+// patch=1,EE,01B42C7B,extended,00000001
+
+[Cheats/Flashback 1-6]
+// patch=1,EE,01B42C7C,extended,00000001
+
+[Cheats/Flashback 2-6]
+// patch=1,EE,01B42C7D,extended,00000001
+
+[Cheats/Flashback 1-7]
+// patch=1,EE,01B42C7E,extended,00000001
+
+[Cheats/Flashback 2-7]
+// patch=1,EE,01B42C7F,extended,00000001
+
+[Cheats/Flashback 1-8]
+// patch=1,EE,01B42C80,extended,00000001
+
+[Cheats/Flashback 2-8]
+// patch=1,EE,01B42C81,extended,00000001
+
+[Cheats/Flashback 1-9]
+// patch=1,EE,01B42C82,extended,00000001
+
+[Cheats/Flashback 2-9]
+// patch=1,EE,01B42C83,extended,00000001
+
+[Cheats/Flashback 1-10]
+// patch=1,EE,01B42C84,extended,00000001
+
+[Cheats/Flashback 2-10]
+// patch=1,EE,01B42C85,extended,00000001
+
+[Cheats/Flashback 1-11]
+// patch=1,EE,01B42C86,extended,00000001
+
+[Cheats/Flashback 2-11]
+// patch=1,EE,01B42C87,extended,00000001
+
+[Cheats/Flashback 1-12]
+// patch=1,EE,01B42C88,extended,00000001
+
+[Cheats/Flashback 2-12]
+// patch=1,EE,01B42C89,extended,00000001
+
+[Cheats/All Flashbacks]
+// patch=1,EE,11B42C72,extended,00000101
+// patch=1,EE,41B42C74,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,11B42C88,extended,00000101
+
+[Cheats/Invulnerability]
+// patch=1,EE,01B42C64,extended,00000001
+// patch=1,EE,01B42C6B,extended,00000001
+
+[Cheats/Unlimiated Ammo]
+// patch=1,EE,01B42C65,extended,00000001
+// patch=1,EE,01B42C6C,extended,00000001
+
+[Cheats/Unlimited Slaughter Mode]
+// patch=1,EE,01B42C66,extended,00000001
+// patch=1,EE,01B42C6D,extended,00000001
+
+[Cheats/No Reload]
+// patch=1,EE,01B42C67,extended,00000001
+// patch=1,EE,01B42C6E,extended,00000001
+
+[Cheats/One Shot, One Kill]
+// patch=1,EE,01B42C68,extended,00000001
+// patch=1,EE,01B42C6F,extended,00000001
+
+[Cheats/Gun Splitters]
+// patch=1,EE,01B42C69,extended,00000001
+// patch=1,EE,01B42C70,extended,00000001
+
+[Cheats/Crazy Deaths]
+// patch=1,EE,01B42C6A,extended,00000001
+// patch=1,EE,01B42C71,extended,00000001
+
+[Cheats/All Cheats]
+// patch=1,EE,21B42C64,extended,01010101
+// patch=1,EE,11B42C68,extended,00000101
+// patch=1,EE,01B42C6A,extended,00000001
+// patch=1,EE,01B42C6B,extended,00000001
+// patch=1,EE,21B42C6C,extended,01010101
+// patch=1,EE,11B42C70,extended,00000101

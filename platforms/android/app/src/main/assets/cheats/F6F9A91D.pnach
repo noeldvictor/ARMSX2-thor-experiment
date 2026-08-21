@@ -1,0 +1,20 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Thing, The [SLES-50975] [F6F9A91D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Gold Tickets]
+// patch=1,EE,90133864,extended,0C04341C
+
+[Cheats/Never Freeze To Death]
+// patch=1,EE,204194D4,extended,AE0004A4
+// patch=1,EE,204194DC,extended,AE0004A4
+// patch=1,EE,204194E0,extended,AE0004A4
+
+[Cheats/Infinite Health]
+// patch=1,EE,2041901C,extended,3C0142C8
+// patch=1,EE,20419024,extended,AE01009C
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20798BF0,extended,2401000A
+// patch=1,EE,20798BF4,extended,00310818
+// patch=1,EE,20798C04,extended,AD210010

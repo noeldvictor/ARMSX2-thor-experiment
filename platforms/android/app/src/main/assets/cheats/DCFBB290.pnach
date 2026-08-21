@@ -1,0 +1,448 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Trapt [SLUS-21255] [DCFBB290]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Pacific Island]
+// patch=1,EE,9013E724,extended,0C04D7AE
+
+[Cheats/Infinite Health]
+// patch=1,EE,201D2B9C,extended,E4410018
+
+[Cheats/Always Low Play Time]
+// patch=1,EE,20BD1E08,extended,00000000
+// patch=1,EE,20BD1E0C,extended,00000000
+// patch=1,EE,20BD2618,extended,00000000
+// patch=1,EE,20BD261C,extended,00000000
+
+[Cheats/Infinite Total Ark]
+// patch=1,EE,10BD1E30,extended,0000FFFF
+// patch=1,EE,10BD2640,extended,0000FFFF
+
+[Cheats/Max Total Ark]
+// patch=1,EE,20BD1E30,extended,05F5E0FF
+// patch=1,EE,20BD2640,extended,05F5E0FF
+
+[Cheats/Infinite Total Warl]
+// patch=1,EE,10BD1E38,extended,0000FFFF
+// patch=1,EE,10BD2648,extended,0000FFFF
+
+[Cheats/Max Total Warl]
+// patch=1,EE,20BD1E38,extended,05F5E0FF
+// patch=1,EE,20BD2648,extended,05F5E0FF
+
+[Cheats/Creating Traps Doesnt Decrease Warl]
+// patch=1,EE,202D8964,extended,00000000
+
+[Cheats/Creating Traps Increases Warl]
+// patch=1,EE,202D8584,extended,0083182D
+
+[Cheats/Infinite Time]
+// patch=1,EE,20BD2DE4,extended,00003840
+
+[Cheats/P1 Press {L1}+{SELECT} For Infinite Time]
+// patch=1,EE,D04C4A42,extended,0000FBFE
+// patch=1,EE,20171AB0,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} For Infinite Time]
+// patch=1,EE,D04C4A42,extended,0000FEFE
+// patch=1,EE,20171AB0,extended,AC8307D4
+
+[Cheats/Malphas]
+// patch=1,EE,20BD1EBC,extended,00000001
+// patch=1,EE,20BD26CC,extended,00000001
+
+[Cheats/Commander Hertzog]
+// patch=1,EE,20BD1EC4,extended,00000001
+// patch=1,EE,20BD26D4,extended,00000001
+
+[Cheats/Queen Catalina]
+// patch=1,EE,20BD1EC8,extended,00000001
+// patch=1,EE,20BD26D8,extended,00000001
+
+[Cheats/Handmaid Rachel]
+// patch=1,EE,20BD1ECC,extended,00000001
+// patch=1,EE,20BD26DC,extended,00000001
+
+[Cheats/Swordsman Finnegan]
+// patch=1,EE,20BD1EDC,extended,00000001
+// patch=1,EE,20BD26EC,extended,00000001
+
+[Cheats/Great Wizard Bertran]
+// patch=1,EE,20BD1EE4,extended,00000001
+// patch=1,EE,20BD26F4,extended,00000001
+
+[Cheats/Knight Jais]
+// patch=1,EE,20BD1EEC,extended,00000001
+// patch=1,EE,20BD26FC,extended,00000001
+
+[Cheats/Warrior Glen]
+// patch=1,EE,20BD1EF8,extended,00000001
+// patch=1,EE,20BD2708,extended,00000001
+
+[Cheats/Warrior Edward]
+// patch=1,EE,20BD1EFC,extended,00000001
+// patch=1,EE,20BD270C,extended,00000001
+
+[Cheats/Warrior Alan]
+// patch=1,EE,20BD1F00,extended,00000001
+// patch=1,EE,20BD2710,extended,00000001
+
+[Cheats/Warrior Macrus]
+// patch=1,EE,20BD1F04,extended,00000001
+// patch=1,EE,20BD2714,extended,00000001
+
+[Cheats/Warrior Damninda]
+// patch=1,EE,20BD1F08,extended,00000001
+// patch=1,EE,20BD2718,extended,00000001
+
+[Cheats/Warrior Vulcano]
+// patch=1,EE,20BD1F0C,extended,00000001
+// patch=1,EE,20BD271C,extended,00000001
+
+[Cheats/Warrior Andrew]
+// patch=1,EE,20BD1F10,extended,00000001
+// patch=1,EE,20BD2720,extended,00000001
+
+[Cheats/Warrior Jeremiah]
+// patch=1,EE,20BD1F14,extended,00000001
+// patch=1,EE,20BD2724,extended,00000001
+
+[Cheats/Warrior Morris]
+// patch=1,EE,20BD1F18,extended,00000001
+// patch=1,EE,20BD2728,extended,00000001
+
+[Cheats/Warrior Raymond]
+// patch=1,EE,20BD1F1C,extended,00000001
+// patch=1,EE,20BD272C,extended,00000001
+
+[Cheats/Warrior Johnny]
+// patch=1,EE,20BD1F24,extended,00000001
+// patch=1,EE,20BD2734,extended,00000001
+
+[Cheats/Warrior Elvin]
+// patch=1,EE,20BD1F30,extended,00000001
+// patch=1,EE,20BD2740,extended,00000001
+
+[Cheats/Warrior Roger]
+// patch=1,EE,20BD1F34,extended,00000001
+// patch=1,EE,20BD2744,extended,00000001
+
+[Cheats/Warrior Gordon]
+// patch=1,EE,20BD1F38,extended,00000001
+// patch=1,EE,20BD2748,extended,00000001
+
+[Cheats/Warrior Elmer]
+// patch=1,EE,20BD1F3C,extended,00000001
+// patch=1,EE,20BD274C,extended,00000001
+
+[Cheats/Warrior Ralph]
+// patch=1,EE,20BD1F40,extended,00000001
+// patch=1,EE,20BD2750,extended,00000001
+
+[Cheats/Knight Rick]
+// patch=1,EE,20BD1F50,extended,00000001
+// patch=1,EE,20BD2760,extended,00000001
+
+[Cheats/Knight Alvin]
+// patch=1,EE,20BD1F54,extended,00000001
+// patch=1,EE,20BD2764,extended,00000001
+
+[Cheats/Knight Conrad]
+// patch=1,EE,20BD1F58,extended,00000001
+// patch=1,EE,20BD2768,extended,00000001
+
+[Cheats/Knight Hamilton]
+// patch=1,EE,20BD1F60,extended,00000001
+// patch=1,EE,20BD2770,extended,00000001
+
+[Cheats/Knight Adolphus]
+// patch=1,EE,20BD1F64,extended,00000001
+// patch=1,EE,20BD2774,extended,00000001
+
+[Cheats/Knight Justin]
+// patch=1,EE,20BD1F68,extended,00000001
+// patch=1,EE,20BD2778,extended,00000001
+
+[Cheats/Knight Gerald]
+// patch=1,EE,20BD1F6C,extended,00000001
+// patch=1,EE,20BD277C,extended,00000001
+
+[Cheats/Knight Alfons]
+// patch=1,EE,20BD1F70,extended,00000001
+// patch=1,EE,20BD2780,extended,00000001
+
+[Cheats/Knight Arthur]
+// patch=1,EE,20BD1F74,extended,00000001
+// patch=1,EE,20BD2784,extended,00000001
+
+[Cheats/Archer Myra]
+// patch=1,EE,20BD1F9C,extended,00000001
+// patch=1,EE,20BD27AC,extended,00000001
+
+[Cheats/Archer Erika]
+// patch=1,EE,20BD1FA0,extended,00000001
+// patch=1,EE,20BD27B0,extended,00000001
+
+[Cheats/Archer Sharon]
+// patch=1,EE,20BD1FA4,extended,00000001
+// patch=1,EE,20BD27B4,extended,00000001
+
+[Cheats/Archer Ellen]
+// patch=1,EE,20BD1FA8,extended,00000001
+// patch=1,EE,20BD27B8,extended,00000001
+
+[Cheats/Archer Miranda]
+// patch=1,EE,20BD1FAC,extended,00000001
+// patch=1,EE,20BD27BC,extended,00000001
+
+[Cheats/Archer Alma]
+// patch=1,EE,20BD1FB0,extended,00000001
+// patch=1,EE,20BD27C0,extended,00000001
+
+[Cheats/Archer Julia]
+// patch=1,EE,20BD1FB4,extended,00000001
+// patch=1,EE,20BD27C4,extended,00000001
+
+[Cheats/Archer Veronica]
+// patch=1,EE,20BD1FB8,extended,00000001
+// patch=1,EE,20BD27C8,extended,00000001
+
+[Cheats/Archer Helena]
+// patch=1,EE,20BD1FBC,extended,00000001
+// patch=1,EE,20BD27CC,extended,00000001
+
+[Cheats/Bow Knight Ursula]
+// patch=1,EE,20BD1FD8,extended,00000001
+// patch=1,EE,20BD27E8,extended,00000001
+
+[Cheats/Bow Knight Lavinia]
+// patch=1,EE,20BD1FDC,extended,00000001
+// patch=1,EE,20BD27EC,extended,00000001
+
+[Cheats/Bow Knight Eileen]
+// patch=1,EE,20BD1FE4,extended,00000001
+// patch=1,EE,20BD27F4,extended,00000001
+
+[Cheats/Bow Knight Lilly]
+// patch=1,EE,20BD1FE8,extended,00000001
+// patch=1,EE,20BD27F8,extended,00000001
+
+[Cheats/Bow Knight Michelle]
+// patch=1,EE,20BD1FEC,extended,00000001
+// patch=1,EE,20BD27FC,extended,00000001
+
+[Cheats/Bow Knight Brigette]
+// patch=1,EE,20BD1FF0,extended,00000001
+// patch=1,EE,20BD2800,extended,00000001
+
+[Cheats/Axe Knight Cesar]
+// patch=1,EE,20BD1FFC,extended,00000001
+// patch=1,EE,20BD280C,extended,00000001
+
+[Cheats/Axe Knight Colonia]
+// patch=1,EE,20BD2000,extended,00000001
+// patch=1,EE,20BD2810,extended,00000001
+
+[Cheats/Axe Knight Lionel]
+// patch=1,EE,20BD2004,extended,00000001
+// patch=1,EE,20BD2814,extended,00000001
+
+[Cheats/Axe Knight Gabriel]
+// patch=1,EE,20BD2008,extended,00000001
+// patch=1,EE,20BD2818,extended,00000001
+
+[Cheats/Axe Knight Basil]
+// patch=1,EE,20BD200C,extended,00000001
+// patch=1,EE,20BD281C,extended,00000001
+
+[Cheats/Spear Knight Bernhardt]
+// patch=1,EE,20BD202C,extended,00000001
+// patch=1,EE,20BD283C,extended,00000001
+
+[Cheats/Spear Knight Isaac]
+// patch=1,EE,20BD2034,extended,00000001
+// patch=1,EE,20BD2844,extended,00000001
+
+[Cheats/Spear Knight Steve]
+// patch=1,EE,20BD2038,extended,00000001
+// patch=1,EE,20BD2848,extended,00000001
+
+[Cheats/Spear Knight Francis]
+// patch=1,EE,20BD203C,extended,00000001
+// patch=1,EE,20BD284C,extended,00000001
+
+[Cheats/Fire Mage Celena]
+// patch=1,EE,20BD204C,extended,00000001
+// patch=1,EE,20BD285C,extended,00000001
+
+[Cheats/Fire Mage Barbara]
+// patch=1,EE,20BD2054,extended,00000001
+// patch=1,EE,20BD2864,extended,00000001
+
+[Cheats/Fire Mage Vaglumo]
+// patch=1,EE,20BD2060,extended,00000001
+// patch=1,EE,20BD2870,extended,00000001
+
+[Cheats/Thunder Mage Iluminado]
+// patch=1,EE,20BD2070,extended,00000001
+// patch=1,EE,20BD2880,extended,00000001
+
+[Cheats/Thunder Mage Purateno]
+// patch=1,EE,20BD2074,extended,00000001
+// patch=1,EE,20BD2884,extended,00000001
+
+[Cheats/Thunder Mage Vulcanon]
+// patch=1,EE,20BD2084,extended,00000001
+// patch=1,EE,20BD2894,extended,00000001
+
+[Cheats/Thunder Mage Alder]
+// patch=1,EE,20BD2088,extended,00000001
+// patch=1,EE,20BD2898,extended,00000001
+
+[Cheats/Thunder Mage Trident]
+// patch=1,EE,20BD208C,extended,00000001
+// patch=1,EE,20BD289C,extended,00000001
+
+[Cheats/Ice Mage Frida]
+// patch=1,EE,20BD20A0,extended,00000001
+// patch=1,EE,20BD28B0,extended,00000001
+
+[Cheats/Ice Mage Friska]
+// patch=1,EE,20BD20A4,extended,00000001
+// patch=1,EE,20BD28B4,extended,00000001
+
+[Cheats/Ice Mage Frosta]
+// patch=1,EE,20BD20A8,extended,00000001
+// patch=1,EE,20BD28B8,extended,00000001
+
+[Cheats/Ice Mage Lavango]
+// patch=1,EE,20BD20B0,extended,00000001
+// patch=1,EE,20BD28C0,extended,00000001
+
+[Cheats/Ice Mage Schtormo]
+// patch=1,EE,20BD20B4,extended,00000001
+// patch=1,EE,20BD28C4,extended,00000001
+
+[Cheats/Ice Mage Blizzardo]
+// patch=1,EE,20BD20B8,extended,00000001
+// patch=1,EE,20BD28C8,extended,00000001
+
+[Cheats/Priestess Angela]
+// patch=1,EE,20BD20D0,extended,00000001
+// patch=1,EE,20BD28E0,extended,00000001
+
+[Cheats/Priestess Eleanor]
+// patch=1,EE,20BD20D4,extended,00000001
+// patch=1,EE,20BD28E4,extended,00000001
+
+[Cheats/Priestess Irene]
+// patch=1,EE,20BD20D8,extended,00000001
+// patch=1,EE,20BD28E8,extended,00000001
+
+[Cheats/Wizard Meteorito]
+// patch=1,EE,20BD20F4,extended,00000001
+// patch=1,EE,20BD2904,extended,00000001
+
+[Cheats/Wizard Smerald]
+// patch=1,EE,20BD20F8,extended,00000001
+// patch=1,EE,20BD2908,extended,00000001
+
+[Cheats/Wizard Benedict]
+// patch=1,EE,20BD20FC,extended,00000001
+// patch=1,EE,20BD290C,extended,00000001
+
+[Cheats/Wizard Diabolo]
+// patch=1,EE,20BD2100,extended,00000001
+// patch=1,EE,20BD2910,extended,00000001
+
+[Cheats/Dark Mage Fiona]
+// patch=1,EE,20BD2108,extended,00000001
+// patch=1,EE,20BD2918,extended,00000001
+
+[Cheats/Dark Mage Louisa]
+// patch=1,EE,20BD2110,extended,00000001
+// patch=1,EE,20BD2920,extended,00000001
+
+[Cheats/Dark Mage Tenebro]
+// patch=1,EE,20BD2114,extended,00000001
+// patch=1,EE,20BD2924,extended,00000001
+
+[Cheats/Dark Mage Nocto]
+// patch=1,EE,20BD2118,extended,00000001
+// patch=1,EE,20BD2928,extended,00000001
+
+[Cheats/Peasant Brenda]
+// patch=1,EE,20BD2124,extended,00000001
+// patch=1,EE,20BD2934,extended,00000001
+
+[Cheats/Peasant Hannah]
+// patch=1,EE,20BD2128,extended,00000001
+// patch=1,EE,20BD2938,extended,00000001
+
+[Cheats/Peasant Eric]
+// patch=1,EE,20BD2138,extended,00000001
+// patch=1,EE,20BD2948,extended,00000001
+
+[Cheats/Peasant Geoff]
+// patch=1,EE,20BD213C,extended,00000001
+// patch=1,EE,20BD294C,extended,00000001
+
+[Cheats/Peasant Bolide]
+// patch=1,EE,20BD2140,extended,00000001
+// patch=1,EE,20BD2950,extended,00000001
+
+[Cheats/Mauler Douglas]
+// patch=1,EE,20BD2160,extended,00000001
+// patch=1,EE,20BD2970,extended,00000001
+
+[Cheats/Mauler Albert]
+// patch=1,EE,20BD2164,extended,00000001
+// patch=1,EE,20BD2974,extended,00000001
+
+[Cheats/Mauler Dudley]
+// patch=1,EE,20BD2168,extended,00000001
+// patch=1,EE,20BD2978,extended,00000001
+
+[Cheats/Mauler Lloyd]
+// patch=1,EE,20BD216C,extended,00000001
+// patch=1,EE,20BD297C,extended,00000001
+
+[Cheats/Thief Aladdin]
+// patch=1,EE,20BD2188,extended,00000001
+// patch=1,EE,20BD2998,extended,00000001
+
+[Cheats/Thief Phillip]
+// patch=1,EE,20BD218C,extended,00000001
+// patch=1,EE,20BD299C,extended,00000001
+
+[Cheats/Thief Louis]
+// patch=1,EE,20BD2190,extended,00000001
+// patch=1,EE,20BD29A0,extended,00000001
+
+[Cheats/Assassin Oliver]
+// patch=1,EE,20BD21BC,extended,00000001
+// patch=1,EE,20BD29CC,extended,00000001
+
+[Cheats/Assassin Moses]
+// patch=1,EE,20BD21C0,extended,00000001
+// patch=1,EE,20BD29D0,extended,00000001
+
+[Cheats/Assassin Valentine]
+// patch=1,EE,20BD21C4,extended,00000001
+// patch=1,EE,20BD29D4,extended,00000001
+
+[Cheats/Assassin Aaron]
+// patch=1,EE,20BD21C8,extended,00000001
+// patch=1,EE,20BD29D8,extended,00000001
+
+[Cheats/Assassin Rufus]
+// patch=1,EE,20BD21CC,extended,00000001
+// patch=1,EE,20BD29DC,extended,00000001
+
+[Cheats/Legionnaire Age]
+// patch=1,EE,20BD21D8,extended,00000001
+// patch=1,EE,20BD29E8,extended,00000001
+
+[Cheats/Legionnaire Hercule]
+// patch=1,EE,20BD21DC,extended,00000001
+// patch=1,EE,20BD29EC,extended,00000001

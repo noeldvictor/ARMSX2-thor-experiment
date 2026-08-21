@@ -1,0 +1,153 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: NBA Street [SLUS-20187] [AE381E74]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/For Awareness]
+// patch=1,EE,90480314,extended,0C111E23
+
+[Cheats/Infinite Creation Points]
+// patch=1,EE,106F1A9E,extended,000001F4
+
+[Cheats/Infinite Turbo]
+// patch=1,EE,1031731A,extended,00001000
+// patch=1,EE,21AE36AC,extended,00000001
+
+[Cheats/Infinite Shot Clock]
+// patch=1,EE,202E2058,extended,03E00008
+// patch=1,EE,202E205C,extended,00000000
+
+[Cheats/Infinite Shot Clock (Alternate Version)]
+// patch=1,EE,202E123C,extended,00000000
+
+[Cheats/Make Extraordinary Shots/Dunk Anywhere]
+// patch=1,EE,202E1244,extended,00000000
+
+[Cheats/ABA Ball]
+// patch=1,EE,21AE3650,extended,00000001
+
+[Cheats/WNBA Ball]
+// patch=1,EE,21AE3640,extended,00000001
+// patch=1,EE,21AE3650,extended,00000002
+
+[Cheats/NuFX Ball]
+// patch=1,EE,21AE3650,extended,00000003
+
+[Cheats/EA Big Ball]
+// patch=1,EE,21AE3650,extended,00000004
+
+[Cheats/Beach Ball]
+// patch=1,EE,21AE3640,extended,00000002
+// patch=1,EE,21AE3644,extended,00000002
+// patch=1,EE,21AE3648,extended,00000001
+// patch=1,EE,21AE364C,extended,00000001
+// patch=1,EE,21AE3650,extended,00000005
+
+[Cheats/Medicine Ball]
+// patch=1,EE,21AE3640,extended,00000002
+// patch=1,EE,21AE3644,extended,00000001
+// patch=1,EE,21AE3648,extended,00000002
+// patch=1,EE,21AE3650,extended,00000006
+
+[Cheats/Volley Ball]
+// patch=1,EE,21AE3640,extended,00000001
+// patch=1,EE,21AE3648,extended,00000001
+// patch=1,EE,21AE3650,extended,00000007
+
+[Cheats/Soccer Ball]
+// patch=1,EE,21AE3650,extended,00000008
+
+[Cheats/Explosive Rims]
+// patch=1,EE,21AE3654,extended,00000001
+
+[Cheats/No Player Indicators]
+// patch=1,EE,21AE3658,extended,00000001
+
+[Cheats/Player Names]
+// patch=1,EE,21AE365C,extended,00000001
+
+[Cheats/No Shot Indicator]
+// patch=1,EE,21AE3660,extended,00000001
+
+[Cheats/No HUD Display]
+// patch=1,EE,21AE3664,extended,00000001
+
+[Cheats/No Auto Replays]
+// patch=1,EE,21AE3668,extended,00000001
+
+[Cheats/Athletic Joe 'The Show']
+// patch=1,EE,21AE366C,extended,00000002
+
+[Cheats/Springtime Joe 'The Show']
+// patch=1,EE,21AE366C,extended,00000002
+
+[Cheats/Summer Joe 'The Show']
+// patch=1,EE,21AE366C,extended,00000003
+
+[Cheats/Tiny Players Mode]
+// patch=1,EE,21AE3670,extended,00000001
+
+[Cheats/Big Head Mode]
+// patch=1,EE,21AE3674,extended,00000002
+
+[Cheats/ABA Socks]
+// patch=1,EE,21AE3678,extended,00000001
+
+[Cheats/Casual Uniforms]
+// patch=1,EE,21AE367C,extended,00000001
+
+[Cheats/Authentic Uniforms]
+// patch=1,EE,21AE367C,extended,00000002
+
+[Cheats/Captain Quicks]
+// patch=1,EE,21AE3680,extended,00000002
+
+[Cheats/Ultimate Power]
+// patch=1,EE,21AE3684,extended,00000002
+
+[Cheats/No Dunks]
+// patch=1,EE,21AE3688,extended,00000001
+
+[Cheats/Mega Dunking]
+// patch=1,EE,21AE3688,extended,00000002
+
+[Cheats/Harder Distance Shots]
+// patch=1,EE,21AE368C,extended,00000001
+
+[Cheats/Easy Shots]
+// patch=1,EE,21AE368C,extended,00000002
+
+[Cheats/Mad Handles]
+// patch=1,EE,21AE3690,extended,00000002
+
+[Cheats/Less Blocks]
+// patch=1,EE,21AE3694,extended,00000001
+
+[Cheats/Super Swats]
+// patch=1,EE,21AE3694,extended,00000002
+
+[Cheats/Less Steals]
+// patch=1,EE,21AE3698,extended,00000001
+
+[Cheats/Sticky Fingers]
+// patch=1,EE,21AE3698,extended,00000002
+
+[Cheats/No Alley-Oops]
+// patch=1,EE,21AE369C,extended,00000001
+
+[Cheats/Less Gamebreakers]
+// patch=1,EE,21AE36A0,extended,00000001
+
+[Cheats/More Gamebreakers]
+// patch=1,EE,21AE36A0,extended,00000002
+
+[Cheats/No Gamebreakers]
+// patch=1,EE,21AE36A4,extended,00000001
+
+[Cheats/No Juice]
+// patch=1,EE,21AE36A8,extended,00000001
+
+[Cheats/No 2-Pointers]
+// patch=1,EE,21AE36B0,extended,00000001
+
+[Cheats/No Shot Clock]
+// patch=1,EE,21AE36B4,extended,00000001

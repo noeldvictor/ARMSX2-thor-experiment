@@ -1,0 +1,16 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Superman Returns [SLUS-21434] [E1BF5DCA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Tracks]
+// patch=1,EE,90359AF0,extended,0C0D03F4
+
+[Cheats/Infinite Metropolis Health]
+// patch=1,EE,200C0220,extended,3C013F80
+// patch=1,EE,200C0224,extended,080AA850
+// patch=1,EE,200C0228,extended,AC41000C
+// patch=1,EE,202A9FBC,extended,0C030088
+
+[Cheats/Infinite Stamina]
+// patch=1,EE,202AA0A4,extended,24102710
+// patch=1,EE,202AA118,extended,AC50000C

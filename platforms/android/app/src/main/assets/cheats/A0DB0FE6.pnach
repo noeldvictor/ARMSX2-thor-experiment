@@ -1,0 +1,138 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ferrari F355 Challenge [SCES-50956] [A0DB0FE6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Notes Codes]
+// patch=1,EE,F0100008,extended,001D133F
+
+[Cheats/Infinite Time]
+// patch=1,EE,203700AC,extended,00000F85
+
+[Cheats/Always Low Lap Time]
+// patch=1,EE,203700B0,extended,00000000
+
+[Cheats/P1 Start On Lap 2]
+// patch=1,EE,D0372388,extended,00000000
+// patch=1,EE,20372388,extended,00010001
+
+[Cheats/P1 Start On Lap 3]
+// patch=1,EE,D0372388,extended,00000000
+// patch=1,EE,20372388,extended,00020002
+
+[Cheats/P1 Start On Lap 4]
+// patch=1,EE,D0372388,extended,00000000
+// patch=1,EE,20372388,extended,00030003
+
+[Cheats/P2 Start On Lap 2]
+// patch=1,EE,D0372A78,extended,00000000
+// patch=1,EE,20372A78,extended,00010001
+
+[Cheats/P2 Start On Lap 3]
+// patch=1,EE,D0372A78,extended,00000000
+// patch=1,EE,20372A78,extended,00020002
+
+[Cheats/P2 Start On Lap 4]
+// patch=1,EE,D0372A78,extended,00000000
+// patch=1,EE,20372A78,extended,00030003
+
+[Cheats/No. 1]
+// patch=1,EE,2043160C,extended,00000001
+
+[Cheats/No. 2]
+// patch=1,EE,204315B8,extended,00000001
+
+[Cheats/No. 3]
+// patch=1,EE,2043175C,extended,00000001
+
+[Cheats/No. 4]
+// patch=1,EE,20431708,extended,00000001
+
+[Cheats/No. 5]
+// patch=1,EE,20431660,extended,00000001
+
+[Cheats/No. 6]
+// patch=1,EE,204316B4,extended,00000001
+
+[Cheats/No. 7]
+// patch=1,EE,20431954,extended,00000001
+
+[Cheats/No. 8]
+// patch=1,EE,20431858,extended,00000001
+
+[Cheats/No. 9]
+// patch=1,EE,204318AC,extended,00000001
+
+[Cheats/No. 10]
+// patch=1,EE,20431900,extended,00000001
+
+[Cheats/No. 11 & 12]
+// patch=1,EE,20431804,extended,00000001
+
+[Cheats/No. 13]
+// patch=1,EE,204319FC,extended,00000001
+
+[Cheats/No. 14]
+// patch=1,EE,204319A8,extended,00000001
+
+[Cheats/No. 15]
+// patch=1,EE,20431B4C,extended,00000001
+
+[Cheats/No. 16]
+// patch=1,EE,20431AF8,extended,00000001
+
+[Cheats/No. 17]
+// patch=1,EE,20431A50,extended,00000001
+
+[Cheats/No. 18]
+// patch=1,EE,20431AA4,extended,00000001
+
+[Cheats/No. 19]
+// patch=1,EE,20431D44,extended,00000001
+
+[Cheats/No. 20]
+// patch=1,EE,20431C48,extended,00000001
+
+[Cheats/No. 21]
+// patch=1,EE,20431C9C,extended,00000001
+
+[Cheats/No. 22 & 23]
+// patch=1,EE,20431CF0,extended,00000001
+
+[Cheats/No. 24]
+// patch=1,EE,20431D98,extended,00000001
+
+[Cheats/No. 25]
+// patch=1,EE,20431DEC,extended,00000001
+
+[Cheats/No. 26 & 27]
+// patch=1,EE,20431E40,extended,00000001
+
+[Cheats/No. 28]
+// patch=1,EE,204321DC,extended,00000001
+
+[Cheats/No. 29]
+// patch=1,EE,20432188,extended,00000001
+
+[Cheats/No. 30]
+// patch=1,EE,2043232C,extended,00000001
+
+[Cheats/No. 31]
+// patch=1,EE,204322D8,extended,00000001
+
+[Cheats/No. 32]
+// patch=1,EE,20432230,extended,00000001
+
+[Cheats/No. 33]
+// patch=1,EE,20432284,extended,00000001
+
+[Cheats/No. 34]
+// patch=1,EE,20432524,extended,00000001
+
+[Cheats/No. 35]
+// patch=1,EE,20432428,extended,00000001
+
+[Cheats/No. 36]
+// patch=1,EE,2043247C,extended,00000001
+
+[Cheats/No. 37, 38 & 39]
+// patch=1,EE,204324D0,extended,00000001

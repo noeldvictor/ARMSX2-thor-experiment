@@ -1,0 +1,32 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mojo! [SLUS-20741] [00D5D3E4]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Training 6]
+// patch=1,EE,902143F4,extended,0C08DCE2
+
+[Cheats/Always Low Time]
+// patch=1,EE,20262A70,extended,AF80843C
+
+[Cheats/Quickly Get All Red Blocks]
+// patch=1,EE,20275D60,extended,24020000
+
+[Cheats/Quickly Get All Green Blocks]
+// patch=1,EE,20275D70,extended,24020000
+
+[Cheats/Quickly Get All Blue Blocks]
+// patch=1,EE,20275D84,extended,24020000
+
+[Cheats/Quickly Get All Yellow Blocks]
+// patch=1,EE,20275D98,extended,24020000
+
+[Cheats/Quickly Get All Mojo Blocks]
+// patch=1,EE,20275DC0,extended,24030000
+
+[Cheats/Infinite Health]
+// patch=1,EE,20260410,extended,03E00008
+// patch=1,EE,20260414,extended,00000000
+
+[Cheats/Infinite Turbo]
+// patch=1,EE,20260560,extended,03E00008
+// patch=1,EE,20260564,extended,00000000

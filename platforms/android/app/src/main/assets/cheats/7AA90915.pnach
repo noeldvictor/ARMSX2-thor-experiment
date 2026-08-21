@@ -1,0 +1,105 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Family Feud [SLUS-21446] [7AA90915]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Caps P2]
+// patch=1,EE,90235018,extended,00832021
+
+[Cheats/Infinite Time To Answer]
+// patch=1,EE,20119CE0,extended,00000000
+// patch=1,EE,2011D2C4,extended,00000000
+// patch=1,EE,201230EC,extended,00000000
+
+[Cheats/Infinite Time To Answer Fast Money]
+// patch=1,EE,2012553C,extended,00000000
+// patch=1,EE,20125670,extended,00000000
+
+[Cheats/Family 1 Starts With 275]
+// patch=1,EE,200C0220,extended,24020113
+// patch=1,EE,200C0224,extended,8E010034
+// patch=1,EE,200C0228,extended,50200001
+// patch=1,EE,200C022C,extended,AE020034
+// patch=1,EE,200C0230,extended,03E00008
+// patch=1,EE,200C0234,extended,C6020034
+// patch=1,EE,20112814,extended,0C030088
+
+[Cheats/Family 1 Starts With 250]
+// patch=1,EE,200C0220,extended,240200FA
+// patch=1,EE,200C0224,extended,8E010034
+// patch=1,EE,200C0228,extended,50200001
+// patch=1,EE,200C022C,extended,AE020034
+// patch=1,EE,200C0230,extended,03E00008
+// patch=1,EE,200C0234,extended,C6020034
+// patch=1,EE,20112814,extended,0C030088
+
+[Cheats/Family 1 Starts With 200]
+// patch=1,EE,200C0220,extended,240200C8
+// patch=1,EE,200C0224,extended,8E010034
+// patch=1,EE,200C0228,extended,50200001
+// patch=1,EE,200C022C,extended,AE020034
+// patch=1,EE,200C0230,extended,03E00008
+// patch=1,EE,200C0234,extended,C6020034
+// patch=1,EE,20112814,extended,0C030088
+
+[Cheats/Family 1 Starts With 100]
+// patch=1,EE,200C0220,extended,24020064
+// patch=1,EE,200C0224,extended,8E010034
+// patch=1,EE,200C0228,extended,50200001
+// patch=1,EE,200C022C,extended,AE020034
+// patch=1,EE,200C0230,extended,03E00008
+// patch=1,EE,200C0234,extended,C6020034
+// patch=1,EE,20112814,extended,0C030088
+
+[Cheats/Family 1 Starts With 50]
+// patch=1,EE,200C0220,extended,24020032
+// patch=1,EE,200C0224,extended,8E010034
+// patch=1,EE,200C0228,extended,50200001
+// patch=1,EE,200C022C,extended,AE020034
+// patch=1,EE,200C0230,extended,03E00008
+// patch=1,EE,200C0234,extended,C6020034
+// patch=1,EE,20112814,extended,0C030088
+
+[Cheats/Family 2 Starts With 275]
+// patch=1,EE,200C0240,extended,24020113
+// patch=1,EE,200C0244,extended,8E010038
+// patch=1,EE,200C0248,extended,50200001
+// patch=1,EE,200C024C,extended,AE020038
+// patch=1,EE,200C0250,extended,03E00008
+// patch=1,EE,200C0254,extended,46020836
+// patch=1,EE,20112828,extended,0C030090
+
+[Cheats/Family 2 Starts With 250]
+// patch=1,EE,200C0240,extended,240200FA
+// patch=1,EE,200C0244,extended,8E010038
+// patch=1,EE,200C0248,extended,50200001
+// patch=1,EE,200C024C,extended,AE020038
+// patch=1,EE,200C0250,extended,03E00008
+// patch=1,EE,200C0254,extended,46020836
+// patch=1,EE,20112828,extended,0C030090
+
+[Cheats/Family 2 Starts With 200]
+// patch=1,EE,200C0240,extended,240200C8
+// patch=1,EE,200C0244,extended,8E010038
+// patch=1,EE,200C0248,extended,50200001
+// patch=1,EE,200C024C,extended,AE020038
+// patch=1,EE,200C0250,extended,03E00008
+// patch=1,EE,200C0254,extended,46020836
+// patch=1,EE,20112828,extended,0C030090
+
+[Cheats/Family 2 Starts With 100]
+// patch=1,EE,200C0240,extended,24020064
+// patch=1,EE,200C0244,extended,8E010038
+// patch=1,EE,200C0248,extended,50200001
+// patch=1,EE,200C024C,extended,AE020038
+// patch=1,EE,200C0250,extended,03E00008
+// patch=1,EE,200C0254,extended,46020836
+// patch=1,EE,20112828,extended,0C030090
+
+[Cheats/Family 2 Starts With 50]
+// patch=1,EE,200C0240,extended,24020032
+// patch=1,EE,200C0244,extended,8E010038
+// patch=1,EE,200C0248,extended,50200001
+// patch=1,EE,200C024C,extended,AE020038
+// patch=1,EE,200C0250,extended,03E00008
+// patch=1,EE,200C0254,extended,46020836
+// patch=1,EE,20112828,extended,0C030090

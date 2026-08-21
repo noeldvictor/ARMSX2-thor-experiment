@@ -1,0 +1,84 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Under The Skin [SLES-52719] [823CDB0D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Costumes]
+// patch=1,EE,901AF7C0,extended,0C071052
+
+[Cheats/Unlock Everything]
+// patch=1,EE,2088B7B8,extended,FFFFFFFF
+// patch=1,EE,2088B7BC,extended,FFFFFFFF
+
+[Cheats/Infinite Time]
+// patch=1,EE,2017AEF0,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Timer]
+// patch=1,EE,D091E502,extended,0000FBFE
+// patch=1,EE,2017AEF0,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Restart Timer]
+// patch=1,EE,D091E502,extended,0000FEFE
+// patch=1,EE,2017AEF0,extended,ACC50748
+
+[Cheats/P2 Press {L1}+{SELECT} To Stop Timer]
+// patch=1,EE,D091E602,extended,0000FBFE
+// patch=1,EE,2017AEF0,extended,00000000
+
+[Cheats/P2 Press {L2}+{SELECT} To Restart Timer]
+// patch=1,EE,D091E602,extended,0000FEFE
+// patch=1,EE,2017AEF0,extended,ACC50748
+
+[Cheats/Max Coins P1]
+// patch=1,EE,20888484,extended,0000270F
+
+[Cheats/No Coins P1]
+// patch=1,EE,20888484,extended,00000000
+
+[Cheats/P1 Press {R1}+{SELECT} For Max Coins P1]
+// patch=1,EE,D091E502,extended,0000F7FE
+// patch=1,EE,20888484,extended,0000270F
+
+[Cheats/P1 Press {R2}+{SELECT} For No Coins P2]
+// patch=1,EE,D091E502,extended,0000FDFE
+// patch=1,EE,2088B004,extended,00000000
+
+[Cheats/Max Coins P2]
+// patch=1,EE,2088B004,extended,0000270F
+
+[Cheats/No Coins P2]
+// patch=1,EE,2088B004,extended,00000000
+
+[Cheats/P2 Press {R1}+{SELECT} For Max Coins P2]
+// patch=1,EE,D091E602,extended,0000F7FE
+// patch=1,EE,2088B004,extended,0000270F
+
+[Cheats/P2 Press {R2}+{SELECT} For No Coins P1]
+// patch=1,EE,D091E602,extended,0000FDFE
+// patch=1,EE,20888484,extended,00000000
+
+[Cheats/Coco Town]
+// patch=1,EE,7088B222,extended,00000001
+
+[Cheats/Pharoah Island]
+// patch=1,EE,7088B222,extended,00000002
+
+[Cheats/Raccoon City]
+// patch=1,EE,7088B222,extended,00000004
+
+[Cheats/Frontiersville]
+// patch=1,EE,7088B222,extended,00000008
+
+[Cheats/Big Booty Bay]
+// patch=1,EE,7088B222,extended,00000010
+
+[Cheats/Pranksylvania]
+// patch=1,EE,7088B222,extended,00000020
+
+[Cheats/Cosmopolis]
+// patch=1,EE,7088B222,extended,00000040
+
+[Cheats/High Stakes Hills]
+// patch=1,EE,7088B222,extended,00000080
+
+[Cheats/All Levels]
+// patch=1,EE,7088B222,extended,000000FF

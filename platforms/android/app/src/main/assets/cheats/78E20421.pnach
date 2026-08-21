@@ -1,0 +1,476 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Crimson Tears [SLPM-65575] [78E20421]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always No Points P2]
+// patch=1,EE,902C6BE4,extended,0C0B334C
+
+[Cheats/Infinite Health]
+// patch=1,EE,20288144,extended,C60101FC
+// patch=1,EE,20288150,extended,E6010200
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20205DB4,extended,00000000
+
+[Cheats/Infinite Item Usage]
+// patch=1,EE,202DD778,extended,00000000
+
+[Cheats/Infinite Funds]
+// patch=1,EE,103AC6AC,extended,0000FFFF
+
+[Cheats/Max Funds]
+// patch=1,EE,203AC6AC,extended,0098967F
+
+[Cheats/Funds Dont Decrease When Buying Items From Ship]
+// patch=1,EE,2029E280,extended,00000000
+
+[Cheats/Funds Increase When Buying Items From Ship]
+// patch=1,EE,2029E27C,extended,00641821
+
+[Cheats/Access All Levels From Teleporter]
+// patch=1,EE,003AEA34,extended,00000007
+
+[Cheats/Remove Item From Bank For Max Quantity]
+// patch=1,EE,202DD584,extended,24020063
+
+[Cheats/Removing Item From Bank Increases Quantity]
+// patch=1,EE,202DD584,extended,00431023
+
+[Cheats/Removing Item From Bank Doesnt Decrease Quantity]
+// patch=1,EE,202DD588,extended,00000000
+
+[Cheats/View Gun In Warehouse For Max Bullets]
+// patch=1,EE,202982A8,extended,240603E7
+// patch=1,EE,202982B0,extended,240703E7
+// patch=1,EE,202982BC,extended,A606000E
+// patch=1,EE,202982C4,extended,A6070016
+
+[Cheats/Level 99 All Close Range Weapons]
+// patch=1,EE,20298F7C,extended,24050063
+// patch=1,EE,20298F80,extended,A245001C
+// patch=1,EE,20279944,extended,24050063
+// patch=1,EE,20279950,extended,A225001C
+
+[Cheats/Level 98 All Close Range Weapons]
+// patch=1,EE,20298F7C,extended,24050062
+// patch=1,EE,20298F80,extended,A245001C
+// patch=1,EE,20279944,extended,24050062
+// patch=1,EE,20279950,extended,A225001C
+
+[Cheats/Level 97 All Close Range Weapons]
+// patch=1,EE,20298F7C,extended,24050061
+// patch=1,EE,20298F80,extended,A245001C
+// patch=1,EE,20279944,extended,24050061
+// patch=1,EE,20279950,extended,A225001C
+
+[Cheats/Attacks Do Hella Damage]
+// patch=1,EE,201ADE48,extended,24042710
+
+[Cheats/High Defense From Attacks]
+// patch=1,EE,201ADE68,extended,24042710
+
+[Cheats/Max AT]
+// patch=1,EE,201ADE48,extended,240103E7
+// patch=1,EE,201ADE4C,extended,44810000
+// patch=1,EE,201ADE50,extended,A4810010
+// patch=1,EE,103AEBA8,extended,000003E7
+// patch=1,EE,103AECC8,extended,000003E7
+// patch=1,EE,103AEDE8,extended,000003E7
+
+[Cheats/Max DF]
+// patch=1,EE,201ADE68,extended,240103E7
+// patch=1,EE,201ADE6C,extended,44810000
+// patch=1,EE,201ADE70,extended,A4810018
+// patch=1,EE,103AEBB0,extended,000003E7
+// patch=1,EE,103AECD0,extended,000003E7
+// patch=1,EE,103AEDF0,extended,000003E7
+
+[Cheats/Gain 30000 EXP Per Kill]
+// patch=1,EE,201A6B10,extended,26317530
+
+[Cheats/Gain 25000 EXP Per Kill]
+// patch=1,EE,201A6B10,extended,263161A8
+
+[Cheats/Gain 20000 EXP Per Kill]
+// patch=1,EE,201A6B10,extended,26314E20
+
+[Cheats/Gain 15000 EXP Per Kill]
+// patch=1,EE,201A6B10,extended,26313A98
+
+[Cheats/Gain 10000 EXP Per Kill]
+// patch=1,EE,201A6B10,extended,26312710
+
+[Cheats/Gain 5000 EXP Per Kill]
+// patch=1,EE,201A6B10,extended,26311388
+
+[Cheats/Gain 1000 EXP Per Kill]
+// patch=1,EE,201A6B10,extended,263103E8
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,200C0220,extended,3C01003A
+// patch=1,EE,200C0224,extended,8C213BD8
+// patch=1,EE,200C0228,extended,8C210050
+// patch=1,EE,200C022C,extended,50310001
+// patch=1,EE,200C0230,extended,27FF0230
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,00000000
+// patch=1,EE,2012112C,extended,44801800
+// patch=1,EE,20120FE8,extended,0C030088
+
+[Cheats/Max HP]
+// patch=1,EE,103AEB98,extended,000003E7
+// patch=1,EE,103AEBA0,extended,000003E7
+// patch=1,EE,103AECB8,extended,000003E7
+// patch=1,EE,103AECC0,extended,000003E7
+// patch=1,EE,103AEDD8,extended,000003E7
+// patch=1,EE,103AEDE0,extended,000003E7
+
+[Cheats/Level 99]
+// patch=1,EE,203AEBC0,extended,00000063
+// patch=1,EE,203AECE0,extended,00000063
+// patch=1,EE,203AEE00,extended,00000063
+
+[Cheats/Infinite MT]
+// patch=1,EE,203AEBC8,extended,00000064
+// patch=1,EE,203AECE8,extended,00000064
+// patch=1,EE,203AEE08,extended,00000064
+
+[Cheats/Quick EXP Gain]
+// patch=1,EE,103AEBD0,extended,0000FFFF
+// patch=1,EE,103AECF0,extended,0000FFFF
+// patch=1,EE,103AEE10,extended,0000FFFF
+
+[Cheats/Max EXP]
+// patch=1,EE,203AEBD0,extended,000F423F
+// patch=1,EE,203AECF0,extended,000F423F
+// patch=1,EE,203AEE10,extended,000F423F
+
+[Cheats/Max Hand-To-Hand]
+// patch=1,EE,003AECA4,extended,00000006
+// patch=1,EE,003AECAC,extended,00000003
+// patch=1,EE,003AEDC4,extended,00000005
+// patch=1,EE,003AEDCC,extended,00000003
+// patch=1,EE,003AEEE4,extended,00000006
+// patch=1,EE,003AEEEC,extended,00000003
+
+[Cheats/Max Knife]
+// patch=1,EE,003AECA5,extended,00000005
+// patch=1,EE,003AECAD,extended,00000003
+// patch=1,EE,003AEDC5,extended,00000004
+// patch=1,EE,003AEDCD,extended,00000003
+
+[Cheats/Max Sword]
+// patch=1,EE,003AECA6,extended,00000006
+// patch=1,EE,003AECAE,extended,00000003
+// patch=1,EE,003AEDC6,extended,00000005
+// patch=1,EE,003AEDCE,extended,00000003
+
+[Cheats/Max Blade]
+// patch=1,EE,003AECA7,extended,00000007
+// patch=1,EE,003AECAF,extended,00000003
+// patch=1,EE,003AEEE5,extended,00000006
+// patch=1,EE,003AEEED,extended,00000003
+
+[Cheats/Max Bi-Sword(Bk)]
+// patch=1,EE,003AECA8,extended,00000008
+// patch=1,EE,003AECB0,extended,00000003
+
+[Cheats/Max Bi-Sword(Fr)]
+// patch=1,EE,003AECA9,extended,00000008
+// patch=1,EE,003AECB1,extended,00000003
+
+[Cheats/Max Claw]
+// patch=1,EE,003AEDC7,extended,00000007
+// patch=1,EE,003AEDCF,extended,00000003
+
+[Cheats/Max Buster Sword]
+// patch=1,EE,003AEDC8,extended,00000006
+// patch=1,EE,003AEDD0,extended,00000003
+
+[Cheats/Movie 1]
+// patch=1,EE,003AEB46,extended,00000001
+
+[Cheats/Movie 2]
+// patch=1,EE,003AEB47,extended,00000001
+
+[Cheats/Movie 3]
+// patch=1,EE,003AEB48,extended,00000001
+
+[Cheats/Movie 4]
+// patch=1,EE,003AEB49,extended,00000001
+
+[Cheats/Movie 5]
+// patch=1,EE,003AEB4A,extended,00000001
+
+[Cheats/Movie 6]
+// patch=1,EE,003AEB4B,extended,00000001
+
+[Cheats/Movie 7]
+// patch=1,EE,003AEB4C,extended,00000001
+
+[Cheats/Movie 8]
+// patch=1,EE,003AEB4D,extended,00000001
+
+[Cheats/Movie 9]
+// patch=1,EE,003AEB4E,extended,00000001
+
+[Cheats/Movie 10]
+// patch=1,EE,003AEB4F,extended,00000001
+
+[Cheats/Movie 11]
+// patch=1,EE,003AEB50,extended,00000001
+
+[Cheats/Movie 12]
+// patch=1,EE,003AEB51,extended,00000001
+
+[Cheats/Movie 13]
+// patch=1,EE,003AEB52,extended,00000001
+
+[Cheats/Movie 14]
+// patch=1,EE,003AEB53,extended,00000001
+
+[Cheats/Movie 15]
+// patch=1,EE,003AEB54,extended,00000001
+
+[Cheats/Movie 16]
+// patch=1,EE,003AEB55,extended,00000001
+
+[Cheats/Movie 17]
+// patch=1,EE,003AEB56,extended,00000001
+
+[Cheats/Movie 18]
+// patch=1,EE,003AEB57,extended,00000001
+
+[Cheats/Movie 19]
+// patch=1,EE,003AEB58,extended,00000001
+
+[Cheats/Movie 20]
+// patch=1,EE,003AEB59,extended,00000001
+
+[Cheats/Movie 21]
+// patch=1,EE,003AEB5A,extended,00000001
+
+[Cheats/Movie 22]
+// patch=1,EE,003AEB5B,extended,00000001
+
+[Cheats/Movie 23]
+// patch=1,EE,003AEB5C,extended,00000001
+
+[Cheats/Movie 24]
+// patch=1,EE,003AEB5D,extended,00000001
+
+[Cheats/All Movies]
+// patch=1,EE,103AEB46,extended,00000101
+// patch=1,EE,403AEB48,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103AEB5C,extended,00000101
+
+[Cheats/Monster 1]
+// patch=1,EE,003AEB66,extended,00000001
+
+[Cheats/Monster 2]
+// patch=1,EE,003AEB67,extended,00000001
+
+[Cheats/Monster 3]
+// patch=1,EE,003AEB68,extended,00000001
+
+[Cheats/Monster 4]
+// patch=1,EE,003AEB69,extended,00000001
+
+[Cheats/Monster 5]
+// patch=1,EE,003AEB6A,extended,00000001
+
+[Cheats/Monster 6]
+// patch=1,EE,003AEB6B,extended,00000001
+
+[Cheats/Monster 7]
+// patch=1,EE,003AEB6C,extended,00000001
+
+[Cheats/Monster 8]
+// patch=1,EE,003AEB6D,extended,00000001
+
+[Cheats/Monster 9]
+// patch=1,EE,003AEB6E,extended,00000001
+
+[Cheats/Monster 10]
+// patch=1,EE,003AEB6F,extended,00000001
+
+[Cheats/Monster 11]
+// patch=1,EE,003AEB70,extended,00000001
+
+[Cheats/Monster 12]
+// patch=1,EE,003AEB71,extended,00000001
+
+[Cheats/Monster 13]
+// patch=1,EE,003AEB72,extended,00000001
+
+[Cheats/Monster 14]
+// patch=1,EE,003AEB73,extended,00000001
+
+[Cheats/Monster 15]
+// patch=1,EE,003AEB74,extended,00000001
+
+[Cheats/Monster 16]
+// patch=1,EE,003AEB75,extended,00000001
+
+[Cheats/Monster 17]
+// patch=1,EE,003AEB76,extended,00000001
+
+[Cheats/Monster 18]
+// patch=1,EE,003AEB77,extended,00000001
+
+[Cheats/Monster 19]
+// patch=1,EE,003AEB78,extended,00000001
+
+[Cheats/Monster 20]
+// patch=1,EE,003AEB79,extended,00000001
+
+[Cheats/Monster 21]
+// patch=1,EE,003AEB7A,extended,00000001
+
+[Cheats/Monster 22]
+// patch=1,EE,003AEB7B,extended,00000001
+
+[Cheats/Monster 23]
+// patch=1,EE,003AEB7C,extended,00000001
+
+[Cheats/Monster 24]
+// patch=1,EE,003AEB7D,extended,00000001
+
+[Cheats/Monster 25]
+// patch=1,EE,003AEB7E,extended,00000001
+
+[Cheats/Monster 26]
+// patch=1,EE,003AEB7F,extended,00000001
+
+[Cheats/Monster 27]
+// patch=1,EE,003AEB80,extended,00000001
+
+[Cheats/Monster 28]
+// patch=1,EE,003AEB81,extended,00000001
+
+[Cheats/All Monsters]
+// patch=1,EE,103AEB66,extended,00000101
+// patch=1,EE,403AEB68,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103AEB80,extended,00000101
+
+[Cheats/Slot 1]
+// patch=1,EE,203AC6F8,extended,00000063
+// patch=1,EE,103AC702,extended,0000270F
+// patch=1,EE,103AC70A,extended,0000270F
+
+[Cheats/Slot 2]
+// patch=1,EE,203AC734,extended,00000063
+// patch=1,EE,103AC73E,extended,0000270F
+// patch=1,EE,103AC746,extended,0000270F
+
+[Cheats/Slot 3]
+// patch=1,EE,203AC770,extended,00000063
+// patch=1,EE,103AC77A,extended,0000270F
+// patch=1,EE,103AC782,extended,0000270F
+
+[Cheats/Slot 4]
+// patch=1,EE,203AC7AC,extended,00000063
+// patch=1,EE,103AC7B6,extended,0000270F
+// patch=1,EE,103AC7BE,extended,0000270F
+
+[Cheats/Slot 5]
+// patch=1,EE,203AC7E8,extended,00000063
+// patch=1,EE,103AC7F2,extended,0000270F
+// patch=1,EE,103AC7FA,extended,0000270F
+
+[Cheats/Slot 6]
+// patch=1,EE,203AC824,extended,00000063
+// patch=1,EE,103AC82E,extended,0000270F
+// patch=1,EE,103AC836,extended,0000270F
+
+[Cheats/Slot 7]
+// patch=1,EE,203AC860,extended,00000063
+// patch=1,EE,103AC86A,extended,0000270F
+// patch=1,EE,103AC872,extended,0000270F
+
+[Cheats/Slot 8]
+// patch=1,EE,203AC89C,extended,00000063
+// patch=1,EE,103AC8A6,extended,0000270F
+// patch=1,EE,103AC8AE,extended,0000270F
+
+[Cheats/Slot 9]
+// patch=1,EE,203AC8D8,extended,00000063
+// patch=1,EE,103AC8E2,extended,0000270F
+// patch=1,EE,103AC8EA,extended,0000270F
+
+[Cheats/Slot 10]
+// patch=1,EE,203AC914,extended,00000063
+// patch=1,EE,103AC91E,extended,0000270F
+// patch=1,EE,103AC926,extended,0000270F
+
+[Cheats/Slot 11]
+// patch=1,EE,203AC950,extended,00000063
+// patch=1,EE,103AC95A,extended,0000270F
+// patch=1,EE,103AC962,extended,0000270F
+
+[Cheats/Slot 12]
+// patch=1,EE,203AC98C,extended,00000063
+// patch=1,EE,103AC996,extended,0000270F
+// patch=1,EE,103AC99E,extended,0000270F
+
+[Cheats/Slot 13]
+// patch=1,EE,203AC9C8,extended,00000063
+// patch=1,EE,103AC9D2,extended,0000270F
+// patch=1,EE,103AC9DA,extended,0000270F
+
+[Cheats/Slot 14]
+// patch=1,EE,203ACA04,extended,00000063
+// patch=1,EE,103ACA0E,extended,0000270F
+// patch=1,EE,103ACA16,extended,0000270F
+
+[Cheats/Slot 15]
+// patch=1,EE,203ACA40,extended,00000063
+// patch=1,EE,103ACA4A,extended,0000270F
+// patch=1,EE,103ACA52,extended,0000270F
+
+[Cheats/Slot 16]
+// patch=1,EE,203ACA7C,extended,00000063
+// patch=1,EE,103ACA86,extended,0000270F
+// patch=1,EE,103ACA8E,extended,0000270F
+
+[Cheats/Slot 17]
+// patch=1,EE,203ACAB8,extended,00000063
+// patch=1,EE,103ACAC2,extended,0000270F
+// patch=1,EE,103ACACA,extended,0000270F
+
+[Cheats/Slot 18]
+// patch=1,EE,203ACAF4,extended,00000063
+// patch=1,EE,103ACAFE,extended,0000270F
+// patch=1,EE,103ACB06,extended,0000270F
+
+[Cheats/Slot 19]
+// patch=1,EE,203ACB30,extended,00000063
+// patch=1,EE,103ACB3A,extended,0000270F
+// patch=1,EE,103ACB42,extended,0000270F
+
+[Cheats/Slot 20]
+// patch=1,EE,203ACB6C,extended,00000063
+// patch=1,EE,103ACB76,extended,0000270F
+// patch=1,EE,103ACB7E,extended,0000270F
+
+[Cheats/Slot 21]
+// patch=1,EE,203ACBA8,extended,00000063
+// patch=1,EE,103ACBB2,extended,0000270F
+// patch=1,EE,103ACBBA,extended,0000270F
+
+[Cheats/Slot 22]
+// patch=1,EE,203ACBE4,extended,00000063
+// patch=1,EE,103ACBEE,extended,0000270F
+// patch=1,EE,103ACBF6,extended,0000270F
+
+[Cheats/Slot 23]
+// patch=1,EE,203ACC20,extended,00000063
+// patch=1,EE,103ACC2A,extended,0000270F
+// patch=1,EE,103ACC32,extended,0000270F
+
+[Cheats/Slot 24]
+// patch=1,EE,203ACC5C,extended,00000063
+// patch=1,EE,103ACC66,extended,0000270F
+// patch=1,EE,103ACC6E,extended,0000270F

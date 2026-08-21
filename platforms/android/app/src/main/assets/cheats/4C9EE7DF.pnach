@@ -1,0 +1,53 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Crazy Taxi [SLUS-20202] [4C9EE7DF]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Gems/Extras]
+// patch=1,EE,901A4294,extended,0C06D1F3
+
+[Cheats/Infinite Fare Time]
+// patch=1,EE,102F0404,extended,00000FFF
+
+[Cheats/Max Money]
+// patch=1,EE,202F03E0,extended,05F5E0FF
+
+[Cheats/Max Customers]
+// patch=1,EE,1047BDE4,extended,000003E7
+
+[Cheats/Max Big Drift Combo]
+// patch=1,EE,1047B950,extended,000003E7
+
+[Cheats/Press {R1}+{R2} For Turbo Speed]
+// patch=1,EE,D047B408,extended,0000000A
+// patch=1,EE,1030A55A,extended,00004600
+
+[Cheats/Press {L1}+{L2} For Ultra Turbo Speed]
+// patch=1,EE,D047B408,extended,00000005
+// patch=1,EE,1030A55A,extended,00004800
+
+[Cheats/Press {L1}+{R1} For More Time]
+// patch=1,EE,D047B408,extended,0000000C
+// patch=1,EE,102F03CC,extended,00001FFF
+
+[Cheats/Press {L1}+{R2} For No Time]
+// patch=1,EE,D047B408,extended,00000003
+// patch=1,EE,102F03CC,extended,00000000
+
+[Cheats/1 Balloon Left (Crazy Box)]
+// patch=1,EE,1047BB14,extended,00000001
+
+[Cheats/Axel]
+// patch=1,EE,D047C798,extended,00000150
+// patch=1,EE,002FCC98,extended,00000001
+
+[Cheats/BD Joe]
+// patch=1,EE,D047C798,extended,00000150
+// patch=1,EE,002FCC98,extended,00000002
+
+[Cheats/Gena]
+// patch=1,EE,D047C798,extended,00000150
+// patch=1,EE,002FCC98,extended,00000003
+
+[Cheats/Gus]
+// patch=1,EE,D047C798,extended,00000150
+// patch=1,EE,002FCC98,extended,00000004

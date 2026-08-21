@@ -1,0 +1,78 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/(M) Must Be On]
+// patch=1,EE,DEADFACE,extended,04030209
+// patch=1,EE,F01B7AF6,extended,58B5CB6B
+
+[Cheats/Health Codes\Infinite Health]
+// patch=1,EE,001D0ECA,extended,00000009
+// patch=1,EE,001D0F0E,extended,00000009
+
+[Cheats/Health Codes\Max Score]
+// patch=1,EE,201D0ED8,extended,05F5E0FF
+// patch=1,EE,201D0F1C,extended,05F5E0FF
+
+[Cheats/Health Codes\Never Have More Than 1 Health]
+// patch=1,EE,D01D0ECA,extended,00500001
+// patch=1,EE,001D0ECA,extended,00000001
+// patch=1,EE,D01D0F0E,extended,00500001
+// patch=1,EE,001D0F0E,extended,00000001
+
+[Cheats/Health Codes\Never Have More Than 2 Health]
+// patch=1,EE,D01D0ECA,extended,00500002
+// patch=1,EE,001D0ECA,extended,00000002
+// patch=1,EE,D01D0F0E,extended,00500002
+// patch=1,EE,001D0F0E,extended,00000002
+
+[Cheats/Health Codes\Never Have More Than 3 Health]
+// patch=1,EE,D01D0ECA,extended,00500003
+// patch=1,EE,001D0ECA,extended,00000003
+// patch=1,EE,D01D0F0E,extended,00500003
+// patch=1,EE,001D0F0E,extended,00000003
+
+[Cheats/Health Codes\No Reload]
+// patch=1,EE,001FCECC,extended,0000000A
+// patch=1,EE,001FCF38,extended,00000007
+
+[Cheats/P1 Infinite Health]
+// patch=1,EE,C0166798,extended,58B5D47F
+
+[Cheats/P1 Max Score]
+// patch=1,EE,EE1667B2,extended,51B8B465
+
+[Cheats/P1 No Reload]
+// patch=1,EE,C008A79E,extended,58B5D478
+
+[Cheats/P1 X99 Multiplier]
+// patch=1,EE,C01667CA,extended,58B5D4C1
+
+[Cheats/P2 Infinite Health]
+// patch=1,EE,C0166C64,extended,58B5D47F
+
+[Cheats/P2 Max Score]
+// patch=1,EE,EE166C6E,extended,51B8B465
+
+[Cheats/P2 No Reload]
+// patch=1,EE,C008AC92,extended,58B5D47D
+
+[Cheats/P2 X99 Multiplier]
+// patch=1,EE,C0166C86,extended,58B5D4C1
+
+[Cheats/Unlock Gallery]
+// patch=1,EE,EE0D4746,extended,51B6D565
+// patch=1,EE,EE0D4752,extended,51B6D565
+
+[Cheats/Health Codes\Unlock Gallery]
+// patch=1,EE,20222E74,extended,FFFFFFFF
+// patch=1,EE,20222E78,extended,FFFFFFFF
+
+[Cheats/Unlock Random Mode]
+// patch=1,EE,C0018C74,extended,58B5D467
+
+[Cheats/Health Codes\Unlock Random Mode]
+// patch=1,EE,0026EF1E,extended,00000001
+
+[Cheats/Health Codes\X99 Multiplier]
+// patch=1,EE,001D0EF0,extended,00000063
+// patch=1,EE,001D0F34,extended,00000063

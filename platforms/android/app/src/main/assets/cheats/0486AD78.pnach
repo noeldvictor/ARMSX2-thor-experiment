@@ -1,0 +1,37 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Suffering, The [SLUS-20636] [0486AD78]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Found %]
+// patch=1,EE,90417DA4,extended,0C10C4BB
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,03E00008
+// patch=1,EE,200C0224,extended,E4800018
+// patch=1,EE,20314C58,extended,08030088
+// patch=1,EE,20314C5C,extended,C480001C
+
+[Cheats/Infinite Health Kits/Ammo]
+// patch=1,EE,202839C0,extended,00000000
+
+[Cheats/Extra Health Kits/Amo]
+// patch=1,EE,202839B8,extended,00511021
+
+[Cheats/Max Infinite Health Kits/Ammo]
+// patch=1,EE,202839B8,extended,24020063
+
+[Cheats/Never Reload]
+// patch=1,EE,202A8A80,extended,00000000
+
+[Cheats/Infinite Flashlight Power]
+// patch=1,EE,20240FF4,extended,00000000
+
+[Cheats/Enemies Don�t Do Close Range Attacks]
+// patch=1,EE,20447008,extended,03E00008
+// patch=1,EE,2044700C,extended,00000000
+
+[Cheats/Quick Level Up Torques Insanity Smash Attack]
+// patch=1,EE,202B6BC4,extended,24630004
+
+[Cheats/Infinite Insanity]
+// patch=1,EE,202B49BC,extended,00000000

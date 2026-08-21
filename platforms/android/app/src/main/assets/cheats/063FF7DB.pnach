@@ -1,0 +1,14 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: F1 2001 [SLES-50423] [063FF7DB]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Time]
+// patch=1,EE,F0100008,extended,001171B7
+
+[Cheats/Have Training Complete]
+// patch=1,EE,403B2738,extended,00060001
+// patch=1,EE,64646464,extended,00000000
+
+[Cheats/Have Track Challenge Complete]
+// patch=1,EE,403B2750,extended,00050001
+// patch=1,EE,64646464,extended,00000000

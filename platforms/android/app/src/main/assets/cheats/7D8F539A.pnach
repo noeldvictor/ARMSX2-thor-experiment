@@ -1,0 +1,291 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Devil May Cry [SLES-50358] [7D8F539A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Fury Drive]
+// patch=1,EE,9010C1DC,extended,0C045528
+
+[Cheats/Infinite Health]
+// patch=1,EE,105B8256,extended,00000BB8
+
+[Cheats/Max Red Orbs]
+// patch=1,EE,20754624,extended,0001869F
+
+[Cheats/Max Blue Orbs]
+// patch=1,EE,00754628,extended,00000004
+
+[Cheats/Makes The Game Think You've Never Saved]
+// patch=1,EE,105B0110,extended,00000000
+
+[Cheats/Max Yellow Orbs]
+// patch=1,EE,10754610,extended,000003E7
+
+[Cheats/Have All Moves]
+// patch=1,EE,1075461A,extended,0000FFFF
+
+[Cheats/Have All Characters & Modes]
+// patch=1,EE,10753F06,extended,0000FFFF
+
+[Cheats/Have All Secret Missions Finished]
+// patch=1,EE,10754022,extended,0000FFFF
+
+[Cheats/Moon Jump]
+// patch=1,EE,D0765572,extended,00001000
+// patch=1,EE,205B84AC,extended,4238CCCE
+
+[Cheats/Invisible]
+// patch=1,EE,105B71B8,extended,00000001
+
+[Cheats/Save Anywhere (Press {SELECT})]
+// patch=1,EE,10752384,extended,00000000
+
+[Cheats/Unlock Total Results (Press {SELECT})]
+// patch=1,EE,10754012,extended,00000001
+
+[Cheats/Disable Screen Blur]
+// patch=1,EE,20149490,extended,03E00008
+// patch=1,EE,20149494,extended,00000000
+
+[Cheats/Infinite Devil Trigger]
+// patch=1,EE,105B85F2,extended,000003E8
+// patch=1,EE,105B85F6,extended,000003E8
+
+[Cheats/Max Devil Trigger]
+// patch=1,EE,105B85F4,extended,000003E8
+// patch=1,EE,105B85F8,extended,000003E8
+
+[Cheats/Allow Usage Of Sparda Devil Trigger (Not Fireballs)]
+// patch=1,EE,20138A90,extended,00000000
+// patch=1,EE,102D338C,extended,00000003
+// patch=1,EE,102D339C,extended,00000003
+// patch=1,EE,202C04E0,extended,03E00008
+// patch=1,EE,202C04E4,extended,00000000
+
+[Cheats/All Difficulties-All Stages-Rank S]
+// patch=1,EE,407547AC,extended,00110001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,007547F0,extended,00000000
+
+[Cheats/Infinite Health (Alternate)]
+// patch=1,EE,20152560,extended,03E00008
+// patch=1,EE,20152564,extended,00000000
+
+[Cheats/Attack Rank Never Lowers]
+// patch=1,EE,201B7540,extended,03E00008
+// patch=1,EE,201B7544,extended,00000000
+
+[Cheats/Infinite Time]
+// patch=1,EE,205AF780,extended,00034B00
+
+[Cheats/Invisible Gun]
+// patch=1,EE,007541F3,extended,00000001
+
+[Cheats/Invisible Sword]
+// patch=1,EE,007541F3,extended,00000002
+
+[Cheats/Invisible Gun & Sword]
+// patch=1,EE,007541F3,extended,00000003
+
+[Cheats/No Dulls]
+// patch=1,EE,207544C8,extended,00000000
+
+[Cheats/No Cools]
+// patch=1,EE,207544CC,extended,00000000
+
+[Cheats/No Bravos]
+// patch=1,EE,207544D0,extended,00000000
+
+[Cheats/No Abosolutes]
+// patch=1,EE,207544D4,extended,00000000
+
+[Cheats/Max Stylish's]
+// patch=1,EE,207544D8,extended,0001869F
+
+[Cheats/No Total Retry's]
+// patch=1,EE,10754612,extended,00000000
+
+[Cheats/Max Total Red Orbs]
+// patch=1,EE,2075482C,extended,0001869F
+
+[Cheats/Low Completed Stage Time-All Missions]
+// patch=1,EE,40754460,extended,00170001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Slot 1]
+// patch=1,EE,10754246,extended,00000009
+// patch=1,EE,007547DA,extended,00000000
+
+[Cheats/Slot 2]
+// patch=1,EE,1075424A,extended,00000009
+// patch=1,EE,007547DB,extended,00000000
+
+[Cheats/Slot 3]
+// patch=1,EE,1075424E,extended,00000009
+// patch=1,EE,007547DC,extended,00000000
+
+[Cheats/Slot 4]
+// patch=1,EE,10754252,extended,00000009
+// patch=1,EE,007547DD,extended,00000000
+
+[Cheats/Slot 5]
+// patch=1,EE,10754256,extended,00000009
+// patch=1,EE,007547DE,extended,00000000
+
+[Cheats/Slot 6]
+// patch=1,EE,1075425A,extended,00000009
+// patch=1,EE,007547DF,extended,00000000
+
+[Cheats/Slot 7]
+// patch=1,EE,1075425E,extended,00000009
+// patch=1,EE,007547E0,extended,00000000
+
+[Cheats/Slot 8]
+// patch=1,EE,10754262,extended,00000009
+// patch=1,EE,007547E1,extended,00000000
+
+[Cheats/Slot 9]
+// patch=1,EE,10754266,extended,00000009
+// patch=1,EE,007547E2,extended,00000000
+
+[Cheats/Slot 10]
+// patch=1,EE,1075426A,extended,00000009
+// patch=1,EE,007547E3,extended,00000000
+
+[Cheats/Slot 11]
+// patch=1,EE,1075426E,extended,00000009
+// patch=1,EE,007547E4,extended,00000000
+
+[Cheats/Slot 12]
+// patch=1,EE,10754272,extended,00000009
+// patch=1,EE,007547E5,extended,00000000
+
+[Cheats/Stage 1]
+// patch=1,EE,007547AC,extended,00000000
+// patch=1,EE,007547C3,extended,00000000
+
+[Cheats/Stage 2]
+// patch=1,EE,007547AD,extended,00000000
+// patch=1,EE,007547C4,extended,00000000
+
+[Cheats/Stage 3]
+// patch=1,EE,007547AE,extended,00000000
+// patch=1,EE,007547C5,extended,00000000
+
+[Cheats/Stage 4]
+// patch=1,EE,007547AF,extended,00000000
+// patch=1,EE,007547C6,extended,00000000
+
+[Cheats/Stage 5]
+// patch=1,EE,007547B0,extended,00000000
+// patch=1,EE,007547C7,extended,00000000
+
+[Cheats/Stage 6]
+// patch=1,EE,007547B1,extended,00000000
+// patch=1,EE,007547C8,extended,00000000
+
+[Cheats/Stage 7]
+// patch=1,EE,007547B2,extended,00000000
+// patch=1,EE,007547C9,extended,00000000
+
+[Cheats/Stage 8]
+// patch=1,EE,007547B3,extended,00000000
+// patch=1,EE,007547CA,extended,00000000
+
+[Cheats/Stage 9]
+// patch=1,EE,007547B4,extended,00000000
+// patch=1,EE,007547CB,extended,00000000
+
+[Cheats/Stage 10]
+// patch=1,EE,007547B5,extended,00000000
+// patch=1,EE,007547CC,extended,00000000
+
+[Cheats/Stage 11]
+// patch=1,EE,007547B6,extended,00000000
+// patch=1,EE,007547CD,extended,00000000
+
+[Cheats/Stage 12]
+// patch=1,EE,007547B7,extended,00000000
+// patch=1,EE,007547CE,extended,00000000
+
+[Cheats/Stage 13]
+// patch=1,EE,007547B8,extended,00000000
+// patch=1,EE,007547CF,extended,00000000
+
+[Cheats/Stage 14]
+// patch=1,EE,007547B9,extended,00000000
+// patch=1,EE,007547D0,extended,00000000
+
+[Cheats/Stage 15]
+// patch=1,EE,007547BA,extended,00000000
+// patch=1,EE,007547D1,extended,00000000
+
+[Cheats/Stage 16]
+// patch=1,EE,007547BB,extended,00000000
+// patch=1,EE,007547D2,extended,00000000
+
+[Cheats/Stage 17]
+// patch=1,EE,007547BC,extended,00000000
+// patch=1,EE,007547D3,extended,00000000
+
+[Cheats/Stage 18]
+// patch=1,EE,007547BD,extended,00000000
+// patch=1,EE,007547D4,extended,00000000
+
+[Cheats/Stage 19]
+// patch=1,EE,007547BE,extended,00000000
+// patch=1,EE,007547D5,extended,00000000
+
+[Cheats/Stage 20]
+// patch=1,EE,007547BF,extended,00000000
+// patch=1,EE,007547D6,extended,00000000
+
+[Cheats/Stage 21]
+// patch=1,EE,007547C0,extended,00000000
+// patch=1,EE,007547D7,extended,00000000
+
+[Cheats/Stage 22]
+// patch=1,EE,007547C1,extended,00000000
+// patch=1,EE,007547D8,extended,00000000
+
+[Cheats/Stage 23]
+// patch=1,EE,007547C2,extended,00000000
+// patch=1,EE,007547D9,extended,00000000
+
+[Cheats/Slot 13]
+// patch=1,EE,007547E6,extended,00000000
+
+[Cheats/Slot 14]
+// patch=1,EE,007547E7,extended,00000000
+
+[Cheats/Slot 15]
+// patch=1,EE,007547E8,extended,00000000
+
+[Cheats/Slot 16]
+// patch=1,EE,007547E9,extended,00000000
+
+[Cheats/Slot 17]
+// patch=1,EE,007547EA,extended,00000000
+
+[Cheats/Slot 18]
+// patch=1,EE,007547EB,extended,00000000
+
+[Cheats/Slot 19]
+// patch=1,EE,007547EC,extended,00000000
+
+[Cheats/Slot 20]
+// patch=1,EE,007547ED,extended,00000000
+
+[Cheats/Slot 21]
+// patch=1,EE,007547EE,extended,00000000
+
+[Cheats/Slot 22]
+// patch=1,EE,007547EF,extended,00000000
+
+[Cheats/Slot 23]
+// patch=1,EE,007547F0,extended,00000000
+
+[Cheats/Secret Mission 1]
+// patch=1,EE,105B0A78,extended,00000064
+
+[Cheats/Secret Mission 2]
+// patch=1,EE,105B0A7C,extended,00000064

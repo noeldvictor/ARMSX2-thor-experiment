@@ -1,0 +1,1394 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Grandia II [SLES-50498] [BEBC87B1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Cheetah 2]
+// patch=1,EE,9027D474,extended,0C0A6B7C
+
+[Cheats/Infinite Money]
+// patch=1,EE,113493A4,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,113493A4,extended,05F5E0FF
+
+[Cheats/Infinite Special Coins]
+// patch=1,EE,113493A8,extended,0000FFFF
+
+[Cheats/Max Special Coins]
+// patch=1,EE,113493A8,extended,05F5E0FF
+
+[Cheats/Infinite Magic Coins]
+// patch=1,EE,113493AC,extended,0000FFFF
+
+[Cheats/Max Magic Coins]
+// patch=1,EE,113493AC,extended,05F5E0FF
+
+[Cheats/Level 99]
+// patch=1,EE,11349A32,extended,00000063
+// patch=1,EE,11349A9E,extended,00000063
+// patch=1,EE,11349B0A,extended,00000063
+// patch=1,EE,11349B76,extended,00000063
+// patch=1,EE,11349BE2,extended,00000063
+// patch=1,EE,11349C4E,extended,00000063
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,11349A34,extended,0000FFFF
+// patch=1,EE,11349AA0,extended,0000FFFF
+// patch=1,EE,11349B0C,extended,0000FFFF
+// patch=1,EE,11349B78,extended,0000FFFF
+// patch=1,EE,11349BE4,extended,0000FFFF
+// patch=1,EE,11349C50,extended,0000FFFF
+
+[Cheats/Max Exp]
+// patch=1,EE,11349A34,extended,05F5E0FF
+// patch=1,EE,11349AA0,extended,05F5E0FF
+// patch=1,EE,11349B0C,extended,05F5E0FF
+// patch=1,EE,11349B78,extended,05F5E0FF
+// patch=1,EE,11349BE4,extended,05F5E0FF
+// patch=1,EE,11349C50,extended,05F5E0FF
+
+[Cheats/Next Level Always 1]
+// patch=1,EE,11349A38,extended,00000001
+// patch=1,EE,11349AA4,extended,00000001
+// patch=1,EE,11349B10,extended,00000001
+// patch=1,EE,11349B7C,extended,00000001
+// patch=1,EE,11349BE8,extended,00000001
+// patch=1,EE,11349C54,extended,00000001
+
+[Cheats/Max HP]
+// patch=1,EE,11349A3C,extended,0000270F
+// patch=1,EE,11349AA8,extended,0000270F
+// patch=1,EE,11349B14,extended,0000270F
+// patch=1,EE,11349B80,extended,0000270F
+// patch=1,EE,11349BEC,extended,0000270F
+// patch=1,EE,11349C58,extended,0000270F
+
+[Cheats/Infinite HP]
+// patch=1,EE,11349A3E,extended,0000270F
+// patch=1,EE,11349AAA,extended,0000270F
+// patch=1,EE,11349B16,extended,0000270F
+// patch=1,EE,11349B82,extended,0000270F
+// patch=1,EE,11349BEE,extended,0000270F
+// patch=1,EE,11349C5A,extended,0000270F
+
+[Cheats/Max MP]
+// patch=1,EE,11349A40,extended,000003E7
+// patch=1,EE,11349AAC,extended,000003E7
+// patch=1,EE,11349B18,extended,000003E7
+// patch=1,EE,11349B84,extended,000003E7
+// patch=1,EE,11349BF0,extended,000003E7
+// patch=1,EE,11349C5C,extended,000003E7
+
+[Cheats/Infinite MP]
+// patch=1,EE,11349A42,extended,000003E7
+// patch=1,EE,11349AAE,extended,000003E7
+// patch=1,EE,11349B1A,extended,000003E7
+// patch=1,EE,11349B86,extended,000003E7
+// patch=1,EE,11349BF2,extended,000003E7
+// patch=1,EE,11349C5E,extended,000003E7
+
+[Cheats/Max SP]
+// patch=1,EE,11349A44,extended,000003E7
+// patch=1,EE,11349AB0,extended,000003E7
+// patch=1,EE,11349B1C,extended,000003E7
+// patch=1,EE,11349B88,extended,000003E7
+// patch=1,EE,11349BF4,extended,000003E7
+// patch=1,EE,11349C60,extended,000003E7
+
+[Cheats/Infinite SP]
+// patch=1,EE,11349A46,extended,000003E7
+// patch=1,EE,11349AB2,extended,000003E7
+// patch=1,EE,11349B1E,extended,000003E7
+// patch=1,EE,11349B8A,extended,000003E7
+// patch=1,EE,11349BF6,extended,000003E7
+// patch=1,EE,11349C62,extended,000003E7
+
+[Cheats/Max Attack/Strength]
+// patch=1,EE,11349A48,extended,000003E7
+// patch=1,EE,11349AB4,extended,000003E7
+// patch=1,EE,11349B20,extended,000003E7
+// patch=1,EE,11349B8C,extended,000003E7
+// patch=1,EE,11349BF8,extended,000003E7
+// patch=1,EE,11349C64,extended,000003E7
+
+[Cheats/Max Defense/Vitality]
+// patch=1,EE,11349A4A,extended,000003E7
+// patch=1,EE,11349AB6,extended,000003E7
+// patch=1,EE,11349B22,extended,000003E7
+// patch=1,EE,11349B8E,extended,000003E7
+// patch=1,EE,11349BFA,extended,000003E7
+// patch=1,EE,11349C66,extended,000003E7
+
+[Cheats/Max Agility/Action]
+// patch=1,EE,11349A4C,extended,000003E7
+// patch=1,EE,11349AB8,extended,000003E7
+// patch=1,EE,11349B24,extended,000003E7
+// patch=1,EE,11349B90,extended,000003E7
+// patch=1,EE,11349BFC,extended,000003E7
+// patch=1,EE,11349C68,extended,000003E7
+
+[Cheats/Max Speed/Movement]
+// patch=1,EE,11349A4E,extended,000003E7
+// patch=1,EE,11349ABA,extended,000003E7
+// patch=1,EE,11349B26,extended,000003E7
+// patch=1,EE,11349B92,extended,000003E7
+// patch=1,EE,11349BFE,extended,000003E7
+// patch=1,EE,11349C6A,extended,000003E7
+
+[Cheats/Max Magic]
+// patch=1,EE,11349A50,extended,000003E7
+// patch=1,EE,11349ABC,extended,000003E7
+// patch=1,EE,11349B28,extended,000003E7
+// patch=1,EE,11349B94,extended,000003E7
+// patch=1,EE,11349C00,extended,000003E7
+// patch=1,EE,11349C6C,extended,000003E7
+
+[Cheats/Max Mentality]
+// patch=1,EE,11349A52,extended,000003E7
+// patch=1,EE,11349ABE,extended,000003E7
+// patch=1,EE,11349B2A,extended,000003E7
+// patch=1,EE,11349B96,extended,000003E7
+// patch=1,EE,11349C02,extended,000003E7
+// patch=1,EE,11349C6E,extended,000003E7
+
+[Cheats/Date 8/16]
+// patch=1,EE,013493C5,extended,00000063
+
+[Cheats/Debug Item]
+// patch=1,EE,013493C6,extended,00000063
+
+[Cheats/Roan's Medal]
+// patch=1,EE,013493CF,extended,00000063
+
+[Cheats/Poff Nut]
+// patch=1,EE,013493D0,extended,00000063
+
+[Cheats/Missanga]
+// patch=1,EE,013493D1,extended,00000063
+
+[Cheats/Adventure Book]
+// patch=1,EE,013493F7,extended,00000063
+
+[Cheats/Book Of Wizards]
+// patch=1,EE,013493F8,extended,00000063
+
+[Cheats/Book Of Warriors]
+// patch=1,EE,013493F9,extended,00000063
+
+[Cheats/Book Of Priest's]
+// patch=1,EE,013493FA,extended,00000063
+
+[Cheats/Book Of Gales]
+// patch=1,EE,013493FB,extended,00000063
+
+[Cheats/Book Of Swords]
+// patch=1,EE,013493FC,extended,00000063
+
+[Cheats/Book Of War]
+// patch=1,EE,013493FD,extended,00000063
+
+[Cheats/Book Of Sages]
+// patch=1,EE,013493FE,extended,00000063
+
+[Cheats/Book Of Learning]
+// patch=1,EE,013493FF,extended,00000063
+
+[Cheats/Seed Of Life]
+// patch=1,EE,01349401,extended,00000063
+
+[Cheats/Seed Of Spells]
+// patch=1,EE,01349402,extended,00000063
+
+[Cheats/Seed Of Moves]
+// patch=1,EE,01349403,extended,00000063
+
+[Cheats/Seed Of Power]
+// patch=1,EE,01349404,extended,00000063
+
+[Cheats/Seed Of Defense]
+// patch=1,EE,01349405,extended,00000063
+
+[Cheats/Seed Of Swift]
+// patch=1,EE,01349406,extended,00000063
+
+[Cheats/Seed Of Running]
+// patch=1,EE,01349407,extended,00000063
+
+[Cheats/Seed Of Magic]
+// patch=1,EE,01349408,extended,00000063
+
+[Cheats/Seed Of Psyche]
+// patch=1,EE,01349409,extended,00000063
+
+[Cheats/All-Around Seed]
+// patch=1,EE,0134940A,extended,00000063
+
+[Cheats/Omnipotent Seed]
+// patch=1,EE,0134940B,extended,00000063
+
+[Cheats/Lore Of Moves]
+// patch=1,EE,0134940C,extended,00000063
+
+[Cheats/Lore Of Magic]
+// patch=1,EE,0134940D,extended,00000063
+
+[Cheats/Miracle Scales]
+// patch=1,EE,01349415,extended,00000063
+
+[Cheats/Soul Of A Hero]
+// patch=1,EE,01349416,extended,00000063
+
+[Cheats/Astral Miracle]
+// patch=1,EE,01349417,extended,00000063
+
+[Cheats/Ethereal Miracle]
+// patch=1,EE,01349418,extended,00000063
+
+[Cheats/Mystic Potion]
+// patch=1,EE,01349429,extended,00000063
+
+[Cheats/Scarlet Potion]
+// patch=1,EE,0134942A,extended,00000063
+
+[Cheats/Healing Fruit]
+// patch=1,EE,0134942B,extended,00000063
+
+[Cheats/Holy Wound Salve]
+// patch=1,EE,0134942C,extended,00000063
+
+[Cheats/Wound Salve]
+// patch=1,EE,0134942D,extended,00000063
+
+[Cheats/Medicinal Herb]
+// patch=1,EE,0134942E,extended,00000063
+
+[Cheats/Potion Of Azure]
+// patch=1,EE,01349433,extended,00000063
+
+[Cheats/Healing Incense]
+// patch=1,EE,01349434,extended,00000063
+
+[Cheats/Scroll Of Alheal]
+// patch=1,EE,01349435,extended,00000063
+
+[Cheats/Healing Herb]
+// patch=1,EE,01349436,extended,00000063
+
+[Cheats/Miracle Elixir]
+// patch=1,EE,0134943D,extended,00000063
+
+[Cheats/Hero's Elixir]
+// patch=1,EE,0134943E,extended,00000063
+
+[Cheats/Yomi's Elixir]
+// patch=1,EE,0134943F,extended,00000063
+
+[Cheats/Panacea]
+// patch=1,EE,01349440,extended,00000063
+
+[Cheats/Purifying Herb]
+// patch=1,EE,01349441,extended,00000063
+
+[Cheats/Poison Antidote]
+// patch=1,EE,01349442,extended,00000063
+
+[Cheats/Paralysis Salve]
+// patch=1,EE,01349443,extended,00000063
+
+[Cheats/Torte's Reedpipe]
+// patch=1,EE,01349444,extended,00000063
+
+[Cheats/Eye Drops]
+// patch=1,EE,01349445,extended,00000063
+
+[Cheats/Smelling Salts]
+// patch=1,EE,01349446,extended,00000063
+
+[Cheats/Blessing Scroll]
+// patch=1,EE,01349447,extended,00000063
+
+[Cheats/Move Blessing]
+// patch=1,EE,01349448,extended,00000063
+
+[Cheats/Magic Blessing]
+// patch=1,EE,01349449,extended,00000063
+
+[Cheats/Vaccine]
+// patch=1,EE,0134944A,extended,00000063
+
+[Cheats/Indigo Potion]
+// patch=1,EE,01349451,extended,00000063
+
+[Cheats/Magical Medicine]
+// patch=1,EE,01349452,extended,00000063
+
+[Cheats/Grail Fruit]
+// patch=1,EE,01349453,extended,00000063
+
+[Cheats/Lumir Flower]
+// patch=1,EE,01349454,extended,00000063
+
+[Cheats/Nut Of Light]
+// patch=1,EE,0134945A,extended,00000063
+
+[Cheats/Golden Potion]
+// patch=1,EE,0134945B,extended,00000063
+
+[Cheats/Baobab Fruit]
+// patch=1,EE,0134945C,extended,00000063
+
+[Cheats/Butter Roll]
+// patch=1,EE,0134945D,extended,00000063
+
+[Cheats/Blueberry]
+// patch=1,EE,0134945E,extended,00000063
+
+[Cheats/Caterpillar Soup]
+// patch=1,EE,01349465,extended,00000063
+
+[Cheats/Fresh Sandwich]
+// patch=1,EE,01349466,extended,00000063
+
+[Cheats/Toad Oil]
+// patch=1,EE,01349467,extended,00000063
+
+[Cheats/Calming Harp]
+// patch=1,EE,0134946F,extended,00000063
+
+[Cheats/Mana Harp]
+// patch=1,EE,01349470,extended,00000063
+
+[Cheats/Lion Harp]
+// patch=1,EE,01349471,extended,00000063
+
+[Cheats/Golden Nut]
+// patch=1,EE,0134948A,extended,00000063
+
+[Cheats/Golden Statue]
+// patch=1,EE,0134948B,extended,00000063
+
+[Cheats/Hyper Mogay Bomb]
+// patch=1,EE,0134948D,extended,00000063
+
+[Cheats/Super Mogay Bomb]
+// patch=1,EE,0134948E,extended,00000063
+
+[Cheats/Mogay Bomb]
+// patch=1,EE,0134948F,extended,00000063
+
+[Cheats/Meteor Bomb]
+// patch=1,EE,01349490,extended,00000063
+
+[Cheats/Thor Stone]
+// patch=1,EE,01349491,extended,00000063
+
+[Cheats/Red Bird Stone]
+// patch=1,EE,01349492,extended,00000063
+
+[Cheats/Icefang Stone]
+// patch=1,EE,01349493,extended,00000063
+
+[Cheats/Electrum Stone]
+// patch=1,EE,01349494,extended,00000063
+
+[Cheats/Gale Stone]
+// patch=1,EE,01349495,extended,00000063
+
+[Cheats/Flame Stone]
+// patch=1,EE,01349496,extended,00000063
+
+[Cheats/Quake Stone]
+// patch=1,EE,01349497,extended,00000063
+
+[Cheats/Fireball Scroll]
+// patch=1,EE,01349498,extended,00000063
+
+[Cheats/Whirlwind Scroll]
+// patch=1,EE,01349499,extended,00000063
+
+[Cheats/Serpentine]
+// patch=1,EE,0134949A,extended,00000063
+
+[Cheats/Spiderweb]
+// patch=1,EE,0134949B,extended,00000063
+
+[Cheats/Dynamite]
+// patch=1,EE,0134949C,extended,00000063
+
+[Cheats/Red Goblin Toad]
+// patch=1,EE,0134949D,extended,00000063
+
+[Cheats/Holy Ashes]
+// patch=1,EE,0134949E,extended,00000063
+
+[Cheats/Insecticide Bomb]
+// patch=1,EE,0134949F,extended,00000063
+
+[Cheats/Makibishi]
+// patch=1,EE,013494A0,extended,00000063
+
+[Cheats/Sandman Wiskers]
+// patch=1,EE,013494A1,extended,00000063
+
+[Cheats/Mushroon Cloud]
+// patch=1,EE,013494A2,extended,00000063
+
+[Cheats/Firebomb]
+// patch=1,EE,013494A3,extended,00000063
+
+[Cheats/Hand Grenade]
+// patch=1,EE,013494A4,extended,00000063
+
+[Cheats/Goblin Toadstool]
+// patch=1,EE,013494A5,extended,00000063
+
+[Cheats/Platinum Feather]
+// patch=1,EE,013494A6,extended,00000063
+
+[Cheats/Gold Feather]
+// patch=1,EE,013494A7,extended,00000063
+
+[Cheats/Silver Feather]
+// patch=1,EE,013494A8,extended,00000063
+
+[Cheats/Scattering Stone]
+// patch=1,EE,013494A9,extended,00000063
+
+[Cheats/Battle Manicure]
+// patch=1,EE,013494AB,extended,00000063
+
+[Cheats/Face Paint]
+// patch=1,EE,013494AC,extended,00000063
+
+[Cheats/Demon Ash]
+// patch=1,EE,013494AD,extended,00000063
+
+[Cheats/Muscle Mushroom]
+// patch=1,EE,013494AE,extended,00000063
+
+[Cheats/Guard Mushroom]
+// patch=1,EE,013494AF,extended,00000063
+
+[Cheats/Speed Mushroom]
+// patch=1,EE,013494B0,extended,00000063
+
+[Cheats/Runner Mushroom]
+// patch=1,EE,013494B1,extended,00000063
+
+[Cheats/WOW! Scroll]
+// patch=1,EE,013494B2,extended,00000063
+
+[Cheats/Diggin' Scroll]
+// patch=1,EE,013494B3,extended,00000063
+
+[Cheats/Speedy Scroll]
+// patch=1,EE,013494B4,extended,00000063
+
+[Cheats/Runner Scroll]
+// patch=1,EE,013494B5,extended,00000063
+
+[Cheats/Myriad Power Nut]
+// patch=1,EE,013494B6,extended,00000063
+
+[Cheats/Patience Nut]
+// patch=1,EE,013494B7,extended,00000063
+
+[Cheats/Sympathy Nut]
+// patch=1,EE,013494B8,extended,00000063
+
+[Cheats/Swiftness Nut]
+// patch=1,EE,013494B9,extended,00000063
+
+[Cheats/Powerless Nut]
+// patch=1,EE,013494BA,extended,00000063
+
+[Cheats/Weakness Nut]
+// patch=1,EE,013494BB,extended,00000063
+
+[Cheats/Exhaustion Nut]
+// patch=1,EE,013494BC,extended,00000063
+
+[Cheats/Slowpoke Nut]
+// patch=1,EE,013494BD,extended,00000063
+
+[Cheats/Kuko Berry]
+// patch=1,EE,013494BF,extended,00000063
+
+[Cheats/Sleeping Harp]
+// patch=1,EE,013494C0,extended,00000063
+
+[Cheats/Silence Lute]
+// patch=1,EE,013494C1,extended,00000063
+
+[Cheats/Mermaid Harp]
+// patch=1,EE,013494C2,extended,00000063
+
+[Cheats/Bone Harp]
+// patch=1,EE,013494C3,extended,00000063
+
+[Cheats/Granasaber]
+// patch=1,EE,013494F1,extended,00000063
+
+[Cheats/Thor Sword]
+// patch=1,EE,013494F2,extended,00000063
+
+[Cheats/Icefang Sword]
+// patch=1,EE,013494F3,extended,00000063
+
+[Cheats/Blazing Sword]
+// patch=1,EE,013494F4,extended,00000063
+
+[Cheats/Holy Soul Blade]
+// patch=1,EE,013494F5,extended,00000063
+
+[Cheats/Maken Valborg]
+// patch=1,EE,013494F6,extended,00000063
+
+[Cheats/Silence Sword]
+// patch=1,EE,013494F7,extended,00000063
+
+[Cheats/Sliver Freeze]
+// patch=1,EE,013494F8,extended,00000063
+
+[Cheats/Sword Of Mikage]
+// patch=1,EE,013494F9,extended,00000063
+
+[Cheats/Fine Broadsword]
+// patch=1,EE,013494FA,extended,00000063
+
+[Cheats/Claymore]
+// patch=1,EE,013494FB,extended,00000063
+
+[Cheats/Ogre Slayer]
+// patch=1,EE,013494FC,extended,00000063
+
+[Cheats/Sworfish Sword]
+// patch=1,EE,013494FD,extended,00000063
+
+[Cheats/Shadowblade]
+// patch=1,EE,013494FE,extended,00000063
+
+[Cheats/Flamberge]
+// patch=1,EE,013494FF,extended,00000063
+
+[Cheats/Sword Of Purity]
+// patch=1,EE,01349500,extended,00000063
+
+[Cheats/Samurai Blade]
+// patch=1,EE,01349501,extended,00000063
+
+[Cheats/Army Saber]
+// patch=1,EE,01349502,extended,00000063
+
+[Cheats/Shamshir]
+// patch=1,EE,01349503,extended,00000063
+
+[Cheats/Falx]
+// patch=1,EE,01349504,extended,00000063
+
+[Cheats/Geoblade]
+// patch=1,EE,01349505,extended,00000063
+
+[Cheats/Zero Broadsword]
+// patch=1,EE,01349506,extended,00000063
+
+[Cheats/Holy Ghost Staff]
+// patch=1,EE,0134950F,extended,00000063
+
+[Cheats/Huge Flail]
+// patch=1,EE,01349510,extended,00000063
+
+[Cheats/Guardian Staff]
+// patch=1,EE,01349511,extended,00000063
+
+[Cheats/Decalogue Staff]
+// patch=1,EE,01349512,extended,00000063
+
+[Cheats/Priest's Staff]
+// patch=1,EE,01349513,extended,00000063
+
+[Cheats/Golden Flail]
+// patch=1,EE,01349514,extended,00000063
+
+[Cheats/Silver Flail]
+// patch=1,EE,01349515,extended,00000063
+
+[Cheats/Aromatic Root]
+// patch=1,EE,01349516,extended,00000063
+
+[Cheats/Buster Flail]
+// patch=1,EE,01349517,extended,00000063
+
+[Cheats/Lullaby Staff]
+// patch=1,EE,01349518,extended,00000063
+
+[Cheats/Quarry Staff]
+// patch=1,EE,01349519,extended,00000063
+
+[Cheats/Whirlwind Staff]
+// patch=1,EE,0134951A,extended,00000063
+
+[Cheats/Blazing Staff]
+// patch=1,EE,0134951B,extended,00000063
+
+[Cheats/Sister's Staff]
+// patch=1,EE,0134951C,extended,00000063
+
+[Cheats/Oracle's Staff]
+// patch=1,EE,0134951D,extended,00000063
+
+[Cheats/Battle Rod]
+// patch=1,EE,0134951E,extended,00000063
+
+[Cheats/Flame Staff]
+// patch=1,EE,0134951F,extended,00000063
+
+[Cheats/Iron Rod]
+// patch=1,EE,01349520,extended,00000063
+
+[Cheats/Prayer Staff]
+// patch=1,EE,01349521,extended,00000063
+
+[Cheats/Dragon Wand]
+// patch=1,EE,01349522,extended,00000063
+
+[Cheats/Useless Staff]
+// patch=1,EE,01349523,extended,00000063
+
+[Cheats/Black Angel Bow]
+// patch=1,EE,0134952D,extended,00000063
+
+[Cheats/Exorcism Bow]
+// patch=1,EE,0134952E,extended,00000063
+
+[Cheats/Dread Bow]
+// patch=1,EE,0134952F,extended,00000063
+
+[Cheats/Arbalest]
+// patch=1,EE,01349530,extended,00000063
+
+[Cheats/Flying Fish Bow]
+// patch=1,EE,01349531,extended,00000063
+
+[Cheats/Burning Bow]
+// patch=1,EE,01349532,extended,00000063
+
+[Cheats/Crossbow]
+// patch=1,EE,01349533,extended,00000063
+
+[Cheats/Unstrung Bow]
+// patch=1,EE,01349534,extended,00000063
+
+[Cheats/Brave Dirk]
+// patch=1,EE,0134954B,extended,00000063
+
+[Cheats/Dirk]
+// patch=1,EE,0134954C,extended,00000063
+
+[Cheats/Gladius]
+// patch=1,EE,0134954D,extended,00000063
+
+[Cheats/Sword Breaker]
+// patch=1,EE,0134954E,extended,00000063
+
+[Cheats/Soul Eater]
+// patch=1,EE,0134954F,extended,00000063
+
+[Cheats/Main Gauche]
+// patch=1,EE,01349550,extended,00000063
+
+[Cheats/Warp Knife]
+// patch=1,EE,01349551,extended,00000063
+
+[Cheats/Poisoned Knife]
+// patch=1,EE,01349552,extended,00000063
+
+[Cheats/Flint Knife]
+// patch=1,EE,01349553,extended,00000063
+
+[Cheats/Icepick]
+// patch=1,EE,01349554,extended,00000063
+
+[Cheats/Hunter's Knife]
+// patch=1,EE,01349555,extended,00000063
+
+[Cheats/Multiple Knife]
+// patch=1,EE,01349556,extended,00000063
+
+[Cheats/Dull Knife]
+// patch=1,EE,01349557,extended,00000063
+
+[Cheats/Phoenix Ring]
+// patch=1,EE,01349569,extended,00000063
+
+[Cheats/Demon Shuriken]
+// patch=1,EE,0134956A,extended,00000063
+
+[Cheats/Wind Cutter]
+// patch=1,EE,0134956B,extended,00000063
+
+[Cheats/Angel Circle]
+// patch=1,EE,0134956C,extended,00000063
+
+[Cheats/Balor]
+// patch=1,EE,0134956D,extended,00000063
+
+[Cheats/Binding Circle]
+// patch=1,EE,0134956E,extended,00000063
+
+[Cheats/Bloody Saucer]
+// patch=1,EE,0134956F,extended,00000063
+
+[Cheats/Discus]
+// patch=1,EE,01349570,extended,00000063
+
+[Cheats/Double Moon]
+// patch=1,EE,01349571,extended,00000063
+
+[Cheats/Moon Claw]
+// patch=1,EE,01349572,extended,00000063
+
+[Cheats/Rusty Hoop]
+// patch=1,EE,01349573,extended,00000063
+
+[Cheats/Leo Rex Battleax]
+// patch=1,EE,01349587,extended,00000063
+
+[Cheats/Rune Axe]
+// patch=1,EE,01349588,extended,00000063
+
+[Cheats/Tundra Battleax]
+// patch=1,EE,01349589,extended,00000063
+
+[Cheats/Inferno Battleax]
+// patch=1,EE,0134958A,extended,00000063
+
+[Cheats/Bardiche]
+// patch=1,EE,0134958B,extended,00000063
+
+[Cheats/Earthen Axe]
+// patch=1,EE,0134958C,extended,00000063
+
+[Cheats/Halberd]
+// patch=1,EE,0134958D,extended,00000063
+
+[Cheats/Dragonfly Slayer]
+// patch=1,EE,0134958E,extended,00000063
+
+[Cheats/Dragonslayer Axe]
+// patch=1,EE,0134958F,extended,00000063
+
+[Cheats/Hammer Axe]
+// patch=1,EE,01349590,extended,00000063
+
+[Cheats/Battleax]
+// patch=1,EE,01349591,extended,00000063
+
+[Cheats/Powerless Axe]
+// patch=1,EE,01349592,extended,00000063
+
+[Cheats/Holy Sword Armor]
+// patch=1,EE,013495B9,extended,00000063
+
+[Cheats/Moonstone Armor]
+// patch=1,EE,013495BA,extended,00000063
+
+[Cheats/Paladin Armor]
+// patch=1,EE,013495BB,extended,00000063
+
+[Cheats/Halo Armor]
+// patch=1,EE,013495BC,extended,00000063
+
+[Cheats/Dragonscale Mail]
+// patch=1,EE,013495BD,extended,00000063
+
+[Cheats/Warrior Mail]
+// patch=1,EE,013495BE,extended,00000063
+
+[Cheats/BlackQuartz Mail]
+// patch=1,EE,013495BF,extended,00000063
+
+[Cheats/Swordfish Armor]
+// patch=1,EE,013495C0,extended,00000063
+
+[Cheats/Plate Mail]
+// patch=1,EE,013495C1,extended,00000063
+
+[Cheats/Shoulder Guards]
+// patch=1,EE,013495C2,extended,00000063
+
+[Cheats/Hero's Cuirass]
+// patch=1,EE,013495CD,extended,00000063
+
+[Cheats/Reflect Mail]
+// patch=1,EE,013495CE,extended,00000063
+
+[Cheats/Aura Armor]
+// patch=1,EE,013495CF,extended,00000063
+
+[Cheats/Dark Armor]
+// patch=1,EE,013495D0,extended,00000063
+
+[Cheats/Flame Armor]
+// patch=1,EE,013495D1,extended,00000063
+
+[Cheats/Earthen Cuirass]
+// patch=1,EE,013495D2,extended,00000063
+
+[Cheats/Ancient Cuirass]
+// patch=1,EE,013495D3,extended,00000063
+
+[Cheats/Shell Armor]
+// patch=1,EE,013495D4,extended,00000063
+
+[Cheats/Chain Armor]
+// patch=1,EE,013495D5,extended,00000063
+
+[Cheats/Leather Armor]
+// patch=1,EE,013495D6,extended,00000063
+
+[Cheats/Valkyrie Dress]
+// patch=1,EE,013495D7,extended,00000063
+
+[Cheats/Tenma's Dress]
+// patch=1,EE,013495D8,extended,00000063
+
+[Cheats/Resist Dress]
+// patch=1,EE,013495D9,extended,00000063
+
+[Cheats/Slyph's Robe]
+// patch=1,EE,013495DA,extended,00000063
+
+[Cheats/Red Fur Coat]
+// patch=1,EE,013495DB,extended,00000063
+
+[Cheats/Mithril Dress]
+// patch=1,EE,013495DC,extended,00000063
+
+[Cheats/Flare Dress]
+// patch=1,EE,013495DD,extended,00000063
+
+[Cheats/Crimson Bolero]
+// patch=1,EE,013495DE,extended,00000063
+
+[Cheats/Tight Dress]
+// patch=1,EE,013495DF,extended,00000063
+
+[Cheats/Priestess' Robe]
+// patch=1,EE,013495E1,extended,00000063
+
+[Cheats/Angel's Robe]
+// patch=1,EE,013495E2,extended,00000063
+
+[Cheats/Imperial Garb]
+// patch=1,EE,013495E3,extended,00000063
+
+[Cheats/Priest's Robe]
+// patch=1,EE,013495E4,extended,00000063
+
+[Cheats/Purple Robe]
+// patch=1,EE,013495E5,extended,00000063
+
+[Cheats/Sister's Robe]
+// patch=1,EE,013495E6,extended,00000063
+
+[Cheats/Pixie's Robe]
+// patch=1,EE,013495E7,extended,00000063
+
+[Cheats/Guardian Robe]
+// patch=1,EE,013495E8,extended,00000063
+
+[Cheats/Sun Robe]
+// patch=1,EE,013495EB,extended,00000063
+
+[Cheats/Holy Clothes]
+// patch=1,EE,013495EC,extended,00000063
+
+[Cheats/Ninja Clothes]
+// patch=1,EE,013495ED,extended,00000063
+
+[Cheats/Dragon Vest]
+// patch=1,EE,013495EE,extended,00000063
+
+[Cheats/Ancient Suit]
+// patch=1,EE,013495EF,extended,00000063
+
+[Cheats/Lion Field Garb]
+// patch=1,EE,013495F0,extended,00000063
+
+[Cheats/Illusion Clothes]
+// patch=1,EE,013495F1,extended,00000063
+
+[Cheats/Quilted Silk]
+// patch=1,EE,013495F2,extended,00000063
+
+[Cheats/Adventure Suit]
+// patch=1,EE,013495F3,extended,00000063
+
+[Cheats/Leather Jacket]
+// patch=1,EE,013495F4,extended,00000063
+
+[Cheats/Cuir Bouilli]
+// patch=1,EE,013495F5,extended,00000063
+
+[Cheats/God Of War Helm]
+// patch=1,EE,013495FF,extended,00000063
+
+[Cheats/Reflect Helm]
+// patch=1,EE,01349600,extended,00000063
+
+[Cheats/Paladin Helm]
+// patch=1,EE,01349601,extended,00000063
+
+[Cheats/Adamantine Helm]
+// patch=1,EE,01349602,extended,00000063
+
+[Cheats/Charisma Helm]
+// patch=1,EE,01349603,extended,00000063
+
+[Cheats/Dragon Bone Helm]
+// patch=1,EE,01349604,extended,00000063
+
+[Cheats/Battle Helm]
+// patch=1,EE,01349605,extended,00000063
+
+[Cheats/BlackQuartz Helm]
+// patch=1,EE,01349606,extended,00000063
+
+[Cheats/Ogre Helm]
+// patch=1,EE,01349607,extended,00000063
+
+[Cheats/Swordfish Helmet]
+// patch=1,EE,01349608,extended,00000063
+
+[Cheats/Iron Helm]
+// patch=1,EE,01349609,extended,00000063
+
+[Cheats/Stone Head]
+// patch=1,EE,0134960A,extended,00000063
+
+[Cheats/Holy Crown]
+// patch=1,EE,01349613,extended,00000063
+
+[Cheats/Loving Ribbon]
+// patch=1,EE,01349614,extended,00000063
+
+[Cheats/Starlight Tiara]
+// patch=1,EE,01349615,extended,00000063
+
+[Cheats/Moonlight Tiara]
+// patch=1,EE,01349616,extended,00000063
+
+[Cheats/Fairy Ribbon]
+// patch=1,EE,01349617,extended,00000063
+
+[Cheats/Azure Barrette]
+// patch=1,EE,01349618,extended,00000063
+
+[Cheats/Lightning Tiara]
+// patch=1,EE,01349619,extended,00000063
+
+[Cheats/Magnolia Bandana]
+// patch=1,EE,0134961A,extended,00000063
+
+[Cheats/Ruby Barrette]
+// patch=1,EE,0134961B,extended,00000063
+
+[Cheats/Silk Hair Ribbon]
+// patch=1,EE,0134961C,extended,00000063
+
+[Cheats/Red Hair Ribbon]
+// patch=1,EE,0134961D,extended,00000063
+
+[Cheats/Illusion Bandana]
+// patch=1,EE,01349627,extended,00000063
+
+[Cheats/Man's Headband]
+// patch=1,EE,01349628,extended,00000063
+
+[Cheats/Flame Headband]
+// patch=1,EE,01349629,extended,00000063
+
+[Cheats/Mercury Bandana]
+// patch=1,EE,0134962A,extended,00000063
+
+[Cheats/Black Band]
+// patch=1,EE,0134962B,extended,00000063
+
+[Cheats/Bravery Bandana]
+// patch=1,EE,0134962C,extended,00000063
+
+[Cheats/Hide Turban]
+// patch=1,EE,0134962D,extended,00000063
+
+[Cheats/Iron Bandana]
+// patch=1,EE,0134962E,extended,00000063
+
+[Cheats/Leather Bandana]
+// patch=1,EE,0134962F,extended,00000063
+
+[Cheats/Bandana]
+// patch=1,EE,01349630,extended,00000063
+
+[Cheats/Hair Band]
+// patch=1,EE,01349631,extended,00000063
+
+[Cheats/Sage's Hat]
+// patch=1,EE,0134963B,extended,00000063
+
+[Cheats/Priest's Hat]
+// patch=1,EE,0134963C,extended,00000063
+
+[Cheats/Phoenix Hat]
+// patch=1,EE,0134963D,extended,00000063
+
+[Cheats/Wizard's Hat]
+// patch=1,EE,0134963E,extended,00000063
+
+[Cheats/Sister's Hat]
+// patch=1,EE,0134963F,extended,00000063
+
+[Cheats/Feathered Hat]
+// patch=1,EE,01349640,extended,00000063
+
+[Cheats/Guardian Hat]
+// patch=1,EE,01349641,extended,00000063
+
+[Cheats/Traveler's Hat]
+// patch=1,EE,01349642,extended,00000063
+
+[Cheats/Climbing Hat]
+// patch=1,EE,01349643,extended,00000063
+
+[Cheats/Lion Boots]
+// patch=1,EE,0134964F,extended,00000063
+
+[Cheats/Elf King's Boots]
+// patch=1,EE,01349650,extended,00000063
+
+[Cheats/Royal Boots]
+// patch=1,EE,01349651,extended,00000063
+
+[Cheats/Wolf Boots]
+// patch=1,EE,01349652,extended,00000063
+
+[Cheats/Battle Boots]
+// patch=1,EE,01349653,extended,00000063
+
+[Cheats/Warrior Leggings]
+// patch=1,EE,01349654,extended,00000063
+
+[Cheats/Mach Boots]
+// patch=1,EE,01349655,extended,00000063
+
+[Cheats/Heavy Boots]
+// patch=1,EE,01349656,extended,00000063
+
+[Cheats/Wing Boots]
+// patch=1,EE,01349657,extended,00000063
+
+[Cheats/Hunter's Boots]
+// patch=1,EE,01349658,extended,00000063
+
+[Cheats/Leather Leggings]
+// patch=1,EE,01349659,extended,00000063
+
+[Cheats/Glass Slippers]
+// patch=1,EE,01349663,extended,00000063
+
+[Cheats/Queen Heels]
+// patch=1,EE,01349664,extended,00000063
+
+[Cheats/Red Shoes]
+// patch=1,EE,01349665,extended,00000063
+
+[Cheats/Goddess Hi-Heels]
+// patch=1,EE,01349666,extended,00000063
+
+[Cheats/Rainbow Hi-Heels]
+// patch=1,EE,01349667,extended,00000063
+
+[Cheats/Magic Hi-Heels]
+// patch=1,EE,01349668,extended,00000063
+
+[Cheats/Hi-Heels]
+// patch=1,EE,01349669,extended,00000063
+
+[Cheats/Charming Heels]
+// patch=1,EE,0134966A,extended,00000063
+
+[Cheats/Ogre Shoes]
+// patch=1,EE,0134966D,extended,00000063
+
+[Cheats/Shadow Shoes]
+// patch=1,EE,0134966E,extended,00000063
+
+[Cheats/Warp Shoes]
+// patch=1,EE,0134966F,extended,00000063
+
+[Cheats/Man's Iron Clogs]
+// patch=1,EE,01349670,extended,00000063
+
+[Cheats/Flame Shoes]
+// patch=1,EE,01349671,extended,00000063
+
+[Cheats/Odd Wooden Clogs]
+// patch=1,EE,01349672,extended,00000063
+
+[Cheats/Giant's Shoes]
+// patch=1,EE,01349673,extended,00000063
+
+[Cheats/Dash Shoes]
+// patch=1,EE,01349674,extended,00000063
+
+[Cheats/Climbing Boots]
+// patch=1,EE,01349675,extended,00000063
+
+[Cheats/Children's Shoes]
+// patch=1,EE,01349676,extended,00000063
+
+[Cheats/Crampons]
+// patch=1,EE,01349677,extended,00000063
+
+[Cheats/Pumps]
+// patch=1,EE,01349678,extended,00000063
+
+[Cheats/Holy Egg]
+// patch=1,EE,01349681,extended,00000063
+
+[Cheats/Chaos Egg]
+// patch=1,EE,01349682,extended,00000063
+
+[Cheats/Mist Egg]
+// patch=1,EE,01349683,extended,00000063
+
+[Cheats/Gravity Egg]
+// patch=1,EE,01349684,extended,00000063
+
+[Cheats/Soul Egg]
+// patch=1,EE,01349685,extended,00000063
+
+[Cheats/Star Egg]
+// patch=1,EE,01349686,extended,00000063
+
+[Cheats/Tutor Egg]
+// patch=1,EE,01349687,extended,00000063
+
+[Cheats/Change Egg]
+// patch=1,EE,01349688,extended,00000063
+
+[Cheats/Fairy Egg]
+// patch=1,EE,01349689,extended,00000063
+
+[Cheats/Dragon Egg]
+// patch=1,EE,0134968A,extended,00000063
+
+[Cheats/Mana Crystals]
+// patch=1,EE,0134968B,extended,00000063
+
+[Cheats/Demon Necklace]
+// patch=1,EE,0134968C,extended,00000063
+
+[Cheats/Mana Insignia]
+// patch=1,EE,0134968D,extended,00000063
+
+[Cheats/Energy Charm]
+// patch=1,EE,0134968E,extended,00000063
+
+[Cheats/Divine Talisman]
+// patch=1,EE,0134968F,extended,00000063
+
+[Cheats/Soul Of Asura]
+// patch=1,EE,01349690,extended,00000063
+
+[Cheats/Demon's Tears]
+// patch=1,EE,01349691,extended,00000063
+
+[Cheats/Angel's Ring]
+// patch=1,EE,01349692,extended,00000063
+
+[Cheats/Relief Tag]
+// patch=1,EE,01349693,extended,00000063
+
+[Cheats/King's Pride]
+// patch=1,EE,01349694,extended,00000063
+
+[Cheats/Black Belt]
+// patch=1,EE,01349695,extended,00000063
+
+[Cheats/Energy Ring]
+// patch=1,EE,01349696,extended,00000063
+
+[Cheats/Rage Ring]
+// patch=1,EE,01349697,extended,00000063
+
+[Cheats/Dragon Scales]
+// patch=1,EE,01349698,extended,00000063
+
+[Cheats/Dark Ring]
+// patch=1,EE,01349699,extended,00000063
+
+[Cheats/Forbear Ring]
+// patch=1,EE,0134969A,extended,00000063
+
+[Cheats/Rune Necklace]
+// patch=1,EE,0134969B,extended,00000063
+
+[Cheats/Meteor Earring]
+// patch=1,EE,0134969C,extended,00000063
+
+[Cheats/Mirage Earring]
+// patch=1,EE,0134969D,extended,00000063
+
+[Cheats/Reflection Ring]
+// patch=1,EE,0134969E,extended,00000063
+
+[Cheats/Heavy Stone]
+// patch=1,EE,0134969F,extended,00000063
+
+[Cheats/Healing Gem]
+// patch=1,EE,013496A0,extended,00000063
+
+[Cheats/Revival Gem]
+// patch=1,EE,013496A1,extended,00000063
+
+[Cheats/Bonds Of Trust]
+// patch=1,EE,013496A2,extended,00000063
+
+[Cheats/Jet-Black Cape]
+// patch=1,EE,013496A8,extended,00000063
+
+[Cheats/Kojin Charm]
+// patch=1,EE,013496A9,extended,00000063
+
+[Cheats/Salamander Tail]
+// patch=1,EE,013496AA,extended,00000063
+
+[Cheats/Fire Pendant]
+// patch=1,EE,013496AB,extended,00000063
+
+[Cheats/North Wind Cape]
+// patch=1,EE,013496AC,extended,00000063
+
+[Cheats/Crystal Brooch]
+// patch=1,EE,013496AD,extended,00000063
+
+[Cheats/Thunder Ring]
+// patch=1,EE,013496AE,extended,00000063
+
+[Cheats/Arctic Cape]
+// patch=1,EE,013496AF,extended,00000063
+
+[Cheats/Fire Charm]
+// patch=1,EE,013496B0,extended,00000063
+
+[Cheats/Wind Charm]
+// patch=1,EE,013496B1,extended,00000063
+
+[Cheats/Earth Charm]
+// patch=1,EE,013496B2,extended,00000063
+
+[Cheats/Lightning Charm]
+// patch=1,EE,013496B3,extended,00000063
+
+[Cheats/Blizzard Charm]
+// patch=1,EE,013496B4,extended,00000063
+
+[Cheats/Mystic Veil]
+// patch=1,EE,013496BD,extended,00000063
+
+[Cheats/Ring Of Guarding]
+// patch=1,EE,013496BE,extended,00000063
+
+[Cheats/Mars Talisman]
+// patch=1,EE,013496BF,extended,00000063
+
+[Cheats/Coral Necklace]
+// patch=1,EE,013496C0,extended,00000063
+
+[Cheats/Talisman]
+// patch=1,EE,013496C1,extended,00000063
+
+[Cheats/Crescent Jade]
+// patch=1,EE,013496C2,extended,00000063
+
+[Cheats/Raincoat]
+// patch=1,EE,013496C3,extended,00000063
+
+[Cheats/Snake Earrings]
+// patch=1,EE,013496C4,extended,00000063
+
+[Cheats/Poison Charm]
+// patch=1,EE,013496C5,extended,00000063
+
+[Cheats/Sleep Charm]
+// patch=1,EE,013496C6,extended,00000063
+
+[Cheats/Confusion Charm]
+// patch=1,EE,013496C7,extended,00000063
+
+[Cheats/Paralysis Charm]
+// patch=1,EE,013496C8,extended,00000063
+
+[Cheats/Move Block Charm]
+// patch=1,EE,013496C9,extended,00000063
+
+[Cheats/MagicBlock Charm]
+// patch=1,EE,013496CA,extended,00000063
+
+[Cheats/Plague Charm]
+// patch=1,EE,013496CB,extended,00000063
+
+[Cheats/Heracle's Belt]
+// patch=1,EE,013496D1,extended,00000063
+
+[Cheats/Titan's Ring]
+// patch=1,EE,013496D2,extended,00000063
+
+[Cheats/Hercule's Brace]
+// patch=1,EE,013496D3,extended,00000063
+
+[Cheats/Jade Charm]
+// patch=1,EE,013496D4,extended,00000063
+
+[Cheats/Shogun's Brace]
+// patch=1,EE,013496D5,extended,00000063
+
+[Cheats/Magical Bracelet]
+// patch=1,EE,013496D6,extended,00000063
+
+[Cheats/Gauntlet]
+// patch=1,EE,013496D7,extended,00000063
+
+[Cheats/Siver Bracelet]
+// patch=1,EE,013496D8,extended,00000063
+
+[Cheats/Leather Brace]
+// patch=1,EE,013496D9,extended,00000063
+
+[Cheats/Sonic Belt]
+// patch=1,EE,013496DA,extended,00000063
+
+[Cheats/Hurricane Belt]
+// patch=1,EE,013496DB,extended,00000063
+
+[Cheats/Godspeed Ring]
+// patch=1,EE,013496DC,extended,00000063
+
+[Cheats/Anklet]
+// patch=1,EE,013496DD,extended,00000063
+
+[Cheats/Moebius Ring]
+// patch=1,EE,013496DE,extended,00000063
+
+[Cheats/Pretty Necklace]
+// patch=1,EE,013496DF,extended,00000063
+
+[Cheats/Pretty Bracelet]
+// patch=1,EE,013496E0,extended,00000063
+
+[Cheats/Pretty Ring]
+// patch=1,EE,013496E1,extended,00000063
+
+[Cheats/Friends Necklace]
+// patch=1,EE,013496E2,extended,00000063

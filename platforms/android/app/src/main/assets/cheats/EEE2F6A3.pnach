@@ -1,0 +1,110 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Neo Contra [SLES-52510] [EEE2F6A3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unique-Xmod]
+// patch=1,EE,903633D0,extended,0C0DA7A2
+
+[Cheats/Infinite Credits]
+// patch=1,EE,203C831C,extended,00000063
+
+[Cheats/Infinite Credits Usage]
+// patch=1,EE,2012F2A4,extended,00000000
+
+[Cheats/Extra Credits]
+// patch=1,EE,1012F29C,extended,00000001
+
+[Cheats/Max Hit Rate]
+// patch=1,EE,203C8304,extended,00000064
+
+[Cheats/No Lost Remaining Life]
+// patch=1,EE,203C830C,extended,00000000
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,203C8314,extended,00000000
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,103C83DC,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,203C83DC,extended,0098967F
+
+[Cheats/Infinite Lives P1]
+// patch=1,EE,203C83E4,extended,00000064
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,103C841C,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,203C841C,extended,0098967F
+
+[Cheats/Infinite Lives P2]
+// patch=1,EE,203C8424,extended,00000064
+
+[Cheats/Infinite Lives (Both Players)]
+// patch=1,EE,20130C38,extended,00000000
+
+[Cheats/Extra Lives (Both Players)]
+// patch=1,EE,10130C34,extended,00000001
+
+[Cheats/Invincible (Both Players)]
+// patch=1,EE,10156482,extended,00001000
+
+[Cheats/Unlock All Characters & Etc]
+// patch=1,EE,203C8364,extended,FFFFFFFF
+// patch=1,EE,203C8368,extended,FFFFFFFF
+
+[Cheats/Always No Deaths Recorded]
+// patch=1,EE,20130C24,extended,AE000014
+
+[Cheats/Max # Of Battles]
+// patch=1,EE,203C8328,extended,0098967F
+
+[Cheats/No # Of Battles]
+// patch=1,EE,203C8328,extended,00000000
+
+[Cheats/Max Total Battle Time]
+// patch=1,EE,203C832C,extended,022550FF
+
+[Cheats/No Total Battle Time]
+// patch=1,EE,203C832C,extended,00000000
+
+[Cheats/Max Shortest Clear Time]
+// patch=1,EE,203C8330,extended,022550FF
+
+[Cheats/No Shortest Clear Time]
+// patch=1,EE,203C8330,extended,00000000
+
+[Cheats/Max Game Clear #]
+// patch=1,EE,203C8334,extended,0098967F
+
+[Cheats/No Game Clear #]
+// patch=1,EE,203C8334,extended,00000000
+
+[Cheats/Max Game Over #]
+// patch=1,EE,203C8338,extended,0098967F
+
+[Cheats/No Game Over #]
+// patch=1,EE,203C8338,extended,00000000
+
+[Cheats/Max Hi Score]
+// patch=1,EE,203C833C,extended,0098967F
+
+[Cheats/Mission 01]
+// patch=1,EE,203C8394,extended,00000000
+
+[Cheats/Mission 02]
+// patch=1,EE,203C8398,extended,00000000
+
+[Cheats/Mission 03]
+// patch=1,EE,203C839C,extended,00000000
+
+[Cheats/Mission 04]
+// patch=1,EE,203C83A0,extended,00000000
+
+[Cheats/Mission 05]
+// patch=1,EE,203C83A4,extended,00000000
+
+[Cheats/All Missions]
+// patch=1,EE,403C8394,extended,00050001
+// patch=1,EE,00000000,extended,00000000

@@ -1,0 +1,34 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: DT Racer [SLUS-21095] [D4690FFA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Garage]
+// patch=1,EE,90208408,extended,0C089777
+
+[Cheats/No Car Damage]
+// patch=1,EE,2016D040,extended,00000000
+
+[Cheats/Infinite Fuel]
+// patch=1,EE,2012FF6C,extended,00000000
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,201BED6C,extended,00000000
+
+[Cheats/Always Low Lap Time]
+// patch=1,EE,201BED74,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Total Timer]
+// patch=1,EE,D02C2FC2,extended,0000FBFE
+// patch=1,EE,201BED6C,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Restart Total Timer]
+// patch=1,EE,D02C2FC2,extended,0000FEFE
+// patch=1,EE,201BED6C,extended,E6010048
+
+[Cheats/P1 Press {R1}+{SELECT} To Stop Total Timer]
+// patch=1,EE,D02C2FC2,extended,0000F7FE
+// patch=1,EE,201BED74,extended,00000000
+
+[Cheats/P1 Press {R2}+{SELECT} To Restart Total Timer]
+// patch=1,EE,D02C2FC2,extended,0000FDFE
+// patch=1,EE,201BED74,extended,E6000044

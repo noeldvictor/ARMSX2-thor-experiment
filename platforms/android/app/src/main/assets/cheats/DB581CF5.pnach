@@ -1,0 +1,94 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mega Man X Collection [SLUS-21370] [DB581CF5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,9012F8B0,extended,00832021
+
+[Cheats/Unlock Mega Man Battle & Chase]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,00669980,extended,00000001
+
+[Cheats/Images 1]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000001
+
+[Cheats/Images 2]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000002
+
+[Cheats/Images 3]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000004
+
+[Cheats/Images 4]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000008
+
+[Cheats/Images 5]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000010
+
+[Cheats/Images 6]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000020
+
+[Cheats/Images 7]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000040
+
+[Cheats/Images 8]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C4,extended,00000080
+
+[Cheats/Staff]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000001
+
+[Cheats/Music 1]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000002
+
+[Cheats/Music 2]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000004
+
+[Cheats/Music 3]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000008
+
+[Cheats/Music 4]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000010
+
+[Cheats/Music 5]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000020
+
+[Cheats/Music 6]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000040
+
+[Cheats/Music 7]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C5,extended,00000080
+
+[Cheats/Music 8]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C6,extended,00000001
+
+[Cheats/Hint 1]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C6,extended,00000002
+
+[Cheats/Hint 2]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C6,extended,00000004
+
+[Cheats/Hint 3]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,706699C6,extended,00000008
+
+[Cheats/All Gallery]
+// patch=1,EE,E0010001,extended,00662E84
+// patch=1,EE,206699C4,extended,FFFFFFFF

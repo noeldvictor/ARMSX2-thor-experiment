@@ -1,0 +1,27 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Silent Scope [SLES-50037] [13DDC49B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slot 10]
+// patch=1,EE,90108DE8,extended,0C0442A6
+
+[Cheats/Infinite Credits]
+// patch=1,EE,102A1984,extended,00000009
+
+[Cheats/Extra Credits]
+// patch=1,EE,20158EBC,extended,24830001
+
+[Cheats/Infinite Time]
+// patch=1,EE,102D6852,extended,000003E7
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,102D68D4,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,202D68D4,extended,05F5E0FF
+
+[Cheats/Infinite Health]
+// patch=1,EE,102D68F8,extended,000003E7
+
+[Cheats/Infinite Bullets]
+// patch=1,EE,102D6922,extended,00000005

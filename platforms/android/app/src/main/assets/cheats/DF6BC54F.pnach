@@ -1,0 +1,131 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Cabela's Big Game Hunter 2005 Adventures [SLUS-21021] [DF6BC54F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Maps]
+// patch=1,EE,9012B0BC,extended,0C0411AA
+
+[Cheats/Infinite Stamina]
+// patch=1,EE,206A3D3C,extended,3F800000
+
+[Cheats/Infinite Health-Head]
+// patch=1,EE,206A3D50,extended,3F800000
+
+[Cheats/Infinite Health-Right Arm]
+// patch=1,EE,206A3D54,extended,3F800000
+
+[Cheats/Infinite Health-Left Arm]
+// patch=1,EE,206A3D58,extended,3F800000
+
+[Cheats/Infinite Health-Right Leg]
+// patch=1,EE,206A3D5C,extended,3F800000
+
+[Cheats/Infinite Health-Left Leg]
+// patch=1,EE,206A3D60,extended,3F800000
+
+[Cheats/Infinite Stealth]
+// patch=1,EE,206A3D7C,extended,3F800000
+
+[Cheats/Never Reload]
+// patch=1,EE,20498D38,extended,00000000
+
+[Cheats/Infinite Money]
+// patch=1,EE,106A3D08,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,206A3D08,extended,05F5E0FF
+
+[Cheats/Buying Items Doesnt Decrease Money]
+// patch=1,EE,203C2FB0,extended,00000000
+
+[Cheats/Buying Items Increases Money]
+// patch=1,EE,203C2FAC,extended,00701821
+
+[Cheats/Infinite Creation Points]
+// patch=1,EE,206A3D80,extended,3F800000
+
+[Cheats/Disable HUD]
+// patch=1,EE,2052F3F0,extended,00000000
+
+[Cheats/God Mode On]
+// patch=1,EE,205AF068,extended,00000001
+
+[Cheats/P1 Press {L1}+{SELECT} To Activate No Clipping Mode]
+// patch=1,EE,D05AAEC2,extended,0000FBFE
+// patch=1,EE,205AF060,extended,00000001
+
+[Cheats/P1 Press {L2}+{SELECT} To Deactivate No Clipping Mode]
+// patch=1,EE,D05AAEC2,extended,0000FEFE
+// patch=1,EE,205AF060,extended,00000000
+
+[Cheats/Disable AI Think]
+// patch=1,EE,205AD590,extended,00000001
+
+[Cheats/Disable AI Actions]
+// patch=1,EE,205AD598,extended,00000001
+
+[Cheats/Access All Subregions]
+// patch=1,EE,206A3F2C,extended,00000001
+
+[Cheats/Unlock All Subregions]
+// patch=1,EE,206A3D00,extended,00000011
+
+[Cheats/Vibration Always Off]
+// patch=1,EE,205C9868,extended,00000000
+
+[Cheats/Vibration Always On]
+// patch=1,EE,205C9868,extended,00000001
+
+[Cheats/Trophy Beacon Always Off]
+// patch=1,EE,205C986C,extended,00000000
+
+[Cheats/Trophy Beacon Always On]
+// patch=1,EE,205C986C,extended,00000001
+
+[Cheats/Auto Claim Always Off]
+// patch=1,EE,205C9870,extended,00000000
+
+[Cheats/Auto Claim Always On]
+// patch=1,EE,205C9870,extended,00000001
+
+[Cheats/Show HUD Always Off]
+// patch=1,EE,205C9874,extended,00000000
+
+[Cheats/Show HUD Always On]
+// patch=1,EE,205C9874,extended,00000001
+
+[Cheats/Bullet Camera Always Off]
+// patch=1,EE,205C9878,extended,00000000
+
+[Cheats/Bullet Camera Always On]
+// patch=1,EE,205C9878,extended,00000001
+
+[Cheats/Animal Info Always Off]
+// patch=1,EE,205C987C,extended,00000000
+
+[Cheats/Animal Info Always On]
+// patch=1,EE,205C987C,extended,00000001
+
+[Cheats/Max Shots Fired]
+// patch=1,EE,206A3E3C,extended,05F5E0FF
+
+[Cheats/Always Low Shots Fired]
+// patch=1,EE,206A3E3C,extended,00000001
+
+[Cheats/Always No Shots Fired]
+// patch=1,EE,206A3E3C,extended,00000000
+
+[Cheats/Max Hit Percentage]
+// patch=1,EE,206A3E40,extended,00000064
+
+[Cheats/Max Clean Shots]
+// patch=1,EE,206A3E44,extended,05F5E0FF
+
+[Cheats/Always Low Clean Shots]
+// patch=1,EE,206A3E44,extended,00000001
+
+[Cheats/Always No Clean Shots]
+// patch=1,EE,206A3E44,extended,00000000
+
+[Cheats/Max Longest Shot]
+// patch=1,EE,206A3E4C,extended,461C3C00

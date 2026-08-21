@@ -1,0 +1,85 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ape Escape 2 [SLUS-20685] [BDD9F5E1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Max Fire Crystals]
+// patch=1,EE,F0100008,extended,0036B4AB
+
+[Cheats/Infinite Lives]
+// patch=1,EE,203E0668,extended,00000009
+
+[Cheats/Infinite Cookies]
+// patch=1,EE,203E066C,extended,00000032
+
+[Cheats/Max Gold Coins]
+// patch=1,EE,203E0670,extended,000003E7
+
+[Cheats/Unlock All Stages]
+// patch=1,EE,203E0674,extended,0000001C
+
+[Cheats/Have All Stages Cleared]
+// patch=1,EE,203E0678,extended,0000001C
+
+[Cheats/Have All Standard Gadgets]
+// patch=1,EE,203E067C,extended,000000FF
+
+[Cheats/Have Magic Punch Gadget]
+// patch=1,EE,004D16F3,extended,00000001
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,202ACA90,extended,00000000
+// patch=1,EE,202ACA9C,extended,00000000
+
+[Cheats/Unlock All Monkey Fables]
+// patch=1,EE,403E0904,extended,00140001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Mini-Games]
+// patch=1,EE,203E0954,extended,01010101
+
+[Cheats/Unlock All Movies]
+// patch=1,EE,003E0957,extended,00000001
+// patch=1,EE,203E0958,extended,01010101
+// patch=1,EE,103E095C,extended,00000101
+// patch=1,EE,003E095E,extended,00000001
+
+[Cheats/Unlock All Soundtracks]
+// patch=1,EE,003E095F,extended,00000001
+// patch=1,EE,403E0960,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,003E0990,extended,00000001
+
+[Cheats/Unlock All RC Cars]
+// patch=1,EE,003E0991,extended,00000001
+// patch=1,EE,103E0992,extended,00000101
+// patch=1,EE,003E0994,extended,00000001
+
+[Cheats/Unlock All Comic Strips]
+// patch=1,EE,003E0995,extended,00000001
+// patch=1,EE,103E0996,extended,00000101
+// patch=1,EE,403E0998,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103E09A4,extended,00000101
+
+[Cheats/Unlock All Concept Arts]
+// patch=1,EE,103E09A6,extended,00000101
+// patch=1,EE,403E09A8,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Unlock All Secret Photos]
+// patch=1,EE,403E09D8,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103E0A08,extended,00000101
+
+[Cheats/Unlock All Enemy Photos]
+// patch=1,EE,103E0A0A,extended,00000101
+// patch=1,EE,403E0A0C,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Unlock All Stage Photos]
+// patch=1,EE,003E0A25,extended,00000001
+// patch=1,EE,103E0A26,extended,00000101
+// patch=1,EE,403E0A28,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,103E0A3C,extended,00000101
+// patch=1,EE,003E0A3E,extended,00000001

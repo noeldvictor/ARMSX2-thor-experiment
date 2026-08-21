@@ -1,0 +1,538 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Fatal Frame [SLUS-20388] [339A0B8C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Film Cars Unlocked]
+// patch=1,EE,F0100008,extended,0022DC67
+
+[Cheats/Always Low Game Time]
+// patch=1,EE,202522F8,extended,00000000
+
+[Cheats/Infinite Health]
+// patch=1,EE,10252AA4,extended,000001F4
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,10265CF8,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,20265CF8,extended,0098967F
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,D0252E98,extended,0003000A
+// patch=1,EE,10252E98,extended,00000001
+// patch=1,EE,D02536F8,extended,0003000A
+// patch=1,EE,102536F8,extended,00000001
+
+[Cheats/Max High Score (Battle Mode)]
+// patch=1,EE,203577F0,extended,0098967F
+
+[Cheats/Quick Score Gain (Battle Mode)]
+// patch=1,EE,103577F8,extended,0000FFFF
+
+[Cheats/Max Score (Battle Mode)]
+// patch=1,EE,203577F8,extended,0098967F
+
+[Cheats/Type-7 Film]
+// patch=1,EE,00254360,extended,00000063
+
+[Cheats/Type-14 Film]
+// patch=1,EE,00254361,extended,00000063
+
+[Cheats/Type-37 Film]
+// patch=1,EE,00254362,extended,00000063
+
+[Cheats/Type-74 Film]
+// patch=1,EE,00254363,extended,00000063
+
+[Cheats/Type-90 Film]
+// patch=1,EE,00254364,extended,00000063
+
+[Cheats/Spirit Stone]
+// patch=1,EE,00254365,extended,00000063
+
+[Cheats/Herbal Medicine]
+// patch=1,EE,00254366,extended,00000063
+
+[Cheats/Sacred Water]
+// patch=1,EE,00254367,extended,00000063
+
+[Cheats/Stone Mirror]
+// patch=1,EE,00254368,extended,00000063
+
+[Cheats/Camera]
+// patch=1,EE,00254369,extended,00000063
+
+[Cheats/Red Handmirror]
+// patch=1,EE,0025436A,extended,00000063
+
+[Cheats/Black Carving]
+// patch=1,EE,0025436B,extended,00000063
+
+[Cheats/Blue Carving]
+// patch=1,EE,0025436C,extended,00000063
+
+[Cheats/Kagome Doll]
+// patch=1,EE,0025436D,extended,00000063
+
+[Cheats/Master's Seal]
+// patch=1,EE,0025436E,extended,00000063
+
+[Cheats/CeremonialRope]
+// patch=1,EE,0025436F,extended,00000063
+
+[Cheats/Brass Key]
+// patch=1,EE,00254370,extended,00000063
+
+[Cheats/KotoSheetMusic]
+// patch=1,EE,00254371,extended,00000063
+
+[Cheats/Tape Recorder]
+// patch=1,EE,00254372,extended,00000063
+
+[Cheats/Red Tape 1]
+// patch=1,EE,00254373,extended,00000063
+
+[Cheats/Blue Tape 1]
+// patch=1,EE,00254374,extended,00000063
+
+[Cheats/Photo Of The Editor, Ogata]
+// patch=1,EE,00254375,extended,00000063
+
+[Cheats/Picture Of Door With Humuro Family Crest]
+// patch=1,EE,00254376,extended,00000063
+
+[Cheats/Teal Carving]
+// patch=1,EE,00254377,extended,00000063
+
+[Cheats/Gold Carving]
+// patch=1,EE,00254378,extended,00000063
+
+[Cheats/HeadlessBuddha]
+// patch=1,EE,00254379,extended,00000063
+
+[Cheats/Purple Carving]
+// patch=1,EE,0025437A,extended,00000063
+
+[Cheats/Mirror/Piece]
+// patch=1,EE,0025437B,extended,00000063
+
+[Cheats/Family Photo]
+// patch=1,EE,0025437C,extended,00000063
+
+[Cheats/Editor's Photo]
+// patch=1,EE,0025437D,extended,00000063
+
+[Cheats/Sturdy Notebook]
+// patch=1,EE,0025437E,extended,00000063
+
+[Cheats/Blood-Stained Scrapbook]
+// patch=1,EE,0025437F,extended,00000063
+
+[Cheats/Blood-Stained Notebook]
+// patch=1,EE,00254380,extended,00000063
+
+[Cheats/Small Notebook]
+// patch=1,EE,00254381,extended,00000063
+
+[Cheats/Matches]
+// patch=1,EE,00254382,extended,00000063
+
+[Cheats/Book Of Folklore About The Himuro Family]
+// patch=1,EE,00254383,extended,00000063
+
+[Cheats/Old Rie Paper With Puzzling Words]
+// patch=1,EE,00254384,extended,00000063
+
+[Cheats/Lighter]
+// patch=1,EE,00254385,extended,00000063
+
+[Cheats/Kirie Photo]
+// patch=1,EE,00254386,extended,00000063
+
+[Cheats/Scroll]
+// patch=1,EE,00254387,extended,00000063
+
+[Cheats/Kirie's Hairpin]
+// patch=1,EE,00254388,extended,00000063
+
+[Cheats/Joyful Mask]
+// patch=1,EE,00254389,extended,00000063
+
+[Cheats/Angry Mask]
+// patch=1,EE,0025438A,extended,00000063
+
+[Cheats/Sad Mask]
+// patch=1,EE,0025438B,extended,00000063
+
+[Cheats/Happy Mask]
+// patch=1,EE,0025438C,extended,00000063
+
+[Cheats/Demon Tag Girls Photo]
+// patch=1,EE,0025438D,extended,00000063
+
+[Cheats/Mask/Reflection]
+// patch=1,EE,0025438E,extended,00000063
+
+[Cheats/Blinding Mask]
+// patch=1,EE,0025438F,extended,00000063
+
+[Cheats/Bronze Key]
+// patch=1,EE,00254390,extended,00000063
+
+[Cheats/Mirror/Piece 2]
+// patch=1,EE,00254391,extended,00000063
+
+[Cheats/Unknown 1]
+// patch=1,EE,00254392,extended,00000063
+
+[Cheats/Unknown 2]
+// patch=1,EE,00254393,extended,00000063
+// patch=1,EE,0025443A,extended,00000003
+// patch=1,EE,0025445D,extended,00000003
+
+[Cheats/Unknown 3]
+// patch=1,EE,00254394,extended,00000063
+// patch=1,EE,0025443F,extended,00000003
+// patch=1,EE,0025445E,extended,00000003
+
+[Cheats/Unknown 4]
+// patch=1,EE,00254395,extended,00000063
+// patch=1,EE,00254444,extended,00000003
+// patch=1,EE,00254460,extended,00000003
+
+[Cheats/Unknown 5]
+// patch=1,EE,00254396,extended,00000063
+// patch=1,EE,0025444C,extended,00000003
+// patch=1,EE,00254461,extended,00000003
+
+[Cheats/Unknown 6]
+// patch=1,EE,00254397,extended,00000063
+// patch=1,EE,00254454,extended,00000003
+// patch=1,EE,00254462,extended,00000003
+
+[Cheats/Mirror/Piece 3]
+// patch=1,EE,00254398,extended,00000063
+
+[Cheats/Mirror/Piece 4]
+// patch=1,EE,00254399,extended,00000063
+
+[Cheats/Mirror/Piece 5]
+// patch=1,EE,0025439A,extended,00000063
+
+[Cheats/Holy Mirror]
+// patch=1,EE,0025439B,extended,00000063
+
+[Cheats/White Tape 1]
+// patch=1,EE,0025439C,extended,00000063
+
+[Cheats/White Tape 2]
+// patch=1,EE,0025439D,extended,00000063
+
+[Cheats/Red Tape 2]
+// patch=1,EE,0025439E,extended,00000063
+
+[Cheats/Red Tape 3]
+// patch=1,EE,0025439F,extended,00000063
+
+[Cheats/Red Tape 4]
+// patch=1,EE,002543A0,extended,00000063
+
+[Cheats/Blue Tape 2]
+// patch=1,EE,002543A1,extended,00000063
+
+[Cheats/Moon Incense]
+// patch=1,EE,002543A2,extended,00000063
+
+[Cheats/Unknown 7]
+// patch=1,EE,002543A3,extended,00000063
+// patch=1,EE,00254463,extended,00000003
+
+[Cheats/Unknown 8]
+// patch=1,EE,002543A4,extended,00000063
+// patch=1,EE,00254464,extended,00000003
+
+[Cheats/Unknown 9]
+// patch=1,EE,002543A5,extended,00000063
+// patch=1,EE,00254466,extended,00000003
+
+[Cheats/Kirie's Diary 1]
+// patch=1,EE,00254428,extended,00000003
+
+[Cheats/Kirie's Diary 2]
+// patch=1,EE,00254429,extended,00000003
+
+[Cheats/Kirie's Diary 3]
+// patch=1,EE,0025442A,extended,00000003
+
+[Cheats/Kirie's Diary 4]
+// patch=1,EE,0025442B,extended,00000003
+
+[Cheats/Kirie's Diary 5]
+// patch=1,EE,0025442C,extended,00000003
+
+[Cheats/Kirie's Diary 6]
+// patch=1,EE,0025442D,extended,00000003
+
+[Cheats/Unknown]
+// patch=1,EE,0025442E,extended,00000003
+// patch=1,EE,0025445A,extended,00000003
+
+[Cheats/Mafuyu's Notes 1]
+// patch=1,EE,0025442F,extended,00000003
+
+[Cheats/Mafuyu's Notes 2]
+// patch=1,EE,00254430,extended,00000003
+
+[Cheats/Mafuyu's Notes 3]
+// patch=1,EE,00254431,extended,00000003
+
+[Cheats/Mafuyu's Notes 4]
+// patch=1,EE,00254432,extended,00000003
+
+[Cheats/Mafuyu's Notes 5]
+// patch=1,EE,00254433,extended,00000003
+
+[Cheats/Mafuyu's Notes 6]
+// patch=1,EE,00254434,extended,00000003
+
+[Cheats/Mafuyu's Notes 7]
+// patch=1,EE,00254435,extended,00000003
+
+[Cheats/Priest's Writings 1]
+// patch=1,EE,00254436,extended,00000003
+
+[Cheats/Priest's Writings 2]
+// patch=1,EE,00254437,extended,00000003
+
+[Cheats/Priest's Writings 3]
+// patch=1,EE,00254438,extended,00000003
+
+[Cheats/Priest's Writings 4]
+// patch=1,EE,00254439,extended,00000003
+
+[Cheats/Old Diary Scrap 1]
+// patch=1,EE,0025443B,extended,00000003
+
+[Cheats/Old Diary Scrap 2]
+// patch=1,EE,0025443C,extended,00000003
+
+[Cheats/Old Diary Scrap 3]
+// patch=1,EE,0025443D,extended,00000003
+
+[Cheats/Old Diary Scrap 4]
+// patch=1,EE,0025443E,extended,00000003
+
+[Cheats/Lady's Diary Scrap 1]
+// patch=1,EE,00254440,extended,00000003
+
+[Cheats/Lady's Diary Scrap 2]
+// patch=1,EE,00254441,extended,00000003
+
+[Cheats/Lady's Diary Scrap 3]
+// patch=1,EE,00254442,extended,00000003
+
+[Cheats/Yae's Death Note]
+// patch=1,EE,00254443,extended,00000003
+
+[Cheats/Child's Writing]
+// patch=1,EE,00254445,extended,00000003
+
+[Cheats/Black Notebook Scrap 1]
+// patch=1,EE,00254446,extended,00000003
+
+[Cheats/Black Notebook Scrap 2]
+// patch=1,EE,00254447,extended,00000003
+
+[Cheats/Black Notebook Scrap 3]
+// patch=1,EE,00254448,extended,00000003
+
+[Cheats/Black Notebook Scrap 4]
+// patch=1,EE,00254449,extended,00000003
+
+[Cheats/Black Notebook Scrap 5]
+// patch=1,EE,0025444A,extended,00000003
+
+[Cheats/Black Notebook Scrap 6]
+// patch=1,EE,0025444B,extended,00000003
+
+[Cheats/Red Notebook Scrap 1]
+// patch=1,EE,0025444D,extended,00000003
+
+[Cheats/Red Notebook Scrap 2]
+// patch=1,EE,0025444E,extended,00000003
+
+[Cheats/Red Notebook Scrap 3]
+// patch=1,EE,0025444F,extended,00000003
+
+[Cheats/Red Notebook Scrap 4]
+// patch=1,EE,00254450,extended,00000003
+
+[Cheats/Red Notebook Scrap 5]
+// patch=1,EE,00254451,extended,00000003
+
+[Cheats/Red Notebook Scrap 6]
+// patch=1,EE,00254452,extended,00000003
+
+[Cheats/Red Notebook Scrap 7]
+// patch=1,EE,00254453,extended,00000003
+
+[Cheats/Research Notes 1]
+// patch=1,EE,00254455,extended,00000003
+
+[Cheats/Research Notes 2]
+// patch=1,EE,00254456,extended,00000003
+
+[Cheats/Research Notes 3]
+// patch=1,EE,00254457,extended,00000003
+
+[Cheats/Research Notes 4]
+// patch=1,EE,00254458,extended,00000003
+
+[Cheats/Research Notes 5]
+// patch=1,EE,00254459,extended,00000003
+
+[Cheats/Huge Altar?]
+// patch=1,EE,0025445B,extended,00000003
+
+[Cheats/Mask On The Pillar]
+// patch=1,EE,0025445C,extended,00000003
+
+[Cheats/Shinto Gate In Photo]
+// patch=1,EE,0025445F,extended,00000003
+
+[Cheats/Storehouse?]
+// patch=1,EE,00254465,extended,00000003
+
+[Cheats/Japanese Doll Shelf]
+// patch=1,EE,00254467,extended,00000003
+
+[Cheats/Foot Of Staircase?]
+// patch=1,EE,00254468,extended,00000003
+
+[Cheats/Waterwheel In Photo]
+// patch=1,EE,00254469,extended,00000003
+
+[Cheats/Girl Pulled Into Well]
+// patch=1,EE,0025446A,extended,00000003
+
+[Cheats/Stone On The Well]
+// patch=1,EE,0025446B,extended,00000003
+
+[Cheats/Stone Burial Mound?]
+// patch=1,EE,0025446C,extended,00000003
+
+[Cheats/Row Of Candlesticks]
+// patch=1,EE,0025446D,extended,00000003
+
+[Cheats/Girl Pulled Thru Door]
+// patch=1,EE,0025446E,extended,00000003
+
+[Cheats/Boy Pulled Into Clock]
+// patch=1,EE,0025446F,extended,00000003
+
+[Cheats/Shinto House Altar?]
+// patch=1,EE,00254470,extended,00000003
+
+[Cheats/Key In The Photo]
+// patch=1,EE,00254471,extended,00000003
+
+[Cheats/Light Thru Crevice]
+// patch=1,EE,00254472,extended,00000003
+
+[Cheats/On The Beam?]
+// patch=1,EE,00254473,extended,00000003
+
+[Cheats/Rubbish Heap In Photo]
+// patch=1,EE,00254474,extended,00000003
+
+[Cheats/Some Stone Monument?]
+// patch=1,EE,00254475,extended,00000003
+
+[Cheats/Unknown 10]
+// patch=1,EE,00254476,extended,00000003
+
+[Cheats/Row Of Japanese Dolls]
+// patch=1,EE,00254477,extended,00000003
+
+[Cheats/Unknown 11]
+// patch=1,EE,00254478,extended,00000003
+
+[Cheats/Lit Garden Lantern]
+// patch=1,EE,00254479,extended,00000003
+
+[Cheats/Ornamental Lion Mask]
+// patch=1,EE,0025447A,extended,00000003
+
+[Cheats/Stand With No Mirror]
+// patch=1,EE,0025447B,extended,00000003
+
+[Cheats/Unknown 12]
+// patch=1,EE,0025447C,extended,00000003
+
+[Cheats/Scroll In The Photo]
+// patch=1,EE,0025447D,extended,00000003
+
+[Cheats/Unknown 13]
+// patch=1,EE,0025447E,extended,00000003
+
+[Cheats/Row Of GardenLanterns]
+// patch=1,EE,0025447F,extended,00000003
+
+[Cheats/StoneMonument InPhoto]
+// patch=1,EE,00254480,extended,00000003
+
+[Cheats/Stone Burial Mound]
+// patch=1,EE,00254481,extended,00000003
+
+[Cheats/Huge Stone Monument]
+// patch=1,EE,00254482,extended,00000003
+
+[Cheats/Graveston In Photo]
+// patch=1,EE,00254483,extended,00000003
+
+[Cheats/Photo Of Character? 1]
+// patch=1,EE,00254484,extended,00000003
+
+[Cheats/Photo Of Character? 2]
+// patch=1,EE,00254485,extended,00000003
+
+[Cheats/Photo Of Character? 3]
+// patch=1,EE,00254486,extended,00000003
+
+[Cheats/Photo Of Character? 4]
+// patch=1,EE,00254487,extended,00000003
+
+[Cheats/Furious-Looking Mask]
+// patch=1,EE,00254488,extended,00000003
+
+[Cheats/Demon Tag Scroll]
+// patch=1,EE,00254489,extended,00000003
+
+[Cheats/Camera Controls 1]
+// patch=1,EE,002544AD,extended,00000003
+
+[Cheats/Camera Controls 2]
+// patch=1,EE,002544AE,extended,00000003
+
+[Cheats/Shooting Ghosts]
+// patch=1,EE,002544AF,extended,00000003
+
+[Cheats/Power-Ups]
+// patch=1,EE,002544B0,extended,00000003
+
+[Cheats/Max Range]
+// patch=1,EE,00265CE8,extended,00000003
+
+[Cheats/Max Max Value]
+// patch=1,EE,00265CE9,extended,00000003
+
+[Cheats/Max Speed]
+// patch=1,EE,00265CEA,extended,00000003
+
+[Cheats/Have All Bonus Camera Options]
+// patch=1,EE,00265CEB,extended,00000002
+// patch=1,EE,20265CEC,extended,02020202
+
+[Cheats/Have All Special Camera Options]
+// patch=1,EE,20265CF0,extended,02020202
+// patch=1,EE,00265CF4,extended,00000002

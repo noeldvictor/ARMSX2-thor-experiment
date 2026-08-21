@@ -1,0 +1,40 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rez [SLUS-20344] [A33748AA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Start With Patch]
+// patch=1,EE,F0100008,extended,001E0457
+
+[Cheats/Always Form 1]
+// patch=1,EE,102F9630,extended,00000000
+
+[Cheats/Always Form 2]
+// patch=1,EE,102F9630,extended,00000001
+
+[Cheats/Always Form 3]
+// patch=1,EE,102F9630,extended,00000002
+
+[Cheats/Always Form 4]
+// patch=1,EE,102F9630,extended,00000003
+
+[Cheats/Always Form 5]
+// patch=1,EE,102F9630,extended,00000004
+
+[Cheats/Always Form 6]
+// patch=1,EE,102F9630,extended,00000005
+
+[Cheats/Always Form 7]
+// patch=1,EE,102F9630,extended,00000006
+
+[Cheats/Always Form 8]
+// patch=1,EE,102F9630,extended,00000007
+
+[Cheats/Quick Form Gain]
+// patch=1,EE,102F967C,extended,00000008
+
+[Cheats/Infinite Overdrive]
+// patch=1,EE,102F9680,extended,00000004
+
+[Cheats/Max Analyzation]
+// patch=1,EE,102F96AC,extended,00000009
+// patch=1,EE,102F96B0,extended,00000009

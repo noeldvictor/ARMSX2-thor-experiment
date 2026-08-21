@@ -1,0 +1,113 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Thrillville [SLUS-21413] [A4315184]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,9056ABEC,extended,0C1700BB
+
+[Cheats/Quick Money Gain]
+// patch=1,EE,20338A84,extended,3C09FFF8
+
+[Cheats/Super Quick Money Gain]
+// patch=1,EE,20338A84,extended,3C09FFF0
+
+[Cheats/Ultra QUick Money Gain]
+// patch=1,EE,20338A84,extended,3C09FF00
+
+[Cheats/Quick Max Money]
+// patch=1,EE,20338AB4,extended,3C0205F5
+// patch=1,EE,20338AC0,extended,3442E0FF
+
+[Cheats/Quick Park Completion]
+// patch=1,EE,203FE424,extended,2403001E
+// patch=1,EE,203FE428,extended,A0A30000
+
+[Cheats/Render GUI On]
+// patch=1,EE,206C9EC4,extended,00000001
+
+[Cheats/Ignore Research On]
+// patch=1,EE,706CB8CD,extended,00000008
+
+[Cheats/More Overheard Spech On]
+// patch=1,EE,706CB8CD,extended,00000010
+
+[Cheats/Render Park Landscape On]
+// patch=1,EE,706CB8C8,extended,00000001
+
+[Cheats/Render Park Attractions On]
+// patch=1,EE,706CB8C8,extended,00000002
+
+[Cheats/Render Park Guests On]
+// patch=1,EE,706CB8C8,extended,00000004
+
+[Cheats/Render Park Staff On]
+// patch=1,EE,706CB8C8,extended,00000008
+
+[Cheats/Render Park Bubbles On]
+// patch=1,EE,706CB8C8,extended,00000010
+
+[Cheats/Render Park Tracks On]
+// patch=1,EE,706CB8C8,extended,00000020
+
+[Cheats/Render Park Particles On]
+// patch=1,EE,706CB8C9,extended,00000001
+
+[Cheats/Render Park Instances On]
+// patch=1,EE,706CB8C9,extended,00000002
+
+[Cheats/Render Skydome Only On]
+// patch=1,EE,706CB8C9,extended,00000020
+
+[Cheats/Show Player Coords On]
+// patch=1,EE,706CB8CC,extended,00000001
+
+[Cheats/Extra Debug Info (Press {R2})]
+// patch=1,EE,706CB8CC,extended,00000002
+
+[Cheats/Show Camera Coords On]
+// patch=1,EE,706CB8CC,extended,00000004
+
+[Cheats/Show Height Sample Below Camera On]
+// patch=1,EE,706CB8CC,extended,00000008
+
+[Cheats/Show Camera Fwd Vector (Flat) On]
+// patch=1,EE,706CB8CC,extended,00000010
+
+[Cheats/Allow Sprint In Doglegs On]
+// patch=1,EE,706CB8CC,extended,00000040
+
+[Cheats/Allow Walk On Non-Walkable On]
+// patch=1,EE,706CB8CC,extended,00000080
+
+[Cheats/GUI Sounds On]
+// patch=1,EE,206CBF9C,extended,00000001
+
+[Cheats/Peep Stats View On]
+// patch=1,EE,706CB8CD,extended,00000001
+
+[Cheats/Debug Controls On]
+// patch=1,EE,706CB8CD,extended,00000002
+
+[Cheats/Show Pos Of Mission Groups On]
+// patch=1,EE,706CB8CD,extended,00000004
+
+[Cheats/Disable Mission Popups On]
+// patch=1,EE,706CB8CD,extended,00000020
+
+[Cheats/Allow Obstructed Track Placement On]
+// patch=1,EE,706CB8CD,extended,00000040
+
+[Cheats/Ingore Mission Min. Interval On]
+// patch=1,EE,706CB8CD,extended,00000080
+
+[Cheats/Show Mission Timers On]
+// patch=1,EE,706CB8CE,extended,00000001
+
+[Cheats/Guests Leave When Needs Not Met On]
+// patch=1,EE,706CB8CE,extended,00000008
+
+[Cheats/Transparent Fade On]
+// patch=1,EE,206CC1AC,extended,00000001
+
+[Cheats/Ignore Unlocks On]
+// patch=1,EE,206CC1C4,extended,00000001

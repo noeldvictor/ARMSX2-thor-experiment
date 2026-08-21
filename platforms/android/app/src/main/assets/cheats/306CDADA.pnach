@@ -1,0 +1,67 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Castlevania [UNKNOWN] [306CDADA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Bigger jumps]
+// patch=1,EE,D0A10282,extended,0050BFFF
+// patch=1,EE,20B69F08,extended,10000000
+
+[Cheats/Max money]
+// patch=1,EE,20B6B260,extended,05F00000
+
+[Cheats/Max health]
+// patch=1,EE,20B6B240,extended,47C34F80
+
+[Cheats/Infinite health]
+// patch=1,EE,20B6B528,extended,47C34F80
+
+[Cheats/Max mana]
+// patch=1,EE,20B6B284,extended,0001869F
+
+[Cheats/Infinite mana]
+// patch=1,EE,20B6B288,extended,0001869F
+
+[Cheats/Max hearts]
+// patch=1,EE,20B6B244,extended,47C34F80
+
+[Cheats/Infinite hearts]
+// patch=1,EE,20B6B248,extended,47C34F80
+// patch=1,EE,20B6B52C,extended,47C34F80
+
+[Cheats/Full Skill List]
+// patch=1,EE,20B6B4E4,extended,FFFFFFFF
+
+[Cheats/Unlock All items]
+// patch=1,EE,40B6B290,extended,00220001
+// patch=1,EE,00010001,extended,00000001
+
+[Cheats/Max items]
+// patch=1,EE,40B6B334,extended,001B0001
+// patch=1,EE,270F002A,extended,00000001
+// patch=1,EE,20B6B3A0,extended,270F00AC
+// patch=1,EE,20B6B3A4,extended,270F00AF
+
+[Cheats/Unlock all events items]
+// patch=1,EE,40B6B3E0,extended,00150001
+// patch=1,EE,00010055,extended,00000001
+// patch=1,EE,20B6B434,extended,00010072
+// patch=1,EE,20B6B438,extended,00010073
+// patch=1,EE,40B6B43C,extended,00080001
+// patch=1,EE,00010033,extended,00000001
+
+[Cheats/Unlock all orbs and relics]
+// patch=1,EE,40B6B4A0,extended,00110001
+// patch=1,EE,0001007F,extended,00000001
+
+[Cheats/Leon - giant]
+// patch=1,EE,20B6B1B0,extended,40000000
+// patch=1,EE,20B6B1B4,extended,40000000
+// patch=1,EE,20B6B1B8,extended,40000000
+
+[Cheats/Leon - 2D]
+// patch=1,EE,20B6B1B8,extended,3E000000
+
+[Cheats/Leon - small]
+// patch=1,EE,20B6B1B0,extended,3F000000
+// patch=1,EE,20B6B1B4,extended,3F000000
+// patch=1,EE,20B6B1B8,extended,3F000000

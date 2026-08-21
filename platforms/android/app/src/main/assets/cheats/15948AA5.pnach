@@ -1,0 +1,43 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Without Warning [SLUS-21156] [15948AA5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Features Unlocked]
+// patch=1,EE,9035D8EC,extended,0C0DD175
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,8C810010
+// patch=1,EE,200C0224,extended,00400008
+// patch=1,EE,200C0228,extended,AC810014
+// patch=1,EE,20180D00,extended,0C030088
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201B49D4,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,201B49C8,extended,24030063
+
+[Cheats/Extra Ammo]
+// patch=1,EE,201B49C8,extended,00661821
+
+[Cheats/Never Reload]
+// patch=1,EE,201B7A1C,extended,00000000
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,2016E29C,extended,00000000
+
+[Cheats/Max Infinite Grenades]
+// patch=1,EE,2016E294,extended,24020005
+
+[Cheats/Extra Grenades]
+// patch=1,EE,1016E294,extended,00000001
+
+[Cheats/Disable Bullet Explosion While Firing]
+// patch=1,EE,201B7A64,extended,00000000
+
+[Cheats/Weapons Can Zoom Forever]
+// patch=1,EE,10200F0E,extended,00001000
+// patch=1,EE,20200F28,extended,00000000
+
+[Cheats/God Mode]
+// patch=1,EE,004A5A8B,extended,00000001

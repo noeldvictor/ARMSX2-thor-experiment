@@ -1,0 +1,270 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tekken 4 [SCES-50878] [2251E14D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Start On Stage 10]
+// patch=1,EE,902937CC,extended,0C0A88C5
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,102A9C6E,extended,000000A5
+
+[Cheats/75% Health P1]
+// patch=1,EE,D02A9C6E,extended,000000A5
+// patch=1,EE,102A9C6E,extended,0000007B
+
+[Cheats/50% Health P1]
+// patch=1,EE,D02A9C6E,extended,000000A5
+// patch=1,EE,102A9C6E,extended,00000052
+
+[Cheats/25% Health P1]
+// patch=1,EE,D02A9C6E,extended,000000A5
+// patch=1,EE,102A9C6E,extended,00000029
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,D02A9C6E,extended,000000A5
+// patch=1,EE,102A9C6E,extended,00000001
+
+[Cheats/No Health P1]
+// patch=1,EE,102A9C6E,extended,00000000
+
+[Cheats/P1 Needs 1 Win To Win]
+// patch=1,EE,D02A963E,extended,00000000
+// patch=1,EE,102A963E,extended,00000001
+
+[Cheats/P1 Never Wins]
+// patch=1,EE,102A963E,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,102AAB8E,extended,000000A5
+
+[Cheats/75% Health P2]
+// patch=1,EE,D02AAB8E,extended,000000A5
+// patch=1,EE,102AAB8E,extended,0000007B
+
+[Cheats/50% Health P2]
+// patch=1,EE,D02AAB8E,extended,000000A5
+// patch=1,EE,102AAB8E,extended,00000052
+
+[Cheats/25% Health P2]
+// patch=1,EE,D02AAB8E,extended,000000A5
+// patch=1,EE,102AAB8E,extended,00000029
+
+[Cheats/1-Hit Death P2]
+// patch=1,EE,D02AAB8E,extended,000000A5
+// patch=1,EE,102AAB8E,extended,00000001
+
+[Cheats/No Health P2]
+// patch=1,EE,102AAB8E,extended,00000000
+
+[Cheats/P2 Needs 1 Win To Win]
+// patch=1,EE,D02AA55E,extended,00000000
+// patch=1,EE,102AA55E,extended,00000001
+
+[Cheats/P2 Never Wins]
+// patch=1,EE,102AA55E,extended,00000000
+
+[Cheats/P1 Press {L1}+{L2} For Death Blow On P2]
+// patch=1,EE,D0356020,extended,00000005
+// patch=1,EE,102AAB8E,extended,00000000
+
+[Cheats/P2 Press {L1}+{L2} For Death Blow On P1]
+// patch=1,EE,D0356020,extended,00000005
+// patch=1,EE,102A9C6E,extended,00000000
+
+[Cheats/Infinite Time]
+// patch=1,EE,10356064,extended,00001788
+
+[Cheats/Hit Anywhere P1 & P2 Cant Hit P1]
+// patch=1,EE,201A5C30,extended,12130024
+
+[Cheats/Hit Anywhere P2 & P1 Cant Hit P2]
+// patch=1,EE,201A5C30,extended,16130024
+
+[Cheats/Hit Anywhere (Both Players)]
+// patch=1,EE,201A5C30,extended,00000000
+
+[Cheats/Disable All Blocking (Both Players)]
+// patch=1,EE,201A4894,extended,1000000C
+
+[Cheats/Infinite Health (Tekken Force Mode)]
+// patch=1,EE,102A9C6E,extended,00000108
+
+[Cheats/Enable All Movies]
+// patch=1,EE,2036C300,extended,FFFFFFFF
+
+[Cheats/Enable Theater]
+// patch=1,EE,0036C32D,extended,00000001
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,202A8C30,extended,00000000
+
+[Cheats/Start On 2nd To Last Stage (Story Mode)]
+// patch=1,EE,D02A8C28,extended,00000000
+// patch=1,EE,102A8C28,extended,00000007
+
+[Cheats/Start On Last Stage (Story Mode)]
+// patch=1,EE,D02A8C28,extended,00000000
+// patch=1,EE,102A8C28,extended,00000008
+
+[Cheats/Quick Score Gain (Tekken Force Mode)]
+// patch=1,EE,2025CD34,extended,2442270F
+// patch=1,EE,2025CE84,extended,2442270F
+
+[Cheats/Max Score (Tekken Force Mode)]
+// patch=1,EE,20260920,extended,3C03000F
+// patch=1,EE,20260924,extended,3463423F
+// patch=1,EE,20260928,extended,AE631780
+
+[Cheats/Max Wins (Survival Mode)]
+// patch=1,EE,202A8C48,extended,000003E7
+
+[Cheats/Enable Statue Stage]
+// patch=1,EE,0036C311,extended,000000FF
+
+[Cheats/Enable Non-Maru Stage]
+// patch=1,EE,0036C312,extended,000000FF
+
+[Cheats/P1 Always Have Gold Charged Up Fists]
+// patch=1,EE,102A9878,extended,000003E7
+
+[Cheats/P1 Never Has Golden Charged Up Fists]
+// patch=1,EE,102A9878,extended,00000000
+
+[Cheats/P1 Always Have Normal Charged Up Fists]
+// patch=1,EE,102A987A,extended,000003E7
+
+[Cheats/P1 Never Has Normal Charged Up Fists]
+// patch=1,EE,102A987A,extended,00000000
+
+[Cheats/P2 Always Have Gold Charged Up Fists]
+// patch=1,EE,102AA798,extended,000003E7
+
+[Cheats/P2 Never Has Golden Charged Up Fists]
+// patch=1,EE,102AA798,extended,00000000
+
+[Cheats/P2 Always Have Normal Charged Up Fists]
+// patch=1,EE,102AA79A,extended,000003E7
+
+[Cheats/P2 Never Has Normal Charged Up Fists]
+// patch=1,EE,102AA79A,extended,00000000
+
+[Cheats/Invisible Players]
+// patch=1,EE,101824BC,extended,00000000
+
+[Cheats/Players Fight Off Above The Ground]
+// patch=1,EE,101828B8,extended,00003FC0
+
+[Cheats/Players Fight High Above The Ground]
+// patch=1,EE,101828B8,extended,00004000
+
+[Cheats/Players Fight Super High Above The Ground]
+// patch=1,EE,101828B8,extended,00004080
+
+[Cheats/Invisible Legs]
+// patch=1,EE,10186EE0,extended,00000000
+
+[Cheats/Super Small Legs]
+// patch=1,EE,10186EE0,extended,00003F40
+
+[Cheats/Small Legs]
+// patch=1,EE,10186EE0,extended,00003F60
+
+[Cheats/Big Legs]
+// patch=1,EE,10186EE0,extended,00003FA0
+
+[Cheats/Huge Legs]
+// patch=1,EE,10186EE0,extended,00003FB0
+
+[Cheats/Invisible Lower Legs (About Knees Down)]
+// patch=1,EE,1018726C,extended,00000000
+
+[Cheats/Super Small Feet]
+// patch=1,EE,1018726C,extended,00003F00
+
+[Cheats/Small Feet]
+// patch=1,EE,1018726C,extended,00003F40
+
+[Cheats/Big Feet]
+// patch=1,EE,1018726C,extended,00003FA0
+
+[Cheats/Super Huge Feet]
+// patch=1,EE,1018726C,extended,00003FC0
+
+[Cheats/Invisible Head/Torso]
+// patch=1,EE,1018D9E0,extended,00004060
+
+[Cheats/Super Small Head/Torso]
+// patch=1,EE,1018D9E0,extended,00004020
+
+[Cheats/Small Head/Torso]
+// patch=1,EE,1018D9E0,extended,00003FC0
+
+[Cheats/Big Head/Torso]
+// patch=1,EE,1018D9E0,extended,00003F40
+
+[Cheats/Super Huge Head/Torso]
+// patch=1,EE,1018D9E0,extended,00003F20
+
+[Cheats/Xiaoyu/Miharu Have No Skirt]
+// patch=1,EE,101925E4,extended,00007FFF
+
+[Cheats/Camera Always Far Back]
+// patch=1,EE,20355530,extended,41000000
+
+[Cheats/Camera Always Close Up]
+// patch=1,EE,20355530,extended,40000000
+
+[Cheats/Airport]
+// patch=1,EE,10357D5C,extended,00000000
+
+[Cheats/Building]
+// patch=1,EE,10357D5C,extended,00000001
+
+[Cheats/Mall]
+// patch=1,EE,10357D5C,extended,00000002
+
+[Cheats/Jungle]
+// patch=1,EE,10357D5C,extended,00000003
+
+[Cheats/Shinjuku]
+// patch=1,EE,10357D5C,extended,00000004
+
+[Cheats/Beach]
+// patch=1,EE,10357D5C,extended,00000005
+
+[Cheats/Laboratory]
+// patch=1,EE,10357D5C,extended,00000006
+
+[Cheats/Parking Area]
+// patch=1,EE,10357D5C,extended,00000007
+
+[Cheats/Underground]
+// patch=1,EE,10357D5C,extended,00000008
+
+[Cheats/Arena]
+// patch=1,EE,10357D5C,extended,00000009
+
+[Cheats/Statue]
+// patch=1,EE,10357D5C,extended,0000000A
+
+[Cheats/Statue 2]
+// patch=1,EE,10357D5C,extended,0000000B
+
+[Cheats/Non-Maru]
+// patch=1,EE,10357D5C,extended,00000010
+
+[Cheats/Background Type A (If Available)]
+// patch=1,EE,2036C494,extended,00000000
+
+[Cheats/Always Play Background B (If Available)]
+// patch=1,EE,2036C494,extended,00000001
+
+[Cheats/Always Play Background C (If Available)]
+// patch=1,EE,2036C494,extended,00000002
+
+[Cheats/Enable All Characters]
+// patch=1,EE,2036C318,extended,FFFFFFFF
+// patch=1,EE,2036C31C,extended,FFFFFFFF
+// patch=1,EE,2036C320,extended,FFFFFFFF
+// patch=1,EE,2036C324,extended,FFFFFFFF
+// patch=1,EE,2036C328,extended,FFFFFFFF

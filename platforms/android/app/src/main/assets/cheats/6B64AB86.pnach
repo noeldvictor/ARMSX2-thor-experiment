@@ -1,0 +1,223 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Headhunter [SLUS-20416] [6B64AB86]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Invisible]
+// patch=1,EE,F0100008,extended,002200DF
+
+[Cheats/Infinite Health]
+// patch=1,EE,2055CA6C,extended,42C80000
+
+[Cheats/Infinite Adrenaline]
+// patch=1,EE,2055CA70,extended,42480000
+
+[Cheats/Access All VR Missions]
+// patch=1,EE,1056E170,extended,0000FFFF
+
+[Cheats/Have All VR Missions Completed (OK)]
+// patch=1,EE,2056E170,extended,FFFFFFFF
+// patch=1,EE,1056E174,extended,00000000
+
+[Cheats/Have All VR Missions Completed (Record)]
+// patch=1,EE,2056E170,extended,FFFFFFFF
+// patch=1,EE,1056E174,extended,0000FFFF
+
+[Cheats/Max Skill Points]
+// patch=1,EE,2058991C,extended,437A0000
+
+[Cheats/Always Low Time (VR Missions)]
+// patch=1,EE,201DFD1C,extended,AE000000
+
+[Cheats/Stimulator Automatic]
+// patch=1,EE,1055CE40,extended,00000063
+
+[Cheats/Stimulator Automatic +]
+// patch=1,EE,1055CE88,extended,00000063
+
+[Cheats/Scorpion Neurostunner]
+// patch=1,EE,1055CED0,extended,00000063
+
+[Cheats/Sub Maching Gun]
+// patch=1,EE,1055CF18,extended,00000063
+
+[Cheats/Regulator Shotgun]
+// patch=1,EE,1055CF60,extended,00000063
+
+[Cheats/Missile Launcher]
+// patch=1,EE,1055CFA8,extended,00000063
+
+[Cheats/Stimulator MkII]
+// patch=1,EE,1055D0C8,extended,00000063
+
+[Cheats/All Weapons]
+// patch=1,EE,20203140,extended,00000000
+
+[Cheats/Render Hero Collision]
+// patch=1,EE,20589AC0,extended,00000001
+
+[Cheats/Render Hero Targets]
+// patch=1,EE,20589AC4,extended,00000001
+
+[Cheats/Render Collision Intersections]
+// patch=1,EE,20589AC8,extended,00000001
+
+[Cheats/Render Important Positions]
+// patch=1,EE,20589ACC,extended,00000001
+
+[Cheats/Render View Circle]
+// patch=1,EE,20589AD0,extended,00000001
+
+[Cheats/Render Hero Visible Line]
+// patch=1,EE,20589AD4,extended,00000001
+
+[Cheats/Render Actionpoints]
+// patch=1,EE,20589AD8,extended,00000001
+
+[Cheats/Hero Immortal]
+// patch=1,EE,20589ADC,extended,00000001
+
+[Cheats/Enemies Immortal]
+// patch=1,EE,20589AE0,extended,00000001
+
+[Cheats/Show Stream Debug]
+// patch=1,EE,20589AEC,extended,00000001
+
+[Cheats/Show AI Debug]
+// patch=1,EE,20589AF0,extended,00000001
+
+[Cheats/Show Bike Turbo Debug]
+// patch=1,EE,20589AF4,extended,00000001
+
+[Cheats/Antialiasing]
+// patch=1,EE,20589B00,extended,00000001
+
+[Cheats/Hero Invisible]
+// patch=1,EE,20589B04,extended,00000001
+
+[Cheats/Render Accuracy]
+// patch=1,EE,20589B08,extended,00000001
+
+[Cheats/Render Broken Paths]
+// patch=1,EE,20589B0C,extended,00000001
+
+[Cheats/Render Enemy Index]
+// patch=1,EE,20589B10,extended,00000001
+
+[Cheats/Unlimited Ammo]
+// patch=1,EE,20589B14,extended,00000001
+
+[Cheats/Render Searchpoints]
+// patch=1,EE,20589B18,extended,00000001
+
+[Cheats/Disable Action Points]
+// patch=1,EE,20589B70,extended,00000001
+
+[Cheats/Render Display Area]
+// patch=1,EE,20589B78,extended,00000001
+
+[Cheats/Press {L1}+{SELECT} To Turn Collisions On]
+// patch=1,EE,D047B3BA,extended,0000FBFE
+// patch=1,EE,20589CF0,extended,00000001
+
+[Cheats/Press {L2}+{SELECT} To Turn Collisions Off]
+// patch=1,EE,D047B3BA,extended,0000FEFE
+// patch=1,EE,20589CF0,extended,00000000
+
+[Cheats/Show Debug Info]
+// patch=1,EE,20589CFC,extended,00000001
+
+[Cheats/Disable All Enemies]
+// patch=1,EE,20589E94,extended,00000001
+
+[Cheats/Render Vistree]
+// patch=1,EE,2058C0AC,extended,00000001
+
+[Cheats/Slot 1]
+// patch=1,EE,203FFC8C,extended,00000063
+
+[Cheats/Slot 2]
+// patch=1,EE,203FFC94,extended,00000063
+
+[Cheats/Slot 3]
+// patch=1,EE,203FFC9C,extended,00000063
+
+[Cheats/Slot 4]
+// patch=1,EE,203FFCA4,extended,00000063
+
+[Cheats/Slot 5]
+// patch=1,EE,203FFCAC,extended,00000063
+
+[Cheats/Slot 6]
+// patch=1,EE,203FFCB4,extended,00000063
+
+[Cheats/Slot 7]
+// patch=1,EE,203FFCBC,extended,00000063
+
+[Cheats/Slot 8]
+// patch=1,EE,203FFCC4,extended,00000063
+
+[Cheats/Slot 9]
+// patch=1,EE,203FFCCC,extended,00000063
+
+[Cheats/Slot 10]
+// patch=1,EE,203FFCD4,extended,00000063
+
+[Cheats/Slot 11]
+// patch=1,EE,203FFCDC,extended,00000063
+
+[Cheats/Slot 12]
+// patch=1,EE,203FFCE4,extended,00000063
+
+[Cheats/Slot 13]
+// patch=1,EE,203FFCEC,extended,00000063
+
+[Cheats/Slot 14]
+// patch=1,EE,203FFCF4,extended,00000063
+
+[Cheats/Slot 15]
+// patch=1,EE,203FFCFC,extended,00000063
+
+[Cheats/Slot 16]
+// patch=1,EE,203FFD04,extended,00000063
+
+[Cheats/Slot 17]
+// patch=1,EE,203FFD0C,extended,00000063
+
+[Cheats/Slot 18]
+// patch=1,EE,203FFD14,extended,00000063
+
+[Cheats/Slot 19]
+// patch=1,EE,203FFD1C,extended,00000063
+
+[Cheats/Slot 20]
+// patch=1,EE,203FFD24,extended,00000063
+
+[Cheats/Slot 21]
+// patch=1,EE,203FFD2C,extended,00000063
+
+[Cheats/Slot 22]
+// patch=1,EE,203FFD34,extended,00000063
+
+[Cheats/Slot 23]
+// patch=1,EE,203FFD3C,extended,00000063
+
+[Cheats/Slot 24]
+// patch=1,EE,203FFD44,extended,00000063
+
+[Cheats/Slot 25]
+// patch=1,EE,203FFD4C,extended,00000063
+
+[Cheats/Slot 26]
+// patch=1,EE,203FFD54,extended,00000063
+
+[Cheats/Slot 27]
+// patch=1,EE,203FFD5C,extended,00000063
+
+[Cheats/Slot 28]
+// patch=1,EE,203FFD64,extended,00000063
+
+[Cheats/Slot 29]
+// patch=1,EE,203FFD6C,extended,00000063
+
+[Cheats/Slot 30]
+// patch=1,EE,203FFD74,extended,00000063

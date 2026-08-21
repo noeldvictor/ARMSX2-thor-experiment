@@ -1,0 +1,39 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Grand Prix Challenge [SLES-51296] [A029B109]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Event 2]
+// patch=1,EE,F0100008,extended,00132827
+
+[Cheats/Total Laps 99]
+// patch=1,EE,2033A7C0,extended,24060063
+
+[Cheats/Total Laps 75]
+// patch=1,EE,2033A7C0,extended,2406004B
+
+[Cheats/Total Laps 50]
+// patch=1,EE,2033A7C0,extended,24060032
+
+[Cheats/Total Laps 25]
+// patch=1,EE,2033A7C0,extended,24060019
+
+[Cheats/Total Laps 20]
+// patch=1,EE,2033A7C0,extended,24060014
+
+[Cheats/Total Laps 15]
+// patch=1,EE,2033A7C0,extended,2406000F
+
+[Cheats/Total Laps 10]
+// patch=1,EE,2033A7C0,extended,2406000A
+
+[Cheats/Total Laps 5]
+// patch=1,EE,2033A7C0,extended,24060005
+
+[Cheats/Total Laps 2]
+// patch=1,EE,2033A7C0,extended,24060002
+
+[Cheats/Total Laps 1]
+// patch=1,EE,2033A7C0,extended,24060001
+
+[Cheats/Stop Lap Timer]
+// patch=1,EE,2021CC30,extended,00000000

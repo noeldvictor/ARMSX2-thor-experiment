@@ -1,0 +1,28 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Nascar 2001 [SLUS-20101] [3D563C06]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max All Equip Attack Items]
+// patch=1,EE,F0100008,extended,0020F44B
+
+[Cheats/Infinite Fuel]
+// patch=1,EE,200C0220,extended,AC80079C
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,C480079C
+// patch=1,EE,20165948,extended,0C030088
+
+[Cheats/Tires Never Worn]
+// patch=1,EE,201659C4,extended,E4550000
+
+[Cheats/Infinite Damage]
+// patch=1,EE,2012CBE8,extended,00000000
+// patch=1,EE,2012CC1C,extended,00000000
+// patch=1,EE,2012CF7C,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} To Stop Timer]
+// patch=1,EE,D03AAA02,extended,0000FBFE
+// patch=1,EE,201A0E64,extended,00000000
+
+[Cheats/Press {L2}+{START} To Stop Timer]
+// patch=1,EE,D03AAA02,extended,0000FEFE
+// patch=1,EE,201A0E64,extended,E463000C

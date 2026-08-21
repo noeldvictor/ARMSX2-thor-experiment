@@ -1,0 +1,21 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Hummer Badlands [SLUS-21357] [449E1F6B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,903FE588,extended,0C1192BB
+
+[Cheats/Infinite Time]
+// patch=1,EE,20317404,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} To Stop Timer]
+// patch=1,EE,D063D9C2,extended,0000FBFE
+// patch=1,EE,20317404,extended,00000000
+
+[Cheats/Press {L2}+{SELECT} To Restart Timer]
+// patch=1,EE,D063D9C2,extended,0000FEFE
+// patch=1,EE,20317404,extended,E6000010
+
+[Cheats/Unlock All Hummers]
+// patch=1,EE,40870358,extended,00110039
+// patch=1,EE,00000000,extended,00000000

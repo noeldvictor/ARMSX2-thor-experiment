@@ -1,0 +1,417 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Nascar 2007 [SLUS-21461] [FB0EB42B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slot 150]
+// patch=1,EE,90395144,extended,0C0C0C32
+
+[Cheats/Infinite Tire Wear]
+// patch=1,EE,201547A8,extended,00000000
+
+[Cheats/Infinite Fuel]
+// patch=1,EE,201626B8,extended,00000000
+
+[Cheats/Cars Take No Damage]
+// patch=1,EE,201C9FA8,extended,03E00008
+// patch=1,EE,201C9FAC,extended,00000000
+
+[Cheats/Total Laps Always 500]
+// patch=1,EE,105A9D96,extended,000001F4
+
+[Cheats/Total Laps Always 250]
+// patch=1,EE,105A9D96,extended,000000FA
+
+[Cheats/Total Laps Always 100]
+// patch=1,EE,105A9D96,extended,00000064
+
+[Cheats/Total Laps Always 50]
+// patch=1,EE,105A9D96,extended,00000032
+
+[Cheats/Total Laps Always 20]
+// patch=1,EE,105A9D96,extended,00000014
+
+[Cheats/Total Laps Always 10]
+// patch=1,EE,105A9D96,extended,0000000A
+
+[Cheats/Total Laps Always 5]
+// patch=1,EE,105A9D96,extended,00000005
+
+[Cheats/Total Laps Always 2]
+// patch=1,EE,105A9D96,extended,00000002
+
+[Cheats/Total Laps Always 1]
+// patch=1,EE,105A9D96,extended,00000001
+
+[Cheats/Start On Lap 100]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000064
+
+[Cheats/Start On Lap 50]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000032
+
+[Cheats/Start On Lap 25]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000019
+
+[Cheats/Start On Lap 10]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,0000000A
+
+[Cheats/Start On Lap 5]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000005
+
+[Cheats/Start On Lap 4]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000004
+
+[Cheats/Start On Lap 3]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000003
+
+[Cheats/Start On Lap 2]
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000002
+
+[Cheats/Start On Last Lap (10 Lap Race)]
+// patch=1,EE,105A9D96,extended,0000000A
+// patch=1,EE,D058EEE4,extended,00000000
+// patch=1,EE,1058EEE4,extended,00000009
+
+[Cheats/Infinite Available Skill Points]
+// patch=1,EE,11FD0EC0,extended,0000FFFF
+
+[Cheats/Max Available Skill Points]
+// patch=1,EE,21FD0EC0,extended,05F5E0FF
+
+[Cheats/Max Skill Points Earned]
+// patch=1,EE,21FD0EFC,extended,05F5E0FF
+
+[Cheats/Skill Points Dont Decrease When Buying Plates]
+// patch=1,EE,202560B8,extended,24620000
+
+[Cheats/Skill Points Increase When Buying Plates]
+// patch=1,EE,202560B8,extended,00701021
+
+[Cheats/Challenges Never Have Fail Stipulations]
+// patch=1,EE,201E3630,extended,03E00008
+// patch=1,EE,201E3634,extended,00000000
+
+[Cheats/Never Fail Challenges]
+// patch=1,EE,102339DA,extended,00001000
+
+[Cheats/Activation Code (Must Be On)]
+// patch=1,EE,21FDA6D4,extended,00000068
+
+[Cheats/Plate 1]
+// patch=1,EE,21FDA730,extended,00010190
+
+[Cheats/Plate 2]
+// patch=1,EE,21FDA738,extended,00010191
+
+[Cheats/Plate 3]
+// patch=1,EE,21FDA740,extended,00010192
+
+[Cheats/Plate 4]
+// patch=1,EE,21FDA748,extended,00010193
+
+[Cheats/Plate 5]
+// patch=1,EE,21FDA750,extended,00010194
+
+[Cheats/Plate 6]
+// patch=1,EE,21FDA758,extended,00010195
+
+[Cheats/Plate 7]
+// patch=1,EE,21FDA760,extended,00010196
+
+[Cheats/Plate 8]
+// patch=1,EE,21FDA768,extended,00010197
+
+[Cheats/Plate 9]
+// patch=1,EE,21FDA770,extended,00010198
+
+[Cheats/Plate 10]
+// patch=1,EE,21FDA778,extended,00010199
+
+[Cheats/Plate 11]
+// patch=1,EE,21FDA780,extended,0001019A
+
+[Cheats/Plate 12]
+// patch=1,EE,21FDA788,extended,0001019B
+
+[Cheats/Plate 13]
+// patch=1,EE,21FDA790,extended,0001019C
+
+[Cheats/Plate 14]
+// patch=1,EE,21FDA798,extended,0001019D
+
+[Cheats/Plate 15]
+// patch=1,EE,21FDA7A0,extended,0001019E
+
+[Cheats/Plate 16]
+// patch=1,EE,21FDA7A8,extended,0001019F
+
+[Cheats/Plate 17]
+// patch=1,EE,21FDA7B0,extended,000101A4
+
+[Cheats/Plate 18]
+// patch=1,EE,21FDA7B8,extended,000101A5
+
+[Cheats/Plate 19]
+// patch=1,EE,21FDA7C0,extended,000101A6
+
+[Cheats/Plate 20]
+// patch=1,EE,21FDA7C8,extended,000101A7
+
+[Cheats/Plate 21]
+// patch=1,EE,21FDA7D0,extended,000101A8
+
+[Cheats/Plate 22]
+// patch=1,EE,21FDA7D8,extended,000101A9
+
+[Cheats/Plate 23]
+// patch=1,EE,21FDA7E0,extended,00010258
+
+[Cheats/Plate 24]
+// patch=1,EE,21FDA7E8,extended,00010259
+
+[Cheats/Plate 25]
+// patch=1,EE,21FDA7F0,extended,0001025B
+
+[Cheats/Plate 26]
+// patch=1,EE,21FDA7F8,extended,0001025C
+
+[Cheats/Plate 27]
+// patch=1,EE,21FDA800,extended,0001025D
+
+[Cheats/Plate 28]
+// patch=1,EE,21FDA808,extended,0001025E
+
+[Cheats/Plate 29]
+// patch=1,EE,21FDA810,extended,0001025F
+
+[Cheats/Plate 30]
+// patch=1,EE,21FDA818,extended,00010261
+
+[Cheats/Plate 31]
+// patch=1,EE,21FDA820,extended,00010262
+
+[Cheats/Plate 32]
+// patch=1,EE,21FDA828,extended,00010264
+
+[Cheats/Plate 33]
+// patch=1,EE,21FDA830,extended,00010265
+
+[Cheats/Plate 34]
+// patch=1,EE,21FDA838,extended,00010268
+
+[Cheats/Plate 35]
+// patch=1,EE,21FDA840,extended,00010269
+
+[Cheats/Plate 36]
+// patch=1,EE,21FDA848,extended,0001026A
+
+[Cheats/Plate 37]
+// patch=1,EE,21FDA850,extended,0001026C
+
+[Cheats/Plate 38]
+// patch=1,EE,21FDA858,extended,0001026D
+
+[Cheats/Plate 39]
+// patch=1,EE,21FDA860,extended,0001026E
+
+[Cheats/Plate 40]
+// patch=1,EE,21FDA868,extended,0001026F
+
+[Cheats/Plate 41]
+// patch=1,EE,21FDA870,extended,00010270
+
+[Cheats/Plate 42]
+// patch=1,EE,21FDA878,extended,00010271
+
+[Cheats/Plate 43]
+// patch=1,EE,21FDA880,extended,00010277
+
+[Cheats/Plate 44]
+// patch=1,EE,21FDA888,extended,00010278
+
+[Cheats/Plate 45]
+// patch=1,EE,21FDA890,extended,00010279
+
+[Cheats/Plate 46]
+// patch=1,EE,21FDA898,extended,0001027A
+
+[Cheats/Plate 47]
+// patch=1,EE,21FDA8A0,extended,0001027B
+
+[Cheats/Plate 48]
+// patch=1,EE,21FDA8A8,extended,0001027C
+
+[Cheats/Plate 49]
+// patch=1,EE,21FDA8B0,extended,0001027D
+
+[Cheats/Plate 50]
+// patch=1,EE,21FDA8B8,extended,0001027E
+
+[Cheats/Plate 51]
+// patch=1,EE,21FDA8C0,extended,0001027F
+
+[Cheats/Plate 52]
+// patch=1,EE,21FDA8C8,extended,000102D6
+
+[Cheats/Plate 53]
+// patch=1,EE,21FDA8D0,extended,000102DB
+
+[Cheats/Plate 54]
+// patch=1,EE,21FDA8D8,extended,00010320
+
+[Cheats/Plate 55]
+// patch=1,EE,21FDA8E0,extended,00010321
+
+[Cheats/Plate 56]
+// patch=1,EE,21FDA8E8,extended,00010323
+
+[Cheats/Plate 57]
+// patch=1,EE,21FDA8F0,extended,0001032A
+
+[Cheats/Plate 58]
+// patch=1,EE,21FDA8F8,extended,0001032F
+
+[Cheats/Plate 59]
+// patch=1,EE,21FDA900,extended,00010330
+
+[Cheats/Plate 60]
+// patch=1,EE,21FDA908,extended,00010331
+
+[Cheats/Plate 61]
+// patch=1,EE,21FDA910,extended,00010332
+
+[Cheats/Plate 62]
+// patch=1,EE,21FDA918,extended,00010333
+
+[Cheats/Plate 63]
+// patch=1,EE,21FDA920,extended,0001033C
+
+[Cheats/Plate 64]
+// patch=1,EE,21FDA928,extended,0001033D
+
+[Cheats/Plate 65]
+// patch=1,EE,21FDA930,extended,0001033E
+
+[Cheats/Plate 66]
+// patch=1,EE,21FDA938,extended,000102B2
+
+[Cheats/Plate 67]
+// patch=1,EE,21FDA940,extended,000102CC
+
+[Cheats/Plate 68]
+// patch=1,EE,21FDA948,extended,000102CE
+
+[Cheats/Plate 69]
+// patch=1,EE,21FDA950,extended,000102CF
+
+[Cheats/Plate 70]
+// patch=1,EE,21FDA958,extended,000102D0
+
+[Cheats/Plate 71]
+// patch=1,EE,21FDA960,extended,000102D1
+
+[Cheats/Plate 72]
+// patch=1,EE,21FDA968,extended,000102D2
+
+[Cheats/Plate 73]
+// patch=1,EE,21FDA970,extended,000102D3
+
+[Cheats/Plate 74]
+// patch=1,EE,21FDA978,extended,000102D4
+
+[Cheats/Plate 75]
+// patch=1,EE,21FDA980,extended,000102D5
+
+[Cheats/Plate 76]
+// patch=1,EE,21FDA988,extended,000102E4
+
+[Cheats/Plate 77]
+// patch=1,EE,21FDA990,extended,000102E5
+
+[Cheats/Plate 78]
+// patch=1,EE,21FDA998,extended,000102E6
+
+[Cheats/Plate 79]
+// patch=1,EE,21FDA9A0,extended,000102E7
+
+[Cheats/Plate 80]
+// patch=1,EE,21FDA9A8,extended,000102F8
+
+[Cheats/Plate 81]
+// patch=1,EE,21FDA9B0,extended,000102F9
+
+[Cheats/Plate 82]
+// patch=1,EE,21FDA9B8,extended,000102FA
+
+[Cheats/Plate 83]
+// patch=1,EE,21FDA9C0,extended,000102FB
+
+[Cheats/Plate 84]
+// patch=1,EE,21FDA9C8,extended,000102FC
+
+[Cheats/Plate 85]
+// patch=1,EE,21FDA9D0,extended,000102FD
+
+[Cheats/Plate 86]
+// patch=1,EE,21FDA9D8,extended,000102FE
+
+[Cheats/Plate 87]
+// patch=1,EE,21FDA9E0,extended,000102FF
+
+[Cheats/Plate 88]
+// patch=1,EE,21FDA9E8,extended,0001030C
+
+[Cheats/Plate 89]
+// patch=1,EE,21FDA9F0,extended,000101F4
+
+[Cheats/Plate 90]
+// patch=1,EE,21FDA9F8,extended,000101F5
+
+[Cheats/Plate 91]
+// patch=1,EE,21FDAA00,extended,000101F6
+
+[Cheats/Plate 92]
+// patch=1,EE,21FDAA08,extended,000101F9
+
+[Cheats/Plate 93]
+// patch=1,EE,21FDAA10,extended,000101FA
+
+[Cheats/Plate 94]
+// patch=1,EE,21FDAA18,extended,000101FB
+
+[Cheats/Plate 95]
+// patch=1,EE,21FDAA20,extended,000101FC
+
+[Cheats/Plate 96]
+// patch=1,EE,21FDAA28,extended,000101FD
+
+[Cheats/Plate 97]
+// patch=1,EE,21FDAA30,extended,000101FE
+
+[Cheats/Plate 98]
+// patch=1,EE,21FDAA38,extended,000101FF
+
+[Cheats/Plate 99]
+// patch=1,EE,21FDAA40,extended,00010200
+
+[Cheats/Plate 100]
+// patch=1,EE,21FDAA48,extended,00010202
+
+[Cheats/Plate 101]
+// patch=1,EE,21FDAA50,extended,00010203
+
+[Cheats/Plate 102]
+// patch=1,EE,21FDAA58,extended,00010204
+
+[Cheats/Plate 103]
+// patch=1,EE,21FDAA60,extended,00010205
+
+[Cheats/Plate 104]
+// patch=1,EE,21FDAA68,extended,00010206

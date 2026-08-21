@@ -1,0 +1,139 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Gungriffon Blaze [SLUS-20080] [D1E24531]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Jackpot]
+// patch=1,EE,9026F408,extended,0C09D483
+
+[Cheats/Have All Weapons Systems]
+// patch=1,EE,203D9A40,extended,FFFFFFFF
+// patch=1,EE,103D9A44,extended,0000FFFF
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,3C014596
+// patch=1,EE,200C0224,extended,AE210440
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,C6210440
+// patch=1,EE,D042D826,extended,00004481
+// patch=1,EE,2042D828,extended,0C030088
+
+[Cheats/Infinite Jumps]
+// patch=1,EE,200C0230,extended,3C014396
+// patch=1,EE,200C0234,extended,AE410418
+// patch=1,EE,200C0238,extended,08081E8E
+// patch=1,EE,200C023C,extended,C64C0418
+// patch=1,EE,D042E986,extended,0000A222
+// patch=1,EE,2042E988,extended,0C03008C
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,D041B9F4,extended,0000202D
+// patch=1,EE,2041BA00,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,D041B9F4,extended,0000202D
+// patch=1,EE,2041B9FC,extended,240303E7
+
+[Cheats/Max Score]
+// patch=1,EE,204886C8,extended,05F5E0FF
+
+[Cheats/Infinite Time]
+// patch=1,EE,204886F8,extended,00000000
+
+[Cheats/Infinite CH Missile]
+// patch=1,EE,104464C4,extended,00000009
+
+[Cheats/Infinite MS Bomb]
+// patch=1,EE,104464C6,extended,00000009
+
+[Cheats/Infinite NP Gun]
+// patch=1,EE,104464C8,extended,00000009
+
+[Cheats/Infinite Rocket Pod]
+// patch=1,EE,104464CA,extended,00000009
+
+[Cheats/Infinite AT Missile]
+// patch=1,EE,104464CC,extended,00000009
+
+[Cheats/Infinite Gun]
+// patch=1,EE,104464CE,extended,00000009
+
+[Cheats/Infinite MG Version 1]
+// patch=1,EE,104464D0,extended,00000009
+
+[Cheats/Infinite S Shotgun]
+// patch=1,EE,104464D2,extended,00000009
+
+[Cheats/Infinite Grenade Version 1]
+// patch=1,EE,104464D4,extended,00000009
+
+[Cheats/Infinite Grenade Version 2]
+// patch=1,EE,104464D6,extended,00000009
+
+[Cheats/Infinite Hyper Grenade]
+// patch=1,EE,104464D8,extended,00000009
+
+[Cheats/Infinite Shotgun]
+// patch=1,EE,104464DA,extended,00000009
+
+[Cheats/Infinite Power MG]
+// patch=1,EE,104464DC,extended,00000009
+
+[Cheats/Infinite SS Rocket Gun]
+// patch=1,EE,104464DE,extended,00000009
+
+[Cheats/Infinite MG Version 2]
+// patch=1,EE,104464E0,extended,00000009
+
+[Cheats/Infinite MG Version 3]
+// patch=1,EE,104464E2,extended,00000009
+
+[Cheats/Infinite HH Missile]
+// patch=1,EE,104464E4,extended,00000009
+
+[Cheats/Infinite Fuel]
+// patch=1,EE,104464E6,extended,00000009
+
+[Cheats/Infinite Firepower 1]
+// patch=1,EE,104466C4,extended,00000009
+
+[Cheats/Infinite Super Reload]
+// patch=1,EE,104466C6,extended,00000009
+
+[Cheats/Infinite Flash Roll]
+// patch=1,EE,104466C8,extended,00000009
+
+[Cheats/Infinite Advance Armor 2]
+// patch=1,EE,104466CA,extended,00000009
+
+[Cheats/Infinite Wheel Adaptor]
+// patch=1,EE,104466CC,extended,00000009
+
+[Cheats/Infinite Super Zoom]
+// patch=1,EE,104466CE,extended,00000009
+
+[Cheats/Infinite Hyper Zoom]
+// patch=1,EE,104466D0,extended,00000009
+
+[Cheats/Infinite IG System]
+// patch=1,EE,104466D2,extended,00000009
+
+[Cheats/Infinite Jump Regulator]
+// patch=1,EE,104466D4,extended,00000009
+
+[Cheats/Infinite Firepower M]
+// patch=1,EE,104466D6,extended,00000009
+
+[Cheats/Infinite Advance Armor M]
+// patch=1,EE,104466D8,extended,00000009
+
+[Cheats/Infinite Firepower 2]
+// patch=1,EE,104466DA,extended,00000009
+
+[Cheats/Infinite Advance Armor 1]
+// patch=1,EE,104466DC,extended,00000009
+
+[Cheats/Infinite Quick Reload]
+// patch=1,EE,104466DE,extended,00000009
+
+[Cheats/Infinite Hyper Reload]
+// patch=1,EE,104466E0,extended,00000009

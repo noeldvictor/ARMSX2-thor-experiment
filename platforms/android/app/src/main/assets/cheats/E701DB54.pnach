@@ -1,0 +1,113 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: World Poker Tour [SLUS-21333] [E701DB54]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Absorb Less Damage]
+// patch=1,EE,9032D044,extended,0C0D7EE1
+
+[Cheats/Quick Money Gain P1]
+// patch=1,EE,1093C660,extended,0000FFFF
+
+[Cheats/Max Money P1]
+// patch=1,EE,2093C660,extended,05F5E0FF
+
+[Cheats/No Money P1]
+// patch=1,EE,2093C660,extended,00000000
+
+[Cheats/Quick Money Gain P2]
+// patch=1,EE,1093C760,extended,0000FFFF
+
+[Cheats/Max Money P2]
+// patch=1,EE,2093C760,extended,05F5E0FF
+
+[Cheats/No Money P2]
+// patch=1,EE,2093C760,extended,00000000
+
+[Cheats/Quick Money Gain P3]
+// patch=1,EE,1093C860,extended,0000FFFF
+
+[Cheats/Max Money P3]
+// patch=1,EE,2093C860,extended,05F5E0FF
+
+[Cheats/No Money P3]
+// patch=1,EE,2093C860,extended,00000000
+
+[Cheats/Quick Money Gain P4]
+// patch=1,EE,1093C960,extended,0000FFFF
+
+[Cheats/Max Money P4]
+// patch=1,EE,2093C960,extended,05F5E0FF
+
+[Cheats/No Money P4]
+// patch=1,EE,2093C960,extended,00000000
+
+[Cheats/Quick Money Gain P5]
+// patch=1,EE,1093CA60,extended,0000FFFF
+
+[Cheats/Max Money P5]
+// patch=1,EE,2093CA60,extended,05F5E0FF
+
+[Cheats/No Money P5]
+// patch=1,EE,2093CA60,extended,00000000
+
+[Cheats/Quick Money Gain P6]
+// patch=1,EE,1093CB60,extended,0000FFFF
+
+[Cheats/Max Money P6]
+// patch=1,EE,2093CB60,extended,05F5E0FF
+
+[Cheats/No Money P6]
+// patch=1,EE,2093CB60,extended,00000000
+
+[Cheats/Quick Money Gain]
+// patch=1,EE,109150A4,extended,0000FFFF
+// patch=1,EE,109154AC,extended,0000FFFF
+// patch=1,EE,109158B4,extended,0000FFFF
+// patch=1,EE,10915CBC,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,209150A4,extended,05F5E0FF
+// patch=1,EE,209154AC,extended,05F5E0FF
+// patch=1,EE,209158B4,extended,05F5E0FF
+// patch=1,EE,20915CBC,extended,05F5E0FF
+
+[Cheats/No Money]
+// patch=1,EE,209150A4,extended,00000000
+// patch=1,EE,209154AC,extended,00000000
+// patch=1,EE,209158B4,extended,00000000
+// patch=1,EE,20915CBC,extended,00000000
+
+[Cheats/Max Hands Played]
+// patch=1,EE,209150B4,extended,0098967F
+// patch=1,EE,209158C4,extended,0098967F
+// patch=1,EE,20915CCC,extended,0098967F
+
+[Cheats/No Hands Played]
+// patch=1,EE,209150B4,extended,00000000
+// patch=1,EE,209154BC,extended,00000000
+// patch=1,EE,209158C4,extended,00000000
+// patch=1,EE,20915CCC,extended,00000000
+
+[Cheats/Max Hands Won]
+// patch=1,EE,209150C0,extended,0098967F
+// patch=1,EE,209154C8,extended,0098967F
+// patch=1,EE,209158D0,extended,0098967F
+// patch=1,EE,20915CD8,extended,0098967F
+
+[Cheats/No Hands Won]
+// patch=1,EE,209150C0,extended,00000000
+// patch=1,EE,209154C8,extended,00000000
+// patch=1,EE,209158D0,extended,00000000
+// patch=1,EE,20915CD8,extended,00000000
+
+[Cheats/Max Showdowns Won]
+// patch=1,EE,209150C0,extended,0098967F
+// patch=1,EE,209154C8,extended,0098967F
+// patch=1,EE,209158D0,extended,0098967F
+// patch=1,EE,20915CD8,extended,0098967F
+
+[Cheats/No Showdowns Won]
+// patch=1,EE,209150C0,extended,00000000
+// patch=1,EE,209154C8,extended,00000000
+// patch=1,EE,209158D0,extended,00000000
+// patch=1,EE,20915CD8,extended,00000000

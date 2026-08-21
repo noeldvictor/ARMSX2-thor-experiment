@@ -1,0 +1,15 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Resident Evil Code Veronica X [UNKNOWN] [24036809]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,4CD6A924,extended,1456E745
+// patch=1,EE,01928868,extended,10415033
+// patch=1,EE,024326FC,extended,000000A0
+
+[Cheats/Health Codes]
+// patch=1,EE,01928A81,extended,90501800
+
+[Cheats/Magnum]
+// patch=1,EE,0192886B,extended,1041503F
+// patch=1,EE,0443349C,extended,002000FE

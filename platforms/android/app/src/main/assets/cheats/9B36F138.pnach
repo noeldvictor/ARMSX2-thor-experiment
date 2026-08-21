@@ -1,0 +1,37 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Karaoke Revolution Party [SLUS-21223] [9B36F138]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Crowd Always Happy]
+// patch=1,EE,902B0A8C,extended,0C0BF6A9
+// patch=1,EE,20124A74,extended,3C013F80
+// patch=1,EE,20125448,extended,3C013F80
+// patch=1,EE,2012544C,extended,44810000
+
+[Cheats/Unlock Everything]
+// patch=1,EE,200C0220,extended,24020001
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,AC82000C
+// patch=1,EE,2019AFF0,extended,08030088
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,20131CFC,extended,244203E7
+
+[Cheats/Super Quick Score Gain]
+// patch=1,EE,20131CFC,extended,2442270F
+
+[Cheats/Hella Quick Score Gain]
+// patch=1,EE,20131CFC,extended,24427FFF
+
+[Cheats/Quick Max Score]
+// patch=1,EE,20131CF8,extended,3C0205F5
+// patch=1,EE,20131CFC,extended,3442E0FF
+
+[Cheats/Infinite Total Points]
+// patch=1,EE,103ECB68,extended,0000FFFF
+
+[Cheats/Max Total Points]
+// patch=1,EE,203ECB68,extended,05F5E0FF
+
+[Cheats/Have All 50 Songs Completed]
+// patch=1,EE,203ECBC4,extended,00000032

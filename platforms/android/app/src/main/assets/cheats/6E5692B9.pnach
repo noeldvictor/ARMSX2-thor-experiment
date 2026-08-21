@@ -1,0 +1,180 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Legends Of Wrestling II [SLUS-20507] [6E5692B9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Ability Points]
+// patch=1,EE,F0100008,extended,00115B2F
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,2036EFA0,extended,00000FFF
+
+[Cheats/No Health P1]
+// patch=1,EE,2036EFA0,extended,00000000
+
+[Cheats/Max Stun Meter P1]
+// patch=1,EE,0036F0E4,extended,00000064
+
+[Cheats/No Stun Meter P1]
+// patch=1,EE,0036F0E4,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,2036EFA4,extended,00000FFF
+
+[Cheats/No Health P2]
+// patch=1,EE,2036EFA4,extended,00000000
+
+[Cheats/Max Stun Meter P2]
+// patch=1,EE,0036F0E5,extended,00000064
+
+[Cheats/No Stun Meter P2]
+// patch=1,EE,0036F0E5,extended,00000000
+
+[Cheats/Infinite Health P3]
+// patch=1,EE,2036EFA8,extended,00000FFF
+
+[Cheats/No Health P3]
+// patch=1,EE,2036EFA8,extended,00000000
+
+[Cheats/Max Stun Meter P3]
+// patch=1,EE,0036F0E6,extended,00000064
+
+[Cheats/No Stun Meter P3]
+// patch=1,EE,0036F0E6,extended,00000000
+
+[Cheats/Infinite Health P4]
+// patch=1,EE,2036EFAC,extended,00000FFF
+
+[Cheats/No Health P4]
+// patch=1,EE,2036EFAC,extended,00000000
+
+[Cheats/Max Stun Meter P4]
+// patch=1,EE,0036F0E7,extended,00000064
+
+[Cheats/No Stun Meter P4]
+// patch=1,EE,0036F0E7,extended,00000000
+
+[Cheats/Infinite Health P5]
+// patch=1,EE,2036EFB0,extended,00000FFF
+
+[Cheats/No Health P5]
+// patch=1,EE,2036EFB0,extended,00000000
+
+[Cheats/Max Stun Meter P5]
+// patch=1,EE,0036F0E8,extended,00000064
+
+[Cheats/No Stun Meter P5]
+// patch=1,EE,0036F0E8,extended,00000000
+
+[Cheats/Infinite Health P6]
+// patch=1,EE,2036EFB4,extended,00000FFF
+
+[Cheats/No Health P6]
+// patch=1,EE,2036EFB4,extended,00000000
+
+[Cheats/Max Stun Meter P6]
+// patch=1,EE,0036F0E9,extended,00000064
+
+[Cheats/No Stun Meter P6]
+// patch=1,EE,0036F0E9,extended,00000000
+
+[Cheats/Infinite Health P7]
+// patch=1,EE,2036EFB8,extended,00000FFF
+
+[Cheats/No Health P7]
+// patch=1,EE,2036EFB8,extended,00000000
+
+[Cheats/Max Stun Meter P7]
+// patch=1,EE,0036F0EA,extended,00000064
+
+[Cheats/No Stun Meter P7]
+// patch=1,EE,0036F0EA,extended,00000000
+
+[Cheats/Infinite Health P8]
+// patch=1,EE,2036EFBC,extended,00000FFF
+
+[Cheats/No Health P8]
+// patch=1,EE,2036EFBC,extended,00000000
+
+[Cheats/Max Stun Meter P8]
+// patch=1,EE,0036F0EB,extended,00000064
+
+[Cheats/No Stun Meter P8]
+// patch=1,EE,0036F0EB,extended,00000000
+
+[Cheats/Max Red LOWII Coins]
+// patch=1,EE,203340E8,extended,000003E7
+
+[Cheats/Max Green LOWII Coins]
+// patch=1,EE,203340EC,extended,000003E7
+
+[Cheats/Max Blue LOWII Coins]
+// patch=1,EE,203340F0,extended,000003E7
+
+[Cheats/Unlock All Wrestlers/Textures]
+// patch=1,EE,203EB630,extended,00000000
+// patch=1,EE,203EB634,extended,00000000
+
+[Cheats/Unlock All Arenas/Abilities/Cheats]
+// patch=1,EE,103EB638,extended,00000000
+// patch=1,EE,003EB63A,extended,00000000
+
+[Cheats/Unlock All Concept Arts]
+// patch=1,EE,003EB63B,extended,00000000
+// patch=1,EE,203EB63C,extended,00000000
+// patch=1,EE,203EB640,extended,00000000
+// patch=1,EE,103EB644,extended,00000000
+
+[Cheats/Unlock Everything]
+// patch=1,EE,403EB630,extended,00050001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,103EB644,extended,00000000
+
+[Cheats/Have All Unlocked Wrestlers Available]
+// patch=1,EE,203EB950,extended,FFFFFFFF
+
+[Cheats/Have All Unlocked Arenas/Cheats Available]
+// patch=1,EE,203EB958,extended,FFFFFFFF
+
+[Cheats/Able To Watch All Career Endings]
+// patch=1,EE,203EBC80,extended,00000001
+// patch=1,EE,10242026,extended,00001000
+// patch=1,EE,20241F6C,extended,00000000
+
+[Cheats/Infinite Attribute Points]
+// patch=1,EE,20373A00,extended,00000063
+
+[Cheats/Max Power]
+// patch=1,EE,203739A0,extended,00000005
+
+[Cheats/Max Excitement]
+// patch=1,EE,203739A4,extended,00000005
+
+[Cheats/Max Stealth]
+// patch=1,EE,203739A8,extended,00000005
+
+[Cheats/Max Constitution]
+// patch=1,EE,203739AC,extended,00000005
+
+[Cheats/Max Grappling]
+// patch=1,EE,203739B0,extended,00000005
+
+[Cheats/Max Regeneration]
+// patch=1,EE,203739B4,extended,00000005
+
+[Cheats/Hella Power]
+// patch=1,EE,203739A0,extended,00000032
+
+[Cheats/Hella Excitement]
+// patch=1,EE,203739A4,extended,00000032
+
+[Cheats/Hella Stealth]
+// patch=1,EE,203739A8,extended,00000032
+
+[Cheats/Hella Constitution]
+// patch=1,EE,203739AC,extended,00000032
+
+[Cheats/Hella Grappling]
+// patch=1,EE,203739B0,extended,00000032
+
+[Cheats/Hella Regeneration]
+// patch=1,EE,203739B4,extended,00000032

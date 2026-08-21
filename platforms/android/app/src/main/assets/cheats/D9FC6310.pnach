@@ -1,0 +1,82 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Clock Tower 3 [SLES-51619] [D9FC6310]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Never Reload With Max Clip]
+// patch=1,EE,9182452C,extended,0C60B66A
+
+[Cheats/Always Empty Panic Meter]
+// patch=1,EE,21940E74,extended,00000000
+
+[Cheats/Infinite Holy Water]
+// patch=1,EE,21941288,extended,00000005
+
+[Cheats/Infinite Health (Boss Battle)]
+// patch=1,EE,21A4C4E4,extended,00000320
+
+[Cheats/Instant Boss Death (Boss Battles)]
+// patch=1,EE,2187057C,extended,24020001
+
+[Cheats/Have Lavender Water]
+// patch=1,EE,2193F9A0,extended,00000001
+
+[Cheats/Max Lavender Water]
+// patch=1,EE,0192E829,extended,00000063
+
+[Cheats/Have Sigil Stone]
+// patch=1,EE,2193F9A4,extended,00000002
+
+[Cheats/Max Sigil Stone]
+// patch=1,EE,0192E841,extended,00000063
+
+[Cheats/Have Invisibility Band]
+// patch=1,EE,2193F9A8,extended,00000003
+
+[Cheats/Max Invisibility Band]
+// patch=1,EE,0192E859,extended,00000063
+
+[Cheats/Max Repellant Arrows]
+// patch=1,EE,2193F85C,extended,00000063
+
+[Cheats/Max Binding Arrows]
+// patch=1,EE,2193F860,extended,00000063
+
+[Cheats/Killers Dont Come Around Much]
+// patch=1,EE,21862170,extended,03E00008
+// patch=1,EE,21862174,extended,00000000
+
+[Cheats/P1 Press {R2}+Up To For Killers Leave You Alone]
+// patch=1,EE,D193E602,extended,0000FDEF
+// patch=1,EE,21864194,extended,00000000
+
+[Cheats/P1 Press {R2}+Down To For Killers Hunt You Again]
+// patch=1,EE,D193E602,extended,0000FDBF
+// patch=1,EE,21864194,extended,0C61994C
+
+[Cheats/Killers Don�t Follow You]
+// patch=1,EE,2187E3D0,extended,03E00008
+// patch=1,EE,2187E3D4,extended,00000000
+
+[Cheats/P1 Press {L1}+Up To Activate Walk Thru Walls]
+// patch=1,EE,E002FEEF,extended,0193E602
+// patch=1,EE,218B1A40,extended,03E00008
+// patch=1,EE,218B1A44,extended,00000000
+
+[Cheats/P1 Press {L1}+Down To Deactivate Walk Thru Walls]
+// patch=1,EE,E002FEBF,extended,0193E602
+// patch=1,EE,218B1A40,extended,27BDFF30
+// patch=1,EE,218B1A44,extended,00051880
+
+[Cheats/Cant Be Grabbed]
+// patch=1,EE,218FBB50,extended,03E00008
+// patch=1,EE,218FBB54,extended,00000000
+
+[Cheats/Cant Be Hit]
+// patch=1,EE,218FC2F0,extended,03E00008
+// patch=1,EE,218FC2F4,extended,00000000
+
+[Cheats/Infinite Repellant Arrows (Boss Battles)]
+// patch=1,EE,2193F790,extended,00000001
+
+[Cheats/Infinite Binding Arrows (Boss Battles)]
+// patch=1,EE,2193F790,extended,00000002

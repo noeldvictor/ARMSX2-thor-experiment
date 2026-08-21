@@ -1,0 +1,64 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: World Series Baseball 2K3 [SLUS-20611] [35358409]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Everything Unlocked]
+// patch=1,EE,F0100008,extended,0011326F
+// patch=1,EE,90121CEC,extended,0C04A14A
+
+[Cheats/Infinite Outs]
+// patch=1,EE,204F6A0C,extended,00000000
+// patch=1,EE,E0010001,extended,004F6A08
+// patch=1,EE,E0010000,extended,004F6A08
+
+[Cheats/1 Out And You Are Out]
+// patch=1,EE,D04F6A0C,extended,00000000
+// patch=1,EE,204F6A0C,extended,00000002
+// patch=1,EE,E0020001,extended,004F6A08
+// patch=1,EE,E0020000,extended,004F6A08
+
+[Cheats/2 Outs And You Are Out]
+// patch=1,EE,D04F6A0C,extended,00000000
+// patch=1,EE,204F6A0C,extended,00000001
+// patch=1,EE,E0020001,extended,004F6A08
+// patch=1,EE,E0020000,extended,004F6A08
+
+[Cheats/Infinite Balls]
+// patch=1,EE,204F6A10,extended,00000000
+// patch=1,EE,E0010001,extended,004F6A08
+// patch=1,EE,E0010000,extended,004F6A08
+
+[Cheats/1 Ball And You Walk]
+// patch=1,EE,D04F6A10,extended,00000000
+// patch=1,EE,204F6A10,extended,00000003
+// patch=1,EE,E0020001,extended,004F6A08
+// patch=1,EE,E0020000,extended,004F6A08
+
+[Cheats/2 Balls And You Walk]
+// patch=1,EE,D04F6A10,extended,00000000
+// patch=1,EE,204F6A10,extended,00000002
+// patch=1,EE,E0020001,extended,004F6A08
+// patch=1,EE,E0020000,extended,004F6A08
+
+[Cheats/3 Balls And You Walk]
+// patch=1,EE,D04F6A10,extended,00000000
+// patch=1,EE,204F6A10,extended,00000001
+// patch=1,EE,E0020001,extended,004F6A08
+// patch=1,EE,E0020000,extended,004F6A08
+
+[Cheats/Infinite Strikes]
+// patch=1,EE,204F6A14,extended,00000001
+// patch=1,EE,E0010001,extended,004F6A08
+// patch=1,EE,E0010000,extended,004F6A08
+
+[Cheats/1 Strike And You Are Out]
+// patch=1,EE,D04F6A14,extended,00000000
+// patch=1,EE,204F6A14,extended,00000002
+// patch=1,EE,E0020001,extended,004F6A08
+// patch=1,EE,E0020000,extended,004F6A08
+
+[Cheats/2 Strikes And You Are Out]
+// patch=1,EE,D04F6A14,extended,00000000
+// patch=1,EE,204F6A14,extended,00000001
+// patch=1,EE,E0020001,extended,004F6A08
+// patch=1,EE,E0020000,extended,004F6A08

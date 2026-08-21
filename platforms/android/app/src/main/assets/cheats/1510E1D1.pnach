@@ -1,0 +1,28 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Crash Twinsanity [SLES-52568] [1510E1D1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Tracks]
+// patch=1,EE,902C2570,extended,00832021
+
+[Cheats/Infinite Lives/Gems]
+// patch=1,EE,200C0220,extended,24023263
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,A4820000
+// patch=1,EE,2016961C,extended,0C030088
+
+[Cheats/Nsanity Isle]
+// patch=1,EE,2098C064,extended,FFFFFFFF
+
+[Cheats/Jungle Bungle]
+// patch=1,EE,2098C068,extended,FFFFFFFF
+
+[Cheats/Cavern Catastrophe]
+// patch=1,EE,2098C06C,extended,FFFFFFFF
+
+[Cheats/Totem Kokum]
+// patch=1,EE,2098C070,extended,FFFFFFFF
+
+[Cheats/All Gems/Extras]
+// patch=1,EE,4098C064,extended,00040001
+// patch=1,EE,FFFFFFFF,extended,00000000

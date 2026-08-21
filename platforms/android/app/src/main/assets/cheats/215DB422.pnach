@@ -1,0 +1,114 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: World Championship Poker [SLUS-21028] [215DB422]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Special Movies]
+// patch=1,EE,902FA92C,extended,0C0C9E1D
+
+[Cheats/Quick Money Gain P1]
+// patch=1,EE,1076FF38,extended,0000FFFF
+
+[Cheats/Max Money P1]
+// patch=1,EE,2076FF38,extended,05F5E0FF
+
+[Cheats/No Money P1]
+// patch=1,EE,2076FF38,extended,00000000
+
+[Cheats/Quick Money Gain P2]
+// patch=1,EE,10770028,extended,0000FFFF
+
+[Cheats/Max Money P2]
+// patch=1,EE,20770028,extended,05F5E0FF
+
+[Cheats/No Money P2]
+// patch=1,EE,20770028,extended,00000000
+
+[Cheats/Quick Money Gain P3]
+// patch=1,EE,10770118,extended,0000FFFF
+
+[Cheats/Max Money P3]
+// patch=1,EE,20770118,extended,05F5E0FF
+
+[Cheats/No Money P3]
+// patch=1,EE,20770118,extended,00000000
+
+[Cheats/Quick Money Gain P4]
+// patch=1,EE,10770208,extended,0000FFFF
+
+[Cheats/Max Money P4]
+// patch=1,EE,20770208,extended,05F5E0FF
+
+[Cheats/No Money P4]
+// patch=1,EE,20770208,extended,00000000
+
+[Cheats/Quick Money Gain P5]
+// patch=1,EE,107702F8,extended,0000FFFF
+
+[Cheats/Max Money P5]
+// patch=1,EE,207702F8,extended,05F5E0FF
+
+[Cheats/No Money P5]
+// patch=1,EE,207702F8,extended,00000000
+
+[Cheats/Quick Money Gain P6]
+// patch=1,EE,107703E8,extended,0000FFFF
+
+[Cheats/Max Money P6]
+// patch=1,EE,207703E8,extended,05F5E0FF
+
+[Cheats/No Money P6]
+// patch=1,EE,207703E8,extended,00000000
+
+[Cheats/Quick Cash Gain (Offline)]
+// patch=1,EE,10695480,extended,0000FFFF
+
+[Cheats/Max Cash (Offline)]
+// patch=1,EE,20695480,extended,05F5E0FF
+
+[Cheats/Max Overall Sit & Go (Offline)]
+// patch=1,EE,10695484,extended,0000270F
+
+[Cheats/No Overall Sit & Go (Offline)]
+// patch=1,EE,10695484,extended,00000000
+
+[Cheats/Max Current Sit & Go (Offline)]
+// patch=1,EE,10695486,extended,0000270F
+
+[Cheats/No Current Sit & Go (Offline)]
+// patch=1,EE,10695486,extended,00000000
+
+[Cheats/Quick Cash Gain (Online)]
+// patch=1,EE,10695488,extended,0000FFFF
+
+[Cheats/Max Cash (Online)]
+// patch=1,EE,20695488,extended,05F5E0FF
+
+[Cheats/Max Overall Sit & Go (Online)]
+// patch=1,EE,1069548C,extended,0000270F
+
+[Cheats/No Overall Sit & Go (Online)]
+// patch=1,EE,1069548C,extended,00000000
+
+[Cheats/Max Current Sit & Go (Online)]
+// patch=1,EE,1069548E,extended,0000270F
+
+[Cheats/No Current Sit & Go (Online)]
+// patch=1,EE,1069548E,extended,00000000
+
+[Cheats/Max Tournaments Played]
+// patch=1,EE,10695532,extended,0000270F
+
+[Cheats/No Tournaments Played]
+// patch=1,EE,10695532,extended,00000000
+
+[Cheats/Max Tournaments Placed]
+// patch=1,EE,10695534,extended,0000270F
+
+[Cheats/No Tournaments Placed]
+// patch=1,EE,10695534,extended,00000000
+
+[Cheats/Max Tournaments Won]
+// patch=1,EE,10695536,extended,0000270F
+
+[Cheats/No Tournaments Won]
+// patch=1,EE,10695536,extended,00000000

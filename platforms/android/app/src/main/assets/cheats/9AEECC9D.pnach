@@ -1,0 +1,251 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: World Championship Poker 2 [SLUS-21176] [9AEECC9D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Tournaments Won]
+// patch=1,EE,9042B328,extended,00832021
+// patch=1,EE,200C0220,extended,3C014CBE
+// patch=1,EE,200C0224,extended,3421BC20
+// patch=1,EE,200C0258,extended,03E00008
+// patch=1,EE,200C025C,extended,24050063
+// patch=1,EE,201A58DC,extended,0C030088
+
+[Cheats/Max Money P1]
+// patch=1,EE,200C0228,extended,8E450000
+// patch=1,EE,200C022C,extended,ACA10014
+
+[Cheats/No Money P1]
+// patch=1,EE,200C0228,extended,8E450000
+// patch=1,EE,200C022C,extended,ACA00014
+
+[Cheats/Max Money P2]
+// patch=1,EE,200C0230,extended,8E450004
+// patch=1,EE,200C0234,extended,ACA10014
+
+[Cheats/No Money P2]
+// patch=1,EE,200C0230,extended,8E450004
+// patch=1,EE,200C0234,extended,ACA00014
+
+[Cheats/Max Money P3]
+// patch=1,EE,200C0238,extended,8E450008
+// patch=1,EE,200C023C,extended,ACA10014
+
+[Cheats/No Money P3]
+// patch=1,EE,200C0238,extended,8E450008
+// patch=1,EE,200C023C,extended,ACA00014
+
+[Cheats/Max Money P4]
+// patch=1,EE,200C0240,extended,8E45000C
+// patch=1,EE,200C0244,extended,ACA10014
+
+[Cheats/No Money P4]
+// patch=1,EE,200C0240,extended,8E45000C
+// patch=1,EE,200C0244,extended,ACA00014
+
+[Cheats/Max Money P5]
+// patch=1,EE,200C0248,extended,8E450010
+// patch=1,EE,200C024C,extended,ACA10014
+
+[Cheats/No Money P5]
+// patch=1,EE,200C0248,extended,8E450010
+// patch=1,EE,200C024C,extended,ACA00014
+
+[Cheats/Max Money P6]
+// patch=1,EE,200C0250,extended,8E450014
+// patch=1,EE,200C0254,extended,ACA10014
+
+[Cheats/No Money P6]
+// patch=1,EE,200C0250,extended,8E450014
+// patch=1,EE,200C0254,extended,ACA00014
+
+[Cheats/Calling Doesnt Decrease Money]
+// patch=1,EE,201A58D0,extended,00000000
+
+[Cheats/P1 Press {R1}+{CIRCLE} To Call & Not Decrease Money]
+// patch=1,EE,D0660FC2,extended,0000D7FF
+// patch=1,EE,201A58D0,extended,00000000
+// patch=1,EE,D0660FC2,extended,0000FFFF
+// patch=1,EE,201A58D0,extended,0C06CA7E
+
+[Cheats/Quick Bankroll Gain]
+// patch=1,EE,1063F42C,extended,0000FFFF
+
+[Cheats/Max Bankroll]
+// patch=1,EE,2063F42C,extended,05F5E0FF
+
+[Cheats/Quick Career Profits Gain]
+// patch=1,EE,1063F430,extended,0000FFFF
+
+[Cheats/Max Career Profits]
+// patch=1,EE,2063F430,extended,05F5E0FF
+
+[Cheats/Max Career Wins]
+// patch=1,EE,1063F5DC,extended,000001F3
+// patch=1,EE,1063F5DE,extended,000001F3
+
+[Cheats/No Career Wins]
+// patch=1,EE,1063F5DC,extended,00000000
+// patch=1,EE,1063F5DE,extended,00000000
+
+[Cheats/Max Outstanding Loan]
+// patch=1,EE,2063F5E4,extended,0001869F
+
+[Cheats/No Outstanding Loan]
+// patch=1,EE,2063F5E4,extended,00000000
+
+[Cheats/Max Outstanding Loan Weeks Left]
+// patch=1,EE,2063F5E8,extended,000003E7
+
+[Cheats/No Outstanding Loan Weeks Left]
+// patch=1,EE,2063F5E8,extended,00000000
+
+[Cheats/Have All Pros Beaten]
+// patch=1,EE,1063F606,extended,0000007F
+
+[Cheats/Have No Pros Beaten]
+// patch=1,EE,1063F606,extended,00000000
+
+[Cheats/Max Online Wins]
+// patch=1,EE,2063F608,extended,000001F3
+
+[Cheats/No Online Wins]
+// patch=1,EE,2063F608,extended,00000000
+
+[Cheats/Max Online Loss]
+// patch=1,EE,2063F60C,extended,000001F3
+
+[Cheats/No Online Loss]
+// patch=1,EE,2063F60C,extended,00000000
+
+[Cheats/Infinite Skill Points]
+// patch=1,EE,0063F634,extended,00000063
+
+[Cheats/Skill Points Dont Decrease When Buying Skills]
+// patch=1,EE,20165D2C,extended,00000000
+
+[Cheats/Skill Points Increase When Buying Skills]
+// patch=1,EE,10165D28,extended,00000001
+
+[Cheats/Max Keen Eyes]
+// patch=1,EE,0063F635,extended,00000003
+
+[Cheats/Max Hand Strength]
+// patch=1,EE,0063F636,extended,00000003
+
+[Cheats/Max Stare Down]
+// patch=1,EE,0063F637,extended,00000003
+
+[Cheats/Max Tough Read]
+// patch=1,EE,0063F638,extended,00000003
+
+[Cheats/Max Stone Face]
+// patch=1,EE,0063F639,extended,00000003
+
+[Cheats/Max Actor]
+// patch=1,EE,0063F63A,extended,00000003
+
+[Cheats/Max Convincing]
+// patch=1,EE,0063F63B,extended,00000003
+
+[Cheats/Max All Skills]
+// patch=1,EE,0063F635,extended,00000003
+// patch=1,EE,1063F636,extended,00000303
+// patch=1,EE,2063F638,extended,03030303
+
+[Cheats/Trophy 1]
+// patch=1,EE,2063F668,extended,00000001
+
+[Cheats/Trophy 2]
+// patch=1,EE,2063F66C,extended,00000001
+
+[Cheats/Trophy 3]
+// patch=1,EE,2063F670,extended,00000001
+
+[Cheats/Trophy 4]
+// patch=1,EE,2063F674,extended,00000001
+
+[Cheats/Trophy 5]
+// patch=1,EE,2063F678,extended,00000001
+
+[Cheats/Trophy 6]
+// patch=1,EE,2063F67C,extended,00000001
+
+[Cheats/Trophy 7]
+// patch=1,EE,2063F680,extended,00000001
+
+[Cheats/Trophy 8]
+// patch=1,EE,2063F684,extended,00000001
+
+[Cheats/Trophy 9]
+// patch=1,EE,2063F688,extended,00000001
+
+[Cheats/Trophy 10]
+// patch=1,EE,2063F68C,extended,00000001
+
+[Cheats/Trophy 11]
+// patch=1,EE,2063F690,extended,00000001
+
+[Cheats/Trophy 12]
+// patch=1,EE,2063F694,extended,00000001
+
+[Cheats/Trophy 13]
+// patch=1,EE,2063F698,extended,00000001
+
+[Cheats/All Trophies]
+// patch=1,EE,4063F668,extended,000D0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Trinket 1]
+// patch=1,EE,2063F69C,extended,00000001
+
+[Cheats/Trinket 2]
+// patch=1,EE,2063F6A0,extended,00000001
+
+[Cheats/Trinket 3]
+// patch=1,EE,2063F6A4,extended,00000001
+
+[Cheats/Trinket 4]
+// patch=1,EE,2063F6A8,extended,00000001
+
+[Cheats/Trinket 5]
+// patch=1,EE,2063F6AC,extended,00000001
+
+[Cheats/Trinket 6]
+// patch=1,EE,2063F6B0,extended,00000001
+
+[Cheats/Trinket 7]
+// patch=1,EE,2063F6B4,extended,00000001
+
+[Cheats/Trinket 8]
+// patch=1,EE,2063F6B8,extended,00000001
+
+[Cheats/Trinket 9]
+// patch=1,EE,2063F6BC,extended,00000001
+
+[Cheats/Trinket 10]
+// patch=1,EE,2063F6C0,extended,00000001
+
+[Cheats/Trinket 11]
+// patch=1,EE,2063F6C4,extended,00000001
+
+[Cheats/Trinket 12]
+// patch=1,EE,2063F6C8,extended,00000001
+
+[Cheats/Trinket 13]
+// patch=1,EE,2063F6CC,extended,00000001
+
+[Cheats/Trinket 14]
+// patch=1,EE,2063F6D0,extended,00000001
+
+[Cheats/Trinket 15]
+// patch=1,EE,2063F6D4,extended,00000001
+
+[Cheats/Trinket 16]
+// patch=1,EE,2063F6D8,extended,00000001
+
+[Cheats/Trinket 17]
+// patch=1,EE,2063F6DC,extended,00000001
+
+[Cheats/All Trinkets]
+// patch=1,EE,4063F69C,extended,00110001
+// patch=1,EE,00000001,extended,00000000

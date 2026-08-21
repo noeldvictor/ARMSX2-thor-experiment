@@ -1,0 +1,75 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: James Cameron's Dark Angel [SLES-51333] [5BE3F481]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Grand Prix-Qualifier 2]
+// patch=1,EE,903B8D3C,extended,0C094303
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,C48002A4
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,E48002A0
+// patch=1,EE,20210638,extended,0C030088
+
+[Cheats/Always Max Rage]
+// patch=1,EE,200C0230,extended,C48002B8
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,E48002B4
+// patch=1,EE,20210644,extended,0C03008C
+
+[Cheats/Infinite Item Usage]
+// patch=1,EE,20213610,extended,00000000
+
+[Cheats/Extra Items]
+// patch=1,EE,10213608,extended,00000001
+
+[Cheats/Infinite Time]
+// patch=1,EE,20211CA8,extended,00000000
+
+[Cheats/Have EMF Jammer]
+// patch=1,EE,205735F0,extended,00000001
+// patch=1,EE,20573600,extended,00000001
+
+[Cheats/Infinite Explosive Charges]
+// patch=1,EE,20573610,extended,00000002
+// patch=1,EE,20573620,extended,00000063
+
+[Cheats/Have Keycard 1]
+// patch=1,EE,20573630,extended,00000003
+// patch=1,EE,20573640,extended,00000001
+
+[Cheats/Have Keycard 2]
+// patch=1,EE,20573650,extended,00000004
+// patch=1,EE,20573660,extended,00000001
+
+[Cheats/Have Keycard 3]
+// patch=1,EE,20573670,extended,00000005
+// patch=1,EE,20573680,extended,00000001
+
+[Cheats/Infinite Health Packs]
+// patch=1,EE,20573690,extended,00000006
+// patch=1,EE,205736A0,extended,00000063
+
+[Cheats/Have Lighter]
+// patch=1,EE,205736B0,extended,00000007
+// patch=1,EE,205736C0,extended,00000001
+
+[Cheats/Have Map]
+// patch=1,EE,205736D0,extended,00000008
+// patch=1,EE,205736E0,extended,00000001
+
+[Cheats/Have Stealth Gun]
+// patch=1,EE,205736F0,extended,00000009
+// patch=1,EE,20573710,extended,00000001
+
+[Cheats/Infinite Stealth Gun Ammunition]
+// patch=1,EE,20573710,extended,0000000A
+// patch=1,EE,20573720,extended,00000063
+
+[Cheats/Have Tonfa]
+// patch=1,EE,20573730,extended,0000000B
+// patch=1,EE,20573740,extended,00000001
+
+[Cheats/Have Walkie Talkie]
+// patch=1,EE,20573750,extended,0000000C
+// patch=1,EE,20573760,extended,00000001

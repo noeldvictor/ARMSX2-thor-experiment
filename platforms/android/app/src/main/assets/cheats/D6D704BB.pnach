@@ -1,0 +1,55 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Cold Winter [SLUS-20845] [D6D704BB]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock Extreme Difficulty]
+// patch=1,EE,90506860,extended,00832021
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,C60000F8
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,E60000F4
+// patch=1,EE,203221F4,extended,0C030088
+
+[Cheats/Infinite Armor]
+// patch=1,EE,200C0230,extended,C6020380
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,E602037C
+// patch=1,EE,20322208,extended,0C03008C
+
+[Cheats/Infinite Stamina]
+// patch=1,EE,200C0260,extended,C4A108C4
+// patch=1,EE,200C0264,extended,03E00008
+// patch=1,EE,200C0268,extended,E4A108C0
+// patch=1,EE,2032220C,extended,0C030098
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20339DA0,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,20339DA0,extended,24050064
+
+[Cheats/Extra Ammo]
+// patch=1,EE,20339DA0,extended,00512821
+
+[Cheats/Never Reload]
+// patch=1,EE,20339994,extended,00000000
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,20342E60,extended,00000000
+
+[Cheats/Max Infinite Grenades]
+// patch=1,EE,20342E5C,extended,24020063
+
+[Cheats/Extra Grenades]
+// patch=1,EE,10342E5C,extended,00000001
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,200C0240,extended,3C01FFFF
+// patch=1,EE,200C0244,extended,00272824
+// patch=1,EE,200C0248,extended,3C010072
+// patch=1,EE,200C024C,extended,54250001
+// patch=1,EE,200C0250,extended,44800000
+// patch=1,EE,200C0254,extended,080D4F4C
+// patch=1,EE,200C0258,extended,3C050400
+// patch=1,EE,20353D24,extended,08030090

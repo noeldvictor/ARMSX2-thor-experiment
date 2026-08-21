@@ -1,0 +1,29 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Area 51 [UNKNOWN] [180F5C36]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,2026ADC8,extended,00000000
+// patch=1,EE,2026ADD8,extended,00000000
+// patch=1,EE,2026ADE0,extended,00000000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201569D4,extended,00000000
+// patch=1,EE,20156A94,extended,00000000
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,20207AC8,extended,00000000
+
+[Cheats/Infinite Mutagen]
+// patch=1,EE,20222AEC,extended,00000000
+
+[Cheats/All Secret Files Unlocked]
+// patch=1,EE,204F9828,extended,00000015
+
+[Cheats/All Databanks Found]
+// patch=1,EE,404F980C,extended,00040001
+// patch=1,EE,FFFFFFFF,extended,00000000
+// patch=1,EE,104F981C,extended,0000FFFF
+
+[Cheats/Steady Aiming]
+// patch=1,EE,20227D14,extended,00000000

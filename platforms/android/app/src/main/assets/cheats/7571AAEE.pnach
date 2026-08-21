@@ -1,0 +1,923 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ape Escape 3 [SCUS-97501] [7571AAEE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Stage Photos]
+// patch=1,EE,90405780,extended,0C10AC5B
+
+[Cheats/Infinite Cookies]
+// patch=1,EE,20649918,extended,42C80000
+
+[Cheats/Max Jackets]
+// patch=1,EE,20649914,extended,00000063
+
+[Cheats/Extra Jackets]
+// patch=1,EE,104D7090,extended,00000001
+
+[Cheats/Max Gotcha Coins]
+// patch=1,EE,206499D4,extended,0000270F
+
+[Cheats/Gotcha Coins Worth 100]
+// patch=1,EE,2033FD0C,extended,25B10064
+
+[Cheats/Gotcha Coins Worth 50]
+// patch=1,EE,2033FD0C,extended,25B10032
+
+[Cheats/Gotcha Coins Worth 25]
+// patch=1,EE,2033FD0C,extended,25B10019
+
+[Cheats/Gotcha Coins Worth 10]
+// patch=1,EE,2033FD0C,extended,25B1000A
+
+[Cheats/Gotcha Coins Worth 5]
+// patch=1,EE,2033FD0C,extended,25B10005
+
+[Cheats/Gotcha Coins Worth 2]
+// patch=1,EE,2033FD0C,extended,25B10002
+
+[Cheats/Unlock All Monkepedia]
+// patch=1,EE,406499DC,extended,008E0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10649C14,extended,00000101
+
+[Cheats/Fantasy Knight]
+// patch=1,EE,20649930,extended,00000002
+
+[Cheats/Wild West Kid]
+// patch=1,EE,20649934,extended,00000002
+
+[Cheats/Miracle Ninja]
+// patch=1,EE,20649938,extended,00000002
+
+[Cheats/Genie Dancer]
+// patch=1,EE,2064993C,extended,00000002
+
+[Cheats/Dragon Kung Fu Fighter]
+// patch=1,EE,20649940,extended,00000002
+
+[Cheats/Cyber Ace]
+// patch=1,EE,20649944,extended,00000002
+
+[Cheats/Super Monkey]
+// patch=1,EE,20649948,extended,00000002
+
+[Cheats/Stun Club]
+// patch=1,EE,20649950,extended,00000002
+
+[Cheats/Monkey Net]
+// patch=1,EE,20649954,extended,00000002
+
+[Cheats/Monkey Radar]
+// patch=1,EE,20649958,extended,00000002
+
+[Cheats/Super Hoop]
+// patch=1,EE,2064995C,extended,00000002
+
+[Cheats/Slingback Shooter]
+// patch=1,EE,20649960,extended,00000002
+
+[Cheats/RC Car]
+// patch=1,EE,20649964,extended,00000002
+
+[Cheats/Sky Flyer]
+// patch=1,EE,20649968,extended,00000002
+
+[Cheats/Water Net]
+// patch=1,EE,20649978,extended,00000002
+
+[Cheats/All Gadgets]
+// patch=1,EE,4064992C,extended,00150001
+// patch=1,EE,00000002,extended,00000000
+
+[Cheats/1-I-borg]
+// patch=1,EE,00649C16,extended,00000001
+
+[Cheats/2-Beckon-borg]
+// patch=1,EE,00649C17,extended,00000001
+
+[Cheats/3-Clap-borg]
+// patch=1,EE,00649C18,extended,00000001
+
+[Cheats/4-Mana-borg]
+// patch=1,EE,00649C19,extended,00000001
+
+[Cheats/5-Heli-borg]
+// patch=1,EE,00649C1A,extended,00000001
+
+[Cheats/6-Shutter-borg]
+// patch=1,EE,00649C1B,extended,00000001
+
+[Cheats/7-Hammer-borg]
+// patch=1,EE,00649C1C,extended,00000001
+
+[Cheats/8-Light-borg]
+// patch=1,EE,00649C1D,extended,00000001
+
+[Cheats/9-Sneaky-borg]
+// patch=1,EE,00649C1E,extended,00000001
+
+[Cheats/10-Bogey-borg]
+// patch=1,EE,00649C1F,extended,00000001
+
+[Cheats/11-Tele-robo]
+// patch=1,EE,00649C20,extended,00000001
+
+[Cheats/12-Water-borg]
+// patch=1,EE,00649C21,extended,00000001
+
+[Cheats/13-Jumbo-borg]
+// patch=1,EE,00649C22,extended,00000001
+
+[Cheats/14-Gun-borg]
+// patch=1,EE,00649C23,extended,00000001
+
+[Cheats/15-Box-borg]
+// patch=1,EE,00649C24,extended,00000001
+
+[Cheats/16-Monkey Loader]
+// patch=1,EE,00649C25,extended,00000001
+
+[Cheats/17-Punch-borg]
+// patch=1,EE,00649C26,extended,00000001
+
+[Cheats/18-Ninja-borg]
+// patch=1,EE,00649C27,extended,00000001
+
+[Cheats/19-Cannon-borg]
+// patch=1,EE,00649C28,extended,00000001
+
+[Cheats/20-Nervy-borg]
+// patch=1,EE,00649C29,extended,00000001
+
+[Cheats/21-Monkey UFO]
+// patch=1,EE,00649C2A,extended,00000001
+
+[Cheats/22-Mammoth-robo]
+// patch=1,EE,00649C2B,extended,00000001
+
+[Cheats/23-Dessert-borg]
+// patch=1,EE,00649C2C,extended,00000001
+
+[Cheats/24-Hel-borg]
+// patch=1,EE,00649C2D,extended,00000001
+
+[Cheats/25-Fly-borg]
+// patch=1,EE,00649C2E,extended,00000001
+
+[Cheats/26-Yojimborg]
+// patch=1,EE,00649C2F,extended,00000001
+
+[Cheats/27-Run-borg]
+// patch=1,EE,00649C30,extended,00000001
+
+[Cheats/28-Shield-borg]
+// patch=1,EE,00649C31,extended,00000001
+
+[Cheats/29-Spiltter-borg]
+// patch=1,EE,00649C32,extended,00000001
+
+[Cheats/30-Sneaky-borg Red]
+// patch=1,EE,00649C33,extended,00000001
+
+[Cheats/All Teleborgs]
+// patch=1,EE,10649C16,extended,00000101
+// patch=1,EE,40649C18,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/1-Kei 1]
+// patch=1,EE,00649C34,extended,00000001
+
+[Cheats/2-Kei 2]
+// patch=1,EE,00649C35,extended,00000001
+
+[Cheats/3-Kei 3]
+// patch=1,EE,00649C36,extended,00000001
+
+[Cheats/4-Kei 4]
+// patch=1,EE,00649C37,extended,00000001
+
+[Cheats/5-Kei 5]
+// patch=1,EE,00649C38,extended,00000001
+
+[Cheats/6-Kei 6]
+// patch=1,EE,00649C39,extended,00000001
+
+[Cheats/7-Kei 7]
+// patch=1,EE,00649C3A,extended,00000001
+
+[Cheats/8-Yumi 1]
+// patch=1,EE,00649C3B,extended,00000001
+
+[Cheats/9-Yumi 2]
+// patch=1,EE,00649C3C,extended,00000001
+
+[Cheats/10-Yumi 3]
+// patch=1,EE,00649C3D,extended,00000001
+
+[Cheats/11-Yumi 4]
+// patch=1,EE,00649C3E,extended,00000001
+
+[Cheats/12-Yumi 5]
+// patch=1,EE,00649C3F,extended,00000001
+
+[Cheats/13-Yumi 6]
+// patch=1,EE,00649C40,extended,00000001
+
+[Cheats/14-Yumi 7]
+// patch=1,EE,00649C41,extended,00000001
+
+[Cheats/15-Yumi 8]
+// patch=1,EE,00649C42,extended,00000001
+
+[Cheats/16-Aki]
+// patch=1,EE,00649C43,extended,00000001
+
+[Cheats/17-Teleborg 1]
+// patch=1,EE,00649C44,extended,00000001
+
+[Cheats/18-Teleborg 2]
+// patch=1,EE,00649C45,extended,00000001
+
+[Cheats/19-Teleborg 3]
+// patch=1,EE,00649C46,extended,00000001
+
+[Cheats/20-Teleborg 4]
+// patch=1,EE,00649C47,extended,00000001
+
+[Cheats/21-Teleborg 5]
+// patch=1,EE,00649C48,extended,00000001
+
+[Cheats/22-Teleborg 6]
+// patch=1,EE,00649C49,extended,00000001
+
+[Cheats/23-Teleborg 7]
+// patch=1,EE,00649C4A,extended,00000001
+
+[Cheats/24-Tomoking]
+// patch=1,EE,00649C4B,extended,00000001
+
+[Cheats/25-King Gorilliac Armor]
+// patch=1,EE,00649C4C,extended,00000001
+
+[Cheats/26-Map Image 1]
+// patch=1,EE,00649C4D,extended,00000001
+
+[Cheats/27-Map Image 2]
+// patch=1,EE,00649C4E,extended,00000001
+
+[Cheats/28-Map Image 3]
+// patch=1,EE,00649C4F,extended,00000001
+
+[Cheats/29-Map Image 4]
+// patch=1,EE,00649C50,extended,00000001
+
+[Cheats/30-Map Image 5]
+// patch=1,EE,00649C51,extended,00000001
+
+[Cheats/All Concept Arts]
+// patch=1,EE,40649C34,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10649C50,extended,00000101
+
+[Cheats/1-Weird Photo 1]
+// patch=1,EE,00649C52,extended,00000001
+
+[Cheats/2-Weird Photo 2]
+// patch=1,EE,00649C53,extended,00000001
+
+[Cheats/3-Weird Photo 3]
+// patch=1,EE,00649C54,extended,00000001
+
+[Cheats/4-Weird Photo 4]
+// patch=1,EE,00649C55,extended,00000001
+
+[Cheats/5-Weird Photo 5]
+// patch=1,EE,00649C56,extended,00000001
+
+[Cheats/6-Weird Photo 6]
+// patch=1,EE,00649C57,extended,00000001
+
+[Cheats/7-Weird Photo 7]
+// patch=1,EE,00649C58,extended,00000001
+
+[Cheats/8-Weird Photo 8]
+// patch=1,EE,00649C59,extended,00000001
+
+[Cheats/9-Weird Photo 9]
+// patch=1,EE,00649C5A,extended,00000001
+
+[Cheats/10-Weird Photo 10]
+// patch=1,EE,00649C5B,extended,00000001
+
+[Cheats/11-Weird Photo 11]
+// patch=1,EE,00649C5C,extended,00000001
+
+[Cheats/12-Weird Photo 12]
+// patch=1,EE,00649C5D,extended,00000001
+
+[Cheats/13-Weird Photo 13]
+// patch=1,EE,00649C5E,extended,00000001
+
+[Cheats/14-Weird Photo 14]
+// patch=1,EE,00649C5F,extended,00000001
+
+[Cheats/15-Weird Photo 15]
+// patch=1,EE,00649C60,extended,00000001
+
+[Cheats/16-Weird Photo 16]
+// patch=1,EE,00649C61,extended,00000001
+
+[Cheats/17-Weird Photo 17]
+// patch=1,EE,00649C62,extended,00000001
+
+[Cheats/18-Weird Photo 18]
+// patch=1,EE,00649C63,extended,00000001
+
+[Cheats/19-Weird Photo 19]
+// patch=1,EE,00649C64,extended,00000001
+
+[Cheats/20-Weird Photo 20]
+// patch=1,EE,00649C65,extended,00000001
+
+[Cheats/All Weird Photos]
+// patch=1,EE,10649C52,extended,00000101
+// patch=1,EE,40649C54,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10649C64,extended,00000101
+
+[Cheats/1-Hindrance]
+// patch=1,EE,00649C66,extended,00000001
+
+[Cheats/2-Foot Race]
+// patch=1,EE,00649C67,extended,00000001
+
+[Cheats/3-Having A Nice Dream?]
+// patch=1,EE,00649C68,extended,00000001
+
+[Cheats/4-A Nightmare I Had Yesterday]
+// patch=1,EE,00649C69,extended,00000001
+
+[Cheats/5-Bananasian Sword]
+// patch=1,EE,00649C6A,extended,00000001
+
+[Cheats/6-Boom!]
+// patch=1,EE,00649C6B,extended,00000001
+
+[Cheats/7-Moonlight Knight]
+// patch=1,EE,00649C6C,extended,00000001
+
+[Cheats/8-Tweety-Tweet Stadium]
+// patch=1,EE,00649C6D,extended,00000001
+
+[Cheats/9-Face The Big Baddie!]
+// patch=1,EE,00649C6E,extended,00000001
+
+[Cheats/10-Fan]
+// patch=1,EE,00649C6F,extended,00000001
+
+[Cheats/11-Hit! Hit!]
+// patch=1,EE,00649C70,extended,00000001
+
+[Cheats/12-Two Hour's Wait]
+// patch=1,EE,00649C71,extended,00000001
+
+[Cheats/13-Beauty]
+// patch=1,EE,00649C72,extended,00000001
+
+[Cheats/14-Car Race]
+// patch=1,EE,00649C73,extended,00000001
+
+[Cheats/15-The She-Ninja Cometh!]
+// patch=1,EE,00649C74,extended,00000001
+
+[Cheats/16-Bon Appetit]
+// patch=1,EE,00649C75,extended,00000001
+
+[Cheats/17-Even Higher!]
+// patch=1,EE,00649C76,extended,00000001
+
+[Cheats/18-Lost Town]
+// patch=1,EE,00649C77,extended,00000001
+
+[Cheats/19-Heeeeeere's Genie!]
+// patch=1,EE,00649C78,extended,00000001
+
+[Cheats/20-Co-Starring 2 Major Idols!!]
+// patch=1,EE,00649C79,extended,00000001
+
+[Cheats/21-Co-Starring 2 Major Idols!?]
+// patch=1,EE,00649C7A,extended,00000001
+
+[Cheats/22-Dead Heat]
+// patch=1,EE,00649C7B,extended,00000001
+
+[Cheats/23-Help Out]
+// patch=1,EE,00649C7C,extended,00000001
+
+[Cheats/24-Cheering Yumi On]
+// patch=1,EE,00649C7D,extended,00000001
+
+[Cheats/25-Midnight Jump]
+// patch=1,EE,00649C7E,extended,00000001
+
+[Cheats/26-Princess Ace Has Arrived!]
+// patch=1,EE,00649C7F,extended,00000001
+
+[Cheats/27-Dogfight!]
+// patch=1,EE,00649C80,extended,00000001
+
+[Cheats/28-Monkey Teacher]
+// patch=1,EE,00649C81,extended,00000001
+
+[Cheats/29-A Whiff Of Luxury]
+// patch=1,EE,00649C82,extended,00000001
+
+[Cheats/30-A Figuring From Somewhere]
+// patch=1,EE,00649C83,extended,00000001
+
+[Cheats/All Secret Photos]
+// patch=1,EE,10649C66,extended,00000101
+// patch=1,EE,40649C68,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/1-Use Combos To Get Items!]
+// patch=1,EE,00649C84,extended,00000001
+
+[Cheats/2-Learn To Use Morphs!]
+// patch=1,EE,00649C85,extended,00000001
+
+[Cheats/3-Defeat The Teleborgs!]
+// patch=1,EE,00649C86,extended,00000001
+
+[Cheats/4-Sweet On Yumi?]
+// patch=1,EE,00649C87,extended,00000001
+
+[Cheats/5-Where's The Dressing Room?]
+// patch=1,EE,00649C88,extended,00000001
+
+[Cheats/6-Found A Rare Monkey! (#1)]
+// patch=1,EE,00649C89,extended,00000001
+
+[Cheats/7-Found A Rare Monkey! (#2)]
+// patch=1,EE,00649C8A,extended,00000001
+
+[Cheats/8-Found A Rare Monkey! (#3)]
+// patch=1,EE,00649C8B,extended,00000001
+
+[Cheats/9-Found A Rare Monkey! (#4)]
+// patch=1,EE,00649C8C,extended,00000001
+
+[Cheats/10-Found A Rare Monkey! (#5)]
+// patch=1,EE,00649C8D,extended,00000001
+
+[Cheats/11-Found A Rare Monkey! (#6)]
+// patch=1,EE,00649C8E,extended,00000001
+
+[Cheats/12-Found A Rare Monkey! (#7)]
+// patch=1,EE,00649C8F,extended,00000001
+
+[Cheats/13-Found A Rare Monkey! (#8)]
+// patch=1,EE,00649C90,extended,00000001
+
+[Cheats/14-Win The Fight With Monkey White!]
+// patch=1,EE,00649C91,extended,00000001
+
+[Cheats/15-Now To See To Monkey Blue!]
+// patch=1,EE,00649C92,extended,00000001
+
+[Cheats/16-Throw A K.O. On Monkey Yellow!]
+// patch=1,EE,00649C93,extended,00000001
+
+[Cheats/17-Go And Sink That Monkey Pink!]
+// patch=1,EE,00649C94,extended,00000001
+
+[Cheats/18-Time For Bed, Monkey Red!]
+// patch=1,EE,00649C95,extended,00000001
+
+[Cheats/19-Now To Show Tomo's Robo!]
+// patch=1,EE,00649C96,extended,00000001
+
+[Cheats/20-Prepare For Attack, King Gorilliac!]
+// patch=1,EE,00649C97,extended,00000001
+
+[Cheats/All Hint Books]
+// patch=1,EE,40649C84,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Yumi's Favorite-Normal Chassis]
+// patch=1,EE,00649C98,extended,00000001
+
+[Cheats/Black Chassis]
+// patch=1,EE,00649C99,extended,00000001
+
+[Cheats/Pudding Chassis]
+// patch=1,EE,00649C9A,extended,00000001
+
+[Cheats/All Bonus RC Cars]
+// patch=1,EE,10649C98,extended,00000101
+// patch=1,EE,00649C9A,extended,00000001
+
+[Cheats/Super Monkey Throw Stadium]
+// patch=1,EE,00649C9B,extended,00000001
+
+[Cheats/Ultim-ape Fighter!]
+// patch=1,EE,00649C9C,extended,00000001
+
+[Cheats/Metal Gear Solid]
+// patch=1,EE,00649C9D,extended,00000001
+
+[Cheats/All Mini-Games]
+// patch=1,EE,00649C9B,extended,00000001
+// patch=1,EE,10649C9C,extended,00000101
+
+[Cheats/1-Channle Guide CH1]
+// patch=1,EE,00649C9E,extended,00000001
+
+[Cheats/2-Channle Guide CH2]
+// patch=1,EE,00649C9F,extended,00000001
+
+[Cheats/3-Channle Guide CH3]
+// patch=1,EE,00649CA0,extended,00000001
+
+[Cheats/4-Channle Guide CH4]
+// patch=1,EE,00649CA1,extended,00000001
+
+[Cheats/5-Channle Guide CH5]
+// patch=1,EE,00649CA2,extended,00000001
+
+[Cheats/6-Channle Guide CH6]
+// patch=1,EE,00649CA3,extended,00000001
+
+[Cheats/7-Channle Guide CH7]
+// patch=1,EE,00649CA4,extended,00000001
+
+[Cheats/8-Channle Guide CH8]
+// patch=1,EE,00649CA5,extended,00000001
+
+[Cheats/9-Channle Guide CH9]
+// patch=1,EE,00649CA6,extended,00000001
+
+[Cheats/10-Channle Guide CH10]
+// patch=1,EE,00649CA7,extended,00000001
+
+[Cheats/11-Channle Guide CH11]
+// patch=1,EE,00649CA8,extended,00000001
+
+[Cheats/12-Channle Guide CH12]
+// patch=1,EE,00649CA9,extended,00000001
+
+[Cheats/13-Channle Guide CH13]
+// patch=1,EE,00649CAA,extended,00000001
+
+[Cheats/14-Channle Guide CH14]
+// patch=1,EE,00649CAB,extended,00000001
+
+[Cheats/15-Channle Guide CH15]
+// patch=1,EE,00649CAC,extended,00000001
+
+[Cheats/16-Channle Guide CH16]
+// patch=1,EE,00649CAD,extended,00000001
+
+[Cheats/17-Channle Guide CH17]
+// patch=1,EE,00649CAE,extended,00000001
+
+[Cheats/18-Channle Guide CH18]
+// patch=1,EE,00649CAF,extended,00000001
+
+[Cheats/19-Channle Guide CH19]
+// patch=1,EE,00649CB0,extended,00000001
+
+[Cheats/20-Channle Guide CH20]
+// patch=1,EE,00649CB1,extended,00000001
+
+[Cheats/All Channel Guides]
+// patch=1,EE,10649C9E,extended,00000101
+// patch=1,EE,40649CA0,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10649CB0,extended,00000101
+
+[Cheats/1-The Cameramonkey's Job]
+// patch=1,EE,00649CB2,extended,00000001
+
+[Cheats/2-The wonders Of Morphing]
+// patch=1,EE,00649CB3,extended,00000001
+
+[Cheats/3-What Monkey White Likes...]
+// patch=1,EE,00649CB4,extended,00000001
+
+[Cheats/4-A Dirty Secret]
+// patch=1,EE,00649CB5,extended,00000001
+
+[Cheats/5-The Old Geezer's Complaints]
+// patch=1,EE,00649CB6,extended,00000001
+
+[Cheats/6-Marvelous Discovery]
+// patch=1,EE,00649CB7,extended,00000001
+
+[Cheats/7-Monkey Blue ANd His Motorbike]
+// patch=1,EE,00649CB8,extended,00000001
+
+[Cheats/8-Secret Technique]
+// patch=1,EE,00649CB9,extended,00000001
+
+[Cheats/9-Monkey Yellow And Kabuki]
+// patch=1,EE,00649CBA,extended,00000001
+
+[Cheats/10-I'm Angel Monkey]
+// patch=1,EE,00649CBB,extended,00000001
+
+[Cheats/11-Go, Chimp Racer!]
+// patch=1,EE,00649CBC,extended,00000001
+
+[Cheats/12-Monkey Pink Vs. Lovey]
+// patch=1,EE,00649CBD,extended,00000001
+
+[Cheats/13-The Ballerina Monkey Vow]
+// patch=1,EE,00649CBE,extended,00000001
+
+[Cheats/14-Separated At Birth?]
+// patch=1,EE,00649CBF,extended,00000001
+
+[Cheats/15-Secret Of The Red Pants Chimp]
+// patch=1,EE,00649CC0,extended,00000001
+
+[Cheats/16-A Tasty Way To Eat Bananas]
+// patch=1,EE,00649CC1,extended,00000001
+
+[Cheats/17-Monkey Red's New Trick!]
+// patch=1,EE,00649CC2,extended,00000001
+
+[Cheats/18-Go Afro! Go Afro!]
+// patch=1,EE,00649CC3,extended,00000001
+
+[Cheats/19-An Enjoyable Time]
+// patch=1,EE,00649CC4,extended,00000001
+
+[Cheats/20-What The Robber Monkey Wants]
+// patch=1,EE,00649CC5,extended,00000001
+
+[Cheats/All Mon-Fictions]
+// patch=1,EE,10649CB2,extended,00000101
+// patch=1,EE,40649CB4,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10649CC4,extended,00000101
+
+[Cheats/1-Seaside Resort]
+// patch=1,EE,00649CC6,extended,00000001
+
+[Cheats/2-Hide-N-Seek Forest]
+// patch=1,EE,00649CC7,extended,00000001
+
+[Cheats/3-Saru-mon's Castle]
+// patch=1,EE,00649CC8,extended,00000001
+
+[Cheats/4-Saru-mon's Castle 2]
+// patch=1,EE,00649CC9,extended,00000001
+
+[Cheats/5-The Big City]
+// patch=1,EE,00649CCA,extended,00000001
+
+[Cheats/6-Specter TV Studio]
+// patch=1,EE,00649CCB,extended,00000001
+
+[Cheats/7-Specter TV Studio 2]
+// patch=1,EE,00649CCC,extended,00000001
+
+[Cheats/8-Bootown]
+// patch=1,EE,00649CCD,extended,00000001
+
+[Cheats/9-Bootown 2]
+// patch=1,EE,00649CCE,extended,00000001
+
+[Cheats/10-Wild West Town]
+// patch=1,EE,00649CCF,extended,00000001
+
+[Cheats/11-Wild West Town 2]
+// patch=1,EE,00649CD0,extended,00000001
+
+[Cheats/12-The Hot Springs]
+// patch=1,EE,00649CD1,extended,00000001
+
+[Cheats/13-THe Hot Springs 2]
+// patch=1,EE,00649CD2,extended,00000001
+
+[Cheats/14-Winterville]
+// patch=1,EE,00649CD3,extended,00000001
+
+[Cheats/15-Winterville 2]
+// patch=1,EE,00649CD4,extended,00000001
+
+[Cheats/16-The Emperor's Castle]
+// patch=1,EE,00649CD5,extended,00000001
+
+[Cheats/17-The Emperor's Castle 2]
+// patch=1,EE,00649CD6,extended,00000001
+
+[Cheats/18-Mount Amazing]
+// patch=1,EE,00649CD7,extended,00000001
+
+[Cheats/19-Mount Amazing 2]
+// patch=1,EE,00649CD8,extended,00000001
+
+[Cheats/20-Toytown]
+// patch=1,EE,00649CD9,extended,00000001
+
+[Cheats/21-Toytown 2]
+// patch=1,EE,00649CDA,extended,00000001
+
+[Cheats/22-Arctic Wonderland]
+// patch=1,EE,00649CDB,extended,00000001
+
+[Cheats/23-Arctic Wonderland 2]
+// patch=1,EE,00649CDC,extended,00000001
+
+[Cheats/24-Mirage Town]
+// patch=1,EE,00649CDD,extended,00000001
+
+[Cheats/25-Eversummer Island]
+// patch=1,EE,00649CDE,extended,00000001
+
+[Cheats/26-Eversummer Island 2]
+// patch=1,EE,00649CDF,extended,00000001
+
+[Cheats/27-Airplane Squadron]
+// patch=1,EE,00649CE0,extended,00000001
+
+[Cheats/28-Kung-Fu Alley]
+// patch=1,EE,00649CE1,extended,00000001
+
+[Cheats/29-Kung-Fu Alley 2]
+// patch=1,EE,00649CE2,extended,00000001
+
+[Cheats/30-Midnight Bay]
+// patch=1,EE,00649CE3,extended,00000001
+
+[Cheats/31-Tomoki City]
+// patch=1,EE,00649CE4,extended,00000001
+
+[Cheats/32-Tomoki City 2]
+// patch=1,EE,00649CE5,extended,00000001
+
+[Cheats/33-Space-TV Fortress]
+// patch=1,EE,00649CE6,extended,00000001
+
+[Cheats/34-space-TV Fortress 2]
+// patch=1,EE,00649CE7,extended,00000001
+
+[Cheats/35-Monkey White Face Off!]
+// patch=1,EE,00649CE8,extended,00000001
+
+[Cheats/36-Monkey Blue Face Off!]
+// patch=1,EE,00649CE9,extended,00000001
+
+[Cheats/37-Monkey Yellow Face Off!]
+// patch=1,EE,00649CEA,extended,00000001
+
+[Cheats/38-Monkey Red Face Off!]
+// patch=1,EE,00649CEB,extended,00000001
+
+[Cheats/39-Dr. Tomoki Face Off!]
+// patch=1,EE,00649CEC,extended,00000001
+
+[Cheats/40-Gorilliac Face Off!]
+// patch=1,EE,00649CED,extended,00000001
+
+[Cheats/41-Specter Face Off!]
+// patch=1,EE,00649CEE,extended,00000001
+
+[Cheats/42-Fantasy Knight]
+// patch=1,EE,00649CEF,extended,00000001
+
+[Cheats/43-Wild West Kid]
+// patch=1,EE,00649CF0,extended,00000001
+
+[Cheats/44-Miracle Ninja]
+// patch=1,EE,00649CF1,extended,00000001
+
+[Cheats/45-Genie Dancer]
+// patch=1,EE,00649CF2,extended,00000001
+
+[Cheats/46-Dragon Kung Fu Fighter]
+// patch=1,EE,00649CF3,extended,00000001
+
+[Cheats/47-Cyber Ace]
+// patch=1,EE,00649CF4,extended,00000001
+
+[Cheats/48-Super Monkey]
+// patch=1,EE,00649CF5,extended,00000001
+
+[Cheats/49-Happy Sensation]
+// patch=1,EE,00649CF6,extended,00000001
+
+[Cheats/50-Banana Heartbreak]
+// patch=1,EE,00649CF7,extended,00000001
+
+[Cheats/All Music Discs]
+// patch=1,EE,10649CC6,extended,00000101
+// patch=1,EE,40649CC8,extended,000C0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Genie Disco]
+// patch=1,EE,00649CF8,extended,00000001
+
+[Cheats/Genie Blues]
+// patch=1,EE,00649CF9,extended,00000001
+
+[Cheats/Genie Slowdance]
+// patch=1,EE,00649CFA,extended,00000001
+
+[Cheats/All Genie Dance Music]
+// patch=1,EE,10649CF8,extended,00000101
+// patch=1,EE,00649CFA,extended,00000001
+
+[Cheats/1-Intro Movie]
+// patch=1,EE,00649CFB,extended,00000001
+
+[Cheats/2-Opening]
+// patch=1,EE,00649CFC,extended,00000001
+
+[Cheats/3-Initial Capture]
+// patch=1,EE,00649CFD,extended,00000001
+
+[Cheats/4-Aki's Invention]
+// patch=1,EE,00649CFE,extended,00000001
+
+[Cheats/5-Monkey White Face Off!]
+// patch=1,EE,00649CFF,extended,00000001
+
+[Cheats/6-Specter & Tomoki 1]
+// patch=1,EE,00649D00,extended,00000001
+
+[Cheats/7-Here's Specter!]
+// patch=1,EE,00649D01,extended,00000001
+
+[Cheats/8-Monkey Blue Face Off!]
+// patch=1,EE,00649D02,extended,00000001
+
+[Cheats/9-Specter & Tomoki 2]
+// patch=1,EE,00649D03,extended,00000001
+
+[Cheats/10-Monkey Yellow Face Off!]
+// patch=1,EE,00649D04,extended,00000001
+
+[Cheats/11-Specter & Tomoki 3]
+// patch=1,EE,00649D05,extended,00000001
+
+[Cheats/12-Monkey Pink Face Off!]
+// patch=1,EE,00649D06,extended,00000001
+
+[Cheats/13-Monkey Pink Face Off 2!]
+// patch=1,EE,00649D07,extended,00000001
+
+[Cheats/14-Specter & Tomoki 4]
+// patch=1,EE,00649D08,extended,00000001
+
+[Cheats/15-Monkey Red Face Off!]
+// patch=1,EE,00649D09,extended,00000001
+
+[Cheats/16-Specter & Tomoki 5]
+// patch=1,EE,00649D0A,extended,00000001
+
+[Cheats/17-Tomoki City]
+// patch=1,EE,00649D0B,extended,00000001
+
+[Cheats/18-Luxury Room]
+// patch=1,EE,00649D0C,extended,00000001
+
+[Cheats/19-Dr. Tomoki Face Off!]
+// patch=1,EE,00649D0D,extended,00000001
+
+[Cheats/20-Tomoki's Secret]
+// patch=1,EE,00649D0E,extended,00000001
+
+[Cheats/21-Double Paradise Plan]
+// patch=1,EE,00649D0F,extended,00000001
+
+[Cheats/22-End Of The Line For Tomoki?]
+// patch=1,EE,00649D10,extended,00000001
+
+[Cheats/23-Ending]
+// patch=1,EE,00649D11,extended,00000001
+
+[Cheats/24-Credits]
+// patch=1,EE,00649D12,extended,00000001
+
+[Cheats/25-Return Of Pink]
+// patch=1,EE,00649D13,extended,00000001
+
+[Cheats/26-Specter Found!]
+// patch=1,EE,00649D14,extended,00000001
+
+[Cheats/27-Specter's Final Showdown!]
+// patch=1,EE,00649D15,extended,00000001
+
+[Cheats/28-The Two Snakes]
+// patch=1,EE,00649D16,extended,00000001
+
+[Cheats/29-Mystery Movie]
+// patch=1,EE,00649D17,extended,00000001
+
+[Cheats/All Movies]
+// patch=1,EE,00649CFB,extended,00000001
+// patch=1,EE,40649CFC,extended,00070001
+// patch=1,EE,01010101,extended,00000000

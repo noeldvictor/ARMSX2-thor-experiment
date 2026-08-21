@@ -1,0 +1,37 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sunny Garcia Surfing [SLUS-20208] [C9E72987]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slot 30]
+// patch=1,EE,F0200008,extended,00327447
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,103885AC,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,203885AC,extended,0098967F
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,103885E0,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,203885E0,extended,0098967F
+
+[Cheats/Unlock All Beaches]
+// patch=1,EE,203888B4,extended,FFFFFFFF
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,203888B8,extended,FFFFFFFF
+
+[Cheats/Unlock All Challenges]
+// patch=1,EE,003888D4,extended,000000FF
+
+[Cheats/Unlock All Outfits]
+// patch=1,EE,203888BC,extended,FFFFFFFF
+// patch=1,EE,203888C0,extended,FFFFFFFF
+// patch=1,EE,203888C4,extended,FFFFFFFF
+
+[Cheats/Unlock All Boards]
+// patch=1,EE,203888C8,extended,FFFFFFFF
+// patch=1,EE,203888CC,extended,FFFFFFFF
+// patch=1,EE,203888D0,extended,FFFFFFFF

@@ -1,0 +1,56 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Battlestar Galactica [SLUS-20421] [7FBD6997]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Equipment Upgrades]
+// patch=1,EE,902356A4,extended,0C08E809
+
+[Cheats/Disable FMV]
+// patch=1,EE,2022DC68,extended,24020001
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,C6400444
+// patch=1,EE,200C0224,extended,080694B0
+// patch=1,EE,200C0228,extended,E6400440
+// patch=1,EE,201A92CC,extended,0C030088
+
+[Cheats/Machine Gun Never Overheats]
+// patch=1,EE,203304BC,extended,42C80000
+
+[Cheats/Unlock All Movies]
+// patch=1,EE,0031B445,extended,0000000F
+
+[Cheats/Unlock All Modelviewer]
+// patch=1,EE,0031B6FC,extended,00000014
+
+[Cheats/Unlock All Renders]
+// patch=1,EE,0031B6FD,extended,0000001A
+
+[Cheats/Unlock All Concepts]
+// patch=1,EE,0031B6FE,extended,0000001D
+
+[Cheats/Unlock All Series Links]
+// patch=1,EE,0031B6FF,extended,0000000A
+
+[Cheats/Unlock All Outtakes]
+// patch=1,EE,0031B700,extended,00000003
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,0031B701,extended,00000010
+
+[Cheats/Invincibility]
+// patch=1,EE,0031B747,extended,00000001
+// patch=1,EE,20258724,extended,00000001
+
+[Cheats/Missiles Maxed Out]
+// patch=1,EE,0031B748,extended,00000001
+// patch=1,EE,2025E340,extended,00000001
+
+[Cheats/Wingmen Options]
+// patch=1,EE,0031B74A,extended,00000001
+// patch=1,EE,2025E348,extended,00000001
+
+[Cheats/Unlock All Code Unlockables]
+// patch=1,EE,1031B702,extended,00000101
+// patch=1,EE,4031B704,extended,00100001
+// patch=1,EE,01010101,extended,00000000

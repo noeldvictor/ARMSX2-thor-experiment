@@ -1,0 +1,21 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Killzone [UNKNOWN] [CAAEC49C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Levels Available]
+// patch=1,EE,201D723C,extended,24020001
+
+[Cheats/God Mode]
+// patch=1,EE,202768F8,extended,24020001
+
+[Cheats/Display Coordinates]
+// patch=1,EE,2047DC44,extended,24020001
+
+[Cheats/Display Spread Circle]
+// patch=1,EE,204791D4,extended,24020001
+
+[Cheats/Display Lock Circle]
+// patch=1,EE,20479118,extended,24020001
+
+[Cheats/Infinite Ammo/No Reload]
+// patch=1,EE,2028B670,extended,00000000

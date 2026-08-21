@@ -1,0 +1,302 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tony Hawk's Underground [SLES-51848] [EADE437E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,9031A58C,extended,0C0CC501
+
+[Cheats/Access More Menus]
+// patch=1,EE,2012B880,extended,00000000
+
+[Cheats/Always Max Special]
+// patch=1,EE,202369F0,extended,24020BB8
+// patch=1,EE,202369F4,extended,AE220068
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,20237FC4,extended,24A503E7
+
+[Cheats/Super Score Gain]
+// patch=1,EE,20237FC4,extended,24A5270F
+
+[Cheats/Hella Score Gain]
+// patch=1,EE,20237FC4,extended,24A57FFF
+
+[Cheats/Trick Score x30000]
+// patch=1,EE,20237550,extended,34027530
+
+[Cheats/Trick Score x25000]
+// patch=1,EE,20237550,extended,340261A8
+
+[Cheats/Trick Score x20000]
+// patch=1,EE,20237550,extended,34024E20
+
+[Cheats/Trick Score x15000]
+// patch=1,EE,20237550,extended,34023A98
+
+[Cheats/Trick Score x10000]
+// patch=1,EE,20237550,extended,34022710
+
+[Cheats/Trick Score x5000]
+// patch=1,EE,20237550,extended,34021388
+
+[Cheats/Trick Score x1000]
+// patch=1,EE,20237550,extended,340203E8
+
+[Cheats/Trick Score x500]
+// patch=1,EE,20237550,extended,340201F4
+
+[Cheats/Trick Score x100]
+// patch=1,EE,20237550,extended,34020064
+
+[Cheats/Trick Score x50]
+// patch=1,EE,20237550,extended,34020032
+
+[Cheats/Trick Score x25]
+// patch=1,EE,20237550,extended,34020019
+
+[Cheats/Trick Score x10]
+// patch=1,EE,20237550,extended,3402000A
+
+[Cheats/Trick Score x5]
+// patch=1,EE,20237550,extended,34020005
+
+[Cheats/Trick Score x2]
+// patch=1,EE,20237550,extended,34020002
+
+[Cheats/Max Score After 1 Trick]
+// patch=1,EE,20237FA4,extended,3C0505F5
+// patch=1,EE,20237FC4,extended,34A5E0FF
+// patch=1,EE,20237FEC,extended,3C0505F5
+// patch=1,EE,20237FF0,extended,34A5E0FF
+
+[Cheats/Infinite Running Combo]
+// patch=1,EE,2029E364,extended,00000000
+// patch=1,EE,2029E378,extended,00000000
+
+[Cheats/Infinite Time]
+// patch=1,EE,20245290,extended,00000000
+
+[Cheats/View Gaps To Have All Gaps (Current Level)]
+// patch=1,EE,200C0230,extended,2402270F
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,AC820044
+// patch=1,EE,2026CB68,extended,0803008C
+
+[Cheats/Unlock Skateshop]
+// patch=1,EE,70AA5A5D,extended,00000001
+
+[Cheats/Unlock Create-A-Deck]
+// patch=1,EE,70AA5A69,extended,00000008
+
+[Cheats/Unlock Everything]
+// patch=1,EE,200C0240,extended,8C8305F0
+// patch=1,EE,200C0244,extended,00651825
+// patch=1,EE,200C0248,extended,08098F25
+// patch=1,EE,200C024C,extended,AC8305F0
+// patch=1,EE,20263C90,extended,08030090
+
+[Cheats/Element]
+// patch=1,EE,70AA5A45,extended,00000004
+// patch=1,EE,70AA5A5D,extended,00000004
+
+[Cheats/Girl]
+// patch=1,EE,70AA5A45,extended,00000008
+// patch=1,EE,70AA5A5D,extended,00000010
+
+[Cheats/Flip]
+// patch=1,EE,70AA5A45,extended,00000010
+// patch=1,EE,70AA5A5D,extended,00000008
+
+[Cheats/Birdhouse]
+// patch=1,EE,70AA5A45,extended,00000020
+// patch=1,EE,70AA5A5D,extended,00000002
+
+[Cheats/Arto Saari]
+// patch=1,EE,70AA5A45,extended,00000040
+
+[Cheats/Zero]
+// patch=1,EE,70AA5A46,extended,00000001
+// patch=1,EE,70AA5A5D,extended,00000020
+
+[Cheats/Kiss]
+// patch=1,EE,70AA5A46,extended,00000002
+
+[Cheats/Tony Hawk]
+// patch=1,EE,70AA5A54,extended,00000080
+
+[Cheats/Eric Koston]
+// patch=1,EE,70AA5A55,extended,00000008
+
+[Cheats/Bucky Lasek]
+// patch=1,EE,70AA5A55,extended,00000010
+
+[Cheats/Bam Margera]
+// patch=1,EE,70AA5A55,extended,00000020
+
+[Cheats/Rodney Mullen]
+// patch=1,EE,70AA5A55,extended,00000040
+
+[Cheats/Chad Muska]
+// patch=1,EE,70AA5A55,extended,00000080
+
+[Cheats/Andrew Reynolds]
+// patch=1,EE,70AA5A56,extended,00000001
+
+[Cheats/Geoff Rowley]
+// patch=1,EE,70AA5A56,extended,00000002
+
+[Cheats/Jamie Thomas]
+// patch=1,EE,70AA5A56,extended,00000008
+
+[Cheats/Bob Burnquist]
+// patch=1,EE,70AA5A56,extended,00000010
+
+[Cheats/Mike Vallely]
+// patch=1,EE,70AA5A56,extended,00000020
+
+[Cheats/Paul Rodriguez]
+// patch=1,EE,70AA5A56,extended,00000040
+
+[Cheats/Bails 1]
+// patch=1,EE,70AA5A57,extended,00000002
+
+[Cheats/Always Hard]
+// patch=1,EE,70AA5A57,extended,00000004
+
+[Cheats/Bails 2]
+// patch=1,EE,70AA5A57,extended,00000020
+
+[Cheats/All THUG Movies]
+// patch=1,EE,70AA5A45,extended,0000007C
+// patch=1,EE,70AA5A46,extended,00000003
+// patch=1,EE,70AA5A54,extended,0010F880
+// patch=1,EE,70AA5A56,extended,0010267B
+
+[Cheats/New Jersey]
+// patch=1,EE,70AA5A50,extended,00000020
+
+[Cheats/Manhattan]
+// patch=1,EE,70AA5A50,extended,00000040
+
+[Cheats/Tampa]
+// patch=1,EE,70AA5A50,extended,00000080
+
+[Cheats/San Diego]
+// patch=1,EE,70AA5A51,extended,00000001
+
+[Cheats/Hawaii]
+// patch=1,EE,70AA5A51,extended,00000002
+
+[Cheats/Vancouver]
+// patch=1,EE,70AA5A51,extended,00000004
+
+[Cheats/Slam City jam]
+// patch=1,EE,70AA5A51,extended,00000008
+
+[Cheats/Moscow]
+// patch=1,EE,70AA5A51,extended,00000010
+
+[Cheats/Hotter Than Hell]
+// patch=1,EE,70AA5A51,extended,00000020
+
+[Cheats/Venice]
+// patch=1,EE,70AA5A77,extended,00000010
+
+[Cheats/Hangar]
+// patch=1,EE,70AA5A77,extended,00000020
+
+[Cheats/School II]
+// patch=1,EE,70AA5A77,extended,00000040
+
+[Cheats/All Levels]
+// patch=1,EE,70AA5A50,extended,00103FE0
+// patch=1,EE,70AA5A77,extended,00000070
+
+[Cheats/Iron Man]
+// patch=1,EE,70AA5A51,extended,00000040
+
+[Cheats/Gene Simmons]
+// patch=1,EE,70AA5A51,extended,00000080
+
+[Cheats/T.H.U.D.]
+// patch=1,EE,70AA5A52,extended,00000001
+
+[Cheats/Pedestrian]
+// patch=1,EE,70AA5A52,extended,00000002
+
+[Cheats/All Hidden Characters]
+// patch=1,EE,70AA5A51,extended,000000C0
+// patch=1,EE,70AA5A52,extended,00000003
+
+[Cheats/Secret 2-Ironman]
+// patch=1,EE,70AA5A51,extended,00000040
+
+[Cheats/Secret 1-Kiss]
+// patch=1,EE,70AA5A51,extended,00000080
+
+[Cheats/Secret 3-T.H.U.D.]
+// patch=1,EE,70AA5A52,extended,00000001
+
+[Cheats/Sponsor 1-Birdhouse]
+// patch=1,EE,70AA5A5D,extended,00000002
+
+[Cheats/Sponsor 2-Element]
+// patch=1,EE,70AA5A5D,extended,00000004
+
+[Cheats/Sponsor 3-Flip]
+// patch=1,EE,70AA5A5D,extended,00000008
+
+[Cheats/Sponsor 4-Girl]
+// patch=1,EE,70AA5A5D,extended,00000010
+
+[Cheats/Sponsor 5-Zero]
+// patch=1,EE,70AA5A5D,extended,00000020
+
+[Cheats/All Interface Themes]
+// patch=1,EE,70AA5A51,extended,000000C0
+// patch=1,EE,70AA5A52,extended,00000001
+// patch=1,EE,70AA5A5D,extended,0000003E
+
+[Cheats/Cool Specials]
+// patch=1,EE,70AA5A53,extended,00000001
+// patch=1,EE,70AA5A5B,extended,00000020
+
+[Cheats/Kid Mode]
+// patch=1,EE,70AA5A53,extended,00000004
+// patch=1,EE,70AA5A5C,extended,00000001
+
+[Cheats/Rollerskates]
+// patch=1,EE,70AA5A53,extended,00000010
+// patch=1,EE,70AA5A5C,extended,00000040
+
+[Cheats/Flame]
+// patch=1,EE,70AA5A54,extended,00000002
+// patch=1,EE,70AA5A76,extended,00000008
+
+[Cheats/Always Special]
+// patch=1,EE,70AA5A54,extended,00000008
+// patch=1,EE,70AA5A5B,extended,00000004
+
+[Cheats/Perfect Rail]
+// patch=1,EE,70AA5A54,extended,00000010
+// patch=1,EE,70AA5A5B,extended,00000008
+
+[Cheats/Perfect Skitch]
+// patch=1,EE,70AA5A54,extended,00000020
+// patch=1,EE,70AA5A5C,extended,00000010
+
+[Cheats/Perfect Manual]
+// patch=1,EE,70AA5A76,extended,00000001
+// patch=1,EE,70AA5A5B,extended,00000080
+
+[Cheats/Moon Gravity]
+// patch=1,EE,70AA5A76,extended,00000002
+// patch=1,EE,70AA5A5C,extended,00000002
+
+[Cheats/All Cheats]
+// patch=1,EE,70AA5A53,extended,00000015
+// patch=1,EE,70AA5A54,extended,0000003A
+// patch=1,EE,70AA5A76,extended,00000003
+
+[Cheats/All Decks]
+// patch=1,EE,70AA5A5D,extended,0000003E

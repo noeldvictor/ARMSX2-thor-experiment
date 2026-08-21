@@ -1,0 +1,43 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Rule Of Rose [SLUS-21448] [F3FD313E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,9026B460,extended,0C09E4D7
+// patch=1,EE,201FB1E0,extended,00000000
+
+[Cheats/Slot 1]
+// patch=1,EE,1079B9CA,extended,00000063
+
+[Cheats/Slot 2]
+// patch=1,EE,1079B9DA,extended,00000063
+
+[Cheats/Slot 3]
+// patch=1,EE,1079B9EA,extended,00000063
+
+[Cheats/Slot 4]
+// patch=1,EE,1079B9FA,extended,00000063
+
+[Cheats/Slot 5]
+// patch=1,EE,1079BA0A,extended,00000063
+
+[Cheats/Slot 6]
+// patch=1,EE,1079BA1A,extended,00000063
+
+[Cheats/Slot 7]
+// patch=1,EE,1079BA2A,extended,00000063
+
+[Cheats/Slot 8]
+// patch=1,EE,1079BA3A,extended,00000063
+
+[Cheats/Slot 9]
+// patch=1,EE,1079BA4A,extended,00000063
+
+[Cheats/Slot 10]
+// patch=1,EE,1079BA5A,extended,00000063
+
+[Cheats/Slot 11]
+// patch=1,EE,1079BA6A,extended,00000063
+
+[Cheats/Slot 12]
+// patch=1,EE,1079BA7A,extended,00000063

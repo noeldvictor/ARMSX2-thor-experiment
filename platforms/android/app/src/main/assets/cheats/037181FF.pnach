@@ -1,0 +1,24 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Drome Racers [SLUS-20577] [037181FF]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Divisions-All Levels]
+// patch=1,EE,90134474,extended,0C048E68
+
+[Cheats/Stop Total Lap Timer]
+// patch=1,EE,202AF7DC,extended,00000000
+
+[Cheats/Stop Lap Timer]
+// patch=1,EE,20270F2C,extended,00000000
+
+[Cheats/Quick Credits Gain]
+// patch=1,EE,104F3F00,extended,0000FFFF
+
+[Cheats/Max Credits]
+// patch=1,EE,204F3F00,extended,05F5E0FF
+
+[Cheats/Quick Build Token Gain]
+// patch=1,EE,104F3F04,extended,0000FFFF
+
+[Cheats/Max Build Tokens]
+// patch=1,EE,204F3F04,extended,05F5E0FF

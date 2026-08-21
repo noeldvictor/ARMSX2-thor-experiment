@@ -1,0 +1,137 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Metal Slug 4 [SLPS-25376] [1D5AEF04]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max EXP]
+// patch=1,EE,9010F420,extended,0C04645C
+
+[Cheats/Infinite Time]
+// patch=1,EE,00701191,extended,00000099
+
+[Cheats/Infinite Lives]
+// patch=1,EE,20154D00,extended,00000000
+// patch=1,EE,0070BF89,extended,00000063
+// patch=1,EE,0070BE59,extended,00000063
+
+[Cheats/Max Infinite Lives]
+// patch=1,EE,10154CF8,extended,24020063
+
+[Cheats/Extra Lives]
+// patch=1,EE,10154CF8,extended,00000001
+
+[Cheats/Infinite Bombs]
+// patch=1,EE,2018E98C,extended,00000000
+// patch=1,EE,0106F1A7,extended,00000063
+// patch=1,EE,0106F197,extended,00000063
+
+[Cheats/Max Infinite Bombs]
+// patch=1,EE,2018E988,extended,24020063
+
+[Cheats/Extra Bombs]
+// patch=1,EE,1018E988,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20178A80,extended,00000000
+
+[Cheats/Do Not Lose Upgraded Weapons When Dieing]
+// patch=1,EE,200C0220,extended,54600001
+// patch=1,EE,200C0224,extended,A0430004
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,00000000
+// patch=1,EE,20176DDC,extended,0C030088
+// patch=1,EE,20175184,extended,00000000
+// patch=1,EE,20175190,extended,00000000
+
+[Cheats/Invincible]
+// patch=1,EE,1070BAC0,extended,000000FF
+// patch=1,EE,1070B990,extended,000000FF
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,1070CC50,extended,00009999
+// patch=1,EE,1070CC48,extended,00009999
+
+[Cheats/Max Score]
+// patch=1,EE,2070CC50,extended,09999999
+// patch=1,EE,2070CC48,extended,09999999
+
+[Cheats/Infinite Ammo (Infinity Symbol)]
+// patch=1,EE,1106F1AC,extended,0000FFFF
+// patch=1,EE,1106F19C,extended,0000FFFF
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,1106F1AC,extended,000003E7
+// patch=1,EE,1106F19C,extended,000003E7
+
+[Cheats/Press {CROSS} For Moon Jump]
+// patch=1,EE,D06CB582,extended,0000BFFF
+// patch=1,EE,1070BA6A,extended,00000002
+// patch=1,EE,D06CB682,extended,0000BFFF
+// patch=1,EE,1070B93A,extended,00000002
+
+[Cheats/Normal Gun]
+// patch=1,EE,1106F1A4,extended,00000000
+// patch=1,EE,1106F194,extended,00000000
+
+[Cheats/Drop Shot (D)]
+// patch=1,EE,1106F1A4,extended,00000101
+// patch=1,EE,1106F194,extended,00000101
+
+[Cheats/Shotgun (S)]
+// patch=1,EE,1106F1A4,extended,00000202
+// patch=1,EE,1106F194,extended,00000202
+
+[Cheats/Rocket Launcher (R)]
+// patch=1,EE,1106F1A4,extended,00000303
+// patch=1,EE,1106F194,extended,00000303
+
+[Cheats/Flame Chop (F)]
+// patch=1,EE,1106F1A4,extended,00000404
+// patch=1,EE,1106F194,extended,00000404
+
+[Cheats/Heavy Machine Gun (H)]
+// patch=1,EE,1106F1A4,extended,00000505
+// patch=1,EE,1106F194,extended,00000505
+
+[Cheats/Laser Gun]
+// patch=1,EE,1106F1A4,extended,00000606
+// patch=1,EE,1106F194,extended,00000606
+
+[Cheats/Super Shotgun]
+// patch=1,EE,1106F1A4,extended,00000707
+// patch=1,EE,1106F194,extended,00000707
+
+[Cheats/Super Rocket Launcher]
+// patch=1,EE,1106F1A4,extended,00000808
+// patch=1,EE,1106F194,extended,00000808
+
+[Cheats/Explosive Rounds]
+// patch=1,EE,1106F1A4,extended,00000909
+// patch=1,EE,1106F194,extended,00000909
+
+[Cheats/Super Handgun]
+// patch=1,EE,1106F1A4,extended,00000A0A
+// patch=1,EE,1106F194,extended,00000A0A
+
+[Cheats/Super Laser]
+// patch=1,EE,1106F1A4,extended,00000B0B
+// patch=1,EE,1106F194,extended,00000B0B
+
+[Cheats/Enemy Chaser (C)]
+// patch=1,EE,1106F1A4,extended,00000C0C
+// patch=1,EE,1106F194,extended,00000C0C
+
+[Cheats/Iron lizard (I)]
+// patch=1,EE,1106F1A4,extended,00000D0D
+// patch=1,EE,1106F194,extended,00000D0D
+
+[Cheats/Bubble Gun]
+// patch=1,EE,1106F1A4,extended,00000E0E
+// patch=1,EE,1106F194,extended,00000E0E
+
+[Cheats/Super Bullet Gun]
+// patch=1,EE,1106F1A4,extended,00000F0F
+// patch=1,EE,1106F194,extended,00000F0F
+
+[Cheats/Dual Machine Gun (2H)]
+// patch=1,EE,1106F1A4,extended,00001212
+// patch=1,EE,1106F194,extended,00001212

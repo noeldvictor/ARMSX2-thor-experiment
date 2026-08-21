@@ -1,0 +1,69 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Lego Soccer Mania [SLUS-20456] [8B6DFE0D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Cars]
+// patch=1,EE,F0100000,extended,0044EABB
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,105F306C,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,105F306C,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,105F306C,extended,00000000
+
+[Cheats/Home Team Start With 50 Goals]
+// patch=1,EE,D05F306C,extended,00000000
+// patch=1,EE,105F306C,extended,00000032
+
+[Cheats/Home Team Start With 20 Goals]
+// patch=1,EE,D05F306C,extended,00000000
+// patch=1,EE,105F306C,extended,00000014
+
+[Cheats/Home Team Start With 10 Goals]
+// patch=1,EE,D05F306C,extended,00000000
+// patch=1,EE,105F306C,extended,0000000A
+
+[Cheats/Home Team Start With 5 Goals]
+// patch=1,EE,D05F306C,extended,00000000
+// patch=1,EE,105F306C,extended,00000005
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,105F3FBC,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,105F3FBC,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,105F3FBC,extended,00000000
+
+[Cheats/Away Team Start With 50 Goals]
+// patch=1,EE,D05F3FBC,extended,00000000
+// patch=1,EE,105F3FBC,extended,00000032
+
+[Cheats/Away Team Start With 20 Goals]
+// patch=1,EE,D05F3FBC,extended,00000000
+// patch=1,EE,105F3FBC,extended,00000014
+
+[Cheats/Away Team Start With 10 Goals]
+// patch=1,EE,D05F3FBC,extended,00000000
+// patch=1,EE,105F3FBC,extended,0000000A
+
+[Cheats/Away Team Start With 5 Goals]
+// patch=1,EE,D05F3FBC,extended,00000000
+// patch=1,EE,105F3FBC,extended,00000005
+
+[Cheats/Goals Score 10]
+// patch=1,EE,10187254,extended,0000000A
+
+[Cheats/Goals Score 5]
+// patch=1,EE,10187254,extended,00000005
+
+[Cheats/Goals Score 2]
+// patch=1,EE,10187254,extended,00000002
+
+[Cheats/Unlock All Teams]
+// patch=1,EE,406D71FC,extended,000C0001
+// patch=1,EE,01000100,extended,00000000

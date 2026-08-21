@@ -1,0 +1,143 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Digimon Rumble Arena 2 [SLUS-21067] [568A5C78]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Missions Completed]
+// patch=1,EE,903F303C,extended,0C0FF617
+
+[Cheats/Activation Code (Must Be On)]
+// patch=1,EE,200C0000,extended,0080B02D
+// patch=1,EE,200C0004,extended,00503023
+// patch=1,EE,200C0008,extended,8E030000
+// patch=1,EE,200C001C,extended,8E030004
+// patch=1,EE,200C0030,extended,2CC1000C
+// patch=1,EE,200C0034,extended,1420000C
+// patch=1,EE,200C0038,extended,8E030008
+// patch=1,EE,200C004C,extended,2CC10010
+// patch=1,EE,200C0050,extended,14200005
+// patch=1,EE,200C0054,extended,8E03000C
+// patch=1,EE,200C0068,extended,03E00008
+// patch=1,EE,20192858,extended,0C030000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,200C000C,extended,3C0142C8
+// patch=1,EE,200C0010,extended,AC61023C
+
+[Cheats/No Health P1]
+// patch=1,EE,200C000C,extended,3C010000
+// patch=1,EE,200C0010,extended,AC61023C
+
+[Cheats/Infinite Digimeter P1]
+// patch=1,EE,200C0014,extended,3C0142C8
+// patch=1,EE,200C0018,extended,AC610240
+
+[Cheats/No Digimeter P1]
+// patch=1,EE,200C0014,extended,3C010000
+// patch=1,EE,200C0018,extended,AC610240
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,200C0020,extended,3C0142C8
+// patch=1,EE,200C0024,extended,AC61023C
+
+[Cheats/No Health P2]
+// patch=1,EE,200C0020,extended,3C013000
+// patch=1,EE,200C0024,extended,AC61023C
+
+[Cheats/Infinite Digimeter P2]
+// patch=1,EE,200C0028,extended,3C0142C8
+// patch=1,EE,200C002C,extended,AC610240
+
+[Cheats/No Digimeter P2]
+// patch=1,EE,200C0028,extended,3C010000
+// patch=1,EE,200C002C,extended,AC610240
+
+[Cheats/Infinite Health P3]
+// patch=1,EE,200C003C,extended,3C0142C8
+// patch=1,EE,200C0040,extended,AC61023C
+
+[Cheats/No Health P3]
+// patch=1,EE,200C003C,extended,3C013000
+// patch=1,EE,200C0040,extended,AC61023C
+
+[Cheats/Infinite Digimeter P3]
+// patch=1,EE,200C0044,extended,3C0142C8
+// patch=1,EE,200C0048,extended,AC610240
+
+[Cheats/No Digimeter P3]
+// patch=1,EE,200C0044,extended,3C010000
+// patch=1,EE,200C0048,extended,AC610240
+
+[Cheats/Infinite Health P4]
+// patch=1,EE,200C0058,extended,3C0142C8
+// patch=1,EE,200C005C,extended,AC61023C
+
+[Cheats/No Health P4]
+// patch=1,EE,200C0058,extended,3C013000
+// patch=1,EE,200C005C,extended,AC61023C
+
+[Cheats/Infinite Digimeter P4]
+// patch=1,EE,200C0060,extended,3C0142C8
+// patch=1,EE,200C0064,extended,AC610240
+
+[Cheats/No Digimeter P4]
+// patch=1,EE,200C0060,extended,3C010000
+// patch=1,EE,200C0064,extended,AC610240
+
+[Cheats/Duskmon]
+// patch=1,EE,2053CD04,extended,00000001
+
+[Cheats/Diaboromon]
+// patch=1,EE,2053CD08,extended,00000001
+
+[Cheats/Omnimon]
+// patch=1,EE,2053CD0C,extended,00000001
+
+[Cheats/Malomyotismon]
+// patch=1,EE,2053CD10,extended,00000001
+
+[Cheats/Black Agumon]
+// patch=1,EE,2053CD14,extended,00000001
+
+[Cheats/Black Gabumon]
+// patch=1,EE,2053CD18,extended,00000001
+
+[Cheats/Black Guilmon]
+// patch=1,EE,2053CD1C,extended,00000001
+
+[Cheats/Neemon]
+// patch=1,EE,2053CD20,extended,00000001
+
+[Cheats/All Characters]
+// patch=1,EE,4053CD04,extended,00080001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Ice Palace]
+// patch=1,EE,2053CD24,extended,00000001
+
+[Cheats/Chaos Wasteland]
+// patch=1,EE,2053CD28,extended,00000001
+
+[Cheats/Digi Race]
+// patch=1,EE,2053CD2C,extended,00000001
+
+[Cheats/Collection]
+// patch=1,EE,2053CD30,extended,00000001
+
+[Cheats/Keep Away]
+// patch=1,EE,2053CD34,extended,00000001
+
+[Cheats/Poison]
+// patch=1,EE,2053CD38,extended,00000001
+
+[Cheats/King Of The Hill]
+// patch=1,EE,2053CD3C,extended,00000001
+
+[Cheats/Crazy Chase]
+// patch=1,EE,2053CD40,extended,00000001
+
+[Cheats/Little Vs. Big]
+// patch=1,EE,2053CD44,extended,00000001
+
+[Cheats/All Brawl Types]
+// patch=1,EE,4053CD2C,extended,00070001
+// patch=1,EE,00000001,extended,00000000

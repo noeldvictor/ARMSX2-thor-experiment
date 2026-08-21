@@ -1,0 +1,96 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ninja Assault [SLUS-20492] [785B28DA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Retry Never Increases When Retrying Levels]
+// patch=1,EE,90139504,extended,0C0990C0
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,109557F6,extended,00000100
+// patch=1,EE,109557F8,extended,00000100
+
+[Cheats/Never Reload P1]
+// patch=1,EE,109557FA,extended,00000009
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,10955808,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,20955808,extended,0098967F
+
+[Cheats/Max Hits! P1]
+// patch=1,EE,20955814,extended,00630063
+
+[Cheats/Infinite Specials P1]
+// patch=1,EE,10955834,extended,00000009
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,10955846,extended,00000100
+// patch=1,EE,10955848,extended,00000100
+
+[Cheats/Never Reload P2]
+// patch=1,EE,1095584A,extended,00000009
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,10955858,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,20955858,extended,0098967F
+
+[Cheats/Max Hits! P2]
+// patch=1,EE,20955864,extended,00630063
+
+[Cheats/Infinite Specials P2]
+// patch=1,EE,10955884,extended,00000009
+
+[Cheats/Infinite Specials (Both Players)]
+// patch=1,EE,20107170,extended,00000000
+
+[Cheats/Extra Specials (Both Players)]
+// patch=1,EE,10107168,extended,00000001
+
+[Cheats/Infinite Credits]
+// patch=1,EE,1095BFB8,extended,00000063
+
+[Cheats/Extra Credits]
+// patch=1,EE,10108748,extended,00000001
+
+[Cheats/Unlock Magnum (Story Mode)]
+// patch=1,EE,0095BF19,extended,00000001
+
+[Cheats/Unlock Shotgun (Story Mode)]
+// patch=1,EE,0095BF1A,extended,00000001
+
+[Cheats/Guren Chapter]
+// patch=1,EE,0095BEEE,extended,00000001
+
+[Cheats/Gunjo Chapter]
+// patch=1,EE,0095BEEF,extended,00000001
+
+[Cheats/Aoi Chapter]
+// patch=1,EE,0095BEF0,extended,00000001
+
+[Cheats/Arcade Mode]
+// patch=1,EE,0095BEF1,extended,00000001
+
+[Cheats/Always Only 1 Objective]
+// patch=1,EE,102955E4,extended,00000001
+
+[Cheats/Infinite Time]
+// patch=1,EE,202955E8,extended,00008C80
+
+[Cheats/P1 Press {SELECT} For Instant Win]
+// patch=1,EE,D071EB02,extended,0000FFFE
+// patch=1,EE,002955E0,extended,00000001
+
+[Cheats/Unlock Training-Fireworks]
+// patch=1,EE,0095BF17,extended,00000001
+
+[Cheats/Unlock Final Mission]
+// patch=1,EE,0095BF18,extended,00000001
+
+[Cheats/Have All Missions Completed]
+// patch=1,EE,1095BEF2,extended,00000101
+// patch=1,EE,4095BEF4,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,1095BF10,extended,00000101

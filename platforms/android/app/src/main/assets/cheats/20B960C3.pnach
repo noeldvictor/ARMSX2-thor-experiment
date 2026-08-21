@@ -1,0 +1,31 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: G1 Jockey 3 [SLES-51357] [20B960C3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Characters]
+// patch=1,EE,F0100008,extended,002621C7
+
+[Cheats/Max Speed]
+// patch=1,EE,20167CF4,extended,3C014200
+// patch=1,EE,20167CFC,extended,AE010064
+
+[Cheats/Max Stamina]
+// patch=1,EE,200C0220,extended,8E01001C
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,AE010074
+// patch=1,EE,20167F40,extended,0C030088
+
+[Cheats/Max Potential]
+// patch=1,EE,20167FA0,extended,AE030078
+
+[Cheats/Max EXP]
+// patch=1,EE,10785ED8,extended,0000270F
+
+[Cheats/Infinite Riding Points]
+// patch=1,EE,107864B0,extended,0000270F
+
+[Cheats/Never Suspended/Injured]
+// patch=1,EE,007864B4,extended,00000000
+
+[Cheats/Have All Skills]
+// patch=1,EE,207864E4,extended,01010101

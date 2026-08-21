@@ -1,0 +1,650 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: FIFA Street 2 [SLUS-21369] [67963EA7]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Cups]
+// patch=1,EE,9041FBC8,extended,00832021
+
+[Cheats/Home Team Always Scores 10]
+// patch=1,EE,20505760,extended,0000000A
+
+[Cheats/Home Team Always Scores 5]
+// patch=1,EE,20505760,extended,00000005
+
+[Cheats/Home Team Always Scores 0]
+// patch=1,EE,20505760,extended,00000000
+
+[Cheats/Home Team Starts With 10]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,0000000A
+
+[Cheats/Home Team Starts With 9]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000009
+
+[Cheats/Home Team Starts With 8]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000008
+
+[Cheats/Home Team Starts With 7]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000007
+
+[Cheats/Home Team Starts With 6]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000006
+
+[Cheats/Home Team Starts With 5]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000005
+
+[Cheats/Home Team Starts With 4]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000004
+
+[Cheats/Home Team Starts With 3]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000003
+
+[Cheats/Home Team Starts With 2]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000002
+
+[Cheats/Home Team Starts With 1]
+// patch=1,EE,D0505760,extended,00000000
+// patch=1,EE,20505760,extended,00000001
+
+[Cheats/Home Team Quick Trick Points Gain]
+// patch=1,EE,10505764,extended,0000FFFF
+
+[Cheats/Home Team Max Trick Points]
+// patch=1,EE,20505764,extended,05F5E0FF
+
+[Cheats/Home Team No Trick Points]
+// patch=1,EE,20505764,extended,00000000
+
+[Cheats/Home Team Max Shots]
+// patch=1,EE,2050575C,extended,000003E7
+
+[Cheats/Home Team Always Has Max Gamebreaker Meter]
+// patch=1,EE,200C0250,extended,52200001
+// patch=1,EE,200C0254,extended,E4410014
+// patch=1,EE,200C0258,extended,03E00008
+// patch=1,EE,200C025C,extended,46026032
+// patch=1,EE,2027FD08,extended,0C030094
+
+[Cheats/Home Team Always Has No Gamebreaker Meter]
+// patch=1,EE,200C0250,extended,52200001
+// patch=1,EE,200C0254,extended,AC400014
+// patch=1,EE,200C0258,extended,03E00008
+// patch=1,EE,200C025C,extended,46026032
+// patch=1,EE,2027FD08,extended,0C030094
+
+[Cheats/Home Team No Shots]
+// patch=1,EE,2050575C,extended,00000000
+
+[Cheats/Home Team Max Beats Attempted]
+// patch=1,EE,20505768,extended,000003E7
+// patch=1,EE,205057BC,extended,000003E7
+
+[Cheats/Home Team No Beats Attempted]
+// patch=1,EE,20505768,extended,00000000
+// patch=1,EE,205057BC,extended,00000000
+
+[Cheats/Home Team Max Beats]
+// patch=1,EE,2050576C,extended,000003E7
+
+[Cheats/Home Team No Beats]
+// patch=1,EE,2050576C,extended,00000000
+
+[Cheats/Home Team Max Gamebreakers]
+// patch=1,EE,20505770,extended,000003E7
+
+[Cheats/Home Team No Gamebreakers]
+// patch=1,EE,20505770,extended,00000000
+
+[Cheats/Home Team Max Best Combo]
+// patch=1,EE,20505774,extended,000003E7
+
+[Cheats/Home Team No Best Combo]
+// patch=1,EE,20505774,extended,00000000
+
+[Cheats/Home Team Max Highest Combo Value]
+// patch=1,EE,2050577C,extended,000003E7
+
+[Cheats/Home Team No Highest Combo Value]
+// patch=1,EE,2050577C,extended,00000000
+
+[Cheats/Home Team Max Goals]
+// patch=1,EE,20505784,extended,000003E7
+
+[Cheats/Home Team No Goals]
+// patch=1,EE,20505784,extended,00000000
+
+[Cheats/Home Team Max Beats Blocked]
+// patch=1,EE,205057B0,extended,000003E7
+
+[Cheats/Home Team No Beats Blocked]
+// patch=1,EE,205057B0,extended,00000000
+
+[Cheats/Away Team Always Scores 10]
+// patch=1,EE,20505828,extended,0000000A
+
+[Cheats/Away Team Always Scores 5]
+// patch=1,EE,20505828,extended,00000005
+
+[Cheats/Away Team Always Scores 0]
+// patch=1,EE,20505828,extended,00000000
+
+[Cheats/Away Team Starts With 10]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,0000000A
+
+[Cheats/Away Team Starts With 9]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000009
+
+[Cheats/Away Team Starts With 8]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000008
+
+[Cheats/Away Team Starts With 7]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000007
+
+[Cheats/Away Team Starts With 6]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000006
+
+[Cheats/Away Team Starts With 5]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000005
+
+[Cheats/Away Team Starts With 4]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000004
+
+[Cheats/Away Team Starts With 3]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000003
+
+[Cheats/Away Team Starts With 2]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000002
+
+[Cheats/Away Team Starts With 1]
+// patch=1,EE,D0505828,extended,00000000
+// patch=1,EE,20505828,extended,00000001
+
+[Cheats/Away Team Quick Trick Points Gain]
+// patch=1,EE,1050582C,extended,0000FFFF
+
+[Cheats/Away Team Max Trick Points]
+// patch=1,EE,2050582C,extended,05F5E0FF
+
+[Cheats/Away Team No Trick Points]
+// patch=1,EE,2050582C,extended,00000000
+
+[Cheats/Away Team Always Has Max Gamebreaker Meter]
+// patch=1,EE,200C0260,extended,56200001
+// patch=1,EE,200C0264,extended,E4410014
+// patch=1,EE,200C0268,extended,03E00008
+// patch=1,EE,200C026C,extended,3C020048
+// patch=1,EE,2027FD1C,extended,0C030098
+
+[Cheats/Away Team Always Has No Gamebreaker Meter]
+// patch=1,EE,200C0260,extended,56200001
+// patch=1,EE,200C0264,extended,AC400014
+// patch=1,EE,200C0268,extended,03E00008
+// patch=1,EE,200C026C,extended,3C020048
+// patch=1,EE,2027FD1C,extended,0C030098
+
+[Cheats/Away Team Max Shots]
+// patch=1,EE,20505824,extended,000003E7
+
+[Cheats/Away Team No Shots]
+// patch=1,EE,20505824,extended,00000000
+
+[Cheats/Away Team Max Beats Attempted]
+// patch=1,EE,20505830,extended,000003E7
+// patch=1,EE,20505884,extended,000003E7
+
+[Cheats/Away Team No Beats Attempted]
+// patch=1,EE,20505830,extended,00000000
+// patch=1,EE,20505884,extended,00000000
+
+[Cheats/Away Team Max Beats]
+// patch=1,EE,20505834,extended,000003E7
+
+[Cheats/Away Team No Beats]
+// patch=1,EE,20505834,extended,00000000
+
+[Cheats/Away Team Max Gamebreakers]
+// patch=1,EE,20505838,extended,000003E7
+
+[Cheats/Away Team No Gamebreakers]
+// patch=1,EE,20505838,extended,00000000
+
+[Cheats/Away Team Max Best Combo]
+// patch=1,EE,2050583C,extended,000003E7
+
+[Cheats/Away Team No Best Combo]
+// patch=1,EE,2050583C,extended,00000000
+
+[Cheats/Away Team Max Highest Combo Value]
+// patch=1,EE,20505844,extended,000003E7
+
+[Cheats/Away Team No Highest Combo Value]
+// patch=1,EE,20505844,extended,00000000
+
+[Cheats/Away Team Max Goals]
+// patch=1,EE,2050584C,extended,000003E7
+
+[Cheats/Away Team No Goals]
+// patch=1,EE,2050584C,extended,00000000
+
+[Cheats/Away Team Max Beats Blocked]
+// patch=1,EE,20505878,extended,000003E7
+
+[Cheats/Away Team No Beats Blocked]
+// patch=1,EE,20505878,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Timer]
+// patch=1,EE,D0E68002,extended,0000FBFE
+// patch=1,EE,201D43B4,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Restart Timer]
+// patch=1,EE,D0E68002,extended,0000FEFE
+// patch=1,EE,201D43B4,extended,E6410024
+
+[Cheats/P2 Press {L1}+{SELECT} To Stop Timer]
+// patch=1,EE,D0E69382,extended,0000FBFE
+// patch=1,EE,201D43B4,extended,00000000
+
+[Cheats/P2 Press {L2}+{SELECT} To Restart Timer]
+// patch=1,EE,D0E69382,extended,0000FEFE
+// patch=1,EE,201D43B4,extended,E6410024
+
+[Cheats/Infinite Skill Bills]
+// patch=1,EE,10929700,extended,0000FFFF
+
+[Cheats/Max Skill Bills]
+// patch=1,EE,20929700,extended,05F5E0FF
+
+[Cheats/Buying Items Doesnt Decrease Skill Bills]
+// patch=1,EE,202F79E8,extended,00402821
+
+[Cheats/Buying Items Increases Skill Bills]
+// patch=1,EE,202F79E8,extended,00515821
+
+[Cheats/Have All Kick Abouts/Team Captain Completed]
+// patch=1,EE,200C0220,extended,16400006
+// patch=1,EE,200C0224,extended,00000000
+// patch=1,EE,200C0228,extended,02221021
+// patch=1,EE,200C022C,extended,A4440A54
+// patch=1,EE,200C0230,extended,96220B68
+// patch=1,EE,200C0234,extended,24420001
+// patch=1,EE,200C0238,extended,A6220B68
+// patch=1,EE,200C023C,extended,08050499
+// patch=1,EE,200C0240,extended,24020001
+// patch=1,EE,2014125C,extended,08030088
+
+[Cheats/Unlock All Venues]
+// patch=1,EE,2047AF5C,extended,00000001
+
+[Cheats/Unlock All Kits]
+// patch=1,EE,2047AF60,extended,00000001
+
+[Cheats/Unlock All RTS]
+// patch=1,EE,2047AF64,extended,00000001
+
+[Cheats/Unlock All Players]
+// patch=1,EE,2047AF6C,extended,00000001
+
+[Cheats/Unlock All Tricks]
+// patch=1,EE,2047AF70,extended,00000001
+
+[Cheats/Max Speed]
+// patch=1,EE,00929730,extended,00000064
+// patch=1,EE,009298E4,extended,00000064
+// patch=1,EE,00929A98,extended,00000064
+// patch=1,EE,00929C4C,extended,00000064
+// patch=1,EE,00929E00,extended,00000064
+// patch=1,EE,00929FB4,extended,00000064
+// patch=1,EE,0092A168,extended,00000064
+// patch=1,EE,0092A31C,extended,00000064
+// patch=1,EE,0092A4D0,extended,00000064
+// patch=1,EE,0092A684,extended,00000064
+// patch=1,EE,0092A838,extended,00000064
+// patch=1,EE,0092A9EC,extended,00000064
+// patch=1,EE,0092ABA0,extended,00000064
+// patch=1,EE,0092AD54,extended,00000064
+// patch=1,EE,0092AF08,extended,00000064
+// patch=1,EE,0092B0BC,extended,00000064
+
+[Cheats/Max Shot]
+// patch=1,EE,00929731,extended,00000064
+// patch=1,EE,009298E5,extended,00000064
+// patch=1,EE,00929A99,extended,00000064
+// patch=1,EE,00929C4D,extended,00000064
+// patch=1,EE,00929E01,extended,00000064
+// patch=1,EE,00929FB5,extended,00000064
+// patch=1,EE,0092A169,extended,00000064
+// patch=1,EE,0092A31D,extended,00000064
+// patch=1,EE,0092A4D1,extended,00000064
+// patch=1,EE,0092A685,extended,00000064
+// patch=1,EE,0092A839,extended,00000064
+// patch=1,EE,0092A9ED,extended,00000064
+// patch=1,EE,0092ABA1,extended,00000064
+// patch=1,EE,0092AD55,extended,00000064
+// patch=1,EE,0092AF09,extended,00000064
+// patch=1,EE,0092B0BD,extended,00000064
+
+[Cheats/Max Tricks]
+// patch=1,EE,00929732,extended,00000064
+// patch=1,EE,009298E6,extended,00000064
+// patch=1,EE,00929A9A,extended,00000064
+// patch=1,EE,00929C4E,extended,00000064
+// patch=1,EE,00929E02,extended,00000064
+// patch=1,EE,00929FB6,extended,00000064
+// patch=1,EE,0092A16A,extended,00000064
+// patch=1,EE,0092A31E,extended,00000064
+// patch=1,EE,0092A4D2,extended,00000064
+// patch=1,EE,0092A686,extended,00000064
+// patch=1,EE,0092A83A,extended,00000064
+// patch=1,EE,0092A9EE,extended,00000064
+// patch=1,EE,0092ABA2,extended,00000064
+// patch=1,EE,0092AD56,extended,00000064
+// patch=1,EE,0092AF0A,extended,00000064
+// patch=1,EE,0092B0BE,extended,00000064
+
+[Cheats/Max Defence]
+// patch=1,EE,00929733,extended,00000064
+// patch=1,EE,009298E7,extended,00000064
+// patch=1,EE,00929A9B,extended,00000064
+// patch=1,EE,00929C4F,extended,00000064
+// patch=1,EE,00929E03,extended,00000064
+// patch=1,EE,00929FB7,extended,00000064
+// patch=1,EE,0092A16B,extended,00000064
+// patch=1,EE,0092A31F,extended,00000064
+// patch=1,EE,0092A4D3,extended,00000064
+// patch=1,EE,0092A687,extended,00000064
+// patch=1,EE,0092A83B,extended,00000064
+// patch=1,EE,0092A9EF,extended,00000064
+// patch=1,EE,0092ABA3,extended,00000064
+// patch=1,EE,0092AD57,extended,00000064
+// patch=1,EE,0092AF0B,extended,00000064
+// patch=1,EE,0092B0BF,extended,00000064
+
+[Cheats/Max Power]
+// patch=1,EE,00929734,extended,00000064
+// patch=1,EE,009298E8,extended,00000064
+// patch=1,EE,00929A9C,extended,00000064
+// patch=1,EE,00929C50,extended,00000064
+// patch=1,EE,00929E04,extended,00000064
+// patch=1,EE,00929FB8,extended,00000064
+// patch=1,EE,0092A16C,extended,00000064
+// patch=1,EE,0092A320,extended,00000064
+// patch=1,EE,0092A4D4,extended,00000064
+// patch=1,EE,0092A688,extended,00000064
+// patch=1,EE,0092A83C,extended,00000064
+// patch=1,EE,0092A9F0,extended,00000064
+// patch=1,EE,0092ABA4,extended,00000064
+// patch=1,EE,0092AD58,extended,00000064
+// patch=1,EE,0092AF0C,extended,00000064
+// patch=1,EE,0092B0C0,extended,00000064
+
+[Cheats/Max All Stats]
+// patch=1,EE,20929730,extended,64646464
+// patch=1,EE,00929734,extended,00000064
+// patch=1,EE,209298E4,extended,64646464
+// patch=1,EE,009298E8,extended,00000064
+// patch=1,EE,20929A98,extended,64646464
+// patch=1,EE,00929A9C,extended,00000064
+// patch=1,EE,20929C4C,extended,64646464
+// patch=1,EE,00929C50,extended,00000064
+// patch=1,EE,20929E00,extended,64646464
+// patch=1,EE,00929E04,extended,00000064
+// patch=1,EE,20929FB4,extended,64646464
+// patch=1,EE,00929FB8,extended,00000064
+// patch=1,EE,2092A168,extended,64646464
+// patch=1,EE,0092A16C,extended,00000064
+// patch=1,EE,2092A31C,extended,64646464
+// patch=1,EE,0092A320,extended,00000064
+// patch=1,EE,2092A4D0,extended,64646464
+// patch=1,EE,0092A4D4,extended,00000064
+// patch=1,EE,2092A684,extended,64646464
+// patch=1,EE,0092A688,extended,00000064
+// patch=1,EE,2092A838,extended,64646464
+// patch=1,EE,0092A83C,extended,00000064
+// patch=1,EE,2092A9EC,extended,64646464
+// patch=1,EE,0092A9F0,extended,00000064
+// patch=1,EE,2092ABA0,extended,64646464
+// patch=1,EE,0092ABA4,extended,00000064
+// patch=1,EE,2092AD54,extended,64646464
+// patch=1,EE,0092AD58,extended,00000064
+// patch=1,EE,2092AF08,extended,64646464
+// patch=1,EE,0092AF0C,extended,00000064
+// patch=1,EE,2092B0BC,extended,64646464
+// patch=1,EE,0092B0C0,extended,00000064
+
+[Cheats/Bottom 1]
+// patch=1,EE,20933C34,extended,00000000
+
+[Cheats/Bottom 2]
+// patch=1,EE,20933C40,extended,00000000
+
+[Cheats/Bottom 3]
+// patch=1,EE,20933C4C,extended,00000000
+
+[Cheats/Bottom 4]
+// patch=1,EE,20933C58,extended,00000000
+
+[Cheats/Bottom 5]
+// patch=1,EE,20933C64,extended,00000000
+
+[Cheats/Bottom 6]
+// patch=1,EE,20933C70,extended,00000000
+
+[Cheats/Bottom 7]
+// patch=1,EE,20933C7C,extended,00000000
+
+[Cheats/Bottom 8]
+// patch=1,EE,20933C88,extended,00000000
+
+[Cheats/Bottom 9]
+// patch=1,EE,20933C94,extended,00000000
+
+[Cheats/Bottom 10]
+// patch=1,EE,20933CA0,extended,00000000
+
+[Cheats/All Bottoms]
+// patch=1,EE,40933C34,extended,000A0003
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Shoe 1]
+// patch=1,EE,20933CAC,extended,00000000
+
+[Cheats/Shoe 2]
+// patch=1,EE,20933CB8,extended,00000000
+
+[Cheats/Shoe 3]
+// patch=1,EE,20933CC4,extended,00000000
+
+[Cheats/Shoe 4]
+// patch=1,EE,20933CD0,extended,00000000
+
+[Cheats/Shoe 5]
+// patch=1,EE,20933CDC,extended,00000000
+
+[Cheats/Shoe 6]
+// patch=1,EE,20933CE8,extended,00000000
+
+[Cheats/Shoe 7]
+// patch=1,EE,20933CF4,extended,00000000
+
+[Cheats/Shoe 8]
+// patch=1,EE,20933D00,extended,00000000
+
+[Cheats/Shoe 9]
+// patch=1,EE,20933D0C,extended,00000000
+
+[Cheats/Shoe 10]
+// patch=1,EE,20933D18,extended,00000000
+
+[Cheats/Shoe 11]
+// patch=1,EE,20933D24,extended,00000000
+
+[Cheats/Shoe 12]
+// patch=1,EE,20933D30,extended,00000000
+
+[Cheats/Shoe 13]
+// patch=1,EE,20933D3C,extended,00000000
+
+[Cheats/Shoe 14]
+// patch=1,EE,20933D48,extended,00000000
+
+[Cheats/Shoe 15]
+// patch=1,EE,20933D54,extended,00000000
+
+[Cheats/All Shoes]
+// patch=1,EE,40933CAC,extended,000F0003
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Top 1]
+// patch=1,EE,20933D60,extended,00000000
+
+[Cheats/Top 2]
+// patch=1,EE,20933D6C,extended,00000000
+
+[Cheats/Top 3]
+// patch=1,EE,20933D78,extended,00000000
+
+[Cheats/Top 4]
+// patch=1,EE,20933D84,extended,00000000
+
+[Cheats/Top 5]
+// patch=1,EE,20933D90,extended,00000000
+
+[Cheats/Top 6]
+// patch=1,EE,20933D9C,extended,00000000
+
+[Cheats/Top 7]
+// patch=1,EE,20933DA8,extended,00000000
+
+[Cheats/Top 8]
+// patch=1,EE,20933DB4,extended,00000000
+
+[Cheats/Top 9]
+// patch=1,EE,20933DC0,extended,00000000
+
+[Cheats/Top 10]
+// patch=1,EE,20933DCC,extended,00000000
+
+[Cheats/Top 11]
+// patch=1,EE,20933DD8,extended,00000000
+
+[Cheats/Top 12]
+// patch=1,EE,20933DE4,extended,00000000
+
+[Cheats/Top 13]
+// patch=1,EE,20933DF0,extended,00000000
+
+[Cheats/Top 14]
+// patch=1,EE,20933DFC,extended,00000000
+
+[Cheats/Top 15]
+// patch=1,EE,20933E08,extended,00000000
+
+[Cheats/Top 16]
+// patch=1,EE,20933E14,extended,00000000
+
+[Cheats/Top 17]
+// patch=1,EE,20933E20,extended,00000000
+
+[Cheats/Top 18]
+// patch=1,EE,20933E2C,extended,00000000
+
+[Cheats/Top 19]
+// patch=1,EE,20933E38,extended,00000000
+
+[Cheats/Top 20]
+// patch=1,EE,20933E44,extended,00000000
+
+[Cheats/Top 21]
+// patch=1,EE,20933E50,extended,00000000
+
+[Cheats/Top 22]
+// patch=1,EE,20933E5C,extended,00000000
+
+[Cheats/Top 23]
+// patch=1,EE,20933E68,extended,00000000
+
+[Cheats/Top 24]
+// patch=1,EE,20933E74,extended,00000000
+
+[Cheats/All Tops]
+// patch=1,EE,40933D60,extended,00180003
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Character 1]
+// patch=1,EE,20934EF8,extended,00000000
+
+[Cheats/Character 2]
+// patch=1,EE,20934F04,extended,00000000
+
+[Cheats/Character 3]
+// patch=1,EE,20934F10,extended,00000000
+
+[Cheats/Character 4]
+// patch=1,EE,20934F1C,extended,00000000
+
+[Cheats/Character 5]
+// patch=1,EE,20934F28,extended,00000000
+
+[Cheats/Character 6]
+// patch=1,EE,20934F34,extended,00000000
+
+[Cheats/Character 7]
+// patch=1,EE,20934F40,extended,00000000
+
+[Cheats/Character 8]
+// patch=1,EE,20934F4C,extended,00000000
+
+[Cheats/Character 9]
+// patch=1,EE,20934F58,extended,00000000
+
+[Cheats/Character 10]
+// patch=1,EE,20934F64,extended,00000000
+
+[Cheats/Character 11]
+// patch=1,EE,20934F70,extended,00000000
+
+[Cheats/Character 12]
+// patch=1,EE,20934F7C,extended,00000000
+
+[Cheats/All Players]
+// patch=1,EE,40934EF8,extended,000C0003
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Venue 1]
+// patch=1,EE,2093585C,extended,00000000
+
+[Cheats/Venue 2]
+// patch=1,EE,20935868,extended,00000000
+
+[Cheats/Venue 3]
+// patch=1,EE,20935874,extended,00000000
+
+[Cheats/Venue 4]
+// patch=1,EE,20935880,extended,00000000
+
+[Cheats/Venue 5]
+// patch=1,EE,2093588C,extended,00000000
+
+[Cheats/Venue 6]
+// patch=1,EE,20935898,extended,00000000
+
+[Cheats/All Venues]
+// patch=1,EE,4093585C,extended,00060003
+// patch=1,EE,00000000,extended,00000000

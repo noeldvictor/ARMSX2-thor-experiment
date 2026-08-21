@@ -1,0 +1,143 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: War Of The Monsters [SCUS-97197] [2EDE12D1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Debug Music]
+// patch=1,EE,F0100008,extended,00232BB7
+
+[Cheats/Quick Battle Token Gain]
+// patch=1,EE,104178A4,extended,0000FFFF
+
+[Cheats/Max Battle Tokens]
+// patch=1,EE,204178A4,extended,05F5E0FF
+
+[Cheats/Idiot AI]
+// patch=1,EE,20102D90,extended,03E00008
+// patch=1,EE,20102D94,extended,00000000
+
+[Cheats/Never Stunned (All Players)]
+// patch=1,EE,201D486C,extended,00000000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,202B4568,extended,432C0000
+// patch=1,EE,202B456C,extended,432C0000
+
+[Cheats/No Health P1]
+// patch=1,EE,202B4568,extended,432C0000
+// patch=1,EE,202B456C,extended,00000000
+
+[Cheats/Max Special Meter P1]
+// patch=1,EE,202B4580,extended,42C80000
+// patch=1,EE,202B4590,extended,43000000
+
+[Cheats/No Special Meter P1]
+// patch=1,EE,202B4580,extended,42C80000
+// patch=1,EE,202B4590,extended,00000000
+
+[Cheats/Always Have Special P1]
+// patch=1,EE,002B4213,extended,00000001
+
+[Cheats/Never Have Special P1]
+// patch=1,EE,002B4213,extended,00000000
+
+[Cheats/P1 Always Stunned (Invincible)]
+// patch=1,EE,002B4169,extended,00000000
+
+[Cheats/P1 Never Stunned]
+// patch=1,EE,002B4169,extended,00000001
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,202C56F8,extended,432C0000
+// patch=1,EE,202C56FC,extended,432C0000
+
+[Cheats/No Health P2]
+// patch=1,EE,202C56F8,extended,432C0000
+// patch=1,EE,202C56FC,extended,00000000
+
+[Cheats/Max Special Meter P2]
+// patch=1,EE,202C5710,extended,42C80000
+// patch=1,EE,202C5720,extended,43000000
+
+[Cheats/No Special Meter P2]
+// patch=1,EE,202C5710,extended,42C80000
+// patch=1,EE,202C5720,extended,00000000
+
+[Cheats/Always Have Special P2]
+// patch=1,EE,002C53A3,extended,00000001
+
+[Cheats/Never Have Special P2]
+// patch=1,EE,002C53A3,extended,00000000
+
+[Cheats/P2 Always Stunned (Invincible)]
+// patch=1,EE,002C52F9,extended,00000000
+
+[Cheats/P2 Never Stunned]
+// patch=1,EE,002C52F9,extended,00000001
+
+[Cheats/Infinite Health P3]
+// patch=1,EE,202D6888,extended,432C0000
+// patch=1,EE,202D688C,extended,432C0000
+
+[Cheats/No Health P3]
+// patch=1,EE,202D6888,extended,432C0000
+// patch=1,EE,202D688C,extended,00000000
+
+[Cheats/Max Special Meter P3]
+// patch=1,EE,202D68A0,extended,42C80000
+// patch=1,EE,202D68B0,extended,43000000
+
+[Cheats/No Special Meter P3]
+// patch=1,EE,202D68A0,extended,42C80000
+// patch=1,EE,202D68B0,extended,00000000
+
+[Cheats/Always Have Special P3]
+// patch=1,EE,002D6533,extended,00000001
+
+[Cheats/Never Have Special P3]
+// patch=1,EE,002D6533,extended,00000000
+
+[Cheats/P3 Always Stunned (Invincible)]
+// patch=1,EE,002D6489,extended,00000000
+
+[Cheats/P3 Never Stunned]
+// patch=1,EE,002D6489,extended,00000001
+
+[Cheats/Infinite Health P4]
+// patch=1,EE,202E7A18,extended,432C0000
+// patch=1,EE,202E7A1C,extended,432C0000
+
+[Cheats/No Health P4]
+// patch=1,EE,202E7A18,extended,432C0000
+// patch=1,EE,202E7A1C,extended,00000000
+
+[Cheats/Max Special Meter P4]
+// patch=1,EE,202E7A30,extended,42C80000
+// patch=1,EE,202E7A40,extended,43000000
+
+[Cheats/No Special Meter P4]
+// patch=1,EE,202E7A30,extended,42C80000
+// patch=1,EE,202E7A40,extended,00000000
+
+[Cheats/Always Have Special P4]
+// patch=1,EE,002E76C3,extended,00000001
+
+[Cheats/Never Have Special P4]
+// patch=1,EE,002E76C3,extended,00000000
+
+[Cheats/P4 Always Stunned (Invincible)]
+// patch=1,EE,002E7619,extended,00000000
+
+[Cheats/P4 Never Stunned]
+// patch=1,EE,002E7619,extended,00000001
+
+[Cheats/Unlock All Costumes]
+// patch=1,EE,402A1EB4,extended,0028000B
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,402A2594,extended,0004000B
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Minigames]
+// patch=1,EE,402A2644,extended,0003000B
+// patch=1,EE,00000001,extended,00000000

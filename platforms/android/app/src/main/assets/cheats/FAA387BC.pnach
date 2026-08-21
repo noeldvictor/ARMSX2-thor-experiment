@@ -1,0 +1,79 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: RPG Maker 2 [SLUS-20340] [FAA387BC]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Cars]
+// patch=1,EE,F0100008,extended,002CED97
+
+[Cheats/Buying Items Doesnt Decrease Gold]
+// patch=1,EE,2018D7B8,extended,00000000
+
+[Cheats/Buying Items Increases Gold]
+// patch=1,EE,2018D7B0,extended,00441021
+
+[Cheats/Buy An Item For Max Gold]
+// patch=1,EE,2018D7D0,extended,00000000
+
+[Cheats/Stop Play Timer]
+// patch=1,EE,2018B070,extended,00000000
+// patch=1,EE,2018B084,extended,00000000
+// patch=1,EE,2018B09C,extended,00000000
+
+[Cheats/Monsters Have No MP]
+// patch=1,EE,201A2D20,extended,A4600090
+
+[Cheats/Infinite HP (In-Battle)]
+// patch=1,EE,201A2B7C,extended,AC670108
+
+[Cheats/Infinite MP Usage]
+// patch=1,EE,201A2CCC,extended,AC670104
+
+[Cheats/Max HP]
+// patch=1,EE,200C0220,extended,241003E7
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,A4700120
+// patch=1,EE,201A6F38,extended,0C030088
+
+[Cheats/Max MP]
+// patch=1,EE,200C0230,extended,241003E7
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,A4700122
+// patch=1,EE,201A7050,extended,0C03008C
+
+[Cheats/Infinite HP]
+// patch=1,EE,201A73E4,extended,240303E7
+// patch=1,EE,201A73E8,extended,AC830108
+// patch=1,EE,101A73EE,extended,00001000
+
+[Cheats/Infinite MP]
+// patch=1,EE,201A7444,extended,240303E7
+// patch=1,EE,201A7448,extended,AC830104
+// patch=1,EE,101A744E,extended,00001000
+
+[Cheats/Max STR]
+// patch=1,EE,200C0240,extended,241003E7
+// patch=1,EE,200C0244,extended,03E00008
+// patch=1,EE,200C0248,extended,A4700124
+// patch=1,EE,201A69E0,extended,0C030090
+
+[Cheats/Max INT]
+// patch=1,EE,200C0250,extended,241003E7
+// patch=1,EE,200C0254,extended,03E00008
+// patch=1,EE,200C0258,extended,A4700126
+// patch=1,EE,201A6D10,extended,0C030094
+
+[Cheats/Max LUCk]
+// patch=1,EE,200C0260,extended,241003E7
+// patch=1,EE,200C0264,extended,03E00008
+// patch=1,EE,200C0268,extended,A4700128
+// patch=1,EE,201A6E20,extended,0C030098
+
+[Cheats/Max DEF]
+// patch=1,EE,200C0270,extended,241003E7
+// patch=1,EE,200C0274,extended,03E00008
+// patch=1,EE,200C0278,extended,A470012A
+// patch=1,EE,201A6C00,extended,0C03009C
+// patch=1,EE,200C0280,extended,241003E7
+// patch=1,EE,200C0284,extended,03E00008
+// patch=1,EE,200C0288,extended,A470012C
+// patch=1,EE,201A6AF0,extended,0C0300A0

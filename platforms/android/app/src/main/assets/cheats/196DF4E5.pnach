@@ -1,0 +1,138 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mega Man X8 [SLUS-20960] [196DF4E5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Moving Wheel]
+// patch=1,EE,90129698,extended,0C13EF1A
+
+[Cheats/Have All R&D Missions Cleared]
+// patch=1,EE,1064C4AE,extended,0000FFFF
+
+[Cheats/Infinite Metals]
+// patch=1,EE,1064C4C4,extended,0000FFFF
+// patch=1,EE,1064C4C8,extended,0000FFFF
+
+[Cheats/Max Metals]
+// patch=1,EE,2064C4C4,extended,0098967F
+// patch=1,EE,2064C4C8,extended,0098967F
+
+[Cheats/Have All Weapons]
+// patch=1,EE,0064C4D5,extended,000000FF
+
+[Cheats/Infinite Retry Chips]
+// patch=1,EE,0064C8B8,extended,00000005
+
+[Cheats/Infinite Health-Character 1]
+// patch=1,EE,200C0220,extended,24020024
+// patch=1,EE,200C0224,extended,08065C94
+// patch=1,EE,200C0228,extended,ACA2002C
+// patch=1,EE,202DC100,extended,0C030088
+
+[Cheats/Max Health-Character 1]
+// patch=1,EE,200C0240,extended,24020024
+// patch=1,EE,200C0244,extended,08065C00
+// patch=1,EE,200C0248,extended,ACA20030
+// patch=1,EE,202DC114,extended,0C030090
+
+[Cheats/Infinite Health-Character 2]
+// patch=1,EE,200C0230,extended,24020024
+// patch=1,EE,200C0234,extended,08065C94
+// patch=1,EE,200C0238,extended,ACA2002C
+// patch=1,EE,202DC150,extended,0C03008C
+
+[Cheats/Max Health-Character 2]
+// patch=1,EE,200C0250,extended,24020024
+// patch=1,EE,200C0254,extended,08065C00
+// patch=1,EE,200C0258,extended,ACA20030
+// patch=1,EE,202DC164,extended,0C030094
+
+[Cheats/Max AT]
+// patch=1,EE,20847754,extended,00000064
+
+[Cheats/Life Up]
+// patch=1,EE,0064C683,extended,00000001
+// patch=1,EE,0064C6CB,extended,00000001
+// patch=1,EE,0064C713,extended,00000001
+
+[Cheats/Life Up +1]
+// patch=1,EE,0064C684,extended,00000001
+// patch=1,EE,0064C6CC,extended,00000001
+// patch=1,EE,0064C714,extended,00000001
+
+[Cheats/Life Up +2]
+// patch=1,EE,0064C685,extended,00000001
+// patch=1,EE,0064C6CD,extended,00000001
+// patch=1,EE,0064C715,extended,00000001
+
+[Cheats/Weapon Up]
+// patch=1,EE,0064C687,extended,00000001
+// patch=1,EE,0064C6CF,extended,00000001
+// patch=1,EE,0064C717,extended,00000001
+
+[Cheats/Weapon Up +1]
+// patch=1,EE,0064C688,extended,00000001
+// patch=1,EE,0064C6D0,extended,00000001
+// patch=1,EE,0064C718,extended,00000001
+
+[Cheats/Weapon Up +2]
+// patch=1,EE,0064C689,extended,00000001
+// patch=1,EE,0064C6D1,extended,00000001
+// patch=1,EE,0064C719,extended,00000001
+
+[Cheats/Double Barrier]
+// patch=1,EE,0064C68B,extended,00000001
+// patch=1,EE,0064C6D3,extended,00000001
+// patch=1,EE,0064C71B,extended,00000001
+
+[Cheats/Speedy Recovery]
+// patch=1,EE,0064C68C,extended,00000001
+// patch=1,EE,0064C6D4,extended,00000001
+// patch=1,EE,0064C71C,extended,00000001
+
+[Cheats/Chain Combo]
+// patch=1,EE,0064C68D,extended,00000001
+// patch=1,EE,0064C6D5,extended,00000001
+// patch=1,EE,0064C71D,extended,00000001
+
+[Cheats/Super Recover]
+// patch=1,EE,0064C68E,extended,00000001
+// patch=1,EE,0064C6D6,extended,00000001
+// patch=1,EE,0064C71E,extended,00000001
+
+[Cheats/Spike Walker]
+// patch=1,EE,0064C68F,extended,00000001
+// patch=1,EE,0064C6D7,extended,00000001
+// patch=1,EE,0064C71F,extended,00000001
+
+[Cheats/Weapon Converter]
+// patch=1,EE,0064C690,extended,00000001
+// patch=1,EE,0064C6D8,extended,00000001
+
+[Cheats/Shock Absorber]
+// patch=1,EE,0064C6D9,extended,00000001
+// patch=1,EE,0064C721,extended,00000001
+
+[Cheats/Saber Skill +1]
+// patch=1,EE,0064C6DA,extended,00000001
+
+[Cheats/Saber Skill +2]
+// patch=1,EE,0064C6DB,extended,00000001
+
+[Cheats/D Glaive]
+// patch=1,EE,0064C6DC,extended,00000001
+
+[Cheats/K Knuckle]
+// patch=1,EE,0064C6DD,extended,00000001
+
+[Cheats/B Fan]
+// patch=1,EE,0064C6DE,extended,00000001
+
+[Cheats/T Breaker]
+// patch=1,EE,0064C6DF,extended,00000001
+
+[Cheats/X Blade]
+// patch=1,EE,0064C6E0,extended,00000001
+
+[Cheats/Shield Armor]
+// patch=1,EE,0064C6E1,extended,00000001
+// patch=1,EE,0064C729,extended,00000001

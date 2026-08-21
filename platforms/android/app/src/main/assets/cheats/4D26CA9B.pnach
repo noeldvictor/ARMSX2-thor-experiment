@@ -1,0 +1,216 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Activision Anthology [SLUS-20588] [4D26CA9B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All SP Weapons]
+// patch=1,EE,F0100008,extended,001DB87F
+
+[Cheats/Unlock All Gameplay Modes]
+// patch=1,EE,402278FC,extended,000F0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Atlantis]
+// patch=1,EE,202279E4,extended,00000001
+
+[Cheats/Barnstorming]
+// patch=1,EE,202279F4,extended,00000001
+// patch=1,EE,002279F0,extended,00000004
+
+[Cheats/Beamrider]
+// patch=1,EE,20227A04,extended,00000001
+// patch=1,EE,00227A00,extended,00000001
+
+[Cheats/Boxing]
+// patch=1,EE,20227A24,extended,00000001
+
+[Cheats/Bridge]
+// patch=1,EE,20227A34,extended,00000001
+
+[Cheats/Checkers]
+// patch=1,EE,20227A44,extended,00000001
+
+[Cheats/Chopper Command]
+// patch=1,EE,20227A54,extended,00000001
+// patch=1,EE,00227A50,extended,00000002
+
+[Cheats/Commando]
+// patch=1,EE,20227A64,extended,00000001
+
+[Cheats/Cosmic Commuter]
+// patch=1,EE,20227A74,extended,00000001
+
+[Cheats/Crackpots]
+// patch=1,EE,20227A84,extended,00000001
+// patch=1,EE,00227A80,extended,0000001B
+
+[Cheats/Decathlon]
+// patch=1,EE,20227A94,extended,00000001
+
+[Cheats/Demon Attack]
+// patch=1,EE,20227AA4,extended,00000001
+
+[Cheats/Dolphin]
+// patch=1,EE,20227AB4,extended,00000001
+
+[Cheats/Dragster]
+// patch=1,EE,20227AD4,extended,00000001
+// patch=1,EE,00227AD0,extended,00000015
+
+[Cheats/Enduro]
+// patch=1,EE,20227AE4,extended,00000001
+// patch=1,EE,00227AE0,extended,00000016
+
+[Cheats/Fishing Derby]
+// patch=1,EE,20227B04,extended,00000001
+
+[Cheats/Freeway]
+// patch=1,EE,20227B14,extended,00000001
+// patch=1,EE,00227B10,extended,00000018
+
+[Cheats/Frostbite]
+// patch=1,EE,20227B34,extended,00000001
+// patch=1,EE,00227B30,extended,00000017
+
+[Cheats/Grand Prix]
+// patch=1,EE,20227B54,extended,00000001
+// patch=1,EE,00227B50,extended,00000019
+
+[Cheats/HERO]
+// patch=1,EE,20227B64,extended,00000001
+// patch=1,EE,00227B60,extended,00000009
+
+[Cheats/Ice Hockey]
+// patch=1,EE,20227B74,extended,00000001
+// patch=1,EE,00227B70,extended,00000003
+
+[Cheats/Kabobber]
+// patch=1,EE,20227B84,extended,00000001
+
+[Cheats/Kaboom!]
+// patch=1,EE,20227B94,extended,00000001
+// patch=1,EE,00227B90,extended,0000000A
+
+[Cheats/Keystone Kapers]
+// patch=1,EE,20227BA4,extended,00000001
+// patch=1,EE,00227BA0,extended,0000001A
+
+[Cheats/Laser Blast]
+// patch=1,EE,20227BB4,extended,00000001
+// patch=1,EE,00227BB0,extended,0000000B
+
+[Cheats/Megamania]
+// patch=1,EE,20227BC4,extended,00000001
+// patch=1,EE,00227BC0,extended,00000012
+
+[Cheats/Moonsweeper]
+// patch=1,EE,20227BD4,extended,00000001
+
+[Cheats/Oink]
+// patch=1,EE,20227BE4,extended,00000001
+// patch=1,EE,00227BE0,extended,0000000C
+
+[Cheats/Baseball]
+// patch=1,EE,20227BF4,extended,00000001
+
+[Cheats/Pitfall!]
+// patch=1,EE,20227C04,extended,00000001
+// patch=1,EE,00227C00,extended,00000020
+
+[Cheats/Pitfall 2]
+// patch=1,EE,20227C14,extended,00000001
+
+[Cheats/Plaque Attack]
+// patch=1,EE,20227C24,extended,00000001
+// patch=1,EE,00227C20,extended,0000001C
+
+[Cheats/Pressure Cooker]
+// patch=1,EE,20227C34,extended,00000001
+// patch=1,EE,00227C30,extended,00000021
+
+[Cheats/Private Eye]
+// patch=1,EE,20227C44,extended,00000001
+// patch=1,EE,00227C40,extended,0000000D
+
+[Cheats/Title Match Wrestling]
+// patch=1,EE,20227C54,extended,00000001
+
+[Cheats/River Raid]
+// patch=1,EE,20227C74,extended,00000001
+// patch=1,EE,00227C70,extended,00000022
+
+[Cheats/River Raid 2]
+// patch=1,EE,20227C84,extended,00000001
+
+[Cheats/Robot Tank]
+// patch=1,EE,20227C94,extended,00000001
+// patch=1,EE,00227C90,extended,00000013
+
+[Cheats/Seaquest]
+// patch=1,EE,20227CA4,extended,00000001
+// patch=1,EE,00227CA0,extended,00000023
+
+[Cheats/Skiing]
+// patch=1,EE,20227CC4,extended,00000001
+// patch=1,EE,00227CC0,extended,0000001F
+
+[Cheats/Sky Jinks]
+// patch=1,EE,20227CD4,extended,00000001
+// patch=1,EE,00227CD0,extended,0000001E
+
+[Cheats/Space Shuttle]
+// patch=1,EE,20227CE4,extended,00000001
+
+[Cheats/Spider Fighter]
+// patch=1,EE,20227CF4,extended,00000001
+// patch=1,EE,00227CF0,extended,00000010
+
+[Cheats/Stampede]
+// patch=1,EE,20227D14,extended,00000001
+// patch=1,EE,00227D10,extended,0000000E
+
+[Cheats/Starmaster]
+// patch=1,EE,20227D24,extended,00000001
+
+[Cheats/Tennis]
+// patch=1,EE,20227D34,extended,00000001
+// patch=1,EE,00227D30,extended,00000011
+
+[Cheats/Thwocker]
+// patch=1,EE,20227D44,extended,00000001
+
+[Cheats/Tomcat]
+// patch=1,EE,20227D54,extended,00000001
+// patch=1,EE,00227D50,extended,00000024
+
+[Cheats/Decathlon 1]
+// patch=1,EE,00227A94,extended,00000005
+
+[Cheats/Decathlon 2]
+// patch=1,EE,00227A95,extended,00000006
+
+[Cheats/Decathlon 3]
+// patch=1,EE,00227A96,extended,00000007
+
+[Cheats/Dolphin 1]
+// patch=1,EE,00227AB0,extended,00000008
+
+[Cheats/Dolphin 2]
+// patch=1,EE,00227AB1,extended,00000014
+
+[Cheats/Space Shuttle 1]
+// patch=1,EE,00227CE0,extended,0000000F
+
+[Cheats/Space Shuttle 2]
+// patch=1,EE,00227CE1,extended,0000001D
+
+[Cheats/Starmaster 1]
+// patch=1,EE,00227D20,extended,00000025
+
+[Cheats/Starmaster 2]
+// patch=1,EE,00227D21,extended,00000026
+
+[Cheats/Starmaster 3]
+// patch=1,EE,00227D22,extended,00000027
+
+[Cheats/Starmaster 4]
+// patch=1,EE,00227D23,extended,00000028

@@ -1,0 +1,185 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Fisherman's Challenge [SLUS-20553] [D1DFF756]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Challenges/Tournaments Completed]
+// patch=1,EE,F0100008,extended,001207EF
+
+[Cheats/Infinite Money (Tournament Mode)]
+// patch=1,EE,11CFBE3C,extended,0000FFFF
+
+[Cheats/Max Money (Tournament Mode)]
+// patch=1,EE,21CFBE3C,extended,0098967F
+
+[Cheats/Natural Colored-Popper]
+// patch=1,EE,11CFD5BA,extended,00000901
+
+[Cheats/Shiny Colored-Popper]
+// patch=1,EE,11CFD5BC,extended,00000901
+
+[Cheats/Natural Colored-Popper-Large Size]
+// patch=1,EE,11CFD5BE,extended,00000901
+
+[Cheats/Shiny Colored-Popper-Large Size]
+// patch=1,EE,11CFD5C0,extended,00000901
+
+[Cheats/Natural Colored-Stick Bait]
+// patch=1,EE,11CFD5C2,extended,00000901
+
+[Cheats/Shiny Colored-Stick Bait]
+// patch=1,EE,11CFD5C4,extended,00000901
+
+[Cheats/Natural Colored-Stick Bait-Large Size]
+// patch=1,EE,11CFD5C6,extended,00000901
+
+[Cheats/Shiny Colored-Stick Bait-Large Size]
+// patch=1,EE,11CFD5C8,extended,00000901
+
+[Cheats/Natural Colored-Prop Bait]
+// patch=1,EE,11CFD5CA,extended,00000901
+
+[Cheats/Shiny Colored-Prop Bait]
+// patch=1,EE,11CFD5CC,extended,00000901
+
+[Cheats/Natural Colored-Floating Minnow]
+// patch=1,EE,11CFD5CE,extended,00000901
+
+[Cheats/Shiny Colored-Floating Minnow]
+// patch=1,EE,11CFD5D0,extended,00000901
+
+[Cheats/Natural Colored-Floating Minnow-Large Size]
+// patch=1,EE,11CFD5D2,extended,00000901
+
+[Cheats/Shiny Colored-Floating Minnow-Large Size]
+// patch=1,EE,11CFD5D4,extended,00000901
+
+[Cheats/Natural Colored-Suspended Minnow]
+// patch=1,EE,11CFD5D6,extended,00000901
+
+[Cheats/Shiny Colored-Suspended Minnow]
+// patch=1,EE,11CFD5D8,extended,00000901
+
+[Cheats/Natural Colored-Suspended Minnow-Large Size]
+// patch=1,EE,11CFD5DA,extended,00000901
+
+[Cheats/Shiny Colored-Suspended Minnow-Large Size]
+// patch=1,EE,11CFD5DC,extended,00000901
+
+[Cheats/Natural Colored-Sinking Minnow]
+// patch=1,EE,11CFD5DE,extended,00000901
+
+[Cheats/Shiny Colored-Sinking Minnow]
+// patch=1,EE,11CFD5E0,extended,00000901
+
+[Cheats/Natural Colored-Sinking Minnow-Large Size]
+// patch=1,EE,11CFD5E2,extended,00000901
+
+[Cheats/Shiny Colored-Sinking Minnow-Large Size]
+// patch=1,EE,11CFD5E4,extended,00000901
+
+[Cheats/Natural Colored-Lipless Crank]
+// patch=1,EE,11CFD5E6,extended,00000901
+
+[Cheats/Shiny Colored-Lipless Crank]
+// patch=1,EE,11CFD5E8,extended,00000901
+
+[Cheats/Natural Colored-Shallow Crank]
+// patch=1,EE,11CFD5EA,extended,00000901
+
+[Cheats/Shiny Colored-Shallow Crank]
+// patch=1,EE,11CFD5EC,extended,00000901
+
+[Cheats/Natural Colored-Mid Crank]
+// patch=1,EE,11CFD5EE,extended,00000901
+
+[Cheats/Shiny Colored-Mid Crank]
+// patch=1,EE,11CFD5F0,extended,00000901
+
+[Cheats/Natural Colored-Deep Crank]
+// patch=1,EE,11CFD5F2,extended,00000901
+
+[Cheats/Shiny Colored-Deep Crank]
+// patch=1,EE,11CFD5F4,extended,00000901
+
+[Cheats/Natural Colored-Buzzbait]
+// patch=1,EE,11CFD5F6,extended,00000901
+
+[Cheats/Shiny Colored-Buzzbait]
+// patch=1,EE,11CFD5F8,extended,00000901
+
+[Cheats/Natural Colored-Spinnerbait]
+// patch=1,EE,11CFD5FA,extended,00000901
+
+[Cheats/Shiny Colored-Spinnerbait]
+// patch=1,EE,11CFD5FC,extended,00000901
+
+[Cheats/Natural Colored-Metallic Jig]
+// patch=1,EE,11CFD5FE,extended,00000901
+
+[Cheats/Shiny Colored-Metallic Jig]
+// patch=1,EE,11CFD600,extended,00000901
+
+[Cheats/Natural Colored-Rubber Jig]
+// patch=1,EE,11CFD602,extended,00000901
+
+[Cheats/Shiny Colored-Rubber Jig]
+// patch=1,EE,11CFD604,extended,00000901
+
+[Cheats/Natural Colored-Straight Tail Worm]
+// patch=1,EE,11CFD606,extended,00000901
+
+[Cheats/Shiny Colored-Straight Tail Worm]
+// patch=1,EE,11CFD608,extended,00000901
+
+[Cheats/Natural Colored-Grub]
+// patch=1,EE,11CFD60A,extended,00000901
+
+[Cheats/Shiny Colored-Grub]
+// patch=1,EE,11CFD60C,extended,00000901
+
+[Cheats/Natural Colored-Paddle Tail]
+// patch=1,EE,11CFD60E,extended,00000901
+
+[Cheats/Shiny Colored-Paddle Tail]
+// patch=1,EE,11CFD610,extended,00000901
+
+[Cheats/Natural Colored-Crayfish]
+// patch=1,EE,11CFD612,extended,00000901
+
+[Cheats/Shiny Colored-Crayfish]
+// patch=1,EE,11CFD614,extended,00000901
+
+[Cheats/Natural Colored-Tube]
+// patch=1,EE,11CFD616,extended,00000901
+
+[Cheats/Shiny Colored-Tube]
+// patch=1,EE,11CFD618,extended,00000901
+
+[Cheats/Unweighted Rig]
+// patch=1,EE,11CFD61A,extended,00000901
+
+[Cheats/Jighead Rig]
+// patch=1,EE,11CFD61C,extended,00000901
+
+[Cheats/Texas Rig]
+// patch=1,EE,11CFD61E,extended,00000901
+
+[Cheats/Carolina Rig]
+// patch=1,EE,11CFD620,extended,00000901
+
+[Cheats/Split Shot Rig]
+// patch=1,EE,11CFD622,extended,00000901
+
+[Cheats/Drop Shot Rig]
+// patch=1,EE,11CFD624,extended,00000901
+
+[Cheats/Have All Rods]
+// patch=1,EE,11CFD626,extended,00000101
+// patch=1,EE,21CFD628,extended,01010101
+// patch=1,EE,21CFD62C,extended,01010101
+// patch=1,EE,11CFD630,extended,00000101
+
+[Cheats/Have All Reels]
+// patch=1,EE,11CFD632,extended,00000101
+// patch=1,EE,41CFD634,extended,00030001
+// patch=1,EE,01010101,extended,00000000

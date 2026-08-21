@@ -1,0 +1,50 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shadow of Colossus [UNKNOWN] [C19A374E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,E002E264,extended,01358290
+// patch=1,EE,212D9BCC,extended,447A0000
+// patch=1,EE,212DE264,extended,447A0000
+
+[Cheats/Infinite Grip]
+// patch=1,EE,E002E264,extended,01358290
+// patch=1,EE,212D9BD0,extended,447A0000
+// patch=1,EE,212DE260,extended,447A0000
+
+[Cheats/Mask Of Strength]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DA,extended,00000004
+
+[Cheats/Mask Of Power]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DA,extended,00000008
+
+[Cheats/Cloak Of Force]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DA,extended,00000040
+
+[Cheats/Cloak Of Deception]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DA,extended,00000080
+
+[Cheats/Flash Arrow]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DC,extended,00000004
+
+[Cheats/Whistling Arrow]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DC,extended,00000008
+
+[Cheats/Fruit Tree Map]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DD,extended,00000004
+
+[Cheats/Lizard Detection Stone]
+// patch=1,EE,E001E264,extended,01358290
+// patch=1,EE,712DA3DD,extended,00000008
+
+[Cheats/All Items]
+// patch=1,EE,E002E264,extended,01358290
+// patch=1,EE,712DA3DA,extended,000000CC
+// patch=1,EE,712DA3DC,extended,00100C0C

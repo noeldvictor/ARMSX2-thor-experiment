@@ -1,0 +1,32 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Nightmare before Christmas [UNKNOWN] [8AD8BA91]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite health]
+// patch=1,EE,80D97461,extended,7C356497
+// patch=1,EE,201A1E58,extended,8E220DC4
+// patch=1,EE,201A1E64,extended,00000000
+
+[Cheats/Max ! count]
+// patch=1,EE,204F263C,extended,000003E7
+
+[Cheats/Max blue souls]
+// patch=1,EE,2049B4E4,extended,00000009
+
+[Cheats/Max skulls]
+// patch=1,EE,2049B54C,extended,00000009
+
+[Cheats/Max souls]
+// patch=1,EE,2049B4D4,extended,0001869F
+
+[Cheats/Max combo]
+// patch=1,EE,104A952E,extended,000003E7
+
+[Cheats/No damage]
+// patch=1,EE,204F2638,extended,00000000
+
+[Cheats/No time]
+// patch=1,EE,204F2630,extended,3F800000
+
+[Cheats/Red souls]
+// patch=1,EE,2049B534,extended,00000032

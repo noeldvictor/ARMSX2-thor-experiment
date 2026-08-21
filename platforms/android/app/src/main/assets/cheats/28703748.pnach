@@ -1,0 +1,1525 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Bully [SLUS-21269] [28703748]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Phoenix Key]
+// patch=1,EE,901216F8,extended,00832021
+
+[Cheats/Infinite Health]
+// patch=1,EE,21C68AC8,extended,43480000
+
+[Cheats/Infinite Health (Alternate)]
+// patch=1,EE,200C0220,extended,3C014348
+// patch=1,EE,200C0224,extended,AE8119F4
+// patch=1,EE,200C0228,extended,AE811A08
+// patch=1,EE,200C022C,extended,03E00008
+// patch=1,EE,200C0230,extended,C68219F4
+// patch=1,EE,2041F568,extended,0C030088
+
+[Cheats/Max Pocket Change]
+// patch=1,EE,21C68AB0,extended,05F5E0FF
+
+[Cheats/Max Pocket Change (Alternate)]
+// patch=1,EE,200C0240,extended,3C0205F5
+// patch=1,EE,200C0244,extended,3442E0FF
+// patch=1,EE,200C0248,extended,03E00008
+// patch=1,EE,200C024C,extended,AC2219F0
+// patch=1,EE,2042ED50,extended,8C418520
+// patch=1,EE,2042ED58,extended,0C030090
+
+[Cheats/Always Low Trouble Meter]
+// patch=1,EE,21C68B50,extended,00000000
+
+[Cheats/P1 Press {L1}+{L2} For Low Trouble Meter]
+// patch=1,EE,D06D5DC2,extended,0000FAFF
+// patch=1,EE,21C68B50,extended,00000000
+
+[Cheats/P1 Press {R1}+{R2} For High Trouble Meter]
+// patch=1,EE,D06D5DC2,extended,0000F5FF
+// patch=1,EE,21C68B50,extended,0001869F
+
+[Cheats/Press {R1}+{SELECT} For Top Of The Hour]
+// patch=1,EE,D06D5DC2,extended,0000F7FE
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {R2}+{SELECT} For End Of The Hour]
+// patch=1,EE,D06D5DC2,extended,0000FDFE
+// patch=1,EE,205E4EBC,extended,0000003B
+
+[Cheats/Press {L1}+{SELECT} For 12:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000000
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 1:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000001
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 2:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000002
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 3:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000003
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 4:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000004
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 5:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000005
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 6:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000006
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 7:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000007
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 8:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000008
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 9:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000009
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 10:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,0000000A
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 11:00 A.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,0000000B
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 12:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,0000000C
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 1:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,0000000D
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 2:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,0000000E
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 3:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,0000000F
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 4:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000010
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 5:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000011
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 6:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000012
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 7:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000013
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 8:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000014
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 9:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000015
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 10:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000016
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Press {L1}+{SELECT} For 11:00 P.M.]
+// patch=1,EE,E002FBFE,extended,006D5DC2
+// patch=1,EE,205E4EB8,extended,00000017
+// patch=1,EE,205E4EBC,extended,00000000
+
+[Cheats/Max Money Earned]
+// patch=1,EE,206C7060,extended,05F5E0FF
+
+[Cheats/No Money Earned]
+// patch=1,EE,206C7060,extended,00000000
+
+[Cheats/Max Room Trophies Unlocked]
+// patch=1,EE,206C7064,extended,00000024
+
+[Cheats/No Room Trophies Unlocked]
+// patch=1,EE,206C7064,extended,00000000
+
+[Cheats/Max Time Played]
+// patch=1,EE,206C7068,extended,FFFFFFFF
+
+[Cheats/No Time Played]
+// patch=1,EE,206C7068,extended,00000000
+
+[Cheats/Max Times Busted]
+// patch=1,EE,206C706C,extended,05F5E0FF
+
+[Cheats/No Times Busted]
+// patch=1,EE,206C706C,extended,00000000
+
+[Cheats/Max Times Passed Out]
+// patch=1,EE,206C7070,extended,05F5E0FF
+
+[Cheats/No Times Passed Out]
+// patch=1,EE,206C7070,extended,00000000
+
+[Cheats/Max Distance Travelled On Foot]
+// patch=1,EE,206C7074,extended,4B189678
+
+[Cheats/No Distance Travelled On Foot]
+// patch=1,EE,206C7074,extended,00000000
+
+[Cheats/Max Distance Travelled On Skateboard]
+// patch=1,EE,206C7078,extended,4B189678
+
+[Cheats/No Distance Travelled On Skateboard]
+// patch=1,EE,206C7078,extended,00000000
+
+[Cheats/Max Distance Travelled On Bike]
+// patch=1,EE,206C707C,extended,4B189678
+
+[Cheats/No Distance Travelled On Bike]
+// patch=1,EE,206C707C,extended,00000000
+
+[Cheats/Max Distance Travelled On Go Kart]
+// patch=1,EE,206C7080,extended,4B189678
+// patch=1,EE,206C7084,extended,4B189678
+
+[Cheats/No Distance Travelled On Go Kart]
+// patch=1,EE,206C7080,extended,00000000
+// patch=1,EE,206C7084,extended,00000000
+
+[Cheats/Max Distance Travelled On Lawnmower]
+// patch=1,EE,206C7088,extended,4B189678
+
+[Cheats/No Distance Travelled On Lawnmower]
+// patch=1,EE,206C7088,extended,00000000
+
+[Cheats/Max Distance Swam]
+// patch=1,EE,206C708C,extended,4B189678
+
+[Cheats/No Distance Swam]
+// patch=1,EE,206C708C,extended,00000000
+
+[Cheats/Max Times Tattled On]
+// patch=1,EE,206C7090,extended,05F5E0FF
+
+[Cheats/No Times Tattled On]
+// patch=1,EE,206C7090,extended,00000000
+
+[Cheats/Max Times Slipped On Banana Skin]
+// patch=1,EE,206C7094,extended,05F5E0FF
+
+[Cheats/No Times Slipped On Banana Skin]
+// patch=1,EE,206C7094,extended,00000000
+
+[Cheats/Max Times Slipped On Marbles]
+// patch=1,EE,206C7098,extended,05F5E0FF
+
+[Cheats/No Times Slipped On Marbles]
+// patch=1,EE,206C7098,extended,00000000
+
+[Cheats/Max Mascot Dances Attempted]
+// patch=1,EE,206C709C,extended,05F5E0FF
+
+[Cheats/No Mascot Dances Attempted]
+// patch=1,EE,206C709C,extended,00000000
+
+[Cheats/Max Mascot Dances Completed]
+// patch=1,EE,206C70A0,extended,05F5E0FF
+
+[Cheats/No Mascot Dances Completed]
+// patch=1,EE,206C70A0,extended,00000000
+
+[Cheats/Max Hit By Car]
+// patch=1,EE,206C70A4,extended,05F5E0FF
+
+[Cheats/No Hit By Car]
+// patch=1,EE,206C70A4,extended,00000000
+
+[Cheats/Max Food Fights Started]
+// patch=1,EE,206C70A8,extended,05F5E0FF
+
+[Cheats/No Food Fights Started]
+// patch=1,EE,206C70A8,extended,00000000
+
+[Cheats/Max Snowball Fights Started]
+// patch=1,EE,206C70AC,extended,05F5E0FF
+
+[Cheats/No Snowball Fights Started]
+// patch=1,EE,206C70AC,extended,00000000
+
+[Cheats/Max Windows Broken]
+// patch=1,EE,206C70B0,extended,05F5E0FF
+
+[Cheats/No Windows Broken]
+// patch=1,EE,206C70B0,extended,00000000
+
+[Cheats/Max Plants Smashed]
+// patch=1,EE,206C70B4,extended,05F5E0FF
+
+[Cheats/No Plants Smashed]
+// patch=1,EE,206C70B4,extended,00000000
+
+[Cheats/Max Cars Egged]
+// patch=1,EE,206C70B8,extended,05F5E0FF
+
+[Cheats/No Cars Egged]
+// patch=1,EE,206C70B8,extended,00000000
+
+[Cheats/Max Fire Crackers In Toilets]
+// patch=1,EE,206C70BC,extended,05F5E0FF
+
+[Cheats/No Fire Crackers In Toilets]
+// patch=1,EE,206C70BC,extended,00000000
+
+[Cheats/Max Cars Damaged]
+// patch=1,EE,206C70C0,extended,05F5E0FF
+
+[Cheats/No Cars Damaged]
+// patch=1,EE,206C70C0,extended,00000000
+
+[Cheats/Max Trash Bins Smashed]
+// patch=1,EE,206C70C8,extended,05F5E0FF
+
+[Cheats/No Trash Bins Smashed]
+// patch=1,EE,206C70C8,extended,00000000
+
+[Cheats/Max Crates Smashed]
+// patch=1,EE,206C70CC,extended,05F5E0FF
+
+[Cheats/No Crates Smashed]
+// patch=1,EE,206C70CC,extended,00000000
+
+[Cheats/Max Times Hidden]
+// patch=1,EE,206C70D0,extended,05F5E0FF
+
+[Cheats/No Times Hidden]
+// patch=1,EE,206C70D0,extended,00000000
+
+[Cheats/Max Times Using Toilet]
+// patch=1,EE,206C70D4,extended,05F5E0FF
+
+[Cheats/No Times Using Toilet]
+// patch=1,EE,206C70D4,extended,00000000
+
+[Cheats/Max Times Using Urinal]
+// patch=1,EE,206C70D8,extended,05F5E0FF
+
+[Cheats/No Times Using Urinal]
+// patch=1,EE,206C70D8,extended,00000000
+
+[Cheats/Max Fire Alarms Pulled]
+// patch=1,EE,206C70DC,extended,05F5E0FF
+
+[Cheats/No Fire Alarms Pulled]
+// patch=1,EE,206C70DC,extended,00000000
+
+[Cheats/Max Wedgies Given]
+// patch=1,EE,206C70E0,extended,05F5E0FF
+
+[Cheats/No Wedgies Given]
+// patch=1,EE,206C70E0,extended,00000000
+
+[Cheats/Max Swirlies Given]
+// patch=1,EE,206C70E4,extended,05F5E0FF
+
+[Cheats/No Swirlies Given]
+// patch=1,EE,206C70E4,extended,00000000
+
+[Cheats/Max People Stuffed In Lockers]
+// patch=1,EE,206C70E8,extended,05F5E0FF
+
+[Cheats/No People Stuffed In Lockers]
+// patch=1,EE,206C70E8,extended,00000000
+
+[Cheats/Max People Stuffed In Bins]
+// patch=1,EE,206C70EC,extended,05F5E0FF
+
+[Cheats/No People Stuffed In Bins]
+// patch=1,EE,206C70EC,extended,00000000
+
+[Cheats/Max Chocolates Found]
+// patch=1,EE,206C70F0,extended,05F5E0FF
+
+[Cheats/No Chocolates Found]
+// patch=1,EE,206C70F0,extended,00000000
+
+[Cheats/Max Chocolates Obtained]
+// patch=1,EE,206C70F4,extended,05F5E0FF
+
+[Cheats/No Chocolates Obtained]
+// patch=1,EE,206C70F4,extended,00000000
+
+[Cheats/Max Flowers Found]
+// patch=1,EE,206C70F8,extended,05F5E0FF
+
+[Cheats/No Flowers Found]
+// patch=1,EE,206C70F8,extended,00000000
+
+[Cheats/Max Flowers Obtained]
+// patch=1,EE,206C70FC,extended,05F5E0FF
+
+[Cheats/No Flowers Obtained]
+// patch=1,EE,206C70FC,extended,00000000
+
+[Cheats/Max Sodas Drank]
+// patch=1,EE,206C7100,extended,05F5E0FF
+
+[Cheats/No Sodas Drank]
+// patch=1,EE,206C7100,extended,00000000
+
+[Cheats/Max Frisbees Thrown]
+// patch=1,EE,206C7104,extended,05F5E0FF
+
+[Cheats/No Frisbees Thrown]
+// patch=1,EE,206C7104,extended,00000000
+
+[Cheats/Max Basketballs Dribbled]
+// patch=1,EE,206C7108,extended,05F5E0FF
+
+[Cheats/No Basketballs Dribbled]
+// patch=1,EE,206C7108,extended,00000000
+
+[Cheats/Max Socker Balls Kicked]
+// patch=1,EE,206C710C,extended,05F5E0FF
+
+[Cheats/No Socker Balls Kicked]
+// patch=1,EE,206C710C,extended,00000000
+
+[Cheats/Max Footballs Thrown]
+// patch=1,EE,206C7110,extended,05F5E0FF
+
+[Cheats/No Footballs Thrown]
+// patch=1,EE,206C7110,extended,00000000
+
+[Cheats/Max Facts Gained From World Globe]
+// patch=1,EE,206C7114,extended,05F5E0FF
+
+[Cheats/No Facts Gained From World Globe]
+// patch=1,EE,206C7114,extended,00000000
+
+[Cheats/Max Bikes Jacked]
+// patch=1,EE,206C7118,extended,05F5E0FF
+
+[Cheats/No Bikes Jacked]
+// patch=1,EE,206C7118,extended,00000000
+
+[Cheats/Max Times Crashed On Bike]
+// patch=1,EE,206C711C,extended,05F5E0FF
+
+[Cheats/No Times Crashed On Bike]
+// patch=1,EE,206C711C,extended,00000000
+
+[Cheats/Max Pushed Off Bike]
+// patch=1,EE,206C7120,extended,05F5E0FF
+
+[Cheats/No Pushed Off Bike]
+// patch=1,EE,206C7120,extended,00000000
+
+[Cheats/Max Wheelies]
+// patch=1,EE,206C7124,extended,05F5E0FF
+
+[Cheats/No Wheelies]
+// patch=1,EE,206C7124,extended,00000000
+
+[Cheats/Max Bike Garages Used]
+// patch=1,EE,206C7130,extended,05F5E0FF
+
+[Cheats/No Bike Garages Used]
+// patch=1,EE,206C7130,extended,00000000
+
+[Cheats/Max Carnival Races Raced]
+// patch=1,EE,206C7138,extended,05F5E0FF
+
+[Cheats/No Carnival Races Raced]
+// patch=1,EE,206C7138,extended,00000000
+
+[Cheats/Max Carnival Races Won]
+// patch=1,EE,206C713C,extended,05F5E0FF
+
+[Cheats/No Carnival Races Won]
+// patch=1,EE,206C713C,extended,00000000
+
+[Cheats/Max Street Races Raced]
+// patch=1,EE,206C7140,extended,05F5E0FF
+
+[Cheats/No Street Races Raced]
+// patch=1,EE,206C7140,extended,00000000
+
+[Cheats/Max Street Races Won]
+// patch=1,EE,206C7144,extended,05F5E0FF
+
+[Cheats/No Street Races Won]
+// patch=1,EE,206C7144,extended,00000000
+
+[Cheats/Max Money Spent On Bikes]
+// patch=1,EE,206C7148,extended,05F5E0FF
+
+[Cheats/No Money Spent On Bikes]
+// patch=1,EE,206C7148,extended,00000000
+
+[Cheats/Max Money Spent In The General Store]
+// patch=1,EE,206C714C,extended,05F5E0FF
+
+[Cheats/No Money Spent In The General Store]
+// patch=1,EE,206C714C,extended,00000000
+
+[Cheats/Max Money Spent On Clothing]
+// patch=1,EE,206C7150,extended,05F5E0FF
+
+[Cheats/No Money Spent On Clothing]
+// patch=1,EE,206C7150,extended,00000000
+
+[Cheats/Max Money Spent In The Comic Store]
+// patch=1,EE,206C7154,extended,05F5E0FF
+
+[Cheats/No Money Spent In The Comic Store]
+// patch=1,EE,206C7154,extended,00000000
+
+[Cheats/Max Money Spent On Haircuts]
+// patch=1,EE,206C7158,extended,05F5E0FF
+
+[Cheats/No Money Spent On Haircuts]
+// patch=1,EE,206C7158,extended,00000000
+
+[Cheats/Max Money Spent On Tattoos]
+// patch=1,EE,206C715C,extended,05F5E0FF
+
+[Cheats/No Money Spent On Tattoos]
+// patch=1,EE,206C715C,extended,00000000
+
+[Cheats/Max Items Purchased]
+// patch=1,EE,206C7160,extended,05F5E0FF
+
+[Cheats/No Items Purchased]
+// patch=1,EE,206C7160,extended,00000000
+
+[Cheats/Max Bikes Purchased]
+// patch=1,EE,206C7164,extended,05F5E0FF
+
+[Cheats/No Bikes Purchased]
+// patch=1,EE,206C7164,extended,00000000
+
+[Cheats/Max Clothing Items Purchased]
+// patch=1,EE,206C7168,extended,05F5E0FF
+
+[Cheats/No Clothing Items Purchased]
+// patch=1,EE,206C7168,extended,00000000
+
+[Cheats/Max Haircuts Purchased]
+// patch=1,EE,206C716C,extended,05F5E0FF
+
+[Cheats/No Haircuts Purchased]
+// patch=1,EE,206C716C,extended,00000000
+
+[Cheats/Max Tattoos Purchased]
+// patch=1,EE,206C7170,extended,05F5E0FF
+
+[Cheats/No Tattoos Purchased]
+// patch=1,EE,206C7170,extended,00000000
+
+[Cheats/Max Water Balloons Made]
+// patch=1,EE,206C7174,extended,05F5E0FF
+
+[Cheats/No Water Balloons Made]
+// patch=1,EE,206C7174,extended,00000000
+
+[Cheats/Max Water Balloons Thrown]
+// patch=1,EE,206C7178,extended,05F5E0FF
+
+[Cheats/No Water Balloons Thrown]
+// patch=1,EE,206C7178,extended,00000000
+
+[Cheats/Max Water Balloons Hit]
+// patch=1,EE,206C717C,extended,05F5E0FF
+
+[Cheats/No Water Balloons Hit]
+// patch=1,EE,206C717C,extended,00000000
+
+[Cheats/Max Itching Powder Thrown]
+// patch=1,EE,206C7180,extended,05F5E0FF
+
+[Cheats/No Itching Powder Thrown]
+// patch=1,EE,206C7180,extended,00000000
+
+[Cheats/Max Itching Powder Hits]
+// patch=1,EE,206C7184,extended,05F5E0FF
+
+[Cheats/No Itching Powder Hits]
+// patch=1,EE,206C7184,extended,00000000
+
+[Cheats/Max Stink Bomb Thrown]
+// patch=1,EE,206C7188,extended,05F5E0FF
+
+[Cheats/No Stink Bomb Thrown]
+// patch=1,EE,206C7188,extended,00000000
+
+[Cheats/Max Stink Bomb Hits]
+// patch=1,EE,206C718C,extended,05F5E0FF
+
+[Cheats/No Stink Bomb Hits]
+// patch=1,EE,206C718C,extended,00000000
+
+[Cheats/Max Kick Me Signs Used]
+// patch=1,EE,206C7190,extended,05F5E0FF
+
+[Cheats/No Kick Me Signs Used]
+// patch=1,EE,206C7190,extended,00000000
+
+[Cheats/Max Marbles Dropped]
+// patch=1,EE,206C7194,extended,05F5E0FF
+
+[Cheats/No Marbles Dropped]
+// patch=1,EE,206C7194,extended,00000000
+
+[Cheats/Max People Tripped With Marbles]
+// patch=1,EE,206C7198,extended,05F5E0FF
+
+[Cheats/No People Tripped With Marbles]
+// patch=1,EE,206C7198,extended,00000000
+
+[Cheats/Max Volcano 4000s Used]
+// patch=1,EE,206C71A8,extended,05F5E0FF
+
+[Cheats/No Volcano 4000s Used]
+// patch=1,EE,206C71A8,extended,00000000
+
+[Cheats/Max People Knocked Down By Volcano 4000]
+// patch=1,EE,206C71AC,extended,05F5E0FF
+
+[Cheats/No People Knocked Down By Volcano 4000]
+// patch=1,EE,206C71AC,extended,00000000
+
+[Cheats/Max Sodas Bought]
+// patch=1,EE,206C7368,extended,05F5E0FF
+
+[Cheats/No Sodas Bought]
+// patch=1,EE,206C7368,extended,00000000
+
+[Cheats/Max Times Knocked Out]
+// patch=1,EE,206C7134,extended,05F5E0FF
+
+[Cheats/No Times Knocked Out]
+// patch=1,EE,206C7134,extended,00000000
+
+[Cheats/Max Nerds Knocked Out]
+// patch=1,EE,206C71B0,extended,05F5E0FF
+
+[Cheats/No Nerds Knocked Out]
+// patch=1,EE,206C71B0,extended,00000000
+
+[Cheats/Max Knocked Out By Nerds]
+// patch=1,EE,206C71B4,extended,05F5E0FF
+
+[Cheats/No Knocked Out By Nerds]
+// patch=1,EE,206C71B4,extended,00000000
+
+[Cheats/Max Bullies Knocked Out]
+// patch=1,EE,206C71B8,extended,05F5E0FF
+
+[Cheats/No Bullies Knocked Out]
+// patch=1,EE,206C71B8,extended,00000000
+
+[Cheats/Max Knocked Out By Bullies]
+// patch=1,EE,206C71BC,extended,05F5E0FF
+
+[Cheats/No Knocked Out By Bullies]
+// patch=1,EE,206C71BC,extended,00000000
+
+[Cheats/Max Preps Knocked Out]
+// patch=1,EE,206C71C0,extended,05F5E0FF
+
+[Cheats/No Preps Knocked Out]
+// patch=1,EE,206C71C0,extended,00000000
+
+[Cheats/Max Knocked Out By Prep]
+// patch=1,EE,206C71C4,extended,05F5E0FF
+
+[Cheats/No Knocked Out By Prep]
+// patch=1,EE,206C71C4,extended,00000000
+
+[Cheats/Max Greasers Knocked Out]
+// patch=1,EE,206C71C8,extended,05F5E0FF
+
+[Cheats/No Greasers Knocked Out]
+// patch=1,EE,206C71C8,extended,00000000
+
+[Cheats/Max Knocked Out By Greaser]
+// patch=1,EE,206C71CC,extended,05F5E0FF
+
+[Cheats/No Knocked Out By Greaser]
+// patch=1,EE,206C71CC,extended,00000000
+
+[Cheats/Max Jocks Knocked Out]
+// patch=1,EE,206C71D0,extended,05F5E0FF
+
+[Cheats/No Jocks Knocked Out]
+// patch=1,EE,206C71D0,extended,00000000
+
+[Cheats/Max Knocked Out By Jock]
+// patch=1,EE,206C71D4,extended,05F5E0FF
+
+[Cheats/No Knocked Out By Jock]
+// patch=1,EE,206C71D4,extended,00000000
+
+[Cheats/Max Townies Knocked Out]
+// patch=1,EE,206C71D8,extended,05F5E0FF
+
+[Cheats/No Townies Knocked Out]
+// patch=1,EE,206C71D8,extended,00000000
+
+[Cheats/Max Knocked Out By Townie]
+// patch=1,EE,206C71DC,extended,05F5E0FF
+
+[Cheats/No Knocked Out By Townie]
+// patch=1,EE,206C71DC,extended,00000000
+
+[Cheats/Max Rats Killed]
+// patch=1,EE,206C71E0,extended,05F5E0FF
+
+[Cheats/No Rats Killed]
+// patch=1,EE,206C71E0,extended,00000000
+
+[Cheats/Max Times Slapped]
+// patch=1,EE,206C71E4,extended,05F5E0FF
+
+[Cheats/No Times Slapped]
+// patch=1,EE,206C71E4,extended,00000000
+
+[Cheats/Max Times Kicked In The Nuts]
+// patch=1,EE,206C71E8,extended,05F5E0FF
+
+[Cheats/No Times Kicked In The Nuts]
+// patch=1,EE,206C71E8,extended,00000000
+
+[Cheats/Max Punches Thrown]
+// patch=1,EE,206C71EC,extended,05F5E0FF
+
+[Cheats/No Punches Thrown]
+// patch=1,EE,206C71EC,extended,00000000
+
+[Cheats/Max Punches Hit]
+// patch=1,EE,206C71F0,extended,05F5E0FF
+
+[Cheats/No Punches Hit]
+// patch=1,EE,206C71F0,extended,00000000
+
+[Cheats/Max Kicks Attempted]
+// patch=1,EE,206C71F4,extended,05F5E0FF
+
+[Cheats/No Kicks Attempted]
+// patch=1,EE,206C71F4,extended,00000000
+
+[Cheats/Max Kicks Landed]
+// patch=1,EE,206C71F8,extended,05F5E0FF
+
+[Cheats/No Kicks Landed]
+// patch=1,EE,206C71F8,extended,00000000
+
+[Cheats/Max Grapples Attempted]
+// patch=1,EE,206C71FC,extended,05F5E0FF
+
+[Cheats/No Grapples Attempted]
+// patch=1,EE,206C71FC,extended,00000000
+
+[Cheats/Max Successful Grapples]
+// patch=1,EE,206C7200,extended,05F5E0FF
+
+[Cheats/No Successful Grapples]
+// patch=1,EE,206C7200,extended,00000000
+
+[Cheats/Max Melee Weapon Attacks]
+// patch=1,EE,206C7204,extended,05F5E0FF
+
+[Cheats/No Melee Weapon Attacks]
+// patch=1,EE,206C7204,extended,00000000
+
+[Cheats/Max Melee Weapon Hits]
+// patch=1,EE,206C7208,extended,05F5E0FF
+
+[Cheats/No Melee Weapon Hits]
+// patch=1,EE,206C7208,extended,00000000
+
+[Cheats/Max Projectiles Fired]
+// patch=1,EE,206C720C,extended,05F5E0FF
+
+[Cheats/No Projectiles Fired]
+// patch=1,EE,206C720C,extended,00000000
+
+[Cheats/Max Projectiles Hits]
+// patch=1,EE,206C7210,extended,05F5E0FF
+
+[Cheats/No Projectiles Hits]
+// patch=1,EE,206C7210,extended,00000000
+
+[Cheats/Max Fire Crackers Collected]
+// patch=1,EE,206C7214,extended,05F5E0FF
+
+[Cheats/No Fire Crackers Collected]
+// patch=1,EE,206C7214,extended,00000000
+
+[Cheats/Max Fire Crackers Thrown]
+// patch=1,EE,206C7218,extended,05F5E0FF
+
+[Cheats/No Fire Crackers Thrown]
+// patch=1,EE,206C7218,extended,00000000
+
+[Cheats/Max Fire Cracker Hits]
+// patch=1,EE,206C721C,extended,05F5E0FF
+
+[Cheats/No Fire Cracker Hits]
+// patch=1,EE,206C721C,extended,00000000
+
+[Cheats/Max Spuds Collected]
+// patch=1,EE,206C7220,extended,05F5E0FF
+
+[Cheats/No Spuds Collected]
+// patch=1,EE,206C7220,extended,00000000
+
+[Cheats/Max Spud Gun Fired]
+// patch=1,EE,206C7224,extended,05F5E0FF
+
+[Cheats/No Spud Gun Fired]
+// patch=1,EE,206C7224,extended,00000000
+
+[Cheats/Max Spud Gun Hits]
+// patch=1,EE,206C7228,extended,05F5E0FF
+
+[Cheats/No Spud Gun Hits]
+// patch=1,EE,206C7228,extended,00000000
+
+[Cheats/Max Eggs Collected]
+// patch=1,EE,206C722C,extended,05F5E0FF
+
+[Cheats/No Eggs Collected]
+// patch=1,EE,206C722C,extended,00000000
+
+[Cheats/Max Eggs Thrown]
+// patch=1,EE,206C7230,extended,05F5E0FF
+
+[Cheats/No Eggs Thrown]
+// patch=1,EE,206C7230,extended,00000000
+
+[Cheats/Max Eggs Hits]
+// patch=1,EE,206C7234,extended,05F5E0FF
+
+[Cheats/No Eggs Hits]
+// patch=1,EE,206C7234,extended,00000000
+
+[Cheats/Max Bottle Rockets Collected]
+// patch=1,EE,206C7238,extended,05F5E0FF
+
+[Cheats/No Bottle Rockets Collected]
+// patch=1,EE,206C7238,extended,00000000
+
+[Cheats/Max Bottle Rockets Fired]
+// patch=1,EE,206C723C,extended,05F5E0FF
+
+[Cheats/No Bottle Rockets Fired]
+// patch=1,EE,206C723C,extended,00000000
+
+[Cheats/Max Bottle Rocket Hits]
+// patch=1,EE,206C7240,extended,05F5E0FF
+
+[Cheats/No Bottle Rocket Hits]
+// patch=1,EE,206C7240,extended,00000000
+
+[Cheats/Max Slingshot Fired]
+// patch=1,EE,206C7244,extended,05F5E0FF
+
+[Cheats/No Slingshot Fired]
+// patch=1,EE,206C7244,extended,00000000
+
+[Cheats/Max Slingshot Hits]
+// patch=1,EE,206C7248,extended,05F5E0FF
+
+[Cheats/No Slingshot Hits]
+// patch=1,EE,206C7248,extended,00000000
+
+[Cheats/Max Super Slingshot Fired]
+// patch=1,EE,206C724C,extended,05F5E0FF
+
+[Cheats/No Super Slingshot Fired]
+// patch=1,EE,206C724C,extended,00000000
+
+[Cheats/Max Super Slingshot Hits]
+// patch=1,EE,206C7250,extended,05F5E0FF
+
+[Cheats/No Super Slingshot Hits]
+// patch=1,EE,206C7250,extended,00000000
+
+[Cheats/Max Snowballs Thrown]
+// patch=1,EE,206C7254,extended,05F5E0FF
+
+[Cheats/No Snowballs Thrown]
+// patch=1,EE,206C7254,extended,00000000
+
+[Cheats/Max Snowball Hits]
+// patch=1,EE,206C7258,extended,05F5E0FF
+
+[Cheats/No Snowball Hits]
+// patch=1,EE,206C7258,extended,00000000
+
+[Cheats/Max Food Items Thrown]
+// patch=1,EE,206C725C,extended,05F5E0FF
+
+[Cheats/No Food Items Thrown]
+// patch=1,EE,206C725C,extended,00000000
+
+[Cheats/Max Foot Item Hits]
+// patch=1,EE,206C7260,extended,05F5E0FF
+
+[Cheats/No Foot Item Hits]
+// patch=1,EE,206C7260,extended,00000000
+
+[Cheats/Max People Knocked Out]
+// patch=1,EE,206C7378,extended,05F5E0FF
+
+[Cheats/No People Knocked Out]
+// patch=1,EE,206C7378,extended,00000000
+
+[Cheats/Max Kisses Received]
+// patch=1,EE,206C7264,extended,05F5E0FF
+
+[Cheats/No Kisses Received]
+// patch=1,EE,206C7264,extended,00000000
+
+[Cheats/Max Bottoms Pinched]
+// patch=1,EE,206C7268,extended,05F5E0FF
+
+[Cheats/No Bottoms Pinched]
+// patch=1,EE,206C7268,extended,00000000
+
+[Cheats/Max Gifts Given To People]
+// patch=1,EE,206C726C,extended,05F5E0FF
+
+[Cheats/No Gifts Given To People]
+// patch=1,EE,206C726C,extended,00000000
+
+[Cheats/Max Successful Authority Apologies]
+// patch=1,EE,206C7274,extended,05F5E0FF
+
+[Cheats/No Successful Authority Apologies]
+// patch=1,EE,206C7274,extended,00000000
+
+[Cheats/Max Nerds Greeted]
+// patch=1,EE,206C7278,extended,05F5E0FF
+
+[Cheats/No Nerds Greeted]
+// patch=1,EE,206C7278,extended,00000000
+
+[Cheats/Max Nerds Taunted]
+// patch=1,EE,206C727C,extended,05F5E0FF
+
+[Cheats/No Nerds Taunted]
+// patch=1,EE,206C727C,extended,00000000
+
+[Cheats/Max Bullies Greeted]
+// patch=1,EE,206C7280,extended,05F5E0FF
+
+[Cheats/No Bullies Greeted]
+// patch=1,EE,206C7280,extended,00000000
+
+[Cheats/Max Bullies Taunted]
+// patch=1,EE,206C7284,extended,05F5E0FF
+
+[Cheats/No Bullies Taunted]
+// patch=1,EE,206C7284,extended,00000000
+
+[Cheats/Max Preps Greeted]
+// patch=1,EE,206C7288,extended,05F5E0FF
+
+[Cheats/No Preps Greeted]
+// patch=1,EE,206C7288,extended,00000000
+
+[Cheats/Max Preps Taunted]
+// patch=1,EE,206C728C,extended,05F5E0FF
+
+[Cheats/No Preps Taunted]
+// patch=1,EE,206C728C,extended,00000000
+
+[Cheats/Max Greasers Greeted]
+// patch=1,EE,206C7290,extended,05F5E0FF
+
+[Cheats/No Greasers Greeted]
+// patch=1,EE,206C7290,extended,00000000
+
+[Cheats/Max Greasers Taunted]
+// patch=1,EE,206C7294,extended,05F5E0FF
+
+[Cheats/No Greasers Taunted]
+// patch=1,EE,206C7294,extended,00000000
+
+[Cheats/Max Jocks Greeted]
+// patch=1,EE,206C7298,extended,05F5E0FF
+
+[Cheats/No Jocks Greeted]
+// patch=1,EE,206C7298,extended,00000000
+
+[Cheats/Max Jocks Taunted]
+// patch=1,EE,206C729C,extended,05F5E0FF
+
+[Cheats/No Jocks Taunted]
+// patch=1,EE,206C729C,extended,00000000
+
+[Cheats/Max Townies Greeted]
+// patch=1,EE,206C72A0,extended,05F5E0FF
+
+[Cheats/No Townies Greeted]
+// patch=1,EE,206C72A0,extended,00000000
+
+[Cheats/Max Townies Taunted]
+// patch=1,EE,206C72A4,extended,05F5E0FF
+
+[Cheats/No Townies Taunted]
+// patch=1,EE,206C72A4,extended,00000000
+
+[Cheats/Max Teachers Greeted]
+// patch=1,EE,206C72A8,extended,05F5E0FF
+
+[Cheats/No Teachers Greeted]
+// patch=1,EE,206C72A8,extended,00000000
+
+[Cheats/Max Teachers Taunted]
+// patch=1,EE,206C72AC,extended,05F5E0FF
+
+[Cheats/No Teachers Taunted]
+// patch=1,EE,206C72AC,extended,00000000
+
+[Cheats/Max Prefects Greeted]
+// patch=1,EE,206C72B0,extended,05F5E0FF
+
+[Cheats/No Prefects Greeted]
+// patch=1,EE,206C72B0,extended,00000000
+
+[Cheats/Max Prefects Taunted]
+// patch=1,EE,206C72B4,extended,05F5E0FF
+
+[Cheats/No Prefects Taunted]
+// patch=1,EE,206C72B4,extended,00000000
+
+[Cheats/Max Cops Greeted]
+// patch=1,EE,206C72B8,extended,05F5E0FF
+
+[Cheats/No Cops Greeted]
+// patch=1,EE,206C72B8,extended,00000000
+
+[Cheats/Max Cops Taunted]
+// patch=1,EE,206C72BC,extended,05F5E0FF
+
+[Cheats/No Cops Taunted]
+// patch=1,EE,206C72BC,extended,00000000
+
+[Cheats/Max Trouble Points Accumulated]
+// patch=1,EE,206C72C8,extended,05F5E0FF
+
+[Cheats/No Trouble Points Accumulated]
+// patch=1,EE,206C72C8,extended,00000000
+
+[Cheats/Max Called To The Principal's Office]
+// patch=1,EE,206C72CC,extended,05F5E0FF
+
+[Cheats/No Called To The Principal's Office]
+// patch=1,EE,206C72CC,extended,00000000
+
+[Cheats/Max Busted By Teacher]
+// patch=1,EE,206C72D8,extended,05F5E0FF
+
+[Cheats/No Busted By Teacher]
+// patch=1,EE,206C72D8,extended,00000000
+
+[Cheats/Max Escaped From Teacher]
+// patch=1,EE,206C72DC,extended,05F5E0FF
+
+[Cheats/No Escaped From Teacher]
+// patch=1,EE,206C72DC,extended,00000000
+
+[Cheats/Max Busted By Prefect]
+// patch=1,EE,206C72E0,extended,05F5E0FF
+
+[Cheats/No Busted By Prefect]
+// patch=1,EE,206C72E0,extended,00000000
+
+[Cheats/Max Escaped From Prefect]
+// patch=1,EE,206C72E4,extended,05F5E0FF
+
+[Cheats/No Escaped From Prefect]
+// patch=1,EE,206C72E4,extended,00000000
+
+[Cheats/Max Busted By Cop]
+// patch=1,EE,206C72E8,extended,05F5E0FF
+
+[Cheats/No Busted By Cop]
+// patch=1,EE,206C72E8,extended,00000000
+
+[Cheats/Max Escaped From Cop]
+// patch=1,EE,206C72EC,extended,05F5E0FF
+
+[Cheats/No Escaped From Cop]
+// patch=1,EE,206C72EC,extended,00000000
+
+[Cheats/Max Busted By Orderly]
+// patch=1,EE,206C72F0,extended,05F5E0FF
+
+[Cheats/No Busted By Orderly]
+// patch=1,EE,206C72F0,extended,00000000
+
+[Cheats/Max Escaped From Orderly]
+// patch=1,EE,206C72F4,extended,05F5E0FF
+
+[Cheats/No Escaped From Orderly]
+// patch=1,EE,206C72F4,extended,00000000
+
+[Cheats/Max Greetings]
+// patch=1,EE,206C7370,extended,05F5E0FF
+
+[Cheats/No Greetings]
+// patch=1,EE,206C7370,extended,00000000
+
+[Cheats/Max Taunts]
+// patch=1,EE,206C7374,extended,05F5E0FF
+
+[Cheats/No Taunts]
+// patch=1,EE,206C7374,extended,00000000
+
+[Cheats/Max Classes Skipped]
+// patch=1,EE,206C72F8,extended,05F5E0FF
+
+[Cheats/No Classes Skipped]
+// patch=1,EE,206C72F8,extended,00000000
+
+[Cheats/Max Papers Thrown]
+// patch=1,EE,206C72FC,extended,05F5E0FF
+
+[Cheats/No Papers Thrown]
+// patch=1,EE,206C72FC,extended,00000000
+
+[Cheats/Max Papers Delivered]
+// patch=1,EE,206C7300,extended,05F5E0FF
+
+[Cheats/No Papers Delivered]
+// patch=1,EE,206C7300,extended,00000000
+
+[Cheats/Max People Hit By Papers]
+// patch=1,EE,206C7304,extended,05F5E0FF
+
+[Cheats/No People Hit By Papers]
+// patch=1,EE,206C7304,extended,00000000
+
+[Cheats/Max Dogs Hit By Papers]
+// patch=1,EE,206C7308,extended,05F5E0FF
+
+[Cheats/No Dogs Hit By Papers]
+// patch=1,EE,206C7308,extended,00000000
+
+[Cheats/Max Money Earned On Paper Routes]
+// patch=1,EE,206C730C,extended,05F5E0FF
+
+[Cheats/No Money Earned On Paper Routes]
+// patch=1,EE,206C730C,extended,00000000
+
+[Cheats/Max Mowing Attempted]
+// patch=1,EE,206C7310,extended,05F5E0FF
+
+[Cheats/No Mowing Attempted]
+// patch=1,EE,206C7310,extended,00000000
+
+[Cheats/Max Mowing Completed]
+// patch=1,EE,206C7314,extended,05F5E0FF
+
+[Cheats/No Mowing Completed]
+// patch=1,EE,206C7314,extended,00000000
+
+[Cheats/Max Money Earned Mowing]
+// patch=1,EE,206C731C,extended,05F5E0FF
+
+[Cheats/No Money Earned Mowing]
+// patch=1,EE,206C731C,extended,00000000
+
+[Cheats/Max Snow Shoveling Attempted]
+// patch=1,EE,206C7320,extended,05F5E0FF
+
+[Cheats/No Snow Shoveling Attempted]
+// patch=1,EE,206C7320,extended,00000000
+
+[Cheats/Max Snow Shoveling Completed]
+// patch=1,EE,206C7324,extended,05F5E0FF
+
+[Cheats/No Snow Shoveling Completed]
+// patch=1,EE,206C7324,extended,00000000
+
+[Cheats/Max Money Won In Bike Races]
+// patch=1,EE,206C732C,extended,05F5E0FF
+
+[Cheats/No Money Won In Bike Races]
+// patch=1,EE,206C732C,extended,00000000
+
+[Cheats/Max Boxing Matches Entered]
+// patch=1,EE,206C7330,extended,05F5E0FF
+
+[Cheats/No Boxing Matches Entered]
+// patch=1,EE,206C7330,extended,00000000
+
+[Cheats/Max Boxing Matches Won]
+// patch=1,EE,206C7334,extended,05F5E0FF
+
+[Cheats/No Boxing Matches Won]
+// patch=1,EE,206C7334,extended,00000000
+
+[Cheats/Max Money Win In Boxing]
+// patch=1,EE,206C7338,extended,05F5E0FF
+
+[Cheats/No Money Win In Boxing]
+// patch=1,EE,206C7338,extended,00000000
+
+[Cheats/Max Pictures Taken]
+// patch=1,EE,206C733C,extended,05F5E0FF
+
+[Cheats/No Pictures Taken]
+// patch=1,EE,206C733C,extended,00000000
+
+[Cheats/Max Pictures Of Nerds]
+// patch=1,EE,206C7344,extended,05F5E0FF
+
+[Cheats/No Pictures Of Nerds]
+// patch=1,EE,206C7344,extended,00000000
+
+[Cheats/Max Pictures Of Preps]
+// patch=1,EE,206C7348,extended,05F5E0FF
+
+[Cheats/No Pictures Of Preps]
+// patch=1,EE,206C7348,extended,00000000
+
+[Cheats/Max Pictures Of Greasers]
+// patch=1,EE,206C734C,extended,05F5E0FF
+
+[Cheats/No Pictures Of Greasers]
+// patch=1,EE,206C734C,extended,00000000
+
+[Cheats/Max Pictures Of Jocks]
+// patch=1,EE,206C7350,extended,05F5E0FF
+
+[Cheats/No Pictures Of Jocks]
+// patch=1,EE,206C7350,extended,00000000
+
+[Cheats/Max Pictures Of Townies]
+// patch=1,EE,206C7354,extended,05F5E0FF
+
+[Cheats/No Pictures Of Townies]
+// patch=1,EE,206C7354,extended,00000000
+
+[Cheats/Max Pictures Of Teachers]
+// patch=1,EE,206C7358,extended,05F5E0FF
+
+[Cheats/No Pictures Of Teachers]
+// patch=1,EE,206C7358,extended,00000000
+
+[Cheats/Max Pictures Of Prefects]
+// patch=1,EE,206C735C,extended,05F5E0FF
+
+[Cheats/No Pictures Of Prefects]
+// patch=1,EE,206C735C,extended,00000000
+
+[Cheats/Max Pictures Of Townsfolk]
+// patch=1,EE,206C7360,extended,05F5E0FF
+
+[Cheats/No Pictures Of Townsfolk]
+// patch=1,EE,206C7360,extended,00000000
+
+[Cheats/Max Pictures Of Bullies]
+// patch=1,EE,206C7364,extended,05F5E0FF
+
+[Cheats/No Pictures Of Bullies]
+// patch=1,EE,206C7364,extended,00000000
+
+[Cheats/Max Tags Sprayed]
+// patch=1,EE,206C7380,extended,05F5E0FF
+
+[Cheats/No Tags Sprayed]
+// patch=1,EE,206C7380,extended,00000000
+
+[Cheats/Max Nerd Tags SPrayed]
+// patch=1,EE,206C7384,extended,05F5E0FF
+
+[Cheats/No Nerd Tags SPrayed]
+// patch=1,EE,206C7384,extended,00000000
+
+[Cheats/Max Preppie Tags Sprayed]
+// patch=1,EE,206C7388,extended,05F5E0FF
+
+[Cheats/No Preppie Tags Sprayed]
+// patch=1,EE,206C7388,extended,00000000
+
+[Cheats/Max Greaser Tags Sprayed]
+// patch=1,EE,206C738C,extended,05F5E0FF
+
+[Cheats/No Greaser Tags Sprayed]
+// patch=1,EE,206C738C,extended,00000000
+
+[Cheats/Max Jock Tags Sprayed]
+// patch=1,EE,206C7390,extended,05F5E0FF
+
+[Cheats/No Jock Tags Sprayed]
+// patch=1,EE,206C7390,extended,00000000
+
+[Cheats/Max Tagging In View Of Authority]
+// patch=1,EE,206C7394,extended,05F5E0FF
+
+[Cheats/No Tagging In View Of Authority]
+// patch=1,EE,206C7394,extended,00000000
+
+[Cheats/Max Attempted Lock Picks]
+// patch=1,EE,206C7398,extended,05F5E0FF
+
+[Cheats/No Attempted Lock Picks]
+// patch=1,EE,206C7398,extended,00000000
+
+[Cheats/Max Successful Lock Picks]
+// patch=1,EE,206C739C,extended,05F5E0FF
+
+[Cheats/No Successful Lock Picks]
+// patch=1,EE,206C739C,extended,00000000
+
+[Cheats/Max Items Taken From Lockers]
+// patch=1,EE,206C73A0,extended,05F5E0FF
+
+[Cheats/No Items Taken From Lockers]
+// patch=1,EE,206C73A0,extended,00000000
+
+[Cheats/Max Ferris Wheel Rides]
+// patch=1,EE,206C736C,extended,05F5E0FF
+
+[Cheats/No Ferris Wheel Rides]
+// patch=1,EE,206C736C,extended,00000000
+
+[Cheats/Max Times Knocked Down]
+// patch=1,EE,206C73A4,extended,05F5E0FF
+
+[Cheats/No Times Knocked Down]
+// patch=1,EE,206C73A4,extended,00000000
+
+[Cheats/Max Dodgeballs Thrown]
+// patch=1,EE,206C73A8,extended,05F5E0FF
+
+[Cheats/No Dodgeballs Thrown]
+// patch=1,EE,206C73A8,extended,00000000
+
+[Cheats/Max Successful Dodgeball Hits]
+// patch=1,EE,206C73AC,extended,05F5E0FF
+
+[Cheats/No Successful Dodgeball Hits]
+// patch=1,EE,206C73AC,extended,00000000
+
+[Cheats/Max Keep-Ups Played]
+// patch=1,EE,206C73B0,extended,05F5E0FF
+
+[Cheats/No Keep-Ups Played]
+// patch=1,EE,206C73B0,extended,00000000
+
+[Cheats/Max Keep-Ups Won]
+// patch=1,EE,206C73B4,extended,05F5E0FF
+
+[Cheats/No Keep-Ups Won]
+// patch=1,EE,206C73B4,extended,00000000
+
+[Cheats/Max Penalty Shootout Played]
+// patch=1,EE,206C73B8,extended,05F5E0FF
+
+[Cheats/No Penalty Shootout Played]
+// patch=1,EE,206C73B8,extended,00000000
+
+[Cheats/Max Penalty Shootout Won]
+// patch=1,EE,206C73BC,extended,05F5E0FF
+
+[Cheats/No Penalty Shootout Won]
+// patch=1,EE,206C73BC,extended,00000000
+
+[Cheats/Max Money Earned On Errands]
+// patch=1,EE,206C73C0,extended,05F5E0FF
+
+[Cheats/No Money Earned On Errands]
+// patch=1,EE,206C73C0,extended,00000000
+
+[Cheats/Max ConSumo Games Played]
+// patch=1,EE,206C73C4,extended,05F5E0FF
+
+[Cheats/No ConSumo Games Played]
+// patch=1,EE,206C73C4,extended,00000000
+
+[Cheats/Max ConSumo High Score]
+// patch=1,EE,206C73C8,extended,05F5E0FF
+
+[Cheats/No ConSumo High Score]
+// patch=1,EE,206C73C8,extended,00000000
+
+[Cheats/Max Money Spent On ConSumo]
+// patch=1,EE,206C73CC,extended,05F5E0FF
+
+[Cheats/No Money Spent On ConSumo]
+// patch=1,EE,206C73CC,extended,00000000
+
+[Cheats/Max Monkey Fling Games Played]
+// patch=1,EE,206C73D0,extended,05F5E0FF
+
+[Cheats/No Monkey Fling Games Played]
+// patch=1,EE,206C73D0,extended,00000000
+
+[Cheats/Max Monkey Fling High Score]
+// patch=1,EE,206C73D4,extended,05F5E0FF
+
+[Cheats/No Monkey Fling High Score]
+// patch=1,EE,206C73D4,extended,00000000
+
+[Cheats/Max Money Spent On Monkey Fling]
+// patch=1,EE,206C73D8,extended,05F5E0FF
+
+[Cheats/No Money Spent On Monkey Fling]
+// patch=1,EE,206C73D8,extended,00000000
+
+[Cheats/Max Nut Shots Games Played]
+// patch=1,EE,206C73DC,extended,05F5E0FF
+
+[Cheats/No Nut Shots Games Played]
+// patch=1,EE,206C73DC,extended,00000000
+
+[Cheats/Max Nut Shots High Score]
+// patch=1,EE,206C73E0,extended,05F5E0FF
+
+[Cheats/No Nut Shots High Score]
+// patch=1,EE,206C73E0,extended,00000000
+
+[Cheats/Max Money Spent On Nut Shots]
+// patch=1,EE,206C73E4,extended,05F5E0FF
+
+[Cheats/No Money Spent On Nut Shots]
+// patch=1,EE,206C73E4,extended,00000000
+
+[Cheats/Max FS Racer 2165 Games Played]
+// patch=1,EE,206C73E8,extended,05F5E0FF
+
+[Cheats/No FS Racer 2165 Games Played]
+// patch=1,EE,206C73E8,extended,00000000
+
+[Cheats/Max Money Spent On FS Racer 2165]
+// patch=1,EE,206C73EC,extended,05F5E0FF
+
+[Cheats/No Money Spent On FS Racer 2165]
+// patch=1,EE,206C73EC,extended,00000000
+
+[Cheats/Max FS Racer 3D Games Played]
+// patch=1,EE,206C73F0,extended,05F5E0FF
+
+[Cheats/No FS Racer 3D Games Played]
+// patch=1,EE,206C73F0,extended,00000000
+
+[Cheats/Max Money Spent On FS Racer 3D]
+// patch=1,EE,206C73F4,extended,05F5E0FF
+
+[Cheats/No Money Spent On FS Racer 3D]
+// patch=1,EE,206C73F4,extended,00000000
+
+[Cheats/Max Tickets Collected]
+// patch=1,EE,206C73F8,extended,05F5E0FF
+
+[Cheats/No Tickets Collected]
+// patch=1,EE,206C73F8,extended,00000000
+
+[Cheats/Max Tickets Used]
+// patch=1,EE,206C73FC,extended,05F5E0FF
+
+[Cheats/No Tickets Used]
+// patch=1,EE,206C73FC,extended,00000000
+
+[Cheats/Max Items Bought Using Tickets]
+// patch=1,EE,206C7400,extended,05F5E0FF
+
+[Cheats/No Items Bought Using Tickets]
+// patch=1,EE,206C7400,extended,00000000
+
+[Cheats/Max Baseball Toss Special Targets Hit]
+// patch=1,EE,206C7404,extended,05F5E0FF
+
+[Cheats/No Baseball Toss Special Targets Hit]
+// patch=1,EE,206C7404,extended,00000000
+
+[Cheats/Max Baseball Toss Umpires Hit]
+// patch=1,EE,206C7408,extended,05F5E0FF
+
+[Cheats/No Baseball Toss Umpires Hit]
+// patch=1,EE,206C7408,extended,00000000
+
+[Cheats/Max Baseball Toss Balls]
+// patch=1,EE,206C740C,extended,05F5E0FF
+
+[Cheats/No Baseball Toss Balls]
+// patch=1,EE,206C740C,extended,00000000
+
+[Cheats/Max Baseball Toss Strikes]
+// patch=1,EE,206C7410,extended,05F5E0FF
+
+[Cheats/No Baseball Toss Strikes]
+// patch=1,EE,206C7410,extended,00000000
+
+[Cheats/Max Shooting Gallery Shots Taken]
+// patch=1,EE,206C7414,extended,05F5E0FF
+
+[Cheats/No Shooting Gallery Shots Taken]
+// patch=1,EE,206C7414,extended,00000000
+
+[Cheats/Max Shooting Gallery Bottles Broken]
+// patch=1,EE,206C7418,extended,05F5E0FF
+
+[Cheats/No Shooting Gallery Bottles Broken]
+// patch=1,EE,206C7418,extended,00000000
+
+[Cheats/Max Roller coaster Rides]
+// patch=1,EE,206C741C,extended,05F5E0FF
+
+[Cheats/No Roller coaster Rides]
+// patch=1,EE,206C741C,extended,00000000
+
+[Cheats/Max Octopus Rides]
+// patch=1,EE,206C7420,extended,05F5E0FF
+
+[Cheats/No Octopus Rides]
+// patch=1,EE,206C7420,extended,00000000
+
+[Cheats/Max Fortunes Read]
+// patch=1,EE,206C7424,extended,05F5E0FF
+
+[Cheats/No Fortunes Read]
+// patch=1,EE,206C7424,extended,00000000

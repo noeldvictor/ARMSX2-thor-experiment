@@ -1,0 +1,451 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Riding Spirits [SLUS-20429] [EDDCAE30]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Cars]
+// patch=1,EE,9020BA74,extended,0C087F33
+
+[Cheats/Infinite Money]
+// patch=1,EE,10236B20,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,20236B20,extended,05F5E0FF
+
+[Cheats/Always Low Total Time]
+// patch=1,EE,202A023C,extended,00000000
+
+[Cheats/Always Low Lap 1 Total Time]
+// patch=1,EE,202A0254,extended,00000000
+
+[Cheats/Always Low Lap 2 Total Time]
+// patch=1,EE,202A0258,extended,00000000
+
+[Cheats/Always Low Lap 3 Total Time]
+// patch=1,EE,202A025C,extended,00000000
+
+[Cheats/Start On Lap 2]
+// patch=1,EE,D02A05DC,extended,00000000
+// patch=1,EE,002A05DC,extended,00000001
+
+[Cheats/Start On Lap 3]
+// patch=1,EE,D02A05DC,extended,00000000
+// patch=1,EE,002A05DC,extended,00000002
+
+[Cheats/Access All Riding Spirit Races]
+// patch=1,EE,20247A78,extended,FFFFFFFF
+// patch=1,EE,20247A7C,extended,FFFFFFFF
+
+[Cheats/Press {R1}+{CROSS} For Turbo Speed P1]
+// patch=1,EE,D0236882,extended,0000B7FF
+// patch=1,EE,20296524,extended,42480000
+
+[Cheats/Press {R2}+{CROSS} For Super Speed P1]
+// patch=1,EE,D0236882,extended,0000BDFF
+// patch=1,EE,20296524,extended,42800000
+
+[Cheats/Press {R1}+{R2}+{CROSS} For Hella Speed P1]
+// patch=1,EE,D0236882,extended,0000B5FF
+// patch=1,EE,20296524,extended,42C80000
+
+[Cheats/Press {R1}+{CROSS} For Turbo Speed P2]
+// patch=1,EE,D0236982,extended,0000B7FF
+// patch=1,EE,202966A0,extended,42480000
+
+[Cheats/Press {R2}+{CROSS} For Super Speed P2]
+// patch=1,EE,D0236982,extended,0000BDFF
+// patch=1,EE,202966A0,extended,42800000
+
+[Cheats/Press {R1}+{R2}+{CROSS} For Hella Speed P2]
+// patch=1,EE,D0236982,extended,0000B5FF
+// patch=1,EE,202966A0,extended,42C80000
+
+[Cheats/Opponent 1]
+// patch=1,EE,002A05DD,extended,00000000
+
+[Cheats/Opponent 2]
+// patch=1,EE,002A05DE,extended,00000000
+
+[Cheats/Opponent 3]
+// patch=1,EE,002A05DF,extended,00000000
+
+[Cheats/Opponent 4]
+// patch=1,EE,002A05E0,extended,00000000
+
+[Cheats/Opponent 5]
+// patch=1,EE,002A05E1,extended,00000000
+
+[Cheats/CR-01]
+// patch=1,EE,00247758,extended,00000004
+
+[Cheats/CR-02]
+// patch=1,EE,00247759,extended,00000004
+
+[Cheats/CR-03]
+// patch=1,EE,0024775A,extended,00000004
+
+[Cheats/CR-04]
+// patch=1,EE,0024775B,extended,00000004
+
+[Cheats/CR-05]
+// patch=1,EE,0024775C,extended,00000004
+
+[Cheats/CR-06]
+// patch=1,EE,0024775D,extended,00000004
+
+[Cheats/CR-07]
+// patch=1,EE,0024775E,extended,00000004
+
+[Cheats/CR-08]
+// patch=1,EE,0024775F,extended,00000004
+
+[Cheats/CR-09]
+// patch=1,EE,00247760,extended,00000004
+
+[Cheats/CR-10]
+// patch=1,EE,00247761,extended,00000004
+
+[Cheats/CR-11]
+// patch=1,EE,00247762,extended,00000004
+
+[Cheats/CR-12]
+// patch=1,EE,00247763,extended,00000004
+
+[Cheats/CR-13]
+// patch=1,EE,00247764,extended,00000004
+
+[Cheats/CR-14]
+// patch=1,EE,00247765,extended,00000004
+
+[Cheats/CR-15]
+// patch=1,EE,00247766,extended,00000004
+
+[Cheats/CR-16]
+// patch=1,EE,00247767,extended,00000004
+
+[Cheats/CR-17]
+// patch=1,EE,00247768,extended,00000004
+
+[Cheats/CR-18]
+// patch=1,EE,00247769,extended,00000004
+
+[Cheats/CR-19]
+// patch=1,EE,0024776A,extended,00000004
+
+[Cheats/CR-20]
+// patch=1,EE,0024776B,extended,00000004
+
+[Cheats/SR-01]
+// patch=1,EE,0024776C,extended,00000004
+
+[Cheats/SR-02]
+// patch=1,EE,0024776D,extended,00000004
+
+[Cheats/SR-03]
+// patch=1,EE,0024776E,extended,00000004
+
+[Cheats/SR-04]
+// patch=1,EE,0024776F,extended,00000004
+
+[Cheats/SR-05]
+// patch=1,EE,00247770,extended,00000004
+
+[Cheats/SR-06]
+// patch=1,EE,00247771,extended,00000004
+
+[Cheats/SR-07]
+// patch=1,EE,00247772,extended,00000004
+
+[Cheats/SR-08]
+// patch=1,EE,00247773,extended,00000004
+
+[Cheats/SR-09]
+// patch=1,EE,00247774,extended,00000004
+
+[Cheats/SR-10]
+// patch=1,EE,00247775,extended,00000004
+
+[Cheats/SR-11]
+// patch=1,EE,00247776,extended,00000004
+
+[Cheats/SR-12]
+// patch=1,EE,00247777,extended,00000004
+
+[Cheats/SR-13]
+// patch=1,EE,00247778,extended,00000004
+
+[Cheats/SR-14]
+// patch=1,EE,00247779,extended,00000004
+
+[Cheats/SR-15]
+// patch=1,EE,0024777A,extended,00000004
+
+[Cheats/SR-16]
+// patch=1,EE,0024777B,extended,00000004
+
+[Cheats/SR-17]
+// patch=1,EE,0024777C,extended,00000004
+
+[Cheats/SR-18]
+// patch=1,EE,0024777D,extended,00000004
+
+[Cheats/SR-19]
+// patch=1,EE,0024777E,extended,00000004
+
+[Cheats/SR-20]
+// patch=1,EE,0024777F,extended,00000004
+
+[Cheats/Rampart Raceway]
+// patch=1,EE,00247780,extended,00000004
+
+[Cheats/Red-Hot Valley]
+// patch=1,EE,00247781,extended,00000004
+
+[Cheats/Stone Maze]
+// patch=1,EE,00247782,extended,00000004
+
+[Cheats/Black Forest Raceway]
+// patch=1,EE,00247783,extended,00000004
+
+[Cheats/Rich Table]
+// patch=1,EE,00247784,extended,00000004
+
+[Cheats/Grassy Hillside]
+// patch=1,EE,00247785,extended,00000004
+
+[Cheats/Queen's Backyard]
+// patch=1,EE,00247786,extended,00000004
+
+[Cheats/Rampart Raceway (Reverse)]
+// patch=1,EE,00247787,extended,00000004
+
+[Cheats/Red-Hot Valley (Reverse)]
+// patch=1,EE,00247788,extended,00000004
+
+[Cheats/Stone Maxe (Reverse)]
+// patch=1,EE,00247789,extended,00000004
+
+[Cheats/Black Forest Raceway (Reverse)]
+// patch=1,EE,0024778A,extended,00000004
+
+[Cheats/Rich Table (Reverse)]
+// patch=1,EE,0024778B,extended,00000004
+
+[Cheats/Grassy Hillside (Reverse)]
+// patch=1,EE,0024778C,extended,00000004
+
+[Cheats/Queen's Backyard (Reverse)]
+// patch=1,EE,0024778D,extended,00000004
+
+[Cheats/Have Battle Duel Completed-All Bikes]
+// patch=1,EE,40247790,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Battle From Zero-Battle From Zero Sports]
+// patch=1,EE,002477B6,extended,00000001
+// patch=1,EE,002477B4,extended,00000001
+// patch=1,EE,002477DC,extended,00000001
+// patch=1,EE,002477FC,extended,00000001
+// patch=1,EE,00247824,extended,00000001
+
+[Cheats/Battle From Zero-Battle From Zero Naked]
+// patch=1,EE,002477B5,extended,00000001
+// patch=1,EE,002477DD,extended,00000001
+// patch=1,EE,002477FD,extended,00000001
+// patch=1,EE,00247825,extended,00000001
+
+[Cheats/Free Race-Freshman Meeting]
+// patch=1,EE,002477AD,extended,00000001
+
+[Cheats/Free Race-Sunday Meeting]
+// patch=1,EE,002477AC,extended,00000001
+
+[Cheats/Beginner-Step UP Meeting]
+// patch=1,EE,002477A6,extended,00000001
+
+[Cheats/Beginner-RS Beginner's Meeting]
+// patch=1,EE,002477A5,extended,00000001
+
+[Cheats/Beginner-Welcome To RS Meeting]
+// patch=1,EE,002477A4,extended,00000001
+
+[Cheats/Battle From Zero-Battle From Zero 600]
+// patch=1,EE,002477DE,extended,00000001
+
+[Cheats/Power Of Heart-V-Twin]
+// patch=1,EE,002477D8,extended,00000001
+
+[Cheats/Power Of Heart-V-Four]
+// patch=1,EE,002477D7,extended,00000001
+
+[Cheats/Power Of Heart-Inline Four]
+// patch=1,EE,002477D6,extended,00000001
+
+[Cheats/Power Of Heart-Four-Cycle]
+// patch=1,EE,002477D5,extended,00000001
+
+[Cheats/Power Of Heart-Two-Cycle]
+// patch=1,EE,002477D4,extended,00000001
+
+[Cheats/The One-Make Memorial-GSX1100S]
+// patch=1,EE,002477D3,extended,00000001
+
+[Cheats/The One-Make Memorial-Z900SUPER4]
+// patch=1,EE,002477D2,extended,00000001
+
+[Cheats/The One-Make Memorial-750RS]
+// patch=1,EE,002477D1,extended,00000001
+
+[Cheats/The One-Make Memorial-CB750F]
+// patch=1,EE,002477D0,extended,00000001
+
+[Cheats/The One-Make Memorial-CB750Four]
+// patch=1,EE,002477CF,extended,00000001
+
+[Cheats/The One-Make Memorial-TZR250]
+// patch=1,EE,002477CE,extended,00000001
+
+[Cheats/The One-Make Memorial-RZ250R]
+// patch=1,EE,002477CD,extended,00000001
+
+[Cheats/The One-Make Memorial-RGV-R 250SP]
+// patch=1,EE,002477CC,extended,00000001
+
+[Cheats/Battle Of The Kings-YAMAHA Meeting]
+// patch=1,EE,002477C7,extended,00000001
+
+[Cheats/Battle Of The Kings-SUZUKI Meeting]
+// patch=1,EE,002477C6,extended,00000001
+
+[Cheats/Battle Of The Kings-KAWASAKI Meeting]
+// patch=1,EE,002477C5,extended,00000001
+
+[Cheats/Battle Of The Kings-HONDA Meeting]
+// patch=1,EE,002477C4,extended,00000001
+
+[Cheats/Class Race-600 CC]
+// patch=1,EE,002477BE,extended,00000001
+// patch=1,EE,002477E6,extended,00000001
+// patch=1,EE,0024780E,extended,00000001
+
+[Cheats/Class Race-400 CC]
+// patch=1,EE,002477BD,extended,00000001
+// patch=1,EE,002477E5,extended,00000001
+// patch=1,EE,0024780D,extended,00000001
+
+[Cheats/Class Race-250 CC]
+// patch=1,EE,002477BC,extended,00000001
+// patch=1,EE,002477E4,extended,00000001
+// patch=1,EE,0024780C,extended,00000001
+
+[Cheats/King Of RS-King Of RS Heat 7]
+// patch=1,EE,0024780A,extended,00000001
+
+[Cheats/King Of RS-King Of RS Heat 6]
+// patch=1,EE,00247809,extended,00000001
+
+[Cheats/King Of RS-King Of RS Heat 5]
+// patch=1,EE,00247808,extended,00000001
+
+[Cheats/King Of RS-King Of RS Heat 4]
+// patch=1,EE,00247807,extended,00000001
+
+[Cheats/King Of RS-King Of RS Heat 3]
+// patch=1,EE,00247806,extended,00000001
+
+[Cheats/King Of RS-King Of RS Heat 2]
+// patch=1,EE,00247805,extended,00000001
+
+[Cheats/King Of RS-King Of RS Heat 1]
+// patch=1,EE,00247804,extended,00000001
+
+[Cheats/Battle From Zero-Battle From Zero Open]
+// patch=1,EE,002477FE,extended,00000001
+
+[Cheats/Speed Master-Time Tunnel~80's]
+// patch=1,EE,002477F8,extended,00000001
+
+[Cheats/Speed Master-Time Tunnel~70's]
+// patch=1,EE,002477F7,extended,00000001
+
+[Cheats/Speed Master-Unlimited]
+// patch=1,EE,002477F6,extended,00000001
+
+[Cheats/Speed Master-Maximum]
+// patch=1,EE,002477F5,extended,00000001
+
+[Cheats/Speed Master-Power Wars]
+// patch=1,EE,002477F4,extended,00000001
+
+[Cheats/The Super Machine-Super Twin]
+// patch=1,EE,002477EF,extended,00000001
+
+[Cheats/The Super Machine-Super Street]
+// patch=1,EE,002477EE,extended,00000001
+
+[Cheats/The Super Machine-Super Naked]
+// patch=1,EE,002477ED,extended,00000001
+
+[Cheats/The Super Machine-Super Sports]
+// patch=1,EE,002477EC,extended,00000001
+
+[Cheats/Class Race-Open]
+// patch=1,EE,002477E8,extended,00000001
+// patch=1,EE,00247810,extended,00000001
+
+[Cheats/Class Race-750 CC]
+// patch=1,EE,002477E7,extended,00000001
+// patch=1,EE,0024780F,extended,00000001
+
+[Cheats/King Of Night-King Of Night Heat 7]
+// patch=1,EE,00247832,extended,00000001
+
+[Cheats/King Of Night-King Of Night Heat 6]
+// patch=1,EE,00247831,extended,00000001
+
+[Cheats/King Of Night-King Of Night Heat 5]
+// patch=1,EE,00247830,extended,00000001
+
+[Cheats/King Of Night-King Of Night Heat 4]
+// patch=1,EE,0024782F,extended,00000001
+
+[Cheats/King Of Night-King Of Night Heat 3]
+// patch=1,EE,0024782E,extended,00000001
+
+[Cheats/King Of Night-King Of Night Heat 2]
+// patch=1,EE,0024782D,extended,00000001
+
+[Cheats/King Of Night-King Of Night Heat 1]
+// patch=1,EE,0024782C,extended,00000001
+
+[Cheats/Battle From Zero-Battle From Zero Extreme]
+// patch=1,EE,00247826,extended,00000001
+
+[Cheats/Riding Spirits-Down Hill 2nd]
+// patch=1,EE,0024781F,extended,00000001
+
+[Cheats/Riding Spirits-Up Hill 2nd]
+// patch=1,EE,0024781E,extended,00000001
+
+[Cheats/Riding Spirits-Down Hill]
+// patch=1,EE,0024781D,extended,00000001
+
+[Cheats/Riding Spirits-Up Hill]
+// patch=1,EE,0024781C,extended,00000001
+
+[Cheats/Time Tunnel-Over The Ton]
+// patch=1,EE,00247818,extended,00000001
+
+[Cheats/Time Tunnel-VS New Generations]
+// patch=1,EE,00247817,extended,00000001
+
+[Cheats/Time Tunnel-Time Tunnel Speed Master]
+// patch=1,EE,00247816,extended,00000001
+
+[Cheats/Time Tunnel-Time Tunnel Maximum]
+// patch=1,EE,00247815,extended,00000001
+
+[Cheats/Time Tunnel-Time Tunnel 500]
+// patch=1,EE,00247814,extended,00000001
+
+[Cheats/Class Race-Extreme]
+// patch=1,EE,00247811,extended,00000001

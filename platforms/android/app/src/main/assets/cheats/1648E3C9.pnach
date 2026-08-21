@@ -1,0 +1,1033 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Drakengard 2 [SLUS-21373] [1648E3C9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Spear-Mermaid's Feast-Undine's Sigh]
+// patch=1,EE,9037FFB0,extended,0C0E8EDD
+// patch=1,EE,200C0278,extended,03E00008
+// patch=1,EE,200C027C,extended,46800020
+// patch=1,EE,2032AC78,extended,0C030088
+
+[Cheats/Max HP]
+// patch=1,EE,200C0220,extended,240303E7
+// patch=1,EE,200C0224,extended,AC830004
+
+[Cheats/Max STR]
+// patch=1,EE,200C0228,extended,3C07447A
+// patch=1,EE,200C022C,extended,AC870008
+
+[Cheats/Max DEF]
+// patch=1,EE,200C0230,extended,2407270F
+// patch=1,EE,200C0234,extended,AC870010
+
+[Cheats/Max INT]
+// patch=1,EE,200C0238,extended,3C0743FA
+// patch=1,EE,200C023C,extended,AC87000C
+
+[Cheats/Infinite HP]
+// patch=1,EE,204959F0,extended,000003E7
+
+[Cheats/Infinite MP]
+// patch=1,EE,204959F4,extended,000003E8
+
+[Cheats/Max Chain Number]
+// patch=1,EE,20495EA0,extended,0000270F
+
+[Cheats/Max Mission Kills]
+// patch=1,EE,204C37AC,extended,05F5E0FF
+
+[Cheats/No Mission Kills]
+// patch=1,EE,204C37AC,extended,00000000
+
+[Cheats/Always Low Time]
+// patch=1,EE,204C37C8,extended,00000000
+
+[Cheats/Max Weapon Completion]
+// patch=1,EE,204C3BA4,extended,00000043
+
+[Cheats/No Weapon Completion]
+// patch=1,EE,204C3BA4,extended,00000000
+
+[Cheats/Infinite Gold]
+// patch=1,EE,104C3F34,extended,0000FFFF
+
+[Cheats/Max Gold]
+// patch=1,EE,204C3F34,extended,05F5E0FF
+
+[Cheats/Max All Kills]
+// patch=1,EE,204C3FD8,extended,05F5E0FF
+
+[Cheats/No All Kills]
+// patch=1,EE,204C3FD8,extended,00000000
+
+[Cheats/Can View All Characters Status]
+// patch=1,EE,2031ADB0,extended,00000000
+
+[Cheats/Level 99]
+// patch=1,EE,204C3B74,extended,00000062
+// patch=1,EE,204C3B78,extended,00000062
+// patch=1,EE,204C3B7C,extended,00000062
+// patch=1,EE,204C3B80,extended,00000062
+// patch=1,EE,204C3B84,extended,00000062
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,104C3B88,extended,0000FFFF
+// patch=1,EE,104C3B8C,extended,0000FFFF
+// patch=1,EE,104C3B90,extended,0000FFFF
+// patch=1,EE,104C3B94,extended,0000FFFF
+// patch=1,EE,104C3B98,extended,0000FFFF
+
+[Cheats/Max EXP]
+// patch=1,EE,204C3B88,extended,05F5E0FF
+// patch=1,EE,204C3B8C,extended,05F5E0FF
+// patch=1,EE,204C3B90,extended,05F5E0FF
+// patch=1,EE,204C3B94,extended,05F5E0FF
+// patch=1,EE,204C3B98,extended,05F5E0FF
+
+[Cheats/Have Legna]
+// patch=1,EE,204C37A4,extended,00000001
+
+[Cheats/Light Sword-Nowe's Sword]
+// patch=1,EE,204C3BA8,extended,00000001
+// patch=1,EE,204C3BAC,extended,0098967F
+// patch=1,EE,204C3BB0,extended,00000003
+
+[Cheats/Light Sword-Oror's Falconblade]
+// patch=1,EE,204C3BB4,extended,00000001
+// patch=1,EE,204C3BB8,extended,0098967F
+// patch=1,EE,204C3BBC,extended,00000003
+
+[Cheats/Light Sword-Oror's Lionblade]
+// patch=1,EE,204C3BC0,extended,00000001
+// patch=1,EE,204C3BC4,extended,0098967F
+// patch=1,EE,204C3BC8,extended,00000003
+
+[Cheats/Light Sword-Savior Blade]
+// patch=1,EE,204C3BCC,extended,00000001
+// patch=1,EE,204C3BD0,extended,0098967F
+// patch=1,EE,204C3BD4,extended,00000003
+
+[Cheats/Light Sword-Evil's Bronze Blade]
+// patch=1,EE,204C3BD8,extended,00000001
+// patch=1,EE,204C3BDC,extended,0098967F
+// patch=1,EE,204C3BE0,extended,00000003
+
+[Cheats/Light Sword-Thief's Secret]
+// patch=1,EE,204C3BE4,extended,00000001
+// patch=1,EE,204C3BE8,extended,0098967F
+// patch=1,EE,204C3BEC,extended,00000003
+
+[Cheats/Light Sword-Moonlit Beauty]
+// patch=1,EE,204C3BF0,extended,00000001
+// patch=1,EE,204C3BF4,extended,0098967F
+// patch=1,EE,204C3BF8,extended,00000003
+
+[Cheats/Light Sword-Sealknife]
+// patch=1,EE,204C3BFC,extended,00000001
+// patch=1,EE,204C3C00,extended,0098967F
+// patch=1,EE,204C3C04,extended,00000003
+
+[Cheats/Light Sword-Mage's Promise]
+// patch=1,EE,204C3C08,extended,00000001
+// patch=1,EE,204C3C0C,extended,0098967F
+// patch=1,EE,204C3C10,extended,00000003
+
+[Cheats/Light Sword-Kingsblood]
+// patch=1,EE,204C3C14,extended,00000001
+// patch=1,EE,204C3C18,extended,0098967F
+// patch=1,EE,204C3C1C,extended,00000003
+
+[Cheats/Light Sword-Carrion-Maker]
+// patch=1,EE,204C3C20,extended,00000001
+// patch=1,EE,204C3C24,extended,0098967F
+// patch=1,EE,204C3C28,extended,00000003
+
+[Cheats/Light Sword-Deathdance]
+// patch=1,EE,204C3C2C,extended,00000001
+// patch=1,EE,204C3C30,extended,0098967F
+// patch=1,EE,204C3C34,extended,00000003
+
+[Cheats/Light Sword-Maiden's Kris]
+// patch=1,EE,204C3C38,extended,00000001
+// patch=1,EE,204C3C3C,extended,0098967F
+// patch=1,EE,204C3C40,extended,00000003
+
+[Cheats/Light Sword-Glory's Bane]
+// patch=1,EE,204C3C44,extended,00000001
+// patch=1,EE,204C3C48,extended,0098967F
+// patch=1,EE,204C3C4C,extended,00000003
+
+[Cheats/Light Sword-Writheheart]
+// patch=1,EE,204C3C50,extended,00000001
+// patch=1,EE,204C3C54,extended,0098967F
+// patch=1,EE,204C3C58,extended,00000003
+
+[Cheats/Light Sword-Hunter's Joy]
+// patch=1,EE,204C3C5C,extended,00000001
+// patch=1,EE,204C3C60,extended,0098967F
+// patch=1,EE,204C3C64,extended,00000003
+
+[Cheats/Light Sword-Flamberge]
+// patch=1,EE,204C3C68,extended,00000001
+// patch=1,EE,204C3C6C,extended,0098967F
+// patch=1,EE,204C3C70,extended,00000003
+
+[Cheats/Light Sword-Scream]
+// patch=1,EE,204C3C74,extended,00000001
+// patch=1,EE,204C3C78,extended,0098967F
+// patch=1,EE,204C3C7C,extended,00000003
+
+[Cheats/Light Sword-Hero's Knife]
+// patch=1,EE,204C3C80,extended,00000001
+// patch=1,EE,204C3C84,extended,0098967F
+// patch=1,EE,204C3C88,extended,00000003
+
+[Cheats/Heavy Sword-Nowe's Long Sword]
+// patch=1,EE,204C3C8C,extended,00000001
+// patch=1,EE,204C3C90,extended,0098967F
+// patch=1,EE,204C3C94,extended,00000003
+
+[Cheats/Heavy Sword-Sealblade]
+// patch=1,EE,204C3C98,extended,00000001
+// patch=1,EE,204C3C9C,extended,0098967F
+// patch=1,EE,204C3CA0,extended,00000003
+
+[Cheats/Heavy Sword-Pitch Black]
+// patch=1,EE,204C3CA4,extended,00000001
+// patch=1,EE,204C3CA8,extended,0098967F
+// patch=1,EE,204C3CAC,extended,00000003
+
+[Cheats/Heavy Sword-Call-Carver]
+// patch=1,EE,204C3CB0,extended,00000001
+// patch=1,EE,204C3CB4,extended,0098967F
+// patch=1,EE,204C3CB8,extended,00000003
+
+[Cheats/Heavy Sword-Bloody Fang]
+// patch=1,EE,204C3CBC,extended,00000001
+// patch=1,EE,204C3CC0,extended,0098967F
+// patch=1,EE,204C3CC4,extended,00000003
+
+[Cheats/Heavy Sword-Silver Butterfly]
+// patch=1,EE,204C3CC8,extended,00000001
+// patch=1,EE,204C3CCC,extended,0098967F
+// patch=1,EE,204C3CD0,extended,00000003
+
+[Cheats/Heavy Sword-Sealblade 2]
+// patch=1,EE,204C3CD4,extended,00000001
+// patch=1,EE,204C3CD8,extended,0098967F
+// patch=1,EE,204C3CDC,extended,00000003
+
+[Cheats/Heavy Sword-Union]
+// patch=1,EE,204C3CE0,extended,00000001
+// patch=1,EE,204C3CE4,extended,0098967F
+// patch=1,EE,204C3CE8,extended,00000003
+
+[Cheats/Heavy Sword-Injustice]
+// patch=1,EE,204C3CEC,extended,00000001
+// patch=1,EE,204C3CF0,extended,0098967F
+// patch=1,EE,204C3CF4,extended,00000003
+
+[Cheats/Heavy Sword-Caim's Sword]
+// patch=1,EE,204C3CF8,extended,00000001
+// patch=1,EE,204C3CFC,extended,0098967F
+// patch=1,EE,204C3D00,extended,00000003
+
+[Cheats/Heavy Sword-Moonfire]
+// patch=1,EE,204C3D04,extended,00000001
+// patch=1,EE,204C3D08,extended,0098967F
+// patch=1,EE,204C3D0C,extended,00000003
+
+[Cheats/Heavy Sword-Takamasa]
+// patch=1,EE,204C3D10,extended,00000001
+// patch=1,EE,204C3D14,extended,0098967F
+// patch=1,EE,204C3D18,extended,00000003
+
+[Cheats/Heavy Sword-Skald's Song]
+// patch=1,EE,204C3D1C,extended,00000001
+// patch=1,EE,204C3D20,extended,0098967F
+// patch=1,EE,204C3D24,extended,00000003
+
+[Cheats/Heavy Sword-Nobuyoshi]
+// patch=1,EE,204C3D28,extended,00000001
+// patch=1,EE,204C3D2C,extended,0098967F
+// patch=1,EE,204C3D30,extended,00000003
+
+[Cheats/Heavy Sword-Slaughterism]
+// patch=1,EE,204C3D34,extended,00000001
+// patch=1,EE,204C3D38,extended,0098967F
+// patch=1,EE,204C3D3C,extended,00000003
+
+[Cheats/Heavy Sword-Soldier's Sword]
+// patch=1,EE,204C3D40,extended,00000001
+// patch=1,EE,204C3D44,extended,0098967F
+// patch=1,EE,204C3D48,extended,00000003
+
+[Cheats/Heavy Sword-Guard's Sword]
+// patch=1,EE,204C3D4C,extended,00000001
+// patch=1,EE,204C3D50,extended,0098967F
+// patch=1,EE,204C3D54,extended,00000003
+
+[Cheats/Heavy Sword-Sealaze-Calamitous Rhythm]
+// patch=1,EE,204C3D58,extended,00000001
+// patch=1,EE,204C3D5C,extended,0098967F
+// patch=1,EE,204C3D60,extended,00000003
+
+[Cheats/Heavy Sword-Captured Goddess]
+// patch=1,EE,204C3D64,extended,00000001
+// patch=1,EE,204C3D68,extended,0098967F
+// patch=1,EE,204C3D6C,extended,00000003
+
+[Cheats/Heavy Sword-Inuart's Long Sword]
+// patch=1,EE,204C3D70,extended,00000001
+// patch=1,EE,204C3D74,extended,0098967F
+// patch=1,EE,204C3D78,extended,00000003
+
+[Cheats/Staff-Manah's Staff]
+// patch=1,EE,204C3D7C,extended,00000001
+// patch=1,EE,204C3D80,extended,0098967F
+// patch=1,EE,204C3D84,extended,00000003
+
+[Cheats/Staff-Knights Of The Seal's]
+// patch=1,EE,204C3D88,extended,00000001
+// patch=1,EE,204C3D8C,extended,0098967F
+// patch=1,EE,204C3D90,extended,00000003
+
+[Cheats/Staff-Sealstaff]
+// patch=1,EE,204C3D94,extended,00000001
+// patch=1,EE,204C3D98,extended,0098967F
+// patch=1,EE,204C3D9C,extended,00000003
+
+[Cheats/Staff-Monk's Red Staff]
+// patch=1,EE,204C3DA0,extended,00000001
+// patch=1,EE,204C3DA4,extended,0098967F
+// patch=1,EE,204C3DA8,extended,00000003
+
+[Cheats/Staff-Phoenix Curse]
+// patch=1,EE,204C3DAC,extended,00000001
+// patch=1,EE,204C3DB0,extended,0098967F
+// patch=1,EE,204C3DB4,extended,00000003
+
+[Cheats/Staff-Northern Siren]
+// patch=1,EE,204C3DB8,extended,00000001
+// patch=1,EE,204C3DBC,extended,0098967F
+// patch=1,EE,204C3DC0,extended,00000003
+
+[Cheats/Staff-Yaha's Staff]
+// patch=1,EE,204C3DC4,extended,00000001
+// patch=1,EE,204C3DC8,extended,0098967F
+// patch=1,EE,204C3DCC,extended,00000003
+
+[Cheats/Staff-Dream Blossom]
+// patch=1,EE,204C3DD0,extended,00000001
+// patch=1,EE,204C3DD4,extended,0098967F
+// patch=1,EE,204C3DD8,extended,00000003
+
+[Cheats/Staff-Wisdom]
+// patch=1,EE,204C3DDC,extended,00000001
+// patch=1,EE,204C3DE0,extended,0098967F
+// patch=1,EE,204C3DE4,extended,00000003
+
+[Cheats/Staff-Magi's Sorrow]
+// patch=1,EE,204C3DE8,extended,00000001
+// patch=1,EE,204C3DEC,extended,0098967F
+// patch=1,EE,204C3DF0,extended,00000003
+
+[Cheats/Staff-Edacious]
+// patch=1,EE,204C3DF4,extended,00000001
+// patch=1,EE,204C3DF8,extended,0098967F
+// patch=1,EE,204C3DFC,extended,00000003
+
+[Cheats/Staff-Philosopher's Staff]
+// patch=1,EE,204C3E00,extended,00000001
+// patch=1,EE,204C3E04,extended,0098967F
+// patch=1,EE,204C3E08,extended,00000003
+
+[Cheats/Spear-Eris's Spear]
+// patch=1,EE,204C3E0C,extended,00000001
+// patch=1,EE,204C3E10,extended,0098967F
+// patch=1,EE,204C3E14,extended,00000003
+
+[Cheats/Spear-Sealspear]
+// patch=1,EE,204C3E18,extended,00000001
+// patch=1,EE,204C3E1C,extended,0098967F
+// patch=1,EE,204C3E20,extended,00000003
+
+[Cheats/Spear-Falcon's Pinion]
+// patch=1,EE,204C3E24,extended,00000001
+// patch=1,EE,204C3E28,extended,0098967F
+// patch=1,EE,204C3E2C,extended,00000003
+
+[Cheats/Spear-Hanch's Spear]
+// patch=1,EE,204C3E30,extended,00000001
+// patch=1,EE,204C3E34,extended,0098967F
+// patch=1,EE,204C3E38,extended,00000003
+
+[Cheats/Spear-Robber King]
+// patch=1,EE,204C3E3C,extended,00000001
+// patch=1,EE,204C3E40,extended,0098967F
+// patch=1,EE,204C3E44,extended,00000003
+
+[Cheats/Spear-Widow's Death]
+// patch=1,EE,204C3E48,extended,00000001
+// patch=1,EE,204C3E4C,extended,0098967F
+// patch=1,EE,204C3E50,extended,00000003
+
+[Cheats/Spear-Victor's Spoils]
+// patch=1,EE,204C3E54,extended,00000001
+// patch=1,EE,204C3E58,extended,0098967F
+// patch=1,EE,204C3E5C,extended,00000003
+
+[Cheats/Spear-Apostate's Misery]
+// patch=1,EE,204C3E60,extended,00000001
+// patch=1,EE,204C3E64,extended,0098967F
+// patch=1,EE,204C3E68,extended,00000003
+
+[Cheats/Spear-Sorrowborn]
+// patch=1,EE,204C3E6C,extended,00000001
+// patch=1,EE,204C3E70,extended,0098967F
+// patch=1,EE,204C3E74,extended,00000003
+
+[Cheats/Spear-Ozymandia's Might]
+// patch=1,EE,204C3E78,extended,00000001
+// patch=1,EE,204C3E7C,extended,0098967F
+// patch=1,EE,204C3E80,extended,00000003
+
+[Cheats/Spear-Tower Of Warning]
+// patch=1,EE,204C3E84,extended,00000001
+// patch=1,EE,204C3E88,extended,0098967F
+// patch=1,EE,204C3E8C,extended,00000003
+
+[Cheats/Axe-Urick's Axe]
+// patch=1,EE,204C3E90,extended,00000001
+// patch=1,EE,204C3E94,extended,0098967F
+// patch=1,EE,204C3E98,extended,00000003
+
+[Cheats/Axe-Sealaxe]
+// patch=1,EE,204C3E9C,extended,00000001
+// patch=1,EE,204C3EA0,extended,0098967F
+// patch=1,EE,204C3EA4,extended,00000003
+
+[Cheats/Axe-Zhangpo's Aze]
+// patch=1,EE,204C3EA8,extended,00000001
+// patch=1,EE,204C3EAC,extended,0098967F
+// patch=1,EE,204C3EB0,extended,00000003
+
+[Cheats/Axe-Broken Iron]
+// patch=1,EE,204C3EB4,extended,00000001
+// patch=1,EE,204C3EB8,extended,0098967F
+// patch=1,EE,204C3EBC,extended,00000003
+
+[Cheats/Axe-Crimson Hood]
+// patch=1,EE,204C3EC0,extended,00000001
+// patch=1,EE,204C3EC4,extended,0098967F
+// patch=1,EE,204C3EC8,extended,00000003
+
+[Cheats/Axe-Poisontongue]
+// patch=1,EE,204C3ECC,extended,00000001
+// patch=1,EE,204C3ED0,extended,0098967F
+// patch=1,EE,204C3ED4,extended,00000003
+
+[Cheats/Axe-Executioner's song]
+// patch=1,EE,204C3ED8,extended,00000001
+// patch=1,EE,204C3EDC,extended,0098967F
+// patch=1,EE,204C3EE0,extended,00000003
+
+[Cheats/Axe-Foul Blade]
+// patch=1,EE,204C3EE4,extended,00000001
+// patch=1,EE,204C3EE8,extended,0098967F
+// patch=1,EE,204C3EEC,extended,00000003
+
+[Cheats/Axe-Mourning Thorn]
+// patch=1,EE,204C3EF0,extended,00000001
+// patch=1,EE,204C3EF4,extended,0098967F
+// patch=1,EE,204C3EF8,extended,00000003
+
+[Cheats/All Weapons]
+// patch=1,EE,404C3BA8,extended,00470003
+// patch=1,EE,00000001,extended,00000000
+// patch=1,EE,404C3BAC,extended,00470003
+// patch=1,EE,0098967F,extended,00000000
+// patch=1,EE,404C3BB0,extended,00470003
+// patch=1,EE,00000003,extended,00000000
+
+[Cheats/Have All Items]
+// patch=1,EE,40572E9C,extended,000B0001
+// patch=1,EE,00000000,extended,00000001
+
+[Cheats/Nothing]
+// patch=1,EE,20572E9C,extended,FFFFFFFF
+// patch=1,EE,20572EA0,extended,FFFFFFFF
+// patch=1,EE,20572EA4,extended,FFFFFFFF
+// patch=1,EE,20572EA8,extended,FFFFFFFF
+// patch=1,EE,20572EAC,extended,FFFFFFFF
+// patch=1,EE,20572EB0,extended,FFFFFFFF
+// patch=1,EE,20572EB4,extended,FFFFFFFF
+// patch=1,EE,20572EB8,extended,FFFFFFFF
+// patch=1,EE,20572EBC,extended,FFFFFFFF
+// patch=1,EE,20572EC0,extended,FFFFFFFF
+// patch=1,EE,20572EC4,extended,FFFFFFFF
+// patch=1,EE,20572EE0,extended,FFFFFFFF
+// patch=1,EE,20572EE4,extended,FFFFFFFF
+// patch=1,EE,20572EE8,extended,FFFFFFFF
+// patch=1,EE,20572EEC,extended,FFFFFFFF
+// patch=1,EE,20572EF0,extended,FFFFFFFF
+// patch=1,EE,20572EF4,extended,FFFFFFFF
+// patch=1,EE,20572EF8,extended,FFFFFFFF
+// patch=1,EE,20572EFC,extended,FFFFFFFF
+// patch=1,EE,20572F00,extended,FFFFFFFF
+// patch=1,EE,20572F04,extended,FFFFFFFF
+// patch=1,EE,20572F08,extended,FFFFFFFF
+// patch=1,EE,20572F0C,extended,FFFFFFFF
+// patch=1,EE,20572F10,extended,FFFFFFFF
+// patch=1,EE,20572F14,extended,FFFFFFFF
+// patch=1,EE,20572F18,extended,FFFFFFFF
+// patch=1,EE,20572F1C,extended,FFFFFFFF
+// patch=1,EE,20572F20,extended,FFFFFFFF
+// patch=1,EE,20572F24,extended,FFFFFFFF
+// patch=1,EE,20572F28,extended,FFFFFFFF
+
+[Cheats/Recovery Powder]
+// patch=1,EE,20572E9C,extended,00000000
+// patch=1,EE,20572EA0,extended,00000000
+// patch=1,EE,20572EA4,extended,00000000
+// patch=1,EE,20572EA8,extended,00000000
+// patch=1,EE,20572EAC,extended,00000000
+// patch=1,EE,20572EB0,extended,00000000
+// patch=1,EE,20572EB4,extended,00000000
+// patch=1,EE,20572EB8,extended,00000000
+// patch=1,EE,20572EBC,extended,00000000
+// patch=1,EE,20572EC0,extended,00000000
+// patch=1,EE,20572EC4,extended,00000000
+
+[Cheats/Restorative Phial]
+// patch=1,EE,20572E9C,extended,00000001
+// patch=1,EE,20572EA0,extended,00000001
+// patch=1,EE,20572EA4,extended,00000001
+// patch=1,EE,20572EA8,extended,00000001
+// patch=1,EE,20572EAC,extended,00000001
+// patch=1,EE,20572EB0,extended,00000001
+// patch=1,EE,20572EB4,extended,00000001
+// patch=1,EE,20572EB8,extended,00000001
+// patch=1,EE,20572EBC,extended,00000001
+// patch=1,EE,20572EC0,extended,00000001
+// patch=1,EE,20572EC4,extended,00000001
+
+[Cheats/Vitality Crystal]
+// patch=1,EE,20572E9C,extended,00000002
+// patch=1,EE,20572EA0,extended,00000002
+// patch=1,EE,20572EA4,extended,00000002
+// patch=1,EE,20572EA8,extended,00000002
+// patch=1,EE,20572EAC,extended,00000002
+// patch=1,EE,20572EB0,extended,00000002
+// patch=1,EE,20572EB4,extended,00000002
+// patch=1,EE,20572EB8,extended,00000002
+// patch=1,EE,20572EBC,extended,00000002
+// patch=1,EE,20572EC0,extended,00000002
+// patch=1,EE,20572EC4,extended,00000002
+
+[Cheats/Magic Powder]
+// patch=1,EE,20572E9C,extended,00000003
+// patch=1,EE,20572EA0,extended,00000003
+// patch=1,EE,20572EA4,extended,00000003
+// patch=1,EE,20572EA8,extended,00000003
+// patch=1,EE,20572EAC,extended,00000003
+// patch=1,EE,20572EB0,extended,00000003
+// patch=1,EE,20572EB4,extended,00000003
+// patch=1,EE,20572EB8,extended,00000003
+// patch=1,EE,20572EBC,extended,00000003
+// patch=1,EE,20572EC0,extended,00000003
+// patch=1,EE,20572EC4,extended,00000003
+
+[Cheats/Enchanted Phial]
+// patch=1,EE,20572E9C,extended,00000004
+// patch=1,EE,20572EA0,extended,00000004
+// patch=1,EE,20572EA4,extended,00000004
+// patch=1,EE,20572EA8,extended,00000004
+// patch=1,EE,20572EAC,extended,00000004
+// patch=1,EE,20572EB0,extended,00000004
+// patch=1,EE,20572EB4,extended,00000004
+// patch=1,EE,20572EB8,extended,00000004
+// patch=1,EE,20572EBC,extended,00000004
+// patch=1,EE,20572EC0,extended,00000004
+// patch=1,EE,20572EC4,extended,00000004
+
+[Cheats/Mystical Crystal]
+// patch=1,EE,20572E9C,extended,00000005
+// patch=1,EE,20572EA0,extended,00000005
+// patch=1,EE,20572EA4,extended,00000005
+// patch=1,EE,20572EA8,extended,00000005
+// patch=1,EE,20572EAC,extended,00000005
+// patch=1,EE,20572EB0,extended,00000005
+// patch=1,EE,20572EB4,extended,00000005
+// patch=1,EE,20572EB8,extended,00000005
+// patch=1,EE,20572EBC,extended,00000005
+// patch=1,EE,20572EC0,extended,00000005
+// patch=1,EE,20572EC4,extended,00000005
+
+[Cheats/Refreshing Powder]
+// patch=1,EE,20572E9C,extended,00000006
+// patch=1,EE,20572EA0,extended,00000006
+// patch=1,EE,20572EA4,extended,00000006
+// patch=1,EE,20572EA8,extended,00000006
+// patch=1,EE,20572EAC,extended,00000006
+// patch=1,EE,20572EB0,extended,00000006
+// patch=1,EE,20572EB4,extended,00000006
+// patch=1,EE,20572EB8,extended,00000006
+// patch=1,EE,20572EBC,extended,00000006
+// patch=1,EE,20572EC0,extended,00000006
+// patch=1,EE,20572EC4,extended,00000006
+
+[Cheats/Fortifying Phial]
+// patch=1,EE,20572E9C,extended,00000007
+// patch=1,EE,20572EA0,extended,00000007
+// patch=1,EE,20572EA4,extended,00000007
+// patch=1,EE,20572EA8,extended,00000007
+// patch=1,EE,20572EAC,extended,00000007
+// patch=1,EE,20572EB0,extended,00000007
+// patch=1,EE,20572EB4,extended,00000007
+// patch=1,EE,20572EB8,extended,00000007
+// patch=1,EE,20572EBC,extended,00000007
+// patch=1,EE,20572EC0,extended,00000007
+// patch=1,EE,20572EC4,extended,00000007
+
+[Cheats/Infinity Crystal]
+// patch=1,EE,20572E9C,extended,00000008
+// patch=1,EE,20572EA0,extended,00000008
+// patch=1,EE,20572EA4,extended,00000008
+// patch=1,EE,20572EA8,extended,00000008
+// patch=1,EE,20572EAC,extended,00000008
+// patch=1,EE,20572EB0,extended,00000008
+// patch=1,EE,20572EB4,extended,00000008
+// patch=1,EE,20572EB8,extended,00000008
+// patch=1,EE,20572EBC,extended,00000008
+// patch=1,EE,20572EC0,extended,00000008
+// patch=1,EE,20572EC4,extended,00000008
+
+[Cheats/Brilliant Crystal]
+// patch=1,EE,20572E9C,extended,00000009
+// patch=1,EE,20572EA0,extended,00000009
+// patch=1,EE,20572EA4,extended,00000009
+// patch=1,EE,20572EA8,extended,00000009
+// patch=1,EE,20572EAC,extended,00000009
+// patch=1,EE,20572EB0,extended,00000009
+// patch=1,EE,20572EB4,extended,00000009
+// patch=1,EE,20572EB8,extended,00000009
+// patch=1,EE,20572EBC,extended,00000009
+// patch=1,EE,20572EC0,extended,00000009
+// patch=1,EE,20572EC4,extended,00000009
+
+[Cheats/Brilliant Crystal 2]
+// patch=1,EE,20572E9C,extended,0000000A
+// patch=1,EE,20572EA0,extended,0000000A
+// patch=1,EE,20572EA4,extended,0000000A
+// patch=1,EE,20572EA8,extended,0000000A
+// patch=1,EE,20572EAC,extended,0000000A
+// patch=1,EE,20572EB0,extended,0000000A
+// patch=1,EE,20572EB4,extended,0000000A
+// patch=1,EE,20572EB8,extended,0000000A
+// patch=1,EE,20572EBC,extended,0000000A
+// patch=1,EE,20572EC0,extended,0000000A
+// patch=1,EE,20572EC4,extended,0000000A
+
+[Cheats/Have All Accessories]
+// patch=1,EE,40572EE0,extended,00130001
+// patch=1,EE,00000000,extended,00000001
+
+[Cheats/Magic Ring]
+// patch=1,EE,20572EE0,extended,00000000
+// patch=1,EE,20572EE4,extended,00000000
+// patch=1,EE,20572EE8,extended,00000000
+// patch=1,EE,20572EEC,extended,00000000
+// patch=1,EE,20572EF0,extended,00000000
+// patch=1,EE,20572EF4,extended,00000000
+// patch=1,EE,20572EF8,extended,00000000
+// patch=1,EE,20572EFC,extended,00000000
+// patch=1,EE,20572F00,extended,00000000
+// patch=1,EE,20572F04,extended,00000000
+// patch=1,EE,20572F08,extended,00000000
+// patch=1,EE,20572F0C,extended,00000000
+// patch=1,EE,20572F10,extended,00000000
+// patch=1,EE,20572F14,extended,00000000
+// patch=1,EE,20572F18,extended,00000000
+// patch=1,EE,20572F1C,extended,00000000
+// patch=1,EE,20572F20,extended,00000000
+// patch=1,EE,20572F24,extended,00000000
+// patch=1,EE,20572F28,extended,00000000
+
+[Cheats/Magic Ring +1]
+// patch=1,EE,20572EE0,extended,00000001
+// patch=1,EE,20572EE4,extended,00000001
+// patch=1,EE,20572EE8,extended,00000001
+// patch=1,EE,20572EEC,extended,00000001
+// patch=1,EE,20572EF0,extended,00000001
+// patch=1,EE,20572EF4,extended,00000001
+// patch=1,EE,20572EF8,extended,00000001
+// patch=1,EE,20572EFC,extended,00000001
+// patch=1,EE,20572F00,extended,00000001
+// patch=1,EE,20572F04,extended,00000001
+// patch=1,EE,20572F08,extended,00000001
+// patch=1,EE,20572F0C,extended,00000001
+// patch=1,EE,20572F10,extended,00000001
+// patch=1,EE,20572F14,extended,00000001
+// patch=1,EE,20572F18,extended,00000001
+// patch=1,EE,20572F1C,extended,00000001
+// patch=1,EE,20572F20,extended,00000001
+// patch=1,EE,20572F24,extended,00000001
+// patch=1,EE,20572F28,extended,00000001
+
+[Cheats/Magic Ring +2]
+// patch=1,EE,20572EE0,extended,00000002
+// patch=1,EE,20572EE4,extended,00000002
+// patch=1,EE,20572EE8,extended,00000002
+// patch=1,EE,20572EEC,extended,00000002
+// patch=1,EE,20572EF0,extended,00000002
+// patch=1,EE,20572EF4,extended,00000002
+// patch=1,EE,20572EF8,extended,00000002
+// patch=1,EE,20572EFC,extended,00000002
+// patch=1,EE,20572F00,extended,00000002
+// patch=1,EE,20572F04,extended,00000002
+// patch=1,EE,20572F08,extended,00000002
+// patch=1,EE,20572F0C,extended,00000002
+// patch=1,EE,20572F10,extended,00000002
+// patch=1,EE,20572F14,extended,00000002
+// patch=1,EE,20572F18,extended,00000002
+// patch=1,EE,20572F1C,extended,00000002
+// patch=1,EE,20572F20,extended,00000002
+// patch=1,EE,20572F24,extended,00000002
+// patch=1,EE,20572F28,extended,00000002
+
+[Cheats/Power Ring]
+// patch=1,EE,20572EE0,extended,00000003
+// patch=1,EE,20572EE4,extended,00000003
+// patch=1,EE,20572EE8,extended,00000003
+// patch=1,EE,20572EEC,extended,00000003
+// patch=1,EE,20572EF0,extended,00000003
+// patch=1,EE,20572EF4,extended,00000003
+// patch=1,EE,20572EF8,extended,00000003
+// patch=1,EE,20572EFC,extended,00000003
+// patch=1,EE,20572F00,extended,00000003
+// patch=1,EE,20572F04,extended,00000003
+// patch=1,EE,20572F08,extended,00000003
+// patch=1,EE,20572F0C,extended,00000003
+// patch=1,EE,20572F10,extended,00000003
+// patch=1,EE,20572F14,extended,00000003
+// patch=1,EE,20572F18,extended,00000003
+// patch=1,EE,20572F1C,extended,00000003
+// patch=1,EE,20572F20,extended,00000003
+// patch=1,EE,20572F24,extended,00000003
+// patch=1,EE,20572F28,extended,00000003
+
+[Cheats/Power Ring +1]
+// patch=1,EE,20572EE0,extended,00000004
+// patch=1,EE,20572EE4,extended,00000004
+// patch=1,EE,20572EE8,extended,00000004
+// patch=1,EE,20572EEC,extended,00000004
+// patch=1,EE,20572EF0,extended,00000004
+// patch=1,EE,20572EF4,extended,00000004
+// patch=1,EE,20572EF8,extended,00000004
+// patch=1,EE,20572EFC,extended,00000004
+// patch=1,EE,20572F00,extended,00000004
+// patch=1,EE,20572F04,extended,00000004
+// patch=1,EE,20572F08,extended,00000004
+// patch=1,EE,20572F0C,extended,00000004
+// patch=1,EE,20572F10,extended,00000004
+// patch=1,EE,20572F14,extended,00000004
+// patch=1,EE,20572F18,extended,00000004
+// patch=1,EE,20572F1C,extended,00000004
+// patch=1,EE,20572F20,extended,00000004
+// patch=1,EE,20572F24,extended,00000004
+// patch=1,EE,20572F28,extended,00000004
+
+[Cheats/Guard Earrings]
+// patch=1,EE,20572EE0,extended,00000005
+// patch=1,EE,20572EE4,extended,00000005
+// patch=1,EE,20572EE8,extended,00000005
+// patch=1,EE,20572EEC,extended,00000005
+// patch=1,EE,20572EF0,extended,00000005
+// patch=1,EE,20572EF4,extended,00000005
+// patch=1,EE,20572EF8,extended,00000005
+// patch=1,EE,20572EFC,extended,00000005
+// patch=1,EE,20572F00,extended,00000005
+// patch=1,EE,20572F04,extended,00000005
+// patch=1,EE,20572F08,extended,00000005
+// patch=1,EE,20572F0C,extended,00000005
+// patch=1,EE,20572F10,extended,00000005
+// patch=1,EE,20572F14,extended,00000005
+// patch=1,EE,20572F18,extended,00000005
+// patch=1,EE,20572F1C,extended,00000005
+// patch=1,EE,20572F20,extended,00000005
+// patch=1,EE,20572F24,extended,00000005
+// patch=1,EE,20572F28,extended,00000005
+
+[Cheats/Guard Earrings +1]
+// patch=1,EE,20572EE0,extended,00000006
+// patch=1,EE,20572EE4,extended,00000006
+// patch=1,EE,20572EE8,extended,00000006
+// patch=1,EE,20572EEC,extended,00000006
+// patch=1,EE,20572EF0,extended,00000006
+// patch=1,EE,20572EF4,extended,00000006
+// patch=1,EE,20572EF8,extended,00000006
+// patch=1,EE,20572EFC,extended,00000006
+// patch=1,EE,20572F00,extended,00000006
+// patch=1,EE,20572F04,extended,00000006
+// patch=1,EE,20572F08,extended,00000006
+// patch=1,EE,20572F0C,extended,00000006
+// patch=1,EE,20572F10,extended,00000006
+// patch=1,EE,20572F14,extended,00000006
+// patch=1,EE,20572F18,extended,00000006
+// patch=1,EE,20572F1C,extended,00000006
+// patch=1,EE,20572F20,extended,00000006
+// patch=1,EE,20572F24,extended,00000006
+// patch=1,EE,20572F28,extended,00000006
+
+[Cheats/Protective Earrings]
+// patch=1,EE,20572EE0,extended,00000007
+// patch=1,EE,20572EE4,extended,00000007
+// patch=1,EE,20572EE8,extended,00000007
+// patch=1,EE,20572EEC,extended,00000007
+// patch=1,EE,20572EF0,extended,00000007
+// patch=1,EE,20572EF4,extended,00000007
+// patch=1,EE,20572EF8,extended,00000007
+// patch=1,EE,20572EFC,extended,00000007
+// patch=1,EE,20572F00,extended,00000007
+// patch=1,EE,20572F04,extended,00000007
+// patch=1,EE,20572F08,extended,00000007
+// patch=1,EE,20572F0C,extended,00000007
+// patch=1,EE,20572F10,extended,00000007
+// patch=1,EE,20572F14,extended,00000007
+// patch=1,EE,20572F18,extended,00000007
+// patch=1,EE,20572F1C,extended,00000007
+// patch=1,EE,20572F20,extended,00000007
+// patch=1,EE,20572F24,extended,00000007
+// patch=1,EE,20572F28,extended,00000007
+
+[Cheats/Shell Earrings]
+// patch=1,EE,20572EE0,extended,00000008
+// patch=1,EE,20572EE4,extended,00000008
+// patch=1,EE,20572EE8,extended,00000008
+// patch=1,EE,20572EEC,extended,00000008
+// patch=1,EE,20572EF0,extended,00000008
+// patch=1,EE,20572EF4,extended,00000008
+// patch=1,EE,20572EF8,extended,00000008
+// patch=1,EE,20572EFC,extended,00000008
+// patch=1,EE,20572F00,extended,00000008
+// patch=1,EE,20572F04,extended,00000008
+// patch=1,EE,20572F08,extended,00000008
+// patch=1,EE,20572F0C,extended,00000008
+// patch=1,EE,20572F10,extended,00000008
+// patch=1,EE,20572F14,extended,00000008
+// patch=1,EE,20572F18,extended,00000008
+// patch=1,EE,20572F1C,extended,00000008
+// patch=1,EE,20572F20,extended,00000008
+// patch=1,EE,20572F24,extended,00000008
+// patch=1,EE,20572F28,extended,00000008
+
+[Cheats/Shell Earrings +1]
+// patch=1,EE,20572EE0,extended,00000009
+// patch=1,EE,20572EE4,extended,00000009
+// patch=1,EE,20572EE8,extended,00000009
+// patch=1,EE,20572EEC,extended,00000009
+// patch=1,EE,20572EF0,extended,00000009
+// patch=1,EE,20572EF4,extended,00000009
+// patch=1,EE,20572EF8,extended,00000009
+// patch=1,EE,20572EFC,extended,00000009
+// patch=1,EE,20572F00,extended,00000009
+// patch=1,EE,20572F04,extended,00000009
+// patch=1,EE,20572F08,extended,00000009
+// patch=1,EE,20572F0C,extended,00000009
+// patch=1,EE,20572F10,extended,00000009
+// patch=1,EE,20572F14,extended,00000009
+// patch=1,EE,20572F18,extended,00000009
+// patch=1,EE,20572F1C,extended,00000009
+// patch=1,EE,20572F20,extended,00000009
+// patch=1,EE,20572F24,extended,00000009
+// patch=1,EE,20572F28,extended,00000009
+
+[Cheats/Glory Orb]
+// patch=1,EE,20572EE0,extended,0000000A
+// patch=1,EE,20572EE4,extended,0000000A
+// patch=1,EE,20572EE8,extended,0000000A
+// patch=1,EE,20572EEC,extended,0000000A
+// patch=1,EE,20572EF0,extended,0000000A
+// patch=1,EE,20572EF4,extended,0000000A
+// patch=1,EE,20572EF8,extended,0000000A
+// patch=1,EE,20572EFC,extended,0000000A
+// patch=1,EE,20572F00,extended,0000000A
+// patch=1,EE,20572F04,extended,0000000A
+// patch=1,EE,20572F08,extended,0000000A
+// patch=1,EE,20572F0C,extended,0000000A
+// patch=1,EE,20572F10,extended,0000000A
+// patch=1,EE,20572F14,extended,0000000A
+// patch=1,EE,20572F18,extended,0000000A
+// patch=1,EE,20572F1C,extended,0000000A
+// patch=1,EE,20572F20,extended,0000000A
+// patch=1,EE,20572F24,extended,0000000A
+// patch=1,EE,20572F28,extended,0000000A
+
+[Cheats/Mind Orb]
+// patch=1,EE,20572EE0,extended,0000000B
+// patch=1,EE,20572EE4,extended,0000000B
+// patch=1,EE,20572EE8,extended,0000000B
+// patch=1,EE,20572EEC,extended,0000000B
+// patch=1,EE,20572EF0,extended,0000000B
+// patch=1,EE,20572EF4,extended,0000000B
+// patch=1,EE,20572EF8,extended,0000000B
+// patch=1,EE,20572EFC,extended,0000000B
+// patch=1,EE,20572F00,extended,0000000B
+// patch=1,EE,20572F04,extended,0000000B
+// patch=1,EE,20572F08,extended,0000000B
+// patch=1,EE,20572F0C,extended,0000000B
+// patch=1,EE,20572F10,extended,0000000B
+// patch=1,EE,20572F14,extended,0000000B
+// patch=1,EE,20572F18,extended,0000000B
+// patch=1,EE,20572F1C,extended,0000000B
+// patch=1,EE,20572F20,extended,0000000B
+// patch=1,EE,20572F24,extended,0000000B
+// patch=1,EE,20572F28,extended,0000000B
+
+[Cheats/Life Orb]
+// patch=1,EE,20572EE0,extended,0000000C
+// patch=1,EE,20572EE4,extended,0000000C
+// patch=1,EE,20572EE8,extended,0000000C
+// patch=1,EE,20572EEC,extended,0000000C
+// patch=1,EE,20572EF0,extended,0000000C
+// patch=1,EE,20572EF4,extended,0000000C
+// patch=1,EE,20572EF8,extended,0000000C
+// patch=1,EE,20572EFC,extended,0000000C
+// patch=1,EE,20572F00,extended,0000000C
+// patch=1,EE,20572F04,extended,0000000C
+// patch=1,EE,20572F08,extended,0000000C
+// patch=1,EE,20572F0C,extended,0000000C
+// patch=1,EE,20572F10,extended,0000000C
+// patch=1,EE,20572F14,extended,0000000C
+// patch=1,EE,20572F18,extended,0000000C
+// patch=1,EE,20572F1C,extended,0000000C
+// patch=1,EE,20572F20,extended,0000000C
+// patch=1,EE,20572F24,extended,0000000C
+// patch=1,EE,20572F28,extended,0000000C
+
+[Cheats/Old Earrings]
+// patch=1,EE,20572EE0,extended,0000000D
+// patch=1,EE,20572EE4,extended,0000000D
+// patch=1,EE,20572EE8,extended,0000000D
+// patch=1,EE,20572EEC,extended,0000000D
+// patch=1,EE,20572EF0,extended,0000000D
+// patch=1,EE,20572EF4,extended,0000000D
+// patch=1,EE,20572EF8,extended,0000000D
+// patch=1,EE,20572EFC,extended,0000000D
+// patch=1,EE,20572F00,extended,0000000D
+// patch=1,EE,20572F04,extended,0000000D
+// patch=1,EE,20572F08,extended,0000000D
+// patch=1,EE,20572F0C,extended,0000000D
+// patch=1,EE,20572F10,extended,0000000D
+// patch=1,EE,20572F14,extended,0000000D
+// patch=1,EE,20572F18,extended,0000000D
+// patch=1,EE,20572F1C,extended,0000000D
+// patch=1,EE,20572F20,extended,0000000D
+// patch=1,EE,20572F24,extended,0000000D
+// patch=1,EE,20572F28,extended,0000000D
+
+[Cheats/Nowe's Knight Orb]
+// patch=1,EE,20572EE0,extended,0000000E
+// patch=1,EE,20572EE4,extended,0000000E
+// patch=1,EE,20572EE8,extended,0000000E
+// patch=1,EE,20572EEC,extended,0000000E
+// patch=1,EE,20572EF0,extended,0000000E
+// patch=1,EE,20572EF4,extended,0000000E
+// patch=1,EE,20572EF8,extended,0000000E
+// patch=1,EE,20572EFC,extended,0000000E
+// patch=1,EE,20572F00,extended,0000000E
+// patch=1,EE,20572F04,extended,0000000E
+// patch=1,EE,20572F08,extended,0000000E
+// patch=1,EE,20572F0C,extended,0000000E
+// patch=1,EE,20572F10,extended,0000000E
+// patch=1,EE,20572F14,extended,0000000E
+// patch=1,EE,20572F18,extended,0000000E
+// patch=1,EE,20572F1C,extended,0000000E
+// patch=1,EE,20572F20,extended,0000000E
+// patch=1,EE,20572F24,extended,0000000E
+// patch=1,EE,20572F28,extended,0000000E
+
+[Cheats/Nowe's Super Orb]
+// patch=1,EE,20572EE0,extended,0000000F
+// patch=1,EE,20572EE4,extended,0000000F
+// patch=1,EE,20572EE8,extended,0000000F
+// patch=1,EE,20572EEC,extended,0000000F
+// patch=1,EE,20572EF0,extended,0000000F
+// patch=1,EE,20572EF4,extended,0000000F
+// patch=1,EE,20572EF8,extended,0000000F
+// patch=1,EE,20572EFC,extended,0000000F
+// patch=1,EE,20572F00,extended,0000000F
+// patch=1,EE,20572F04,extended,0000000F
+// patch=1,EE,20572F08,extended,0000000F
+// patch=1,EE,20572F0C,extended,0000000F
+// patch=1,EE,20572F10,extended,0000000F
+// patch=1,EE,20572F14,extended,0000000F
+// patch=1,EE,20572F18,extended,0000000F
+// patch=1,EE,20572F1C,extended,0000000F
+// patch=1,EE,20572F20,extended,0000000F
+// patch=1,EE,20572F24,extended,0000000F
+// patch=1,EE,20572F28,extended,0000000F
+
+[Cheats/Eris's Holy Orb]
+// patch=1,EE,20572EE0,extended,00000010
+// patch=1,EE,20572EE4,extended,00000010
+// patch=1,EE,20572EE8,extended,00000010
+// patch=1,EE,20572EEC,extended,00000010
+// patch=1,EE,20572EF0,extended,00000010
+// patch=1,EE,20572EF4,extended,00000010
+// patch=1,EE,20572EF8,extended,00000010
+// patch=1,EE,20572EFC,extended,00000010
+// patch=1,EE,20572F00,extended,00000010
+// patch=1,EE,20572F04,extended,00000010
+// patch=1,EE,20572F08,extended,00000010
+// patch=1,EE,20572F0C,extended,00000010
+// patch=1,EE,20572F10,extended,00000010
+// patch=1,EE,20572F14,extended,00000010
+// patch=1,EE,20572F18,extended,00000010
+// patch=1,EE,20572F1C,extended,00000010
+// patch=1,EE,20572F20,extended,00000010
+// patch=1,EE,20572F24,extended,00000010
+// patch=1,EE,20572F28,extended,00000010
+
+[Cheats/Maskless Orb]
+// patch=1,EE,20572EE0,extended,00000011
+// patch=1,EE,20572EE4,extended,00000011
+// patch=1,EE,20572EE8,extended,00000011
+// patch=1,EE,20572EEC,extended,00000011
+// patch=1,EE,20572EF0,extended,00000011
+// patch=1,EE,20572EF4,extended,00000011
+// patch=1,EE,20572EF8,extended,00000011
+// patch=1,EE,20572EFC,extended,00000011
+// patch=1,EE,20572F00,extended,00000011
+// patch=1,EE,20572F04,extended,00000011
+// patch=1,EE,20572F08,extended,00000011
+// patch=1,EE,20572F0C,extended,00000011
+// patch=1,EE,20572F10,extended,00000011
+// patch=1,EE,20572F14,extended,00000011
+// patch=1,EE,20572F18,extended,00000011
+// patch=1,EE,20572F1C,extended,00000011
+// patch=1,EE,20572F20,extended,00000011
+// patch=1,EE,20572F24,extended,00000011
+// patch=1,EE,20572F28,extended,00000011
+
+[Cheats/Nice-Guy Orb]
+// patch=1,EE,20572EE0,extended,00000012
+// patch=1,EE,20572EE4,extended,00000012
+// patch=1,EE,20572EE8,extended,00000012
+// patch=1,EE,20572EEC,extended,00000012
+// patch=1,EE,20572EF0,extended,00000012
+// patch=1,EE,20572EF4,extended,00000012
+// patch=1,EE,20572EF8,extended,00000012
+// patch=1,EE,20572EFC,extended,00000012
+// patch=1,EE,20572F00,extended,00000012
+// patch=1,EE,20572F04,extended,00000012
+// patch=1,EE,20572F08,extended,00000012
+// patch=1,EE,20572F0C,extended,00000012
+// patch=1,EE,20572F10,extended,00000012
+// patch=1,EE,20572F14,extended,00000012
+// patch=1,EE,20572F18,extended,00000012
+// patch=1,EE,20572F1C,extended,00000012
+// patch=1,EE,20572F20,extended,00000012
+// patch=1,EE,20572F24,extended,00000012
+// patch=1,EE,20572F28,extended,00000012

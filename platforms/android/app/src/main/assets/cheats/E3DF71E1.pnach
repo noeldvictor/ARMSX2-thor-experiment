@@ -1,0 +1,23 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Catwoman [SLUS-20992] [E3DF71E1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock Encyclopedia-All Enemies]
+// patch=1,EE,901D2250,extended,0C078871
+
+[Cheats/Max Diamonds]
+// patch=1,EE,2025DADC,extended,000F423F
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,0025DB70,extended,000000FF
+
+[Cheats/Max Score]
+// patch=1,EE,2025DB70,extended,0001869F
+
+[Cheats/Infinite Domination]
+// patch=1,EE,2025D2DC,extended,447A0000
+
+[Cheats/Unlock Everything]
+// patch=1,EE,10341CEE,extended,0000FFFF
+// patch=1,EE,20341CF0,extended,FFFFFFFF
+// patch=1,EE,20341CF4,extended,FFFFFFFF

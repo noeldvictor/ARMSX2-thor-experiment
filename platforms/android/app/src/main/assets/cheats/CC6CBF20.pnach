@@ -1,0 +1,99 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Conflict-Vietnam [SLUS-21045] [CC6CBF20]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Super Slow Speed]
+// patch=1,EE,9034A6C8,extended,00832021
+// patch=1,EE,20432130,extended,3F000000
+
+[Cheats/Enable Lighting]
+// patch=1,EE,20432BEC,extended,00000001
+
+[Cheats/Enable Debug Mappings]
+// patch=1,EE,204150FC,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20222EF8,extended,00000000
+// patch=1,EE,2042BEF8,extended,00000001
+
+[Cheats/Extra Ammo]
+// patch=1,EE,10222EF0,extended,00000001
+
+[Cheats/Never Reload]
+// patch=1,EE,20222EFC,extended,00000000
+
+[Cheats/Infinite Medi-Kits]
+// patch=1,EE,2022AA98,extended,00000000
+
+[Cheats/Extra Medi-Kits]
+// patch=1,EE,2022AA94,extended,00451021
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,20222750,extended,00000000
+
+[Cheats/Extra Grenades]
+// patch=1,EE,10222748,extended,00000001
+
+[Cheats/Infinite Health (Entire Team)]
+// patch=1,EE,200C0220,extended,3C024376
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,AE020074
+// patch=1,EE,201CE040,extended,0C030088
+// patch=1,EE,201CE044,extended,46010034
+
+[Cheats/Infinite Health (Only Current Character)]
+// patch=1,EE,200C0230,extended,3C014348
+// patch=1,EE,200C0234,extended,AC810074
+// patch=1,EE,200C0238,extended,08087798
+// patch=1,EE,200C023C,extended,C4800074
+// patch=1,EE,2021DE5C,extended,08030088
+
+[Cheats/Idiot AI]
+// patch=1,EE,2042CD9C,extended,00000001
+
+[Cheats/Max Infinite Skill Points]
+// patch=1,EE,200C0230,extended,2402270F
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,A4821AA8
+// patch=1,EE,201B4C6C,extended,0C03008C
+
+[Cheats/Infinite Skill Points Usage]
+// patch=1,EE,20217874,extended,00000000
+
+[Cheats/Unlock Cheats Menu (Inside Options)]
+// patch=1,EE,2042BF10,extended,00000001
+
+[Cheats/Infinite Saves]
+// patch=1,EE,2042BF08,extended,00000001
+
+[Cheats/P1 Press {L1}+{SELECT} For Hyper Speed]
+// patch=1,EE,D069AB02,extended,0000FBFE
+// patch=1,EE,20432130,extended,40000000
+
+[Cheats/P1 Press {L2}+{SELECT} For Super Hyper Speed]
+// patch=1,EE,D069AB02,extended,0000FEFE
+// patch=1,EE,20432130,extended,40800000
+
+[Cheats/P1 Press {R1}+{SELECT} For Slow Speed]
+// patch=1,EE,D069AB02,extended,0000F7FE
+// patch=1,EE,20432130,extended,3F400000
+
+[Cheats/P1 Press {R2}+{SELECT} For Super Slow Speed]
+// patch=1,EE,D069AB02,extended,0000FDFE
+// patch=1,EE,20432130,extended,3F000000
+
+[Cheats/P1 Press {L3}+{SELECT} For Normal Speed]
+// patch=1,EE,D069AB02,extended,0000FFFC
+// patch=1,EE,20432130,extended,3F800000
+
+[Cheats/Super Hyper Speed]
+// patch=1,EE,20432130,extended,40800000
+
+[Cheats/Hyper Speed]
+// patch=1,EE,20432130,extended,40000000
+
+[Cheats/Normal Speed]
+// patch=1,EE,20432130,extended,3F800000
+
+[Cheats/Slow Speed]
+// patch=1,EE,20432130,extended,3F400000

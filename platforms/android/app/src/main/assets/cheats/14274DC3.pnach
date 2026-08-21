@@ -1,0 +1,137 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Alien Hominid [SLES-53139] [14274DC3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {R3}+{SELECT} For Normal Vision]
+// patch=1,EE,901A8818,extended,0C06BCFA
+// patch=1,EE,20127608,extended,00402821
+
+[Cheats/Infinite Grenades (All Players)]
+// patch=1,EE,20127568,extended,00000000
+
+[Cheats/Infinite Ammo (All Players)]
+// patch=1,EE,20144318,extended,241E0063
+
+[Cheats/Infinite Lives (All Players)]
+// patch=1,EE,200C0220,extended,24010009
+// patch=1,EE,200C0224,extended,54A00001
+// patch=1,EE,200C0228,extended,ACA10008
+// patch=1,EE,200C022C,extended,03E00008
+// patch=1,EE,200C0230,extended,0040A82D
+// patch=1,EE,201447A4,extended,0C030088
+
+[Cheats/Infinite Credits (All Players)]
+// patch=1,EE,20145100,extended,24020063
+// patch=1,EE,20145104,extended,1000012C
+// patch=1,EE,20145108,extended,ACA20008
+
+[Cheats/Hat 1]
+// patch=1,EE,005065D3,extended,00000001
+
+[Cheats/Hat 2]
+// patch=1,EE,005065D4,extended,00000001
+
+[Cheats/Hat 3]
+// patch=1,EE,005065D5,extended,00000001
+
+[Cheats/Hat 4]
+// patch=1,EE,005065D6,extended,00000001
+
+[Cheats/Hat 5]
+// patch=1,EE,005065D7,extended,00000001
+
+[Cheats/Hat 6]
+// patch=1,EE,005065D8,extended,00000001
+
+[Cheats/Hat 7]
+// patch=1,EE,005065D9,extended,00000001
+
+[Cheats/Hat 8]
+// patch=1,EE,005065DA,extended,00000001
+
+[Cheats/Hat 9]
+// patch=1,EE,005065DB,extended,00000001
+
+[Cheats/Hat 10]
+// patch=1,EE,005065DC,extended,00000001
+
+[Cheats/Hat 11]
+// patch=1,EE,005065DD,extended,00000001
+
+[Cheats/Hat 12]
+// patch=1,EE,005065DE,extended,00000001
+
+[Cheats/Hat 13]
+// patch=1,EE,005065DF,extended,00000001
+
+[Cheats/Hat 14]
+// patch=1,EE,005065E0,extended,00000001
+
+[Cheats/Hat 15]
+// patch=1,EE,005065E1,extended,00000001
+
+[Cheats/Hat 16]
+// patch=1,EE,005065E2,extended,00000001
+
+[Cheats/Hat 17]
+// patch=1,EE,005065E3,extended,00000001
+
+[Cheats/Hat 18]
+// patch=1,EE,005065E4,extended,00000001
+
+[Cheats/Hat 19]
+// patch=1,EE,005065E5,extended,00000001
+
+[Cheats/Hat 20]
+// patch=1,EE,005065E6,extended,00000001
+
+[Cheats/Hat 21]
+// patch=1,EE,005065E7,extended,00000001
+
+[Cheats/Hat 22]
+// patch=1,EE,005065E8,extended,00000001
+
+[Cheats/Hat 23]
+// patch=1,EE,005065E9,extended,00000001
+
+[Cheats/Hat 24]
+// patch=1,EE,005065EA,extended,00000001
+
+[Cheats/Hat 25]
+// patch=1,EE,005065EB,extended,00000001
+
+[Cheats/Hat 26]
+// patch=1,EE,005065EC,extended,00000001
+
+[Cheats/Hat 27]
+// patch=1,EE,005065ED,extended,00000001
+
+[Cheats/Hat 28]
+// patch=1,EE,005065EE,extended,00000001
+
+[Cheats/Hat 29]
+// patch=1,EE,005065EF,extended,00000001
+
+[Cheats/All Hats]
+// patch=1,EE,005065D3,extended,00000001
+// patch=1,EE,405065D4,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/PDA Games]
+// patch=1,EE,00506603,extended,00000001
+
+[Cheats/Challenge]
+// patch=1,EE,00506604,extended,00000001
+
+[Cheats/Missile Mastar]
+// patch=1,EE,00506605,extended,00000001
+
+[Cheats/Neutron Ball]
+// patch=1,EE,00506606,extended,00000001
+
+[Cheats/Pinata Boss]
+// patch=1,EE,00506607,extended,00000001
+
+[Cheats/All Mini-Games]
+// patch=1,EE,00506603,extended,00000001
+// patch=1,EE,20506604,extended,01010101

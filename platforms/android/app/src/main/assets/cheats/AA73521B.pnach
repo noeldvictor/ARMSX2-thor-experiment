@@ -1,0 +1,218 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Trigger Man [SLUS-20931] [AA73521B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always 3rd Person Mode]
+// patch=1,EE,90201D08,extended,0C085B2B
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,8C820000
+// patch=1,EE,200C0224,extended,AC820008
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,46000546
+// patch=1,EE,20183E8C,extended,0C030088
+// patch=1,EE,702518FC,extended,00000001
+
+[Cheats/Infinite Armor]
+// patch=1,EE,20175538,extended,8C820000
+// patch=1,EE,20175540,extended,AC820008
+// patch=1,EE,7025189C,extended,00000001
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201F7C9C,extended,00000000
+// patch=1,EE,201F7CA0,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,101F7C92,extended,00001000
+// patch=1,EE,201F7C94,extended,240203E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,101F7C92,extended,00001000
+// patch=1,EE,201F7C94,extended,00651021
+
+[Cheats/Never Reload]
+// patch=1,EE,201F64D4,extended,00000000
+
+[Cheats/Have All Weapons/Infinite Ammo]
+// patch=1,EE,20201D3C,extended,0804CFF6
+
+[Cheats/P1 Press {L1}+{SELECT} To Complete Mission]
+// patch=1,EE,D03FA502,extended,0000FBFE
+// patch=1,EE,20216D50,extended,0804CFEE
+// patch=1,EE,D03FA502,extended,0010FBFE
+// patch=1,EE,20216D50,extended,03E00008
+
+[Cheats/Idiot AI Guard]
+// patch=1,EE,2011C638,extended,03E00008
+// patch=1,EE,2011C63C,extended,00000000
+
+[Cheats/Idiot AI Sentry]
+// patch=1,EE,2011C970,extended,03E00008
+// patch=1,EE,2011C974,extended,00000000
+
+[Cheats/Enemy Doesnt Investigate]
+// patch=1,EE,2011CD28,extended,03E00008
+// patch=1,EE,2011CD2C,extended,00000000
+
+[Cheats/Enemy Doesnt Hide]
+// patch=1,EE,2011D038,extended,03E00008
+// patch=1,EE,2011D03C,extended,00000000
+
+[Cheats/Guards Dont Randomly Fire]
+// patch=1,EE,2011D358,extended,03E00008
+// patch=1,EE,2011D35C,extended,00000000
+
+[Cheats/Guards Dont Attack]
+// patch=1,EE,2011D468,extended,03E00008
+// patch=1,EE,2011D46C,extended,00000000
+
+[Cheats/Sentries Dont Attack]
+// patch=1,EE,2011D8D0,extended,03E00008
+// patch=1,EE,2011D8D4,extended,00000000
+
+[Cheats/Enemy Doest Chase You]
+// patch=1,EE,2011DCC8,extended,03E00008
+// patch=1,EE,2011DCCC,extended,00000000
+
+[Cheats/No Enemy Cover Attack]
+// patch=1,EE,2011E368,extended,03E00008
+// patch=1,EE,2011E36C,extended,00000000
+
+[Cheats/Wire Mode]
+// patch=1,EE,20279750,extended,00000001
+
+[Cheats/Display AI Vision]
+// patch=1,EE,20277A54,extended,00000001
+
+[Cheats/Adrenalin Refills Faster]
+// patch=1,EE,20277C84,extended,41000000
+
+[Cheats/Pause Never Disabled]
+// patch=1,EE,20277DD0,extended,00000000
+
+[Cheats/Pause Always Disabled]
+// patch=1,EE,20277DD0,extended,00000001
+
+[Cheats/Enemy Zero Accuracy]
+// patch=1,EE,20279344,extended,00000000
+
+[Cheats/Always Day 1]
+// patch=1,EE,20277610,extended,00000001
+
+[Cheats/Game Time Always 00:00:00]
+// patch=1,EE,20277614,extended,00000000
+
+[Cheats/Slow Motion]
+// patch=1,EE,2027761C,extended,3F000000
+
+[Cheats/Super Slow Motion]
+// patch=1,EE,2027761C,extended,3E800000
+
+[Cheats/Mega Slow Motion]
+// patch=1,EE,2027761C,extended,3E400000
+
+[Cheats/Normal Speed]
+// patch=1,EE,2027761C,extended,3F800000
+
+[Cheats/Hyper Mode]
+// patch=1,EE,2027761C,extended,40000000
+
+[Cheats/Mega Hyper Mode]
+// patch=1,EE,2027761C,extended,41000000
+
+[Cheats/Super Hyper Mode]
+// patch=1,EE,2027761C,extended,40800000
+
+[Cheats/Blood Enabled]
+// patch=1,EE,20277DC8,extended,00000001
+
+[Cheats/Faster Aim Turn Rate]
+// patch=1,EE,20278418,extended,3E000000
+
+[Cheats/Invulnerable]
+// patch=1,EE,202797FC,extended,00000001
+
+[Cheats/Enable Rain]
+// patch=1,EE,20279910,extended,00000001
+
+[Cheats/Disable Rain]
+// patch=1,EE,20279910,extended,00000000
+
+[Cheats/Enable Lightning]
+// patch=1,EE,20279918,extended,00000001
+
+[Cheats/Disable Lightning]
+// patch=1,EE,20279918,extended,00000000
+
+[Cheats/Auto Wall Mode Enabled]
+// patch=1,EE,20279338,extended,00000001
+
+[Cheats/Disable HUD]
+// patch=1,EE,202795C8,extended,00000001
+
+[Cheats/Player Health Bar Enabled]
+// patch=1,EE,20279A40,extended,00000001
+
+[Cheats/Player Armor Bar Enabled]
+// patch=1,EE,20279A44,extended,00000001
+
+[Cheats/Adrenalin Bar Enabled]
+// patch=1,EE,20279A48,extended,00000001
+
+[Cheats/1-Shot Kills]
+// patch=1,EE,20279A4C,extended,00000001
+// patch=1,EE,702518DC,extended,00000001
+
+[Cheats/Stay Locked On When R1 is Released]
+// patch=1,EE,20279A50,extended,00000001
+
+[Cheats/Dive always Slomo]
+// patch=1,EE,20279A54,extended,00000001
+
+[Cheats/Throw always Slomo]
+// patch=1,EE,20279A58,extended,00000001
+
+[Cheats/Shoot when Frozen]
+// patch=1,EE,20279A60,extended,00000001
+
+[Cheats/Can Exit Wall Mode]
+// patch=1,EE,20279A64,extended,00000001
+
+[Cheats/Enemy Health Bar Enabled]
+// patch=1,EE,20279A6C,extended,00000001
+
+[Cheats/Boss Health Bar Enabled]
+// patch=1,EE,20279A70,extended,00000001
+
+[Cheats/Special Health Bar Enabled]
+// patch=1,EE,20279A74,extended,00000001
+
+[Cheats/Ammo Count Enabled]
+// patch=1,EE,20279A78,extended,00000001
+
+[Cheats/Weapon Icon Enabled]
+// patch=1,EE,20279A80,extended,00000001
+
+[Cheats/Stay In Manual Targeting When R2 Released]
+// patch=1,EE,20279AB4,extended,00000001
+
+[Cheats/Player Continued From Game Over Screen]
+// patch=1,EE,20279AC0,extended,00000001
+
+[Cheats/Draw Scripted Sniper Scope]
+// patch=1,EE,20279AC8,extended,00000001
+
+[Cheats/God Mode]
+// patch=1,EE,20279C08,extended,00000001
+
+[Cheats/Have All Weapons]
+// patch=1,EE,7025183C,extended,00000001
+
+[Cheats/Infnite Ammo]
+// patch=1,EE,7025185C,extended,00000001
+
+[Cheats/Head Shot]
+// patch=1,EE,7025187C,extended,00000001
+
+[Cheats/1-Hit Kills]
+// patch=1,EE,702518BC,extended,00000001

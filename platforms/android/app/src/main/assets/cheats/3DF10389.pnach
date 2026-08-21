@@ -1,0 +1,147 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shox [SLES-51250] [3DF10389]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Health P8]
+// patch=1,EE,902BAEA4,extended,0C0B2789
+
+[Cheats/Quick Money Gain]
+// patch=1,EE,1035BC60,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,2035BC60,extended,05F5E0FF
+
+[Cheats/Idiot AI]
+// patch=1,EE,202FFDB8,extended,00000001
+
+[Cheats/Have Compact Gold Trophy]
+// patch=1,EE,0035BD70,extended,00000003
+
+[Cheats/Have Sports Gold Trophy]
+// patch=1,EE,0035BD71,extended,00000003
+
+[Cheats/Have Turbo Gold Trophy]
+// patch=1,EE,0035BD72,extended,00000003
+
+[Cheats/Have Power Gold Trophy]
+// patch=1,EE,0035BD73,extended,00000003
+
+[Cheats/Have All Compact Stages]
+// patch=1,EE,0035BC2B,extended,00000006
+
+[Cheats/Have All Sports Stages]
+// patch=1,EE,0035BC2C,extended,00000006
+
+[Cheats/Have All Turbo Stages]
+// patch=1,EE,0035BC2D,extended,00000006
+
+[Cheats/Have All Power Stages]
+// patch=1,EE,0035BC2E,extended,00000006
+
+[Cheats/Car 1]
+// patch=1,EE,0035BC53,extended,00000002
+// patch=1,EE,0035BC47,extended,00000002
+// patch=1,EE,0035BC3B,extended,00000002
+// patch=1,EE,0035BC2F,extended,00000002
+
+[Cheats/Car 2]
+// patch=1,EE,0035BC54,extended,00000002
+// patch=1,EE,0035BC48,extended,00000002
+// patch=1,EE,0035BC3C,extended,00000002
+// patch=1,EE,0035BC30,extended,00000002
+
+[Cheats/Car 3]
+// patch=1,EE,0035BC55,extended,00000002
+// patch=1,EE,0035BC49,extended,00000002
+// patch=1,EE,0035BC3D,extended,00000002
+// patch=1,EE,0035BC31,extended,00000002
+
+[Cheats/Car 4]
+// patch=1,EE,0035BC56,extended,00000002
+// patch=1,EE,0035BC4A,extended,00000002
+// patch=1,EE,0035BC3E,extended,00000002
+// patch=1,EE,0035BC32,extended,00000002
+
+[Cheats/Car 5]
+// patch=1,EE,0035BC57,extended,00000002
+// patch=1,EE,0035BC4B,extended,00000002
+// patch=1,EE,0035BC3F,extended,00000002
+// patch=1,EE,0035BC33,extended,00000002
+
+[Cheats/Car 6]
+// patch=1,EE,0035BC58,extended,00000002
+// patch=1,EE,0035BC4C,extended,00000002
+// patch=1,EE,0035BC40,extended,00000002
+// patch=1,EE,0035BC34,extended,00000002
+
+[Cheats/Tunnel Vision]
+// patch=1,EE,0035BCAD,extended,00000000
+
+[Cheats/Surfs Up]
+// patch=1,EE,0035BCAE,extended,00000000
+
+[Cheats/Nursery Slopes]
+// patch=1,EE,0035BCAF,extended,00000000
+
+[Cheats/Shox Away]
+// patch=1,EE,0035BCB0,extended,00000000
+
+[Cheats/Lagoon Show]
+// patch=1,EE,0035BCB1,extended,00000000
+
+[Cheats/Ice And Easy]
+// patch=1,EE,0035BCB2,extended,00000000
+
+[Cheats/Fort Shox]
+// patch=1,EE,0035BCB3,extended,00000000
+
+[Cheats/Flamingo Falls]
+// patch=1,EE,0035BCB4,extended,00000000
+
+[Cheats/Avalanche]
+// patch=1,EE,0035BCB5,extended,00000000
+
+[Cheats/Temple Ruins]
+// patch=1,EE,0035BCB6,extended,00000000
+
+[Cheats/Some Like It Hut]
+// patch=1,EE,0035BCB7,extended,00000000
+
+[Cheats/Burner Glade]
+// patch=1,EE,0035BCB8,extended,00000000
+
+[Cheats/Full Lock]
+// patch=1,EE,0035BCB9,extended,00000000
+
+[Cheats/Volcano]
+// patch=1,EE,0035BCBA,extended,00000000
+
+[Cheats/Cable Car]
+// patch=1,EE,0035BCBB,extended,00000000
+
+[Cheats/Drm Blast]
+// patch=1,EE,0035BCBC,extended,00000000
+
+[Cheats/Great Wall]
+// patch=1,EE,0035BCBD,extended,00000000
+
+[Cheats/White Out]
+// patch=1,EE,0035BCBE,extended,00000000
+
+[Cheats/Arid Enduro F]
+// patch=1,EE,0035BCBF,extended,00000000
+
+[Cheats/Jungle Enduro F]
+// patch=1,EE,0035BCC0,extended,00000000
+
+[Cheats/Snow Enduro F]
+// patch=1,EE,0035BCC1,extended,00000000
+
+[Cheats/Arid Enduro R]
+// patch=1,EE,0035BCC2,extended,00000000
+
+[Cheats/Jungle Enduro R]
+// patch=1,EE,0035BCC3,extended,00000000
+
+[Cheats/Snow Enduro R]
+// patch=1,EE,0035BCC4,extended,00000000

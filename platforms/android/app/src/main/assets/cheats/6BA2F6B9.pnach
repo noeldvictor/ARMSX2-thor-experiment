@@ -1,0 +1,161 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Resident Evil 4 [SLES-53702] [6BA2F6B9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Time Out]
+// patch=1,EE,902A6E88,extended,00832021
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201200AC,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,2012009C,extended,24020318
+
+[Cheats/Extra Ammo]
+// patch=1,EE,1012009C,extended,00000001
+
+[Cheats/Infinite Grenades/RPG]
+// patch=1,EE,2011EF30,extended,00000000
+// patch=1,EE,1011EF3E,extended,00001000
+
+[Cheats/Max Infinite Grenades/RPG]
+// patch=1,EE,2011EF30,extended,24020063
+
+[Cheats/Infinite Pesetas]
+// patch=1,EE,1042DA6C,extended,0000FFFF
+
+[Cheats/Max Pesetas]
+// patch=1,EE,2042DA6C,extended,05F5E0FF
+
+[Cheats/Buying Items Doesnt Decrease Pesetas]
+// patch=1,EE,2012ACFC,extended,00000000
+
+[Cheats/Buying Items Increases Pesetas]
+// patch=1,EE,2012ACF8,extended,00451021
+
+[Cheats/All Items Sell For 30000]
+// patch=1,EE,2012A910,extended,24627530
+
+[Cheats/All Items Sell For 25000]
+// patch=1,EE,2012A910,extended,246261A8
+
+[Cheats/All Items Sell For 20000]
+// patch=1,EE,2012A910,extended,24624E20
+
+[Cheats/All Items Sell For 15000]
+// patch=1,EE,2012A910,extended,24623A98
+
+[Cheats/All Items Sell For 10000]
+// patch=1,EE,2012A910,extended,24622710
+
+[Cheats/All Items Sell For 5000]
+// patch=1,EE,2012A910,extended,24621388
+
+[Cheats/Sell Item For Max Pesetas]
+// patch=1,EE,2012A90C,extended,3C0205F5
+// patch=1,EE,2012A910,extended,3442E0FF
+
+[Cheats/Equip Weapon For Max Ammo]
+// patch=1,EE,2011FA60,extended,24021F38
+
+[Cheats/Equip Weapon For Red Rounds]
+// patch=1,EE,2011FA64,extended,34420001
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,201C2A9C,extended,24020000
+
+[Cheats/Infinite Time For Button Masher Scenes]
+// patch=1,EE,101DE596,extended,00001000
+
+[Cheats/Always Low Game Save Time]
+// patch=1,EE,2042DA54,extended,00000000
+
+[Cheats/No Times Saved Recorded]
+// patch=1,EE,1042DA5A,extended,00000000
+
+[Cheats/Unlock Extras Menu]
+// patch=1,EE,70430F67,extended,00000080
+
+[Cheats/Unlock Ada's Reports (Extras)]
+// patch=1,EE,70430F66,extended,00000001
+
+[Cheats/Have All Ada's Reports]
+// patch=1,EE,00430F6D,extended,00000004
+
+[Cheats/Albert Wesker]
+// patch=1,EE,70430F67,extended,00000001
+
+[Cheats/Jack Krauser]
+// patch=1,EE,70430F67,extended,00000002
+
+[Cheats/Hunk]
+// patch=1,EE,70430F67,extended,00000004
+// patch=1,EE,0042DA8A,extended,00000003
+
+[Cheats/Ada Wong]
+// patch=1,EE,70430F67,extended,00000008
+
+[Cheats/All Characters]
+// patch=1,EE,70430F67,extended,0000000F
+
+[Cheats/Infinite Health]
+// patch=1,EE,1042DA76,extended,00000960
+// patch=1,EE,1042DA7A,extended,000004B0
+
+[Cheats/Max Health]
+// patch=1,EE,1042DA78,extended,00000960
+// patch=1,EE,1042DA7C,extended,000004B0
+
+[Cheats/Super Infinite Health]
+// patch=1,EE,10246F36,extended,00001000
+// patch=1,EE,10163C3A,extended,00001000
+
+[Cheats/Infinite Health (Alternate)]
+// patch=1,EE,201C27FC,extended,00000000
+// patch=1,EE,201C2940,extended,00000000
+
+[Cheats/Leon]
+// patch=1,EE,0042DA8A,extended,00000000
+
+[Cheats/Ashley]
+// patch=1,EE,0042DA8A,extended,00000001
+
+[Cheats/Ada]
+// patch=1,EE,0042DA8A,extended,00000002
+
+[Cheats/Krauser]
+// patch=1,EE,0042DA8A,extended,00000004
+
+[Cheats/Wesker]
+// patch=1,EE,0042DA8A,extended,00000005
+
+[Cheats/Always Costume 1]
+// patch=1,EE,0042DA8B,extended,00000000
+// patch=1,EE,0042DA8D,extended,00000000
+
+[Cheats/Always Costume 2]
+// patch=1,EE,0042DA8B,extended,00000001
+// patch=1,EE,0042DA8D,extended,00000001
+
+[Cheats/Always Costume 3]
+// patch=1,EE,0042DA8B,extended,00000002
+// patch=1,EE,0042DA8D,extended,00000002
+
+[Cheats/Always Costume 4 (Leon Only)]
+// patch=1,EE,0042DA8B,extended,00000003
+// patch=1,EE,0042DA8D,extended,00000003
+
+[Cheats/Always Present]
+// patch=1,EE,0042DAFF,extended,00000004
+
+[Cheats/Never Present]
+// patch=1,EE,0042DAFF,extended,00000000
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,103CFA6C,extended,0000FFFF
+
+[Cheats/Max Score]
+// patch=1,EE,203CFA6C,extended,0098967F
+
+[Cheats/Infinite Time]
+// patch=1,EE,2041B668,extended,00000E00

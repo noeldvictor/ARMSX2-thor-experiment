@@ -1,0 +1,39 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sky Odyssey [SLUS-20134] [CD213E68]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Slots]
+// patch=1,EE,901FF1EC,extended,0C087C5B
+
+[Cheats/Max Acrobatic Points]
+// patch=1,EE,20283830,extended,0001869F
+
+[Cheats/Infinite Time]
+// patch=1,EE,20283F00,extended,00000000
+
+[Cheats/Max Rings Passed]
+// patch=1,EE,10284124,extended,00000064
+
+[Cheats/Infinite Fuel]
+// patch=1,EE,103765BA,extended,000042C8
+
+[Cheats/Have All Aircraft]
+// patch=1,EE,203840F8,extended,81818181
+// patch=1,EE,103840FC,extended,00008181
+
+[Cheats/Have All Graphics]
+// patch=1,EE,20386690,extended,FFFFFFFF
+// patch=1,EE,20386694,extended,FFFFFFFF
+// patch=1,EE,10386698,extended,0000FFFF
+
+[Cheats/Have All Map Pieces]
+// patch=1,EE,0038415D,extended,00000085
+// patch=1,EE,1038415E,extended,00008986
+
+[Cheats/Have All Levels]
+// patch=1,EE,40383C78,extended,00050001
+// patch=1,EE,00010001,extended,00000000
+
+[Cheats/Max Scores]
+// patch=1,EE,40383C98,extended,000A0001
+// patch=1,EE,42C80000,extended,00000000

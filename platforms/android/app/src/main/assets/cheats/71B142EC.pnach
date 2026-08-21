@@ -1,0 +1,143 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sega Sports Tennis [SLUS-20480] [71B142EC]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Goal's Score 2]
+// patch=1,EE,F0100008,extended,002B152F
+
+[Cheats/Infinite Money (World Tour)]
+// patch=1,EE,102ECCA8,extended,0000FFFF
+
+[Cheats/Max Money (World Tour)]
+// patch=1,EE,202ECCA8,extended,05F5E0FF
+
+[Cheats/Max Money (Championship Mode)]
+// patch=1,EE,204359AC,extended,05F5E0FF
+
+[Cheats/P1 Start Match With 15 Points]
+// patch=1,EE,D0454A30,extended,00000000
+// patch=1,EE,10454A30,extended,00000001
+
+[Cheats/P1 Start Match With 30 Points]
+// patch=1,EE,D0454A30,extended,00000000
+// patch=1,EE,10454A30,extended,00000002
+
+[Cheats/P1 Start Match With 45 Points]
+// patch=1,EE,D0454A30,extended,00000000
+// patch=1,EE,10454A30,extended,00000003
+
+[Cheats/P1 Never Wins]
+// patch=1,EE,10454A30,extended,00000000
+
+[Cheats/P2 Start Match With 15 Points]
+// patch=1,EE,D0454A34,extended,00000000
+// patch=1,EE,10454A34,extended,00000001
+
+[Cheats/P2 Start Match With 30 Points]
+// patch=1,EE,D0454A34,extended,00000000
+// patch=1,EE,10454A34,extended,00000002
+
+[Cheats/P2 Start Match With 45 Points]
+// patch=1,EE,D0454A34,extended,00000000
+// patch=1,EE,10454A34,extended,00000003
+
+[Cheats/P2 Never Wins]
+// patch=1,EE,10454A34,extended,00000000
+
+[Cheats/Infinite Stamina (Male)]
+// patch=1,EE,202ECD40,extended,0000000A
+
+[Cheats/Infinite Stamina (Female)]
+// patch=1,EE,202ECD44,extended,0000000A
+
+[Cheats/Serve-Speed]
+// patch=1,EE,202ECCE8,extended,00034000
+
+[Cheats/Serve-Control]
+// patch=1,EE,202ECCEC,extended,00034000
+
+[Cheats/Footwork-Net Dash]
+// patch=1,EE,202ECCF0,extended,00034000
+// patch=1,EE,202ECD34,extended,00034000
+
+[Cheats/Footwork-Side Dash]
+// patch=1,EE,202ECCF4,extended,00034000
+// patch=1,EE,202ECD38,extended,00034000
+
+[Cheats/Footwork-Turn]
+// patch=1,EE,202ECCF8,extended,00034000
+// patch=1,EE,202ECD3C,extended,00034000
+
+[Cheats/Stroke-Fore-Power]
+// patch=1,EE,202ECCB8,extended,00034000
+// patch=1,EE,202ECCFC,extended,00034000
+
+[Cheats/Stroke-Back-Power]
+// patch=1,EE,202ECCBC,extended,00034000
+// patch=1,EE,202ECD00,extended,00034000
+
+[Cheats/Stroke-Fore-Angle]
+// patch=1,EE,202ECCC0,extended,00034000
+// patch=1,EE,202ECD04,extended,00034000
+
+[Cheats/Stroke-Back-Angle]
+// patch=1,EE,202ECCC4,extended,00034000
+// patch=1,EE,202ECD08,extended,00034000
+
+[Cheats/Stroke-Fore-Control]
+// patch=1,EE,202ECCC8,extended,00034000
+// patch=1,EE,202ECD0C,extended,00034000
+
+[Cheats/Stroke-Back-Control]
+// patch=1,EE,202ECCCC,extended,00034000
+// patch=1,EE,202ECD10,extended,00034000
+
+[Cheats/Volley-Fore-Power]
+// patch=1,EE,202ECCD0,extended,00034000
+// patch=1,EE,202ECD14,extended,00034000
+
+[Cheats/Volley-Back-Power]
+// patch=1,EE,202ECCD4,extended,00034000
+// patch=1,EE,202ECD18,extended,00034000
+
+[Cheats/Volley-Fore-Angle]
+// patch=1,EE,202ECCD8,extended,00034000
+// patch=1,EE,202ECD1C,extended,00034000
+
+[Cheats/Volley-Back-Angle]
+// patch=1,EE,202ECCDC,extended,00034000
+// patch=1,EE,202ECD20,extended,00034000
+
+[Cheats/Volley-Fore-Control]
+// patch=1,EE,202ECCE0,extended,00034000
+// patch=1,EE,202ECD24,extended,00034000
+
+[Cheats/Volley-Back-Control]
+// patch=1,EE,202ECCE4,extended,00034000
+// patch=1,EE,202ECD28,extended,00034000
+
+[Cheats/Max Net Dash]
+// patch=1,EE,102ECD36,extended,00000004
+
+[Cheats/Max Side Dash]
+// patch=1,EE,102ECD3A,extended,00000004
+
+[Cheats/Max Turn]
+// patch=1,EE,102ECD3E,extended,00000004
+
+[Cheats/Have All Apparel (Male)]
+// patch=1,EE,203B14F4,extended,000000FF
+// patch=1,EE,203B14F8,extended,000000FF
+
+[Cheats/Have All Apparel (Female)]
+// patch=1,EE,203B14FC,extended,000000FF
+// patch=1,EE,203B1500,extended,000000FF
+
+[Cheats/Have All Stages]
+// patch=1,EE,203B1504,extended,000000FF
+
+[Cheats/Have All Etc.]
+// patch=1,EE,203B1508,extended,0000FFFF
+
+[Cheats/Have All Raquets]
+// patch=1,EE,203B150C,extended,000000FF

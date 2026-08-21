@@ -1,0 +1,57 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Haunting Ground [SLUS-21075] [901AAC09]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Souls]
+// patch=1,EE,901EFC18,extended,0C0456DA
+
+[Cheats/Infinite Item Usage (Need More Than 1)]
+// patch=1,EE,2025FDF4,extended,00000000
+
+[Cheats/Always Max Items (On Pickup)]
+// patch=1,EE,2025FE4C,extended,24020063
+// patch=1,EE,2025FE50,extended,AE020010
+
+[Cheats/Take No Damage (Fiona)]
+// patch=1,EE,101A22AA,extended,00001000
+
+[Cheats/Infinite Health (Dog)]
+// patch=1,EE,20164E60,extended,8E2414CC
+// patch=1,EE,20164E64,extended,AE2414C8
+
+[Cheats/Infinite Panic (Fiona)]
+// patch=1,EE,202F0794,extended,AE20001C
+
+[Cheats/Unlock Everything]
+// patch=1,EE,40487A24,extended,00030001
+// patch=1,EE,FFFFFFFF,extended,00000000
+
+[Cheats/Stand Still To Be Invisible]
+// patch=1,EE,201A2BB4,extended,00000000
+// patch=1,EE,201A2C24,extended,00000000
+
+[Cheats/Always Invisible]
+// patch=1,EE,201A2BB4,extended,00000000
+// patch=1,EE,201A2C24,extended,00000000
+// patch=1,EE,201A2BCC,extended,00000000
+
+[Cheats/Have No Skirt]
+// patch=1,EE,202F86E0,extended,44806000
+
+[Cheats/Have Big Boobs]
+// patch=1,EE,202EEEE4,extended,3C013FC0
+// patch=1,EE,202EEEF0,extended,AE210050
+// patch=1,EE,202EEF04,extended,AE210054
+// patch=1,EE,202EEF10,extended,AE210058
+
+[Cheats/Have Super Big Boobs]
+// patch=1,EE,202EEEE4,extended,3C014000
+// patch=1,EE,202EEEF0,extended,AE210050
+// patch=1,EE,202EEF04,extended,AE210054
+// patch=1,EE,202EEF10,extended,AE210058
+
+[Cheats/Have Ultra Big Boobs]
+// patch=1,EE,202EEEE4,extended,3C014040
+// patch=1,EE,202EEEF0,extended,AE210050
+// patch=1,EE,202EEF04,extended,AE210054
+// patch=1,EE,202EEF10,extended,AE210058

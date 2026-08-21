@@ -1,0 +1,383 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Hobbit, The [SLUS-20655] [2D29C32F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Slow Motion ({R2}+Up=On & {R2}+Down=Off)]
+// patch=1,EE,903D236C,extended,0C0ED034
+
+[Cheats/Max Silver Pennies]
+// patch=1,EE,2046C630,extended,461C3C00
+
+[Cheats/Infinite Rocks]
+// patch=1,EE,2046C634,extended,41200000
+
+[Cheats/Infinite Health]
+// patch=1,EE,2046C63C,extended,42F00000
+
+[Cheats/Max Total Courage Points Earned]
+// patch=1,EE,2046C648,extended,461C3C00
+
+[Cheats/Max Summary Courage Points]
+// patch=1,EE,2046C650,extended,44960000
+
+[Cheats/Max Health]
+// patch=1,EE,2046C64C,extended,463B8000
+
+[Cheats/Have Large Rock Bag]
+// patch=1,EE,2046C680,extended,40000000
+
+[Cheats/Have Large Medicine Chest]
+// patch=1,EE,2046C684,extended,40000000
+
+[Cheats/Infinite Skeleton Keys]
+// patch=1,EE,2046C688,extended,42C60000
+
+[Cheats/Max Summary Silver Pennies]
+// patch=1,EE,2046C68C,extended,43C80000
+
+[Cheats/Max Summary Chests]
+// patch=1,EE,2046C690,extended,40A00000
+
+[Cheats/Infinite Health Potions (5)]
+// patch=1,EE,D046C684,extended,00000000
+// patch=1,EE,2046C6EC,extended,40A00000
+
+[Cheats/Infinite Health Potions (10)]
+// patch=1,EE,D046C684,extended,00003F80
+// patch=1,EE,2046C6EC,extended,41200000
+
+[Cheats/Infinite Health Potions (15)]
+// patch=1,EE,D046C684,extended,00004000
+// patch=1,EE,2046C6EC,extended,41700000
+
+[Cheats/Infinite Antidote Potions (5)]
+// patch=1,EE,D046C684,extended,00000000
+// patch=1,EE,2046C6F0,extended,40A00000
+
+[Cheats/Infinite Antidote Potions (10)]
+// patch=1,EE,D046C684,extended,00003F80
+// patch=1,EE,2046C6F0,extended,41200000
+
+[Cheats/Infinite Antidote Potions (15)]
+// patch=1,EE,D046C684,extended,00004000
+// patch=1,EE,2046C6F0,extended,41700000
+
+[Cheats/Have Water Of Vigour (1)]
+// patch=1,EE,D046C682,extended,00000000
+// patch=1,EE,2046C6F4,extended,3F800000
+
+[Cheats/Have Water Of Vigour (2)]
+// patch=1,EE,D046C682,extended,00003F80
+// patch=1,EE,2046C6F4,extended,40000000
+
+[Cheats/Have Water Of Vigour (3)]
+// patch=1,EE,D046C682,extended,00004000
+// patch=1,EE,2046C6F4,extended,40400000
+
+[Cheats/Have Walking Stick]
+// patch=1,EE,2046C700,extended,3F800000
+
+[Cheats/Have Upgrade Level 1]
+// patch=1,EE,2046C6A0,extended,3F800000
+// patch=1,EE,2046C6C4,extended,3F800000
+// patch=1,EE,2046C6DC,extended,3F800000
+
+[Cheats/Have Upgrade Level 2]
+// patch=1,EE,2046C6A4,extended,3F800000
+// patch=1,EE,2046C6C8,extended,3F800000
+// patch=1,EE,2046C6E0,extended,3F800000
+
+[Cheats/Have Upgrade Level 3]
+// patch=1,EE,2046C6A8,extended,3F800000
+// patch=1,EE,2046C6CC,extended,3F800000
+// patch=1,EE,2046C6E4,extended,3F800000
+
+[Cheats/Have Jump Attack-Upgrade Level 1]
+// patch=1,EE,2046C6AC,extended,3F800000
+// patch=1,EE,2046C6D0,extended,3F800000
+
+[Cheats/Have Jump Attack-Upgrade Level 2]
+// patch=1,EE,2046C6B0,extended,3F800000
+// patch=1,EE,2046C6D4,extended,3F800000
+
+[Cheats/Have Jump Attack-Upgrade Level 3]
+// patch=1,EE,2046C6B4,extended,3F800000
+// patch=1,EE,2046C6D8,extended,3F800000
+
+[Cheats/Have Sting]
+// patch=1,EE,2046C6F8,extended,3F800000
+
+[Cheats/Troll Key]
+// patch=1,EE,2046C718,extended,3F800000
+
+[Cheats/Witch-King Crystal]
+// patch=1,EE,2046C71C,extended,3F800000
+
+[Cheats/Burberry Plant]
+// patch=1,EE,2046C720,extended,3F800000
+
+[Cheats/Blue Urn]
+// patch=1,EE,2046C724,extended,3F800000
+
+[Cheats/Red Urn]
+// patch=1,EE,2046C728,extended,3F800000
+
+[Cheats/Yellow Urn]
+// patch=1,EE,2046C72C,extended,3F800000
+
+[Cheats/Unlit Torch]
+// patch=1,EE,2046C730,extended,3F800000
+
+[Cheats/Lit Torch]
+// patch=1,EE,2046C734,extended,3F800000
+
+[Cheats/Bellows]
+// patch=1,EE,2046C738,extended,3F800000
+
+[Cheats/Signet Ring]
+// patch=1,EE,2046C73C,extended,3F800000
+
+[Cheats/Can Of Oil]
+// patch=1,EE,2046C740,extended,3F800000
+
+[Cheats/Small Iron Gear]
+// patch=1,EE,2046C744,extended,3F800000
+
+[Cheats/Small Silver Gear]
+// patch=1,EE,2046C748,extended,3F800000
+
+[Cheats/Small Golden Gear]
+// patch=1,EE,2046C74C,extended,3F800000
+
+[Cheats/Small Copper Gear]
+// patch=1,EE,2046C750,extended,3F800000
+
+[Cheats/Small Metallic Gear]
+// patch=1,EE,2046C754,extended,3F800000
+
+[Cheats/Iron Gear]
+// patch=1,EE,2046C758,extended,3F800000
+
+[Cheats/Silver Gear]
+// patch=1,EE,2046C75C,extended,3F800000
+
+[Cheats/Golden Gear]
+// patch=1,EE,2046C760,extended,3F800000
+
+[Cheats/Copper Gear]
+// patch=1,EE,2046C764,extended,3F800000
+
+[Cheats/Metallic Gear]
+// patch=1,EE,2046C768,extended,3F800000
+
+[Cheats/Large Iron Gear]
+// patch=1,EE,2046C76C,extended,3F800000
+
+[Cheats/Large Silver Gear]
+// patch=1,EE,2046C770,extended,3F800000
+
+[Cheats/Large Golden Gear]
+// patch=1,EE,2046C774,extended,3F800000
+
+[Cheats/Large Copper Gear]
+// patch=1,EE,2046C778,extended,3F800000
+
+[Cheats/Large Metallic Gear]
+// patch=1,EE,2046C77C,extended,3F800000
+
+[Cheats/Iron Shank Head]
+// patch=1,EE,2046C780,extended,3F800000
+
+[Cheats/Silver Shank Head]
+// patch=1,EE,2046C784,extended,3F800000
+
+[Cheats/Gold Shank Head]
+// patch=1,EE,2046C788,extended,3F800000
+
+[Cheats/Copper Shank Arm]
+// patch=1,EE,2046C78C,extended,3F800000
+// patch=1,EE,2046C7A0,extended,3F800000
+
+[Cheats/Metallic Shank Arm]
+// patch=1,EE,2046C790,extended,3F800000
+// patch=1,EE,2046C7A4,extended,3F800000
+
+[Cheats/Iron Shank Arm]
+// patch=1,EE,2046C794,extended,3F800000
+
+[Cheats/Silver Shank Arm]
+// patch=1,EE,2046C798,extended,3F800000
+
+[Cheats/Gold Shank Arm]
+// patch=1,EE,2046C79C,extended,3F800000
+
+[Cheats/Firewood]
+// patch=1,EE,2046C7A8,extended,3F800000
+
+[Cheats/Grit-Lift Key]
+// patch=1,EE,2046C7AC,extended,3F800000
+
+[Cheats/Dim-Lift Key]
+// patch=1,EE,2046C7B0,extended,3F800000
+
+[Cheats/Mugg-Lift Key]
+// patch=1,EE,2046C7B4,extended,3F800000
+
+[Cheats/Wart-Lift Lever]
+// patch=1,EE,2046C7C8,extended,3F800000
+
+[Cheats/Wart-Stone]
+// patch=1,EE,2046C7CC,extended,3F800000
+
+[Cheats/Thror's Golden Cup]
+// patch=1,EE,2046C7D0,extended,3F800000
+
+[Cheats/Necklace Of Girion]
+// patch=1,EE,2046C7D4,extended,3F800000
+
+[Cheats/Groin's Ruby]
+// patch=1,EE,2046C7D8,extended,3F800000
+
+[Cheats/King Bladorthin's Spears]
+// patch=1,EE,2046C7DC,extended,3F800000
+
+[Cheats/Golden Serving Dish]
+// patch=1,EE,2046C7E0,extended,3F800000
+
+[Cheats/Tea-Cakes]
+// patch=1,EE,2046C7E4,extended,3F800000
+
+[Cheats/Infinite Apples]
+// patch=1,EE,2046C7F0,extended,41200000
+
+[Cheats/Hammer]
+// patch=1,EE,2046C7F4,extended,3F800000
+
+[Cheats/Infinite Nails]
+// patch=1,EE,2046C7F8,extended,41200000
+
+[Cheats/Infinite Eggs]
+// patch=1,EE,2046C800,extended,41200000
+
+[Cheats/Infinite Berries]
+// patch=1,EE,2046C804,extended,41200000
+
+[Cheats/Sack Of Wheat]
+// patch=1,EE,2046C808,extended,3F800000
+
+[Cheats/Sugar]
+// patch=1,EE,2046C80C,extended,3F800000
+
+[Cheats/Spice]
+// patch=1,EE,2046C810,extended,3F800000
+
+[Cheats/Sauasage]
+// patch=1,EE,2046C814,extended,3F800000
+
+[Cheats/Wheat]
+// patch=1,EE,2046C818,extended,3F800000
+
+[Cheats/Quilting Needle]
+// patch=1,EE,2046C820,extended,3F800000
+
+[Cheats/Elvish Opening Crystal 1]
+// patch=1,EE,2046C824,extended,3F800000
+
+[Cheats/Elvish Opening Crystal 2]
+// patch=1,EE,2046C828,extended,3F800000
+
+[Cheats/Elvish Opening Crystal 3]
+// patch=1,EE,2046C82C,extended,3F800000
+
+[Cheats/Elvish Opening Crystal 4]
+// patch=1,EE,2046C830,extended,3F800000
+
+[Cheats/Deep Cellar Key 1]
+// patch=1,EE,2046C838,extended,3F800000
+
+[Cheats/Deep Cellar Key 2]
+// patch=1,EE,2046C83C,extended,3F800000
+
+[Cheats/Deep Cellar Key 3]
+// patch=1,EE,2046C840,extended,3F800000
+
+[Cheats/Deep Cellar Key 4]
+// patch=1,EE,2046C844,extended,3F800000
+
+[Cheats/Moonleaf]
+// patch=1,EE,2046C84C,extended,3F800000
+
+[Cheats/Willowweed]
+// patch=1,EE,2046C850,extended,3F800000
+
+[Cheats/Spidersbane]
+// patch=1,EE,2046C854,extended,3F800000
+
+[Cheats/Web Potion]
+// patch=1,EE,2046C858,extended,3F800000
+
+[Cheats/Gear Belt]
+// patch=1,EE,2046C85C,extended,3F800000
+
+[Cheats/Treasury Chain]
+// patch=1,EE,2046C860,extended,3F800000
+
+[Cheats/Treasury Key Mold]
+// patch=1,EE,2046C864,extended,3F800000
+
+[Cheats/Throne Key Mold 1]
+// patch=1,EE,2046C868,extended,3F800000
+
+[Cheats/Throne Key Mold 2]
+// patch=1,EE,2046C86C,extended,3F800000
+
+[Cheats/Treasure Key]
+// patch=1,EE,2046C870,extended,3F800000
+
+[Cheats/Throne Key 1]
+// patch=1,EE,2046C874,extended,3F800000
+
+[Cheats/Throne Key 2]
+// patch=1,EE,2046C878,extended,3F800000
+
+[Cheats/Arkenstone]
+// patch=1,EE,2046C87C,extended,3F800000
+
+[Cheats/City Warehouse Key]
+// patch=1,EE,2046C880,extended,3F800000
+
+[Cheats/Black Arrow]
+// patch=1,EE,2046C884,extended,3F800000
+
+[Cheats/Malloc's Golden Dagger]
+// patch=1,EE,2046C888,extended,3F800000
+
+[Cheats/Black Wine Bottle]
+// patch=1,EE,2046C88C,extended,3F800000
+
+[Cheats/Blue Wine Bottle]
+// patch=1,EE,2046C890,extended,3F800000
+
+[Cheats/Purple Wine Bottle]
+// patch=1,EE,2046C894,extended,3F800000
+
+[Cheats/Red Wine Bottle]
+// patch=1,EE,2046C898,extended,3F800000
+
+[Cheats/Yellow Wine Bottle]
+// patch=1,EE,2046C89C,extended,3F800000
+
+[Cheats/Gandalf's Message]
+// patch=1,EE,2046C8A0,extended,3F800000
+
+[Cheats/Healing Draught]
+// patch=1,EE,2046C8A4,extended,3F800000
+
+[Cheats/Troll Key 8]
+// patch=1,EE,2046C8A8,extended,3F800000
+
+[Cheats/Ladder Switch Lever]
+// patch=1,EE,2046C8AC,extended,3F800000
+
+[Cheats/Rennar's Key]
+// patch=1,EE,2046C8B0,extended,3F800000

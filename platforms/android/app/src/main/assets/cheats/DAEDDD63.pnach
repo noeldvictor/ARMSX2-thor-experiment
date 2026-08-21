@@ -1,0 +1,69 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Fight Night 2004 [SLUS-20906] [DAEDDD63]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Characters]
+// patch=1,EE,9042DF1C,extended,0C1181DF
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,200C0220,extended,8C82026C
+// patch=1,EE,200C0224,extended,3C0142C8
+// patch=1,EE,200C0228,extended,0804812E
+// patch=1,EE,200C022C,extended,AC410004
+// patch=1,EE,20325648,extended,0C030088
+
+[Cheats/No Health P1]
+// patch=1,EE,200C0220,extended,8C82026C
+// patch=1,EE,200C0224,extended,24010000
+// patch=1,EE,200C0228,extended,0804812E
+// patch=1,EE,200C022C,extended,AC410004
+// patch=1,EE,20325648,extended,0C030088
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,200C0230,extended,8C82027C
+// patch=1,EE,200C0234,extended,3C0142C8
+// patch=1,EE,200C0238,extended,0804812E
+// patch=1,EE,200C023C,extended,AC410004
+// patch=1,EE,2032566C,extended,0C03008C
+
+[Cheats/No Health P2]
+// patch=1,EE,200C0230,extended,8C82026C
+// patch=1,EE,200C0234,extended,24010000
+// patch=1,EE,200C0238,extended,0804812E
+// patch=1,EE,200C023C,extended,AC410004
+// patch=1,EE,2032566C,extended,0C03008C
+
+[Cheats/Infinite Stamina P1]
+// patch=1,EE,200C0240,extended,8C82026C
+// patch=1,EE,200C0244,extended,3C0142C8
+// patch=1,EE,200C0248,extended,08048132
+// patch=1,EE,200C024C,extended,AC41000C
+// patch=1,EE,20325064,extended,0C030090
+
+[Cheats/No Stamina P1]
+// patch=1,EE,200C0240,extended,8C82026C
+// patch=1,EE,200C0244,extended,24010000
+// patch=1,EE,200C0248,extended,08048132
+// patch=1,EE,200C024C,extended,AC41000C
+// patch=1,EE,20325064,extended,0C030090
+
+[Cheats/Infinite Stamina P2]
+// patch=1,EE,200C0250,extended,8C82026C
+// patch=1,EE,200C0254,extended,3C0142C8
+// patch=1,EE,200C0258,extended,08048132
+// patch=1,EE,200C025C,extended,AC41000C
+// patch=1,EE,20325070,extended,0C030094
+
+[Cheats/No Stamina P2]
+// patch=1,EE,200C0250,extended,8C82026C
+// patch=1,EE,200C0254,extended,24010000
+// patch=1,EE,200C0258,extended,08048132
+// patch=1,EE,200C025C,extended,AC41000C
+// patch=1,EE,20325070,extended,0C030094
+
+[Cheats/Can Always Add Rating Points]
+// patch=1,EE,2022300C,extended,00000000
+// patch=1,EE,20223040,extended,00000000
+
+[Cheats/Can Max Stats Over 45]
+// patch=1,EE,10223014,extended,00000063

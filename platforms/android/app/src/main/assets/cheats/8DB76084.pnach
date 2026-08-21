@@ -1,0 +1,25 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Flushed Away [SLUS-21484] [8DB76084]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Challenges]
+// patch=1,EE,902C5790,extended,00832021
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,200C0220,extended,3C014120
+// patch=1,EE,200C0224,extended,8C6201FC
+// patch=1,EE,200C0228,extended,AC410210
+// patch=1,EE,200C022C,extended,AC410214
+// patch=1,EE,200C0230,extended,080D9571
+// patch=1,EE,200C0234,extended,8C620030
+// patch=1,EE,203655C0,extended,08030088
+
+[Cheats/Unlock All Missions]
+// patch=1,EE,2053A724,extended,41A00000
+
+[Cheats/Max Unlockable Points]
+// patch=1,EE,2053A748,extended,4CBEBC20
+
+[Cheats/Unlock All Production Art]
+// patch=1,EE,4053A864,extended,000E0001
+// patch=1,EE,00000000,extended,00000000

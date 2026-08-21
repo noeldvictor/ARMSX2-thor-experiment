@@ -1,0 +1,108 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Stolen [SLUS-21099] [C98BEF46]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Reels-All Levels]
+// patch=1,EE,903BA854,extended,0C0E7FB3
+
+[Cheats/Infinite Health]
+// patch=1,EE,201E8C3C,extended,24030064
+// patch=1,EE,201E8C40,extended,AE030398
+
+[Cheats/Always Low Visibility Meter]
+// patch=1,EE,201DD43C,extended,AC400000
+
+[Cheats/Have Trackers]
+// patch=1,EE,2083DD9C,extended,00000000
+
+[Cheats/Infinite Item Usage]
+// patch=1,EE,202D3A44,extended,00000000
+
+[Cheats/Infinite Trackers]
+// patch=1,EE,2083DD94,extended,00000063
+
+[Cheats/Have Nullifiers]
+// patch=1,EE,2083DDAC,extended,00000000
+
+[Cheats/Infinite Nullifiers]
+// patch=1,EE,2083DDA4,extended,00000063
+
+[Cheats/Have Sonic Emitters]
+// patch=1,EE,2083DDBC,extended,00000000
+
+[Cheats/Infinite Sonic Emitters]
+// patch=1,EE,2083DDB4,extended,00000063
+
+[Cheats/Have Motion Tripwires]
+// patch=1,EE,2083DDCC,extended,00000000
+
+[Cheats/Infinite Motion Tripwires]
+// patch=1,EE,2083DDC4,extended,00000063
+
+[Cheats/Have Grand Trackers]
+// patch=1,EE,2083DDDC,extended,00000000
+
+[Cheats/Infinite Grand Trackers]
+// patch=1,EE,2083DDD4,extended,00000063
+
+[Cheats/Have Health Packs]
+// patch=1,EE,2083DDEC,extended,00000000
+
+[Cheats/Infinite Health Packs]
+// patch=1,EE,2083DDE4,extended,00000063
+
+[Cheats/Unlock All Concept Art]
+// patch=1,EE,204B2848,extended,00000000
+// patch=1,EE,204B284C,extended,00000000
+
+[Cheats/Always Low Time Taken]
+// patch=1,EE,204B65A0,extended,00000000
+// patch=1,EE,204B65C0,extended,00000000
+
+[Cheats/Max Objectives]
+// patch=1,EE,204B65A4,extended,05F5E0FF
+// patch=1,EE,204B65C4,extended,05F5E0FF
+
+[Cheats/No Objectives]
+// patch=1,EE,204B65A4,extended,00000000
+// patch=1,EE,204B65C4,extended,00000000
+
+[Cheats/Max Stolen Items]
+// patch=1,EE,204B65A8,extended,05F5E0FF
+// patch=1,EE,204B65C8,extended,05F5E0FF
+
+[Cheats/No Stolen Items]
+// patch=1,EE,204B65A8,extended,00000000
+// patch=1,EE,204B65C8,extended,00000000
+
+[Cheats/Max Spotted]
+// patch=1,EE,204B65AC,extended,05F5E0FF
+// patch=1,EE,204B65CC,extended,05F5E0FF
+
+[Cheats/No Spotted]
+// patch=1,EE,204B65AC,extended,00000000
+// patch=1,EE,204B65CC,extended,00000000
+
+[Cheats/Max Alarm Triggered]
+// patch=1,EE,204B65B0,extended,05F5E0FF
+// patch=1,EE,204B65D0,extended,05F5E0FF
+
+[Cheats/No Alarm Triggered]
+// patch=1,EE,204B65B0,extended,00000000
+// patch=1,EE,204B65D0,extended,00000000
+
+[Cheats/Max Guards KO'd]
+// patch=1,EE,204B65B4,extended,05F5E0FF
+// patch=1,EE,204B65D4,extended,05F5E0FF
+
+[Cheats/No Guards KO'd]
+// patch=1,EE,204B65B4,extended,00000000
+// patch=1,EE,204B65D4,extended,00000000
+
+[Cheats/Max Continues]
+// patch=1,EE,204B65B8,extended,05F5E0FF
+// patch=1,EE,204B65D8,extended,05F5E0FF
+
+[Cheats/No Continues]
+// patch=1,EE,204B65B8,extended,00000000
+// patch=1,EE,204B65D8,extended,00000000

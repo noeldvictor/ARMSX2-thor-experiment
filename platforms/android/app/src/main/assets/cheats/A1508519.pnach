@@ -1,0 +1,87 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Swing Away Golf [SLUS-20096] [A1508519]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Rider Stills]
+// patch=1,EE,F0200008,extended,0031B78B
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,203BF984,extended,FFFFFFFF
+
+[Cheats/Infinite Skill Points]
+// patch=1,EE,202ABA30,extended,00000000
+// patch=1,EE,202ABD50,extended,00000000
+
+[Cheats/Infinite Money]
+// patch=1,EE,103D7780,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,203D7780,extended,05F5E0FF
+
+[Cheats/Buying Items Doesnt Decrease Money]
+// patch=1,EE,202C37D8,extended,00000000
+
+[Cheats/Buying Items Increases Money]
+// patch=1,EE,202C37D4,extended,00A92821
+
+[Cheats/Have All Drivers]
+// patch=1,EE,103D794C,extended,0000FFFF
+
+[Cheats/Have All Woods]
+// patch=1,EE,103D794E,extended,0000FFFF
+
+[Cheats/Have All Utilities]
+// patch=1,EE,103D7950,extended,0000FFFF
+
+[Cheats/Have All Irons]
+// patch=1,EE,103D7952,extended,0000FFFF
+
+[Cheats/Have All Wedges]
+// patch=1,EE,103D7954,extended,0000FFFF
+
+[Cheats/Have All Putters]
+// patch=1,EE,103D7956,extended,0000FFFF
+
+[Cheats/Have All Balls]
+// patch=1,EE,103D7958,extended,0000FFFF
+
+[Cheats/Have All Shoes]
+// patch=1,EE,103D795A,extended,0000FFFF
+
+[Cheats/Have All Bags]
+// patch=1,EE,103D795C,extended,0000FFFF
+
+[Cheats/Have All Gloves]
+// patch=1,EE,103D795E,extended,0000FFFF
+
+[Cheats/Always Hole In One P1-All Holes]
+// patch=1,EE,403D62A8,extended,00090001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Always 9 Strokes Recorded P1-All Holes]
+// patch=1,EE,403D62A8,extended,00090001
+// patch=1,EE,00090009,extended,00000000
+
+[Cheats/Always Hole In One P2-All Holes]
+// patch=1,EE,403D66E8,extended,00090001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Always 9 Strokes Recorded P2-All Holes]
+// patch=1,EE,403D66E8,extended,00090001
+// patch=1,EE,00090009,extended,00000000
+
+[Cheats/Always Hole In One P3-All Holes]
+// patch=1,EE,403D6B28,extended,00090001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Always 9 Strokes Recorded P3-All Holes]
+// patch=1,EE,403D6B28,extended,00090001
+// patch=1,EE,00090009,extended,00000000
+
+[Cheats/Always Hole In One P4-All Holes]
+// patch=1,EE,403D6F68,extended,00090001
+// patch=1,EE,00000000,extended,00000000
+
+[Cheats/Always 9 Strokes Recorded P4-All Holes]
+// patch=1,EE,403D6F68,extended,00090001
+// patch=1,EE,00090009,extended,00000000

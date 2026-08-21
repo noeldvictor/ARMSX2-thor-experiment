@@ -1,0 +1,279 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Dr. Muto [SLUS-20458] [FF60D3ED]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Prototype Bike]
+// patch=1,EE,90294D74,extended,0C0A8ED9
+
+[Cheats/Infinite Time]
+// patch=1,EE,102FAFB8,extended,00000000
+
+[Cheats/Infinite Health]
+// patch=1,EE,202EE798,extended,00000006
+
+[Cheats/Max Health]
+// patch=1,EE,202EE794,extended,00000006
+
+[Cheats/Max Heart Powerups]
+// patch=1,EE,103A3FBC,extended,00000063
+
+[Cheats/Max Overall Isotopes]
+// patch=1,EE,103A3E94,extended,0000109A
+
+[Cheats/Max Overall Terra]
+// patch=1,EE,103A3E98,extended,00000056
+
+[Cheats/Infinite Double Jumps (As Mouse)]
+// patch=1,EE,2016BD7C,extended,00000000
+
+[Cheats/Go Anywhere]
+// patch=1,EE,202C0E00,extended,00000001
+
+[Cheats/Invincibility]
+// patch=1,EE,20411C80,extended,00000001
+
+[Cheats/Never Take Damage]
+// patch=1,EE,20411C84,extended,00000001
+
+[Cheats/Every Gadget]
+// patch=1,EE,20411C88,extended,00000001
+
+[Cheats/Unlock Every Morph]
+// patch=1,EE,20411C8C,extended,00000001
+
+[Cheats/Secret Morphs]
+// patch=1,EE,20411CA0,extended,00000001
+
+[Cheats/See The Movies]
+// patch=1,EE,20411CA4,extended,00000001
+
+[Cheats/Super Ending Unlocked]
+// patch=1,EE,20411CA8,extended,00000001
+
+[Cheats/Super Baller]
+// patch=1,EE,203A3EC8,extended,00000001
+// patch=1,EE,D03A3EC4,extended,00200006
+// patch=1,EE,103A3EC4,extended,00000006
+// patch=1,EE,D03A3EC4,extended,00300007
+// patch=1,EE,103A3EC4,extended,00000007
+
+[Cheats/Pocket Rocket]
+// patch=1,EE,203A3EE4,extended,00000001
+// patch=1,EE,D03A3EE0,extended,00200006
+// patch=1,EE,103A3EE0,extended,00000006
+// patch=1,EE,D03A3EE0,extended,00300007
+// patch=1,EE,103A3EE0,extended,00000007
+
+[Cheats/Super Boots]
+// patch=1,EE,203A3F1C,extended,00000001
+// patch=1,EE,D03A3F18,extended,00200006
+// patch=1,EE,103A3F18,extended,00000006
+// patch=1,EE,D03A3F18,extended,00300007
+// patch=1,EE,103A3F18,extended,00000007
+
+[Cheats/Rocket Boots]
+// patch=1,EE,203A3F38,extended,00000001
+// patch=1,EE,D03A3F34,extended,00200006
+// patch=1,EE,103A3F34,extended,00000006
+// patch=1,EE,D03A3F34,extended,00300007
+// patch=1,EE,103A3F34,extended,00000007
+
+[Cheats/Invisibility]
+// patch=1,EE,203A3F54,extended,00000001
+// patch=1,EE,D03A3F50,extended,00200006
+// patch=1,EE,103A3F50,extended,00000006
+// patch=1,EE,D03A3F50,extended,00300007
+// patch=1,EE,103A3F50,extended,00000007
+
+[Cheats/Invulnerability]
+// patch=1,EE,203A3F70,extended,00000001
+// patch=1,EE,D03A3F6C,extended,00200006
+// patch=1,EE,103A3F6C,extended,00000006
+// patch=1,EE,D03A3F6C,extended,00300007
+// patch=1,EE,103A3F6C,extended,00000007
+
+[Cheats/All Blueprints]
+// patch=1,EE,203A3EC8,extended,00000001
+// patch=1,EE,203A3EE4,extended,00000001
+// patch=1,EE,403A3F1C,extended,00040007
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Gerbilus Doctorus]
+// patch=1,EE,203A3F98,extended,00000001
+
+[Cheats/Doczilla]
+// patch=1,EE,203A3F9C,extended,00000001
+
+[Cheats/Spiny Docfish]
+// patch=1,EE,203A3FA0,extended,00000001
+
+[Cheats/Teradoctyl]
+// patch=1,EE,203A3FA4,extended,00000001
+
+[Cheats/Arachnidoc]
+// patch=1,EE,203A3FAC,extended,00000001
+
+[Cheats/Monkey]
+// patch=1,EE,003A3E9A,extended,000000FF
+
+[Cheats/Roach]
+// patch=1,EE,003A3E9B,extended,000000FF
+
+[Cheats/Fireant]
+// patch=1,EE,003A3E9C,extended,000000FF
+
+[Cheats/Chark]
+// patch=1,EE,003A3E9D,extended,000000FF
+
+[Cheats/Tarfish]
+// patch=1,EE,003A3E9E,extended,000000FF
+
+[Cheats/Airbag]
+// patch=1,EE,003A3E9F,extended,000000FF
+
+[Cheats/Peligul]
+// patch=1,EE,003A3EA0,extended,000000FF
+
+[Cheats/Max Isotopes]
+// patch=1,EE,103A3E48,extended,00000064
+// patch=1,EE,103A3E4C,extended,0000012C
+// patch=1,EE,103A3E50,extended,0000012C
+// patch=1,EE,103A3E58,extended,0000012C
+// patch=1,EE,103A3E60,extended,0000012C
+// patch=1,EE,103A3E64,extended,0000012C
+// patch=1,EE,103A3E68,extended,0000012C
+// patch=1,EE,103A3E6C,extended,0000012C
+// patch=1,EE,103A3E74,extended,00000190
+// patch=1,EE,103A3E78,extended,00000190
+// patch=1,EE,103A3E7C,extended,00000190
+// patch=1,EE,103A3E80,extended,00000190
+// patch=1,EE,103A3E88,extended,000001C2
+
+[Cheats/Max Terra]
+// patch=1,EE,103A3E4A,extended,00000002
+// patch=1,EE,003A3E4E,extended,00000007
+// patch=1,EE,003A3E52,extended,00000007
+// patch=1,EE,003A3E5A,extended,00000007
+// patch=1,EE,003A3E62,extended,00000007
+// patch=1,EE,003A3E66,extended,00000007
+// patch=1,EE,003A3E6A,extended,00000007
+// patch=1,EE,003A3E6E,extended,00000007
+// patch=1,EE,003A3E76,extended,00000007
+// patch=1,EE,003A3E7A,extended,00000007
+// patch=1,EE,003A3E7E,extended,00000007
+// patch=1,EE,003A3E82,extended,00000007
+// patch=1,EE,003A3E8A,extended,00000007
+
+[Cheats/Mission 1]
+// patch=1,EE,00411854,extended,00000004
+// patch=1,EE,00411B64,extended,00000004
+// patch=1,EE,00411B9C,extended,00000004
+// patch=1,EE,00411C0C,extended,00000004
+// patch=1,EE,00411A44,extended,00000004
+// patch=1,EE,00411A7C,extended,00000004
+// patch=1,EE,00411AB4,extended,00000004
+// patch=1,EE,00411AEC,extended,00000004
+// patch=1,EE,00411924,extended,00000004
+// patch=1,EE,0041195C,extended,00000004
+// patch=1,EE,00411994,extended,00000004
+// patch=1,EE,004119CC,extended,00000004
+// patch=1,EE,00411874,extended,00000004
+
+[Cheats/Mission 2]
+// patch=1,EE,0041185C,extended,00000004
+// patch=1,EE,00411B6C,extended,00000004
+// patch=1,EE,00411BA4,extended,00000004
+// patch=1,EE,00411C14,extended,00000004
+// patch=1,EE,00411A4C,extended,00000004
+// patch=1,EE,00411A84,extended,00000004
+// patch=1,EE,00411ABC,extended,00000004
+// patch=1,EE,00411AF4,extended,00000004
+// patch=1,EE,0041192C,extended,00000004
+// patch=1,EE,00411964,extended,00000004
+// patch=1,EE,0041199C,extended,00000004
+// patch=1,EE,004119D4,extended,00000004
+// patch=1,EE,0041187C,extended,00000004
+
+[Cheats/Max DNA]
+// patch=1,EE,003A3E4F,extended,00000011
+// patch=1,EE,003A3E53,extended,0000001B
+// patch=1,EE,003A3E5B,extended,0000003E
+// patch=1,EE,003A3E63,extended,0000001C
+// patch=1,EE,003A3E67,extended,00000005
+// patch=1,EE,003A3E6B,extended,0000002A
+// patch=1,EE,003A3E6F,extended,00000003
+// patch=1,EE,003A3E77,extended,00000017
+// patch=1,EE,003A3E7B,extended,0000001F
+// patch=1,EE,003A3E7F,extended,00000007
+// patch=1,EE,003A3E83,extended,0000000F
+// patch=1,EE,003A3E8B,extended,0000000D
+
+[Cheats/Mission 3]
+// patch=1,EE,00411B74,extended,00000004
+// patch=1,EE,00411BAC,extended,00000004
+// patch=1,EE,00411C1C,extended,00000004
+// patch=1,EE,00411A54,extended,00000004
+// patch=1,EE,00411A8C,extended,00000004
+// patch=1,EE,00411AC4,extended,00000004
+// patch=1,EE,00411AFC,extended,00000004
+// patch=1,EE,00411934,extended,00000004
+// patch=1,EE,0041196C,extended,00000004
+// patch=1,EE,004119A4,extended,00000004
+// patch=1,EE,004119DC,extended,00000004
+// patch=1,EE,00411884,extended,00000004
+
+[Cheats/Mission 4]
+// patch=1,EE,00411B7C,extended,00000004
+// patch=1,EE,00411BB4,extended,00000004
+// patch=1,EE,00411C24,extended,00000004
+// patch=1,EE,00411A5C,extended,00000004
+// patch=1,EE,00411A94,extended,00000004
+// patch=1,EE,00411ACC,extended,00000004
+// patch=1,EE,00411B04,extended,00000004
+// patch=1,EE,0041193C,extended,00000004
+// patch=1,EE,00411974,extended,00000004
+// patch=1,EE,004119AC,extended,00000004
+// patch=1,EE,004119E4,extended,00000004
+// patch=1,EE,0041188C,extended,00000004
+
+[Cheats/Mission 5]
+// patch=1,EE,00411B84,extended,00000004
+// patch=1,EE,00411BBC,extended,00000004
+// patch=1,EE,00411C2C,extended,00000004
+// patch=1,EE,00411A64,extended,00000004
+// patch=1,EE,00411A9C,extended,00000004
+// patch=1,EE,00411AD4,extended,00000004
+// patch=1,EE,00411B0C,extended,00000004
+// patch=1,EE,00411944,extended,00000004
+// patch=1,EE,0041197C,extended,00000004
+// patch=1,EE,004119B4,extended,00000004
+// patch=1,EE,004119EC,extended,00000004
+// patch=1,EE,00411894,extended,00000004
+
+[Cheats/Mission 6]
+// patch=1,EE,00411B8C,extended,00000004
+// patch=1,EE,00411BC4,extended,00000004
+// patch=1,EE,00411C34,extended,00000004
+// patch=1,EE,00411A6C,extended,00000004
+// patch=1,EE,00411AA4,extended,00000004
+// patch=1,EE,00411ADC,extended,00000004
+// patch=1,EE,00411B14,extended,00000004
+// patch=1,EE,0041194C,extended,00000004
+// patch=1,EE,00411984,extended,00000004
+// patch=1,EE,004119BC,extended,00000004
+// patch=1,EE,004119F4,extended,00000004
+// patch=1,EE,0041189C,extended,00000004
+
+[Cheats/Mission 7]
+// patch=1,EE,00411B94,extended,00000004
+// patch=1,EE,00411BCC,extended,00000004
+// patch=1,EE,00411C3C,extended,00000004
+// patch=1,EE,00411A74,extended,00000004
+// patch=1,EE,00411AAC,extended,00000004
+// patch=1,EE,00411AE4,extended,00000004
+// patch=1,EE,00411B1C,extended,00000004
+// patch=1,EE,00411954,extended,00000004
+// patch=1,EE,0041198C,extended,00000004
+// patch=1,EE,004119C4,extended,00000004
+// patch=1,EE,004119FC,extended,00000004
+// patch=1,EE,004118A4,extended,00000004

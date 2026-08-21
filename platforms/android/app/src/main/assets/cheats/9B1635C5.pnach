@@ -1,0 +1,292 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Wheel Of Fortune [SLUS-20790] [9B1635C5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Objects Collected]
+// patch=1,EE,F0200008,extended,0022CE8F
+
+[Cheats/Vowels Are Free P1]
+// patch=1,EE,D04C8360,extended,00000000
+// patch=1,EE,2035CD9C,extended,00000000
+
+[Cheats/Vowels Are Free P2]
+// patch=1,EE,D04C8360,extended,00000001
+// patch=1,EE,2035CD9C,extended,00000000
+
+[Cheats/Vowels Are Free P3]
+// patch=1,EE,D04C8360,extended,00000002
+// patch=1,EE,2035CD9C,extended,00000000
+
+[Cheats/Vowels Are Free (All Players)]
+// patch=1,EE,2035CD9C,extended,00000000
+
+[Cheats/Getting Bankrupt Always Bankrupts P1]
+// patch=1,EE,2035D994,extended,24020000
+
+[Cheats/Getting Bankrupt Always Bankrupts P2]
+// patch=1,EE,2035D994,extended,24020001
+
+[Cheats/Getting Bankrupt Always Bankrupts P3]
+// patch=1,EE,2035D994,extended,24020002
+
+[Cheats/Dont Lost Cash When Getting Bankrupt P1]
+// patch=1,EE,D04C8360,extended,00000000
+// patch=1,EE,2035D9A8,extended,00000000
+
+[Cheats/Dont Lost Cash When Getting Bankrupt P2]
+// patch=1,EE,D04C8360,extended,00000001
+// patch=1,EE,2035D9A8,extended,00000000
+
+[Cheats/Dont Lost Cash When Getting Bankrupt P3]
+// patch=1,EE,D04C8360,extended,00000002
+// patch=1,EE,2035D9A8,extended,00000000
+
+[Cheats/Dont Lost Cash When Getting Bankrupt (All Players)]
+// patch=1,EE,2035D9A8,extended,00000000
+
+[Cheats/Always Stop Play Select Timer P1]
+// patch=1,EE,E0020000,extended,004C8360
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/Always Stop Play Select Timer P2]
+// patch=1,EE,E0020001,extended,004C8360
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/Always Stop Play Select Timer P3]
+// patch=1,EE,E0020002,extended,004C8360
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/Always Stop Play Select Timer (All Players)]
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/Max Jackpot]
+// patch=1,EE,204C83E0,extended,0001869F
+
+[Cheats/No Jackpot]
+// patch=1,EE,204C83E0,extended,00000000
+
+[Cheats/Always Have Free Spin P1]
+// patch=1,EE,204C8388,extended,00000001
+
+[Cheats/Never Have Free Spin P1]
+// patch=1,EE,204C8388,extended,00000000
+
+[Cheats/Always Have Free Spin P2]
+// patch=1,EE,204C83A8,extended,00000001
+
+[Cheats/Never Have Free Spin P2]
+// patch=1,EE,204C83A8,extended,00000000
+
+[Cheats/Always Have Free Spin P3]
+// patch=1,EE,204C83C8,extended,00000001
+
+[Cheats/Never Have Free Spin P3]
+// patch=1,EE,204C83C8,extended,00000000
+
+[Cheats/Max Cash P1]
+// patch=1,EE,204C8378,extended,0001869F
+// patch=1,EE,204C8384,extended,0001869F
+
+[Cheats/No Cash P1]
+// patch=1,EE,204C8378,extended,00000000
+// patch=1,EE,204C8384,extended,00000000
+
+[Cheats/Max Cash P2]
+// patch=1,EE,204C8398,extended,0001869F
+// patch=1,EE,204C83A4,extended,0001869F
+
+[Cheats/No Cash P2]
+// patch=1,EE,204C8398,extended,00000000
+// patch=1,EE,204C83A4,extended,00000000
+
+[Cheats/Max Cash P3]
+// patch=1,EE,204C83B8,extended,0001869F
+// patch=1,EE,204C83C4,extended,0001869F
+
+[Cheats/No Cash P3]
+// patch=1,EE,204C83B8,extended,00000000
+// patch=1,EE,204C83C4,extended,00000000
+
+[Cheats/All Letters Score For P1]
+// patch=1,EE,2035CE70,extended,24020000
+
+[Cheats/All Letters Score For P2]
+// patch=1,EE,2035CE70,extended,24020001
+
+[Cheats/All Letters Score For P3]
+// patch=1,EE,2035CE70,extended,24020002
+
+[Cheats/All Letters Worth 5000]
+// patch=1,EE,2035CE88,extended,24421388
+
+[Cheats/All Letters Worth 2000]
+// patch=1,EE,2035CE88,extended,244207D0
+
+[Cheats/All Letters Worth 1000]
+// patch=1,EE,2035CE88,extended,244203E8
+
+[Cheats/All Games Score For P1]
+// patch=1,EE,2035E390,extended,24020000
+
+[Cheats/All Games Score For P2]
+// patch=1,EE,2035E390,extended,24020001
+
+[Cheats/All Games Score For P3]
+// patch=1,EE,2035E390,extended,24020002
+
+[Cheats/All Games Worth 9999]
+// patch=1,EE,2035E3AC,extended,2442270F
+
+[Cheats/All Games Worth 5000]
+// patch=1,EE,2035E3AC,extended,24421388
+
+[Cheats/All Games Worth 2000]
+// patch=1,EE,2035E3AC,extended,244207D0
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CC1C2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CC1C2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P2 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CBFC2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P2 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CBFC2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P3 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CBDC2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P3 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CBDC2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P4 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CBBC2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P4 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CBBC2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P5 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CC0C2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P5 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CC0C2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P6 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CBEC2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P6 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CBEC2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P7 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CBCC2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P7 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CBCC2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P8 Press {L1}+{SELECT} To Stop Play Select Timer]
+// patch=1,EE,E002FBFE,extended,004CBAC2
+// patch=1,EE,2036973C,extended,00000000
+// patch=1,EE,20369A24,extended,00000000
+
+[Cheats/P8 Press {L1}+{SELECT} To Start Play Select Timer]
+// patch=1,EE,E002FEFE,extended,004CBAC2
+// patch=1,EE,2036973C,extended,E42083D4
+// patch=1,EE,20369A24,extended,E42083DC
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CC1C2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CC1C2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC
+
+[Cheats/P2 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CBFC2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P2 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CBFC2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC
+
+[Cheats/P3 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CBDC2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P3 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CBDC2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC
+
+[Cheats/P4 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CBBC2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P4 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CBBC2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC
+
+[Cheats/P5 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CC0C2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P5 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CC0C2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC
+
+[Cheats/P6 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CBEC2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P6 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CBEC2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC
+
+[Cheats/P7 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CBCC2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P7 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CBCC2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC
+
+[Cheats/P8 Press {L1}+{SELECT} To Stop Answer Select Timer]
+// patch=1,EE,D04CBAC2,extended,0000FBFE
+// patch=1,EE,20337344,extended,00000000
+
+[Cheats/P8 Press {L2}+{SELECT} To Start Answer Select Timer]
+// patch=1,EE,D04CBAC2,extended,0000FEFE
+// patch=1,EE,20337344,extended,E78089CC

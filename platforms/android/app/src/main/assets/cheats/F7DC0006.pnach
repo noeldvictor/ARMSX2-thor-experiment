@@ -1,0 +1,49 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Amplitude [SCES-51706] [F7DC0006]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Flair Meter]
+// patch=1,EE,90319098,extended,0C0C63CE
+
+[Cheats/Quick Max Score]
+// patch=1,EE,2AFF5FA9,extended,2406270F
+
+[Cheats/Max Energy]
+// patch=1,EE,2A42DBBF,extended,3C0141C0
+// patch=1,EE,2A42D7BF,extended,AC810000
+// patch=1,EE,2A42D3BF,extended,03E00008
+// patch=1,EE,2A42CFBF,extended,C4800000
+// patch=1,EE,2A35A3A6,extended,08030088
+
+[Cheats/Access All Arenas]
+// patch=1,EE,2A2113B2,extended,00000000
+
+[Cheats/Neotropolis-Chris Child With Melissa Kaplan]
+// patch=1,EE,2A0A1766,extended,00000000
+
+[Cheats/Beat Factory-David Bowie]
+// patch=1,EE,2A296764,extended,00000000
+
+[Cheats/Metaclouds-Herbie Hancock]
+// patch=1,EE,2AB23764,extended,00000000
+
+[Cheats/Elektro Kore-Slipknot]
+// patch=1,EE,2AEF4764,extended,00000000
+
+[Cheats/Blastlands-Symbion Project]
+// patch=1,EE,2A79B773,extended,00000000
+
+[Cheats/Neotropolis-Logan 7]
+// patch=1,EE,2AFFD765,extended,00000000
+
+[Cheats/Beat Factory-Freezepop]
+// patch=1,EE,2A81E764,extended,00000000
+
+[Cheats/Metaclouds-The Production Club]
+// patch=1,EE,2AA1F764,extended,00000000
+
+[Cheats/Elektro Kore-Game Boyz]
+// patch=1,EE,2A48D773,extended,00000000
+
+[Cheats/Blastlands-Komputer Kontroller]
+// patch=1,EE,2A6EE773,extended,00000000

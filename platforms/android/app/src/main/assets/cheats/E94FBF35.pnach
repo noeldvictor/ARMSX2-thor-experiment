@@ -1,0 +1,143 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Driv3r [SLES-50876] [E94FBF35]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Nice-Guy Orb]
+// patch=1,EE,902E4DC8,extended,0C0B31AE
+
+[Cheats/Infinite Health (On Foot)]
+// patch=1,EE,200C0200,extended,8C430000
+// patch=1,EE,200C0204,extended,3C014000
+// patch=1,EE,200C0208,extended,54600001
+// patch=1,EE,200C020C,extended,AC610024
+// patch=1,EE,200C0210,extended,03E00008
+// patch=1,EE,200C0214,extended,00000000
+// patch=1,EE,201CAB74,extended,08030080
+
+[Cheats/Transparent Character]
+// patch=1,EE,201BEBFC,extended,3C01BF00
+// patch=1,EE,201BEC00,extended,AE210014
+
+[Cheats/Immune To Bullets (On Foot)]
+// patch=1,EE,200C0220,extended,3C01003E
+// patch=1,EE,200C0224,extended,8C218810
+// patch=1,EE,200C0228,extended,3C023F80
+// patch=1,EE,200C022C,extended,50310001
+// patch=1,EE,200C0230,extended,44820800
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,46020836
+// patch=1,EE,201C29C8,extended,0C030088
+
+[Cheats/Immune To Explosions (On Foot)]
+// patch=1,EE,200C0240,extended,3C01003E
+// patch=1,EE,200C0244,extended,8C218810
+// patch=1,EE,200C0248,extended,54300001
+// patch=1,EE,200C024C,extended,E6010024
+// patch=1,EE,200C0250,extended,03E00008
+// patch=1,EE,200C0254,extended,00000000
+// patch=1,EE,201C2DDC,extended,0C030090
+
+[Cheats/Immune To Body Damage Caused By Car Crashes]
+// patch=1,EE,201C1DA0,extended,00000000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,201D8184,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,201D8168,extended,00621021
+
+[Cheats/Never Reload]
+// patch=1,EE,201D80DC,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} For Infinite Car Damage On]
+// patch=1,EE,E002FBFE,extended,006FD49C
+// patch=1,EE,201F2D20,extended,00000000
+// patch=1,EE,20201AA8,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} For Infinite Car Damage Off]
+// patch=1,EE,E002FEFE,extended,006FD49C
+// patch=1,EE,201F2D20,extended,E6C0218C
+// patch=1,EE,20201AA8,extended,E6400000
+
+[Cheats/P1 Press {R1}+{SELECT} For Cars Take No Damage On]
+// patch=1,EE,E002F7FE,extended,006FD49C
+// patch=1,EE,201F2210,extended,03E00008
+// patch=1,EE,20201930,extended,03E00008
+
+[Cheats/P1 Press {R2}+{SELECT} For Cars Take No Damage Off]
+// patch=1,EE,E002FDFE,extended,006FD49C
+// patch=1,EE,201F2210,extended,27BDFC90
+// patch=1,EE,20201930,extended,3C013BA3
+
+[Cheats/Cheats Below Work In All Modes]
+// patch=1,EE,201C6800,extended,00000000
+
+[Cheats/Hidden Car 1]
+// patch=1,EE,2070F860,extended,00000001
+
+[Cheats/Hidden Car 2]
+// patch=1,EE,2070F864,extended,00000001
+
+[Cheats/Hidden Car 3]
+// patch=1,EE,2070F868,extended,00000001
+
+[Cheats/Hidden Car 4]
+// patch=1,EE,2070F86C,extended,00000001
+
+[Cheats/Hidden Car 5]
+// patch=1,EE,2070F870,extended,00000001
+
+[Cheats/Hidden Car 6]
+// patch=1,EE,2070F874,extended,00000001
+
+[Cheats/All Hidden Cars]
+// patch=1,EE,4070F860,extended,00060001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/All Missions]
+// patch=1,EE,2070F810,extended,00000001
+// patch=1,EE,2070FA74,extended,00000001
+// patch=1,EE,2070F814,extended,00000001
+// patch=1,EE,2070FA78,extended,00000001
+// patch=1,EE,2070F814,extended,00000000
+// patch=1,EE,2070FA78,extended,00000000
+
+[Cheats/All Weapons]
+// patch=1,EE,2070F818,extended,00000001
+// patch=1,EE,2070FA7C,extended,00000001
+// patch=1,EE,2070F81C,extended,00000001
+// patch=1,EE,2070FA80,extended,00000001
+// patch=1,EE,2070F81C,extended,00000000
+// patch=1,EE,2070FA80,extended,00000000
+
+[Cheats/Unlimited Ammo]
+// patch=1,EE,2070F820,extended,00000001
+// patch=1,EE,2070FA84,extended,00000001
+// patch=1,EE,2070F824,extended,00000001
+// patch=1,EE,2070FA88,extended,00000001
+// patch=1,EE,2070F824,extended,00000000
+// patch=1,EE,2070FA88,extended,00000000
+
+[Cheats/Invincibility (Take A Ride)]
+// patch=1,EE,2070F828,extended,00000001
+// patch=1,EE,2070FA8C,extended,00000001
+// patch=1,EE,2070F82C,extended,00000001
+// patch=1,EE,2070FA90,extended,00000001
+// patch=1,EE,2070F82C,extended,00000000
+// patch=1,EE,2070FA90,extended,00000000
+
+[Cheats/Immunity]
+// patch=1,EE,2070F830,extended,00000001
+// patch=1,EE,2070FA94,extended,00000001
+// patch=1,EE,2070F834,extended,00000001
+// patch=1,EE,2070FA98,extended,00000001
+// patch=1,EE,2070F834,extended,00000000
+// patch=1,EE,2070FA98,extended,00000000
+
+[Cheats/All Vehicles]
+// patch=1,EE,2070F840,extended,00000001
+// patch=1,EE,2070FAA4,extended,00000001
+// patch=1,EE,2070F844,extended,00000001
+// patch=1,EE,2070FAA8,extended,00000001
+// patch=1,EE,2070F844,extended,00000000
+// patch=1,EE,2070FAA8,extended,00000000

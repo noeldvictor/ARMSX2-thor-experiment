@@ -1,0 +1,68 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Total Immersion Racing [SLES-51128] [064C5787]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Challenges]
+// patch=1,EE,90206AAC,extended,0C087325
+
+[Cheats/Max Total Points (Career Mode]
+// patch=1,EE,1040BAEC,extended,0000270F
+
+[Cheats/Unlock All Challenges]
+// patch=1,EE,40274998,extended,00250084
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Rockingham Champ Car]
+// patch=1,EE,2041B644,extended,00000001
+
+[Cheats/Lister LMP]
+// patch=1,EE,2041BDC4,extended,00000001
+
+[Cheats/Pilbeam LMP]
+// patch=1,EE,2041C544,extended,00000001
+
+[Cheats/Audi R8]
+// patch=1,EE,2041CCC4,extended,00000001
+
+[Cheats/Bentley EXP Speed 8]
+// patch=1,EE,2041D444,extended,00000001
+
+[Cheats/Dome S101]
+// patch=1,EE,2041DBC4,extended,00000001
+
+[Cheats/Panoz LMP-1 Evo]
+// patch=1,EE,2041E344,extended,00000001
+
+[Cheats/8MW V12LMR]
+// patch=1,EE,2041EAC4,extended,00000001
+
+[Cheats/McLaren F1 GTR]
+// patch=1,EE,2041F9D4,extended,00000001
+
+[Cheats/Lister Storm]
+// patch=1,EE,20420154,extended,00000001
+
+[Cheats/VEMAC 320R]
+// patch=1,EE,204208D4,extended,00000001
+
+[Cheats/Panoz Esperante GTR1]
+// patch=1,EE,20421054,extended,00000001
+
+[Cheats/Sintura GTS]
+// patch=1,EE,204217D4,extended,00000001
+
+[Cheats/8MW B3 GTR]
+// patch=1,EE,20423D64,extended,00000001
+
+[Cheats/Quaife GT1]
+// patch=1,EE,204244E4,extended,00000001
+
+[Cheats/Noble M12 GTO]
+// patch=1,EE,20424C64,extended,00000001
+
+[Cheats/Abt Audi TT-R]
+// patch=1,EE,204253E4,extended,00000001
+
+[Cheats/Unlock All Tracks]
+// patch=1,EE,40416440,extended,000C01B1
+// patch=1,EE,00000001,extended,00000000

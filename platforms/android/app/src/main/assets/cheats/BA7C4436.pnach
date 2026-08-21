@@ -1,0 +1,59 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Endgame [SLUS-20389] [BA7C4436]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,902542BC,extended,0C095BF3
+
+[Cheats/Infinite Health (Training Levels)]
+// patch=1,EE,D0D5BE80,extended,00200003
+// patch=1,EE,10D5BE80,extended,00000003
+
+[Cheats/Unlock All Country Challenges]
+// patch=1,EE,402A5BE8,extended,00050001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Arcade Mode Options]
+// patch=1,EE,402A5BFC,extended,00060001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Mighty Joe Jupiter Episodes]
+// patch=1,EE,402A5C14,extended,00030001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock Music Jukebox]
+// patch=1,EE,202A5C20,extended,00000001
+
+[Cheats/Unlock All Mighty Joe Jupiter Cadet Training Missions]
+// patch=1,EE,402A677C,extended,000A0001
+// patch=1,EE,00000003,extended,00000000
+
+[Cheats/Alien Skeet]
+// patch=1,EE,112C77A0,extended,00000006
+
+[Cheats/Duck 'N' Cover]
+// patch=1,EE,111E7410,extended,00000006
+
+[Cheats/Chicken Run]
+// patch=1,EE,111C7EC0,extended,00000006
+
+[Cheats/Pot Shot]
+// patch=1,EE,112712D0,extended,00000006
+
+[Cheats/Rapid Fire]
+// patch=1,EE,1121C280,extended,00000006
+
+[Cheats/Chain Reaction]
+// patch=1,EE,112243C0,extended,00000006
+
+[Cheats/High Noon]
+// patch=1,EE,1124CAB0,extended,00000006
+
+[Cheats/Save Andromeda]
+// patch=1,EE,11209170,extended,00000006
+
+[Cheats/Six Shooter]
+// patch=1,EE,112DCA60,extended,00000006
+
+[Cheats/Who's The Boss?]
+// patch=1,EE,111F5D80,extended,00000006

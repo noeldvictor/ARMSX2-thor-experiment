@@ -1,0 +1,162 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: MLB Slugfest 2006 [SLUS-21342] [F6D977AE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Full Count & 2 Outs]
+// patch=1,EE,901B2024,extended,0C06DCD6
+// patch=1,EE,1051AAE4,extended,00000002
+// patch=1,EE,1051AAF0,extended,00000003
+// patch=1,EE,1051AAF4,extended,00000002
+// patch=1,EE,E0030001,extended,0051AA98
+// patch=1,EE,E0030000,extended,0051AA98
+
+[Cheats/Home Team Scores 50]
+// patch=1,EE,2051AC08,extended,00000032
+
+[Cheats/Home Team Scores 20]
+// patch=1,EE,2051AC08,extended,00000014
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,2051AC08,extended,00000000
+
+[Cheats/Home Team Starts With 50]
+// patch=1,EE,D051AC08,extended,00000000
+// patch=1,EE,2051AC08,extended,00000032
+
+[Cheats/Home Team Starts With 20]
+// patch=1,EE,D051AC08,extended,00000000
+// patch=1,EE,2051AC08,extended,00000014
+
+[Cheats/Home Team Starts With 10]
+// patch=1,EE,D051AC08,extended,00000000
+// patch=1,EE,2051AC08,extended,0000000A
+
+[Cheats/Home Team Starts With 5]
+// patch=1,EE,D051AC08,extended,00000000
+// patch=1,EE,2051AC08,extended,00000005
+
+[Cheats/Away Team Scores 50]
+// patch=1,EE,2051AC3C,extended,00000032
+
+[Cheats/Away Team Scores 20]
+// patch=1,EE,2051AC3C,extended,00000014
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,2051AC3C,extended,00000000
+
+[Cheats/Away Team Starts With 50]
+// patch=1,EE,D051AC3C,extended,00000000
+// patch=1,EE,2051AC3C,extended,00000032
+
+[Cheats/Away Team Starts With 20]
+// patch=1,EE,D051AC3C,extended,00000000
+// patch=1,EE,2051AC3C,extended,00000014
+
+[Cheats/Away Team Starts With 10]
+// patch=1,EE,D051AC3C,extended,00000000
+// patch=1,EE,2051AC3C,extended,0000000A
+
+[Cheats/Away Team Starts With 5]
+// patch=1,EE,D051AC3C,extended,00000000
+// patch=1,EE,2051AC3C,extended,00000005
+
+[Cheats/Home Team Infinite Turbo]
+// patch=1,EE,20517928,extended,42C80000
+
+[Cheats/Home Team No Turbo]
+// patch=1,EE,20517928,extended,00000000
+
+[Cheats/Away Team Infinite Turbo]
+// patch=1,EE,2051792C,extended,42C80000
+
+[Cheats/Away Team No Turbo]
+// patch=1,EE,2051792C,extended,00000000
+
+[Cheats/All Runs Score For Home Team]
+// patch=1,EE,20105AE0,extended,24630000
+
+[Cheats/All Runs Score For Away Team]
+// patch=1,EE,20105AE0,extended,24630034
+
+[Cheats/Runs Score 10]
+// patch=1,EE,10105AEC,extended,0000000A
+
+[Cheats/Runs Score 5]
+// patch=1,EE,10105AEC,extended,00000005
+
+[Cheats/Runs Score 2]
+// patch=1,EE,10105AEC,extended,00000002
+
+[Cheats/Infinite Strikes]
+// patch=1,EE,1051AAE4,extended,00000000
+// patch=1,EE,E0010001,extended,0051AA98
+// patch=1,EE,E0010000,extended,0051AA98
+
+[Cheats/1 Strike And You Are Out]
+// patch=1,EE,D051AAE4,extended,00000000
+// patch=1,EE,1051AAE4,extended,00000002
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/2 Strikes And You Are Out]
+// patch=1,EE,D051AAE4,extended,00000000
+// patch=1,EE,1051AAE4,extended,00000001
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/Infinite Balls]
+// patch=1,EE,1051AAF0,extended,00000000
+// patch=1,EE,E0010001,extended,0051AA98
+// patch=1,EE,E0010000,extended,0051AA98
+
+[Cheats/1 Ball And You Walk]
+// patch=1,EE,D051AAF0,extended,00000000
+// patch=1,EE,1051AAF0,extended,00000003
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/2 Balls And You Walk]
+// patch=1,EE,D051AAF0,extended,00000000
+// patch=1,EE,1051AAF0,extended,00000002
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/3 Balls And You Walk]
+// patch=1,EE,D051AAF0,extended,00000000
+// patch=1,EE,1051AAF0,extended,00000001
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/Infinite Outs]
+// patch=1,EE,1051AAF4,extended,00000000
+// patch=1,EE,E0010001,extended,0051AA98
+// patch=1,EE,E0010000,extended,0051AA98
+
+[Cheats/1 Out And You Are Out]
+// patch=1,EE,D051AAF4,extended,00000000
+// patch=1,EE,1051AAF4,extended,00000002
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/2 Outs And You Are Out]
+// patch=1,EE,D051AAF4,extended,00000000
+// patch=1,EE,1051AAF4,extended,00000001
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/Always Full Count]
+// patch=1,EE,1051AAE4,extended,00000002
+// patch=1,EE,1051AAF0,extended,00000003
+// patch=1,EE,E0020001,extended,0051AA98
+// patch=1,EE,E0020000,extended,0051AA98
+
+[Cheats/Unlock All Teams]
+// patch=1,EE,005D1A87,extended,00000001
+// patch=1,EE,405D1A88,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,005D1A98,extended,00000001
+
+[Cheats/Unlock All Stadiums]
+// patch=1,EE,205D1A80,extended,01010101
+// patch=1,EE,105D1A84,extended,00000101
+// patch=1,EE,005D1A86,extended,00000001

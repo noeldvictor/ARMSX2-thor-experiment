@@ -1,0 +1,125 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Disney Golf [SLUS-20532] [5DE49C34]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Counter]
+// patch=1,EE,9010CEF4,extended,0C0AA390
+
+[Cheats/Only One Shot Recorded]
+// patch=1,EE,20152978,extended,00000000
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,20345814,extended,000000FF
+
+[Cheats/View Status For Max Coins (Members Room)]
+// patch=1,EE,E002AAE2,extended,0045E4B4
+// patch=1,EE,2045E4B0,extended,2406270F
+// patch=1,EE,2045E4B8,extended,AC660234
+
+[Cheats/Hole 1]
+// patch=1,EE,1033F8C6,extended,00000000
+// patch=1,EE,1033FE46,extended,00000000
+// patch=1,EE,103403C6,extended,00000000
+// patch=1,EE,10340946,extended,00000000
+
+[Cheats/Hole 2]
+// patch=1,EE,1033F8C8,extended,00000000
+// patch=1,EE,1033FE48,extended,00000000
+// patch=1,EE,103403C8,extended,00000000
+// patch=1,EE,10340948,extended,00000000
+
+[Cheats/Hole 3]
+// patch=1,EE,1033F8CA,extended,00000000
+// patch=1,EE,1033FE4A,extended,00000000
+// patch=1,EE,103403CA,extended,00000000
+// patch=1,EE,1034094A,extended,00000000
+
+[Cheats/Hole 4]
+// patch=1,EE,1033F8CC,extended,00000000
+// patch=1,EE,1033FE4C,extended,00000000
+// patch=1,EE,103403CC,extended,00000000
+// patch=1,EE,1034094C,extended,00000000
+
+[Cheats/Hole 5]
+// patch=1,EE,1033F8CE,extended,00000000
+// patch=1,EE,1033FE4E,extended,00000000
+// patch=1,EE,103403CE,extended,00000000
+// patch=1,EE,1034094E,extended,00000000
+
+[Cheats/Hole 6]
+// patch=1,EE,1033F8D0,extended,00000000
+// patch=1,EE,1033FE50,extended,00000000
+// patch=1,EE,103403D0,extended,00000000
+// patch=1,EE,10340950,extended,00000000
+
+[Cheats/Hole 7]
+// patch=1,EE,1033F8D2,extended,00000000
+// patch=1,EE,1033FE52,extended,00000000
+// patch=1,EE,103403D2,extended,00000000
+// patch=1,EE,10340952,extended,00000000
+
+[Cheats/Hole 8]
+// patch=1,EE,1033F8D4,extended,00000000
+// patch=1,EE,1033FE54,extended,00000000
+// patch=1,EE,103403D4,extended,00000000
+// patch=1,EE,10340954,extended,00000000
+
+[Cheats/Hole 9]
+// patch=1,EE,1033F8D6,extended,00000000
+// patch=1,EE,1033FE56,extended,00000000
+// patch=1,EE,103403D6,extended,00000000
+// patch=1,EE,10340956,extended,00000000
+
+[Cheats/Hole 10]
+// patch=1,EE,1033F8D8,extended,00000000
+// patch=1,EE,1033FE58,extended,00000000
+// patch=1,EE,103403D8,extended,00000000
+// patch=1,EE,10340958,extended,00000000
+
+[Cheats/Hole 11]
+// patch=1,EE,1033F8DA,extended,00000000
+// patch=1,EE,1033FE5A,extended,00000000
+// patch=1,EE,103403DA,extended,00000000
+// patch=1,EE,1034095A,extended,00000000
+
+[Cheats/Hole 12]
+// patch=1,EE,1033F8DC,extended,00000000
+// patch=1,EE,1033FE5C,extended,00000000
+// patch=1,EE,103403DC,extended,00000000
+// patch=1,EE,1034095C,extended,00000000
+
+[Cheats/Hole 13]
+// patch=1,EE,1033F8DE,extended,00000000
+// patch=1,EE,1033FE5E,extended,00000000
+// patch=1,EE,103403DE,extended,00000000
+// patch=1,EE,1034095E,extended,00000000
+
+[Cheats/Hole 14]
+// patch=1,EE,1033F8E0,extended,00000000
+// patch=1,EE,1033FE60,extended,00000000
+// patch=1,EE,103403E0,extended,00000000
+// patch=1,EE,10340960,extended,00000000
+
+[Cheats/Hole 15]
+// patch=1,EE,1033F8E2,extended,00000000
+// patch=1,EE,1033FE62,extended,00000000
+// patch=1,EE,103403E2,extended,00000000
+// patch=1,EE,10340962,extended,00000000
+
+[Cheats/Hole 16]
+// patch=1,EE,1033F8E4,extended,00000000
+// patch=1,EE,1033FE64,extended,00000000
+// patch=1,EE,103403E4,extended,00000000
+// patch=1,EE,10340964,extended,00000000
+
+[Cheats/Hole 17]
+// patch=1,EE,1033F8E6,extended,00000000
+// patch=1,EE,1033FE66,extended,00000000
+// patch=1,EE,103403E6,extended,00000000
+// patch=1,EE,10340966,extended,00000000
+
+[Cheats/Hole 18]
+// patch=1,EE,1033F8E8,extended,00000000
+// patch=1,EE,1033FE68,extended,00000000
+// patch=1,EE,103403E8,extended,00000000
+// patch=1,EE,10340968,extended,00000000

@@ -1,0 +1,149 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Mystic Heroes [SLUS-20521] [19C243C1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Start On Lap 14 (Yellow Player)]
+// patch=1,EE,902F2684,extended,0C0BEFED
+
+[Cheats/Max Health P1]
+// patch=1,EE,1078EC50,extended,0000270F
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,1078EC52,extended,0000270F
+
+[Cheats/Max Infinite Health P1]
+// patch=1,EE,2078EC50,extended,270F270F
+
+[Cheats/No Health P1]
+// patch=1,EE,2078EC50,extended,0000270F
+
+[Cheats/Infinite Magic P1]
+// patch=1,EE,1078EC8C,extended,0000270F
+
+[Cheats/Max Magic P1]
+// patch=1,EE,1078EC8E,extended,0000270F
+
+[Cheats/Max Infinite Magic P1]
+// patch=1,EE,2078EC8C,extended,270F270F
+
+[Cheats/No Magic P1]
+// patch=1,EE,2078EC8C,extended,270F0000
+
+[Cheats/Max Health P2]
+// patch=1,EE,1078ED40,extended,0000270F
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,1078ED42,extended,0000270F
+
+[Cheats/Max Infinite Health P2]
+// patch=1,EE,2078ED40,extended,270F270F
+
+[Cheats/No Health P2]
+// patch=1,EE,2078ED40,extended,0000270F
+
+[Cheats/Infinite Magic P2]
+// patch=1,EE,1078ED7C,extended,0000270F
+
+[Cheats/Max Magic P2]
+// patch=1,EE,1078ED7E,extended,0000270F
+
+[Cheats/Max Infinite Magic P2]
+// patch=1,EE,2078ED7C,extended,270F270F
+
+[Cheats/No Magic P2]
+// patch=1,EE,2078ED7C,extended,270F0000
+
+[Cheats/Max Health P3]
+// patch=1,EE,1078EE30,extended,0000270F
+
+[Cheats/Infinite Health P3]
+// patch=1,EE,1078EE32,extended,0000270F
+
+[Cheats/Max Infinite Health P3]
+// patch=1,EE,2078EE30,extended,270F270F
+
+[Cheats/No Health P3]
+// patch=1,EE,2078EE30,extended,0000270F
+
+[Cheats/Infinite Magic P3]
+// patch=1,EE,1078EE6C,extended,0000270F
+
+[Cheats/Max Magic P3]
+// patch=1,EE,1078EE6E,extended,0000270F
+
+[Cheats/Max Infinite Magic P3]
+// patch=1,EE,2078EE6C,extended,270F270F
+
+[Cheats/No Magic P3]
+// patch=1,EE,2078EE6C,extended,270F0000
+
+[Cheats/Max Health P4]
+// patch=1,EE,1078EF20,extended,0000270F
+
+[Cheats/Infinite Health P4]
+// patch=1,EE,1078EF22,extended,0000270F
+
+[Cheats/Max Infinite Health P4]
+// patch=1,EE,2078EF20,extended,270F270F
+
+[Cheats/No Health P4]
+// patch=1,EE,2078EF20,extended,0000270F
+
+[Cheats/Infinite Magic P4]
+// patch=1,EE,1078EF5C,extended,0000270F
+
+[Cheats/Max Magic P4]
+// patch=1,EE,1078EF5E,extended,0000270F
+
+[Cheats/Max Infinite Magic P4]
+// patch=1,EE,2078EF5C,extended,270F270F
+
+[Cheats/No Magic P4]
+// patch=1,EE,2078EF5C,extended,270F0000
+
+[Cheats/Max Health]
+// patch=1,EE,1031E2B4,extended,0000270F
+
+[Cheats/Max Magic]
+// patch=1,EE,1031E2B6,extended,0000270F
+
+[Cheats/Max Att.]
+// patch=1,EE,1031E2B8,extended,000003E7
+
+[Cheats/Max Def.]
+// patch=1,EE,1031E2BA,extended,000003E7
+
+[Cheats/Max RA]
+// patch=1,EE,1031E2BC,extended,000003E7
+
+[Cheats/Max RD]
+// patch=1,EE,1031E2BE,extended,000003E7
+
+[Cheats/Direct Max Lv. 4]
+// patch=1,EE,0031E2D4,extended,00000004
+
+[Cheats/Target Max Lv. 4]
+// patch=1,EE,0031E2D5,extended,00000004
+
+[Cheats/Jump Max Lv. 4]
+// patch=1,EE,0031E2D6,extended,00000004
+
+[Cheats/Sword Max Lv. 4]
+// patch=1,EE,0031E2D7,extended,00000004
+
+[Cheats/Always Low Play Time]
+// patch=1,EE,2031E28C,extended,00000000
+
+[Cheats/Max Enemies Defeated]
+// patch=1,EE,2031E2A8,extended,0001869F
+
+[Cheats/No Allies Defeated]
+// patch=1,EE,1031E2AC,extended,00000000
+
+[Cheats/Max Best Combo]
+// patch=1,EE,1031E2AE,extended,0000270F
+
+[Cheats/Have All Runes]
+// patch=1,EE,2031E2F4,extended,FFFFFFFF
+// patch=1,EE,2031E2F8,extended,FFFFFFFF
+// patch=1,EE,2031E2FC,extended,FFFFFFFF

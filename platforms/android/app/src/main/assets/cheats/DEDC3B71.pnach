@@ -1,0 +1,29 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Persona 4 [UNKNOWN] [DEDC3B71]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/EXP Multi X8 (Main Character)]
+// patch=1,EE,200A0000,extended,001188C0
+// patch=1,EE,200A0004,extended,08087895
+// patch=1,EE,200A0008,extended,02222021
+// patch=1,EE,2021E250,extended,08028000
+// patch=1,EE,2021E254,extended,00000000
+// patch=1,EE,2021E258,extended,0C041678
+// patch=1,EE,2021E25C,extended,00000000
+// patch=1,EE,2021E260,extended,304200FF
+// patch=1,EE,2021E264,extended,12020003
+
+[Cheats/Infinite Yen]
+// patch=1,EE,2079B68C,extended,05F5E0FF
+
+[Cheats/Exp Multi X8 (Other Characters)]
+// patch=1,EE,200A0010,extended,001088C0
+// patch=1,EE,200A0014,extended,00701821
+// patch=1,EE,200A0018,extended,0804326F
+// patch=1,EE,200A001C,extended,AE230008
+// patch=1,EE,2010C9B8,extended,08028004
+// patch=1,EE,2010C9BC,extended,00000000
+
+[Cheats/MAX HP SP ME]
+// patch=1,EE,405DD874,extended,0063000B
+// patch=1,EE,03E703E7,extended,00000000

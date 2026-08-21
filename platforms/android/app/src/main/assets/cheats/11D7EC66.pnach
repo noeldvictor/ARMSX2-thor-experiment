@@ -1,0 +1,102 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shrek 2 [SLUS-20745] [11D7EC66]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Snow Enduro R]
+// patch=1,EE,902DEA94,extended,0C0B8BA0
+
+[Cheats/Infinite Health]
+// patch=1,EE,20190F64,extended,C4A001AC
+// patch=1,EE,20190F6C,extended,E4A001A8
+
+[Cheats/Always Max Eyeballs]
+// patch=1,EE,2024CA30,extended,C780E358
+// patch=1,EE,2024CA3C,extended,E780E35C
+
+[Cheats/Infinite Specials Usage]
+// patch=1,EE,201785AC,extended,00000000
+
+[Cheats/Always Have Max Gingerbread Man's Cookie Toss]
+// patch=1,EE,201C2A94,extended,2402000A
+// patch=1,EE,201C2A98,extended,ACC20344
+
+[Cheats/Always Have Max Fiona's Slow Time]
+// patch=1,EE,201C1540,extended,2402000A
+// patch=1,EE,201C1544,extended,AC820344
+
+[Cheats/Always Have Max Lil Red's Rottle Apple Bomb]
+// patch=1,EE,201C84F0,extended,2402000A
+// patch=1,EE,201C84F4,extended,AE020344
+
+[Cheats/Infinite Gold Coins]
+// patch=1,EE,1037916C,extended,0000FFFF
+
+[Cheats/Max Gold Coins]
+// patch=1,EE,2037916C,extended,05F5E0FF
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,20379C78,extended,0000000F
+
+[Cheats/Shrek's Swamp]
+// patch=1,EE,20379BBC,extended,01111111
+
+[Cheats/Spooky Forest]
+// patch=1,EE,20379BC0,extended,01111111
+
+[Cheats/Far Far Away]
+// patch=1,EE,20379BC4,extended,01111111
+
+[Cheats/Ogre Killer]
+// patch=1,EE,20379BC8,extended,00000111
+
+[Cheats/Walking The Path]
+// patch=1,EE,20379BCC,extended,01111111
+
+[Cheats/Jack And Jill's Farm]
+// patch=1,EE,20379BD0,extended,01111111
+
+[Cheats/Fairy Godmother's]
+// patch=1,EE,20379BD4,extended,01111111
+
+[Cheats/Prison Break]
+// patch=1,EE,20379BE4,extended,01111111
+
+[Cheats/The Mines]
+// patch=1,EE,20379BEC,extended,01111111
+
+[Cheats/Cookie, Cookie]
+// patch=1,EE,20379BF0,extended,01111111
+
+[Cheats/Final Fight]
+// patch=1,EE,20379BF4,extended,00001111
+
+[Cheats/Three Bears' Porridge]
+// patch=1,EE,20379BF8,extended,00000001
+
+[Cheats/Ogre Ring]
+// patch=1,EE,20379BFC,extended,00000001
+
+[Cheats/Pott Of Gold]
+// patch=1,EE,20379C00,extended,00000001
+
+[Cheats/Green Clover]
+// patch=1,EE,20379C04,extended,00000001
+
+[Cheats/Heart Of Gold]
+// patch=1,EE,20379C08,extended,00000001
+
+[Cheats/Lucky Horseshoe]
+// patch=1,EE,20379C0C,extended,00000001
+
+[Cheats/Nine Lives]
+// patch=1,EE,20379C10,extended,00000001
+
+[Cheats/Cupid's Arrow]
+// patch=1,EE,20379C14,extended,00000001
+
+[Cheats/Lucky Rabbit's Foot]
+// patch=1,EE,20379C18,extended,00000001
+
+[Cheats/All Upgrades]
+// patch=1,EE,40379BF8,extended,00090001
+// patch=1,EE,00000001,extended,00000000

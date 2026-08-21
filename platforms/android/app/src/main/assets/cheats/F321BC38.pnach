@@ -1,0 +1,90 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Castlevania Curse of Darkness [UNKNOWN] [F321BC38]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite HP]
+// patch=1,EE,20AF2188,extended,000003E7
+// patch=1,EE,10AF2184,extended,000003E7
+
+[Cheats/Level 99]
+// patch=1,EE,20AF2178,extended,000003E7
+
+[Cheats/Max all resist]
+// patch=1,EE,40AF2190,extended,000B0002
+// patch=1,EE,00000003,extended,00000000
+
+[Cheats/Max atk]
+// patch=1,EE,20AF220C,extended,000003E7
+
+[Cheats/Max con]
+// patch=1,EE,20AF21FC,extended,000003E7
+// patch=1,EE,20AF2200,extended,000003E7
+
+[Cheats/Max def]
+// patch=1,EE,20AF2210,extended,000003E7
+
+[Cheats/Max gold]
+// patch=1,EE,20AFA6B4,extended,05F5E0FF
+
+[Cheats/Infinite health (devil 1) fay]
+// patch=1,EE,20AF23C0,extended,000003E7
+// patch=1,EE,10AF23BC,extended,000003E7
+
+[Cheats/Infinite health (devil 2) magmar]
+// patch=1,EE,20AF25F8,extended,000003E7
+// patch=1,EE,10AF25F4,extended,000003E7
+
+[Cheats/Max luck]
+// patch=1,EE,20AF2204,extended,000003E7
+// patch=1,EE,20AF2208,extended,000003E7
+
+[Cheats/Max strn]
+// patch=1,EE,20AF21F4,extended,000003E7
+// patch=1,EE,20AF21F8,extended,000003E7
+
+[Cheats/All weapons]
+// patch=1,EE,40AEF800,extended,004F0001
+// patch=1,EE,00630001,extended,00000001
+
+[Cheats/All heads]
+// patch=1,EE,40AEF9E4,extended,00140001
+// patch=1,EE,0063007A,extended,00000001
+
+[Cheats/All bodies]
+// patch=1,EE,40AEF95C,extended,00170001
+// patch=1,EE,00630058,extended,00000001
+
+[Cheats/All accessories]
+// patch=1,EE,40AEFA58,extended,00110001
+// patch=1,EE,00630097,extended,00000001
+
+[Cheats/All usables]
+// patch=1,EE,40AEFAC4,extended,001B0001
+// patch=1,EE,006300B2,extended,00000001
+
+[Cheats/All rares]
+// patch=1,EE,40AEFC84,extended,00190001
+// patch=1,EE,0063013E,extended,00000001
+
+[Cheats/All tips]
+// patch=1,EE,20AE5624,extended,FFFFFFFF
+
+[Cheats/All skills]
+// patch=1,EE,40AEFC30,extended,000D0001
+// patch=1,EE,0001010D,extended,00000001
+
+[Cheats/Infinite health (devil 3) crow]
+// patch=1,EE,20AF2830,extended,000003E7
+// patch=1,EE,10AF282C,extended,000003E7
+
+[Cheats/Infinite health (devil 4) wood rod]
+// patch=1,EE,20AF2A68,extended,000003E7
+// patch=1,EE,10AF2A64,extended,000003E7
+
+[Cheats/Infinite health (devil 5) gale]
+// patch=1,EE,20AF2CA0,extended,000003E7
+// patch=1,EE,10AF2C9C,extended,000003E7
+
+[Cheats/All materials (for real)]
+// patch=1,EE,40AEFB70,extended,00280001
+// patch=1,EE,006300DD,extended,00000001

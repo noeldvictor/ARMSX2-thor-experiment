@@ -1,0 +1,33 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: ESPN NBA 2Night [SLES-50075] [68DAC75E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Off. Awareness]
+// patch=1,EE,9011259C,extended,0C048376
+
+[Cheats/Huge Ball]
+// patch=1,EE,008310EC,extended,00000001
+
+[Cheats/Light Mode]
+// patch=1,EE,008310EF,extended,00000001
+
+[Cheats/Bigheads Mode]
+// patch=1,EE,008310F0,extended,00000001
+
+[Cheats/Bighands Mode]
+// patch=1,EE,008310F1,extended,00000001
+
+[Cheats/Bigfeet Mode]
+// patch=1,EE,008310F2,extended,00000001
+
+[Cheats/Flat Mode]
+// patch=1,EE,008310F3,extended,00000001
+
+[Cheats/Tiny Mode]
+// patch=1,EE,008310F4,extended,00000001
+
+[Cheats/Spotlight Mode]
+// patch=1,EE,008310F6,extended,00000001
+
+[Cheats/Easy Dunks]
+// patch=1,EE,008310F7,extended,00000001

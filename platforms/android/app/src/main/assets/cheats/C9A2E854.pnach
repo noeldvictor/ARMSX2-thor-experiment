@@ -1,0 +1,39 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Super Trucks Racing [SLUS-20748] [C9A2E854]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Ultimate Playable]
+// patch=1,EE,90188D64,extended,0C067927
+
+[Cheats/Stop Lap Timer]
+// patch=1,EE,20117654,extended,00000000
+
+[Cheats/Stop Race Timer]
+// patch=1,EE,2011768C,extended,00000000
+
+[Cheats/Start On Lap 2]
+// patch=1,EE,D01F8870,extended,00000001
+// patch=1,EE,201F8870,extended,00000002
+// patch=1,EE,D01F8874,extended,00000001
+// patch=1,EE,201F8874,extended,00000002
+
+[Cheats/Start On Lap 3]
+// patch=1,EE,D01F8870,extended,00000001
+// patch=1,EE,201F8870,extended,00000003
+// patch=1,EE,D01F8874,extended,00000001
+// patch=1,EE,201F8874,extended,00000003
+
+[Cheats/Idiot AI]
+// patch=1,EE,20128078,extended,00000000
+
+[Cheats/Max All Trophies/Races]
+// patch=1,EE,401D7ABC,extended,00200001
+// patch=1,EE,00000063,extended,00000000
+
+[Cheats/Unlock All Trucks]
+// patch=1,EE,401D7B40,extended,00100001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Tracks]
+// patch=1,EE,401D7B80,extended,000F0001
+// patch=1,EE,00000001,extended,00000000

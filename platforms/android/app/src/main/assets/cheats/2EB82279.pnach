@@ -1,0 +1,378 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sphinx And The Cursed Mummy [SLUS-20482] [2EB82279]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Do 1 Front Flip]
+// patch=1,EE,902FFA4C,extended,0C0C3517
+
+[Cheats/Infinite Health]
+// patch=1,EE,204778AC,extended,00000024
+
+[Cheats/Max Health]
+// patch=1,EE,204778B0,extended,00000024
+
+[Cheats/Gold Ankh Piece]
+// patch=1,EE,205525D4,extended,00000014
+
+[Cheats/Abydosian Pearls]
+// patch=1,EE,205525E4,extended,00000003
+
+[Cheats/Healing Herbs]
+// patch=1,EE,205525F4,extended,00000005
+
+[Cheats/Rosetta Stone Pieces]
+// patch=1,EE,20552604,extended,00000006
+
+[Cheats/Atun Eye]
+// patch=1,EE,20552614,extended,0000001E
+
+[Cheats/Gold Key]
+// patch=1,EE,20552624,extended,00000005
+
+[Cheats/Glyph Key]
+// patch=1,EE,20552634,extended,00000005
+
+[Cheats/Glyph Key 2]
+// patch=1,EE,20552644,extended,00000005
+
+[Cheats/South Desert Key]
+// patch=1,EE,20552654,extended,00000001
+
+[Cheats/Obelisk Gate Key]
+// patch=1,EE,20552664,extended,00000001
+
+[Cheats/Cave Door Key]
+// patch=1,EE,20552674,extended,00000001
+
+[Cheats/Coconut]
+// patch=1,EE,20552684,extended,00000003
+
+[Cheats/Urukite Crown]
+// patch=1,EE,20552694,extended,00000001
+
+[Cheats/Abydosian Crown]
+// patch=1,EE,205526A4,extended,00000001
+
+[Cheats/Helian Crown]
+// patch=1,EE,205526B4,extended,00000001
+
+[Cheats/Set Crown]
+// patch=1,EE,205526C4,extended,00000001
+
+[Cheats/Curse Stone (White)]
+// patch=1,EE,205526D4,extended,00000001
+
+[Cheats/Curse Stone (Green)]
+// patch=1,EE,205526E4,extended,00000001
+
+[Cheats/Curse Stone (Red)]
+// patch=1,EE,205526F4,extended,00000001
+
+[Cheats/Curse Stone (Orange)]
+// patch=1,EE,20552704,extended,00000001
+
+[Cheats/Curse Stone (Blue)]
+// patch=1,EE,20552714,extended,00000001
+
+[Cheats/Curse Stone (Purple)]
+// patch=1,EE,20552724,extended,00000001
+
+[Cheats/Curse Stone (Turquoise)]
+// patch=1,EE,20552734,extended,00000001
+
+[Cheats/Stolen Jewel]
+// patch=1,EE,20552744,extended,00000001
+
+[Cheats/Stolen Jewel 2]
+// patch=1,EE,20552754,extended,00000001
+
+[Cheats/Stolen Jewel 3]
+// patch=1,EE,20552764,extended,00000001
+
+[Cheats/Stolen Jewel 4]
+// patch=1,EE,20552774,extended,00000001
+
+[Cheats/Stolen Jewel 5]
+// patch=1,EE,20552784,extended,00000001
+
+[Cheats/Stolen Jewel 6]
+// patch=1,EE,20552794,extended,00000001
+
+[Cheats/Skeletal Skull]
+// patch=1,EE,205527A4,extended,00000001
+
+[Cheats/Skeletal Pelvis]
+// patch=1,EE,205527B4,extended,00000001
+
+[Cheats/Skeletal Arm]
+// patch=1,EE,205527C4,extended,00000001
+
+[Cheats/Skeletal Leg]
+// patch=1,EE,205527D4,extended,00000001
+
+[Cheats/Canopic Vase]
+// patch=1,EE,205527E4,extended,00000006
+
+[Cheats/Mysterious Amulet]
+// patch=1,EE,205527F4,extended,00000001
+
+[Cheats/Abydos Amulet]
+// patch=1,EE,20552804,extended,00000001
+
+[Cheats/Heliopolis Amulet]
+// patch=1,EE,20552814,extended,00000001
+
+[Cheats/Anubis Amulet]
+// patch=1,EE,20552824,extended,00000001
+
+[Cheats/Bas-Ket]
+// patch=1,EE,20552834,extended,00000001
+
+[Cheats/Blue Diamond]
+// patch=1,EE,20552844,extended,00000004
+
+[Cheats/Book Of The Dead]
+// patch=1,EE,20552854,extended,00000001
+
+[Cheats/Physician's Note]
+// patch=1,EE,20552864,extended,00000001
+
+[Cheats/Rosetta Stone]
+// patch=1,EE,20552874,extended,00000001
+
+[Cheats/Abydos Pass Card]
+// patch=1,EE,20552884,extended,00000001
+
+[Cheats/Beetle Breeding Jar]
+// patch=1,EE,20552894,extended,00000001
+
+[Cheats/Loyalty Card]
+// patch=1,EE,205528A4,extended,00000001
+
+[Cheats/Royal Invitation]
+// patch=1,EE,205528B4,extended,00000001
+
+[Cheats/Parasol]
+// patch=1,EE,205528C4,extended,00000001
+
+[Cheats/Monster List I]
+// patch=1,EE,205528D4,extended,00000001
+
+[Cheats/Monster List II]
+// patch=1,EE,205528E4,extended,00000001
+
+[Cheats/Monster List III]
+// patch=1,EE,205528F4,extended,00000001
+
+[Cheats/Zip Line Handle]
+// patch=1,EE,20552904,extended,00000001
+
+[Cheats/Old Key]
+// patch=1,EE,20552914,extended,00000001
+
+[Cheats/Stairs Key]
+// patch=1,EE,20552924,extended,00000001
+
+[Cheats/Medicine Bag]
+// patch=1,EE,20552934,extended,00000001
+
+[Cheats/Atun Statue]
+// patch=1,EE,20552944,extended,00000001
+
+[Cheats/Hathor Statue]
+// patch=1,EE,20552954,extended,00000001
+
+[Cheats/Eagle Stone]
+// patch=1,EE,20552964,extended,00000001
+
+[Cheats/Dark Stone]
+// patch=1,EE,20552974,extended,00000001
+
+[Cheats/Marksman Medal]
+// patch=1,EE,20552984,extended,00000001
+
+[Cheats/Medal Of Memory]
+// patch=1,EE,20552994,extended,00000001
+
+[Cheats/Medal Of Champions]
+// patch=1,EE,205529A4,extended,00000001
+
+[Cheats/Medal Of Sequences]
+// patch=1,EE,205529B4,extended,00000001
+
+[Cheats/Master Hunter]
+// patch=1,EE,205529C4,extended,00000001
+
+[Cheats/Hunter Gold Class]
+// patch=1,EE,205529D4,extended,00000001
+
+[Cheats/Hunter Silver Class]
+// patch=1,EE,205529E4,extended,00000001
+
+[Cheats/Hunter Bronze Class]
+// patch=1,EE,205529F4,extended,00000001
+
+[Cheats/Standard Dart]
+// patch=1,EE,20552484,extended,00000064
+
+[Cheats/Bouncing Dart]
+// patch=1,EE,20552494,extended,00000064
+
+[Cheats/Ice Dart]
+// patch=1,EE,205524A4,extended,0000001E
+
+[Cheats/Acid Dart]
+// patch=1,EE,205524B4,extended,0000001E
+
+[Cheats/Gold Scarab]
+// patch=1,EE,205525A4,extended,00000190
+
+[Cheats/Onyx Scarab]
+// patch=1,EE,205525B4,extended,00000190
+
+[Cheats/Capture Beetle]
+// patch=1,EE,20552DC4,extended,00000014
+
+[Cheats/Blade Of Osiris]
+// patch=1,EE,20552DD4,extended,00000001
+
+[Cheats/Shield Of Osiris]
+// patch=1,EE,20552DE4,extended,00000001
+
+[Cheats/Blowpipe]
+// patch=1,EE,20552DF4,extended,00000001
+
+[Cheats/Wings Of Ibis]
+// patch=1,EE,20552E04,extended,00000001
+
+[Cheats/Crocodile Scales]
+// patch=1,EE,20552E14,extended,00000001
+
+[Cheats/Underwater Projectile]
+// patch=1,EE,20552E24,extended,00000001
+
+[Cheats/Hands Of Amun]
+// patch=1,EE,20552E34,extended,00000001
+
+[Cheats/Scarab Bag]
+// patch=1,EE,20552E44,extended,00000001
+
+[Cheats/Large Scarab Bag]
+// patch=1,EE,20552E54,extended,00000001
+
+[Cheats/Beetle Pouch]
+// patch=1,EE,20552E64,extended,00000001
+
+[Cheats/Beetle Satchel]
+// patch=1,EE,20552E74,extended,00000001
+
+[Cheats/Dark Belt]
+// patch=1,EE,20552E84,extended,00000001
+
+[Cheats/Fire Armadillo]
+// patch=1,EE,20552E94,extended,0000000A
+
+[Cheats/Slim Burble]
+// patch=1,EE,20552EA4,extended,0000000A
+
+[Cheats/Almost-A-Bull]
+// patch=1,EE,20552F24,extended,0000000A
+
+[Cheats/Big Bull]
+// patch=1,EE,20552F34,extended,0000000A
+
+[Cheats/Blade Scorpion]
+// patch=1,EE,20552F44,extended,0000000A
+
+[Cheats/Chihuahua]
+// patch=1,EE,20552F54,extended,0000000A
+
+[Cheats/Cobra]
+// patch=1,EE,20552F64,extended,0000000A
+
+[Cheats/Crabhands]
+// patch=1,EE,20552F74,extended,0000000A
+
+[Cheats/Cyclops]
+// patch=1,EE,20552F84,extended,0000000A
+
+[Cheats/Dark Worshipper]
+// patch=1,EE,20552F94,extended,0000000A
+
+[Cheats/Electric Armadillo]
+// patch=1,EE,20552FA4,extended,0000000A
+
+[Cheats/Exo-Piranha]
+// patch=1,EE,20552FB4,extended,0000000A
+
+[Cheats/Featherless Turkey]
+// patch=1,EE,20552FC4,extended,0000000A
+
+[Cheats/Goofy Lizard]
+// patch=1,EE,20552FD4,extended,0000000A
+
+[Cheats/Green Giant Worm]
+// patch=1,EE,20552FE4,extended,0000000A
+
+[Cheats/Half Brute]
+// patch=1,EE,20552FF4,extended,0000000A
+
+[Cheats/Knives Cat]
+// patch=1,EE,20553004,extended,0000000A
+
+[Cheats/Mummy Bird]
+// patch=1,EE,20553014,extended,0000000A
+
+[Cheats/Mummy Chihuahua]
+// patch=1,EE,20553024,extended,0000000A
+
+[Cheats/Mummy Worm]
+// patch=1,EE,20553034,extended,0000000A
+
+[Cheats/Nose Needler]
+// patch=1,EE,20553044,extended,0000000A
+
+[Cheats/Piranha]
+// patch=1,EE,20553054,extended,0000000A
+
+[Cheats/Rat]
+// patch=1,EE,20553064,extended,0000000A
+
+[Cheats/Sharpbeak]
+// patch=1,EE,20553074,extended,0000000A
+
+[Cheats/Shell Critter]
+// patch=1,EE,20553084,extended,0000000A
+
+[Cheats/Shuttlecock Bird]
+// patch=1,EE,20553094,extended,0000000A
+
+[Cheats/Skeletal Axeman]
+// patch=1,EE,205530A4,extended,0000000A
+
+[Cheats/Skeletal Spider]
+// patch=1,EE,205530B4,extended,0000000A
+
+[Cheats/Skull Swordsman]
+// patch=1,EE,205530C4,extended,0000000A
+
+[Cheats/Skull Worshipper]
+// patch=1,EE,205530D4,extended,0000000A
+
+[Cheats/Small Frog]
+// patch=1,EE,205530E4,extended,0000000A
+
+[Cheats/Smiling Burble]
+// patch=1,EE,205530F4,extended,0000000A
+
+[Cheats/Spike Spider]
+// patch=1,EE,20553104,extended,0000000A
+
+[Cheats/Sunflower]
+// patch=1,EE,20553114,extended,0000000A
+
+[Cheats/Tree Creature]
+// patch=1,EE,20553124,extended,0000000A
+
+[Cheats/Wasp Spider]
+// patch=1,EE,20553134,extended,0000000A

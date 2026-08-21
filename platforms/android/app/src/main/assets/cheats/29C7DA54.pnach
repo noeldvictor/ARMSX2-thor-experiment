@@ -1,0 +1,24 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ghosthunter [SLUS-20993] [29C7DA54]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Halo-Legacy Mode (Analog Sticks)]
+// patch=1,EE,90447E4C,extended,0C114C3F
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,C44102C0
+// patch=1,EE,200C0224,extended,0808D435
+// patch=1,EE,200C0228,extended,E44102C4
+// patch=1,EE,202350D0,extended,0C030088
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,202163F4,extended,00000000
+
+[Cheats/Infinite Ghost Energy (Upon Pickup)]
+// patch=1,EE,20324884,extended,00000000
+
+[Cheats/Quick Captures]
+// patch=1,EE,20568620,extended,00000001
+
+[Cheats/Infinite Ability Energy]
+// patch=1,EE,201DF7B4,extended,00000000

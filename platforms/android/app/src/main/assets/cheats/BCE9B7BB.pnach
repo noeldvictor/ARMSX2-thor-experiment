@@ -1,0 +1,494 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Everblue 2 [SLUS-20598] [BCE9B7BB]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Switch To Weapon For Max Level Up]
+// patch=1,EE,9021EB04,extended,0C0856CA
+
+[Cheats/Infinite Cash]
+// patch=1,EE,104BE02C,extended,0000FFFF
+
+[Cheats/Max Cash]
+// patch=1,EE,204BE02C,extended,05F5E0FF
+
+[Cheats/Max HP]
+// patch=1,EE,204BE038,extended,0000270F
+
+[Cheats/Infinite HP]
+// patch=1,EE,204BDFF0,extended,461C3C00
+
+[Cheats/Infinite Air]
+// patch=1,EE,204BDFF4,extended,461C3C00
+
+[Cheats/Have All History-Shells]
+// patch=1,EE,204870C8,extended,FFFFFFFF
+// patch=1,EE,204870CC,extended,FFFFFFFF
+
+[Cheats/Have All History-Titles]
+// patch=1,EE,204870F0,extended,FFFFFFFF
+// patch=1,EE,204870F4,extended,FFFFFFFF
+
+[Cheats/Old Dive Suit]
+// patch=1,EE,004B8120,extended,00000063
+
+[Cheats/Dive Skin]
+// patch=1,EE,004B8122,extended,00000063
+
+[Cheats/Wet Suit]
+// patch=1,EE,004B8126,extended,00000063
+
+[Cheats/Dry Suit]
+// patch=1,EE,004B8128,extended,00000063
+
+[Cheats/Pro Dry Suit]
+// patch=1,EE,004B812C,extended,00000063
+
+[Cheats/Supreme Dry Suit]
+// patch=1,EE,004B812E,extended,00000063
+
+[Cheats/Dolphin Suit]
+// patch=1,EE,004B8132,extended,00000063
+
+[Cheats/3 Minute Suit]
+// patch=1,EE,004B8134,extended,00000063
+
+[Cheats/Dented Air Tank]
+// patch=1,EE,004B8137,extended,00000063
+
+[Cheats/Air 10]
+// patch=1,EE,004B813B,extended,00000063
+
+[Cheats/Air 14]
+// patch=1,EE,004B813E,extended,00000063
+
+[Cheats/Trimix 10]
+// patch=1,EE,004B8140,extended,00000063
+
+[Cheats/Trimix 14]
+// patch=1,EE,004B8143,extended,00000063
+
+[Cheats/Rebreather 10]
+// patch=1,EE,004B8147,extended,00000063
+
+[Cheats/Rebreather Infinity]
+// patch=1,EE,004B8149,extended,00000063
+
+[Cheats/Broken Fins]
+// patch=1,EE,004B814D,extended,00000063
+
+[Cheats/Sea Walkers]
+// patch=1,EE,004B8150,extended,00000063
+
+[Cheats/Speed Ups]
+// patch=1,EE,004B8152,extended,00000063
+
+[Cheats/Balance Ups]
+// patch=1,EE,004B8156,extended,00000063
+
+[Cheats/Wild Divers]
+// patch=1,EE,004B8158,extended,00000063
+
+[Cheats/Speed Kings]
+// patch=1,EE,004B815B,extended,00000063
+
+[Cheats/Luxury Fins]
+// patch=1,EE,004B815F,extended,00000063
+
+[Cheats/Omni Fins]
+// patch=1,EE,004B8161,extended,00000063
+
+[Cheats/Johann's Fins]
+// patch=1,EE,004B8165,extended,00000063
+
+[Cheats/Torn Bag]
+// patch=1,EE,004B8168,extended,00000063
+
+[Cheats/Medium Bag]
+// patch=1,EE,004B816A,extended,00000063
+
+[Cheats/Large Bag]
+// patch=1,EE,004B816E,extended,00000063
+
+[Cheats/Extra Large Bag]
+// patch=1,EE,004B8170,extended,00000063
+
+[Cheats/King-Sized Bag]
+// patch=1,EE,004B8173,extended,00000063
+
+[Cheats/Ultimate Bag]
+// patch=1,EE,004B8177,extended,00000063
+
+[Cheats/Only-One Bag]
+// patch=1,EE,004B8179,extended,00000063
+
+[Cheats/Accelerator]
+// patch=1,EE,004B817D,extended,00000063
+
+[Cheats/Maximator]
+// patch=1,EE,004B8180,extended,00000063
+
+[Cheats/Pro Regulator]
+// patch=1,EE,004B8182,extended,00000063
+
+[Cheats/Suit Hood]
+// patch=1,EE,004B8186,extended,00000063
+
+[Cheats/Hyperspace]
+// patch=1,EE,004B8188,extended,00000063
+
+[Cheats/Power Gloves]
+// patch=1,EE,004B818B,extended,00000063
+
+[Cheats/Full Power Light]
+// patch=1,EE,004B818F,extended,00000063
+
+[Cheats/Magic Hand]
+// patch=1,EE,004B8191,extended,00000063
+
+[Cheats/Inertial Damper]
+// patch=1,EE,004B8195,extended,00000063
+
+[Cheats/Good Luck Charm]
+// patch=1,EE,004B8198,extended,00000063
+
+[Cheats/Wood]
+// patch=1,EE,004B81A2,extended,00000001
+// patch=1,EE,004B81A4,extended,00000001
+
+[Cheats/Clay]
+// patch=1,EE,004B81A5,extended,00000001
+// patch=1,EE,004B81A7,extended,00000001
+
+[Cheats/Stone]
+// patch=1,EE,004B81A8,extended,00000001
+// patch=1,EE,004B81AA,extended,00000001
+
+[Cheats/Fish Call]
+// patch=1,EE,004B81AB,extended,00000001
+// patch=1,EE,004B81AD,extended,00000001
+
+[Cheats/Fish Avay]
+// patch=1,EE,004B81AE,extended,00000001
+// patch=1,EE,004B81B0,extended,00000001
+
+[Cheats/Worldmap]
+// patch=1,EE,004B81B1,extended,00000001
+// patch=1,EE,004B81B3,extended,00000001
+
+[Cheats/Ferry Map]
+// patch=1,EE,004B81B4,extended,00000001
+// patch=1,EE,004B81B6,extended,00000001
+
+[Cheats/Airplane Map]
+// patch=1,EE,004B81B7,extended,00000001
+// patch=1,EE,004B81B9,extended,00000001
+
+[Cheats/Cruise Ship Map]
+// patch=1,EE,004B81BA,extended,00000001
+// patch=1,EE,004B81BC,extended,00000001
+
+[Cheats/Pirate Ship Map (30)]
+// patch=1,EE,004B81BD,extended,00000001
+// patch=1,EE,004B81BF,extended,00000001
+
+[Cheats/Submarine Map]
+// patch=1,EE,004B81C0,extended,00000001
+// patch=1,EE,004B81C2,extended,00000001
+
+[Cheats/Deck Area Key]
+// patch=1,EE,004B81C3,extended,00000001
+// patch=1,EE,004B81C5,extended,00000001
+
+[Cheats/Locker Room Key]
+// patch=1,EE,004B81C6,extended,00000001
+// patch=1,EE,004B81C8,extended,00000001
+
+[Cheats/Play Area Key]
+// patch=1,EE,004B81CF,extended,00000001
+// patch=1,EE,004B81D1,extended,00000001
+
+[Cheats/Luxury Room Key]
+// patch=1,EE,004B81D2,extended,00000001
+// patch=1,EE,004B81D4,extended,00000001
+
+[Cheats/Pedestal Key]
+// patch=1,EE,004B81D5,extended,00000001
+// patch=1,EE,004B81D7,extended,00000001
+
+[Cheats/Guiding Gem]
+// patch=1,EE,004B81D8,extended,00000001
+// patch=1,EE,004B81DA,extended,00000001
+
+[Cheats/Stone Key]
+// patch=1,EE,004B81DB,extended,00000001
+// patch=1,EE,004B81DD,extended,00000001
+
+[Cheats/Pirate Crest]
+// patch=1,EE,004B81DE,extended,00000001
+// patch=1,EE,004B81E0,extended,00000001
+
+[Cheats/Acetic Acid]
+// patch=1,EE,004B81E1,extended,00000001
+// patch=1,EE,004B81E3,extended,00000001
+
+[Cheats/Aspirin]
+// patch=1,EE,004B81E4,extended,00000001
+// patch=1,EE,004B81E6,extended,00000001
+
+[Cheats/Bouquet]
+// patch=1,EE,004B81E7,extended,00000001
+// patch=1,EE,004B81E9,extended,00000001
+
+[Cheats/Erebos]
+// patch=1,EE,004B81EA,extended,00000001
+// patch=1,EE,004B81EC,extended,00000001
+
+[Cheats/Important Document]
+// patch=1,EE,004B81ED,extended,00000001
+// patch=1,EE,004B81EF,extended,00000001
+
+[Cheats/Alberto's Notes]
+// patch=1,EE,004B81F0,extended,00000001
+// patch=1,EE,004B81F2,extended,00000001
+
+[Cheats/60's Tacos]
+// patch=1,EE,004B81F3,extended,00000001
+// patch=1,EE,004B81F5,extended,00000001
+
+[Cheats/Memoirs Of A Poet]
+// patch=1,EE,004B81F6,extended,00000001
+// patch=1,EE,004B81F8,extended,00000001
+
+[Cheats/Pirate Tacos]
+// patch=1,EE,004B81F9,extended,00000001
+// patch=1,EE,004B81FB,extended,00000001
+
+[Cheats/Competitive Tacos]
+// patch=1,EE,004B81FC,extended,00000001
+// patch=1,EE,004B81FE,extended,00000001
+
+[Cheats/Tropical Tacos]
+// patch=1,EE,004B81FF,extended,00000001
+// patch=1,EE,004B8200,extended,00000001
+
+[Cheats/Chinese Tacos]
+// patch=1,EE,004B8201,extended,00000001
+// patch=1,EE,004B8203,extended,00000001
+
+[Cheats/Mariachi Poems]
+// patch=1,EE,004B8204,extended,00000001
+// patch=1,EE,004B8206,extended,00000001
+
+[Cheats/Young Execs Today!]
+// patch=1,EE,004B8207,extended,00000001
+// patch=1,EE,004B8209,extended,00000001
+
+[Cheats/Wheelgraph]
+// patch=1,EE,004B820A,extended,00000001
+// patch=1,EE,004B820C,extended,00000001
+
+[Cheats/Ultimate Comix!]
+// patch=1,EE,004B820D,extended,00000001
+// patch=1,EE,004B820F,extended,00000001
+
+[Cheats/Compact]
+// patch=1,EE,004B8212,extended,00000001
+
+[Cheats/Diver's Monthly]
+// patch=1,EE,004B8216,extended,00000001
+
+[Cheats/Combination Manual]
+// patch=1,EE,004B8218,extended,00000001
+
+[Cheats/Secrets Of Shells]
+// patch=1,EE,004B821B,extended,00000001
+
+[Cheats/Poems Of B. Saxon 1]
+// patch=1,EE,004B821F,extended,00000001
+
+[Cheats/Poems Of B. Saxon 2]
+// patch=1,EE,004B8221,extended,00000001
+
+[Cheats/Poems Of B. Saxon 3]
+// patch=1,EE,004B8225,extended,00000001
+
+[Cheats/Poems Of B. Saxon 4]
+// patch=1,EE,004B8228,extended,00000001
+
+[Cheats/Poems Of B. Saxon 5]
+// patch=1,EE,004B822A,extended,00000001
+
+[Cheats/Nala's Dad's Diary]
+// patch=1,EE,004B822E,extended,00000001
+
+[Cheats/Andrea's Note]
+// patch=1,EE,004B8230,extended,00000001
+
+[Cheats/Letter From Arika]
+// patch=1,EE,004B8233,extended,00000001
+
+[Cheats/Aquarium Plans]
+// patch=1,EE,004B8237,extended,00000001
+
+[Cheats/Aquar. Renovation]
+// patch=1,EE,004B8239,extended,00000001
+
+[Cheats/House Plans]
+// patch=1,EE,004B823D,extended,00000001
+
+[Cheats/Hotel Plans]
+// patch=1,EE,004B8240,extended,00000001
+
+[Cheats/Boat Custom Plans]
+// patch=1,EE,004B8242,extended,00000001
+
+[Cheats/Fast Boat Plans]
+// patch=1,EE,004B8246,extended,00000001
+
+[Cheats/Ocean Boat Plans]
+// patch=1,EE,004B8248,extended,00000001
+
+[Cheats/Studio Plans]
+// patch=1,EE,004B824B,extended,00000001
+
+[Cheats/Radio Station Plan]
+// patch=1,EE,004B824F,extended,00000001
+
+[Cheats/Stand Repair Notes]
+// patch=1,EE,004B8251,extended,00000001
+
+[Cheats/Seawater]
+// patch=1,EE,004B8255,extended,00000063
+// patch=1,EE,004B8257,extended,00000001
+
+[Cheats/Olive Oil]
+// patch=1,EE,004B8258,extended,00000063
+// patch=1,EE,004B825A,extended,00000001
+
+[Cheats/Oxidized Alcohol]
+// patch=1,EE,004B825B,extended,00000063
+// patch=1,EE,004B825D,extended,00000001
+
+[Cheats/Kill Kwik]
+// patch=1,EE,004B825E,extended,00000063
+// patch=1,EE,004B8260,extended,00000001
+
+[Cheats/High And Low]
+// patch=1,EE,004B8261,extended,00000063
+// patch=1,EE,004B8263,extended,00000001
+
+[Cheats/Expired Mega-ade]
+// patch=1,EE,004B8264,extended,00000063
+// patch=1,EE,004B8266,extended,00000001
+
+[Cheats/Mega-ade 300]
+// patch=1,EE,004B8267,extended,00000063
+// patch=1,EE,004B8269,extended,00000001
+
+[Cheats/Mega-ade 500]
+// patch=1,EE,004B826A,extended,00000063
+// patch=1,EE,004B826C,extended,00000001
+
+[Cheats/Mega-ade 1000]
+// patch=1,EE,004B826D,extended,00000063
+// patch=1,EE,004B826F,extended,00000001
+
+[Cheats/Mega-ade 2000]
+// patch=1,EE,004B8270,extended,00000063
+// patch=1,EE,004B8272,extended,00000001
+
+[Cheats/Mega-ade 4000]
+// patch=1,EE,004B8273,extended,00000063
+// patch=1,EE,004B8275,extended,00000001
+
+[Cheats/Mega-ade 8000]
+// patch=1,EE,004B8276,extended,00000063
+// patch=1,EE,004B8278,extended,00000001
+
+[Cheats/Supertonic]
+// patch=1,EE,004B8279,extended,00000063
+// patch=1,EE,004B827B,extended,00000001
+
+[Cheats/Supertonic Dash]
+// patch=1,EE,004B827C,extended,00000063
+// patch=1,EE,004B827E,extended,00000001
+
+[Cheats/Supertonic Turbo]
+// patch=1,EE,004B827F,extended,00000063
+// patch=1,EE,004B8281,extended,00000001
+
+[Cheats/Supertonic Extra]
+// patch=1,EE,004B8282,extended,00000063
+// patch=1,EE,004B8284,extended,00000001
+
+[Cheats/Supertonic X]
+// patch=1,EE,004B8285,extended,00000063
+// patch=1,EE,004B8287,extended,00000001
+
+[Cheats/Roaring Tiger]
+// patch=1,EE,004B8288,extended,00000063
+// patch=1,EE,004B828A,extended,00000001
+
+[Cheats/Snake Bite]
+// patch=1,EE,004B828B,extended,00000063
+// patch=1,EE,004B828D,extended,00000001
+
+[Cheats/Ninja Rush]
+// patch=1,EE,004B828E,extended,00000063
+// patch=1,EE,004B8290,extended,00000001
+
+[Cheats/Killer Spider]
+// patch=1,EE,004B8291,extended,00000063
+// patch=1,EE,004B8293,extended,00000001
+
+[Cheats/Scorpion's Tail]
+// patch=1,EE,004B8294,extended,00000063
+// patch=1,EE,004B8296,extended,00000001
+
+[Cheats/Water]
+// patch=1,EE,004B8297,extended,00000063
+// patch=1,EE,004B8299,extended,00000001
+
+[Cheats/Deep Seawater]
+// patch=1,EE,004B829A,extended,00000063
+// patch=1,EE,004B829C,extended,00000001
+
+[Cheats/Negative Ion Water]
+// patch=1,EE,004B829D,extended,00000063
+// patch=1,EE,004B829F,extended,00000001
+
+[Cheats/Mineral Water]
+// patch=1,EE,004B82A0,extended,00000063
+// patch=1,EE,004B82A2,extended,00000001
+
+[Cheats/Acetic Anhydride]
+// patch=1,EE,004B82A3,extended,00000063
+// patch=1,EE,004B82A5,extended,00000001
+
+[Cheats/Mercury]
+// patch=1,EE,004B82A6,extended,00000063
+// patch=1,EE,004B82A8,extended,00000001
+
+[Cheats/Yellow Paint]
+// patch=1,EE,004B82A9,extended,00000063
+// patch=1,EE,004B82AB,extended,00000001
+
+[Cheats/Serum Syringe]
+// patch=1,EE,004B82AC,extended,00000063
+// patch=1,EE,004B82AE,extended,00000001
+
+[Cheats/Disinfectant]
+// patch=1,EE,004B82AF,extended,00000063
+// patch=1,EE,004B82B1,extended,00000001
+
+[Cheats/Ion Ring]
+// patch=1,EE,004B82B2,extended,00000063
+// patch=1,EE,004B82B4,extended,00000001
+
+[Cheats/Royal Ampoule]
+// patch=1,EE,004B82BB,extended,00000063
+// patch=1,EE,004B82BD,extended,00000001
+
+[Cheats/Beryl Knife]
+// patch=1,EE,004B82BE,extended,00000063
+// patch=1,EE,004B82C0,extended,00000001

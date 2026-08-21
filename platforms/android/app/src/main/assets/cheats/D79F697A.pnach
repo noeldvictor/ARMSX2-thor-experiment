@@ -1,0 +1,138 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Capcom Vs. SNK 2 [SLPM-65047] [D79F697A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P2 Never Wins]
+// patch=1,EE,F0100008,extended,0010DE8F
+
+[Cheats/Max Groove Points]
+// patch=1,EE,20481CB0,extended,0098967F
+
+[Cheats/Have S. Akuma & U. Rugal]
+// patch=1,EE,103F2514,extended,0000FFFF
+
+[Cheats/P1 Infinite Health]
+// patch=1,EE,204818C4,extended,36003600
+// patch=1,EE,104818C8,extended,00003600
+
+[Cheats/P1 Super Jumping Ability]
+// patch=1,EE,D04817C2,extended,00300030
+// patch=1,EE,104817C2,extended,000000C0
+
+[Cheats/P1 Large Jumps]
+// patch=1,EE,1048181C,extended,00001000
+
+[Cheats/P1 Very Large Jumps]
+// patch=1,EE,1048181C,extended,0000F000
+
+[Cheats/P1 Infinite Groove Time]
+// patch=1,EE,20481988,extended,000003E8
+
+[Cheats/P1 No Groove Time]
+// patch=1,EE,20481988,extended,00000000
+
+[Cheats/P1 Infinite Guard Crash]
+// patch=1,EE,10481928,extended,00003030
+
+[Cheats/P1 No Guard Crash]
+// patch=1,EE,10481928,extended,00000000
+
+[Cheats/P1 No Groove]
+// patch=1,EE,20481960,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Warp Left]
+// patch=1,EE,D045F852,extended,0000FEFE
+// patch=1,EE,104817BE,extended,0000FE00
+
+[Cheats/P1 Press {L1}+{SELECT} To Warp Right]
+// patch=1,EE,D045F852,extended,0000FBFE
+// patch=1,EE,104817BE,extended,00000200
+
+[Cheats/P1 Press {L1}+{L1}+{SELECT} To Warp Middle]
+// patch=1,EE,D045F852,extended,0000FAFE
+// patch=1,EE,104817BE,extended,00000000
+
+[Cheats/P2 Infinite Health]
+// patch=1,EE,20481E94,extended,36003600
+// patch=1,EE,10481E98,extended,00003600
+
+[Cheats/P2 Super Jumping Ability]
+// patch=1,EE,D0481D92,extended,00300030
+// patch=1,EE,10481D92,extended,000000C0
+
+[Cheats/P2 Large Jumps]
+// patch=1,EE,10481DEC,extended,00001000
+
+[Cheats/P2 Very Large Jumps]
+// patch=1,EE,10481DEC,extended,0000F000
+
+[Cheats/P2 Infinite Groove Time]
+// patch=1,EE,20481F58,extended,000003E8
+
+[Cheats/P2 No Groove Time]
+// patch=1,EE,20481F58,extended,00000000
+
+[Cheats/P2 Infinite Guard Crash]
+// patch=1,EE,10481EF8,extended,00003030
+
+[Cheats/P2 No Guard Crash]
+// patch=1,EE,10481EF8,extended,00000000
+
+[Cheats/P2 No Groove]
+// patch=1,EE,20481F30,extended,00000000
+
+[Cheats/P2 Press {L2}+{SELECT} To Warp Left]
+// patch=1,EE,D045F7F2,extended,0000FEFE
+// patch=1,EE,10481D8E,extended,0000FE00
+
+[Cheats/P2 Press {L1}+{SELECT} To Warp Right]
+// patch=1,EE,D045F7F2,extended,0000FBFE
+// patch=1,EE,10481D9E,extended,00000200
+
+[Cheats/P2 Press {L1}+{L1}+{SELECT} To Warp Middle]
+// patch=1,EE,D045F7F2,extended,0000FAFE
+// patch=1,EE,10481D8E,extended,00000000
+
+[Cheats/P1 Can Throw Anywhere, P2 Cant Throw At All]
+// patch=1,EE,202965F0,extended,03E00008
+// patch=1,EE,202965F4,extended,0085102B
+
+[Cheats/P2 Can Throw Anywhere, P1 Cant Throw At All]
+// patch=1,EE,202965F0,extended,03E00008
+// patch=1,EE,202965F4,extended,00A4102B
+
+[Cheats/P1 Can Hit Anywhere, P2 Cant Hit At All]
+// patch=1,EE,2014D510,extended,03E00008
+// patch=1,EE,2014D514,extended,0085102B
+// patch=1,EE,2014D630,extended,03E00008
+// patch=1,EE,2014D634,extended,0085102B
+
+[Cheats/P2 Can Hit Anywhere, P1 Cant Hit At All]
+// patch=1,EE,2014D510,extended,03E00008
+// patch=1,EE,2014D514,extended,00A4102B
+// patch=1,EE,2014D630,extended,03E00008
+// patch=1,EE,2014D634,extended,00A4102B
+
+[Cheats/Throw Anywhere (Both Players)]
+// patch=1,EE,20296694,extended,24020001
+
+[Cheats/Hit Anywhere (P1 Only)]
+// patch=1,EE,201464C8,extended,0232102B
+// patch=1,EE,201464CC,extended,14400024
+
+[Cheats/Hit Anywhere (P2 Only)]
+// patch=1,EE,201464C8,extended,0232102B
+// patch=1,EE,201464CC,extended,10400024
+
+[Cheats/Hit Anywhere (Both Players)]
+// patch=1,EE,201464CC,extended,00000000
+
+[Cheats/All Attacks Hurt P1]
+// patch=1,EE,2014BB08,extended,3C010048
+// patch=1,EE,2014BB14,extended,842418C4
+// patch=1,EE,2014BB20,extended,A42318C4
+
+[Cheats/All Attacks Hurt P2]
+// patch=1,EE,2014BB08,extended,3C010048
+// patch=1,EE,2014BB14,extended,84241E94
+// patch=1,EE,2014BB20,extended,A4231E94

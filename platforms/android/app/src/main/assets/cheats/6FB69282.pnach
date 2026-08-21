@@ -1,0 +1,50 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: God Hand [SLUS-21503] [6FB69282]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Disable Fog Of War]
+// patch=1,EE,90397D48,extended,00832021
+
+[Cheats/Infinite Life]
+// patch=1,EE,202C3554,extended,84410548
+// patch=1,EE,202C355C,extended,A441054A
+
+[Cheats/Max Gold]
+// patch=1,EE,205686F0,extended,000F423F
+
+[Cheats/Max Lv 1]
+// patch=1,EE,1056875C,extended,0000270F
+
+[Cheats/Max Lv 2]
+// patch=1,EE,1056875E,extended,0000270F
+
+[Cheats/Max Lv 3]
+// patch=1,EE,10568760,extended,0000270F
+
+[Cheats/Max Lv 4]
+// patch=1,EE,10568764,extended,0000270F
+
+[Cheats/Infinite Roulette Orbs]
+// patch=1,EE,20568778,extended,01010101
+
+[Cheats/Have All Roulette]
+// patch=1,EE,20568800,extended,FFFFFFFF
+
+[Cheats/Max Tension Gauge]
+// patch=1,EE,205CB000,extended,43480000
+
+[Cheats/Infinite Tension Gauge]
+// patch=1,EE,205CB004,extended,43480000
+
+[Cheats/Always Max Difficulty Level Mete]
+// patch=1,EE,105686EC,extended,00001400
+
+[Cheats/Always Low Difficulty Level Meter]
+// patch=1,EE,105686EC,extended,00000000
+
+[Cheats/Always Low Play Time]
+// patch=1,EE,2061A990,extended,00000000
+
+[Cheats/Have All Techniques]
+// patch=1,EE,202C912C,extended,34420007
+// patch=1,EE,202C9130,extended,AC62000C

@@ -1,0 +1,31 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Kill Switch [SLUS-20706] [ECC849C5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Auditorium]
+// patch=1,EE,9035D30C,extended,0C0E0745
+
+[Cheats/Infinite Health]
+// patch=1,EE,2018DF40,extended,8E411330
+// patch=1,EE,2018DF48,extended,AE41132C
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20250790,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,20250788,extended,00461021
+
+[Cheats/Never Reload]
+// patch=1,EE,2025021C,extended,00000000
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,2018B6DC,extended,00000000
+
+[Cheats/Extra Grenades]
+// patch=1,EE,1018B6D8,extended,00000001
+
+[Cheats/Infinite Time (Timed Missions)]
+// patch=1,EE,202015D4,extended,00000000
+
+[Cheats/Unlock Mission Select (Main Menu)]
+// patch=1,EE,203CD5AC,extended,00000024

@@ -1,0 +1,176 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Fight Club [SLUS-20857] [7AB8929F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No. 37, 38 & 39]
+// patch=1,EE,903039B0,extended,0C0C4C53
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,20328630,extended,43FA0000
+// patch=1,EE,20328638,extended,43FA0000
+// patch=1,EE,20328640,extended,43FA0000
+
+[Cheats/75% Health P1]
+// patch=1,EE,20328630,extended,43FA0000
+// patch=1,EE,E00243BB,extended,3032863A
+// patch=1,EE,20328638,extended,43BB8000
+// patch=1,EE,20328640,extended,43BB8000
+
+[Cheats/50% Health P1]
+// patch=1,EE,20328630,extended,43FA0000
+// patch=1,EE,E002437A,extended,3032863A
+// patch=1,EE,20328638,extended,437A0000
+// patch=1,EE,20328640,extended,437A0000
+
+[Cheats/25% Health P1]
+// patch=1,EE,20328630,extended,43FA0000
+// patch=1,EE,E00242FA,extended,3032863A
+// patch=1,EE,20328638,extended,42FA0000
+// patch=1,EE,20328640,extended,42FA0000
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,20328630,extended,43FA0000
+// patch=1,EE,E0023F80,extended,3032863A
+// patch=1,EE,20328638,extended,3F800000
+// patch=1,EE,20328640,extended,3F800000
+
+[Cheats/No Health P1]
+// patch=1,EE,20328630,extended,43FA0000
+// patch=1,EE,20328638,extended,00000000
+// patch=1,EE,20328640,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,20328634,extended,43FA0000
+// patch=1,EE,2032863C,extended,43FA0000
+// patch=1,EE,20328644,extended,43FA0000
+
+[Cheats/75% Health P2]
+// patch=1,EE,20328634,extended,43FA0000
+// patch=1,EE,E00243BB,extended,3032863E
+// patch=1,EE,2032863C,extended,43BB8000
+// patch=1,EE,20328644,extended,43BB8000
+
+[Cheats/50% Health P2]
+// patch=1,EE,20328634,extended,43FA0000
+// patch=1,EE,E002437A,extended,3032863E
+// patch=1,EE,2032863C,extended,437A0000
+// patch=1,EE,20328644,extended,437A0000
+
+[Cheats/25% Health P2]
+// patch=1,EE,20328634,extended,43FA0000
+// patch=1,EE,E00242FA,extended,3032863E
+// patch=1,EE,2032863C,extended,42FA0000
+// patch=1,EE,20328644,extended,42FA0000
+
+[Cheats/1-Hit Death P2]
+// patch=1,EE,20328634,extended,43FA0000
+// patch=1,EE,E0023F80,extended,3032863E
+// patch=1,EE,2032863C,extended,3F800000
+// patch=1,EE,20328644,extended,3F800000
+
+[Cheats/No Health P2]
+// patch=1,EE,20328634,extended,43FA0000
+// patch=1,EE,2032863C,extended,00000000
+// patch=1,EE,20328644,extended,00000000
+
+[Cheats/Hella Starting CDP's]
+// patch=1,EE,201377AC,extended,3C0205F6
+// patch=1,EE,20132594,extended,3C0805F5
+
+[Cheats/Infinite CDP's]
+// patch=1,EE,10905EF0,extended,0000FFFF
+
+[Cheats/Max CDP's]
+// patch=1,EE,20905EF0,extended,05F5E0FF
+
+[Cheats/Buying Statistics Never Decreases CDP's]
+// patch=1,EE,20132AC8,extended,00000000
+
+[Cheats/Buying Statistics Increases CDP's]
+// patch=1,EE,20132AC0,extended,00451021
+
+[Cheats/Max Strength]
+// patch=1,EE,20905F64,extended,00000064
+
+[Cheats/Max Endurance]
+// patch=1,EE,20905F68,extended,00000064
+
+[Cheats/Max Speed]
+// patch=1,EE,20905F6C,extended,00000064
+
+[Cheats/Max Technique]
+// patch=1,EE,20905F70,extended,00000064
+
+[Cheats/Max All Stats]
+// patch=1,EE,40905F64,extended,00040001
+// patch=1,EE,00000064,extended,00000000
+
+[Cheats/Super Max Strength]
+// patch=1,EE,20905F64,extended,000003E8
+
+[Cheats/Super Max Endurance]
+// patch=1,EE,20905F68,extended,000003E8
+
+[Cheats/Super Max Speed]
+// patch=1,EE,20905F6C,extended,000003E8
+
+[Cheats/Super Max Technique]
+// patch=1,EE,20905F70,extended,000003E8
+
+[Cheats/Super Max All Stats]
+// patch=1,EE,40905F64,extended,00040001
+// patch=1,EE,00000064,extended,00000000
+
+[Cheats/Tyler]
+// patch=1,EE,2046E3D4,extended,00000001
+
+[Cheats/Jack]
+// patch=1,EE,2046E3D8,extended,00000001
+
+[Cheats/Bob]
+// patch=1,EE,2046E3DC,extended,00000001
+
+[Cheats/Angel Face]
+// patch=1,EE,2046E3E0,extended,00000001
+
+[Cheats/Irvin]
+// patch=1,EE,2046E3E4,extended,00000001
+
+[Cheats/Mechanic]
+// patch=1,EE,2046E3E8,extended,00000001
+
+[Cheats/Ricky]
+// patch=1,EE,2046E3EC,extended,00000001
+
+[Cheats/Lou]
+// patch=1,EE,2046E3F0,extended,00000001
+
+[Cheats/Raymond]
+// patch=1,EE,2046E3F4,extended,00000001
+
+[Cheats/Detective Stern]
+// patch=1,EE,2046E3F8,extended,00000001
+
+[Cheats/Fred]
+// patch=1,EE,2046E3FC,extended,00000001
+// patch=1,EE,2046E434,extended,00000001
+
+[Cheats/Halo]
+// patch=1,EE,2046E400,extended,00000001
+// patch=1,EE,2046E438,extended,00000001
+
+[Cheats/Abe]
+// patch=1,EE,2046E404,extended,00000001
+// patch=1,EE,2046E43C,extended,00000001
+
+[Cheats/Chesler]
+// patch=1,EE,2046E408,extended,00000001
+// patch=1,EE,2046E440,extended,00000001
+
+[Cheats/All Movies]
+// patch=1,EE,4046E3D4,extended,000E0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/All Characters]
+// patch=1,EE,4046E434,extended,00040001
+// patch=1,EE,00000001,extended,00000000

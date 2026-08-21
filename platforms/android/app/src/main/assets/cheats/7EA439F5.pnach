@@ -1,0 +1,36 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Grand Theft Auto - Liberty City Stories [UNKNOWN] [7EA439F5]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Freeze Daily Time]
+// patch=1,EE,201F88C0,extended,03E00008
+// patch=1,EE,201F88C4,extended,00000000
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,202A2DD0,extended,00000000
+// patch=1,EE,202A2E34,extended,00000000
+
+[Cheats/Infinite Ammo In Vehicles]
+// patch=1,EE,202A31C8,extended,00000000
+// patch=1,EE,202A3228,extended,00000000
+
+[Cheats/Infinite Armor]
+// patch=1,EE,200C0230,extended,3C0142C8
+// patch=1,EE,200C0234,extended,AC6104BC
+// patch=1,EE,200C0238,extended,08090263
+// patch=1,EE,200C023C,extended,C46004BC
+// patch=1,EE,20240988,extended,0803008C
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,3C0142C8
+// patch=1,EE,200C0224,extended,AC6104B8
+// patch=1,EE,200C0228,extended,0809022F
+// patch=1,EE,200C022C,extended,C46004B8
+// patch=1,EE,202408B8,extended,08030088
+
+[Cheats/Infinite Run]
+// patch=1,EE,20408FAC,extended,00000001
+
+[Cheats/Max Money]
+// patch=1,EE,20408EFC,extended,05F5E0FF
+// patch=1,EE,20408F00,extended,05F5E0FF

@@ -1,0 +1,354 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Indigo Prophecy [SLUS-21196] [A7A37EB8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Access All Levels]
+// patch=1,EE,9038F5D0,extended,00832021
+// patch=1,EE,200C0200,extended,3C030087
+// patch=1,EE,200C0204,extended,8C63F1BC
+// patch=1,EE,200C0208,extended,1060007B
+// patch=1,EE,200C020C,extended,24040001
+// patch=1,EE,200C03F8,extended,03E00008
+// patch=1,EE,2038F614,extended,08030080
+
+[Cheats/Max Mental Status (Tyler Miles)]
+// patch=1,EE,200C0210,extended,24010064
+// patch=1,EE,200C0214,extended,AC6100A4
+
+[Cheats/Max Mental Status (Carla Valenti)]
+// patch=1,EE,200C0218,extended,24010064
+// patch=1,EE,200C021C,extended,AC6100A8
+
+[Cheats/Max Mental Status (Lucas Kane)]
+// patch=1,EE,200C0220,extended,24010064
+// patch=1,EE,200C0224,extended,AC6100BC
+
+[Cheats/Max Bonus Points]
+// patch=1,EE,200C0228,extended,3C010001
+// patch=1,EE,200C022C,extended,3421869F
+// patch=1,EE,200C0230,extended,AC6100AC
+
+[Cheats/Infinite Lives]
+// patch=1,EE,200C0234,extended,24010006
+// patch=1,EE,200C0238,extended,AC6100C4
+
+[Cheats/Chapter 1]
+// patch=1,EE,200C024C,extended,A0640840
+
+[Cheats/Chapter 2]
+// patch=1,EE,200C0250,extended,A0640841
+
+[Cheats/Chapter 3]
+// patch=1,EE,200C0254,extended,A0640842
+
+[Cheats/Chapter 4]
+// patch=1,EE,200C0258,extended,A0640843
+
+[Cheats/Chapter 5]
+// patch=1,EE,200C025C,extended,A0640844
+
+[Cheats/Chapter 6]
+// patch=1,EE,200C0260,extended,A0640845
+
+[Cheats/Chapter 7]
+// patch=1,EE,200C0264,extended,A0640846
+
+[Cheats/Chapter 8]
+// patch=1,EE,200C0268,extended,A0640847
+
+[Cheats/Chapter 9]
+// patch=1,EE,200C026C,extended,A0640848
+
+[Cheats/Chapter 10]
+// patch=1,EE,200C0270,extended,A0640849
+
+[Cheats/Chapter 11]
+// patch=1,EE,200C0274,extended,A064084A
+
+[Cheats/Chapter 12]
+// patch=1,EE,200C0278,extended,A064084B
+
+[Cheats/Chapter 13]
+// patch=1,EE,200C027C,extended,A064084C
+
+[Cheats/Chapter 14]
+// patch=1,EE,200C0280,extended,A064084D
+
+[Cheats/Chapter 15]
+// patch=1,EE,200C0284,extended,A064084E
+
+[Cheats/Chapter 16]
+// patch=1,EE,200C0288,extended,A064084F
+
+[Cheats/Chapter 17]
+// patch=1,EE,200C028C,extended,A0640850
+
+[Cheats/Chapter 18]
+// patch=1,EE,200C0290,extended,A0640851
+
+[Cheats/Chapter 19]
+// patch=1,EE,200C0294,extended,A0640852
+
+[Cheats/Chapter 20]
+// patch=1,EE,200C0298,extended,A0640853
+
+[Cheats/Chapter 21]
+// patch=1,EE,200C029C,extended,A0640854
+
+[Cheats/Chapter 22]
+// patch=1,EE,200C02A0,extended,A0640855
+
+[Cheats/Chapter 23]
+// patch=1,EE,200C02A4,extended,A0640856
+
+[Cheats/Chapter 24]
+// patch=1,EE,200C02A8,extended,A0640857
+
+[Cheats/Chapter 25]
+// patch=1,EE,200C02AC,extended,A0640858
+
+[Cheats/Chapter 26]
+// patch=1,EE,200C02B0,extended,A0640859
+
+[Cheats/Chapter 27]
+// patch=1,EE,200C02B4,extended,A064085A
+
+[Cheats/Chapter 28]
+// patch=1,EE,200C02B8,extended,A064085B
+
+[Cheats/Chapter 29]
+// patch=1,EE,200C02BC,extended,A064085C
+
+[Cheats/Chapter 30]
+// patch=1,EE,200C02C0,extended,A064085D
+
+[Cheats/Boxing]
+// patch=1,EE,200C02C4,extended,A064088C
+
+[Cheats/Car Chase]
+// patch=1,EE,200C02C8,extended,A064088D
+
+[Cheats/Shooting Gallery]
+// patch=1,EE,200C02CC,extended,A064088E
+
+[Cheats/Basketball Match]
+// patch=1,EE,200C02D0,extended,A064088F
+
+[Cheats/Angels]
+// patch=1,EE,200C02D4,extended,A0640890
+
+[Cheats/Da Hidden Dancefloor]
+// patch=1,EE,200C02D8,extended,A0640891
+
+[Cheats/Ice Skate Contest]
+// patch=1,EE,200C02DC,extended,A0640892
+
+[Cheats/Artwork #1]
+// patch=1,EE,200C02E0,extended,A0640898
+
+[Cheats/Artwork #2]
+// patch=1,EE,200C02E4,extended,A0640899
+
+[Cheats/Artwork #3]
+// patch=1,EE,200C02E8,extended,A064089A
+
+[Cheats/Artwork #4]
+// patch=1,EE,200C02EC,extended,A064089B
+
+[Cheats/Artwork #5]
+// patch=1,EE,200C02F0,extended,A064089C
+
+[Cheats/Artwork #6]
+// patch=1,EE,200C02F4,extended,A064089D
+
+[Cheats/Artwork #7]
+// patch=1,EE,200C02F8,extended,A064089E
+
+[Cheats/Artwork #8]
+// patch=1,EE,200C02FC,extended,A064089F
+
+[Cheats/Artwork #9]
+// patch=1,EE,200C0300,extended,A06408A0
+
+[Cheats/Artwork #10]
+// patch=1,EE,200C0304,extended,A06408A1
+
+[Cheats/Artwork #11]
+// patch=1,EE,200C0308,extended,A06408A2
+
+[Cheats/Artwork #12]
+// patch=1,EE,200C030C,extended,A06408A3
+
+[Cheats/Artwork #13]
+// patch=1,EE,200C0310,extended,A06408A4
+
+[Cheats/Artwork #14]
+// patch=1,EE,200C0314,extended,A06408A5
+
+[Cheats/Artwork #15]
+// patch=1,EE,200C0318,extended,A06408A6
+
+[Cheats/Artwork #16]
+// patch=1,EE,200C031C,extended,A06408A7
+
+[Cheats/Artwork #17]
+// patch=1,EE,200C0320,extended,A06408A8
+
+[Cheats/Artwork #18]
+// patch=1,EE,200C0324,extended,A06408A9
+
+[Cheats/Artwork #19]
+// patch=1,EE,200C0328,extended,A06408AA
+
+[Cheats/Artwork #20]
+// patch=1,EE,200C032C,extended,A06408AB
+
+[Cheats/Artwork #21]
+// patch=1,EE,200C0330,extended,A06408AC
+
+[Cheats/Artwork #22]
+// patch=1,EE,200C0334,extended,A06408AD
+
+[Cheats/Artwork #23]
+// patch=1,EE,200C0338,extended,A06408AE
+
+[Cheats/Artwork #24]
+// patch=1,EE,200C033C,extended,A06408AF
+
+[Cheats/Artwork #25]
+// patch=1,EE,200C0340,extended,A06408B0
+
+[Cheats/Artwork #26]
+// patch=1,EE,200C0344,extended,A06408B1
+
+[Cheats/Artwork #27]
+// patch=1,EE,200C0348,extended,A06408B2
+
+[Cheats/Artwork #28]
+// patch=1,EE,200C034C,extended,A06408B3
+
+[Cheats/Artwork #29]
+// patch=1,EE,200C0350,extended,A06408B4
+
+[Cheats/Artwork #30]
+// patch=1,EE,200C0354,extended,A06408B5
+
+[Cheats/Artwork #31]
+// patch=1,EE,200C0358,extended,A06408B6
+
+[Cheats/Artwork #32]
+// patch=1,EE,200C035C,extended,A06408B7
+
+[Cheats/Artwork #33]
+// patch=1,EE,200C0360,extended,A06408B8
+
+[Cheats/Artwork #34]
+// patch=1,EE,200C0364,extended,A06408B9
+
+[Cheats/Artwork #35]
+// patch=1,EE,200C0368,extended,A06408BA
+
+[Cheats/Artwork #36]
+// patch=1,EE,200C036C,extended,A06408BB
+
+[Cheats/Artwork #37]
+// patch=1,EE,200C0370,extended,A06408BC
+
+[Cheats/Artwork #38]
+// patch=1,EE,200C0374,extended,A06408BD
+
+[Cheats/Artwork #39]
+// patch=1,EE,200C0378,extended,A06408BE
+
+[Cheats/Artwork #40]
+// patch=1,EE,200C037C,extended,A06408BF
+
+[Cheats/Artwork #41]
+// patch=1,EE,200C0380,extended,A06408C0
+
+[Cheats/Artwork #42]
+// patch=1,EE,200C0384,extended,A06408C1
+
+[Cheats/Artwork #43]
+// patch=1,EE,200C0388,extended,A06408C2
+
+[Cheats/Artwork #44]
+// patch=1,EE,200C038C,extended,A06408C3
+
+[Cheats/Artwork #45]
+// patch=1,EE,200C0390,extended,A06408C4
+
+[Cheats/Artwork #46]
+// patch=1,EE,200C0394,extended,A06408C5
+
+[Cheats/Artwork #47]
+// patch=1,EE,200C0398,extended,A06408C6
+
+[Cheats/Sam's Dance]
+// patch=1,EE,200C039C,extended,A06408D4
+
+[Cheats/Takeo's Hide & Seek]
+// patch=1,EE,200C03A0,extended,A06408D5
+
+[Cheats/Fist Of Takeo]
+// patch=1,EE,200C03A4,extended,A06408D6
+
+[Cheats/Making-Of Teaser]
+// patch=1,EE,200C03A8,extended,A06408D7
+
+[Cheats/The Motion Capture]
+// patch=1,EE,200C03AC,extended,A06408D8
+
+[Cheats/The Settings]
+// patch=1,EE,200C03B0,extended,A06408D9
+
+[Cheats/The Voices]
+// patch=1,EE,200C03B4,extended,A06408DA
+
+[Cheats/The Characters]
+// patch=1,EE,200C03B8,extended,A06408DB
+
+[Cheats/Character Gallery]
+// patch=1,EE,200C03BC,extended,A06408DC
+
+[Cheats/Theory Of A Dead Man-Santa Monica]
+// patch=1,EE,200C03C0,extended,A064087C
+
+[Cheats/Theory Of A Dead Man-Say Goodbye]
+// patch=1,EE,200C03C4,extended,A064087D
+
+[Cheats/Theory Of A Dead Man-No Way Out]
+// patch=1,EE,200C03C8,extended,A064087E
+
+[Cheats/Theory Of A Dead Man-No Surprise]
+// patch=1,EE,200C03CC,extended,A064087F
+
+[Cheats/Teddy Pendergrass-Love TKO]
+// patch=1,EE,200C03D0,extended,A0640880
+
+[Cheats/Ben E. King-Street Tough]
+// patch=1,EE,200C03D4,extended,A0640881
+
+[Cheats/Patrice Rushen-Hang It Up]
+// patch=1,EE,200C03D8,extended,A0640882
+
+[Cheats/Bobby Byrd-Try It Again]
+// patch=1,EE,200C03DC,extended,A0640883
+
+[Cheats/Society's Bag-Let It Crawl]
+// patch=1,EE,200C03E0,extended,A0640884
+
+[Cheats/Leee John-Just An Illusion]
+// patch=1,EE,200C03E4,extended,A0640885
+
+[Cheats/Angelo Badalamenti-Lucas' Main Theme]
+// patch=1,EE,200C03E8,extended,A0640886
+
+[Cheats/Angelo Badalamenti-Carla's Main Theme]
+// patch=1,EE,200C03EC,extended,A0640887
+
+[Cheats/Nina Simone-No Good Man]
+// patch=1,EE,200C03F0,extended,A0640888
+
+[Cheats/Martina Topley-Bird-Sandpaper Kisses]
+// patch=1,EE,200C03F4,extended,A0640889

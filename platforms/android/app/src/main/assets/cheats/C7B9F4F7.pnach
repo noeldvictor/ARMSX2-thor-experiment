@@ -1,0 +1,597 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Eternal Ring [SLUS-20015] [C7B9F4F7]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/The Throne Room]
+// patch=1,EE,901D67E8,extended,0C07A697
+
+[Cheats/Level 99]
+// patch=1,EE,101FF890,extended,00000063
+
+[Cheats/Infinite HP]
+// patch=1,EE,101FF894,extended,000003E7
+
+[Cheats/Max HP]
+// patch=1,EE,101FF896,extended,000003E7
+
+[Cheats/Infinite MP]
+// patch=1,EE,101FF898,extended,000003E7
+
+[Cheats/Max MP]
+// patch=1,EE,101FF89A,extended,000003E7
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,101FF89C,extended,0000FFFF
+
+[Cheats/Max Exp]
+// patch=1,EE,201FF89C,extended,05F5E0FF
+
+[Cheats/Quick Level Up]
+// patch=1,EE,201FF8A8,extended,00000001
+
+[Cheats/Max Fire]
+// patch=1,EE,101FF8C0,extended,000003E7
+
+[Cheats/Max Earth]
+// patch=1,EE,101FF8C2,extended,000003E7
+
+[Cheats/Max Wind]
+// patch=1,EE,101FF8C4,extended,000003E7
+
+[Cheats/Max Water]
+// patch=1,EE,101FF8C6,extended,000003E7
+
+[Cheats/Max Light]
+// patch=1,EE,101FF8C8,extended,000003E7
+
+[Cheats/Max Dark]
+// patch=1,EE,101FF8CA,extended,000003E7
+
+[Cheats/Max Str]
+// patch=1,EE,101FF8CC,extended,000003E7
+
+[Cheats/Unknown? (Japanese)]
+// patch=1,EE,0021E730,extended,00000001
+// patch=1,EE,0021E740,extended,00000001
+// patch=1,EE,0021E7C0,extended,00000001
+// patch=1,EE,0021E825,extended,00000001
+// patch=1,EE,0021E840,extended,00000001
+
+[Cheats/Small Sword]
+// patch=1,EE,0021E831,extended,00000001
+
+[Cheats/Knife]
+// patch=1,EE,0021E832,extended,00000001
+
+[Cheats/Cinquedea]
+// patch=1,EE,0021E833,extended,00000001
+
+[Cheats/Stiletto]
+// patch=1,EE,0021E834,extended,00000001
+
+[Cheats/Rapier]
+// patch=1,EE,0021E835,extended,00000001
+
+[Cheats/Unknown 2? (Japanese)]
+// patch=1,EE,0021E836,extended,00000001
+
+[Cheats/Hunting Sword]
+// patch=1,EE,0021E837,extended,00000001
+
+[Cheats/Eternal Sword]
+// patch=1,EE,0021E838,extended,00000001
+
+[Cheats/Kaizer Knuckle]
+// patch=1,EE,0021E839,extended,00000001
+
+[Cheats/Unknown 3? (Japanese)]
+// patch=1,EE,0021E83A,extended,00000001
+
+[Cheats/Unknown 4? (Japanese)]
+// patch=1,EE,0021E83B,extended,00000001
+
+[Cheats/Unknown 5? (Japanese)]
+// patch=1,EE,0021E83C,extended,00000001
+
+[Cheats/Unknown 6? (Japanese)]
+// patch=1,EE,0021E83D,extended,00000001
+
+[Cheats/Unknown 7? (Japanese)]
+// patch=1,EE,0021E83E,extended,00000001
+
+[Cheats/Unknown 8? (Japanese)]
+// patch=1,EE,0021E83F,extended,00000001
+
+[Cheats/All Weapons]
+// patch=1,EE,4021E730,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/King's Scroll]
+// patch=1,EE,0021E741,extended,00000001
+
+[Cheats/Weapon Form]
+// patch=1,EE,0021E742,extended,00000001
+
+[Cheats/Bracelet]
+// patch=1,EE,0021E743,extended,00000001
+
+[Cheats/Water Key]
+// patch=1,EE,0021E744,extended,00000001
+
+[Cheats/Fire Key]
+// patch=1,EE,0021E746,extended,00000001
+
+[Cheats/Wind Key]
+// patch=1,EE,0021E747,extended,00000001
+
+[Cheats/Earth Key]
+// patch=1,EE,0021E748,extended,00000001
+
+[Cheats/Golden Grass]
+// patch=1,EE,0021E773,extended,00000001
+
+[Cheats/Golden Flower]
+// patch=1,EE,0021E774,extended,00000001
+
+[Cheats/Golden Fruit]
+// patch=1,EE,0021E775,extended,00000001
+
+[Cheats/Magic Stone]
+// patch=1,EE,0021E776,extended,00000001
+
+[Cheats/Magic Crystal]
+// patch=1,EE,0021E777,extended,00000001
+
+[Cheats/Max Jewel]
+// patch=1,EE,0021E778,extended,00000001
+
+[Cheats/Dragon Scale]
+// patch=1,EE,0021E779,extended,00000001
+
+[Cheats/Dragon Egg]
+// patch=1,EE,0021E77A,extended,00000001
+
+[Cheats/Rat's Tail]
+// patch=1,EE,0021E77B,extended,00000001
+
+[Cheats/Golden Seed]
+// patch=1,EE,0021E77C,extended,00000001
+
+[Cheats/Sahagin's Thorn]
+// patch=1,EE,0021E77D,extended,00000001
+
+[Cheats/Cockatrice Feather]
+// patch=1,EE,0021E77E,extended,00000001
+
+[Cheats/Dragon Potion]
+// patch=1,EE,0021E77F,extended,00000001
+
+[Cheats/Fire Dragon Fang]
+// patch=1,EE,0021E780,extended,00000001
+
+[Cheats/Earth Dragon Fang]
+// patch=1,EE,0021E781,extended,00000001
+
+[Cheats/Air Dragon Fang]
+// patch=1,EE,0021E782,extended,00000001
+
+[Cheats/Water Dragon Fang]
+// patch=1,EE,0021E783,extended,00000001
+
+[Cheats/Gold Dragon Fang]
+// patch=1,EE,0021E784,extended,00000001
+
+[Cheats/Silver Dragon Fang]
+// patch=1,EE,0021E785,extended,00000001
+
+[Cheats/Elder Dragon Fang]
+// patch=1,EE,0021E786,extended,00000001
+
+[Cheats/All Items]
+// patch=1,EE,2021E740,extended,01010101
+// patch=1,EE,0021E744,extended,00000001
+// patch=1,EE,1021E746,extended,00000101
+// patch=1,EE,0021E748,extended,00000001
+// patch=1,EE,0021E773,extended,00000001
+// patch=1,EE,4021E774,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,1021E784,extended,00000101
+// patch=1,EE,0021E786,extended,00000001
+
+[Cheats/Fire Ball]
+// patch=1,EE,0021E7C1,extended,00000001
+
+[Cheats/Fire Wall]
+// patch=1,EE,0021E7C2,extended,00000001
+
+[Cheats/Floating Bomb]
+// patch=1,EE,0021E7C3,extended,00000001
+
+[Cheats/Bomber]
+// patch=1,EE,0021E7C4,extended,00000001
+
+[Cheats/Silence]
+// patch=1,EE,0021E7C5,extended,00000001
+
+[Cheats/Weaken]
+// patch=1,EE,0021E7C6,extended,00000001
+
+[Cheats/Alter Fire]
+// patch=1,EE,0021E7C7,extended,00000001
+
+[Cheats/Deplete]
+// patch=1,EE,0021E7C8,extended,00000001
+
+[Cheats/Fiery Avenger]
+// patch=1,EE,0021E7C9,extended,00000001
+
+[Cheats/Fire Dragon]
+// patch=1,EE,0021E7CA,extended,00000001
+
+[Cheats/Ring Of Heat]
+// patch=1,EE,0021E7CB,extended,00000001
+
+[Cheats/Ring Of Flame]
+// patch=1,EE,0021E7CC,extended,00000001
+
+[Cheats/Ring Of Inferno]
+// patch=1,EE,0021E7CD,extended,00000001
+
+[Cheats/Wind Heat]
+// patch=1,EE,0021E7CE,extended,00000001
+
+[Cheats/Earth Heat]
+// patch=1,EE,0021E7CF,extended,00000001
+
+[Cheats/Sword Heat]
+// patch=1,EE,0021E7D0,extended,00000001
+
+[Cheats/Water Heat]
+// patch=1,EE,0021E7D1,extended,00000001
+
+[Cheats/Animated Sword]
+// patch=1,EE,0021E7D2,extended,00000001
+
+[Cheats/Power Of Branch]
+// patch=1,EE,0021E7D3,extended,00000001
+
+[Cheats/Burn Edge]
+// patch=1,EE,0021E7D4,extended,00000001
+
+[Cheats/Ice Needle]
+// patch=1,EE,0021E7D5,extended,00000001
+
+[Cheats/Ice Wall]
+// patch=1,EE,0021E7D6,extended,00000001
+
+[Cheats/Ice Trap]
+// patch=1,EE,0021E7D7,extended,00000001
+
+[Cheats/Blizzard]
+// patch=1,EE,0021E7D8,extended,00000001
+
+[Cheats/Healing Water]
+// patch=1,EE,0021E7D9,extended,00000001
+
+[Cheats/Curing Water]
+// patch=1,EE,0021E7DA,extended,00000001
+
+[Cheats/Unpoison]
+// patch=1,EE,0021E7DB,extended,00000001
+
+[Cheats/Purify]
+// patch=1,EE,0021E7DC,extended,00000001
+
+[Cheats/Projectile]
+// patch=1,EE,0021E7DD,extended,00000001
+
+[Cheats/Water Dragon]
+// patch=1,EE,0021E7DE,extended,00000001
+
+[Cheats/Ring Of Rain]
+// patch=1,EE,0021E7DF,extended,00000001
+
+[Cheats/Ring Of Sea]
+// patch=1,EE,0021E7E0,extended,00000001
+
+[Cheats/Ring Of Abyss]
+// patch=1,EE,0021E7E1,extended,00000001
+
+[Cheats/Wind Rain]
+// patch=1,EE,0021E7E2,extended,00000001
+
+[Cheats/Earth Rain]
+// patch=1,EE,0021E7E3,extended,00000001
+
+[Cheats/Sword Rain]
+// patch=1,EE,0021E7E4,extended,00000001
+
+[Cheats/Fire Rain]
+// patch=1,EE,0021E7E5,extended,00000001
+
+[Cheats/Fortune]
+// patch=1,EE,0021E7E6,extended,00000001
+
+[Cheats/Enlightenment]
+// patch=1,EE,0021E7E7,extended,00000001
+
+[Cheats/Sacrifice]
+// patch=1,EE,0021E7E8,extended,00000001
+
+[Cheats/Wind Cutter]
+// patch=1,EE,0021E7E9,extended,00000001
+
+[Cheats/Sonic]
+// patch=1,EE,0021E7EA,extended,00000001
+
+[Cheats/Tornado]
+// patch=1,EE,0021E7EB,extended,00000001
+
+[Cheats/Vortex]
+// patch=1,EE,0021E7EC,extended,00000001
+
+[Cheats/Turbulence]
+// patch=1,EE,0021E7ED,extended,00000001
+
+[Cheats/Confusion]
+// patch=1,EE,0021E7EE,extended,00000001
+
+[Cheats/Invisible]
+// patch=1,EE,0021E7EF,extended,00000001
+
+[Cheats/Bind]
+// patch=1,EE,0021E7F0,extended,00000001
+
+[Cheats/Spear]
+// patch=1,EE,0021E7F1,extended,00000001
+
+[Cheats/Wind Dragon]
+// patch=1,EE,0021E7F2,extended,00000001
+
+[Cheats/Ring Of Breeze]
+// patch=1,EE,0021E7F3,extended,00000001
+
+[Cheats/Ring Of Gust]
+// patch=1,EE,0021E7F4,extended,00000001
+
+[Cheats/Ring Of Storm]
+// patch=1,EE,0021E7F5,extended,00000001
+
+[Cheats/Fire Breeze]
+// patch=1,EE,0021E7F6,extended,00000001
+
+[Cheats/Water Breeze]
+// patch=1,EE,0021E7F7,extended,00000001
+
+[Cheats/Sword Breeze]
+// patch=1,EE,0021E7F8,extended,00000001
+
+[Cheats/Earth Breeze]
+// patch=1,EE,0021E7F9,extended,00000001
+
+[Cheats/Power Of Seek]
+// patch=1,EE,0021E7FA,extended,00000001
+
+[Cheats/Clarity]
+// patch=1,EE,0021E7FB,extended,00000001
+
+[Cheats/Power Of Time]
+// patch=1,EE,0021E7FC,extended,00000001
+
+[Cheats/Material Arrow]
+// patch=1,EE,0021E7FD,extended,00000001
+
+[Cheats/Upheaval]
+// patch=1,EE,0021E7FE,extended,00000001
+
+[Cheats/Poison]
+// patch=1,EE,0021E7FF,extended,00000001
+
+[Cheats/Mist]
+// patch=1,EE,0021E800,extended,00000001
+
+[Cheats/Earth Heal]
+// patch=1,EE,0021E801,extended,00000001
+
+[Cheats/Protect]
+// patch=1,EE,0021E802,extended,00000001
+
+[Cheats/Imprisonment]
+// patch=1,EE,0021E803,extended,00000001
+
+[Cheats/Orbiter]
+// patch=1,EE,0021E804,extended,00000001
+
+[Cheats/Earthy Axe]
+// patch=1,EE,0021E805,extended,00000001
+
+[Cheats/Earth Dragon]
+// patch=1,EE,0021E806,extended,00000001
+
+[Cheats/Ring Of Stone]
+// patch=1,EE,0021E807,extended,00000001
+
+[Cheats/Ring Of Rock]
+// patch=1,EE,0021E808,extended,00000001
+
+[Cheats/Ring Of Nature]
+// patch=1,EE,0021E809,extended,00000001
+
+[Cheats/Fire Stone]
+// patch=1,EE,0021E80A,extended,00000001
+
+[Cheats/Water Stone]
+// patch=1,EE,0021E80B,extended,00000001
+
+[Cheats/Sword Stone]
+// patch=1,EE,0021E80C,extended,00000001
+
+[Cheats/Wind Stone]
+// patch=1,EE,0021E80D,extended,00000001
+
+[Cheats/Ring Of Insight]
+// patch=1,EE,0021E80E,extended,00000001
+
+[Cheats/Power Of Growth]
+// patch=1,EE,0021E80F,extended,00000001
+
+[Cheats/True Sight]
+// patch=1,EE,0021E810,extended,00000001
+
+[Cheats/Divine]
+// patch=1,EE,0021E811,extended,00000001
+
+[Cheats/Thunder]
+// patch=1,EE,0021E812,extended,00000001
+
+[Cheats/Holy Flash]
+// patch=1,EE,0021E813,extended,00000001
+
+[Cheats/Absorb]
+// patch=1,EE,0021E814,extended,00000001
+
+[Cheats/Bless]
+// patch=1,EE,0021E815,extended,00000001
+
+[Cheats/Light Dragon]
+// patch=1,EE,0021E816,extended,00000001
+
+[Cheats/Ring Of Light]
+// patch=1,EE,0021E817,extended,00000001
+
+[Cheats/Ring Of Shine]
+// patch=1,EE,0021E818,extended,00000001
+
+[Cheats/Ring Of Glare]
+// patch=1,EE,0021E819,extended,00000001
+
+[Cheats/Create Life]
+// patch=1,EE,0021E81A,extended,00000001
+
+[Cheats/Banishment]
+// patch=1,EE,0021E81B,extended,00000001
+
+[Cheats/Dark Thunder]
+// patch=1,EE,0021E81C,extended,00000001
+
+[Cheats/Dark Flash]
+// patch=1,EE,0021E81D,extended,00000001
+
+[Cheats/Guardian]
+// patch=1,EE,0021E81E,extended,00000001
+
+[Cheats/Dark Stop]
+// patch=1,EE,0021E81F,extended,00000001
+
+[Cheats/Dark Dragon]
+// patch=1,EE,0021E820,extended,00000001
+
+[Cheats/Ring Of Shadow]
+// patch=1,EE,0021E821,extended,00000001
+
+[Cheats/Ring Of Night]
+// patch=1,EE,0021E822,extended,00000001
+
+[Cheats/Ring Of Chaos]
+// patch=1,EE,0021E823,extended,00000001
+
+[Cheats/Dark Pact]
+// patch=1,EE,0021E824,extended,00000001
+
+[Cheats/Unknown2? (Japanese)]
+// patch=1,EE,0021E826,extended,00000001
+
+[Cheats/Unknown3? (Japanese)]
+// patch=1,EE,0021E827,extended,00000001
+
+[Cheats/Ring Of Magic]
+// patch=1,EE,0021E83F,extended,00000001
+
+[Cheats/All Rings]
+// patch=1,EE,4021E7C0,extended,001A0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,0021E83F,extended,00000001
+
+[Cheats/Glowing Gem]
+// patch=1,EE,0021E841,extended,00000001
+
+[Cheats/Leaf Gem]
+// patch=1,EE,0021E842,extended,00000001
+
+[Cheats/Feather Gem]
+// patch=1,EE,0021E843,extended,00000001
+
+[Cheats/Watery Gem]
+// patch=1,EE,0021E844,extended,00000001
+
+[Cheats/Flame Gem]
+// patch=1,EE,0021E845,extended,00000001
+
+[Cheats/Tree Gem]
+// patch=1,EE,0021E846,extended,00000001
+
+[Cheats/Winged Gem]
+// patch=1,EE,0021E847,extended,00000001
+
+[Cheats/Waterfall Gem]
+// patch=1,EE,0021E848,extended,00000001
+
+[Cheats/Lava Gem]
+// patch=1,EE,0021E849,extended,00000001
+
+[Cheats/Forest Gem]
+// patch=1,EE,0021E84A,extended,00000001
+
+[Cheats/Cloudy Gem]
+// patch=1,EE,0021E84B,extended,00000001
+
+[Cheats/Sea Gem]
+// patch=1,EE,0021E84C,extended,00000001
+
+[Cheats/Sunbeam Gem]
+// patch=1,EE,0021E84D,extended,00000001
+
+[Cheats/Dead Gem]
+// patch=1,EE,0021E84E,extended,00000001
+
+[Cheats/Phoenix Gem]
+// patch=1,EE,0021E84F,extended,00000001
+
+[Cheats/Mountain Gem]
+// patch=1,EE,0021E850,extended,00000001
+
+[Cheats/Tornado Gem]
+// patch=1,EE,0021E851,extended,00000001
+
+[Cheats/Iceberg Gem]
+// patch=1,EE,0021E852,extended,00000001
+
+[Cheats/Divine Gem]
+// patch=1,EE,0021E853,extended,00000001
+
+[Cheats/Ritual Gem]
+// patch=1,EE,0021E854,extended,00000001
+
+[Cheats/Fire Dragon Gem]
+// patch=1,EE,0021E855,extended,00000001
+
+[Cheats/Earth Dragon Gem]
+// patch=1,EE,0021E856,extended,00000001
+
+[Cheats/Wind Dragon Gem]
+// patch=1,EE,0021E857,extended,00000001
+
+[Cheats/Water Dragon Gem]
+// patch=1,EE,0021E858,extended,00000001
+
+[Cheats/Light Dragon Gem]
+// patch=1,EE,0021E859,extended,00000001
+
+[Cheats/Dark Dragon Gem]
+// patch=1,EE,0021E85A,extended,00000001
+
+[Cheats/All Mag Gems]
+// patch=1,EE,4021E840,extended,00060001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,1021E858,extended,00000101
+// patch=1,EE,0021E85A,extended,00000001

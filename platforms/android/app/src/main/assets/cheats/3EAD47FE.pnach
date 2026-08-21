@@ -1,0 +1,12 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Britney's Dance Beat [SLUS-20402] [3EAD47FE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Money]
+// patch=1,EE,902B59A4,extended,0C0B3BAE
+
+[Cheats/Have All Videos]
+// patch=1,EE,10356698,extended,00000006
+
+[Cheats/Max Total Points]
+// patch=1,EE,10356690,extended,0000270F

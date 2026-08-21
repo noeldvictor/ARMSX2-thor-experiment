@@ -1,0 +1,194 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Kuon [SLUS-21007] [9AC63A2E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max All Stats]
+// patch=1,EE,901193A4,extended,0C049E8A
+
+[Cheats/Infinite Health]
+// patch=1,EE,206B2D70,extended,00000064
+
+[Cheats/Always Low Time]
+// patch=1,EE,206B2D74,extended,00000000
+
+[Cheats/Sacred Cloth-Mercury]
+// patch=1,EE,00A2FD31,extended,000000E3
+
+[Cheats/Sacred Cloth-Venus]
+// patch=1,EE,00A2FD32,extended,000000E3
+
+[Cheats/Sacred Cloth-Earth]
+// patch=1,EE,00A2FD33,extended,000000E3
+
+[Cheats/Sacred Cloth-Mars]
+// patch=1,EE,00A2FD34,extended,000000E3
+
+[Cheats/Sacred Cloth-Jupiter]
+// patch=1,EE,00A2FD35,extended,000000E3
+
+[Cheats/Sacred Cloth-Uranus]
+// patch=1,EE,00A2FD37,extended,000000E3
+
+[Cheats/Neptune]
+// patch=1,EE,00A2FD38,extended,000000E3
+
+[Cheats/Bell]
+// patch=1,EE,00A2FD3A,extended,000000E3
+
+[Cheats/Medicne Jar]
+// patch=1,EE,00A2FD3C,extended,000000E3
+
+[Cheats/Scythe]
+// patch=1,EE,00A2FD3F,extended,000000E3
+
+[Cheats/Guardian Dog]
+// patch=1,EE,00A2FD40,extended,000000E3
+
+[Cheats/Guardian Dog 2]
+// patch=1,EE,00A2FD41,extended,000000E3
+
+[Cheats/Silkworm Disk]
+// patch=1,EE,00A2FD42,extended,000000E3
+
+[Cheats/Crow Disk]
+// patch=1,EE,00A2FD43,extended,000000E3
+
+[Cheats/Old Disk]
+// patch=1,EE,00A2FD44,extended,000000E3
+
+[Cheats/Sugoroku Pieces]
+// patch=1,EE,00A2FD46,extended,000000E3
+
+[Cheats/Pliers]
+// patch=1,EE,00A2FD47,extended,000000E3
+
+[Cheats/Dust]
+// patch=1,EE,00A2FD49,extended,000000E3
+
+[Cheats/Elixir]
+// patch=1,EE,00A2FD4A,extended,000000E3
+
+[Cheats/Metal Spike]
+// patch=1,EE,00A2FD4C,extended,000000E3
+
+[Cheats/Vessel]
+// patch=1,EE,00A2FD4D,extended,000000E3
+
+[Cheats/Iron Wedge]
+// patch=1,EE,00A2FD4E,extended,000000E3
+
+[Cheats/Manor Map]
+// patch=1,EE,00A2FD4F,extended,000000E3
+
+[Cheats/Temple Map]
+// patch=1,EE,00A2FD50,extended,000000E3
+
+[Cheats/Shrine Map]
+// patch=1,EE,00A2FD52,extended,000000E3
+
+[Cheats/Undersground Map]
+// patch=1,EE,00A2FD53,extended,000000E3
+
+[Cheats/All Items]
+// patch=1,EE,40A2FD30,extended,00090001
+// patch=1,EE,E3E3E3E3,extended,00000000
+
+[Cheats/Doman's Note]
+// patch=1,EE,00A2FDB2,extended,000000C1
+
+[Cheats/Scroll-Survival 1]
+// patch=1,EE,00A2FDB3,extended,000000C1
+
+[Cheats/Scroll-Survival 2]
+// patch=1,EE,00A2FDB4,extended,000000C1
+
+[Cheats/Servant's Memorandum]
+// patch=1,EE,00A2FDB5,extended,000000C1
+
+[Cheats/Geen Bound Book]
+// patch=1,EE,00A2FDB6,extended,000000C1
+
+[Cheats/Silkworm Journal-Vol. 1]
+// patch=1,EE,00A2FDB9,extended,000000C1
+
+[Cheats/Silkworm Journal-Vol. 2]
+// patch=1,EE,00A2FDBA,extended,000000C1
+
+[Cheats/Silkworm Journal-Vol. 3]
+// patch=1,EE,00A2FDBB,extended,000000C1
+
+[Cheats/Purpled Cover Book]
+// patch=1,EE,00A2FDBC,extended,000000C1
+
+[Cheats/Shrone Entrance Guide]
+// patch=1,EE,00A2FDC3,extended,000000C1
+
+[Cheats/Priest's Journal-Vol. 1]
+// patch=1,EE,00A2FDC4,extended,000000C1
+
+[Cheats/Scroll-Exorcism]
+// patch=1,EE,00A2FDC5,extended,000000C1
+
+[Cheats/Priest's Journal-Vol. 2]
+// patch=1,EE,00A2FDC6,extended,000000C1
+
+[Cheats/Yakushi's Legend]
+// patch=1,EE,00A2FDC7,extended,000000C1
+
+[Cheats/Elegant Diary]
+// patch=1,EE,00A2FDCD,extended,000000C1
+
+[Cheats/Kureha's Diary]
+// patch=1,EE,00A2FDCE,extended,000000C1
+
+[Cheats/Scroll-Silkworm Shrine]
+// patch=1,EE,00A2FDD0,extended,000000C1
+
+[Cheats/Decorated Diary]
+// patch=1,EE,00A2FDD1,extended,000000C1
+
+[Cheats/Doman's Book-Vol. 1]
+// patch=1,EE,00A2FDD2,extended,000000C1
+
+[Cheats/Crumpled Note]
+// patch=1,EE,00A2FDD6,extended,000000C1
+
+[Cheats/Doman's Book-Vol. 5]
+// patch=1,EE,00A2FDD9,extended,000000C1
+
+[Cheats/Constellation Map]
+// patch=1,EE,00A2FDDC,extended,000000C1
+
+[Cheats/Big Dipper Map]
+// patch=1,EE,00A2FDDD,extended,000000C1
+
+[Cheats/Chinese Zodiac]
+// patch=1,EE,00A2FDDE,extended,000000C1
+
+[Cheats/Lady Fujiwara Memorandum]
+// patch=1,EE,00A2FDE5,extended,000000C1
+
+[Cheats/The Seer's Memorandum]
+// patch=1,EE,00A2FDE6,extended,000000C1
+
+[Cheats/Ayako's Letter]
+// patch=1,EE,00A2FDE7,extended,000000C1
+
+[Cheats/Kureha's Note]
+// patch=1,EE,00A2FDE8,extended,000000C1
+
+[Cheats/All Writings]
+// patch=1,EE,40A2FDB2,extended,000F0001
+// patch=1,EE,C1C1C1C1,extended,00000000
+
+[Cheats/Guardian Blade]
+// patch=1,EE,00A2FEB1,extended,00000081
+
+[Cheats/Winter Blade]
+// patch=1,EE,00A2FEB2,extended,00000081
+
+[Cheats/Summer Blade]
+// patch=1,EE,00A2FEB3,extended,00000081
+
+[Cheats/All Equipment]
+// patch=1,EE,20A2FEB0,extended,81818181

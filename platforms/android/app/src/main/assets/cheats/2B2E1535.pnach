@@ -1,0 +1,63 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Arctic Thunder [SLUS-20217] [2B2E1535]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max SPD]
+// patch=1,EE,901CC4B4,extended,0C07563B
+
+[Cheats/Have All Characters]
+// patch=1,EE,102813C0,extended,00000012
+
+[Cheats/Have All Tracks]
+// patch=1,EE,102813C8,extended,0000000B
+
+[Cheats/Have All Battle Arenas]
+// patch=1,EE,102813D0,extended,00000004
+
+[Cheats/Max Boost]
+// patch=1,EE,1021FA50,extended,00000015
+
+[Cheats/Max Shot Accuracy]
+// patch=1,EE,1021FA74,extended,00000015
+
+[Cheats/Max Number Dropped]
+// patch=1,EE,1021FA98,extended,00000015
+
+[Cheats/Max Blast Radius 1]
+// patch=1,EE,1021FABC,extended,00000015
+
+[Cheats/Max Shield Str]
+// patch=1,EE,1021FAE0,extended,00000015
+
+[Cheats/Max Invisibility]
+// patch=1,EE,1021FB04,extended,00000015
+
+[Cheats/Max Blast Radius 2]
+// patch=1,EE,1021FB28,extended,00000015
+
+[Cheats/Max Spray Time]
+// patch=1,EE,1021FB4C,extended,00000015
+
+[Cheats/Max Chain Length]
+// patch=1,EE,1021FB70,extended,00000015
+
+[Cheats/Max Accelerator]
+// patch=1,EE,1021FC90,extended,00000015
+
+[Cheats/Max Top Speed]
+// patch=1,EE,1021FCB4,extended,00000015
+
+[Cheats/Max Handling]
+// patch=1,EE,1021FCD8,extended,00000015
+
+[Cheats/Super Max Speed]
+// patch=1,EE,202815A0,extended,41C00000
+
+[Cheats/Hella Max Speed]
+// patch=1,EE,202815A0,extended,42C80000
+
+[Cheats/Have Hidden Modes]
+// patch=1,EE,202815A4,extended,00000001
+
+[Cheats/Infinite Time]
+// patch=1,EE,202829D8,extended,00000000

@@ -1,0 +1,36 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Portal Runner [SLUS-20003] [101E8C43]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Items]
+// patch=1,EE,F01EEE08,extended,001E71AF
+
+[Cheats/Infinite Basic Arrows]
+// patch=1,EE,1028ADBC,extended,00000063
+
+[Cheats/Infinite Fire Arrows]
+// patch=1,EE,1028ADC0,extended,00000063
+
+[Cheats/Infinite Explosive Arrows]
+// patch=1,EE,1028ADC4,extended,00000063
+
+[Cheats/Infinite Lightning Arrows]
+// patch=1,EE,1028ADC8,extended,00000063
+
+[Cheats/Infinite Golden Arrows]
+// patch=1,EE,1028ADCC,extended,00000063
+
+[Cheats/Infinite Piercing Arrows]
+// patch=1,EE,1028ADD0,extended,00000063
+
+[Cheats/Infinite Trident Arrows]
+// patch=1,EE,1028ADD4,extended,00000063
+
+[Cheats/Infinite Water Arrows]
+// patch=1,EE,1028ADD8,extended,00000063
+
+[Cheats/Max Jewels]
+// patch=1,EE,1028BA40,extended,00000063
+
+[Cheats/Max Total Jewels]
+// patch=1,EE,1028BA44,extended,00000063

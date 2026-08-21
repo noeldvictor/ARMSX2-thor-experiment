@@ -1,0 +1,498 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Spider-Man 2 [SLUS-20776] [E2DFCE12]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Perfect]
+// patch=1,EE,90579D28,extended,0C162E8B
+
+[Cheats/Infinite Health]
+// patch=1,EE,20B31B98,extended,000003E8
+
+[Cheats/Max Health]
+// patch=1,EE,20B31BA0,extended,000003E8
+
+[Cheats/Score Display Always On]
+// patch=1,EE,21A33188,extended,00000001
+
+[Cheats/Score Display Always Off]
+// patch=1,EE,21A33188,extended,00000000
+
+[Cheats/Invert Camera Up/Down Always On]
+// patch=1,EE,21A331A0,extended,00000001
+
+[Cheats/Invert Camera Up/Down Always Off]
+// patch=1,EE,21A331A0,extended,00000000
+
+[Cheats/Invert Camera Left/Right Always On]
+// patch=1,EE,21A331A4,extended,00000001
+
+[Cheats/Invert Camera Left/Right Always Off]
+// patch=1,EE,21A331A4,extended,00000000
+
+[Cheats/Easy Swinging Always On]
+// patch=1,EE,21A331A8,extended,00000001
+
+[Cheats/Easy Swinging Always Off]
+// patch=1,EE,21A331A8,extended,00000000
+
+[Cheats/Map Always On]
+// patch=1,EE,21A331AC,extended,00000001
+
+[Cheats/Map Always Off]
+// patch=1,EE,21A331AC,extended,00000001
+
+[Cheats/Max Hero Points]
+// patch=1,EE,20A5FAD0,extended,4CBEBC20
+
+[Cheats/P1 Press {L1}+{SELECT} To Stop Timers Going Down]
+// patch=1,EE,D0608102,extended,0000FBFE
+// patch=1,EE,2037820C,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} To Restart Timers Going Down]
+// patch=1,EE,D0608102,extended,0000FEFE
+// patch=1,EE,2037820C,extended,E6200030
+
+[Cheats/P1 Press {R1}+{SELECT} To Stop Timers Going Up]
+// patch=1,EE,D0608102,extended,0000F7FE
+// patch=1,EE,2037822C,extended,00000000
+
+[Cheats/P1 Press {R2}+{SELECT} To Restart Timers Going Up]
+// patch=1,EE,D0608102,extended,0000FDFE
+// patch=1,EE,2037822C,extended,E6200030
+
+[Cheats/No Traffic]
+// patch=1,EE,005DF968,extended,00000000
+
+[Cheats/12:00 A.M.]
+// patch=1,EE,20698BE8,extended,00000000
+
+[Cheats/1:00 A.M.]
+// patch=1,EE,20698BE8,extended,00000E10
+
+[Cheats/2:00 A.M.]
+// patch=1,EE,20698BE8,extended,00001C20
+
+[Cheats/3:00 A.M.]
+// patch=1,EE,20698BE8,extended,00002A30
+
+[Cheats/4:00 A.M.]
+// patch=1,EE,20698BE8,extended,00003840
+
+[Cheats/5:00 A.M.]
+// patch=1,EE,20698BE8,extended,00004650
+
+[Cheats/6:00 A.M.]
+// patch=1,EE,20698BE8,extended,00005460
+
+[Cheats/7:00 A.M.]
+// patch=1,EE,20698BE8,extended,00006270
+
+[Cheats/8:00 A.M.]
+// patch=1,EE,20698BE8,extended,00007080
+
+[Cheats/9:00 A.M.]
+// patch=1,EE,20698BE8,extended,00007E90
+
+[Cheats/10:00 A.M.]
+// patch=1,EE,20698BE8,extended,00008CA0
+
+[Cheats/11:00 A.M.]
+// patch=1,EE,20698BE8,extended,00009AB0
+
+[Cheats/12:00 P.M.]
+// patch=1,EE,20698BE8,extended,0000A8C0
+
+[Cheats/1:00 P.M.]
+// patch=1,EE,20698BE8,extended,0000B6D0
+
+[Cheats/2:00 P.M.]
+// patch=1,EE,20698BE8,extended,0000C4E0
+
+[Cheats/3:00 P.M.]
+// patch=1,EE,20698BE8,extended,0000D2F0
+
+[Cheats/4:00 P.M.]
+// patch=1,EE,20698BE8,extended,0000E100
+
+[Cheats/5:00 P.M.]
+// patch=1,EE,20698BE8,extended,0000EF10
+
+[Cheats/6:00 P.M.]
+// patch=1,EE,20698BE8,extended,0000FD20
+
+[Cheats/7:00 P.M.]
+// patch=1,EE,20698BE8,extended,00010B30
+
+[Cheats/8:00 P.M.]
+// patch=1,EE,20698BE8,extended,00011940
+
+[Cheats/9:00 P.M.]
+// patch=1,EE,20698BE8,extended,00012750
+
+[Cheats/10:00 P.M.]
+// patch=1,EE,20698BE8,extended,00013560
+
+[Cheats/11:00 P.M.]
+// patch=1,EE,20698BE8,extended,00014370
+
+[Cheats/Grapple]
+// patch=1,EE,20A5FB40,extended,3F800000
+
+[Cheats/Air Jump Off Kick]
+// patch=1,EE,20A5FB64,extended,3F800000
+
+[Cheats/Cannonball Kick]
+// patch=1,EE,20A5FB70,extended,3F800000
+
+[Cheats/Rising Knee Kick]
+// patch=1,EE,20A5FB7C,extended,3F800000
+
+[Cheats/Yank Behind]
+// patch=1,EE,20A5FB88,extended,3F800000
+
+[Cheats/Earth Breaker Punch]
+// patch=1,EE,20A5FB94,extended,3F800000
+
+[Cheats/Level 3 Air Combo]
+// patch=1,EE,20A5FBA0,extended,3F800000
+
+[Cheats/Launch Kick]
+// patch=1,EE,20A5FBAC,extended,3F800000
+
+[Cheats/Dizzy Strike]
+// patch=1,EE,20A5FBB8,extended,3F800000
+
+[Cheats/Multi Web Hammer]
+// patch=1,EE,20A5FBC4,extended,3F800000
+
+[Cheats/The Hero Punch]
+// patch=1,EE,20A5FBD0,extended,3F800000
+
+[Cheats/Interceptor Kick]
+// patch=1,EE,20A5FBDC,extended,3F800000
+
+[Cheats/Level 4 Air Combo]
+// patch=1,EE,20A5FBE8,extended,3F800000
+
+[Cheats/Jaw Launcher]
+// patch=1,EE,20A5FBF4,extended,3F800000
+
+[Cheats/Air Pile Driver]
+// patch=1,EE,20A5FC00,extended,3F800000
+
+[Cheats/Double Heel Kick]
+// patch=1,EE,20A5FC0C,extended,3F800000
+
+[Cheats/Stair Step Kicks Combo]
+// patch=1,EE,20A5FC18,extended,3F800000
+
+[Cheats/Whirlwind Kick]
+// patch=1,EE,20A5FC24,extended,3F800000
+
+[Cheats/Rising Shoulder Charge]
+// patch=1,EE,20A5FC30,extended,3F800000
+
+[Cheats/Air Web Slam]
+// patch=1,EE,20A5FC3C,extended,3F800000
+
+[Cheats/Spider Missile]
+// patch=1,EE,20A5FC48,extended,3F800000
+
+[Cheats/Web Hanger]
+// patch=1,EE,20A5FC54,extended,3F800000
+
+[Cheats/Super Web]
+// patch=1,EE,20A5FC60,extended,3F800000
+
+[Cheats/Max Max Trap Webs]
+// patch=1,EE,20A5FD74,extended,40800000
+
+[Cheats/All Combat Upgrades]
+// patch=1,EE,20A5FB40,extended,3F800000
+// patch=1,EE,40A5FB64,extended,00170003
+// patch=1,EE,3F800000,extended,00000000
+// patch=1,EE,20A5FD74,extended,40800000
+
+[Cheats/Slingshot Jump]
+// patch=1,EE,20A5FB34,extended,3F800000
+
+[Cheats/Max Swing Speed Level]
+// patch=1,EE,20A5FDBC,extended,41000000
+
+[Cheats/Web Zip]
+// patch=1,EE,20A5FE24,extended,3F800000
+
+[Cheats/Wallspring Duration Upgrade 1]
+// patch=1,EE,20A5FE60,extended,3F800000
+
+[Cheats/Employee Of The Month]
+// patch=1,EE,20A60090,extended,3F800000
+
+[Cheats/Shutterbug]
+// patch=1,EE,20A60094,extended,3F800000
+
+[Cheats/Knowledge Seeker]
+// patch=1,EE,20A60098,extended,3F800000
+
+[Cheats/Silver Medalist]
+// patch=1,EE,20A6009C,extended,3F800000
+
+[Cheats/Gold Medalist]
+// patch=1,EE,20A600A0,extended,3F800000
+
+[Cheats/Drenched Explorer]
+// patch=1,EE,20A600A4,extended,3F800000
+
+[Cheats/Watchful Explorer]
+// patch=1,EE,20A600A8,extended,3F800000
+
+[Cheats/Towering Explorer]
+// patch=1,EE,20A600AC,extended,3F800000
+
+[Cheats/Vigilant Explorer]
+// patch=1,EE,20A600B0,extended,3F800000
+
+[Cheats/Master Explorer]
+// patch=1,EE,20A600B4,extended,3F800000
+
+[Cheats/Friend To Childer]
+// patch=1,EE,20A600B8,extended,3F800000
+
+[Cheats/Peace Maker]
+// patch=1,EE,20A600BC,extended,3F800000
+
+[Cheats/Bane Of Petty Thieves]
+// patch=1,EE,20A600C0,extended,3F800000
+
+[Cheats/Thug Mugger]
+// patch=1,EE,20A600C4,extended,3F800000
+
+[Cheats/Watch Dog]
+// patch=1,EE,20A600C8,extended,3F800000
+
+[Cheats/Anger Manager]
+// patch=1,EE,20A600CC,extended,3F800000
+
+[Cheats/Stick Up Artist]
+// patch=1,EE,20A600D0,extended,3F800000
+
+[Cheats/Partycrasher]
+// patch=1,EE,20A600D4,extended,3F800000
+
+[Cheats/Lifter Of Spirits]
+// patch=1,EE,20A600D8,extended,3F800000
+
+[Cheats/Sucker]
+// patch=1,EE,20A600DC,extended,3F800000
+
+[Cheats/Automobile Avenger]
+// patch=1,EE,20A600E0,extended,3F800000
+
+[Cheats/Life Preserver]
+// patch=1,EE,20A600E4,extended,3F800000
+
+[Cheats/Human Ambulance]
+// patch=1,EE,20A600E8,extended,3F800000
+
+[Cheats/Honoparty Deputy]
+// patch=1,EE,20A600EC,extended,3F800000
+
+[Cheats/Crime Stopper]
+// patch=1,EE,20A600F0,extended,3F800000
+
+[Cheats/Good Samaritan]
+// patch=1,EE,20A600F4,extended,3F800000
+
+[Cheats/Champ]
+// patch=1,EE,20A600F8,extended,3F800000
+
+[Cheats/Mega Champ]
+// patch=1,EE,20A600FC,extended,3F800000
+
+[Cheats/Big Game Hunter]
+// patch=1,EE,20A60100,extended,3F800000
+
+[Cheats/Alien Buster]
+// patch=1,EE,20A60104,extended,3F800000
+
+[Cheats/Shock Absorber]
+// patch=1,EE,20A60108,extended,3F800000
+
+[Cheats/Tentacle Wrangler]
+// patch=1,EE,20A6010C,extended,3F800000
+
+[Cheats/Speed Freak]
+// patch=1,EE,20A60110,extended,3F800000
+
+[Cheats/Hardcore Gamer]
+// patch=1,EE,20A60114,extended,3F800000
+
+[Cheats/Lover Not A Fighter]
+// patch=1,EE,20A60118,extended,3F800000
+
+[Cheats/Hero In Training]
+// patch=1,EE,20A6011C,extended,3F800000
+
+[Cheats/Hero]
+// patch=1,EE,20A60120,extended,3F800000
+
+[Cheats/Super Hero]
+// patch=1,EE,20A60124,extended,3F800000
+
+[Cheats/Mega Hero]
+// patch=1,EE,20A60128,extended,3F800000
+
+[Cheats/Game Master]
+// patch=1,EE,20A6012C,extended,3F800000
+
+[Cheats/All Awards]
+// patch=1,EE,40A60090,extended,00280001
+// patch=1,EE,3F800000,extended,00000000
+
+[Cheats/Max Hint Markers Found]
+// patch=1,EE,20A5FAAC,extended,43550000
+
+[Cheats/Find 1 Hit Marker For Quantity]
+// patch=1,EE,D0A5FAAE,extended,00204354
+// patch=1,EE,20A5FAAC,extended,43540000
+
+[Cheats/Max Challenges Completed]
+// patch=1,EE,20A5FAA4,extended,43160000
+
+[Cheats/Complete 1 Challenge For Max Completed]
+// patch=1,EE,D0A5FAA6,extended,00204315
+// patch=1,EE,20A5FAA4,extended,43150000
+
+[Cheats/Max Secret Tokens Found]
+// patch=1,EE,20A5E50C,extended,42960000
+
+[Cheats/Find 1 Secret Token For Max Quantity]
+// patch=1,EE,D0A5E50E,extended,00204294
+// patch=1,EE,20A5E50C,extended,42940000
+
+[Cheats/Max Skyscraper Tokens Found]
+// patch=1,EE,20A5E510,extended,43160000
+
+[Cheats/Find 1 Skycraper Token For Max Quantity]
+// patch=1,EE,D0A5E512,extended,00204315
+// patch=1,EE,20A5E510,extended,43150000
+
+[Cheats/Max Hideout Tokens Found]
+// patch=1,EE,20A5E514,extended,42140000
+
+[Cheats/Find 1 Hideout Token For Max Quantity]
+// patch=1,EE,D0A5E516,extended,00204210
+// patch=1,EE,20A5E514,extended,42100000
+
+[Cheats/Max Buoy Tokens Found]
+// patch=1,EE,20A5E518,extended,43020000
+
+[Cheats/Find 1 Buoy Token For Max Quantity]
+// patch=1,EE,D0A5E51A,extended,00204301
+// patch=1,EE,20A5E518,extended,43010000
+
+[Cheats/Max Mega Challenges Completed]
+// patch=1,EE,20A5EDB0,extended,43160000
+
+[Cheats/Complete 1 Mega Challenge For Max Completed]
+// patch=1,EE,D0A5EDB2,extended,00204315
+// patch=1,EE,20A5EDB0,extended,43150000
+
+[Cheats/Max Citizens In Distress Helped]
+// patch=1,EE,20A5FAB8,extended,4CBEBC20
+
+[Cheats/Max Petty Crimes Stopped]
+// patch=1,EE,20A5FAC0,extended,4CBEBC20
+
+[Cheats/Max Total Hero Points Gained]
+// patch=1,EE,20A5FACC,extended,4CBEBC20
+
+[Cheats/Max Enemies Defeated]
+// patch=1,EE,20A5FFE0,extended,4CBEBC20
+
+[Cheats/Max Number Of Jumps]
+// patch=1,EE,20A5FFE4,extended,4CBEBC20
+
+[Cheats/Max Weapons Yanked]
+// patch=1,EE,20A5FFEC,extended,4CBEBC20
+
+[Cheats/No Times Hit]
+// patch=1,EE,20A5FFF0,extended,00000000
+
+[Cheats/No Times Fallen Hard On Ground]
+// patch=1,EE,20A60000,extended,00000000
+
+[Cheats/Max Number Of Steps Taken]
+// patch=1,EE,20A60010,extended,4CBEBC20
+
+[Cheats/No Number Of Pedestrians Jostled]
+// patch=1,EE,20A60014,extended,00000000
+
+[Cheats/Max Number Of Swings]
+// patch=1,EE,20A60018,extended,4CBEBC20
+
+[Cheats/Max Unconscious Enemies Hung From Lightpoles]
+// patch=1,EE,20A60028,extended,4CBEBC20
+
+[Cheats/Max Most Enemies Defeated Without Damage]
+// patch=1,EE,20A6002C,extended,4CBEBC20
+
+[Cheats/Max Helicopters Swung From]
+// patch=1,EE,20A60030,extended,4CBEBC20
+
+[Cheats/Max Total Attacks Dodged]
+// patch=1,EE,20A60034,extended,4CBEBC20
+
+[Cheats/Max Total Bullets Dodged]
+// patch=1,EE,20A60038,extended,4CBEBC20
+
+[Cheats/Max Spinning Pile Driver Revolutions]
+// patch=1,EE,20A6003C,extended,4CBEBC20
+
+[Cheats/Max Pizzas Delivered]
+// patch=1,EE,20A60044,extended,4CBEBC20
+
+[Cheats/No Times Fallen In Water]
+// patch=1,EE,20A60054,extended,00000000
+
+[Cheats/Max Ballons Returned]
+// patch=1,EE,20A60058,extended,4CBEBC20
+
+[Cheats/Max Gang Wars Stopped]
+// patch=1,EE,20A6005C,extended,4CBEBC20
+
+[Cheats/Max Purse Snatches Foiled]
+// patch=1,EE,20A60060,extended,4CBEBC20
+
+[Cheats/Max Muggings Averted]
+// patch=1,EE,20A60064,extended,4CBEBC20
+
+[Cheats/Max Break-Ins Foiled]
+// patch=1,EE,20A60068,extended,4CBEBC20
+
+[Cheats/Max Road Rages Ended]
+// patch=1,EE,20A6006C,extended,4CBEBC20
+
+[Cheats/Max Robberies Put Down]
+// patch=1,EE,20A60070,extended,4CBEBC20
+
+[Cheats/Max Battles Royal]
+// patch=1,EE,20A60074,extended,4CBEBC20
+
+[Cheats/Max Hangers Rescued]
+// patch=1,EE,20A60078,extended,4CBEBC20
+
+[Cheats/Max Ambushes Avenged]
+// patch=1,EE,20A6007C,extended,4CBEBC20
+
+[Cheats/Max Car Jackings Foiled]
+// patch=1,EE,20A60080,extended,4CBEBC20
+
+[Cheats/Max Sinking Boat Rescues]
+// patch=1,EE,20A60084,extended,4CBEBC20
+
+[Cheats/Max Medical Emergencies Resolved]
+// patch=1,EE,20A60088,extended,4CBEBC20
+
+[Cheats/Max Officer Assists]
+// patch=1,EE,20A6008C,extended,4CBEBC20

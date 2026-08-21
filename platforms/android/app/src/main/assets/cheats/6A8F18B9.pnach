@@ -1,0 +1,498 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Ratchet & Clank [SCES-50916] [6A8F18B9]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Locations]
+// patch=1,EE,90124C58,extended,0C045492
+
+[Cheats/Infinite Air]
+// patch=1,EE,201415F0,extended,00002710
+
+[Cheats/Infinite Health]
+// patch=1,EE,201415F8,extended,00000004
+
+[Cheats/Night Vision]
+// patch=1,EE,2015F30C,extended,00000001
+
+[Cheats/Quick Bolt Gain]
+// patch=1,EE,0015ED98,extended,000000FF
+
+[Cheats/Super Quick Bolt Gain]
+// patch=1,EE,1015ED98,extended,0000FFFF
+
+[Cheats/Max Bolts]
+// patch=1,EE,2015ED98,extended,05F5E0FF
+
+[Cheats/Unlock Goodies]
+// patch=1,EE,2015EE20,extended,00000001
+
+[Cheats/Press {CROSS} For Moon Jump]
+// patch=1,EE,200C0220,extended,3C010014
+// patch=1,EE,200C0224,extended,9423C95C
+// patch=1,EE,200C0228,extended,30634000
+// patch=1,EE,200C022C,extended,14600004
+// patch=1,EE,200C0230,extended,34038000
+// patch=1,EE,200C0234,extended,8C24F3D8
+// patch=1,EE,200C0238,extended,00832021
+// patch=1,EE,200C023C,extended,AC24F3D8
+// patch=1,EE,200C0240,extended,03E00008
+// patch=1,EE,200C0244,extended,00000000
+// patch=1,EE,20124CA4,extended,08030088
+
+[Cheats/Press {CROSS} For Super Moon Jump]
+// patch=1,EE,200C0220,extended,3C010014
+// patch=1,EE,200C0224,extended,9423C95C
+// patch=1,EE,200C0228,extended,30634000
+// patch=1,EE,200C022C,extended,14600004
+// patch=1,EE,200C0230,extended,3C038001
+// patch=1,EE,200C0234,extended,8C24F3D8
+// patch=1,EE,200C0238,extended,00832021
+// patch=1,EE,200C023C,extended,AC24F3D8
+// patch=1,EE,200C0240,extended,03E00008
+// patch=1,EE,200C0244,extended,00000000
+// patch=1,EE,20124CA4,extended,08030088
+
+[Cheats/Bomb Glove]
+// patch=1,EE,2013D450,extended,00000028
+
+[Cheats/Devastator]
+// patch=1,EE,2013D454,extended,00000014
+
+[Cheats/Visibomb Gun]
+// patch=1,EE,2013D45C,extended,00000014
+
+[Cheats/Blaster]
+// patch=1,EE,2013D464,extended,000000C8
+
+[Cheats/Pyrocitor]
+// patch=1,EE,2013D468,extended,000000F0
+
+[Cheats/Mine Glove]
+// patch=1,EE,2013D46C,extended,00000032
+
+[Cheats/Tesla Claw]
+// patch=1,EE,2013D474,extended,000000F0
+
+[Cheats/Glove Of Doom]
+// patch=1,EE,2013D478,extended,0000000A
+
+[Cheats/R.Y.N.O.]
+// patch=1,EE,2013D484,extended,00000032
+
+[Cheats/Drone Device]
+// patch=1,EE,2013D488,extended,0000000A
+
+[Cheats/Decoy Glove]
+// patch=1,EE,2013D48C,extended,00000014
+
+[Cheats/Gold Suck Cannon]
+// patch=1,EE,0013D4C9,extended,00000001
+// patch=1,EE,0013E529,extended,00000001
+
+[Cheats/Gold Bomb Glove]
+// patch=1,EE,0013D4CA,extended,00000001
+// patch=1,EE,0013E52A,extended,00000001
+
+[Cheats/Gold Devastator]
+// patch=1,EE,0013D4CB,extended,00000001
+// patch=1,EE,0013E52B,extended,00000001
+
+[Cheats/Gold Visibomb Gun]
+// patch=1,EE,0013D4CD,extended,00000001
+// patch=1,EE,0013E52D,extended,00000001
+
+[Cheats/Gold Taunter]
+// patch=1,EE,0013D4CE,extended,00000001
+// patch=1,EE,0013E52E,extended,00000001
+
+[Cheats/Gold Blaster]
+// patch=1,EE,0013D4CF,extended,00000001
+// patch=1,EE,0013E52F,extended,00000001
+
+[Cheats/Gold Pyrocitor]
+// patch=1,EE,0013D4D0,extended,00000001
+// patch=1,EE,0013E530,extended,00000001
+
+[Cheats/Gold Mine Glove]
+// patch=1,EE,0013D4D1,extended,00000001
+// patch=1,EE,0013E531,extended,00000001
+
+[Cheats/Gold Walloper]
+// patch=1,EE,0013D4D2,extended,00000001
+// patch=1,EE,0013E532,extended,00000001
+
+[Cheats/Gold Tesla Claw]
+// patch=1,EE,0013D4D3,extended,00000001
+// patch=1,EE,0013E533,extended,00000001
+
+[Cheats/Gold Glove Of Doom]
+// patch=1,EE,0013D4D4,extended,00000001
+// patch=1,EE,0013E534,extended,00000001
+
+[Cheats/Gold Morp-O-Ray]
+// patch=1,EE,0013D4D5,extended,00000001
+// patch=1,EE,0013E535,extended,00000001
+
+[Cheats/Gold R.Y.N.O.]
+// patch=1,EE,0013D4D7,extended,00000001
+// patch=1,EE,0013E537,extended,00000001
+
+[Cheats/Gold Drone Device]
+// patch=1,EE,0013D4D8,extended,00000001
+// patch=1,EE,0013E538,extended,00000001
+
+[Cheats/Gold Decoy Glove]
+// patch=1,EE,0013D4D9,extended,00000001
+// patch=1,EE,0013E539,extended,00000001
+
+[Cheats/Swingshot]
+// patch=1,EE,0013D4CC,extended,00000001
+
+[Cheats/Hydrodisplacer]
+// patch=1,EE,0013D4D6,extended,00000001
+
+[Cheats/Trespasser]
+// patch=1,EE,0013D4DA,extended,00000001
+
+[Cheats/Metal Detector]
+// patch=1,EE,0013D4DB,extended,00000001
+
+[Cheats/Hologuise]
+// patch=1,EE,0013D4DF,extended,00000001
+
+[Cheats/Gadgetron PDA]
+// patch=1,EE,0013D4E0,extended,00000001
+
+[Cheats/Heli-Pack]
+// patch=1,EE,0013D4C2,extended,00000001
+
+[Cheats/Thruster-Pack]
+// patch=1,EE,0013D4C3,extended,00000001
+
+[Cheats/Hydro-Pack]
+// patch=1,EE,0013D4C4,extended,00000001
+
+[Cheats/Sonic Summoner]
+// patch=1,EE,0013D4C5,extended,00000001
+
+[Cheats/O2 Mask]
+// patch=1,EE,0013D4C6,extended,00000001
+
+[Cheats/Pilot's Helmet]
+// patch=1,EE,0013D4C7,extended,00000001
+
+[Cheats/Magneboots]
+// patch=1,EE,0013D4DC,extended,00000001
+
+[Cheats/Grindboots]
+// patch=1,EE,0013D4DD,extended,00000001
+
+[Cheats/Hoverboard]
+// patch=1,EE,0013D4DE,extended,00000001
+
+[Cheats/Map-O-Matic]
+// patch=1,EE,0013D4E1,extended,00000001
+
+[Cheats/Bold Grabber]
+// patch=1,EE,0013D4E2,extended,00000001
+
+[Cheats/Persuader]
+// patch=1,EE,0013D4E3,extended,00000001
+
+[Cheats/Premium Nanotech]
+// patch=1,EE,0013D4C4,extended,00000001
+// patch=1,EE,101B629E,extended,00000000
+
+[Cheats/Ultra Nanotech]
+// patch=1,EE,0013D4C5,extended,00000001
+// patch=1,EE,101B62AC,extended,00000000
+
+[Cheats/Zoomerator]
+// patch=1,EE,0013D4C0,extended,00000001
+// patch=1,EE,101B62C0,extended,00000000
+
+[Cheats/Raritanium]
+// patch=1,EE,0013D4C1,extended,00000001
+// patch=1,EE,101B62CA,extended,00000000
+
+[Cheats/CodeBot]
+// patch=1,EE,0013D4C2,extended,00000001
+// patch=1,EE,101B62D0,extended,00000000
+
+[Cheats/Have All Skill Points Completed]
+// patch=1,EE,4013D408,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,1013D424,extended,00000101
+
+[Cheats/Planet Novalis]
+// patch=1,EE,2013D510,extended,00000001
+
+[Cheats/Planet Aridia]
+// patch=1,EE,2013D514,extended,00000002
+
+[Cheats/Planet Kerwan]
+// patch=1,EE,2013D518,extended,00000003
+
+[Cheats/Planet Eudora]
+// patch=1,EE,2013D51C,extended,00000004
+
+[Cheats/Planet Rilgar]
+// patch=1,EE,2013D520,extended,00000005
+
+[Cheats/Nebula G34]
+// patch=1,EE,2013D524,extended,00000006
+
+[Cheats/Planet Umbris]
+// patch=1,EE,2013D528,extended,00000007
+
+[Cheats/Planet Batalia]
+// patch=1,EE,2013D52C,extended,00000008
+
+[Cheats/Planet Gaspar]
+// patch=1,EE,2013D530,extended,00000009
+
+[Cheats/Planet Orxon]
+// patch=1,EE,2013D534,extended,0000000A
+
+[Cheats/Planet Pokitaru]
+// patch=1,EE,2013D538,extended,0000000B
+
+[Cheats/Planet Hoven]
+// patch=1,EE,2013D53C,extended,0000000C
+
+[Cheats/Oltanis Orbit]
+// patch=1,EE,2013D540,extended,0000000D
+
+[Cheats/Planet Oltanis]
+// patch=1,EE,2013D544,extended,0000000E
+
+[Cheats/Planet Quartu]
+// patch=1,EE,2013D548,extended,0000000F
+
+[Cheats/Planet Kalebo III]
+// patch=1,EE,2013D54C,extended,00000010
+
+[Cheats/Veldin Orbit]
+// patch=1,EE,2013D550,extended,00000011
+
+[Cheats/Planet Veldin]
+// patch=1,EE,2013D554,extended,00000012
+
+[Cheats/Planet Novalis-Find A New Ship]
+// patch=1,EE,0013DD43,extended,00000001
+
+[Cheats/Planet Novalis-Explore The Waterworks]
+// patch=1,EE,0013D5EC,extended,00000001
+
+[Cheats/Planet Novalis-Buy Infobot From Mechanic]
+// patch=1,EE,0013DD42,extended,00000001
+
+[Cheats/Planet Aridia-Locate Skid McMarx]
+// patch=1,EE,0013D6BC,extended,00000001
+
+[Cheats/Planet Aridia-Help Skid Get To His Ship]
+// patch=1,EE,0013D4DE,extended,00000001
+
+[Cheats/Planet Aridia-Find Skid's Agent]
+// patch=1,EE,0013D6CC,extended,00000001
+
+[Cheats/Planet Aridia-Bring Prize To Agent]
+// patch=1,EE,0013D4C5,extended,00000001
+
+[Cheats/Planet Aridia-Use Your Swingshot]
+// patch=1,EE,0013D39C,extended,00000001
+// patch=1,EE,0013D4DA,extended,00000001
+
+[Cheats/Planet Kerwan-Visit Al's Roboshack]
+// patch=1,EE,0013D6FC,extended,00000001
+
+[Cheats/Planet Kerwan-Buy Heli-Pack From Al]
+// patch=1,EE,0013D4C2,extended,00000001
+
+[Cheats/Planet Kerwan-Explore The Rest Of The City]
+// patch=1,EE,0013DD5B,extended,00000001
+
+[Cheats/Planet Kerwan-Ride The Robot Train]
+// patch=1,EE,0013D3A0,extended,00000001
+// patch=1,EE,0013DD44,extended,00000001
+
+[Cheats/Planet Kerwan-Complete Fitness Course]
+// patch=1,EE,0013D73C,extended,00000001
+// patch=1,EE,0013D70C,extended,00000001
+
+[Cheats/Planet Kerwan-Buy Swingshot From Trainer]
+// patch=1,EE,0013D4CC,extended,00000001
+
+[Cheats/Planet Eudora-Confront Robot Lieutenant]
+// patch=1,EE,0013DD46,extended,00000001
+
+[Cheats/Planet Eudora-Explore The Mills]
+// patch=1,EE,0013DD5C,extended,00000001
+// patch=1,EE,0013D4F1,extended,00000001
+
+[Cheats/Planet Rilgar-Win The Hoverboard Race]
+// patch=1,EE,0013D81C,extended,00000001
+// patch=1,EE,0013D83C,extended,00000001
+// patch=1,EE,0013D388,extended,00000001
+
+[Cheats/Planet Rilgar-Locate Captain Qwark]
+// patch=1,EE,2013D82C,extended,00000001
+
+[Cheats/Planet Rilgar-Bribe The Bodyguard]
+// patch=1,EE,0013DD47,extended,00000001
+
+[Cheats/Planet Nebula G34-Explore The Space Station]
+// patch=1,EE,1013D3A8,extended,00000101
+// patch=1,EE,0013D8AC,extended,00000001
+
+[Cheats/Planet Nebula G34-Buy Grindboots]
+// patch=1,EE,0013D4DD,extended,00000001
+
+[Cheats/Planet Nebula G34-Explore The Blarg Warship]
+// patch=1,EE,0013D3AA,extended,00000001
+
+[Cheats/Planet Nebula G34-Destroy The Warship]
+// patch=1,EE,0013D3AC,extended,00000001
+
+[Cheats/Planet Nebula G34-Journey Outside The Airlock]
+// patch=1,EE,0013D4D6,extended,00000001
+
+[Cheats/Planet Umbris-Survive Qwark's Gauntlet]
+// patch=1,EE,0013D3B1,extended,00000001
+
+[Cheats/Planet Umbris-Destroy The Snagglebeast]
+// patch=1,EE,0013D8FC,extended,00000001
+
+[Cheats/Planet Umbris-Find A New Ship]
+// patch=1,EE,0013DD48,extended,00000001
+
+[Cheats/Planet Batalia-Scout The Area]
+// patch=1,EE,0013D3B7,extended,00000001
+
+[Cheats/Planet Batalia-Ride The Grind Rail]
+// patch=1,EE,0013D93C,extended,00000001
+
+[Cheats/Planet Batalia-Buy Deserter's Infobot]
+// patch=1,EE,0013DD49,extended,00000001
+
+[Cheats/Planet Batalia-Talk To The Commando]
+// patch=1,EE,0013D92C,extended,00000001
+
+[Cheats/Planet Batalia-Meet The Commando At City]
+// patch=1,EE,0013DD4A,extended,00000001
+
+[Cheats/Planet Batalia-Explore The Walled City]
+// patch=1,EE,0013D94C,extended,00000001
+
+[Cheats/Planet Batalia-Destroy The Bombers]
+// patch=1,EE,0013D4DB,extended,00000001
+
+[Cheats/Planet Gaspar-Find THe Pilot's Helment]
+// patch=1,EE,0013D4C7,extended,00000001
+
+[Cheats/Planet Orxon-Search The Laboratories]
+// patch=1,EE,0013D4DC,extended,00000001
+
+[Cheats/Planet Orxon-Traverse The Wilderness]
+// patch=1,EE,0013DD4B,extended,00000001
+
+[Cheats/Planet Orxon-Explore As Ratchet]
+// patch=1,EE,0013DD62,extended,00000001
+// patch=1,EE,0013D9BC,extended,00000001
+
+[Cheats/Planet Orxon-Catch The Infobot]
+// patch=1,EE,0013D9AC,extended,00000001
+// patch=1,EE,0013DD4C,extended,00000001
+
+[Cheats/Planet Orxon-Buy The Premium Nanotech]
+// patch=1,EE,0013D38C,extended,00000001
+
+[Cheats/Planet Pokitaru-Check Out The Resort]
+// patch=1,EE,0013D3DD,extended,00000001
+
+[Cheats/Planet Pokitaru-Help The Resort Owner]
+// patch=1,EE,0013D9DC,extended,00000002
+
+[Cheats/Planet Pokitaru-Buy Thrusterpack From Bob]
+// patch=1,EE,0013D4C3,extended,00000001
+
+[Cheats/Planet Pokitaru-Destroy The Blarg Ships]
+// patch=1,EE,0013D4C6,extended,00000001
+
+[Cheats/Planet Pokitaru-Navigate The Sewers]
+// patch=1,EE,0013D9FC,extended,00000001
+
+[Cheats/Planet Pokitaru-Bring Raritanium To Inventor]
+// patch=1,EE,0013D4E3,extended,00000001
+
+[Cheats/Planet Hoven-Destroy The Planetbuster]
+// patch=1,EE,0013DD4D,extended,00000001
+
+[Cheats/Planet Hoven-Explorer The Icy Wastes]
+// patch=1,EE,0013DD64,extended,00000001
+// patch=1,EE,0013D3E9,extended,00000001
+
+[Cheats/Planet Hoven-Buy Hydro-Pack From Ed]
+// patch=1,EE,0013DA1C,extended,00000001
+// patch=1,EE,0013D4C4,extended,00000001
+
+[Cheats/Oltanis Orbit-Explore Base]
+// patch=1,EE,0013DA6C,extended,00000001
+
+[Cheats/Oltanis Orbit-Shoot Down Captain Qwark]
+// patch=1,EE,0013DD4E,extended,00000001
+
+[Cheats/Planet Oltanis-Find Survivors Of Blarg Attack]
+// patch=1,EE,0013DB3C,extended,00000001
+
+[Cheats/Planet Oltanis-Buy Infobot From Scrap Merchant]
+// patch=1,EE,0013DD4F,extended,00000001
+
+[Cheats/Planet Oltanis-Search The Destroyed City]
+// patch=1,EE,0013D4FD,extended,00000001
+
+[Cheats/Planet Oltanis-Purchase Gadgetron PDR F/'Steve']
+// patch=1,EE,0013DB2C,extended,00000001
+
+[Cheats/Planet Quarty-Find Out More About The Ultra-Mech]
+// patch=1,EE,0013DB9C,extended,00000001
+
+[Cheats/Planet Quarty-Destroy The Ultra-Mechs]
+// patch=1,EE,0013DD50,extended,00000001
+
+[Cheats/Planet Quarty-Explore The Coolant]
+// patch=1,EE,0013DD67,extended,00000001
+// patch=1,EE,0013D50A,extended,00000001
+
+[Cheats/Planet Quarty-Infiltrate The Secure Area]
+// patch=1,EE,0013DD51,extended,00000001
+// patch=1,EE,0013D3F6,extended,00000001
+
+[Cheats/Planet Kalebo III-Find Equipment & Get Past Blarg]
+// patch=1,EE,0013D4E1,extended,00000001
+// patch=1,EE,0013D4DF,extended,00000001
+
+[Cheats/Planet Kalebo III-Win The Hoverboard Race]
+// patch=1,EE,0013D3F8,extended,00000001
+// patch=1,EE,0013DC1C,extended,00000001
+
+[Cheats/Planet Kalebo III-Ride The Grind Rail]
+// patch=1,EE,0013D3F9,extended,00000001
+// patch=1,EE,0013D509,extended,00000001
+
+[Cheats/Veldin Orbit-Find The Coordinates For Drek's Laser]
+// patch=1,EE,0013DD52,extended,00000001
+
+[Cheats/Veldin Orbit-Swim Through The Water Tanker]
+// patch=1,EE,0013DD69,extended,00000001
+// patch=1,EE,0013D400,extended,00000001
+
+[Cheats/Planet Veldin-Save Ratchet's Planet]
+// patch=1,EE,0013D405,extended,00000001
+
+[Cheats/Have All Gold Bolts]
+// patch=1,EE,0014BEC5,extended,00000001
+// patch=1,EE,1014BEC6,extended,00000101
+// patch=1,EE,4014BEC8,extended,00090001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,0014BEEC,extended,00000001

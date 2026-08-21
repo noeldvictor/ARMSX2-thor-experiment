@@ -1,0 +1,64 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Devil May cry 3 [UNKNOWN] [7ADCB24A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Health]
+// patch=1,EE,200FFF00,extended,3C030073
+// patch=1,EE,200FFF04,extended,8C633CA8
+// patch=1,EE,200FFF08,extended,AC832AD4
+// patch=1,EE,200FFF0C,extended,C6212AD4
+// patch=1,EE,200FFF10,extended,08087C08
+// patch=1,EE,2021F01C,extended,0803FFC0
+
+[Cheats/Each Red Orb is Worth 9999]
+// patch=1,EE,202EB758,extended,2404270F
+
+[Cheats/Infinite Yellow Orbs]
+// patch=1,EE,00733B96,extended,00000063
+
+[Cheats/Max Blue Orbs]
+// patch=1,EE,00733B97,extended,00000006
+
+[Cheats/Max Purple Orbs]
+// patch=1,EE,00733B98,extended,00000007
+
+[Cheats/All Weapons Available In Customize]
+// patch=1,EE,10733BA6,extended,00000101
+// patch=1,EE,20733BA8,extended,01010101
+// patch=1,EE,20733BAC,extended,01010101
+// patch=1,EE,10733BB0,extended,00000101
+
+[Cheats/All Bonus Material Open]
+// patch=1,EE,21CB2A20,extended,FFFFFFFF
+// patch=1,EE,21CB2A24,extended,FFFFFFFF
+// patch=1,EE,21CB2A28,extended,FFFFFFFF
+
+[Cheats/All Normal Levels Open In Load Game]
+// patch=1,EE,00733BE1,extended,00000005
+// patch=1,EE,10733BE2,extended,00000505
+// patch=1,EE,40733BE4,extended,00040001
+// patch=1,EE,05050505,extended,00000000
+// patch=1,EE,00733BF4,extended,00000005
+
+[Cheats/Always Devil Hunter Rank S]
+// patch=1,EE,20733BF8,extended,3F800000
+// patch=1,EE,20733BFC,extended,00000000
+// patch=1,EE,20733C00,extended,000F423F
+// patch=1,EE,20733C04,extended,00000000
+// patch=1,EE,20733CB4,extended,4A000000
+
+[Cheats/Infinite Vital Stars S]
+// patch=1,EE,00733BA1,extended,0000001E
+// patch=1,EE,007851DC,extended,0000001E
+
+[Cheats/Infinite Vital Stars L]
+// patch=1,EE,00733BA0,extended,0000001E
+// patch=1,EE,007851DD,extended,0000001E
+
+[Cheats/Infinite Devil Stars]
+// patch=1,EE,00733BA2,extended,0000001E
+// patch=1,EE,007851DE,extended,0000001E
+
+[Cheats/Infinite Holy Water]
+// patch=1,EE,00733BA3,extended,0000001E
+// patch=1,EE,007851DF,extended,0000001E

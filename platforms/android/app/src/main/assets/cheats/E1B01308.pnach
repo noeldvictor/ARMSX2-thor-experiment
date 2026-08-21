@@ -1,0 +1,367 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Soul Calibur II [SLUS-20643] [E1B01308]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Concept Art]
+// patch=1,EE,902D9A5C,extended,0C0BB5EF
+
+[Cheats/Infinite Time]
+// patch=1,EE,203F4CD4,extended,00000063
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,203D449C,extended,43700000
+
+[Cheats/75% Health P1]
+// patch=1,EE,D03D449E,extended,00004370
+// patch=1,EE,203D449C,extended,43340000
+
+[Cheats/50% Health P1]
+// patch=1,EE,D03D449E,extended,00004370
+// patch=1,EE,203D449C,extended,42F00000
+
+[Cheats/25% Health P1]
+// patch=1,EE,D03D449E,extended,00004370
+// patch=1,EE,203D449C,extended,42700000
+
+[Cheats/No Health P1]
+// patch=1,EE,203D449C,extended,00000000
+
+[Cheats/1-Hit Death P1]
+// patch=1,EE,D03D449E,extended,00004370
+// patch=1,EE,203D449C,extended,3F800000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,203E531C,extended,43700000
+
+[Cheats/75% Health P2]
+// patch=1,EE,D03E531E,extended,00004370
+// patch=1,EE,203E531C,extended,43340000
+
+[Cheats/50% Health P2]
+// patch=1,EE,D03E531E,extended,00004370
+// patch=1,EE,203E531C,extended,42F00000
+
+[Cheats/25% Health P2]
+// patch=1,EE,D03E531E,extended,00004370
+// patch=1,EE,203E531C,extended,42700000
+
+[Cheats/No Health P2]
+// patch=1,EE,203E531C,extended,00000000
+
+[Cheats/1-Hit Death P2]
+// patch=1,EE,D03E531E,extended,00004370
+// patch=1,EE,203E531C,extended,3F800000
+
+[Cheats/P1 Needs 1 Win To Win]
+// patch=1,EE,D03D448C,extended,00000000
+// patch=1,EE,103D448C,extended,00000001
+
+[Cheats/P1 Never Wins]
+// patch=1,EE,103D448C,extended,00000000
+
+[Cheats/P2 Needs 1 Win To Win]
+// patch=1,EE,D03E530C,extended,00000000
+// patch=1,EE,103E530C,extended,00000001
+
+[Cheats/P2 Never Wins]
+// patch=1,EE,103E530C,extended,00000000
+
+[Cheats/Hit Anywhere P1/P2 Cant Hit P1]
+// patch=1,EE,20193558,extended,32060080
+// patch=1,EE,2019355C,extended,10C00038
+
+[Cheats/Hit Anywhere P2/P1 Cant Hit P2]
+// patch=1,EE,20193558,extended,32060080
+// patch=1,EE,2019355C,extended,14C00038
+
+[Cheats/Hit Anywhere (Both Players)]
+// patch=1,EE,2019355C,extended,00000000
+
+[Cheats/Quick Exp Gain (Weapon Master Mode)]
+// patch=1,EE,1044D290,extended,0000FFFF
+
+[Cheats/Max Exp (Weapon Master Mode)]
+// patch=1,EE,2044D290,extended,05F5E0FF
+
+[Cheats/Infinite Gold (Weapon Master Mode)]
+// patch=1,EE,1044D474,extended,0000FFFF
+
+[Cheats/Max Gold (Weapon Master Mode)]
+// patch=1,EE,20444D74,extended,05F5E0FF
+
+[Cheats/Unlock Everything]
+// patch=1,EE,403FE720,extended,00160001
+// patch=1,EE,03030303,extended,00000000
+
+[Cheats/Unlock All Weapons]
+// patch=1,EE,403FE778,extended,002F0001
+// patch=1,EE,02020202,extended,00000000
+// patch=1,EE,103FE834,extended,00000202
+
+[Cheats/Access Extra Characters In All Modes]
+// patch=1,EE,201B5510,extended,24020001
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,203FE720,extended,03030303
+// patch=1,EE,203FE724,extended,03030303
+
+[Cheats/Unlock All Modes]
+// patch=1,EE,103FE75E,extended,00000303
+// patch=1,EE,403FE760,extended,00040001
+// patch=1,EE,03030303,extended,00000000
+// patch=1,EE,103FE770,extended,00000303
+// patch=1,EE,003FE772,extended,00000003
+
+[Cheats/Buying Items From Shop Doesnt Decrease Gold]
+// patch=1,EE,202432E0,extended,00000000
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,1044D290,extended,0000FFFF
+
+[Cheats/Max Exp]
+// patch=1,EE,2044D290,extended,05F5E0FF
+
+[Cheats/Infinite Gold]
+// patch=1,EE,1044D474,extended,0000FFFF
+
+[Cheats/Max Gold]
+// patch=1,EE,20444D74,extended,05F5E0FF
+
+[Cheats/Unlock All Raphael Weapons]
+// patch=1,EE,203FE778,extended,02020202
+// patch=1,EE,203FE77C,extended,02020202
+// patch=1,EE,103FE780,extended,00000202
+
+[Cheats/Unlock All Talim Weapons]
+// patch=1,EE,103FE782,extended,00000202
+// patch=1,EE,203FE784,extended,02020202
+// patch=1,EE,203FE788,extended,02020202
+
+[Cheats/Unlock All Yungsung Weapons]
+// patch=1,EE,203FE78C,extended,02020202
+// patch=1,EE,203FE790,extended,02020202
+// patch=1,EE,103FE794,extended,00000202
+
+[Cheats/Unlock All Cassandra Weapons]
+// patch=1,EE,103FE796,extended,00000202
+// patch=1,EE,203FE798,extended,02020202
+// patch=1,EE,203FE79C,extended,02020202
+
+[Cheats/Unlock All Mitsurugi Weapons]
+// patch=1,EE,203FE7A0,extended,02020202
+// patch=1,EE,203FE7A4,extended,02020202
+// patch=1,EE,103FE7A8,extended,00000202
+
+[Cheats/Unlock All Taki Weapons]
+// patch=1,EE,103FE7AA,extended,00000202
+// patch=1,EE,203FE7AC,extended,02020202
+// patch=1,EE,203FE7B0,extended,02020202
+
+[Cheats/Unlock All Voldo Weapons]
+// patch=1,EE,203FE7B4,extended,02020202
+// patch=1,EE,203FE7B8,extended,02020202
+// patch=1,EE,103FE7BC,extended,00000202
+
+[Cheats/Unlock All Nightmare Weapons]
+// patch=1,EE,103FE7BE,extended,00000202
+// patch=1,EE,203FE7C0,extended,02020202
+// patch=1,EE,203FE7C4,extended,02020202
+
+[Cheats/Unlock All Astaroth Weapons]
+// patch=1,EE,203FE7C8,extended,02020202
+// patch=1,EE,203FE7CC,extended,02020202
+// patch=1,EE,103FE7D0,extended,00000202
+
+[Cheats/Unlock All Ivy Weapons]
+// patch=1,EE,103FE7D2,extended,00000202
+// patch=1,EE,203FE7D4,extended,02020202
+// patch=1,EE,203FE7D8,extended,02020202
+
+[Cheats/Unlock All Kilik Weapons]
+// patch=1,EE,203FE7DC,extended,02020202
+// patch=1,EE,203FE7E0,extended,02020202
+// patch=1,EE,103FE7E4,extended,00000202
+
+[Cheats/Unlock All Xianghua Weapons]
+// patch=1,EE,103FE7E6,extended,00000202
+// patch=1,EE,203FE7E8,extended,02020202
+// patch=1,EE,203FE7EC,extended,02020202
+
+[Cheats/Unlock All Maxi Weapons]
+// patch=1,EE,203FE7F0,extended,02020202
+// patch=1,EE,203FE7F4,extended,02020202
+// patch=1,EE,103FE7F8,extended,00000202
+
+[Cheats/Unlock All Necrid Weapons]
+// patch=1,EE,103FE7FA,extended,00000202
+// patch=1,EE,203FE7FC,extended,02020202
+// patch=1,EE,203FE800,extended,02020202
+
+[Cheats/Unlock All Heihachi Weapons]
+// patch=1,EE,203FE804,extended,02020202
+// patch=1,EE,203FE808,extended,02020202
+// patch=1,EE,103FE80C,extended,00000202
+
+[Cheats/Unlock All Sophitia Weapons]
+// patch=1,EE,103FE80E,extended,00000202
+// patch=1,EE,203FE810,extended,02020202
+// patch=1,EE,203FE814,extended,02020202
+
+[Cheats/Unlock All Seung Mina Weapons]
+// patch=1,EE,203FE818,extended,02020202
+// patch=1,EE,203FE81C,extended,02020202
+// patch=1,EE,103FE820,extended,00000202
+
+[Cheats/Unlock All Yoshimitsu Weapons]
+// patch=1,EE,103FE822,extended,00000202
+// patch=1,EE,203FE824,extended,02020202
+// patch=1,EE,203FE828,extended,02020202
+
+[Cheats/Unlock All Cervantes Weapons]
+// patch=1,EE,203FE82C,extended,02020202
+// patch=1,EE,203FE830,extended,02020202
+// patch=1,EE,103FE834,extended,00000202
+
+[Cheats/Raphael]
+// patch=1,EE,003FE728,extended,00000003
+// patch=1,EE,003FE729,extended,00000003
+// patch=1,EE,003FE72A,extended,00000003
+
+[Cheats/Talim]
+// patch=1,EE,003FE72B,extended,00000003
+// patch=1,EE,003FE72C,extended,00000003
+// patch=1,EE,003FE72D,extended,00000003
+
+[Cheats/Yunsung]
+// patch=1,EE,003FE72E,extended,00000003
+// patch=1,EE,003FE72F,extended,00000003
+
+[Cheats/Cassandra]
+// patch=1,EE,003FE730,extended,00000003
+// patch=1,EE,003FE731,extended,00000003
+// patch=1,EE,003FE732,extended,00000003
+
+[Cheats/Mitsurugi]
+// patch=1,EE,003FE733,extended,00000003
+// patch=1,EE,003FE734,extended,00000003
+// patch=1,EE,003FE735,extended,00000003
+
+[Cheats/Taki]
+// patch=1,EE,003FE736,extended,00000003
+// patch=1,EE,003FE737,extended,00000003
+// patch=1,EE,003FE738,extended,00000003
+
+[Cheats/Voldo]
+// patch=1,EE,003FE739,extended,00000003
+// patch=1,EE,003FE73A,extended,00000003
+// patch=1,EE,003FE73B,extended,00000003
+
+[Cheats/Nightmare]
+// patch=1,EE,003FE73C,extended,00000003
+// patch=1,EE,003FE73D,extended,00000003
+// patch=1,EE,003FE73E,extended,00000003
+
+[Cheats/Astaroth]
+// patch=1,EE,003FE73F,extended,00000003
+// patch=1,EE,003FE740,extended,00000003
+// patch=1,EE,003FE741,extended,00000003
+
+[Cheats/Ivy]
+// patch=1,EE,003FE742,extended,00000003
+// patch=1,EE,003FE743,extended,00000003
+// patch=1,EE,003FE744,extended,00000003
+
+[Cheats/Kilik]
+// patch=1,EE,003FE745,extended,00000003
+// patch=1,EE,003FE746,extended,00000003
+
+[Cheats/Xianghua]
+// patch=1,EE,003FE747,extended,00000003
+// patch=1,EE,003FE748,extended,00000003
+// patch=1,EE,003FE749,extended,00000003
+
+[Cheats/Maxi]
+// patch=1,EE,003FE74A,extended,00000003
+// patch=1,EE,003FE74B,extended,00000003
+
+[Cheats/Necrid]
+// patch=1,EE,003FE74C,extended,00000003
+// patch=1,EE,003FE74D,extended,00000003
+
+[Cheats/Heihachi]
+// patch=1,EE,003FE74E,extended,00000003
+// patch=1,EE,003FE74F,extended,00000003
+
+[Cheats/Sophitia]
+// patch=1,EE,003FE752,extended,00000003
+// patch=1,EE,003FE753,extended,00000003
+// patch=1,EE,003FE754,extended,00000003
+
+[Cheats/Seung Mina]
+// patch=1,EE,003FE755,extended,00000003
+// patch=1,EE,003FE756,extended,00000003
+// patch=1,EE,003FE757,extended,00000003
+
+[Cheats/Yoshimitsu]
+// patch=1,EE,003FE758,extended,00000003
+// patch=1,EE,003FE759,extended,00000003
+
+[Cheats/Charade]
+// patch=1,EE,003FE75A,extended,00000003
+// patch=1,EE,003FE75B,extended,00000003
+
+[Cheats/Cervantes]
+// patch=1,EE,003FE75C,extended,00000003
+// patch=1,EE,003FE75D,extended,00000003
+
+[Cheats/Chapter 1]
+// patch=1,EE,0044D294,extended,00000003
+
+[Cheats/Chapter 2]
+// patch=1,EE,0044D295,extended,00000003
+
+[Cheats/Chapter 3]
+// patch=1,EE,0044D296,extended,00000003
+
+[Cheats/Chapter 4]
+// patch=1,EE,0044D297,extended,00000003
+
+[Cheats/Chapter 5]
+// patch=1,EE,0044D298,extended,00000003
+
+[Cheats/Chapter 6]
+// patch=1,EE,0044D299,extended,00000003
+
+[Cheats/Chapter 7]
+// patch=1,EE,0044D29A,extended,00000003
+
+[Cheats/Chapter 8]
+// patch=1,EE,0044D29B,extended,00000003
+
+[Cheats/Chapter 9]
+// patch=1,EE,0044D29C,extended,00000003
+
+[Cheats/Chapter 10]
+// patch=1,EE,0044D29D,extended,00000003
+
+[Cheats/Subchapter 1]
+// patch=1,EE,0044D29E,extended,00000003
+
+[Cheats/Subchapter 2]
+// patch=1,EE,0044D29F,extended,00000003
+
+[Cheats/Subchapter 3]
+// patch=1,EE,0044D2A0,extended,00000003
+
+[Cheats/Subchapter 4]
+// patch=1,EE,0044D2A1,extended,00000003
+
+[Cheats/Extra Chapter 1]
+// patch=1,EE,0044D2A2,extended,00000003
+
+[Cheats/Extra Chapter 2]
+// patch=1,EE,0044D2A3,extended,00000003
+
+[Cheats/All Chapters]
+// patch=1,EE,4044D294,extended,00040001
+// patch=1,EE,03030303,extended,00000000

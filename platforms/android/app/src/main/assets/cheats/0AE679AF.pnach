@@ -1,0 +1,226 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Extermination [SCUS-97112] [0AE679AF]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Gears]
+// patch=1,EE,F0100008,extended,00110B5F
+
+[Cheats/Infinite Health]
+// patch=1,EE,208104D0,extended,42C80000
+// patch=1,EE,20810858,extended,42C80000
+
+[Cheats/Never Infected]
+// patch=1,EE,108104DA,extended,00000000
+// patch=1,EE,1081085E,extended,00000000
+
+[Cheats/Infinite Ammo-Shotgun]
+// patch=1,EE,10810CA8,extended,0000270F
+
+[Cheats/Infinite Ammo-Grenade Launcher]
+// patch=1,EE,10810CAA,extended,0000270F
+
+[Cheats/Infinite Ammo-Flame Thrower]
+// patch=1,EE,20810CAC,extended,00630063
+
+[Cheats/Infinite Ammo-Machine Gun]
+// patch=1,EE,10810CB4,extended,0000270F
+
+[Cheats/Infinite Rockets]
+// patch=1,EE,10810CB0,extended,0000270F
+
+[Cheats/Infinite Battery]
+// patch=1,EE,00810CB2,extended,00000030
+// patch=1,EE,00810CB7,extended,00000030
+
+[Cheats/Always Low Timer]
+// patch=1,EE,20810750,extended,00000000
+
+[Cheats/Thorn Mode]
+// patch=1,EE,D0810CA4,extended,0010FF02
+// patch=1,EE,10810CA4,extended,0000FFFF
+
+[Cheats/Have All Weapon Parts]
+// patch=1,EE,40810C64,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have Tactical Grip Unit]
+// patch=1,EE,00810C64,extended,00000001
+
+[Cheats/Have Shotgun Unit]
+// patch=1,EE,00810C65,extended,00000001
+
+[Cheats/Have Grenade Launcher Unit]
+// patch=1,EE,00810C66,extended,00000001
+
+[Cheats/Have Grenade Launcher Unit AT-6]
+// patch=1,EE,00810C67,extended,00000001
+
+[Cheats/Have Flamethrower Unit]
+// patch=1,EE,00810C68,extended,00000001
+
+[Cheats/Have U.R.S. Cover]
+// patch=1,EE,00810C69,extended,00000001
+
+[Cheats/Have Dog Tag Receiver Unit]
+// patch=1,EE,00810C6A,extended,00000001
+
+[Cheats/Have Dot Sight]
+// patch=1,EE,00810C6B,extended,00000001
+
+[Cheats/Have Zoom Scope]
+// patch=1,EE,00810C6C,extended,00000001
+
+[Cheats/Have Night Vision Scope]
+// patch=1,EE,00810C6D,extended,00000001
+
+[Cheats/Have Delta Auto Sight]
+// patch=1,EE,00810C6E,extended,00000001
+
+[Cheats/Have Interceptor Unit]
+// patch=1,EE,00810C6F,extended,00000001
+
+[Cheats/Have Missile Launcher Unit-A]
+// patch=1,EE,00810C70,extended,00000001
+
+[Cheats/Have Missile Launcher Unit-B]
+// patch=1,EE,00810C71,extended,00000001
+
+[Cheats/Have Missile Launcher Unit-C]
+// patch=1,EE,00810C72,extended,00000001
+
+[Cheats/Have Full Auto Trigger Group]
+// patch=1,EE,00810C73,extended,00000001
+
+[Cheats/Have Climbing Spikes]
+// patch=1,EE,00810C7D,extended,00000001
+
+[Cheats/Have Arctic Parka]
+// patch=1,EE,00810C7E,extended,00000001
+
+[Cheats/Have Battery Pack-6 Guage]
+// patch=1,EE,00810C7F,extended,00000001
+
+[Cheats/Have Battery Pack-18 Guage]
+// patch=1,EE,00810C80,extended,00000001
+
+[Cheats/Have Battery Pack-24 Gauge]
+// patch=1,EE,00810C81,extended,00000001
+
+[Cheats/Infinite Recovery Unit A]
+// patch=1,EE,00810C82,extended,00000063
+
+[Cheats/Infinite Recovery Unit B]
+// patch=1,EE,00810C83,extended,00000063
+
+[Cheats/Infinite MTS Vaccine]
+// patch=1,EE,00810C84,extended,00000063
+
+[Cheats/Infinite Booster Type A]
+// patch=1,EE,00810C85,extended,00000063
+
+[Cheats/Infinite Booster Type B]
+// patch=1,EE,00810C86,extended,00000063
+
+[Cheats/Have Card Key Alpha]
+// patch=1,EE,00810C87,extended,00000001
+
+[Cheats/Have Card Key Beta]
+// patch=1,EE,00810C88,extended,00000001
+
+[Cheats/Have Snow Truck Key]
+// patch=1,EE,00810C89,extended,00000001
+
+[Cheats/Have Train Key]
+// patch=1,EE,00810C8A,extended,00000001
+
+[Cheats/Have Crowbar]
+// patch=1,EE,00810C8B,extended,00000001
+
+[Cheats/Have Gary's Bomb]
+// patch=1,EE,00810C8C,extended,00000001
+
+[Cheats/Have Metal Tag 1]
+// patch=1,EE,00810C8D,extended,00000001
+
+[Cheats/Have Metal Tag 2]
+// patch=1,EE,00810C8E,extended,00000001
+
+[Cheats/Have DVD-ROM]
+// patch=1,EE,00810C8F,extended,00000001
+
+[Cheats/Have Roger's Knife]
+// patch=1,EE,00810C90,extended,00000001
+
+[Cheats/Have All Dennis' Memos]
+// patch=1,EE,00810CC3,extended,00000001
+// patch=1,EE,40810CC4,extended,00070001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10810CE0,extended,00000101
+// patch=1,EE,00810CE2,extended,00000001
+
+[Cheats/Have All Operation Manuals]
+// patch=1,EE,00810CE3,extended,00000001
+// patch=1,EE,40810CE4,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Staff Logs]
+// patch=1,EE,00810CF5,extended,00000001
+// patch=1,EE,10810CF6,extended,00000101
+// patch=1,EE,40810CF8,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,10810D08,extended,00000101
+// patch=1,EE,00810D0A,extended,00000001
+
+[Cheats/Have All Classified Files]
+// patch=1,EE,00810D0B,extended,00000001
+// patch=1,EE,40810D0C,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Top Secret Files]
+// patch=1,EE,40810D20,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Tag 1]
+// patch=1,EE,00810C91,extended,00000001
+
+[Cheats/Tag 2]
+// patch=1,EE,00810C92,extended,00000001
+
+[Cheats/Tag 3]
+// patch=1,EE,00810C93,extended,00000001
+
+[Cheats/Tag 4]
+// patch=1,EE,00810C94,extended,00000001
+
+[Cheats/Tag 5]
+// patch=1,EE,00810C95,extended,00000001
+
+[Cheats/Tag 6]
+// patch=1,EE,00810C96,extended,00000001
+
+[Cheats/Tag 7]
+// patch=1,EE,00810C97,extended,00000001
+
+[Cheats/Tag 8]
+// patch=1,EE,00810C98,extended,00000001
+
+[Cheats/Tag 9]
+// patch=1,EE,00810C99,extended,00000001
+
+[Cheats/Tag 10]
+// patch=1,EE,00810C9A,extended,00000001
+
+[Cheats/Tag 11]
+// patch=1,EE,00810C9B,extended,00000001
+
+[Cheats/Tag 12]
+// patch=1,EE,00810C9C,extended,00000001
+
+[Cheats/Tag 13]
+// patch=1,EE,00810C9D,extended,00000001
+
+[Cheats/Tag 14]
+// patch=1,EE,00810C9E,extended,00000001
+
+[Cheats/Tag 15]
+// patch=1,EE,00810C9F,extended,00000001

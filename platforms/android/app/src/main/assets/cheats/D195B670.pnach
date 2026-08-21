@@ -1,0 +1,37 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Savage Skies [SLUS-20430] [D195B670]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {L2}+{SELECT} To Resume Lap Timer]
+// patch=1,EE,F0100008,extended,004134C7
+
+[Cheats/Infinite Health]
+// patch=1,EE,2036E964,extended,3C0142C8
+// patch=1,EE,2036E968,extended,AC810070
+
+[Cheats/Infinite Special Meter]
+// patch=1,EE,2034E53C,extended,3C01447A
+// patch=1,EE,2034E578,extended,AC810178
+
+[Cheats/Infinite Shield]
+// patch=1,EE,200C0220,extended,3C0142C8
+// patch=1,EE,200C0224,extended,AE210074
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,C6200074
+// patch=1,EE,2037C870,extended,0C030088
+
+[Cheats/Have All Virtwyn Campaign Missions Completed]
+// patch=1,EE,40B71968,extended,00090005
+// patch=1,EE,40800000,extended,00000000
+
+[Cheats/Have All Chrysalis Campaign Missions Completed]
+// patch=1,EE,40B71AB8,extended,00090005
+// patch=1,EE,40800000,extended,00000000
+
+[Cheats/Have All Pariah Campaign Missions Completed]
+// patch=1,EE,40B71C08,extended,00090005
+// patch=1,EE,40800000,extended,00000000
+
+[Cheats/Unlock All Multiplayer Maps]
+// patch=1,EE,40B71F6C,extended,00060005
+// patch=1,EE,3F800000,extended,00000000

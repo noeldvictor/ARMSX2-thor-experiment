@@ -1,0 +1,63 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Batman Begins [SLUS-21198] [57EB973A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Total Weight P2]
+// patch=1,EE,90375930,extended,0C0E161B
+
+[Cheats/Max Reputation]
+// patch=1,EE,20120A58,extended,3C0142C8
+// patch=1,EE,20120A5C,extended,AC610528
+
+[Cheats/Infinite Gadgets]
+// patch=1,EE,20138450,extended,00000000
+
+[Cheats/Max Infinite Gadgets]
+// patch=1,EE,2013844C,extended,240203E7
+
+[Cheats/Extra Gadgets]
+// patch=1,EE,2013844C,extended,00D11021
+
+[Cheats/Infinite Health]
+// patch=1,EE,2015ABD8,extended,8E040BAC
+// patch=1,EE,2015ABDC,extended,AE040BA8
+
+[Cheats/1-Hit Deaths (Enemies)]
+// patch=1,EE,201F55B4,extended,A0800008
+
+[Cheats/Infinite Armor]
+// patch=1,EE,202690F0,extended,00000000
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,203BB554,extended,001570E4
+
+[Cheats/Max Area Fear]
+// patch=1,EE,204092A0,extended,42C80000
+
+[Cheats/Always Low Game Time]
+// patch=1,EE,2040B1F4,extended,00000000
+// patch=1,EE,2040BF00,extended,00000000
+
+[Cheats/Never Blurred Vision]
+// patch=1,EE,2040E138,extended,00000000
+// patch=1,EE,2040E13C,extended,00000000
+
+[Cheats/P1 Press {L1}+Up For Super Game Speed]
+// patch=1,EE,D0448642,extended,0000FBEF
+// patch=1,EE,2040E114,extended,3F800000
+
+[Cheats/P1 Press {L1}+Down For Hyper Game Speed]
+// patch=1,EE,D0448642,extended,0000FBBF
+// patch=1,EE,2040E114,extended,3F800000
+
+[Cheats/P1 Press {L1}+Left For Slow Game Speed]
+// patch=1,EE,D0448642,extended,0000FB7F
+// patch=1,EE,2040E114,extended,3F000000
+
+[Cheats/P1 Press {L1}+Right For Super Slow Game Speed]
+// patch=1,EE,D0448642,extended,0000FBDF
+// patch=1,EE,2040E114,extended,3E800000
+
+[Cheats/P1 Press {L1}+{L2} For Normal Game Speed]
+// patch=1,EE,D0448642,extended,0000FAFF
+// patch=1,EE,2040E114,extended,3F800000

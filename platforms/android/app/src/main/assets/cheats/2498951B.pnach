@@ -1,0 +1,16 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Silent Hill 3 [UNKNOWN] [2498951B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Ampoules]
+// patch=1,EE,1B5F83BC,extended,000003E7
+
+[Cheats/First-Aid Kits]
+// patch=1,EE,1B5D83BC,extended,000003E7
+
+[Cheats/Handgun Bullets]
+// patch=1,EE,1B5583BC,extended,000003E7
+
+[Cheats/Shotgun Shells]
+// patch=1,EE,1B5783BC,extended,000003E7
+// patch=1,EE,11D31C1E,extended,000003E7

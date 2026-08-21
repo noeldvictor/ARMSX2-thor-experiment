@@ -1,0 +1,6 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Haunting Ground [UNKNOWN] [2CD5794C]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Item Use]
+// patch=1,EE,20231D3C,extended,24020062

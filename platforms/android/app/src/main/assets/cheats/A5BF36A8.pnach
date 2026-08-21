@@ -1,0 +1,30 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Paris-Dakar Rally [SLES-50212] [A5BF36A8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Stage 8]
+// patch=1,EE,90125E14,extended,0C046286
+
+[Cheats/Always Low Time]
+// patch=1,EE,20178C68,extended,00000000
+
+[Cheats/Infinite Repairs]
+// patch=1,EE,204D6AAC,extended,000003E7
+
+[Cheats/Unlock All 4x4 Drive Vehicles]
+// patch=1,EE,004D8F4C,extended,0000000F
+
+[Cheats/Unlock All Motorbike Vehicles]
+// patch=1,EE,004D8F4D,extended,0000000F
+
+[Cheats/Unlock All Buggy Vehicles]
+// patch=1,EE,004D8F4E,extended,0000000F
+
+[Cheats/Unlock All Quad Vehicles]
+// patch=1,EE,004D8F4F,extended,0000000F
+
+[Cheats/Unlock All Stages (Arcade Mode)]
+// patch=1,EE,204D6A8C,extended,0000FFFF
+
+[Cheats/Unlock All Stages (Time Attack Mode)]
+// patch=1,EE,204D6A90,extended,0000FFFF

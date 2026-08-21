@@ -1,0 +1,36 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: UFC Throwdown [SLUS-20252] [3B959E6E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Ass Kickin' Machine]
+// patch=1,EE,9020341C,extended,0C08BEED
+// patch=1,EE,404AA974,extended,00060001
+// patch=1,EE,0000270F,extended,00000000
+
+[Cheats/CPU Controlled Via Controller 2]
+// patch=1,EE,004AA7C8,extended,00000000
+
+[Cheats/Infinite Challenge Points]
+// patch=1,EE,004AA98C,extended,00000064
+
+[Cheats/Max Endurance]
+// patch=1,EE,204AA974,extended,00000024
+
+[Cheats/Max Stamina]
+// patch=1,EE,204AA978,extended,00000024
+
+[Cheats/Max Punch Skill]
+// patch=1,EE,204AA97C,extended,00000024
+
+[Cheats/Max Kick Skill]
+// patch=1,EE,204AA980,extended,00000024
+
+[Cheats/Max Grappling Skill]
+// patch=1,EE,204AA984,extended,00000024
+
+[Cheats/Max Speed]
+// patch=1,EE,204AA988,extended,00000024
+
+[Cheats/Complete Skill Challenges Easier]
+// patch=1,EE,404AC414,extended,000F0019
+// patch=1,EE,00000002,extended,00000000

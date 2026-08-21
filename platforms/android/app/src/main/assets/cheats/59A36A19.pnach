@@ -1,0 +1,9 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Monopoly Party [SLUS-20348] [59A36A19]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Turbo]
+// patch=1,EE,F0100008,extended,0027F7CF
+
+[Cheats/Infinite Money (All Players)]
+// patch=1,EE,201E87EC,extended,00000000

@@ -1,0 +1,56 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Nightshade [SLUS-20810] [519E816B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Win 1 Battle For Max Exp/Level]
+// patch=1,EE,F0180008,extended,003B1D07
+
+[Cheats/Disable FMV]
+// patch=1,EE,203648C4,extended,24020003
+
+[Cheats/Infinite Health]
+// patch=1,EE,201BE2B4,extended,00000000
+
+[Cheats/Max Special Meter]
+// patch=1,EE,201BE2E4,extended,00000000
+
+[Cheats/Infinite Throwing Knives]
+// patch=1,EE,201C3744,extended,00000000
+
+[Cheats/Extra Throwing Knives]
+// patch=1,EE,101C3740,extended,00000001
+
+[Cheats/Infinite Main Spells]
+// patch=1,EE,201C8964,extended,00000000
+
+[Cheats/Extra Main Spell]
+// patch=1,EE,101C8960,extended,00000001
+
+[Cheats/Always Have Max Infinite Main Spells]
+// patch=1,EE,201BE838,extended,24030003
+// patch=1,EE,201BE840,extended,AE030918
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,201C6DF4,extended,00000000
+// patch=1,EE,201BB484,extended,00000000
+
+[Cheats/Infinite Dashes In Air]
+// patch=1,EE,201C60CC,extended,00000000
+
+[Cheats/Super Jumps/Double Jumps]
+// patch=1,EE,201C6AC8,extended,00000000
+// patch=1,EE,201C6AD4,extended,00000000
+// patch=1,EE,101C6AD8,extended,00004000
+
+[Cheats/Mega Jumps/Double Jumps]
+// patch=1,EE,201C6AC8,extended,00000000
+// patch=1,EE,201C6AD4,extended,00000000
+// patch=1,EE,101C6AD8,extended,00004040
+
+[Cheats/Ultra Jumps/Double Jumps]
+// patch=1,EE,201C6AC8,extended,00000000
+// patch=1,EE,201C6AD4,extended,00000000
+// patch=1,EE,101C6AD8,extended,00004080
+
+[Cheats/Retry Never Increases When Retrying Levels]
+// patch=1,EE,201AF558,extended,00000000

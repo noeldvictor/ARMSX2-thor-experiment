@@ -1,0 +1,118 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Zathura [SLES-53696] [B1C7FED2]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {L2}+{SELECT} For 0 Mamado Points]
+// patch=1,EE,9011FDF8,extended,00832021
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,080A4819
+// patch=1,EE,200C0224,extended,E4540014
+// patch=1,EE,20292058,extended,08030088
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,200C0230,extended,C440000C
+// patch=1,EE,200C0234,extended,080A47E2
+// patch=1,EE,200C0238,extended,E4400014
+// patch=1,EE,20291F84,extended,0803008C
+
+[Cheats/Z Counter Worth 10]
+// patch=1,EE,10230C10,extended,0000000A
+
+[Cheats/Z Counter Worth 5]
+// patch=1,EE,10230C10,extended,00000005
+
+[Cheats/Z Counter Worth 2]
+// patch=1,EE,10230C10,extended,00000002
+
+[Cheats/Every Z Counter Increases Energy]
+// patch=1,EE,20230C10,extended,24020032
+
+[Cheats/Unlock Everything]
+// patch=1,EE,200C0240,extended,AC410000
+// patch=1,EE,200C0244,extended,0808CCAF
+// patch=1,EE,200C024C,extended,8C420000
+// patch=1,EE,202332B0,extended,08030090
+// patch=1,EE,202332B4,extended,24010001
+
+[Cheats/The Adventure Begins]
+// patch=1,EE,208A875C,extended,00000001
+
+[Cheats/Hello Robot Planet]
+// patch=1,EE,208A876C,extended,00000001
+
+[Cheats/The Escape]
+// patch=1,EE,208A877C,extended,00000001
+
+[Cheats/Reprogrammed]
+// patch=1,EE,208A878C,extended,00000001
+
+[Cheats/The Gauntlet]
+// patch=1,EE,208A879C,extended,00000001
+
+[Cheats/A Master Betrayed]
+// patch=1,EE,208A87AC,extended,00000001
+
+[Cheats/A Dangerous Game]
+// patch=1,EE,208A87BC,extended,00000001
+
+[Cheats/Fall To Tsouris-3]
+// patch=1,EE,208A87CC,extended,00000001
+
+[Cheats/Into The Fire]
+// patch=1,EE,208A87DC,extended,00000001
+
+[Cheats/Mr. Meltdown]
+// patch=1,EE,208A87EC,extended,00000001
+
+[Cheats/Visitors]
+// patch=1,EE,208A87FC,extended,00000001
+
+[Cheats/Mysterious Station]
+// patch=1,EE,208A881C,extended,00000001
+
+[Cheats/Finding A Way]
+// patch=1,EE,208A882C,extended,00000001
+
+[Cheats/Breaking Through]
+// patch=1,EE,208A883C,extended,00000001
+
+[Cheats/Surviving The Swarm]
+// patch=1,EE,208A884C,extended,00000001
+
+[Cheats/Lost]
+// patch=1,EE,208A886C,extended,00000001
+
+[Cheats/The Dead Planet]
+// patch=1,EE,208A888C,extended,00000001
+
+[Cheats/Search And Rescue]
+// patch=1,EE,208A889C,extended,00000001
+
+[Cheats/The Stone Goddess]
+// patch=1,EE,208A88AC,extended,00000001
+
+[Cheats/Game Over]
+// patch=1,EE,208A88BC,extended,00000001
+
+[Cheats/Battle In The Stars]
+// patch=1,EE,208A887C,extended,00000001
+
+[Cheats/The Zorgon Mothership]
+// patch=1,EE,208A88EC,extended,00000001
+
+[Cheats/The Lure]
+// patch=1,EE,208A88FC,extended,00000001
+
+[Cheats/One Last Chance]
+// patch=1,EE,208A890C,extended,00000001
+
+[Cheats/Enter The Overlord]
+// patch=1,EE,208A891C,extended,00000001
+
+[Cheats/Zathura]
+// patch=1,EE,208A892C,extended,00000001
+
+[Cheats/All Levels]
+// patch=1,EE,408A875C,extended,001E0004
+// patch=1,EE,00000001,extended,00000000

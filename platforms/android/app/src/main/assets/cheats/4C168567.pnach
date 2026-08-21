@@ -1,0 +1,108 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Road Trip [SLUS-20398] [4C168567]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Weapons]
+// patch=1,EE,90273BA4,extended,0C09F9A3
+
+[Cheats/Infinite Money]
+// patch=1,EE,1177FDB4,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,2177FDB4,extended,000F423F
+
+[Cheats/Always Low Total Timer]
+// patch=1,EE,2177A7B0,extended,00000001
+
+[Cheats/Always Low Lap Timer]
+// patch=1,EE,2177AEB0,extended,00000001
+
+[Cheats/Start On Lap 3]
+// patch=1,EE,D177ADEA,extended,00000000
+// patch=1,EE,0177ADEB,extended,00000002
+
+[Cheats/Warp To All Towns]
+// patch=1,EE,11780A3A,extended,00000000
+
+[Cheats/Have All Choro Q Coins]
+// patch=1,EE,4178FCA8,extended,00030001
+// patch=1,EE,00000000,extended,00000000
+// patch=1,EE,0178FCB4,extended,00000000
+
+[Cheats/Peach Raceway-Rank C]
+// patch=1,EE,01780750,extended,00000000
+
+[Cheats/Peach Raceway-Rank B]
+// patch=1,EE,01780751,extended,00000000
+
+[Cheats/Peach Raceway-Rank A]
+// patch=1,EE,01780752,extended,00000000
+
+[Cheats/Ninja Temple Raceway-Rank C]
+// patch=1,EE,01780753,extended,00000000
+
+[Cheats/Temple Raceway-Rank B]
+// patch=1,EE,01780754,extended,00000000
+
+[Cheats/Temple Raceway-Rank A]
+// patch=1,EE,01780755,extended,00000000
+
+[Cheats/Desert Raceway-Rank C]
+// patch=1,EE,01780756,extended,00000000
+
+[Cheats/Desert Raceway-Rank B]
+// patch=1,EE,01780757,extended,00000000
+
+[Cheats/Night Glow Raceway-Rank B]
+// patch=1,EE,01780758,extended,00000000
+
+[Cheats/Night Glow Raceway-Rank A]
+// patch=1,EE,01780759,extended,00000000
+
+[Cheats/Miner 49er Raceway-Rank C]
+// patch=1,EE,0178075A,extended,00000000
+
+[Cheats/Miner 49er Raceway-Rank A]
+// patch=1,EE,0178075B,extended,00000000
+
+[Cheats/Lava Run Raceway-Rank B]
+// patch=1,EE,0178075C,extended,00000000
+
+[Cheats/Lava Run Raceway-Rank A]
+// patch=1,EE,0178075D,extended,00000000
+
+[Cheats/River Raceway-Rank C]
+// patch=1,EE,0178075E,extended,00000000
+
+[Cheats/Slick Track-Rank C]
+// patch=1,EE,0178075F,extended,00000000
+
+[Cheats/Oval Raceway-Rank B]
+// patch=1,EE,01780760,extended,00000000
+
+[Cheats/Slick Track-Rank A]
+// patch=1,EE,01780761,extended,00000000
+
+[Cheats/Snow Mountain Raceway-Rank B]
+// patch=1,EE,01780762,extended,00000000
+
+[Cheats/Snow Mountain Raceway-Rank A]
+// patch=1,EE,01780763,extended,00000000
+
+[Cheats/Sunny Beach Raceway-Rank B]
+// patch=1,EE,01780764,extended,00000000
+
+[Cheats/Sunny Beach Raceway-Rank A]
+// patch=1,EE,01780765,extended,00000000
+
+[Cheats/Lagoon Raceway-Rank B]
+// patch=1,EE,01780766,extended,00000000
+
+[Cheats/Lagoon Raceway-Rank A]
+// patch=1,EE,01780767,extended,00000000
+
+[Cheats/Endurance Run]
+// patch=1,EE,01780768,extended,00000000
+
+[Cheats/Tin Raceway]
+// patch=1,EE,01780769,extended,00000000

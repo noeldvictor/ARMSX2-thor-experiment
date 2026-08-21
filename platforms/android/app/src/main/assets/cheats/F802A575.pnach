@@ -1,0 +1,36 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Run Like Hell [SLUS-20037] [F802A575]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Invisible Character?]
+// patch=1,EE,90280A6C,extended,0C0A30AD
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2014848C,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,20148488,extended,00431021
+
+[Cheats/Infinite Health]
+// patch=1,EE,200C0220,extended,00A0802D
+// patch=1,EE,200C0224,extended,2402012C
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,AE42026C
+// patch=1,EE,2013F8AC,extended,0C030088
+
+[Cheats/Infinite Armor]
+// patch=1,EE,20173B54,extended,2402000A
+// patch=1,EE,20173B5C,extended,AC620224
+
+[Cheats/View Weapon In Inventory For Max Damage]
+// patch=1,EE,20178A14,extended,24820020
+// patch=1,EE,20178A18,extended,AEA2002C
+
+[Cheats/View Weapon In Inventory For Max Burst]
+// patch=1,EE,20178CC0,extended,AEA20048
+
+[Cheats/View Weapon In Inventory For Max Clips]
+// patch=1,EE,200C0230,extended,8E820090
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,AEA20044
+// patch=1,EE,20178B78,extended,0C03008C

@@ -1,0 +1,311 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Devil May Cry 2 [SLUS-20484] [08995DEE]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Secret Mission 2]
+// patch=1,EE,90129820,extended,0C047DA8
+
+[Cheats/Max Health]
+// patch=1,EE,1056F864,extended,0000270F
+
+[Cheats/Infinite Health]
+// patch=1,EE,2056F860,extended,270F270F
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,2056F860,extended,270F270F
+// patch=1,EE,1056F864,extended,0000270F
+
+[Cheats/Infinite Devil Trigger]
+// patch=1,EE,1056FB8E,extended,0000270F
+// patch=1,EE,1056FB90,extended,0000270F
+
+[Cheats/Max Devil Trigger]
+// patch=1,EE,1056FB92,extended,0000270F
+
+[Cheats/Max Infinite Devil Trigger]
+// patch=1,EE,1056FB8E,extended,0000270F
+// patch=1,EE,2056FB90,extended,270F270F
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,1056FBB2,extended,00000101
+
+[Cheats/Red Orbs Worth 255]
+// patch=1,EE,00570BA8,extended,000000FF
+
+[Cheats/Max Red Orbs]
+// patch=1,EE,20570BA8,extended,000F423F
+
+[Cheats/Max Blue Orbs]
+// patch=1,EE,20570BB4,extended,00000004
+
+[Cheats/Max Yellow Orbs]
+// patch=1,EE,00570BB1,extended,00000063
+
+[Cheats/Have All Enemy File]
+// patch=1,EE,20570C08,extended,FFFFFFFF
+// patch=1,EE,10570C0C,extended,0000FFFF
+
+[Cheats/Always 1st Devil Form]
+// patch=1,EE,0056FB88,extended,00000001
+
+[Cheats/Always Show Time!]
+// patch=1,EE,0056FC99,extended,00000063
+
+[Cheats/Invincible]
+// patch=1,EE,0056FCAF,extended,00000009
+
+[Cheats/Have All Guns]
+// patch=1,EE,0056FD70,extended,0000000F
+
+[Cheats/Have All Weapons]
+// patch=1,EE,0056FD71,extended,00000007
+
+[Cheats/Infinite Time]
+// patch=1,EE,10570288,extended,0000FFFF
+
+[Cheats/Have All Item Files]
+// patch=1,EE,20570B4C,extended,FFFFFFFF
+// patch=1,EE,20570B50,extended,FFFFFFFF
+
+[Cheats/Load A Game For Character & Mode/Mission Select]
+// patch=1,EE,10570D4E,extended,00000303
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,10573C92,extended,000001FF
+
+[Cheats/1-Hit Kills (All Enemies & Bosses)]
+// patch=1,EE,200C0220,extended,3C010056
+// patch=1,EE,200C0224,extended,3421F760
+// patch=1,EE,200C0228,extended,54310002
+// patch=1,EE,200C022C,extended,24020000
+// patch=1,EE,200C0230,extended,00501021
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,A6220100
+// patch=1,EE,20194E58,extended,0C030088
+// patch=1,EE,20194E5C,extended,86220100
+
+[Cheats/Infinite Health & 1-Hit Kills (All Enemies & Bosses)]
+// patch=1,EE,200C0220,extended,3C010056
+// patch=1,EE,200C0224,extended,3421F760
+// patch=1,EE,200C0228,extended,54310002
+// patch=1,EE,200C022C,extended,24020000
+// patch=1,EE,200C0230,extended,00000000
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,A6220100
+// patch=1,EE,20194E58,extended,0C030088
+// patch=1,EE,20194E5C,extended,86220100
+
+[Cheats/Max Orbs]
+// patch=1,EE,20570BAC,extended,000F423F
+// patch=1,EE,205741D4,extended,000F423F
+
+[Cheats/Low Clear Time]
+// patch=1,EE,20570BA0,extended,00000000
+// patch=1,EE,20570BA4,extended,00000000
+
+[Cheats/Clear Time-Rank S]
+// patch=1,EE,00571A94,extended,00000000
+
+[Cheats/Orbs-Rank S]
+// patch=1,EE,00571A95,extended,00000000
+
+[Cheats/Stylish Average-Rank S]
+// patch=1,EE,00571A96,extended,00000000
+
+[Cheats/Damage-Rank S]
+// patch=1,EE,00571A97,extended,00000000
+
+[Cheats/Item Used-Rank S]
+// patch=1,EE,00571A98,extended,00000000
+
+[Cheats/Devil Hunter Rank-Rank S]
+// patch=1,EE,00571A9B,extended,00000000
+
+[Cheats/Start On Level 9999]
+// patch=1,EE,D0570C20,extended,00000000
+// patch=1,EE,10570C20,extended,0000270F
+
+[Cheats/Start On Level 999]
+// patch=1,EE,D0570C20,extended,00000000
+// patch=1,EE,10570C20,extended,000003E7
+
+[Cheats/Start On Level 99]
+// patch=1,EE,D0570C20,extended,00000000
+// patch=1,EE,10570C20,extended,00000063
+
+[Cheats/Start On Level 9]
+// patch=1,EE,D0570C20,extended,00000000
+// patch=1,EE,10570C20,extended,00000009
+
+[Cheats/Always Low Time]
+// patch=1,EE,205741CC,extended,00000000
+
+[Cheats/Max Enemy]
+// patch=1,EE,205741D0,extended,0098967F
+
+[Cheats/Max Bonus]
+// patch=1,EE,205741D8,extended,0098967F
+
+[Cheats/Aqua Heart]
+// patch=1,EE,00570BBE,extended,00000001
+
+[Cheats/Aerial Heart]
+// patch=1,EE,00570BBF,extended,00000001
+
+[Cheats/Quick Heart]
+// patch=1,EE,00570BC0,extended,00000001
+
+[Cheats/Flame Heart]
+// patch=1,EE,00570BC1,extended,00000001
+
+[Cheats/Frost Heart]
+// patch=1,EE,00570BC2,extended,00000001
+
+[Cheats/Electro Heart]
+// patch=1,EE,00570BC3,extended,00000001
+
+[Cheats/Chrono Heart]
+// patch=1,EE,00570BC4,extended,00000001
+
+[Cheats/Healing Heart]
+// patch=1,EE,00570BC5,extended,00000001
+
+[Cheats/Offence Heart]
+// patch=1,EE,00570BC6,extended,00000001
+
+[Cheats/All Amulets]
+// patch=1,EE,10570BBE,extended,00000101
+// patch=1,EE,20570BC0,extended,01010101
+// patch=1,EE,10570BC4,extended,01010101
+// patch=1,EE,00570BC6,extended,00000001
+
+[Cheats/Vital Star L.]
+// patch=1,EE,00570BB7,extended,00000063
+
+[Cheats/Vital Star S.]
+// patch=1,EE,00570BB8,extended,00000063
+
+[Cheats/Devil Star L.]
+// patch=1,EE,00570BB9,extended,00000063
+
+[Cheats/Devil Star S.]
+// patch=1,EE,00570BBA,extended,00000063
+
+[Cheats/Holy Star]
+// patch=1,EE,00570BBB,extended,00000063
+
+[Cheats/Smell Of Fear]
+// patch=1,EE,00570BBD,extended,00000063
+
+[Cheats/Key (1)]
+// patch=1,EE,00570BD5,extended,00000063
+
+[Cheats/Key (2)]
+// patch=1,EE,00570BD6,extended,00000063
+
+[Cheats/Evilheart]
+// patch=1,EE,00570BD7,extended,00000063
+
+[Cheats/Sacrilege]
+// patch=1,EE,00570BD8,extended,00000063
+
+[Cheats/Arcana Spada]
+// patch=1,EE,00570BD9,extended,00000063
+
+[Cheats/Arcana Calice]
+// patch=1,EE,00570BDA,extended,00000063
+
+[Cheats/Arcana Medaglia]
+// patch=1,EE,00570BDB,extended,00000063
+
+[Cheats/Arcana Bastone]
+// patch=1,EE,00570BDC,extended,00000063
+
+[Cheats/Always 2nd Devil Form]
+// patch=1,EE,0056FB88,extended,00000002
+
+[Cheats/Unlock All Normal Missions]
+// patch=1,EE,00574193,extended,00000012
+// patch=1,EE,00574193,extended,0000000D
+
+[Cheats/Unlock All Hard Missions]
+// patch=1,EE,00574194,extended,00000012
+// patch=1,EE,00574194,extended,0000000D
+
+[Cheats/Unlock All Dante Must Die Missions]
+// patch=1,EE,00574195,extended,00000012
+
+[Cheats/Max Handguns Level]
+// patch=1,EE,0056FD76,extended,00000002
+
+[Cheats/Max Submachine Guns Level]
+// patch=1,EE,0056FD77,extended,00000002
+
+[Cheats/Max Shotgun Level]
+// patch=1,EE,0056FD78,extended,00000002
+
+[Cheats/Max Missile Launcher Level]
+// patch=1,EE,0056FD79,extended,00000002
+
+[Cheats/Max Rebellion/Cutlaseer Level]
+// patch=1,EE,0056FD7A,extended,00000004
+
+[Cheats/Max Merciles Level]
+// patch=1,EE,0056FD7B,extended,00000004
+
+[Cheats/Max Vendetta Level]
+// patch=1,EE,0056FD7C,extended,00000004
+
+[Cheats/Have Merciless]
+// patch=1,EE,00570BC8,extended,00000001
+
+[Cheats/Have Vendetta]
+// patch=1,EE,00570BC9,extended,00000001
+
+[Cheats/Have Submachine Guns]
+// patch=1,EE,00570BCE,extended,00000001
+
+[Cheats/Have Shotgun]
+// patch=1,EE,00570BCF,extended,00000001
+
+[Cheats/Have Missile Launcher]
+// patch=1,EE,00570BD0,extended,00000001
+
+[Cheats/Unlock All Lucia Must Die Missions]
+// patch=1,EE,00574195,extended,0000000D
+
+[Cheats/Max Throwing Daggers Level]
+// patch=1,EE,0056FD76,extended,00000002
+
+[Cheats/Max Darts Guns Level]
+// patch=1,EE,0056FD77,extended,00000002
+
+[Cheats/Max Cranky Bomb Level]
+// patch=1,EE,0056FD78,extended,00000002
+
+[Cheats/Max Bow Gun Level]
+// patch=1,EE,0056FD79,extended,00000002
+
+[Cheats/Max Cutlaseer Level]
+// patch=1,EE,0056FD7A,extended,00000004
+
+[Cheats/Max Klyamoor Level]
+// patch=1,EE,0056FD7B,extended,00000004
+
+[Cheats/Max Zambak Level]
+// patch=1,EE,0056FD7C,extended,00000004
+
+[Cheats/Klyamoor]
+// patch=1,EE,00570BCB,extended,00000001
+
+[Cheats/Zambak]
+// patch=1,EE,00570BCC,extended,00000001
+
+[Cheats/Darts]
+// patch=1,EE,00570BD2,extended,00000001
+
+[Cheats/Cranky Bomb]
+// patch=1,EE,00570BD3,extended,00000001
+
+[Cheats/Bow Gun]
+// patch=1,EE,00570BD4,extended,00000001

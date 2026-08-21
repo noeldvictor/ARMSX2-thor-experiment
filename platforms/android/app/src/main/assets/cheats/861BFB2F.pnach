@@ -1,0 +1,82 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Guilty Gear X [SLUS-20287] [861BFB2F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Skills]
+// patch=1,EE,901997F4,extended,0C068AE6
+
+[Cheats/Infinite Time]
+// patch=1,EE,1056D034,extended,00001770
+
+[Cheats/Quick Score Gain]
+// patch=1,EE,10539BFC,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,20539BFC,extended,05F5E0FF
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,10539CBC,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,20539CBC,extended,05F5E0FF
+
+[Cheats/Always Full Tension Gauge P1]
+// patch=1,EE,10539C90,extended,0000270F
+// patch=1,EE,10539D44,extended,0000270F
+
+[Cheats/Always Empty Tension Gauge P1]
+// patch=1,EE,10539C90,extended,00000000
+// patch=1,EE,10539D44,extended,00000000
+
+[Cheats/Always Full Tension Gauge P2]
+// patch=1,EE,10539D50,extended,0000270F
+// patch=1,EE,10539E04,extended,0000270F
+
+[Cheats/Always Empty Tension Gauge P2]
+// patch=1,EE,10539D50,extended,00000000
+// patch=1,EE,10539E04,extended,00000000
+
+[Cheats/P1 Infinite Upward Jumps]
+// patch=1,EE,10539CE8,extended,00000101
+
+[Cheats/P1 Cant Jump Very High]
+// patch=1,EE,10539CE8,extended,00000000
+
+[Cheats/P2 Infinite Upward Jumps]
+// patch=1,EE,10539DA8,extended,00000101
+
+[Cheats/P2 Cant Jump Very High]
+// patch=1,EE,10539DA8,extended,00000000
+
+[Cheats/P1 Never Dizzy]
+// patch=1,EE,10539CF6,extended,00000000
+
+[Cheats/P1 Always Dizzy (Upon 1st Dizzy)]
+// patch=1,EE,10539CF6,extended,000000E8
+
+[Cheats/P2 Never Dizzy]
+// patch=1,EE,10539DB6,extended,00000000
+
+[Cheats/P2 Always Dizzy (Upon 1st Dizzy)]
+// patch=1,EE,10539DB6,extended,000000E8
+
+[Cheats/Always On Full Guard Break P1]
+// patch=1,EE,10539CAA,extended,00000000
+
+[Cheats/Always On Weak Guard Break P1]
+// patch=1,EE,10539CAA,extended,00000080
+
+[Cheats/Always On Full Guard Break P2]
+// patch=1,EE,10539D6A,extended,00000000
+
+[Cheats/Always On Weak Guard Break P2]
+// patch=1,EE,10539D6A,extended,00000080
+
+[Cheats/P1 Always Has Blue Trails]
+// patch=1,EE,10539C9A,extended,00000001
+
+[Cheats/P2 Always Has Blue Trails]
+// patch=1,EE,10539D5A,extended,00000001
+
+[Cheats/Max Level (Survivor Mode)]
+// patch=1,EE,11DF3D00,extended,0000270F

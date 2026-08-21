@@ -1,0 +1,6 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Sega Ages 2500 Series Vol.26 - Dynamite Deka [UNKNOWN] [02E1970F]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Infinite Credits]
+// patch=1,EE,01FA9BF0,extended,00000009

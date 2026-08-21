@@ -1,0 +1,57 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Bombastic [SLES-51966] [40127377]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Awards]
+// patch=1,EE,F0100008,extended,001F40CF
+
+[Cheats/Quick Score Gain P1]
+// patch=1,EE,10352874,extended,0000FFFF
+// patch=1,EE,1055F820,extended,0000FFFF
+
+[Cheats/Max Score P1]
+// patch=1,EE,20352874,extended,05F5E0FF
+// patch=1,EE,2055F820,extended,05F5E0FF
+
+[Cheats/No Score P1]
+// patch=1,EE,20352874,extended,00000000
+// patch=1,EE,2055F820,extended,00000000
+
+[Cheats/Max Combo P1]
+// patch=1,EE,203528A4,extended,000003E7
+
+[Cheats/No Combo P1]
+// patch=1,EE,203528A4,extended,00000000
+
+[Cheats/Quick Score Gain P2]
+// patch=1,EE,10352994,extended,0000FFFF
+// patch=1,EE,1055F824,extended,0000FFFF
+
+[Cheats/Max Score P2]
+// patch=1,EE,20352994,extended,05F5E0FF
+// patch=1,EE,2055F824,extended,05F5E0FF
+
+[Cheats/No Score P2]
+// patch=1,EE,20352994,extended,00000000
+// patch=1,EE,2055F824,extended,00000000
+
+[Cheats/Max Combo P2]
+// patch=1,EE,203529C4,extended,000003E7
+
+[Cheats/No Combo P2]
+// patch=1,EE,203529C4,extended,00000000
+
+[Cheats/Infinite Time]
+// patch=1,EE,202F829C,extended,00000000
+
+[Cheats/Unlock All World Maps]
+// patch=1,EE,404A1D58,extended,00050001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Have All Worlds Completed]
+// patch=1,EE,404A1D88,extended,00040001
+// patch=1,EE,00000004,extended,00000000
+// patch=1,EE,404A1DB0,extended,00040001
+// patch=1,EE,404A1DD8,extended,00040001
+// patch=1,EE,404A1E00,extended,00040001
+// patch=1,EE,404A1E28,extended,00040001

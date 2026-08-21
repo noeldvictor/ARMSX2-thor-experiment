@@ -1,0 +1,29 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Primal [SCUS-97142] [FCD89DC3]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Endurance]
+// patch=1,EE,903F3C94,extended,0C0FF28F
+
+[Cheats/Unlock All Bonus Materials Options]
+// patch=1,EE,2048569C,extended,00000005
+
+[Cheats/Unlock All Tarot Card Gallery]
+// patch=1,EE,20488410,extended,FFFFFFFF
+
+[Cheats/Have Scene Select]
+// patch=1,EE,204884A8,extended,FFFFFFFF
+// patch=1,EE,204884AC,extended,FFFFFFFF
+
+[Cheats/Infinite Health (Human Form)]
+// patch=1,EE,2017D1DC,extended,3C0142C8
+// patch=1,EE,2017D1E0,extended,AE210294
+
+[Cheats/Pause For 99 Lode Stones]
+// patch=1,EE,200C0220,extended,24060063
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,AE6603C0
+// patch=1,EE,20117384,extended,0C030088
+
+[Cheats/Infinite Health (Demon Ferai Form)]
+// patch=1,EE,2017B4CC,extended,E4400000

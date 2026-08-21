@@ -1,0 +1,65 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Herdy Gerdy [SLUS-20231] [E2762CB7]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Shadow Always Off]
+// patch=1,EE,902FCC6C,extended,0C0C43B2
+
+[Cheats/Max Doops]
+// patch=1,EE,20350900,extended,000003E7
+
+[Cheats/No Doops To Left To Find]
+// patch=1,EE,20350904,extended,00000000
+
+[Cheats/No Doops Dead]
+// patch=1,EE,20350908,extended,00000000
+
+[Cheats/No Doops Left To Find]
+// patch=1,EE,20350904,extended,00000000
+
+[Cheats/Max Gromps]
+// patch=1,EE,2035090C,extended,000003E7
+
+[Cheats/No Gromps Left To Find]
+// patch=1,EE,20350910,extended,00000000
+
+[Cheats/No Gromps Dead]
+// patch=1,EE,20350914,extended,00000000
+
+[Cheats/Max Bleeps]
+// patch=1,EE,20350918,extended,000003E7
+
+[Cheats/No Bleeps Left To Find]
+// patch=1,EE,2035091C,extended,00000000
+
+[Cheats/No Bleeps Dead]
+// patch=1,EE,20350920,extended,00000000
+
+[Cheats/Have All Items]
+// patch=1,EE,0035227B,extended,00000005
+// patch=1,EE,2035227C,extended,04030201
+// patch=1,EE,00352284,extended,00000005
+
+[Cheats/Have Super Jump Ability]
+// patch=1,EE,00352288,extended,00000001
+
+[Cheats/Have Feather]
+// patch=1,EE,0035228C,extended,00000001
+
+[Cheats/Have Swimming Ability]
+// patch=1,EE,00352290,extended,00000001
+
+[Cheats/Start With 99 Bells]
+// patch=1,EE,D0350B20,extended,00200062
+// patch=1,EE,10350B20,extended,00000063
+
+[Cheats/Max Bells]
+// patch=1,EE,10350B20,extended,00000064
+
+[Cheats/Enable All Level Codes (On Map)]
+// patch=1,EE,20267034,extended,24020001
+// patch=1,EE,20267038,extended,AE420000
+
+[Cheats/Unlock All Secrets]
+// patch=1,EE,403A9120,extended,00140001
+// patch=1,EE,00000001,extended,00000000

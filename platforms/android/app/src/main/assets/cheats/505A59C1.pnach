@@ -1,0 +1,349 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: NFL Gameday 2004 [SCUS-97276] [505A59C1]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Away Team Safety's Score 1]
+// patch=1,EE,F0100008,extended,00225757
+
+[Cheats/Infinite Points Remaining]
+// patch=1,EE,D062E56C,extended,0000FA9C
+// patch=1,EE,2062E570,extended,00000000
+
+[Cheats/Home Team Scores 255]
+// patch=1,EE,107F07DC,extended,000000FF
+
+[Cheats/Home Team Scores 150]
+// patch=1,EE,107F07DC,extended,00000096
+
+[Cheats/Home Team Scores 0]
+// patch=1,EE,107F07DC,extended,00000000
+
+[Cheats/Home Team Start With Score 150]
+// patch=1,EE,D07F07DC,extended,00000000
+// patch=1,EE,107F07DC,extended,00000096
+
+[Cheats/Home Team Start With Score 100]
+// patch=1,EE,D07F07DC,extended,00000000
+// patch=1,EE,107F07DC,extended,00000064
+
+[Cheats/Home Team Start With Score 50]
+// patch=1,EE,D07F07DC,extended,00000000
+// patch=1,EE,107F07DC,extended,00000032
+
+[Cheats/Home Team Start With Score 20]
+// patch=1,EE,D07F07DC,extended,00000000
+// patch=1,EE,107F07DC,extended,00000014
+
+[Cheats/Away Team Scores 255]
+// patch=1,EE,107F07FC,extended,000000FF
+
+[Cheats/Away Team Scores 150]
+// patch=1,EE,107F07FC,extended,00000096
+
+[Cheats/Away Team Scores 0]
+// patch=1,EE,107F07FC,extended,00000000
+
+[Cheats/Away Team Start With Score 150]
+// patch=1,EE,D07F07FC,extended,00000000
+// patch=1,EE,107F07FC,extended,00000096
+
+[Cheats/Away Team Start With Score 100]
+// patch=1,EE,D07F07FC,extended,00000000
+// patch=1,EE,107F07FC,extended,00000064
+
+[Cheats/Away Team Start With Score 50]
+// patch=1,EE,D07F07FC,extended,00000000
+// patch=1,EE,107F07FC,extended,00000032
+
+[Cheats/Away Team Start With Score 20]
+// patch=1,EE,D07F07FC,extended,00000000
+// patch=1,EE,107F07FC,extended,00000014
+
+[Cheats/Home Team Infinite Time-Outs]
+// patch=1,EE,007F07D3,extended,00000003
+
+[Cheats/Home Team No Time-Outs]
+// patch=1,EE,007F07D3,extended,00000000
+
+[Cheats/Away Team Infinite Time-Outs]
+// patch=1,EE,007F07F3,extended,00000003
+
+[Cheats/Away Team No Time-Outs]
+// patch=1,EE,007F07F3,extended,00000000
+
+[Cheats/P1 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0417F02,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P1 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0417F02,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P2 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0418002,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P2 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0418002,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P3 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0418102,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P3 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0418102,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P4 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0418202,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P4 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0418202,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P5 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0418302,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P5 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0418302,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P6 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0418402,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P6 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0418402,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P7 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0418502,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P7 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0418502,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P8 Press {L1}+{L2} For More Time]
+// patch=1,EE,D0418602,extended,0000FAFF
+// patch=1,EE,107A2CA8,extended,00000005
+
+[Cheats/P8 Press {R1}+{R2} To End Quarter]
+// patch=1,EE,D0418602,extended,0000F5FF
+// patch=1,EE,107A2CA8,extended,00000100
+
+[Cheats/P1 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0417F02,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P1 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0417F02,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/P2 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0418002,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P2 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0418002,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/P3 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0418102,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P3 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0418102,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/P4 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0418202,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P4 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0418202,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/P5 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0418302,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P5 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0418302,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/P6 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0418402,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P6 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0418402,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/P7 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0418502,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P7 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0418502,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/P8 Press {L1}+{SELECT} For Low Play Choose Time]
+// patch=1,EE,D0418602,extended,0000FBFE
+// patch=1,EE,107A2CC0,extended,00000100
+
+[Cheats/P8 Press {R1}+{SELECT} For More Play Choose Time]
+// patch=1,EE,D0418602,extended,0000F7FE
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/Infinite Time To Choose Your Play]
+// patch=1,EE,107A2CC0,extended,00002800
+
+[Cheats/Start On 2nd Quarter]
+// patch=1,EE,D07F07A8,extended,00000000
+// patch=1,EE,007F07A8,extended,00000001
+
+[Cheats/Start On 3rd Quarter]
+// patch=1,EE,D07F07A8,extended,00000000
+// patch=1,EE,007F07A8,extended,00000002
+
+[Cheats/Start On 4th Quarter]
+// patch=1,EE,D07F07A8,extended,00000000
+// patch=1,EE,007F07A8,extended,00000003
+
+[Cheats/Always 1st Down]
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/Always 4th Down]
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P1 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0417F02,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P1 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0417F02,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P2 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0418002,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P2 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0418002,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P3 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0418102,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P3 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0418102,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P4 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0418202,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P4 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0418202,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P5 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0418302,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P5 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0418302,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P6 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0418402,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P6 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0418402,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P7 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0418502,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P7 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0418502,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/P8 Press {L2}+{SELECT} For 1st Down]
+// patch=1,EE,D0418602,extended,0000FEFE
+// patch=1,EE,007F07A9,extended,00000001
+
+[Cheats/P8 Press {R2}+{SELECT} For 4th Down]
+// patch=1,EE,D0418602,extended,0000FDFE
+// patch=1,EE,007F07A9,extended,00000004
+
+[Cheats/Field Goal's Score 10]
+// patch=1,EE,D06BD4A0,extended,0000380B
+// patch=1,EE,106BD4A4,extended,0000000A
+
+[Cheats/Field Goal's Score 5]
+// patch=1,EE,D06BD4A0,extended,0000380B
+// patch=1,EE,106BD4A4,extended,00000005
+
+[Cheats/Field Goal's Score 1]
+// patch=1,EE,D06BD4A0,extended,0000380B
+// patch=1,EE,106BD4A4,extended,00000001
+
+[Cheats/Touch Down's Score 15]
+// patch=1,EE,D06BDAC4,extended,0000180B
+// patch=1,EE,106BDAC8,extended,0000000F
+
+[Cheats/Touch Down's Score 10]
+// patch=1,EE,D06BDAC4,extended,0000180B
+// patch=1,EE,106BDAC8,extended,0000000A
+
+[Cheats/Touch Down's Score 5]
+// patch=1,EE,D06BDAC4,extended,0000180B
+// patch=1,EE,106BDAC8,extended,00000005
+
+[Cheats/Touch Down's Score 1]
+// patch=1,EE,D06BDAC4,extended,0000180B
+// patch=1,EE,106BDAC8,extended,00000001
+
+[Cheats/Safety's Score 10]
+// patch=1,EE,D06BDC98,extended,0000A410
+// patch=1,EE,106BDCA0,extended,0000000A
+
+[Cheats/Safety's Score 5]
+// patch=1,EE,D06BDC98,extended,0000A410
+// patch=1,EE,106BDCA0,extended,00000005
+
+[Cheats/Safety's Score 1]
+// patch=1,EE,D06BDC98,extended,0000A410
+// patch=1,EE,106BDCA0,extended,00000001
+
+[Cheats/Extra Point's Score 10]
+// patch=1,EE,D06BE478,extended,0000382D
+// patch=1,EE,106BE47C,extended,0000000A
+
+[Cheats/Extra Point's Score 5]
+// patch=1,EE,D06BE478,extended,0000382D
+// patch=1,EE,106BE47C,extended,00000005
+
+[Cheats/Extra Point's Score 2]
+// patch=1,EE,D06BE478,extended,0000382D
+// patch=1,EE,106BE47C,extended,00000002
+
+[Cheats/2-Point Conversion's Score 10]
+// patch=1,EE,D06BE508,extended,0000007F
+// patch=1,EE,106BE50C,extended,0000000A
+
+[Cheats/2-Point Conversion's Score 5]
+// patch=1,EE,D06BE508,extended,0000007F
+// patch=1,EE,106BE50C,extended,00000005
+
+[Cheats/2-Point Conversion's Score 1]
+// patch=1,EE,D06BE508,extended,0000007F
+// patch=1,EE,106BE50C,extended,00000001

@@ -1,0 +1,60 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Dead To Rights [SLES-51581] [FAC64195]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Costumes]
+// patch=1,EE,90229C1C,extended,0C08B460
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2020AF44,extended,00000000
+// patch=1,EE,2020AF5C,extended,00000000
+
+[Cheats/Extra Ammo]
+// patch=1,EE,1020AE28,extended,00000001
+
+[Cheats/Infinite Life]
+// patch=1,EE,20172F2C,extended,E4430208
+
+[Cheats/Infinite Armor]
+// patch=1,EE,2017319C,extended,E442020C
+
+[Cheats/Infinite Adrenaline]
+// patch=1,EE,2042B39C,extended,42C80000
+
+[Cheats/Unlock All Chapters]
+// patch=1,EE,20276390,extended,0000000F
+
+[Cheats/Unlock All Movies]
+// patch=1,EE,40276394,extended,00130001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Mini-Games]
+// patch=1,EE,402763E0,extended,00070001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Infinite Bouncer Destraction (Hildy Dancing)]
+// patch=1,EE,2042B244,extended,3F800000
+
+[Cheats/Max Hits (Speedbag)]
+// patch=1,EE,1042D19A,extended,0000270F
+
+[Cheats/Absolute Max Hits (Speedbag)]
+// patch=1,EE,1042D19A,extended,0000FFFF
+
+[Cheats/Max Speed (Speedbag)]
+// patch=1,EE,2042D1D4,extended,3F800000
+
+[Cheats/Max Strength Meter (Weightlifting)]
+// patch=1,EE,2042DC30,extended,3F800000
+
+[Cheats/Max Current Strength (Weightlifting)]
+// patch=1,EE,2042DC34,extended,3F800000
+
+[Cheats/Max Strength (Arm Wrestling)]
+// patch=1,EE,2042D728,extended,3F800000
+
+[Cheats/Infinite Time (Bomb Disarm)]
+// patch=1,EE,20286808,extended,00008C80
+
+[Cheats/Infinite Oxygen (Drowning)]
+// patch=1,EE,2042B48C,extended,3F800000

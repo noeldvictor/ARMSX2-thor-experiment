@@ -1,0 +1,12 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: 24 [UNKNOWN] [F1C7201E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Never Reload]
+// patch=1,EE,201706EC,extended,24420000
+
+[Cheats/Body Armor Never Decreases]
+// patch=1,EE,201F2788,extended,00000000
+
+[Cheats/Health Packs Never Decrease]
+// patch=1,EE,2036FBA4,extended,00000000

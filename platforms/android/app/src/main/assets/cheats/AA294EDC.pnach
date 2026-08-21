@@ -1,0 +1,431 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Colin McRae Rally 3 [SLUS-20502] [AA294EDC]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/1-Hit Death (Enemies)]
+// patch=1,EE,F0100008,extended,0027BF9F
+
+[Cheats/Drive Thru Most Obstacles]
+// patch=1,EE,20187D00,extended,03E00008
+// patch=1,EE,20187D04,extended,00000000
+
+[Cheats/Unlock All Cheats]
+// patch=1,EE,202CA9DC,extended,FFFFFFFF
+
+[Cheats/Buggy]
+// patch=1,EE,002C3397,extended,00000003
+
+[Cheats/Plane]
+// patch=1,EE,002C33BF,extended,00000003
+
+[Cheats/Hovercraft]
+// patch=1,EE,002C33E7,extended,00000003
+// patch=1,EE,202D6B60,extended,00000001
+
+[Cheats/Battle Tank]
+// patch=1,EE,002C340F,extended,00000003
+// patch=1,EE,202D6B64,extended,00000001
+
+[Cheats/RC Car]
+// patch=1,EE,002C3437,extended,00000003
+
+[Cheats/All Cars]
+// patch=1,EE,002C345F,extended,00000003
+
+[Cheats/All Tracks]
+// patch=1,EE,002C3487,extended,00000003
+
+[Cheats/All Parts]
+// patch=1,EE,002C34AF,extended,00000003
+
+[Cheats/All Difficulties]
+// patch=1,EE,002C34D7,extended,00000003
+
+[Cheats/Ford Super Focus]
+// patch=1,EE,002C34FF,extended,00000003
+
+[Cheats/Ford Focus FS WRC 02]
+// patch=1,EE,202D6B08,extended,00000001
+
+[Cheats/Ford Focus FS WRC 01]
+// patch=1,EE,202D6B0C,extended,00000001
+
+[Cheats/Ford RS Rocus]
+// patch=1,EE,202D6B10,extended,00000001
+
+[Cheats/Ford RS200]
+// patch=1,EE,202D6B14,extended,00000001
+
+[Cheats/Ford Puma Rally Car]
+// patch=1,EE,202D6B18,extended,00000001
+
+[Cheats/Ford WRC Replica Transit Van]
+// patch=1,EE,202D6B1C,extended,00000001
+
+[Cheats/Mitsubishi Lancer Evo VII]
+// patch=1,EE,202D6B20,extended,00000001
+
+[Cheats/Mitsubishi Lancer Evo VII RS II]
+// patch=1,EE,202D6B24,extended,00000001
+
+[Cheats/Mitsubishi Pajero]
+// patch=1,EE,202D6B28,extended,00000001
+
+[Cheats/Subaru Impreza 22B Sti]
+// patch=1,EE,202D6B2C,extended,00000001
+
+[Cheats/Black Subaru Impreza WRX (44s)]
+// patch=1,EE,202D6B30,extended,00000001
+
+[Cheats/Blue Subaru Impreza WRX (44s)]
+// patch=1,EE,202D6B34,extended,00000001
+
+[Cheats/MG ZR Rally Car]
+// patch=1,EE,202D6B38,extended,00000001
+
+[Cheats/Metro 6R4]
+// patch=1,EE,202D6B3C,extended,00000001
+
+[Cheats/Citroen Xsara Kit Car]
+// patch=1,EE,202D6B40,extended,00000001
+
+[Cheats/Citroen Xsara]
+// patch=1,EE,202D6B44,extended,00000001
+
+[Cheats/Citroen Saxo Kit Car]
+// patch=1,EE,202D6B48,extended,00000001
+
+[Cheats/Citroen 2CV Sahara]
+// patch=1,EE,202D6B4C,extended,00000001
+
+[Cheats/Lancia 037]
+// patch=1,EE,202D6B50,extended,00000001
+
+[Cheats/Baja Buggy]
+// patch=1,EE,202D6B54,extended,00000001
+
+[Cheats/Fiat Punto Rally Car]
+// patch=1,EE,202D6B58,extended,00000001
+
+[Cheats/Jet Fighter]
+// patch=1,EE,202D6B5C,extended,00000001
+
+[Cheats/Spain-Special Stage 1]
+// patch=1,EE,202D6B68,extended,00000001
+
+[Cheats/Spain-Special Stage 2]
+// patch=1,EE,202D6B6C,extended,00000001
+
+[Cheats/Spain-Special Stage 3]
+// patch=1,EE,202D6B70,extended,00000001
+
+[Cheats/Spain-Special Stage 4]
+// patch=1,EE,202D6B74,extended,00000001
+
+[Cheats/Spain-Special Stage 5]
+// patch=1,EE,202D6B78,extended,00000001
+
+[Cheats/Spain-Special Stage 6]
+// patch=1,EE,202D6B7C,extended,00000001
+
+[Cheats/Spain-Super Special Stage]
+// patch=1,EE,202D6B80,extended,00000001
+
+[Cheats/UK-Special Stage 1]
+// patch=1,EE,202D6B84,extended,00000001
+
+[Cheats/UK-Special Stage 2]
+// patch=1,EE,202D6B88,extended,00000001
+
+[Cheats/UK-Special Stage 3]
+// patch=1,EE,202D6B8C,extended,00000001
+
+[Cheats/UK-Special Stage 4]
+// patch=1,EE,202D6B90,extended,00000001
+
+[Cheats/UK-Special Stage 5]
+// patch=1,EE,202D6B94,extended,00000001
+
+[Cheats/UK-Special Stage 6]
+// patch=1,EE,202D6B98,extended,00000001
+
+[Cheats/UK-Super Special Stage]
+// patch=1,EE,202D6B9C,extended,00000001
+
+[Cheats/Greece-Special Stage 1]
+// patch=1,EE,202D6BA0,extended,00000001
+
+[Cheats/Greece-Special Stage 2]
+// patch=1,EE,202D6BA4,extended,00000001
+
+[Cheats/Greece-Special Stage 3]
+// patch=1,EE,202D6BA8,extended,00000001
+
+[Cheats/Greece-Special Stage 4]
+// patch=1,EE,202D6BAC,extended,00000001
+
+[Cheats/Greece-Special Stage 5]
+// patch=1,EE,202D6BB0,extended,00000001
+
+[Cheats/Greece-Special Stage 6]
+// patch=1,EE,202D6BB4,extended,00000001
+
+[Cheats/Greece-Super Special Stage]
+// patch=1,EE,202D6BB8,extended,00000001
+
+[Cheats/USA-Special Stage 1]
+// patch=1,EE,202D6BBC,extended,00000001
+
+[Cheats/USA-Special Stage 2]
+// patch=1,EE,202D6BC0,extended,00000001
+
+[Cheats/USA-Special Stage 3]
+// patch=1,EE,202D6BC4,extended,00000001
+
+[Cheats/USA-Special Stage 4]
+// patch=1,EE,202D6BC8,extended,00000001
+
+[Cheats/USA-Special Stage 5]
+// patch=1,EE,202D6BCC,extended,00000001
+
+[Cheats/USA-Special Stage 6]
+// patch=1,EE,202D6BD0,extended,00000001
+
+[Cheats/USA-Super Special Stage]
+// patch=1,EE,202D6BD4,extended,00000001
+
+[Cheats/Japan-Special Stage 1]
+// patch=1,EE,202D6BD8,extended,00000001
+
+[Cheats/Japan-Special Stage 2]
+// patch=1,EE,202D6BDC,extended,00000001
+
+[Cheats/Japan-Special Stage 3]
+// patch=1,EE,202D6BE0,extended,00000001
+
+[Cheats/Japan-Special Stage 4]
+// patch=1,EE,202D6BE4,extended,00000001
+
+[Cheats/Japan-Special Stage 5]
+// patch=1,EE,202D6BE8,extended,00000001
+
+[Cheats/Japan-Special Stage 6]
+// patch=1,EE,202D6BEC,extended,00000001
+
+[Cheats/Japan-Super Special Stage]
+// patch=1,EE,202D6BF0,extended,00000001
+
+[Cheats/Sweden-Special Stage 1]
+// patch=1,EE,202D6BF4,extended,00000001
+
+[Cheats/Sweden-Special Stage 2]
+// patch=1,EE,202D6BF8,extended,00000001
+
+[Cheats/Sweden-Special Stage 3]
+// patch=1,EE,202D6BFC,extended,00000001
+
+[Cheats/Sweden-Special Stage 4]
+// patch=1,EE,202D6C00,extended,00000001
+
+[Cheats/Sweden-Special Stage 5]
+// patch=1,EE,202D6C04,extended,00000001
+
+[Cheats/Sweden-Special Stage 6]
+// patch=1,EE,202D6C08,extended,00000001
+
+[Cheats/Sweden-Super Special Stage]
+// patch=1,EE,202D6C0C,extended,00000001
+
+[Cheats/Australia-Special Stage 1]
+// patch=1,EE,202D6C10,extended,00000001
+
+[Cheats/Australia-Special Stage 2]
+// patch=1,EE,202D6C14,extended,00000001
+
+[Cheats/Australia-Special Stage 3]
+// patch=1,EE,202D6C18,extended,00000001
+
+[Cheats/Australia-Special Stage 4]
+// patch=1,EE,202D6C1C,extended,00000001
+
+[Cheats/Australia-Special Stage 5]
+// patch=1,EE,202D6C20,extended,00000001
+
+[Cheats/Australia-Special Stage 6]
+// patch=1,EE,202D6C24,extended,00000001
+
+[Cheats/Australia-Super Special Stage]
+// patch=1,EE,202D6C28,extended,00000001
+
+[Cheats/Finland-Special Stage 1]
+// patch=1,EE,202D6C2C,extended,00000001
+
+[Cheats/Finland-Special Stage 2]
+// patch=1,EE,202D6C30,extended,00000001
+
+[Cheats/Finland-Special Stage 3]
+// patch=1,EE,202D6C34,extended,00000001
+
+[Cheats/Finland-Special Stage 4]
+// patch=1,EE,202D6C38,extended,00000001
+
+[Cheats/Finland-Special Stage 5]
+// patch=1,EE,202D6C3C,extended,00000001
+
+[Cheats/Finland-Special Stage 6]
+// patch=1,EE,202D6C40,extended,00000001
+
+[Cheats/Finland-Super Special Stage]
+// patch=1,EE,202D6C44,extended,00000001
+
+[Cheats/Spain Video]
+// patch=1,EE,202D6CAC,extended,00000001
+
+[Cheats/UK Video]
+// patch=1,EE,202D6CB0,extended,00000001
+
+[Cheats/Greece Video]
+// patch=1,EE,202D6CB4,extended,00000001
+
+[Cheats/USA Video]
+// patch=1,EE,202D6CB8,extended,00000001
+
+[Cheats/Japan Video]
+// patch=1,EE,202D6CBC,extended,00000001
+
+[Cheats/Sweden Video]
+// patch=1,EE,202D6CC0,extended,00000001
+
+[Cheats/Australia Video]
+// patch=1,EE,202D6CC4,extended,00000001
+
+[Cheats/Finland Video]
+// patch=1,EE,202D6CC8,extended,00000001
+
+[Cheats/C McRae]
+// patch=1,EE,203887F0,extended,14141478
+// patch=1,EE,103887F4,extended,00001414
+// patch=1,EE,003887F6,extended,00000014
+// patch=1,EE,203887F0,extended,00000000
+// patch=1,EE,103887F4,extended,00000000
+// patch=1,EE,003887F6,extended,00000000
+
+[Cheats/E Lahikainen]
+// patch=1,EE,203888D0,extended,14141478
+// patch=1,EE,103888D4,extended,00001414
+// patch=1,EE,003888D6,extended,00000014
+// patch=1,EE,203888D0,extended,00000000
+// patch=1,EE,103888D4,extended,00000000
+// patch=1,EE,003888D6,extended,00000000
+
+[Cheats/P Lunabba]
+// patch=1,EE,203889B0,extended,14141478
+// patch=1,EE,103889B4,extended,00001414
+// patch=1,EE,003889B6,extended,00000014
+// patch=1,EE,203889B0,extended,00000000
+// patch=1,EE,103889B4,extended,00000000
+// patch=1,EE,003889B6,extended,00000000
+
+[Cheats/X Cantaloube]
+// patch=1,EE,20388A90,extended,14141478
+// patch=1,EE,10388A94,extended,00001414
+// patch=1,EE,00388A96,extended,00000014
+// patch=1,EE,20388A90,extended,00000000
+// patch=1,EE,10388A94,extended,00000000
+// patch=1,EE,00388A96,extended,00000000
+
+[Cheats/R Riolon]
+// patch=1,EE,20388B70,extended,14141478
+// patch=1,EE,10388B74,extended,00001414
+// patch=1,EE,00388B76,extended,00000014
+// patch=1,EE,20388B70,extended,00000000
+// patch=1,EE,10388B74,extended,00000000
+// patch=1,EE,00388B76,extended,00000000
+
+[Cheats/D Keller]
+// patch=1,EE,20388C50,extended,14141478
+// patch=1,EE,10388C54,extended,00001414
+// patch=1,EE,00388C56,extended,00000014
+// patch=1,EE,20388C50,extended,00000000
+// patch=1,EE,10388C54,extended,00000000
+// patch=1,EE,00388C56,extended,00000000
+
+[Cheats/P Wiedermann]
+// patch=1,EE,20388D30,extended,14141478
+// patch=1,EE,10388D34,extended,00001414
+// patch=1,EE,00388D36,extended,00000014
+// patch=1,EE,20388D30,extended,00000000
+// patch=1,EE,10388D34,extended,00000000
+// patch=1,EE,00388D36,extended,00000000
+
+[Cheats/P Barca]
+// patch=1,EE,20388E10,extended,14141478
+// patch=1,EE,10388E14,extended,00001414
+// patch=1,EE,00388E16,extended,00000014
+// patch=1,EE,20388E10,extended,00000000
+// patch=1,EE,10388E14,extended,00000000
+// patch=1,EE,00388E16,extended,00000000
+
+[Cheats/J Molina]
+// patch=1,EE,20388EF0,extended,14141478
+// patch=1,EE,10388EF4,extended,00001414
+// patch=1,EE,00388EF6,extended,00000014
+// patch=1,EE,20388EF0,extended,00000000
+// patch=1,EE,10388EF4,extended,00000000
+// patch=1,EE,00388EF6,extended,00000000
+
+[Cheats/R Field]
+// patch=1,EE,20388FD0,extended,14141478
+// patch=1,EE,10388FD4,extended,00001414
+// patch=1,EE,00388FD6,extended,00000014
+// patch=1,EE,20388FD0,extended,00000000
+// patch=1,EE,10388FD4,extended,00000000
+// patch=1,EE,00388FD6,extended,00000000
+
+[Cheats/T Ingham]
+// patch=1,EE,203890B0,extended,14141478
+// patch=1,EE,103890B4,extended,00001414
+// patch=1,EE,003890B6,extended,00000014
+// patch=1,EE,203890B0,extended,00000000
+// patch=1,EE,103890B4,extended,00000000
+// patch=1,EE,003890B6,extended,00000000
+
+[Cheats/F Rizzo]
+// patch=1,EE,20389190,extended,14141478
+// patch=1,EE,10389194,extended,00001414
+// patch=1,EE,00389196,extended,00000014
+// patch=1,EE,20389190,extended,00000000
+// patch=1,EE,10389194,extended,00000000
+// patch=1,EE,00389196,extended,00000000
+
+[Cheats/M Manganello]
+// patch=1,EE,20389270,extended,14141478
+// patch=1,EE,10389274,extended,00001414
+// patch=1,EE,00389276,extended,00000014
+// patch=1,EE,20389270,extended,00000000
+// patch=1,EE,10389274,extended,00000000
+// patch=1,EE,00389276,extended,00000000
+
+[Cheats/D Henderson]
+// patch=1,EE,20389350,extended,14141478
+// patch=1,EE,10389354,extended,00001414
+// patch=1,EE,00389356,extended,00000014
+// patch=1,EE,20389350,extended,00000000
+// patch=1,EE,10389354,extended,00000000
+// patch=1,EE,00389356,extended,00000000
+
+[Cheats/B Kewell]
+// patch=1,EE,20389430,extended,14141478
+// patch=1,EE,10389434,extended,00001414
+// patch=1,EE,00389436,extended,00000014
+// patch=1,EE,20389430,extended,00000000
+// patch=1,EE,10389434,extended,00000000
+// patch=1,EE,00389436,extended,00000000
+
+[Cheats/P Stafs]
+// patch=1,EE,20389510,extended,14141478
+// patch=1,EE,10389514,extended,00001414
+// patch=1,EE,00389516,extended,00000014
+// patch=1,EE,20389510,extended,00000000
+// patch=1,EE,10389514,extended,00000000
+// patch=1,EE,00389516,extended,00000000

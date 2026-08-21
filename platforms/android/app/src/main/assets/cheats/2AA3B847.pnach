@@ -1,0 +1,33 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Super Monkey Ball Adventure [SLES-53701] [2AA3B847]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Dragon Balls-All Characters]
+// patch=1,EE,903EE268,extended,00832021
+
+[Cheats/Max Bananas]
+// patch=1,EE,20A8F50C,extended,00000063
+
+[Cheats/Infinite Lives]
+// patch=1,EE,20A91AF8,extended,0000000F
+
+[Cheats/Max Score]
+// patch=1,EE,20A91B00,extended,000F423F
+
+[Cheats/Max Credits]
+// patch=1,EE,20A95D40,extended,00000063
+
+[Cheats/Extra Credits]
+// patch=1,EE,10181058,extended,00000001
+
+[Cheats/Infinite Time]
+// patch=1,EE,201606CC,extended,00000000
+// patch=1,EE,201606D4,extended,24020063
+
+[Cheats/Unlock All Characters]
+// patch=1,EE,40A8F7A8,extended,00110001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock All Stages]
+// patch=1,EE,40A8F840,extended,000C0001
+// patch=1,EE,00000001,extended,00000000

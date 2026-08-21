@@ -1,0 +1,65 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Monsters, Inc. [SCUS-97123] [E157ACB8]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Illegal]
+// patch=1,EE,F0100008,extended,00159457
+
+[Cheats/Start With 999 Screams]
+// patch=1,EE,D0B00620,extended,00000000
+// patch=1,EE,10B00620,extended,000003E7
+
+[Cheats/Get 1 Scream For 999 Screams]
+// patch=1,EE,D0B00620,extended,00000001
+// patch=1,EE,10B00620,extended,000003E7
+
+[Cheats/Infinite Health]
+// patch=1,EE,10B00622,extended,00000005
+
+[Cheats/Start With 4 Canisters]
+// patch=1,EE,D0B00628,extended,00000000
+// patch=1,EE,10B00628,extended,00000004
+
+[Cheats/Start With 4 Mice]
+// patch=1,EE,D0B0062A,extended,00000000
+// patch=1,EE,10B0062A,extended,00000004
+
+[Cheats/Always Have 999 Screams]
+// patch=1,EE,201BB090,extended,240303E7
+// patch=1,EE,201BB09C,extended,A6630010
+
+[Cheats/Mailroom]
+// patch=1,EE,20AFD928,extended,00000001
+
+[Cheats/Main Street]
+// patch=1,EE,20AFD950,extended,00000001
+
+[Cheats/Sulley's Apartment]
+// patch=1,EE,20AFD978,extended,00000001
+
+[Cheats/Garbage Disposal]
+// patch=1,EE,20AFD9B4,extended,00000001
+
+[Cheats/Himalayas]
+// patch=1,EE,20AFD9F0,extended,00000001
+
+[Cheats/Door Vault]
+// patch=1,EE,20AFDA04,extended,00000001
+
+[Cheats/Showdown]
+// patch=1,EE,20AFDA18,extended,00000001
+
+[Cheats/Tot Bot Scare Fair]
+// patch=1,EE,20AFD944,extended,00000032
+
+[Cheats/Canister Catastrophe]
+// patch=1,EE,20AFD96C,extended,0000003C
+
+[Cheats/Closet Chaos]
+// patch=1,EE,20AFD9A8,extended,00000046
+
+[Cheats/Furry Scurry]
+// patch=1,EE,20AFD9E4,extended,00000050
+
+[Cheats/Yeti Says]
+// patch=1,EE,20AFD9F8,extended,0000005A

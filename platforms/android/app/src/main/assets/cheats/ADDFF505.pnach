@@ -1,0 +1,207 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Black [SLES-53886] [ADDFF505]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have All Upgrades]
+// patch=1,EE,9029C8E8,extended,0C0D7151
+
+[Cheats/Disable FMV]
+// patch=1,EE,20294BA0,extended,24020001
+
+[Cheats/Infinite Health]
+// patch=1,EE,205A8DA8,extended,44960000
+
+[Cheats/Infinite Health (Alternate)]
+// patch=1,EE,200C0220,extended,3C014700
+// patch=1,EE,200C0224,extended,AE4102F8
+// patch=1,EE,200C0228,extended,03E00008
+// patch=1,EE,200C022C,extended,C65402F8
+// patch=1,EE,2013BC7C,extended,0C030088
+
+[Cheats/Infinite Health Packs]
+// patch=1,EE,005A9351,extended,00000003
+
+[Cheats/Infinite Health Packs Usage]
+// patch=1,EE,2013CBF8,extended,00000000
+
+[Cheats/Always Max Health Packs]
+// patch=1,EE,2013CBF4,extended,24040003
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,20155168,extended,00000000
+
+[Cheats/Max Infinite Ammo]
+// patch=1,EE,2015515C,extended,240303E7
+
+[Cheats/Extra Ammo]
+// patch=1,EE,2015515C,extended,00661821
+
+[Cheats/Never Reload]
+// patch=1,EE,2015787C,extended,00000000
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,201551BC,extended,00000000
+
+[Cheats/Extra Grenades]
+// patch=1,EE,101551B0,extended,00000001
+
+[Cheats/Max Infinite Grenades]
+// patch=1,EE,201551B0,extended,24030009
+
+[Cheats/Fire Effect!]
+// patch=1,EE,201BE0EC,extended,00000000
+
+[Cheats/Max Enemy Count]
+// patch=1,EE,2048F3B0,extended,05F5E0FF
+
+[Cheats/No Enemy Count]
+// patch=1,EE,2048F3B0,extended,00000000
+
+[Cheats/Max Number Of Headshots]
+// patch=1,EE,2048F3B4,extended,05F5E0FF
+
+[Cheats/No Number Of Headshots]
+// patch=1,EE,2048F3B4,extended,00000000
+
+[Cheats/Max Total Bullets Fired]
+// patch=1,EE,2048F3B8,extended,05F5E0FF
+
+[Cheats/No Total Bullets Fired]
+// patch=1,EE,2048F3B8,extended,00000000
+
+[Cheats/Always Low Total Game Time]
+// patch=1,EE,2048F4C8,extended,00000000
+
+[Cheats/Veblensk City Street-Easy]
+// patch=1,EE,7048EFC6,extended,00000001
+// patch=1,EE,2048EFAC,extended,00000001
+
+[Cheats/Treneska Border Crossing-Easy]
+// patch=1,EE,7048EFE6,extended,00000001
+// patch=1,EE,2048EFCC,extended,00000001
+
+[Cheats/Naszran Town-Easy]
+// patch=1,EE,7048F006,extended,00000001
+// patch=1,EE,2048EFEC,extended,00000001
+
+[Cheats/Naszran Foundry-Easy]
+// patch=1,EE,7048F026,extended,00000001
+// patch=1,EE,2048F00C,extended,00000001
+
+[Cheats/Tivliz Asylum-Easy]
+// patch=1,EE,7048F046,extended,00000001
+// patch=1,EE,2048F02C,extended,00000001
+
+[Cheats/Vratska Dockyard-Easy]
+// patch=1,EE,7048F066,extended,00000001
+// patch=1,EE,2048F04C,extended,00000001
+
+[Cheats/Graznei Bridge-Easy]
+// patch=1,EE,7048F086,extended,00000001
+// patch=1,EE,2048F06C,extended,00000001
+
+[Cheats/Spetriniv Gulag-Easy]
+// patch=1,EE,7048F0A6,extended,00000001
+// patch=1,EE,2048F08C,extended,00000001
+
+[Cheats/Veblensk City Street-Normal]
+// patch=1,EE,7048F0C6,extended,00000001
+// patch=1,EE,2048F0AC,extended,00000001
+
+[Cheats/Treneska Border Crossing-Normal]
+// patch=1,EE,7048F0E6,extended,00000001
+// patch=1,EE,2048F0CC,extended,00000001
+
+[Cheats/Naszran Town-Normal]
+// patch=1,EE,7048F106,extended,00000001
+// patch=1,EE,2048F0EC,extended,00000001
+
+[Cheats/Naszran Foundry-Normal]
+// patch=1,EE,7048F126,extended,00000001
+// patch=1,EE,2048F10C,extended,00000001
+
+[Cheats/Tivliz Asylum-Normal]
+// patch=1,EE,7048F146,extended,00000001
+// patch=1,EE,2048F12C,extended,00000001
+
+[Cheats/Vratska Dockyard-Normal]
+// patch=1,EE,7048F166,extended,00000001
+// patch=1,EE,2048F14C,extended,00000001
+
+[Cheats/Graznei Bridge-Normal]
+// patch=1,EE,7048F186,extended,00000001
+// patch=1,EE,2048F16C,extended,00000001
+
+[Cheats/Spetriniv Gulag-Normal]
+// patch=1,EE,7048F1A6,extended,00000001
+// patch=1,EE,2048F18C,extended,00000001
+
+[Cheats/Veblensk City Street-Hard]
+// patch=1,EE,7048F1C6,extended,00000001
+// patch=1,EE,2048F1AC,extended,00000001
+
+[Cheats/Treneska Border Crossing-Hard]
+// patch=1,EE,7048F1E6,extended,00000001
+// patch=1,EE,2048F1CC,extended,00000001
+
+[Cheats/Naszran Town-Hard]
+// patch=1,EE,7048F206,extended,00000001
+// patch=1,EE,2048F1EC,extended,00000001
+
+[Cheats/Naszran Foundry-Hard]
+// patch=1,EE,7048F226,extended,00000001
+// patch=1,EE,2048F20C,extended,00000001
+
+[Cheats/Tivliz Asylum-Hard]
+// patch=1,EE,7048F246,extended,00000001
+// patch=1,EE,2048F22C,extended,00000001
+
+[Cheats/Vratska Dockyard-Hard]
+// patch=1,EE,7048F266,extended,00000001
+// patch=1,EE,2048F24C,extended,00000001
+
+[Cheats/Graznei Bridge-Hard]
+// patch=1,EE,7048F286,extended,00000001
+// patch=1,EE,2048F26C,extended,00000001
+
+[Cheats/Spetriniv Gulag-Hard]
+// patch=1,EE,7048F2A6,extended,00000001
+// patch=1,EE,2048F28C,extended,00000001
+
+[Cheats/Veblensk City Street-Black Ops]
+// patch=1,EE,7048F2C6,extended,00000001
+// patch=1,EE,2048F2AC,extended,00000001
+
+[Cheats/Treneska Border Crossing-Black Ops]
+// patch=1,EE,7048F2E6,extended,00000001
+// patch=1,EE,2048F2CC,extended,00000001
+
+[Cheats/Naszran Town-Black Ops]
+// patch=1,EE,7048F306,extended,00000001
+// patch=1,EE,2048F2EC,extended,00000001
+
+[Cheats/Naszran Foundry-Black Ops]
+// patch=1,EE,7048F326,extended,00000001
+// patch=1,EE,2048F30C,extended,00000001
+
+[Cheats/Tivliz Asylum-Black Ops]
+// patch=1,EE,7048F346,extended,00000001
+// patch=1,EE,2048F32C,extended,00000001
+
+[Cheats/Vratska Dockyard-Black Ops]
+// patch=1,EE,7048F366,extended,00000001
+// patch=1,EE,2048F34C,extended,00000001
+
+[Cheats/Graznei Bridge-Black Ops]
+// patch=1,EE,7048F386,extended,00000001
+// patch=1,EE,2048F36C,extended,00000001
+
+[Cheats/Spetriniv Gulag-Black Ops]
+// patch=1,EE,7048F3A6,extended,00000001
+// patch=1,EE,2048F38C,extended,00000001
+
+[Cheats/All Levels]
+// patch=1,EE,4048EFC4,extended,00200008
+// patch=1,EE,00010000,extended,00000000
+// patch=1,EE,4048EFAC,extended,00200008
+// patch=1,EE,00000001,extended,00000000

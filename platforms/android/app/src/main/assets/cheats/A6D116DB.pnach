@@ -1,0 +1,49 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Splashdown [SLUS-20223] [A6D116DB]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Officer Assists]
+// patch=1,EE,F0200008,extended,003BB3DF
+
+[Cheats/Seoul]
+// patch=1,EE,10620178,extended,00000001
+
+[Cheats/Lake Quilotoa]
+// patch=1,EE,1062017C,extended,00000001
+
+[Cheats/Nice]
+// patch=1,EE,10620180,extended,00000001
+
+[Cheats/Loch Ness]
+// patch=1,EE,10620184,extended,00000001
+
+[Cheats/Madrid 2]
+// patch=1,EE,10620188,extended,00000001
+
+[Cheats/Kuta Beach]
+// patch=1,EE,1062018C,extended,00000001
+
+[Cheats/Tokyo]
+// patch=1,EE,10620190,extended,00000001
+
+[Cheats/Nile River]
+// patch=1,EE,10620194,extended,00000001
+
+[Cheats/Seoul 2]
+// patch=1,EE,10620198,extended,00000001
+
+[Cheats/Venice]
+// patch=1,EE,1062019C,extended,00000001
+
+[Cheats/Bering Straight]
+// patch=1,EE,106201A0,extended,00000001
+
+[Cheats/Amazon River]
+// patch=1,EE,106201A4,extended,00000001
+
+[Cheats/Lake Havasu]
+// patch=1,EE,106201A8,extended,00000001
+
+[Cheats/Unlock All Movies]
+// patch=1,EE,40620228,extended,00080001
+// patch=1,EE,00000001,extended,00000000

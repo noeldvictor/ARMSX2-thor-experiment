@@ -1,0 +1,10 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Nascar Heat 2002 [SLUS-20176] [D813AF38]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Have Top-10 All Completed]
+// patch=1,EE,F0100008,extended,0025DC37
+
+[Cheats/Max Points]
+// patch=1,EE,102C8414,extended,0000270F
+// patch=1,EE,102F1C34,extended,0000270F

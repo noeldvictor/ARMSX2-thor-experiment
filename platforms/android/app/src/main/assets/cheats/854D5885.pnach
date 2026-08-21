@@ -1,0 +1,18 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Stretch Panic [SLUS-20182] [854D5885]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/All Courts]
+// patch=1,EE,9010D3DC,extended,0C0461E8
+
+[Cheats/Max Points]
+// patch=1,EE,206AF098,extended,000003E7
+
+[Cheats/Points Worth 100]
+// patch=1,EE,2014EECC,extended,24630064
+
+[Cheats/Points Worth 50]
+// patch=1,EE,2014EECC,extended,24630032
+
+[Cheats/Points Worth 20]
+// patch=1,EE,2014EECC,extended,24630014

@@ -1,0 +1,333 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: MX Unleashed [SLUS-20767] [9866FE54]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/7 Opponents]
+// patch=1,EE,9041AD64,extended,0C1037F6
+
+[Cheats/Always Low Time]
+// patch=1,EE,202635BC,extended,3C013C00
+// patch=1,EE,202635C0,extended,44810000
+
+[Cheats/Quick Points Gain]
+// patch=1,EE,1056FF60,extended,0000FFFF
+
+[Cheats/Max Points]
+// patch=1,EE,2056FF60,extended,05F5E0FF
+
+[Cheats/Low Rez Character]
+// patch=1,EE,20420438,extended,00000000
+
+[Cheats/No Shadow Intensity]
+// patch=1,EE,20420710,extended,00000000
+
+[Cheats/High Shadow Intensity]
+// patch=1,EE,20420710,extended,447A0000
+
+[Cheats/Crazy Tires]
+// patch=1,EE,20426DA4,extended,3F800000
+// patch=1,EE,20426DA8,extended,3F800000
+
+[Cheats/Weird Camera 1]
+// patch=1,EE,20426DB0,extended,3F800000
+// patch=1,EE,20426DB8,extended,00000000
+
+[Cheats/Weird Camera 2]
+// patch=1,EE,20426DB0,extended,00000000
+// patch=1,EE,20426DB8,extended,3F800000
+
+[Cheats/Weird Camera 3]
+// patch=1,EE,20426DB0,extended,3F800000
+// patch=1,EE,20426DB8,extended,3F800000
+
+[Cheats/Unlock Super Cross Tracks]
+// patch=1,EE,205722E4,extended,00000001
+
+[Cheats/Unlock National Tracks]
+// patch=1,EE,205722E8,extended,00000001
+
+[Cheats/Unlock Freestyle Tracks]
+// patch=1,EE,205722EC,extended,00000001
+
+[Cheats/Unlock Pro Physics]
+// patch=1,EE,205722F0,extended,00000001
+
+[Cheats/Unlock Expert AI]
+// patch=1,EE,205722F4,extended,00000001
+
+[Cheats/Unlock Machines]
+// patch=1,EE,205722F8,extended,00000001
+
+[Cheats/Unlock 50cc Bikes]
+// patch=1,EE,205722FC,extended,00000001
+
+[Cheats/Unlock 500cc Bikes]
+// patch=1,EE,20572300,extended,00000001
+
+[Cheats/Unlock Career Completion?]
+// patch=1,EE,20572304,extended,00000001
+
+[Cheats/Unlock AI Bowling]
+// patch=1,EE,20572308,extended,00000001
+
+[Cheats/Dune Buggy]
+// patch=1,EE,205676C4,extended,00000001
+
+[Cheats/Biplane]
+// patch=1,EE,205676C8,extended,00000001
+
+[Cheats/Monster Truck]
+// patch=1,EE,205676CC,extended,00000001
+
+[Cheats/Trophy Truck]
+// patch=1,EE,205676D0,extended,00000001
+
+[Cheats/Helicopter]
+// patch=1,EE,205676D4,extended,00000001
+
+[Cheats/All Machines]
+// patch=1,EE,405676C4,extended,00050001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/50cc Bikes]
+// patch=1,EE,2056778C,extended,00000001
+
+[Cheats/500cc Bikes]
+// patch=1,EE,20567790,extended,00000001
+
+[Cheats/Los Angeles]
+// patch=1,EE,20567854,extended,00000001
+
+[Cheats/Jackson]
+// patch=1,EE,20567858,extended,00000001
+
+[Cheats/San Diego]
+// patch=1,EE,2056785C,extended,00000001
+
+[Cheats/Phoenix]
+// patch=1,EE,20567860,extended,00000001
+
+[Cheats/Memphis]
+// patch=1,EE,20567864,extended,00000001
+
+[Cheats/San Antonio]
+// patch=1,EE,20567868,extended,00000001
+
+[Cheats/Lincoln]
+// patch=1,EE,2056786C,extended,00000001
+
+[Cheats/Denver]
+// patch=1,EE,20567870,extended,00000001
+
+[Cheats/Provo]
+// patch=1,EE,20567874,extended,00000001
+
+[Cheats/Las Vegas]
+// patch=1,EE,20567878,extended,00000001
+
+[Cheats/Detroit]
+// patch=1,EE,2056787C,extended,00000001
+
+[Cheats/Pittsburph]
+// patch=1,EE,20567880,extended,00000001
+
+[Cheats/Lynchburg]
+// patch=1,EE,20567884,extended,00000001
+
+[Cheats/Chicago]
+// patch=1,EE,20567888,extended,00000001
+
+[Cheats/Springfield]
+// patch=1,EE,2056788C,extended,00000001
+
+[Cheats/Dallas]
+// patch=1,EE,20567890,extended,00000001
+
+[Cheats/Norfolk]
+// patch=1,EE,20567894,extended,00000001
+
+[Cheats/Cleveland]
+// patch=1,EE,20567898,extended,00000001
+
+[Cheats/Cincinnati]
+// patch=1,EE,2056789C,extended,00000001
+
+[Cheats/Atlanta]
+// patch=1,EE,205678A0,extended,00000001
+
+[Cheats/All Supercross Tracks]
+// patch=1,EE,40567854,extended,00140001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Seneca Butte]
+// patch=1,EE,2056791C,extended,00000001
+
+[Cheats/Bodie]
+// patch=1,EE,20567920,extended,00000001
+
+[Cheats/Racine-Long]
+// patch=1,EE,20567924,extended,00000001
+
+[Cheats/Doha]
+// patch=1,EE,20567928,extended,00000001
+
+[Cheats/Blueridge]
+// patch=1,EE,2056792C,extended,00000001
+
+[Cheats/Summerhaven]
+// patch=1,EE,20567930,extended,00000001
+
+[Cheats/Pine Bluff]
+// patch=1,EE,20567934,extended,00000001
+
+[Cheats/Slack Jaw]
+// patch=1,EE,20567938,extended,00000001
+
+[Cheats/Foxpark]
+// patch=1,EE,2056793C,extended,00000001
+
+[Cheats/Hillsboro]
+// patch=1,EE,20567940,extended,00000001
+
+[Cheats/Black Hills]
+// patch=1,EE,20567944,extended,00000001
+
+[Cheats/Rattlesnake Pass]
+// patch=1,EE,20567948,extended,00000001
+
+[Cheats/Grandview]
+// patch=1,EE,2056794C,extended,00000001
+
+[Cheats/Cedar Mills]
+// patch=1,EE,20567950,extended,00000001
+
+[Cheats/Casa De Cobre]
+// patch=1,EE,20567954,extended,00000001
+
+[Cheats/Waimea]
+// patch=1,EE,20567958,extended,00000001
+
+[Cheats/Sliderrock]
+// patch=1,EE,2056795C,extended,00000001
+
+[Cheats/Signal Butte]
+// patch=1,EE,20567960,extended,00000001
+
+[Cheats/All Nationals Tracks]
+// patch=1,EE,4056791C,extended,00120001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Sierra Vista]
+// patch=1,EE,205679E4,extended,00000001
+
+[Cheats/Ocotillo Wells]
+// patch=1,EE,205679E8,extended,00000001
+
+[Cheats/Smoke Ridge]
+// patch=1,EE,205679EC,extended,00000001
+
+[Cheats/Morenci Mines]
+// patch=1,EE,205679F0,extended,00000001
+
+[Cheats/All Freestyle Tracks]
+// patch=1,EE,405679E4,extended,00040001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Hit Competition 1]
+// patch=1,EE,20567AAC,extended,00000001
+// patch=1,EE,20567B74,extended,00000001
+// patch=1,EE,20567C3C,extended,00000001
+// patch=1,EE,20567D04,extended,00000001
+// patch=1,EE,20567DCC,extended,00000001
+
+[Cheats/Hit Competition 2]
+// patch=1,EE,20567AB0,extended,00000001
+// patch=1,EE,20567B78,extended,00000001
+// patch=1,EE,20567C40,extended,00000001
+// patch=1,EE,20567D08,extended,00000001
+// patch=1,EE,20567DD0,extended,00000001
+
+[Cheats/Hit Competition 3]
+// patch=1,EE,20567AB4,extended,00000001
+// patch=1,EE,20567B7C,extended,00000001
+// patch=1,EE,20567C44,extended,00000001
+// patch=1,EE,20567D0C,extended,00000001
+// patch=1,EE,20567DD4,extended,00000001
+
+[Cheats/Hit Competition 4]
+// patch=1,EE,20567AB8,extended,00000001
+// patch=1,EE,20567B80,extended,00000001
+// patch=1,EE,20567C48,extended,00000001
+// patch=1,EE,20567D10,extended,00000001
+// patch=1,EE,20567DD8,extended,00000001
+
+[Cheats/Hit Competition 5]
+// patch=1,EE,20567ABC,extended,00000001
+// patch=1,EE,20567B84,extended,00000001
+// patch=1,EE,20567C4C,extended,00000001
+// patch=1,EE,20567D14,extended,00000001
+// patch=1,EE,20567DDC,extended,00000001
+
+[Cheats/Run Objective 1]
+// patch=1,EE,20567AC0,extended,00000001
+// patch=1,EE,20567B88,extended,00000001
+// patch=1,EE,20567C50,extended,00000001
+// patch=1,EE,20567D18,extended,00000001
+// patch=1,EE,20567DE0,extended,00000001
+
+[Cheats/Run Objective 2]
+// patch=1,EE,20567AC4,extended,00000001
+// patch=1,EE,20567B8C,extended,00000001
+// patch=1,EE,20567C54,extended,00000001
+// patch=1,EE,20567D1C,extended,00000001
+// patch=1,EE,20567DE4,extended,00000001
+
+[Cheats/Run Objective 3]
+// patch=1,EE,20567AC8,extended,00000001
+// patch=1,EE,20567B90,extended,00000001
+// patch=1,EE,20567C58,extended,00000001
+// patch=1,EE,20567D20,extended,00000001
+// patch=1,EE,20567DE8,extended,00000001
+
+[Cheats/Run Objective 4]
+// patch=1,EE,20567ACC,extended,00000001
+// patch=1,EE,20567B94,extended,00000001
+// patch=1,EE,20567C5C,extended,00000001
+// patch=1,EE,20567D24,extended,00000001
+// patch=1,EE,20567DEC,extended,00000001
+
+[Cheats/Run Objective 5]
+// patch=1,EE,20567AD0,extended,00000001
+// patch=1,EE,20567B98,extended,00000001
+// patch=1,EE,20567C60,extended,00000001
+// patch=1,EE,20567D28,extended,00000001
+// patch=1,EE,20567DF0,extended,00000001
+
+[Cheats/Stunt Objective 5]
+// patch=1,EE,20567AD4,extended,00000001
+
+[Cheats/All Ocotillo Wells]
+// patch=1,EE,40567AAC,extended,000B0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Stunt Objective]
+// patch=1,EE,20567B9C,extended,00000001
+// patch=1,EE,20567C64,extended,00000001
+// patch=1,EE,20567D2C,extended,00000001
+// patch=1,EE,20567DF4,extended,00000001
+
+[Cheats/All Sierra Vista]
+// patch=1,EE,40567B74,extended,000B0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/All Montauk Plains]
+// patch=1,EE,40567C3C,extended,000B0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/All Smoke Ridge]
+// patch=1,EE,40567D04,extended,000B0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/All Morenci Mines]
+// patch=1,EE,40567DCC,extended,000B0001
+// patch=1,EE,00000001,extended,00000000

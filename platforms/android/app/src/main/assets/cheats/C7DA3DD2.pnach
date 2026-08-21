@@ -1,0 +1,545 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Fantastic 4 [SLUS-20615] [C7DA3DD2]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {CROSS} For Moon Jump]
+// patch=1,EE,90269E14,extended,0C09CEF5
+
+[Cheats/Infinite Energy]
+// patch=1,EE,2017EF18,extended,24500000
+// patch=1,EE,2017EF1C,extended,A602000E
+// patch=1,EE,2017EF20,extended,44822000
+// patch=1,EE,2017EF2C,extended,00000000
+
+[Cheats/Upgrades Are Free]
+// patch=1,EE,2012EC70,extended,AC400000
+// patch=1,EE,2012EC74,extended,24020001
+
+[Cheats/Upgrade Points Dont Decrease]
+// patch=1,EE,201B5EA0,extended,00000000
+// patch=1,EE,201B5EA4,extended,00000000
+
+[Cheats/Use Upgrade Points For Max Upgrade Points]
+// patch=1,EE,201B5E94,extended,3C0205F5
+// patch=1,EE,201B5E98,extended,3442E0FF
+
+[Cheats/Upgrade Points Increase Instead of Decrease]
+// patch=1,EE,201B5E98,extended,00521023
+
+[Cheats/Infinite Upgrade Points]
+// patch=1,EE,10320324,extended,0000FFFF
+
+[Cheats/Max Upgrade Points]
+// patch=1,EE,20320324,extended,05F5E0FF
+
+[Cheats/Unlock All Levels]
+// patch=1,EE,20320328,extended,0000000A
+
+[Cheats/Have All Upgrades Available For Purchase]
+// patch=1,EE,403201B8,extended,00040008
+// patch=1,EE,FFFFFFFF,extended,00000000
+// patch=1,EE,203201B8,extended,FFFFFFFF
+// patch=1,EE,203201D8,extended,FFFFFFFF
+// patch=1,EE,203201F8,extended,FFFFFFFF
+// patch=1,EE,20320218,extended,FFFFFFFF
+
+[Cheats/Max Supers Available]
+// patch=1,EE,403201C0,extended,00040008
+// patch=1,EE,00000063,extended,00000000
+// patch=1,EE,203201C0,extended,00000063
+// patch=1,EE,203201E0,extended,00000063
+// patch=1,EE,20320200,extended,00000063
+// patch=1,EE,20320220,extended,00000063
+
+[Cheats/Max Cosmic Power]
+// patch=1,EE,403201D0,extended,00040008
+// patch=1,EE,00000B54,extended,00000000
+// patch=1,EE,203201D0,extended,00000B54
+// patch=1,EE,203201F0,extended,00000B54
+// patch=1,EE,20320210,extended,00000B54
+// patch=1,EE,20320230,extended,00000B54
+
+[Cheats/Infinite Lives]
+// patch=1,EE,201B3C30,extended,00000000
+// patch=1,EE,018A0861,extended,00000064
+// patch=1,EE,018A08F1,extended,00000064
+// patch=1,EE,018A0981,extended,00000064
+// patch=1,EE,018A0A11,extended,00000064
+
+[Cheats/Extra Lives]
+// patch=1,EE,101B3C2C,extended,00000001
+
+[Cheats/Infinite Cosmic Power Bars]
+// patch=1,EE,418A07F0,extended,00040024
+// patch=1,EE,03E803E8,extended,00000000
+
+[Cheats/Infinite Supers Available]
+// patch=1,EE,018A0862,extended,00000063
+
+[Cheats/3-Hit Combos Count As 25]
+// patch=1,EE,101FCEC4,extended,00000019
+
+[Cheats/3-Hit Combos Count As 10]
+// patch=1,EE,101FCEC4,extended,0000000A
+
+[Cheats/3-Hit Combos Count As 5]
+// patch=1,EE,101FCEC4,extended,00000005
+
+[Cheats/3-Hit Combos Count As 2]
+// patch=1,EE,101FCEC4,extended,00000002
+
+[Cheats/4-Hit Combos Count As 25]
+// patch=1,EE,101FCED4,extended,00000019
+
+[Cheats/4-Hit Combos Count As 10]
+// patch=1,EE,101FCED4,extended,0000000A
+
+[Cheats/4-Hit Combos Count As 5]
+// patch=1,EE,101FCED4,extended,00000005
+
+[Cheats/4-Hit Combos Count As 2]
+// patch=1,EE,101FCED4,extended,00000002
+
+[Cheats/Always Low Time]
+// patch=1,EE,219FECB0,extended,00000000
+
+[Cheats/Max Total Defeated]
+// patch=1,EE,219FECB8,extended,0000270F
+
+[Cheats/No Total Defeated]
+// patch=1,EE,219FECB8,extended,00000000
+
+[Cheats/Max Lives Lost]
+// patch=1,EE,219FECBC,extended,0000270F
+
+[Cheats/No Lives Lost]
+// patch=1,EE,219FECBC,extended,00000000
+
+[Cheats/Max Supers Used]
+// patch=1,EE,219FECC0,extended,0000270F
+
+[Cheats/No Supers Used]
+// patch=1,EE,219FECC0,extended,00000000
+
+[Cheats/Max Objects Destroyed]
+// patch=1,EE,219FECC4,extended,0000270F
+
+[Cheats/No Objects Destroyed]
+// patch=1,EE,219FECC4,extended,00000000
+
+[Cheats/Max 3-Hit Combos Landed]
+// patch=1,EE,219FECD0,extended,0000270F
+
+[Cheats/No 3-Hit Combos Landed]
+// patch=1,EE,219FECD0,extended,00000000
+
+[Cheats/Max 4-Hit Combos Landed]
+// patch=1,EE,219FECD4,extended,0000270F
+
+[Cheats/No 4-Hit Combos Landed]
+// patch=1,EE,219FECD4,extended,00000000
+
+[Cheats/Infinite Cosmic Power]
+// patch=1,EE,218A07F0,extended,03E803E8
+// patch=1,EE,218A0880,extended,03E803E8
+// patch=1,EE,218A0910,extended,03E803E8
+// patch=1,EE,218A09A0,extended,03E803E8
+
+[Cheats/Max Health]
+// patch=1,EE,203201CC,extended,000019A7
+// patch=1,EE,203201EC,extended,00001EDC
+// patch=1,EE,2032020C,extended,000026AC
+// patch=1,EE,2032022C,extended,00001324
+
+[Cheats/Foot Slam]
+// patch=1,EE,003267A7,extended,00000001
+
+[Cheats/Hearth Punch]
+// patch=1,EE,003267A8,extended,00000001
+
+[Cheats/Mallet]
+// patch=1,EE,003267A9,extended,00000001
+
+[Cheats/Rubber Band]
+// patch=1,EE,003267AA,extended,00000001
+
+[Cheats/Bludgeoner]
+// patch=1,EE,003267AB,extended,00000001
+
+[Cheats/Jackhammer]
+// patch=1,EE,003267AC,extended,00000001
+
+[Cheats/Stretch Punch]
+// patch=1,EE,003267AD,extended,00000002
+
+[Cheats/Spinning Fists]
+// patch=1,EE,003267AE,extended,00000002
+
+[Cheats/Spider Mines]
+// patch=1,EE,003267AF,extended,00000002
+
+[Cheats/Flip Kick]
+// patch=1,EE,00326795,extended,00000001
+
+[Cheats/Freeze]
+// patch=1,EE,00326796,extended,00000001
+
+[Cheats/Air Strike]
+// patch=1,EE,00326797,extended,00000001
+
+[Cheats/Silent Roar]
+// patch=1,EE,00326798,extended,00000001
+
+[Cheats/Wishbone]
+// patch=1,EE,00326799,extended,00000001
+
+[Cheats/Whiplash]
+// patch=1,EE,0032679A,extended,00000001
+
+[Cheats/Force Blind]
+// patch=1,EE,0032679B,extended,00000002
+
+[Cheats/Force Burst]
+// patch=1,EE,0032679C,extended,00000002
+
+[Cheats/Force Wall]
+// patch=1,EE,0032679D,extended,00000002
+
+[Cheats/Burn]
+// patch=1,EE,003267B0,extended,00000001
+
+[Cheats/Charred]
+// patch=1,EE,003267B1,extended,00000001
+
+[Cheats/Back Draft]
+// patch=1,EE,003267B2,extended,00000001
+
+[Cheats/Fire Bolt]
+// patch=1,EE,003267B3,extended,00000001
+
+[Cheats/Incinerator]
+// patch=1,EE,003267B4,extended,00000001
+
+[Cheats/Aftermath]
+// patch=1,EE,003267B5,extended,00000001
+
+[Cheats/Fireball]
+// patch=1,EE,003267B6,extended,00000002
+
+[Cheats/Fire Vortex]
+// patch=1,EE,003267B7,extended,00000002
+
+[Cheats/Firewall]
+// patch=1,EE,003267B8,extended,00000002
+
+[Cheats/Power Toss]
+// patch=1,EE,0032679E,extended,00000001
+
+[Cheats/Skull Crusher]
+// patch=1,EE,0032679F,extended,00000001
+
+[Cheats/Rockslide]
+// patch=1,EE,003267A0,extended,00000001
+
+[Cheats/Anvil Smash]
+// patch=1,EE,003267A1,extended,00000001
+
+[Cheats/Meteor Strike]
+// patch=1,EE,003267A2,extended,00000001
+
+[Cheats/Super Fly]
+// patch=1,EE,003267A3,extended,00000001
+
+[Cheats/Bull Rush]
+// patch=1,EE,003267A4,extended,00000002
+
+[Cheats/Elbow Drop]
+// patch=1,EE,003267A5,extended,00000002
+
+[Cheats/Thunderclap]
+// patch=1,EE,003267A6,extended,00000002
+
+[Cheats/Intro-Easy]
+// patch=1,EE,20320234,extended,00000001
+
+[Cheats/Brooklyn-Easy]
+// patch=1,EE,20320238,extended,00000001
+
+[Cheats/Underground-Easy]
+// patch=1,EE,2032023C,extended,00000001
+
+[Cheats/Tikal-Easy]
+// patch=1,EE,20320240,extended,00000001
+
+[Cheats/Museum-Easy]
+// patch=1,EE,20320244,extended,00000001
+
+[Cheats/Times Square-Easy]
+// patch=1,EE,20320248,extended,00000001
+
+[Cheats/Vault-Easy]
+// patch=1,EE,2032024C,extended,00000001
+
+[Cheats/Shield-Easy]
+// patch=1,EE,20320250,extended,00000001
+
+[Cheats/Space-Easy]
+// patch=1,EE,20320254,extended,00000001
+
+[Cheats/Doom-Easy]
+// patch=1,EE,20320258,extended,00000001
+
+[Cheats/All Easy Levels]
+// patch=1,EE,40320234,extended,000A0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Intro-Medium]
+// patch=1,EE,20320284,extended,00000001
+
+[Cheats/Brooklyn-Medium]
+// patch=1,EE,20320288,extended,00000001
+
+[Cheats/Underground-Medium]
+// patch=1,EE,2032028C,extended,00000001
+
+[Cheats/Tikal-Medium]
+// patch=1,EE,20320290,extended,00000001
+
+[Cheats/Museum-Medium]
+// patch=1,EE,20320294,extended,00000001
+
+[Cheats/Times Square-Medium]
+// patch=1,EE,20320298,extended,00000001
+
+[Cheats/Vault-Medium]
+// patch=1,EE,2032029C,extended,00000001
+
+[Cheats/Shield-Medium]
+// patch=1,EE,203202A0,extended,00000001
+
+[Cheats/Space-Medium]
+// patch=1,EE,203202A4,extended,00000001
+
+[Cheats/Doom-Medium]
+// patch=1,EE,203202A8,extended,00000001
+
+[Cheats/All Medium Levels]
+// patch=1,EE,40320284,extended,000A0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Intro-Hard]
+// patch=1,EE,203202D4,extended,00000001
+
+[Cheats/Brooklyn-Hard]
+// patch=1,EE,203202D8,extended,00000001
+
+[Cheats/Underground-Hard]
+// patch=1,EE,203202DC,extended,00000001
+
+[Cheats/Tikal-Hard]
+// patch=1,EE,203202E0,extended,00000001
+
+[Cheats/Museum-Hard]
+// patch=1,EE,203202E4,extended,00000001
+
+[Cheats/Times Square-Hard]
+// patch=1,EE,203202E8,extended,00000001
+
+[Cheats/Vault-Hard]
+// patch=1,EE,203202EC,extended,00000001
+
+[Cheats/Shield-Hard]
+// patch=1,EE,203202F0,extended,00000001
+
+[Cheats/Space-Hard]
+// patch=1,EE,203202F4,extended,00000001
+
+[Cheats/Doom-Hard]
+// patch=1,EE,203202F8,extended,00000001
+
+[Cheats/All Hard Levels]
+// patch=1,EE,403202D4,extended,000A0001
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Unlock Bonus Level]
+// patch=1,EE,7032032D,extended,00000001
+
+[Cheats/Unlock Latveria 1]
+// patch=1,EE,7032032E,extended,00000001
+
+[Cheats/Unlock Latveria 2]
+// patch=1,EE,7032032F,extended,00000001
+
+[Cheats/Unlock Arena Fight-Guard Granny]
+// patch=1,EE,703203D4,extended,00000004
+
+[Cheats/Enemy Concept Drawings]
+// patch=1,EE,703203EF,extended,00000001
+
+[Cheats/Boss Monster Concept Drawings]
+// patch=1,EE,703203EF,extended,00000002
+
+[Cheats/Character Pencil SKetches By Marvel Artists]
+// patch=1,EE,703203EF,extended,00000004
+
+[Cheats/'Ultimate Fantasy Four' Concepts By Marvel Artists]
+// patch=1,EE,703203EF,extended,00000008
+
+[Cheats/Panels From The 'Ultimate Fantastic Four' Comics]
+// patch=1,EE,703203EF,extended,00000010
+
+[Cheats/All Concepts]
+// patch=1,EE,703203EF,extended,0000001F
+
+[Cheats/Selected Panels From 'Ultimate Fantastic Four' #1]
+// patch=1,EE,703203F0,extended,00000001
+
+[Cheats/Selected Panels From 'Ultimate Fantastic Four' #2]
+// patch=1,EE,703203F0,extended,00000002
+
+[Cheats/Selected Panels From 'Ultimate Fantastic Four' #3]
+// patch=1,EE,703203F0,extended,00000004
+
+[Cheats/Selected Panels From 'Ultimate Fantastic Four' #4]
+// patch=1,EE,703203F0,extended,00000008
+
+[Cheats/Selected Panels From 'Ultimate Fantastic Four' #5]
+// patch=1,EE,703203F0,extended,00000010
+
+[Cheats/All Ultimates]
+// patch=1,EE,703203F0,extended,0000001F
+
+[Cheats/Covers From Classic 'Fantastic Four' Comics 1]
+// patch=1,EE,703203F1,extended,00000001
+
+[Cheats/Covers From Classic 'Fantastic Four' Comics 2]
+// patch=1,EE,703203F1,extended,00000002
+
+[Cheats/Covers From Classic 'Fantastic Four' Comics 3]
+// patch=1,EE,703203F1,extended,00000004
+
+[Cheats/Covers From Classic 'Fantastic Four' Comics 4]
+// patch=1,EE,703203F1,extended,00000008
+
+[Cheats/Covers From Classic 'Fantastic Four' Comics 5]
+// patch=1,EE,703203F1,extended,00000010
+
+[Cheats/Covers From Classic 'Fantastic Four' Comics 6]
+// patch=1,EE,703203F1,extended,00000020
+
+[Cheats/All Covers]
+// patch=1,EE,703203F1,extended,0000003F
+
+[Cheats/Biographies Of The Fantastic Four]
+// patch=1,EE,703203F2,extended,00000001
+
+[Cheats/Biographies Of The Classic Fantastic Four Villians 1]
+// patch=1,EE,703203F2,extended,00000002
+
+[Cheats/Biographies Of The Classic Fantastic Four Villians 2]
+// patch=1,EE,703203F2,extended,00000004
+
+[Cheats/Biographies Of Original 'Fantastic Four' Enemies 1]
+// patch=1,EE,703203F2,extended,00000008
+
+[Cheats/Biographies Of Original 'Fantastic Four' Enemies 2]
+// patch=1,EE,703203F2,extended,00000010
+
+[Cheats/All Bios]
+// patch=1,EE,703203F2,extended,0000001F
+
+[Cheats/Interview With Michael Chiklis. 'The Thing']
+// patch=1,EE,703203F3,extended,00000001
+
+[Cheats/Interview With Loan Gruffudd. 'Mr. Fantastic']
+// patch=1,EE,703203F3,extended,00000002
+
+[Cheats/Interview With Zak Penn And Marty Signore. Writers]
+// patch=1,EE,703203F3,extended,00000004
+
+[Cheats/Interview With Chris Evans. 'the Human Torch']
+// patch=1,EE,703203F3,extended,00000008
+
+[Cheats/Interview With Jessica Alba. 'The Invisible Woman']
+// patch=1,EE,703203F3,extended,00000010
+
+[Cheats/Interview With Zak Penn And Marty Signore. Writers 2]
+// patch=1,EE,703203F3,extended,00000020
+
+[Cheats/Interview With Julian McMahon. 'Dr. Doom']
+// patch=1,EE,703203F3,extended,00000040
+
+[Cheats/All Interviews]
+// patch=1,EE,703203F3,extended,0000007F
+
+[Cheats/Stan Lee Interview #1]
+// patch=1,EE,703203F4,extended,00000001
+
+[Cheats/Stan Lee Interview #2]
+// patch=1,EE,703203F4,extended,00000002
+
+[Cheats/Developer Interview #1]
+// patch=1,EE,703203F4,extended,00000004
+
+[Cheats/Stan Lee Interview #3]
+// patch=1,EE,703203F4,extended,00000008
+
+[Cheats/Stan Lee Interview #4]
+// patch=1,EE,703203F4,extended,00000010
+
+[Cheats/Developer Interview #2]
+// patch=1,EE,703203F4,extended,00000020
+
+[Cheats/Stan Lee Interview #5]
+// patch=1,EE,703203F4,extended,00000040
+
+[Cheats/All F4 Secrets]
+// patch=1,EE,703203F4,extended,0000007F
+// patch=1,EE,20320368,extended,0F0F071F
+// patch=1,EE,2032036C,extended,030F070F
+// patch=1,EE,10320370,extended,00003F07
+
+[Cheats/Intro]
+// patch=1,EE,00320368,extended,0000001F
+// patch=1,EE,00320372,extended,0000001F
+
+[Cheats/Brooklyn]
+// patch=1,EE,00320369,extended,00000007
+// patch=1,EE,00320373,extended,00000007
+
+[Cheats/Underground]
+// patch=1,EE,0032036A,extended,0000000F
+// patch=1,EE,00320374,extended,0000000F
+
+[Cheats/Tikal]
+// patch=1,EE,0032036B,extended,0000000F
+// patch=1,EE,00320375,extended,0000000F
+
+[Cheats/Museum]
+// patch=1,EE,0032036C,extended,0000000F
+// patch=1,EE,00320376,extended,0000000F
+
+[Cheats/Times Square]
+// patch=1,EE,0032036D,extended,00000007
+// patch=1,EE,00320377,extended,00000007
+
+[Cheats/Vault]
+// patch=1,EE,0032036E,extended,0000000F
+// patch=1,EE,00320378,extended,0000000F
+
+[Cheats/Shield]
+// patch=1,EE,0032036F,extended,00000003
+// patch=1,EE,00320379,extended,00000003
+
+[Cheats/Space]
+// patch=1,EE,00320370,extended,00000007
+// patch=1,EE,0032037A,extended,00000007
+
+[Cheats/Doom]
+// patch=1,EE,00320371,extended,0000003F
+// patch=1,EE,0032037B,extended,0000003F
+
+[Cheats/All Levels]
+// patch=1,EE,10320372,extended,0000071F
+// patch=1,EE,20320374,extended,070F0F0F
+// patch=1,EE,20320378,extended,3F07030F

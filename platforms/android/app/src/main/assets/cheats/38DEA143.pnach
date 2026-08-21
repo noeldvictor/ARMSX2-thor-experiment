@@ -1,0 +1,59 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Manhunt [SLUS-20827] [38DEA143]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {CROSS} For Moon Jump]
+// patch=1,EE,90130B14,extended,0C04999E
+
+[Cheats/Infinite Health]
+// patch=1,EE,20112CA4,extended,AFC20010
+
+[Cheats/Infinite Stamina]
+// patch=1,EE,201B3968,extended,00000000
+
+[Cheats/Disable FMV]
+// patch=1,EE,2035F7D0,extended,24020001
+
+[Cheats/Save Anywhere]
+// patch=1,EE,00549868,extended,00000001
+
+[Cheats/Have All Levels Completed]
+// patch=1,EE,405E0684,extended,0014002C
+// patch=1,EE,00000001,extended,00000000
+
+[Cheats/Max Rating-All Levels]
+// patch=1,EE,405E0688,extended,0014002C
+// patch=1,EE,00000005,extended,00000000
+
+[Cheats/Rabbit Skin]
+// patch=1,EE,20548D18,extended,00000001
+
+[Cheats/Monkey Skin]
+// patch=1,EE,20548D18,extended,00000002
+
+[Cheats/Piggsy Skin]
+// patch=1,EE,20548D18,extended,00000003
+
+[Cheats/Runner]
+// patch=1,EE,20549AF4,extended,00000001
+
+[Cheats/Silence]
+// patch=1,EE,20549AF8,extended,00000001
+
+[Cheats/Regenerate]
+// patch=1,EE,20549AFC,extended,00000001
+
+[Cheats/Helium Hunters]
+// patch=1,EE,20549B00,extended,00000001
+
+[Cheats/Fully Equipped]
+// patch=1,EE,20549B04,extended,00000001
+
+[Cheats/Super Punch]
+// patch=1,EE,20549B08,extended,00000001
+
+[Cheats/Invisibility]
+// patch=1,EE,20549B0C,extended,00000001
+
+[Cheats/God Mode]
+// patch=1,EE,20549B10,extended,00000001

@@ -1,0 +1,69 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Tom Clancy's Ghost Recon 2 [SLUS-21105] [82E1D0EA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/P1 Press {L3}+{CROSS} To Become Visible Again]
+// patch=1,EE,90137B74,extended,0C04B1A4
+
+[Cheats/Disable FMV]
+// patch=1,EE,20113B70,extended,24020001
+
+[Cheats/Infinite Health]
+// patch=1,EE,2037380C,extended,24020078
+// patch=1,EE,20373810,extended,AE020714
+// patch=1,EE,10373816,extended,00001000
+
+[Cheats/Infinite Health (Your Team)]
+// patch=1,EE,203944CC,extended,8FA12B1C
+// patch=1,EE,203944D0,extended,AC410714
+
+[Cheats/Infinite Ammo]
+// patch=1,EE,2039A650,extended,904100CF
+// patch=1,EE,2039A654,extended,34210002
+// patch=1,EE,2039A658,extended,A04100CF
+// patch=1,EE,2039A65C,extended,00000000
+
+[Cheats/Max Infinite Clip]
+// patch=1,EE,2039A70C,extended,24020063
+
+[Cheats/Never Reload]
+// patch=1,EE,2039A710,extended,00000000
+
+[Cheats/Infinite Grenades]
+// patch=1,EE,2015F6E8,extended,00000000
+
+[Cheats/Max Infinite Grenades]
+// patch=1,EE,2015F6E4,extended,24030063
+
+[Cheats/Extra Grenades]
+// patch=1,EE,10156FE4,extended,00000001
+
+[Cheats/Disable Map HUD]
+// patch=1,EE,20391914,extended,00000000
+
+[Cheats/Disable Ammo HUD]
+// patch=1,EE,20392E74,extended,00000000
+
+[Cheats/Disable Team Health HUD]
+// patch=1,EE,103942FE,extended,00001000
+
+[Cheats/Max Points To Buy Galleries/Movies]
+// patch=1,EE,200C0220,extended,24087530
+// patch=1,EE,200C0224,extended,A5A80320
+// patch=1,EE,200C0228,extended,0812B7DF
+// patch=1,EE,200C022C,extended,A5A80324
+// patch=1,EE,204ADF74,extended,08030088
+
+[Cheats/All Gallery Items Cost 0 Pts]
+// patch=1,EE,204A79CC,extended,24060000
+// patch=1,EE,204A79E8,extended,AC4601E0
+
+[Cheats/All Gallery Movies Cost 0 Pts]
+// patch=1,EE,204A5724,extended,24060000
+// patch=1,EE,204A572C,extended,AC4602D0
+
+[Cheats/Unlock All Gallery Items/Movies]
+// patch=1,EE,204AE054,extended,2403FFFF
+// patch=1,EE,204AE058,extended,AD0301D0
+// patch=1,EE,204AE06C,extended,AC6001E0
+// patch=1,EE,204AE070,extended,00000000

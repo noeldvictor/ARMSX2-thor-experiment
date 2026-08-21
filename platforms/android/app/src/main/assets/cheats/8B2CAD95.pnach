@@ -1,0 +1,55 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Knockout Kings 2001 [SLUS-20150] [8B2CAD95]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Vision 16]
+// patch=1,EE,901D0574,extended,0C07A78C
+
+[Cheats/Idiot AI]
+// patch=1,EE,2017E598,extended,03E00008
+// patch=1,EE,2017E59C,extended,00000000
+
+[Cheats/Infinite Stamina P1 & P2]
+// patch=1,EE,20178CE8,extended,03E00008
+// patch=1,EE,20178CEC,extended,00000000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,2017A18C,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,2017A158,extended,00000000
+
+[Cheats/Infinite Health P1 & P2]
+// patch=1,EE,20178D88,extended,03E00008
+// patch=1,EE,20178D8C,extended,00000000
+
+[Cheats/Ref Always Sees The Illegal]
+// patch=1,EE,2017A21C,extended,00000000
+
+[Cheats/Ref Never Sees The Illegal]
+// patch=1,EE,2017A21C,extended,10000009
+
+[Cheats/Infinite Creation Points]
+// patch=1,EE,0024CB60,extended,00000096
+
+[Cheats/Max Power]
+// patch=1,EE,0024CB78,extended,000000FF
+
+[Cheats/Max Speed]
+// patch=1,EE,0024CB79,extended,000000FF
+
+[Cheats/Max Stamina]
+// patch=1,EE,0024CB7A,extended,000000FF
+
+[Cheats/Max Chin]
+// patch=1,EE,0024CB7B,extended,000000FF
+
+[Cheats/Max Heart]
+// patch=1,EE,0024CB7C,extended,000000FF
+
+[Cheats/Max Cuts]
+// patch=1,EE,0024CB7D,extended,000000FF
+
+[Cheats/Max All Stats]
+// patch=1,EE,2024CB78,extended,FFFFFFFF
+// patch=1,EE,1024CB7C,extended,0000FFFF

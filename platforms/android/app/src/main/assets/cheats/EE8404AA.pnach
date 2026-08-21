@@ -1,0 +1,10 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Yu-Gi-Oh GX Tag Force Evolution [UNKNOWN] [EE8404AA]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max DP]
+// patch=1,EE,2035CAAC,extended,05F000AB
+// patch=1,EE,2035CAB0,extended,05F000AB
+
+[Cheats/Instant Win]
+// patch=1,EE,117464BC,extended,00000000

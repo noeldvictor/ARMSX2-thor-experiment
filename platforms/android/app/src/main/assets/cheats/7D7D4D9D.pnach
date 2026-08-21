@@ -1,0 +1,44 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Disaster Report [SLUS-20561] [7D7D4D9D]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Tachyon]
+// patch=1,EE,F0100008,extended,001D2177
+
+[Cheats/Infinite HP]
+// patch=1,EE,20380904,extended,42C80000
+
+[Cheats/Infinite QP]
+// patch=1,EE,20380908,extended,42C80000
+
+[Cheats/Have All Maps]
+// patch=1,EE,2036CC00,extended,FFFFFFFF
+// patch=1,EE,2036CC04,extended,FFFFFFFF
+
+[Cheats/Have All Compasses]
+// patch=1,EE,203FE8EC,extended,FFFFFFFF
+// patch=1,EE,203FE8F0,extended,FFFFFFF7
+
+[Cheats/Always Low Play Time]
+// patch=1,EE,204144B4,extended,00000000
+
+[Cheats/Never Have Saved]
+// patch=1,EE,204144B8,extended,00000000
+
+[Cheats/Saved Only Once]
+// patch=1,EE,204144B8,extended,00000001
+
+[Cheats/No Game Overs]
+// patch=1,EE,204144BC,extended,00000000
+
+[Cheats/No Falls]
+// patch=1,EE,204144C0,extended,00000000
+
+[Cheats/Always Low Distance Traveled]
+// patch=1,EE,204144C4,extended,00000000
+
+[Cheats/Hella Distance Traveled]
+// patch=1,EE,204144C4,extended,461C3F9A
+
+[Cheats/Always Low Water Consumed]
+// patch=1,EE,204144C8,extended,00000000

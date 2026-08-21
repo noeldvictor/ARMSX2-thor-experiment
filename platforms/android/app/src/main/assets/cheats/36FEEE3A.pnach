@@ -1,0 +1,86 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Knockout Kings 2002 [SLUS-20369] [36FEEE3A]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max All Stats]
+// patch=1,EE,9021A68C,extended,0C08B591
+// patch=1,EE,20409A78,extended,FFFFFFFF
+// patch=1,EE,10409A7C,extended,0000FFFF
+
+[Cheats/Infinite Stamina P1 & P2]
+// patch=1,EE,20165E28,extended,03E00008
+// patch=1,EE,20165E2C,extended,00000000
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,20166C08,extended,00000000
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,20166B98,extended,00000000
+// patch=1,EE,20166BD4,extended,00000000
+
+[Cheats/Infinite Health P1 & P2]
+// patch=1,EE,20165EB0,extended,03E00008
+// patch=1,EE,20165EB4,extended,00000000
+
+[Cheats/Screen Distortion]
+// patch=1,EE,002ADDDC,extended,00000001
+
+[Cheats/KO Punch P1]
+// patch=1,EE,00409001,extended,00000002
+
+[Cheats/KO Punch P2]
+// patch=1,EE,00409001,extended,00000003
+
+[Cheats/KO Punch P1 & P2]
+// patch=1,EE,00409001,extended,00000004
+
+[Cheats/Invincible P1]
+// patch=1,EE,00409003,extended,00000002
+
+[Cheats/Invincible P2]
+// patch=1,EE,00409003,extended,00000003
+
+[Cheats/Invincible P1 & P2]
+// patch=1,EE,00409003,extended,00000004
+
+[Cheats/Stop Time]
+// patch=1,EE,00409007,extended,00000001
+
+[Cheats/Last Round]
+// patch=1,EE,00409008,extended,00000001
+
+[Cheats/Big Head Mode (When Hit)]
+// patch=1,EE,20272208,extended,00000001
+
+[Cheats/Big Hands Mode]
+// patch=1,EE,2027220C,extended,00000001
+
+[Cheats/Stretch Head Mode]
+// patch=1,EE,20272210,extended,00000001
+
+[Cheats/Stretch Hands Mode]
+// patch=1,EE,20272214,extended,00000001
+
+[Cheats/Turbo Mode]
+// patch=1,EE,20272218,extended,00000001
+
+[Cheats/Invisible Mode]
+// patch=1,EE,2027221C,extended,00000001
+
+[Cheats/Giant Mode]
+// patch=1,EE,20272220,extended,00000001
+
+[Cheats/Little Mode]
+// patch=1,EE,20272224,extended,00000001
+
+[Cheats/Teleport(R1) Mode]
+// patch=1,EE,20272228,extended,00000001
+
+[Cheats/Rumble Mode]
+// patch=1,EE,2027222C,extended,00000001
+
+[Cheats/Tag Mode]
+// patch=1,EE,20272230,extended,00000001
+
+[Cheats/Infinite Creation Points]
+// patch=1,EE,00409A50,extended,00000096

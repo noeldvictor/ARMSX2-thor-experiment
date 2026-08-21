@@ -1,0 +1,40 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Cart Fury Championship Racing [SLUS-20141] [116154AD]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Character Skins]
+// patch=1,EE,901E901C,extended,0C077B30
+
+[Cheats/Max Season Points]
+// patch=1,EE,10597EB0,extended,0000270F
+
+[Cheats/Infinite Boost]
+// patch=1,EE,1056B224,extended,000001A4
+
+[Cheats/Always Super Boost]
+// patch=1,EE,0056C7D9,extended,00000001
+
+[Cheats/Start On Last Track (Simulation Mode)]
+// patch=1,EE,00597FA0,extended,00000010
+
+[Cheats/Max Kills (Demolition)]
+// patch=1,EE,1056C2A0,extended,0000270F
+
+[Cheats/Infinite Missile Time]
+// patch=1,EE,1056C2E8,extended,00000063
+
+[Cheats/Infinite Time]
+// patch=1,EE,1056C328,extended,00000063
+// patch=1,EE,2056C5C0,extended,00000063
+
+[Cheats/Max Kills]
+// patch=1,EE,105CEC42,extended,0000270F
+
+[Cheats/No Barrels Hit]
+// patch=1,EE,105F56C0,extended,00000000
+
+[Cheats/0 Time Out Of Bounds]
+// patch=1,EE,205F56C4,extended,00000000
+
+[Cheats/Low Total Time]
+// patch=1,EE,205F56C8,extended,00000000

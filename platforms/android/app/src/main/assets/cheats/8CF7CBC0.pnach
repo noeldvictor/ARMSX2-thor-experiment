@@ -1,0 +1,120 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Maximo Vs. Army Of Zin [SLUS-20722] [8CF7CBC0]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Max Items/Ammo Usage]
+// patch=1,EE,9012DA10,extended,0C0495CC
+
+[Cheats/Disable FMV]
+// patch=1,EE,2010BFE8,extended,24020001
+
+[Cheats/Press {CROSS} For Moon Jump]
+// patch=1,EE,20171A5C,extended,3C013E80
+// patch=1,EE,D02CBE1C,extended,0000BFFF
+// patch=1,EE,20171A64,extended,AE810004
+// patch=1,EE,D02CBE1C,extended,0010BFFF
+// patch=1,EE,20171A64,extended,00000000
+
+[Cheats/Infinite Double Jumps]
+// patch=1,EE,2015E440,extended,24020001
+
+[Cheats/Infinite Shield]
+// patch=1,EE,200C0220,extended,24010708
+// patch=1,EE,200C0224,extended,03E00008
+// patch=1,EE,200C0228,extended,ACC10008
+// patch=1,EE,201409B4,extended,0C030088
+
+[Cheats/Infinite Weapon Energy]
+// patch=1,EE,20140278,extended,8F818358
+// patch=1,EE,20140280,extended,24051680
+// patch=1,EE,2014028C,extended,AC25003C
+
+[Cheats/Press {L1}+{R1} For Max Grim Energy]
+// patch=1,EE,200C0230,extended,24030028
+// patch=1,EE,200C0234,extended,03E00008
+// patch=1,EE,200C0238,extended,AC430000
+// patch=1,EE,D02CBE1C,extended,0000F3FF
+// patch=1,EE,2013FCF0,extended,0C03008C
+// patch=1,EE,D02CBE1C,extended,0010F3FF
+// patch=1,EE,2013FCF0,extended,8C430000
+
+[Cheats/Never Need Gold Keys To Open Gold Locks]
+// patch=1,EE,20164D44,extended,24020001
+
+[Cheats/Start With Max Koins]
+// patch=1,EE,20302704,extended,0000270F
+
+[Cheats/Start With Max Soul Stones]
+// patch=1,EE,20302708,extended,0000270F
+
+[Cheats/Start With Max Iron Keys]
+// patch=1,EE,20302714,extended,00000063
+
+[Cheats/Start With Max Death Coins]
+// patch=1,EE,2030271C,extended,0000270F
+
+[Cheats/Start With All Hint Scrolls]
+// patch=1,EE,20302748,extended,FFFFFFFF
+
+[Cheats/Start With All Swords]
+// patch=1,EE,E002FFFF,extended,00302750
+// patch=1,EE,20302750,extended,09080701
+// patch=1,EE,10302754,extended,00000B0A
+
+[Cheats/Start With All Shields]
+// patch=1,EE,D0302758,extended,0000FFFF
+// patch=1,EE,20302758,extended,14110605
+
+[Cheats/Start With All Hammers]
+// patch=1,EE,E003FFFF,extended,00302760
+// patch=1,EE,0030275F,extended,00000002
+// patch=1,EE,20302760,extended,0E0D0C03
+// patch=1,EE,10302764,extended,0000100F
+
+[Cheats/Start With All Boxers]
+// patch=1,EE,D0302768,extended,0000FFFF
+// patch=1,EE,20302768,extended,19181716
+
+[Cheats/Start With Max Shield]
+// patch=1,EE,203026FC,extended,00000708
+// patch=1,EE,20302700,extended,00000009
+
+[Cheats/Start With Max Grim Energy]
+// patch=1,EE,20302724,extended,00000028
+// patch=1,EE,20302728,extended,00000028
+
+[Cheats/Start With Max Weapon Energy]
+// patch=1,EE,2030272C,extended,00000009
+// patch=1,EE,20302730,extended,00001680
+
+[Cheats/Max Koins]
+// patch=1,EE,602C42C8,extended,0000270F
+// patch=1,EE,60020001,extended,00000010
+
+[Cheats/Max Soul Stones]
+// patch=1,EE,602C42C8,extended,0000270F
+// patch=1,EE,60020001,extended,00000014
+
+[Cheats/Max Iron Keys]
+// patch=1,EE,602C42C8,extended,0000270F
+// patch=1,EE,60020001,extended,00000020
+
+[Cheats/Max Death Coins]
+// patch=1,EE,602C42C8,extended,0000270F
+// patch=1,EE,60020001,extended,00000028
+
+[Cheats/Have All Enemies Defeated]
+// patch=1,EE,202E8D7C,extended,00000063
+// patch=1,EE,202E8D80,extended,00000063
+
+[Cheats/Have All Treasure Found]
+// patch=1,EE,202E8D84,extended,00000063
+// patch=1,EE,202E8D88,extended,00000063
+
+[Cheats/Have All Innocents Rescued]
+// patch=1,EE,202E8D8C,extended,00000063
+// patch=1,EE,202E8D90,extended,00000063
+
+[Cheats/Have All Secrets Found]
+// patch=1,EE,202E8D94,extended,00000063
+// patch=1,EE,202E8D98,extended,00000063
