@@ -1,7 +1,7 @@
 # Texture Upscaling On AYN Thor
 
-Design direction plus the research behind it. The scaffold and three scalers are
-implemented and running; the rest of the algorithm library, the settings UI, and the
+Design direction plus the research behind it. The scaffold, three scalers and the
+settings UI are implemented and running; the rest of the algorithm library and the
 neural path are not.
 
 Last researched: 2026-08-21.
@@ -198,6 +198,10 @@ confirmed against Qualcomm documentation; probe at runtime and fall back to FP32
 
 In rough order of how likely each is to sink the feature:
 
+- **Toggling on mid-game looks broken.** Settings apply live via `applyGSSettingsLive()`,
+  but already-cached textures stay native until they are evicted and re-uploaded, so the
+  screen barely changes at first. A user will read that as "it does nothing". Either say so
+  in the UI or flush the hash cache when the setting changes.
 - **VRAM blowup.** 4x on a 256x256 RGBA texture is 256KB -> 4MB. A few thousand
   unique textures will not fit. The budget and eviction policy above are mandatory,
   not polish.
@@ -220,8 +224,16 @@ Traced against the tree on 2026-08-21. More of this exists than expected.
 **Status.** Config plumbing, `GSTextureUpscaler`, the hash-cache hook, budget/rate-limit/
 decline accounting and eviction bookkeeping are in and building. Implemented scalers:
 Bilinear, Scale2x, Eagle. Everything else in the enum declines and leaves the texture
-native. No settings UI yet, so the feature is only reachable by editing `EmuCore/GS` keys
-directly — that is the next piece of work.
+native.
+
+Settings UI is `ui/common/TextureUpscaleSection.kt`, mounted as its own collapsible section
+on the renderer tab — deliberately not grouped with the present-time filters, since that is
+exactly the confusion to avoid. Per-class enable, algorithm and scale, plus a shared VRAM
+budget slider. The picker exposes only filters that have a kernel; offering the rest would
+be a menu of no-ops. Fields are registered in `SettingsResetFields.kt` so Reset covers them.
+
+Not yet mounted in the in-game pause menu (`EmulationMenuScreen.kt`), which is the other
+call site the section is designed for.
 
 ### Native — where the work goes
 

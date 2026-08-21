@@ -47,6 +47,11 @@ internal val SETTINGS_CATEGORY_FIELDS: Map<SettingsCategory, List<String>> = map
         "shadeBoost", "shadeBoostBrightness", "shadeBoostContrast", "shadeBoostGamma",
         "shadeBoostSaturation", "shaderChainEnabled", "shaderChainParams", "shaderChainPreset",
         "textureFiltering", "texturePreloading", "triFilter", "tvShader", "upscaleFloat",
+        // TextureUpscaleSection lives on this tab. Texture-time upscaling, not the screen
+        // upscaler above it.
+        "textureUpscaleWorldEnabled", "textureUpscaleUiEnabled", "textureUpscaleWorldAlgorithm",
+        "textureUpscaleUiAlgorithm", "textureUpscaleWorldScale", "textureUpscaleUiScale",
+        "textureUpscaleVramBudgetMb",
         "upscaler", "vsyncEnable",
     ),
     // AudioTab.kt

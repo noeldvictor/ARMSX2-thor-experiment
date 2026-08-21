@@ -465,6 +465,28 @@ fun RendererTab(state: MutableState<Settings>) {
             com.armsx2.ui.common.ShaderManagerSection()
         }
         SettingsDivider()
+        // Its own section rather than a row under Display Effects: this is texture-time, not
+        // present-time, so grouping it with the screen filters is exactly the confusion to
+        // avoid. Lifted to ui/common so the pause menu can render the same rows.
+        CollapsibleSection(str("renderer.textureUpscale.title")) {
+            com.armsx2.ui.common.TextureUpscaleSection(
+                worldEnabled = s.textureUpscaleWorldEnabled,
+                worldAlgorithm = s.textureUpscaleWorldAlgorithm,
+                worldScale = s.textureUpscaleWorldScale,
+                uiEnabled = s.textureUpscaleUiEnabled,
+                uiAlgorithm = s.textureUpscaleUiAlgorithm,
+                uiScale = s.textureUpscaleUiScale,
+                vramBudgetMb = s.textureUpscaleVramBudgetMb,
+                onWorldEnabledChange = { apply(s.copy(textureUpscaleWorldEnabled = it)) },
+                onWorldAlgorithmChange = { apply(s.copy(textureUpscaleWorldAlgorithm = it)) },
+                onWorldScaleChange = { apply(s.copy(textureUpscaleWorldScale = it)) },
+                onUiEnabledChange = { apply(s.copy(textureUpscaleUiEnabled = it)) },
+                onUiAlgorithmChange = { apply(s.copy(textureUpscaleUiAlgorithm = it)) },
+                onUiScaleChange = { apply(s.copy(textureUpscaleUiScale = it)) },
+                onVramBudgetChange = { apply(s.copy(textureUpscaleVramBudgetMb = it)) },
+            )
+        }
+        SettingsDivider()
         // Its OWN section, not a row at the bottom of Display Effects: buried under the whole
         // shader manager inside a collapsed section, nobody could find it.
         CollapsibleSection(str("renderer.section.overlayArt")) {
