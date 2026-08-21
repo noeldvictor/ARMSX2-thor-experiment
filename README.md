@@ -24,9 +24,13 @@ Bring your own legally dumped PS2 BIOS and games. Use this only for personal exp
 
 Screenshots are from a personal AYN Thor test device.
 
-| Game selector | In-game OSD |
+| Game selector | Texture upscaling, in-game |
 | --- | --- |
-| ![ARMSX2 Thor game selector with cover art and cheat badge](docs/media/armsx2-library-device.png) | ![ARMSX2 Thor in-game OSD drawer](docs/media/armsx2-osd-device.png) |
+| ![ARMSX2 Thor game selector with cover art and cheat badges](docs/media/armsx2-library-device.png) | ![Texture upscaling section in the in-game menu, showing the world-texture toggle, the Bilinear/Scale2x/Eagle algorithm picker and the 2x/4x scale selector](docs/media/armsx2-texture-upscaling-device.png) |
+
+| Running, no touch overlay | In-game OSD |
+| --- | --- |
+| ![7 Blades running on the Thor with no on-screen controls drawn over the game](docs/media/armsx2-ingame-device.png) | ![ARMSX2 Thor in-game OSD drawer](docs/media/armsx2-osd-device.png) |
 
 ## Where This Fork Diverges
 
@@ -39,6 +43,8 @@ Screenshots are from a personal AYN Thor test device.
 - The Compose pause menu has Thor-friendly shortcuts for renderer changes, fast forward, game state, disc changes, imports, and individual cheat toggles.
 - The refreshed upstream Kotlin/Compose frontend and PCSX2-derived native core are the active path.
 - Texture upscaling runs per texture as the emulator uploads it, not on the finished frame, with separate settings for world and UI textures.
+- Texture upscaling scale and algorithm are changeable from the in-game menu, so filters can actually be compared side by side.
+- On-screen touch controls default to off. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs.
 
 ## Exploration Notes
 

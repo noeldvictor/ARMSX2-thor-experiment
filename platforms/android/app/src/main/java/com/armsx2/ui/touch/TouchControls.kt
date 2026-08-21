@@ -398,9 +398,14 @@ object TouchControls {
     /** On-screen touch controls visibility. 0 = Never show (for physical-
      *  controls devices like the RP6 — also hides the settings cog so nothing
      *  overlaps R1); 1..10 = auto-hide after that many seconds of no touch;
-     *  11 = Auto — show on screen touch, hide when a controller is used (the
-     *  default / legacy behavior). Persisted. */
-    val visibilityMode = mutableIntStateOf(11)
+     *  11 = Auto — show on screen touch, hide when a controller is used
+     *  (upstream's default). Persisted.
+     *
+     *  This fork defaults to 0. The Thor has physical sticks, d-pad and buttons,
+     *  so a touch overlay on top of the game is covering the screen to duplicate
+     *  controls the user is already holding. Only affects fresh installs - anyone
+     *  with a stored preference keeps it. */
+    val visibilityMode = mutableIntStateOf(0)
 
     /** Bumped on every touch interaction (screen tap or on-screen button press)
      *  so the auto-hide timer restarts. Not persisted. */
@@ -693,7 +698,7 @@ object TouchControls {
         analogExtraDistance.floatValue =
             MainActivityRuntime.prefs.getFloat(KEY_ANALOG_EXTRA_DIST, 0.35f).coerceIn(0.1f, 1.5f)
         gridSnap.value = MainActivityRuntime.prefs.getBoolean(KEY_GRID_SNAP, false)
-        visibilityMode.intValue = MainActivityRuntime.prefs.getInt(KEY_VIS_MODE, 11).coerceIn(0, 11)
+        visibilityMode.intValue = MainActivityRuntime.prefs.getInt(KEY_VIS_MODE, 0).coerceIn(0, 11)
         if (visibilityMode.intValue == 0) visible.value = false
         // #357: show/hide became tap-to-reveal (inverted). Seed the new pref from the old one so
         // anyone who had the button hidden keeps it hidden — now as tap-to-reveal, which still

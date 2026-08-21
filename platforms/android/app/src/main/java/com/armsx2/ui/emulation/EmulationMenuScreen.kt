@@ -993,6 +993,32 @@ private fun GraphicsPane(state: EmulationMenuUiState, viewModel: EmulationMenuVi
         onParamsChange = { next -> viewModel.updateSettings { it.copy(shaderChainParams = next) } },
     )
     com.armsx2.ui.common.ShaderManagerSection()
+    // Texture upscaling, in-game. Same composable the Settings renderer tab renders; only the
+    // save lambda differs, exactly like ShaderChainSection above. Being able to flip scale and
+    // algorithm WHILE a game is running is the whole point - comparing filters by bouncing out
+    // to All Settings and back is how you fail to compare them at all.
+    //
+    // Both classes' keys ride writeGsToNative() and apply live via applyGSSettingsLive(), but
+    // already-cached textures stay native until they are evicted and re-uploaded, so a change
+    // shows up gradually rather than instantly.
+    SectionCard(str("renderer.textureUpscale.title")) {
+        com.armsx2.ui.common.TextureUpscaleSection(
+            worldEnabled = settings.textureUpscaleWorldEnabled,
+            worldAlgorithm = settings.textureUpscaleWorldAlgorithm,
+            worldScale = settings.textureUpscaleWorldScale,
+            uiEnabled = settings.textureUpscaleUiEnabled,
+            uiAlgorithm = settings.textureUpscaleUiAlgorithm,
+            uiScale = settings.textureUpscaleUiScale,
+            vramBudgetMb = settings.textureUpscaleVramBudgetMb,
+            onWorldEnabledChange = { on -> viewModel.updateSettings { it.copy(textureUpscaleWorldEnabled = on) } },
+            onWorldAlgorithmChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleWorldAlgorithm = v) } },
+            onWorldScaleChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleWorldScale = v) } },
+            onUiEnabledChange = { on -> viewModel.updateSettings { it.copy(textureUpscaleUiEnabled = on) } },
+            onUiAlgorithmChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleUiAlgorithm = v) } },
+            onUiScaleChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleUiScale = v) } },
+            onVramBudgetChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleVramBudgetMb = v) } },
+        )
+    }
 }
 
 @Composable

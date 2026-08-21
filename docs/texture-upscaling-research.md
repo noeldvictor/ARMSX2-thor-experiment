@@ -232,8 +232,10 @@ exactly the confusion to avoid. Per-class enable, algorithm and scale, plus a sh
 budget slider. The picker exposes only filters that have a kernel; offering the rest would
 be a menu of no-ops. Fields are registered in `SettingsResetFields.kt` so Reset covers them.
 
-Not yet mounted in the in-game pause menu (`EmulationMenuScreen.kt`), which is the other
-call site the section is designed for.
+Also mounted in the in-game pause menu (`EmulationMenuScreen.kt`), in the graphics pane
+next to the shader chain. Being able to change scale and algorithm *while* a game runs is
+what makes filters comparable at all - bouncing out to All Settings and back between every
+comparison is how you fail to compare them.
 
 ### Native — where the work goes
 
