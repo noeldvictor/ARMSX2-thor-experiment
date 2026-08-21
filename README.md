@@ -43,7 +43,8 @@ Screenshots are from a personal AYN Thor test device.
 
 Things I am reading about, not things I am building. No promises, no dates.
 
-- [Real-time texture and sprite enhancement on AYN Thor](docs/texture-upscaling-research.md) — why texture-time upscaling is affordable where per-frame upscaling is not, which hooks already exist in the tree, and what would sink it.
+- [Texture upscaling on AYN Thor](docs/texture-upscaling-research.md) — upscaling each texture inside the emulator as you play, rather than upscaling the screen. Why that cost model works on a handheld, and what would sink it.
+- [On-device MCP server](docs/mcp-server.md) — a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 
 ## What This Is Not
 

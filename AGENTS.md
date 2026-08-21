@@ -62,11 +62,18 @@
 
 ## Rendering And Upscaling
 - Present-time enhancement already exists: `GSUpscaler` (FSR1), the librashader `.slangp` chain, and LSFG frame generation. Check `pcsx2/Config.h` before adding a new present-time path; the odds are it is already there.
+- Texture upscaling in this fork means upscaling each texture as it is uploaded, not upscaling the finished frame. Do not conflate the two; they have opposite cost models.
+- Texture-time work belongs in the hash cache. The injection point is `GSTextureCache::InjectHashCacheTexture`, and `GSTextureReplacements::QueueWorkerThreadItem` is the existing async worker queue.
+- World/3D and UI/2D textures are separate user-facing classes, each with its own on/off and its own algorithm. Keep them independent everywhere, including config keys.
+- Anything that upscales textures needs a VRAM budget with batch eviction to a low-water mark, a "do not retry" mark on evicted hashes, and a hash-stability heuristic. Animated textures re-hash every frame and will otherwise generate unbounded work.
 - Gate any new GPU feature on the existing `MobileGpuArchitecture` detection in `pcsx2/GS/Renderers/Common/GSGPUProfile.h`. Thor ships both an 8 Gen 2 (Adreno 740) and an 865 (Adreno 650) variant, so never assume 8 Gen 2.
-- Texture-time work belongs in the hash cache, not the present path. The injection point is `GSTextureCache::InjectHashCacheTexture`, and `GSTextureReplacements::QueueWorkerThreadItem` is the existing async worker queue.
-- Anything that upscales textures needs a VRAM budget with eviction and a hash-stability heuristic before it is worth reviewing. Animated textures re-hash every frame and will otherwise generate unbounded work.
 - Prefer Vulkan compute over the Hexagon NPU for texture work: the data is already in GPU memory, QNN/SNPE is a per-SoC packaging burden, and NNAPI is deprecated as of Android 15.
 - Design notes live in `docs/texture-upscaling-research.md`. Update that file rather than restating its conclusions in code comments.
+
+## Dev Automation
+- The planned on-device MCP server is off by default, binds localhost only, and is reached over `adb forward`. Do not add a LAN bind or an auth scheme without being asked.
+- Keep it `github`-flavor only and compiled out of `play`, matching how storage access and LSFG are already handled. The emulator must build and run identically with it compiled out.
+- Design notes live in `docs/mcp-server.md`.
 
 ## Android Gotchas
 - Android compiles regexes with ICU, which is stricter than desktop Java. Patterns that build and pass a Kotlin compile can still throw `PatternSyntaxException` at runtime on device. Escape `]` and `}` inside patterns (`[^\]]`, `\}`), and treat a green Gradle build as no evidence a regex is valid.
