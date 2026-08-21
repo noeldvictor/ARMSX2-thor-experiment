@@ -60,6 +60,14 @@
 - Prefer existing bridges in `NativeApp.java` and `native-lib.cpp` before adding JNI surface area.
 - Preserve upstream behavior when the refreshed Compose patch manager already covers a fork feature.
 
+## Rendering And Upscaling
+- Present-time enhancement already exists: `GSUpscaler` (FSR1), the librashader `.slangp` chain, and LSFG frame generation. Check `pcsx2/Config.h` before adding a new present-time path; the odds are it is already there.
+- Gate any new GPU feature on the existing `MobileGpuArchitecture` detection in `pcsx2/GS/Renderers/Common/GSGPUProfile.h`. Thor ships both an 8 Gen 2 (Adreno 740) and an 865 (Adreno 650) variant, so never assume 8 Gen 2.
+- Texture-time work belongs in the hash cache, not the present path. The injection point is `GSTextureCache::InjectHashCacheTexture`, and `GSTextureReplacements::QueueWorkerThreadItem` is the existing async worker queue.
+- Anything that upscales textures needs a VRAM budget with eviction and a hash-stability heuristic before it is worth reviewing. Animated textures re-hash every frame and will otherwise generate unbounded work.
+- Prefer Vulkan compute over the Hexagon NPU for texture work: the data is already in GPU memory, QNN/SNPE is a per-SoC packaging burden, and NNAPI is deprecated as of Android 15.
+- Design notes live in `docs/texture-upscaling-research.md`. Update that file rather than restating its conclusions in code comments.
+
 ## Android Gotchas
 - Android compiles regexes with ICU, which is stricter than desktop Java. Patterns that build and pass a Kotlin compile can still throw `PatternSyntaxException` at runtime on device. Escape `]` and `}` inside patterns (`[^\]]`, `\}`), and treat a green Gradle build as no evidence a regex is valid.
 - Compiling is not running. After a change that touches startup, the game list, or cover rendering, launch the app on device and check `adb logcat -b crash` before calling it done.

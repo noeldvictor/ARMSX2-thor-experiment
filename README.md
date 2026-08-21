@@ -39,6 +39,12 @@ Screenshots are from a personal AYN Thor test device.
 - The Compose pause menu has Thor-friendly shortcuts for renderer changes, fast forward, game state, disc changes, imports, and individual cheat toggles.
 - The refreshed upstream Kotlin/Compose frontend and PCSX2-derived native core are the active path.
 
+## Exploration Notes
+
+Things I am reading about, not things I am building. No promises, no dates.
+
+- [Real-time texture and sprite enhancement on AYN Thor](docs/texture-upscaling-research.md) — why texture-time upscaling is affordable where per-frame upscaling is not, which hooks already exist in the tree, and what would sink it.
+
 ## What This Is Not
 
 - Not official ARMSX2.
