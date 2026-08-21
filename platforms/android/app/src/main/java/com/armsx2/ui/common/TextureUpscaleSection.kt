@@ -41,14 +41,24 @@ import com.armsx2.ui.settings.ToggleRow
 /** Ordinals of the native `GSTextureUpscaleAlgorithm` enum, which is APPEND ONLY. Only the
  *  filters with a kernel are listed; the native side declines anything else and leaves the
  *  texture native, so offering them here would be a menu of no-ops. */
-private val ALGORITHM_ORDINALS = listOf(0, 4, 5)
+private val ALGORITHM_ORDINALS = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 10)
 
-private val ALGORITHM_LABELS = listOf("Bilinear", "Scale2x", "Eagle")
+private val ALGORITHM_LABELS = listOf(
+    "Bilinear", "Bicubic", "Lanczos", "Lanczos + CAS",
+    "Scale2x", "Eagle", "SuperEagle", "2xSaI", "Super2xSaI", "xBR",
+)
 
 private val ALGORITHM_DESCRIPTION_KEYS = listOf(
     "renderer.textureUpscale.algorithm.bilinear",
+    "renderer.textureUpscale.algorithm.bicubic",
+    "renderer.textureUpscale.algorithm.lanczos",
+    "renderer.textureUpscale.algorithm.lanczoscas",
     "renderer.textureUpscale.algorithm.scale2x",
     "renderer.textureUpscale.algorithm.eagle",
+    "renderer.textureUpscale.algorithm.supereagle",
+    "renderer.textureUpscale.algorithm.sai2x",
+    "renderer.textureUpscale.algorithm.supersai2x",
+    "renderer.textureUpscale.algorithm.xbr",
 )
 
 private val SCALE_LABELS = listOf("2x", "4x")
@@ -60,7 +70,7 @@ private fun scaleToIndex(scale: Int): Int = if (scale >= 4) 1 else 0
 private fun indexToScale(index: Int): Int = if (index == 1) 4 else 2
 
 private fun algorithmToIndex(ordinal: Int): Int =
-    ALGORITHM_ORDINALS.indexOf(ordinal).let { if (it < 0) 1 else it }
+    ALGORITHM_ORDINALS.indexOf(ordinal).let { if (it < 0) ALGORITHM_ORDINALS.indexOf(4) else it }
 
 @Composable
 fun TextureUpscaleSection(
@@ -99,13 +109,15 @@ fun TextureUpscaleSection(
         // registry rather than parking focus on something inert.
         if (worldEnabled) {
             val worldIndex = algorithmToIndex(worldAlgorithm)
-            SegmentedRow(
+            IntSliderRow(
                 str("renderer.textureUpscale.algorithm.label"),
-                ALGORITHM_LABELS,
                 worldIndex,
+                min = 0,
+                max = ALGORITHM_LABELS.size - 1,
                 description = str(ALGORITHM_DESCRIPTION_KEYS[worldIndex]),
+                valueFormatter = { ALGORITHM_LABELS[it.coerceIn(0, ALGORITHM_LABELS.size - 1)] },
             ) {
-                onWorldAlgorithmChange(ALGORITHM_ORDINALS[it])
+                onWorldAlgorithmChange(ALGORITHM_ORDINALS[it.coerceIn(0, ALGORITHM_ORDINALS.size - 1)])
             }
             SegmentedRow(
                 str("renderer.textureUpscale.scale.label"),
@@ -127,13 +139,15 @@ fun TextureUpscaleSection(
         }
         if (uiEnabled) {
             val uiIndex = algorithmToIndex(uiAlgorithm)
-            SegmentedRow(
+            IntSliderRow(
                 str("renderer.textureUpscale.algorithm.label"),
-                ALGORITHM_LABELS,
                 uiIndex,
+                min = 0,
+                max = ALGORITHM_LABELS.size - 1,
                 description = str(ALGORITHM_DESCRIPTION_KEYS[uiIndex]),
+                valueFormatter = { ALGORITHM_LABELS[it.coerceIn(0, ALGORITHM_LABELS.size - 1)] },
             ) {
-                onUiAlgorithmChange(ALGORITHM_ORDINALS[it])
+                onUiAlgorithmChange(ALGORITHM_ORDINALS[it.coerceIn(0, ALGORITHM_ORDINALS.size - 1)])
             }
             SegmentedRow(
                 str("renderer.textureUpscale.scale.label"),

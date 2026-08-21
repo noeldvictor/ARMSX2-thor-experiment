@@ -7360,7 +7360,14 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	// A larger texture in the hash cache is not a new idea here: the replacement path above
 	// already inserts higher-resolution textures against the same unscaled_size/m_scale, so
 	// sampling handles it.
-	if (GSTextureUpscaler::IsEnabled() && !paltex && !lod && !region.HasX() && !region.HasY())
+	if (GSTextureUpscaler::IsEnabled() && (paltex || lod || region.HasX() || region.HasY()))
+	{
+		// Counted rather than silently dropped: if a game turns out to be mostly palette or
+		// mipmapped textures, "the upscaler does nothing" and "the upscaler is off" look
+		// identical from the outside, and only this number tells them apart.
+		GSTextureUpscaler::NoteGuardSkipped();
+	}
+	else if (GSTextureUpscaler::IsEnabled())
 	{
 		const GSTextureUpscaler::Plan plan = GSTextureUpscaler::MakePlan(key.TEX0Hash, tw, th);
 		if (plan.scale > 1)

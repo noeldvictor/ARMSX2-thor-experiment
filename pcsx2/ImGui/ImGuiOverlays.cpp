@@ -5,6 +5,7 @@
 #include "Config.h"
 #include "Counters.h"
 #include "GS/GS.h"
+#include "GS/Renderers/HW/GSTextureUpscaler.h"
 #include "GS/GSShaderCompileIndicator.h"
 #include "GS/GSCapture.h"
 #include "GS/GSVector.h"
@@ -67,6 +68,7 @@ SmallString s_speed_line;
 SmallString s_gs_stats_line;
 SmallString s_gs_memory_stats_line;
 SmallString s_gs_frame_times_line;
+SmallString s_texture_upscale_line;
 SmallString s_resolution_line;
 SmallString s_hardware_info_cpu_line;
 SmallString s_hardware_info_gpu_line;
@@ -605,6 +607,21 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				if (!s_gs_memory_stats_line.empty())
 					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), OsdTextColor());
 				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), OsdTextColor());
+
+				// Texture upscaling counters. Every decline reason is listed separately because
+				// "nothing is being upscaled" has several very different causes - a full budget
+				// and a texture set that is entirely palettised need opposite fixes, and the
+				// totals alone cannot tell them apart.
+				if (GSTextureUpscaler::IsEnabled())
+				{
+					const GSTextureUpscaler::Stats& us = GSTextureUpscaler::GetStats();
+					s_texture_upscale_line.format(
+						"TexUp: {} up | {} held ({:.1f} MB) | guard {} | impl {} | rate {} | budget {}",
+						us.upscaled, us.held, static_cast<double>(us.memory_usage) / (1024.0 * 1024.0),
+						us.skipped_guard, us.declined_unimplemented, us.declined_rate_limit,
+						us.declined_budget);
+					DRAW_LINE(osd_font, font_size, s_texture_upscale_line.c_str(), OsdTextColor());
+				}
 			}
 
 			if (GSConfig.OsdShowResolution)
@@ -779,6 +796,8 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				if (!s_gs_memory_stats_line.empty())
 					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), OsdTextColor());
 				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), OsdTextColor());
+				if (!s_texture_upscale_line.empty())
+					DRAW_LINE(osd_font, font_size, s_texture_upscale_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowResolution)

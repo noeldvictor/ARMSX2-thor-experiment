@@ -198,6 +198,12 @@ confirmed against Qualcomm documentation; probe at runtime and fall back to FP32
 
 In rough order of how likely each is to sink the feature:
 
+- **The upscale is currently synchronous.** `LookupHashCache` scales the texture inline
+  before returning it, so the cost lands on the GS thread at upload time. The design always
+  said "queue it, run on a worker, inject when ready" and that is *not* what got built. It
+  is tolerable for Scale2x; it is not tolerable for Lanczos-3 (36 taps per output pixel) and
+  it is a non-starter for anything neural. `QueueWorkerThreadItem` already exists - this is
+  wiring, not invention, but it has to land before the heavier filters are usable.
 - **Toggling on mid-game looks broken.** Settings apply live via `applyGSSettingsLive()`,
   but already-cached textures stay native until they are evicted and re-uploaded, so the
   screen barely changes at first. A user will read that as "it does nothing". Either say so

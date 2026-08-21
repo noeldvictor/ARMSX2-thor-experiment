@@ -34,6 +34,23 @@ namespace GSTextureUpscaler
 		TextureClass texture_class = TextureClass::World;
 	};
 
+	/// Counters for one session, so the feature can be judged by numbers rather than by
+	/// squinting at a screenshot. Every decline reason is separate on purpose: "nothing got
+	/// upscaled" has half a dozen very different causes and they need different fixes.
+	struct Stats
+	{
+		u32 upscaled = 0;
+		u32 evicted = 0;
+		u32 held = 0;
+		u32 memory_usage = 0;
+		/// Skipped before a plan was even made - palette, mipmaps or a source region.
+		u32 skipped_guard = 0;
+		u32 declined_class_disabled = 0;
+		u32 declined_unimplemented = 0;
+		u32 declined_rate_limit = 0;
+		u32 declined_budget = 0;
+	};
+
 	/// True when either texture class is enabled. Cheap enough to call per texture upload,
 	/// and lets the caller skip all of the below without paying for a plan.
 	bool IsEnabled();
@@ -63,6 +80,9 @@ namespace GSTextureUpscaler
 	/// Called when an upscaled texture leaves the cache.
 	void NoteEvicted(u64 tex0_hash, u32 bytes);
 
+	/// Called when a texture never reached MakePlan because of the caller's guards.
+	void NoteGuardSkipped();
+
 	/// Per-frame bookkeeping: resets the rate limiter.
 	void NextFrame();
 
@@ -71,4 +91,7 @@ namespace GSTextureUpscaler
 
 	/// Bytes currently held by upscaled textures.
 	u32 GetMemoryUsage();
+
+	/// Session counters. See Stats.
+	const Stats& GetStats();
 } // namespace GSTextureUpscaler
