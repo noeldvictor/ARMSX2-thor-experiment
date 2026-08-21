@@ -1,6 +1,8 @@
 # Texture Upscaling On AYN Thor
 
-Design direction plus the research behind it. Nothing here is implemented yet.
+Design direction plus the research behind it. The scaffold and three scalers are
+implemented and running; the rest of the algorithm library, the settings UI, and the
+neural path are not.
 
 Last researched: 2026-08-21.
 
@@ -214,6 +216,12 @@ In rough order of how likely each is to sink the feature:
 ## Implementation Map
 
 Traced against the tree on 2026-08-21. More of this exists than expected.
+
+**Status.** Config plumbing, `GSTextureUpscaler`, the hash-cache hook, budget/rate-limit/
+decline accounting and eviction bookkeeping are in and building. Implemented scalers:
+Bilinear, Scale2x, Eagle. Everything else in the enum declines and leaves the texture
+native. No settings UI yet, so the feature is only reachable by editing `EmuCore/GS` keys
+directly — that is the next piece of work.
 
 ### Native — where the work goes
 

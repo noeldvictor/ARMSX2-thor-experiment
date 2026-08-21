@@ -3,6 +3,7 @@
 
 #include "GSTextureCache.h"
 #include "GSTextureReplacements.h"
+#include "GSTextureUpscaler.h"
 #include "GSRendererHW.h"
 #include "GS/GSState.h"
 #include "GS/GSGL.h"
@@ -117,6 +118,7 @@ void GSTextureCache::RemoveAll(bool sources, bool targets, bool hash_cache)
 		m_hash_cache.clear();
 		m_hash_cache_memory_usage = 0;
 		m_hash_cache_replacement_memory_usage = 0;
+		GSTextureUpscaler::Reset();
 	}
 }
 
@@ -7178,6 +7180,64 @@ GSTextureCache::Source* GSTextureCache::CreateMergedSource(GIFRegTEX0 TEX0, GIFR
 // This really needs a better home...
 extern bool FMVstarted;
 
+/// Read a texture out of GS memory, scale it on the CPU, and hand back a larger texture.
+///
+/// The read mirrors PreloadTexture's slow path deliberately — same rect alignment, same
+/// rtx call, same buffer offset — because that is the path already known to produce
+/// correct pixels for every format that reaches here.
+///
+/// Returns nullptr when the algorithm has no implementation yet, or allocation fails, in
+/// which case the caller falls through to the ordinary native-resolution path.
+static GSTexture* CreateUpscaledHashCacheTexture(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA,
+	GSTextureCache::SourceRegion region, int tw, int th, u8 scale, GSTextureUpscaleAlgorithm algorithm,
+	std::pair<u8, u8>* alpha_minmax)
+{
+	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
+	const GSVector2i& bs = psm.bs;
+	const GSVector4i rect(region.GetRect(tw, th));
+	const GSVector4i block_rect(rect.ralign<Align_Outside>(bs));
+	GSLocalMemory& mem = g_gs_renderer->m_mem;
+	const GSOffset off(mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM));
+
+	const u32 src_pitch = VectorAlign(static_cast<u32>(block_rect.width()) * sizeof(u32));
+	static std::vector<u8> s_upscale_src_buffer;
+	const size_t src_size = static_cast<size_t>(src_pitch) * static_cast<size_t>(block_rect.height());
+	if (s_upscale_src_buffer.size() < src_size)
+		s_upscale_src_buffer.resize(src_size);
+
+	psm.rtx(mem, off, block_rect, s_upscale_src_buffer.data(), src_pitch, TEXA);
+
+	const u8* ptr = s_upscale_src_buffer.data() + (src_pitch * static_cast<u32>(rect.top - block_rect.top)) +
+					(static_cast<u32>(rect.left - block_rect.left) << 2);
+
+	// Taken from the source rather than the scaled result on purpose. Every scaler here
+	// either replicates existing pixels or interpolates between them, so the scaled alpha
+	// range is a subset of the source's - the bound stays correct and we avoid a second pass.
+	if (alpha_minmax)
+		*alpha_minmax = GSGetRGBA8AlphaMinMax(ptr, tw, th, src_pitch);
+
+	const int dw = tw * static_cast<int>(scale);
+	const int dh = th * static_cast<int>(scale);
+	const u32 dst_pitch = static_cast<u32>(dw) * sizeof(u32);
+	static std::vector<u8> s_upscale_dst_buffer;
+	const size_t dst_size = static_cast<size_t>(dst_pitch) * static_cast<size_t>(dh);
+	if (s_upscale_dst_buffer.size() < dst_size)
+		s_upscale_dst_buffer.resize(dst_size);
+
+	if (!GSTextureUpscaler::ScaleBuffer(algorithm, ptr, tw, th, src_pitch, s_upscale_dst_buffer.data(),
+			dst_pitch, scale))
+	{
+		return nullptr;
+	}
+
+	GSTexture* tex = g_gs_device->CreateTexture(dw, dh, 1, GSTexture::Format::Color);
+	if (!tex)
+		return nullptr;
+
+	tex->Update(GSVector4i(0, 0, dw, dh), s_upscale_dst_buffer.data(), dst_pitch, 0);
+	return tex;
+}
+
 GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, bool& paltex, const u32* clut, const GSVector2i* lod, SourceRegion region)
 {
 	// don't bother hashing if we're not dumping or replacing.
@@ -7290,6 +7350,37 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	const int tw = region.HasX() ? region.GetWidth() : (1 << TEX0.TW);
 	const int th = region.HasY() ? region.GetHeight() : (1 << TEX0.TH);
 	const int tlevels = lod ? (GSConfig.HWMipmap ? std::min(lod->y - lod->x + 1, GSDevice::GetMipmapLevelsForSize(tw, th)) : -1) : 1;
+
+	// Texture upscaling. Deliberately narrow for now: no palette, because the buffer would
+	// hold indices rather than colour and has to resolve through its CLUT first; no mips,
+	// because each level would need scaling and the level count changes with it; and no
+	// source region, because the sub-rect changes what "the texture" even is. Each of those
+	// gets its own handling later - see docs/texture-upscaling-research.md.
+	//
+	// A larger texture in the hash cache is not a new idea here: the replacement path above
+	// already inserts higher-resolution textures against the same unscaled_size/m_scale, so
+	// sampling handles it.
+	if (GSTextureUpscaler::IsEnabled() && !paltex && !lod && !region.HasX() && !region.HasY())
+	{
+		const GSTextureUpscaler::Plan plan = GSTextureUpscaler::MakePlan(key.TEX0Hash, tw, th);
+		if (plan.scale > 1)
+		{
+			std::pair<u8, u8> upscaled_alpha_minmax = {0u, 255u};
+			GSTexture* upscaled = CreateUpscaledHashCacheTexture(TEX0, TEXA, region, tw, th, plan.scale,
+				plan.algorithm, &upscaled_alpha_minmax);
+			if (upscaled)
+			{
+				const u32 upscaled_bytes = upscaled->GetMemUsage();
+				GSTextureUpscaler::NoteUpscaled(key.TEX0Hash, upscaled_bytes);
+				GL_CACHE("TC: HC Upscale x%u: %" PRIx64 " %dx%d", plan.scale, key.TEX0Hash, tw, th);
+
+				const HashCacheEntry entry{upscaled, 1u, 0u, upscaled_alpha_minmax, true, false};
+				m_hash_cache_memory_usage += upscaled_bytes;
+				return &m_hash_cache.emplace(key, entry).first->second;
+			}
+		}
+	}
+
 	GSTexture* tex = g_gs_device->CreateTexture(tw, th, tlevels, paltex ? GSTexture::Format::UNorm8 : GSTexture::Format::Color);
 	if (!tex)
 	{
@@ -7342,12 +7433,19 @@ GSTextureCache::HashCacheMap::iterator GSTextureCache::RemoveFromHashCache(HashC
 		m_hash_cache_replacement_memory_usage -= mem_usage;
 	else
 		m_hash_cache_memory_usage -= mem_usage;
+	// No-op unless this hash was one we upscaled; the upscaler keeps its own budget so it
+	// knows what it is actually holding rather than inferring it from the cache totals.
+	GSTextureUpscaler::NoteEvicted(it->first.TEX0Hash, mem_usage);
 	g_gs_device->Recycle(e.texture);
 	return m_hash_cache.erase(it);
 }
 
 void GSTextureCache::AgeHashCache()
 {
+	// Runs once per frame, which makes it the natural place to reset the upscaler's
+	// per-frame rate limit.
+	GSTextureUpscaler::NextFrame();
+
 	// Where did this number come from?
 	// A game called Corvette draws its background FMVs with a ton of 17x17 tiles, which ends up
 	// being about 600 texture uploads per frame. We'll use 800 as an upper bound for a bit of
