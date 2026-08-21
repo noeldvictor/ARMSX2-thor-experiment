@@ -63,6 +63,11 @@ GSTextureCache::GSTextureCache()
 
 GSTextureCache::~GSTextureCache()
 {
+	// Before RemoveAll: the worker holds hash-cache keys and its finished jobs are about to
+	// become meaningless. Joining first means nothing can land in a cache that is being torn
+	// down underneath it.
+	GSTextureUpscaler::Shutdown();
+
 	RemoveAll(true, true, true);
 
 	s_hash_cache_purge_list = {};
@@ -7180,17 +7185,19 @@ GSTextureCache::Source* GSTextureCache::CreateMergedSource(GIFRegTEX0 TEX0, GIFR
 // This really needs a better home...
 extern bool FMVstarted;
 
-/// Read a texture out of GS memory, scale it on the CPU, and hand back a larger texture.
+/// Read a texture out of GS memory and hand it to the upscaler's worker thread.
 ///
 /// The read mirrors PreloadTexture's slow path deliberately — same rect alignment, same
 /// rtx call, same buffer offset — because that is the path already known to produce
 /// correct pixels for every format that reaches here.
 ///
-/// Returns nullptr when the algorithm has no implementation yet, or allocation fails, in
-/// which case the caller falls through to the ordinary native-resolution path.
-static GSTexture* CreateUpscaledHashCacheTexture(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA,
-	GSTextureCache::SourceRegion region, int tw, int th, u8 scale, GSTextureUpscaleAlgorithm algorithm,
-	std::pair<u8, u8>* alpha_minmax)
+/// Nothing is scaled here. The caller carries straight on and creates the ordinary
+/// native-resolution texture; the upscaled one swaps in a frame or two later through
+/// ProcessUpscaledTextures. Scaling inline would put the filter on the GS thread at upload
+/// time, which is the hitch this feature exists to avoid.
+static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& key, const GIFRegTEX0& TEX0,
+	const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region, int tw, int th, u8 scale,
+	GSTextureUpscaleAlgorithm algorithm)
 {
 	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
 	const GSVector2i& bs = psm.bs;
@@ -7213,29 +7220,9 @@ static GSTexture* CreateUpscaledHashCacheTexture(const GIFRegTEX0& TEX0, const G
 	// Taken from the source rather than the scaled result on purpose. Every scaler here
 	// either replicates existing pixels or interpolates between them, so the scaled alpha
 	// range is a subset of the source's - the bound stays correct and we avoid a second pass.
-	if (alpha_minmax)
-		*alpha_minmax = GSGetRGBA8AlphaMinMax(ptr, tw, th, src_pitch);
+	const std::pair<u8, u8> alpha_minmax = GSGetRGBA8AlphaMinMax(ptr, tw, th, src_pitch);
 
-	const int dw = tw * static_cast<int>(scale);
-	const int dh = th * static_cast<int>(scale);
-	const u32 dst_pitch = static_cast<u32>(dw) * sizeof(u32);
-	static std::vector<u8> s_upscale_dst_buffer;
-	const size_t dst_size = static_cast<size_t>(dst_pitch) * static_cast<size_t>(dh);
-	if (s_upscale_dst_buffer.size() < dst_size)
-		s_upscale_dst_buffer.resize(dst_size);
-
-	if (!GSTextureUpscaler::ScaleBuffer(algorithm, ptr, tw, th, src_pitch, s_upscale_dst_buffer.data(),
-			dst_pitch, scale))
-	{
-		return nullptr;
-	}
-
-	GSTexture* tex = g_gs_device->CreateTexture(dw, dh, 1, GSTexture::Format::Color);
-	if (!tex)
-		return nullptr;
-
-	tex->Update(GSVector4i(0, 0, dw, dh), s_upscale_dst_buffer.data(), dst_pitch, 0);
-	return tex;
+	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, alpha_minmax);
 }
 
 GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, bool& paltex, const u32* clut, const GSVector2i* lod, SourceRegion region)
@@ -7372,19 +7359,10 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		const GSTextureUpscaler::Plan plan = GSTextureUpscaler::MakePlan(key.TEX0Hash, tw, th);
 		if (plan.scale > 1)
 		{
-			std::pair<u8, u8> upscaled_alpha_minmax = {0u, 255u};
-			GSTexture* upscaled = CreateUpscaledHashCacheTexture(TEX0, TEXA, region, tw, th, plan.scale,
-				plan.algorithm, &upscaled_alpha_minmax);
-			if (upscaled)
-			{
-				const u32 upscaled_bytes = upscaled->GetMemUsage();
-				GSTextureUpscaler::NoteUpscaled(key.TEX0Hash, upscaled_bytes);
-				GL_CACHE("TC: HC Upscale x%u: %" PRIx64 " %dx%d", plan.scale, key.TEX0Hash, tw, th);
-
-				const HashCacheEntry entry{upscaled, 1u, 0u, upscaled_alpha_minmax, true, false};
-				m_hash_cache_memory_usage += upscaled_bytes;
-				return &m_hash_cache.emplace(key, entry).first->second;
-			}
+			GL_CACHE("TC: HC Upscale queued x%u: %" PRIx64 " %dx%d", plan.scale, key.TEX0Hash, tw, th);
+			QueueUpscaleForHashCacheTexture(key, TEX0, TEXA, region, tw, th, plan.scale, plan.algorithm);
+			// Deliberately falls through: the native texture is created below so the game has
+			// something to draw this frame, and the upscale replaces it when the worker is done.
 		}
 	}
 
@@ -7445,6 +7423,32 @@ GSTextureCache::HashCacheMap::iterator GSTextureCache::RemoveFromHashCache(HashC
 	GSTextureUpscaler::NoteEvicted(it->first.TEX0Hash, mem_usage);
 	g_gs_device->Recycle(e.texture);
 	return m_hash_cache.erase(it);
+}
+
+void GSTextureCache::ProcessUpscaledTextures()
+{
+	// Mirrors GSTextureReplacements::ProcessAsyncLoadedTextures, including the per-frame
+	// upload ceiling: a scene transition can finish a lot of upscales at once, and uploading
+	// all of them in one frame trades the hitch we just moved off the GS thread for a
+	// different one.
+	static constexpr u32 MAX_UPLOAD_BYTES_PER_FRAME = 4 * 1024 * 1024;
+
+	static std::vector<GSTextureUpscaler::CompletedUpscale> completed;
+	completed.clear();
+	GSTextureUpscaler::PopCompleted(completed, MAX_UPLOAD_BYTES_PER_FRAME);
+
+	for (GSTextureUpscaler::CompletedUpscale& done : completed)
+	{
+		GSTexture* tex = g_gs_device->CreateTexture(done.width, done.height, 1, GSTexture::Format::Color);
+		if (!tex)
+			continue;
+
+		tex->Update(GSVector4i(0, 0, done.width, done.height), done.pixels.data(),
+			static_cast<u32>(done.width) * sizeof(u32), 0);
+
+		GSTextureUpscaler::NoteUpscaled(done.key.TEX0Hash, tex->GetMemUsage());
+		InjectHashCacheTexture(done.key, tex, done.alpha_minmax);
+	}
 }
 
 void GSTextureCache::AgeHashCache()

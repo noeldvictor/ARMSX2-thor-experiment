@@ -651,6 +651,10 @@ public:
 
 	/// Injects a texture into the hash cache, by using GSTexture::Swap(), transitively applying to all sources. Ownership of tex is transferred.
 	void InjectHashCacheTexture(const HashCacheKey& key, GSTexture* tex, const std::pair<u8, u8>& alpha_minmax);
+
+	/// Upload and inject any textures the upscaler's worker has finished. GS thread, once per
+	/// frame, with its own per-frame upload ceiling.
+	void ProcessUpscaledTextures();
 };
 
 extern std::unique_ptr<GSTextureCache> g_texture_cache;

@@ -5,7 +5,12 @@
 
 #include "Config.h"
 
+#include "GS/Renderers/HW/GSTextureCache.h"
+
 #include "common/Pcsx2Defs.h"
+
+#include <utility>
+#include <vector>
 
 /// Per-texture upscaling, applied when a texture is uploaded rather than to the presented
 /// frame. The result lives in the hash cache, so the cost is once per unique texture and
@@ -51,6 +56,16 @@ namespace GSTextureUpscaler
 		u32 declined_budget = 0;
 	};
 
+	/// A finished upscale, waiting to be turned into a texture on the GS thread.
+	struct CompletedUpscale
+	{
+		GSTextureCache::HashCacheKey key;
+		std::vector<u32> pixels;
+		int width = 0;
+		int height = 0;
+		std::pair<u8, u8> alpha_minmax{0u, 255u};
+	};
+
 	/// True when either texture class is enabled. Cheap enough to call per texture upload,
 	/// and lets the caller skip all of the below without paying for a plan.
 	bool IsEnabled();
@@ -82,6 +97,23 @@ namespace GSTextureUpscaler
 
 	/// Called when a texture never reached MakePlan because of the caller's guards.
 	void NoteGuardSkipped();
+
+	/// Hand a texture to the worker thread to be scaled. Copies the source pixels, so the
+	/// caller's buffer can be reused the moment this returns.
+	///
+	/// The caller does NOT wait: it carries on and creates the native-resolution texture, and
+	/// the upscaled one replaces it a frame or two later. That is the whole point - scaling
+	/// inline puts Lanczos on the GS thread at upload time, which is exactly the hitch this
+	/// feature must not cause.
+	void QueueUpscale(const GSTextureCache::HashCacheKey& key, const u8* src, int sw, int sh, u32 src_pitch,
+		GSTextureUpscaleAlgorithm algorithm, u8 scale, const std::pair<u8, u8>& alpha_minmax);
+
+	/// Move finished jobs out for injection, stopping once `max_bytes` have been taken so a
+	/// burst cannot stall one frame. GS thread only.
+	void PopCompleted(std::vector<CompletedUpscale>& out, u32 max_bytes);
+
+	/// Stop and join the worker. Safe to call when it was never started.
+	void Shutdown();
 
 	/// Per-frame bookkeeping: resets the rate limiter.
 	void NextFrame();

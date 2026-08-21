@@ -9,6 +9,10 @@
 
 #include <algorithm>
 #include <cmath>
+#include <condition_variable>
+#include <deque>
+#include <mutex>
+#include <thread>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -41,6 +45,82 @@ namespace GSTextureUpscaler
 
 		/// Bytes per upscaled texture, so eviction can give the budget back.
 		std::unordered_map<u64, u32> s_held;
+
+		// ---- worker thread -------------------------------------------------------------
+		//
+		// One thread, started lazily the first time anything is queued. Deliberately not
+		// reusing GSTextureReplacements' worker: that one only runs while dumping or
+		// replacement is enabled, and upscaling has to work with both of those off.
+
+		struct PendingJob
+		{
+			GSTextureCache::HashCacheKey key;
+			std::vector<u32> src;
+			int sw = 0;
+			int sh = 0;
+			u32 src_stride = 0;
+			GSTextureUpscaleAlgorithm algorithm = GSTextureUpscaleAlgorithm::Bilinear;
+			u8 scale = 2;
+			std::pair<u8, u8> alpha_minmax{0u, 255u};
+		};
+
+		std::thread s_worker;
+		std::mutex s_worker_mutex;
+		std::condition_variable s_worker_cv;
+		std::deque<PendingJob> s_pending;
+		std::vector<CompletedUpscale> s_completed;
+		bool s_worker_running = false;
+		bool s_worker_quit = false;
+
+		/// Hashes already queued, so a texture that misses the cache repeatedly while its
+		/// upscale is still in flight does not queue the same work several times over.
+		std::unordered_set<u64> s_in_flight;
+
+		void WorkerLoop()
+		{
+			for (;;)
+			{
+				PendingJob job;
+				{
+					std::unique_lock<std::mutex> lock(s_worker_mutex);
+					s_worker_cv.wait(lock, [] { return s_worker_quit || !s_pending.empty(); });
+					if (s_worker_quit)
+						return;
+					job = std::move(s_pending.front());
+					s_pending.pop_front();
+				}
+
+				const int dw = job.sw * static_cast<int>(job.scale);
+				const int dh = job.sh * static_cast<int>(job.scale);
+				std::vector<u32> out(static_cast<size_t>(dw) * static_cast<size_t>(dh));
+
+				const bool ok = ScaleBuffer(job.algorithm, reinterpret_cast<const u8*>(job.src.data()), job.sw,
+					job.sh, job.src_stride * sizeof(u32), reinterpret_cast<u8*>(out.data()),
+					static_cast<u32>(dw) * sizeof(u32), job.scale);
+
+				std::unique_lock<std::mutex> lock(s_worker_mutex);
+				s_in_flight.erase(job.key.TEX0Hash);
+				if (!ok)
+					continue;
+
+				CompletedUpscale done;
+				done.key = job.key;
+				done.pixels = std::move(out);
+				done.width = dw;
+				done.height = dh;
+				done.alpha_minmax = job.alpha_minmax;
+				s_completed.push_back(std::move(done));
+			}
+		}
+
+		void EnsureWorker()
+		{
+			if (s_worker_running)
+				return;
+			s_worker_quit = false;
+			s_worker = std::thread(WorkerLoop);
+			s_worker_running = true;
+		}
 
 		u32 GetBudgetBytes()
 		{
@@ -969,6 +1049,84 @@ namespace GSTextureUpscaler
 		s_declined.clear();
 		s_held.clear();
 		s_stats = {};
+
+		// Queued work refers to hash-cache keys that no longer exist, so it is dropped rather
+		// than allowed to inject into a cache that has moved on. The thread itself stays up.
+		std::unique_lock<std::mutex> lock(s_worker_mutex);
+		s_pending.clear();
+		s_completed.clear();
+		s_in_flight.clear();
+	}
+
+	void QueueUpscale(const GSTextureCache::HashCacheKey& key, const u8* src, int sw, int sh, u32 src_pitch,
+		GSTextureUpscaleAlgorithm algorithm, u8 scale, const std::pair<u8, u8>& alpha_minmax)
+	{
+		const u32 src_stride = src_pitch / sizeof(u32);
+
+		PendingJob job;
+		job.key = key;
+		job.sw = sw;
+		job.sh = sh;
+		job.src_stride = static_cast<u32>(sw);
+		job.algorithm = algorithm;
+		job.scale = scale;
+		job.alpha_minmax = alpha_minmax;
+
+		// Compacted to a tight sw-wide buffer on the way in. The caller's buffer is a shared
+		// scratch area that will be overwritten by the very next texture upload, and it is
+		// block-aligned rather than tightly packed, so neither its lifetime nor its stride
+		// can be relied on once this returns.
+		job.src.resize(static_cast<size_t>(sw) * static_cast<size_t>(sh));
+		const u32* src_px = reinterpret_cast<const u32*>(src);
+		for (int y = 0; y < sh; y++)
+		{
+			std::copy_n(src_px + static_cast<size_t>(y) * src_stride, static_cast<size_t>(sw),
+				job.src.begin() + static_cast<size_t>(y) * static_cast<size_t>(sw));
+		}
+
+		std::unique_lock<std::mutex> lock(s_worker_mutex);
+		if (!s_in_flight.insert(key.TEX0Hash).second)
+			return; // already queued; a repeated cache miss must not queue the work twice
+
+		EnsureWorker();
+		s_pending.push_back(std::move(job));
+		s_worker_cv.notify_one();
+	}
+
+	void PopCompleted(std::vector<CompletedUpscale>& out, u32 max_bytes)
+	{
+		std::unique_lock<std::mutex> lock(s_worker_mutex);
+		u32 taken = 0;
+		while (!s_completed.empty())
+		{
+			const u32 bytes = static_cast<u32>(s_completed.front().pixels.size() * sizeof(u32));
+			// Always take at least one, so a texture bigger than the whole per-frame budget
+			// still gets through on its own frame instead of wedging the queue forever.
+			if (taken != 0 && taken + bytes > max_bytes)
+				break;
+			out.push_back(std::move(s_completed.front()));
+			s_completed.erase(s_completed.begin());
+			taken += bytes;
+		}
+	}
+
+	void Shutdown()
+	{
+		{
+			std::unique_lock<std::mutex> lock(s_worker_mutex);
+			if (!s_worker_running)
+				return;
+			s_worker_quit = true;
+			s_pending.clear();
+		}
+		s_worker_cv.notify_all();
+		if (s_worker.joinable())
+			s_worker.join();
+		s_worker_running = false;
+
+		std::unique_lock<std::mutex> lock(s_worker_mutex);
+		s_completed.clear();
+		s_in_flight.clear();
 	}
 
 	u32 GetMemoryUsage()

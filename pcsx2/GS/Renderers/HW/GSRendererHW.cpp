@@ -118,6 +118,11 @@ void GSRendererHW::VSync(u32 field, bool registers_written, bool idle_frame)
 	if (GSConfig.LoadTextureReplacements)
 		GSTextureReplacements::ProcessAsyncLoadedTextures();
 
+	// Same shape as the line above: the worker scales off-thread, this drains what it
+	// finished. Unconditional because the tail of a queue still needs draining after the
+	// setting is switched off.
+	g_texture_cache->ProcessUpscaledTextures();
+
 	if (!idle_frame)
 	{
 		// If it did draws very recently, we should keep the recent stuff in case it hasn't been preloaded/used yet.
