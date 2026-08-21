@@ -94,3 +94,6 @@
 // patch=1,EE,40445B70,extended,00060001
 // patch=1,EE,09090909,extended,00000000
 // patch=1,EE,00445B88,extended,00000009
+
+[Cheats/No Enemy Encounters (Skip Visible Monster Contact Test)]
+// patch=1,EE,201B9468,extended,00000000
