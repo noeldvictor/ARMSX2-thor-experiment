@@ -13,53 +13,85 @@ Do not duplicate those rules here — update `AGENTS.md` instead.
 
 ## Current Thinking
 
-Active design directions. **None of this is implemented.** It is recorded so a new
-session does not re-derive it or contradict decisions already made.
+Active work and design directions, so a new session does not re-derive them or
+contradict decisions already made. Implementation status is stated per item.
 
 ### Texture upscaling — in the emulator, not on the screen
 
-Full notes: [docs/texture-upscaling-research.md](docs/texture-upscaling-research.md).
+**Implemented and running.** Full notes:
+[docs/texture-upscaling-research.md](docs/texture-upscaling-research.md).
 
 The core distinction, and the easiest thing to get wrong: this upscales **each
-texture as the emulator uploads it**, so the game renders from better source art.
-It does **not** upscale the finished frame. Present-time upscaling already exists
-here (FSR1, the librashader slang chain, LSFG) and is not what this is.
+texture as the emulator uploads it**, so the game renders from better source art. It
+does **not** upscale the finished frame. Present-time upscaling already exists here
+(FSR1, the librashader slang chain, LSFG) and is not what this is.
 
-Decided so far:
-
-- **On-device and real time**, while the game is played. No offline baking step, no
-  playthrough needed to prepare anything.
-- **Works without HD texture packs.** Packs remain optional and complementary — a
-  pack wins where one exists, this covers every other game.
-- **Two independent texture classes**: world/3D and UI/font/2D. Separate menu
-  entries, each with its own on/off *and* its own algorithm. They need different
-  treatment; a neural model that flatters a painted wall will mangle a HUD font.
-- **Explicit scale factor**: Off / 2x / 4x, user-chosen, not derived from the
-  internal resolution multiplier. Thor's panel is 1080x1920, so 4x is the top of
-  the useful range.
-- **Per-game setting with a global default.**
-- **~20 algorithms**, grouped by family (pixel-art / resample / neural), each with a
-  `RECOMMENDED` badge where it applies and a short plain-language comment. The
-  comment is what makes a twenty-item list usable on a handheld.
-- **No per-game recommendation database.** Style presets instead — 2D Sprite,
-  Cel-shaded, Painted, Photographic, Neutral — that set both texture classes at
-  once. Nothing to curate, nothing to be silently wrong.
-- **VRAM: warn once in the UI, then evict.** Batch-evict to ~80% of budget rather
-  than one texture at a time at 100%, and mark evicted hashes "do not retry" so a
-  busy scene cannot thrash.
-- **Build order**: scaffold first with a cheap scaler, then the pixel-art and
-  resample families, neural last as Vulkan compute. Not the other way round.
+- On-device and real time, no offline bake, works without HD texture packs.
+- Two independent classes, world/3D and UI/2D, each with its own enable, algorithm
+  and scale. A filter that flatters a painted wall will mangle a HUD font.
+- Explicit Off / 2x / 4x. Thor's panel is 1080x1920, so 4x is the useful ceiling.
+- Per-game with a global default.
+- ~20 algorithms in the enum across pixel-art / resample / neural families. **Only
+  Bilinear, Scale2x and Eagle have kernels**; the rest decline and leave the texture
+  native, and the picker only offers implemented ones.
+- Style presets rather than a curated per-game table.
+- VRAM: warn once, then evict in a batch to a low-water mark, with a declined-hash
+  set so a full budget cannot thrash.
+- Build order was scaffold → cheap scalers → neural last, as Vulkan compute. Do not
+  jump to the neural path.
 
 ### On-device MCP server
 
-Full notes: [docs/mcp-server.md](docs/mcp-server.md).
+**Not implemented.** Full notes: [docs/mcp-server.md](docs/mcp-server.md).
 
-Exists mainly to make the upscaling work measurable — comparing twenty algorithms
-by hand across a game library is not realistic.
+Exists mainly to make the upscaling work measurable — comparing twenty algorithms by
+hand across a library is not realistic.
 
-- Drives **screenshots/framebuffer capture, settings read/write, emulator control,
-  and texture dump/replace control**.
-- **Localhost only, reached over `adb forward`.** No network exposure, no auth
-  surface, and it matches how this fork already deploys.
-- **Off by default**, explicit toggle, visible indicator while running.
-- **`github` flavor only**, compiled out of `play`, never a hard dependency.
+- Drives screenshots/framebuffer capture, settings read/write, emulator control, and
+  texture dump/replace control.
+- Localhost only over `adb forward`. Off by default, visible indicator when running.
+- `github` flavor only, compiled out of `play`, never a hard dependency.
+
+### ARM64 optimization
+
+**One finding applied.** Full notes:
+[docs/arm64-optimization-review.md](docs/arm64-optimization-review.md).
+Reference manuals for the Thor's exact cores in
+[docs/reference/arm/](docs/reference/arm/README.md).
+
+- The Thor is a heterogeneous 1+4+3 complex (Cortex-X3 / A715 / A710 / A510) and the
+  Lite is a Snapdragon 865 matching none of them. Any perf claim must name the core.
+- **Applied:** `armsx2.march=armv8.2-a+fp16+dotprod` now defaults in
+  `platforms/android/gradle.properties`. Before this, local debug builds fell back to
+  `armv8.1-a` and tested different codegen than any released APK.
+- Not benchmarked. No profiling has been run, so nothing here identifies a
+  *measured* hot path — do that before vectorizing anything.
+
+### Cheat tooling
+
+**Analysis tool implemented, rest not.** Full notes:
+[docs/cheat-tooling.md](docs/cheat-tooling.md).
+
+- `tools/cheat_coverage.py` measures the gap. On the test library: 590 bundled files
+  covering 534 serials, and **46% of resolvable games have no cheats**.
+- Unresolved filenames are reported separately from missing on purpose — unknown is
+  not the same as absent, and merging them overstates the gap.
+- Two separate problems: importing cheats that exist (use the tool's missing list),
+  and authoring ones that do not (memory search — likely better driven over MCP than
+  through an on-device UI).
+- Bundled files are keyed by **CRC**, not serial. That is the real friction when
+  importing for a game you do not own.
+
+### Texture pack getter
+
+**Not implemented.** Full notes:
+[docs/texture-pack-getter.md](docs/texture-pack-getter.md).
+
+- Only offer packs for games in the library — that scoping is the point of the
+  feature, not a filter on top of it.
+- Catalogue must be keyed by **serial and CRC**, never title. Title matching leaves
+  ~16% unresolved on a real library, and a catalogue can just carry the right key.
+- Installs to `<DataRoot>/textures/<SERIAL>/`, the folder the existing replacement
+  loader already scans.
+- Runtime resolution order is pack → upscaler → native, which is what makes partial
+  pack coverage acceptable.

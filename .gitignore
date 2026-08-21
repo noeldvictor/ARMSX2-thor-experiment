@@ -168,3 +168,8 @@ platforms/android/.kotlin/
 **/discord_partner_sdk.aar
 **/discord_partner_sdk.jar
 platforms/android/app/src/main/cpp/3rdparty/discord/include/
+
+# ARM A-profile architecture reference manual — 66MB, kept out of history on purpose.
+# docs/reference/arm/README.md says where to get it. The per-core optimization guides
+# next to it are small enough to track.
+docs/reference/arm/arm-architecture-reference-manual-a-profile.pdf

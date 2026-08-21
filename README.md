@@ -38,12 +38,16 @@ Screenshots are from a personal AYN Thor test device.
 - Widescreen and 60 FPS patch metadata are intentionally not used for cheat badges or cheat switches.
 - The Compose pause menu has Thor-friendly shortcuts for renderer changes, fast forward, game state, disc changes, imports, and individual cheat toggles.
 - The refreshed upstream Kotlin/Compose frontend and PCSX2-derived native core are the active path.
+- Texture upscaling runs per texture as the emulator uploads it, not on the finished frame, with separate settings for world and UI textures.
 
 ## Exploration Notes
 
-Things I am reading about, not things I am building. No promises, no dates.
+Notes on what I am poking at. Some of it is built, most of it is not. No promises, no dates.
 
-- [Texture upscaling on AYN Thor](docs/texture-upscaling-research.md) — upscaling each texture inside the emulator as you play, rather than upscaling the screen. Why that cost model works on a handheld, and what would sink it.
+- [Texture upscaling on AYN Thor](docs/texture-upscaling-research.md) — upscaling each texture inside the emulator as you play, rather than upscaling the screen. Scaffold and three filters are in; the rest of the library is not.
+- [ARM64 optimization review](docs/arm64-optimization-review.md) — the Thor is four different CPU cores, and local debug builds were quietly testing different codegen than every release.
+- [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats. What it would take to close that.
+- [Texture pack getter](docs/texture-pack-getter.md) — browse and install HD packs, scoped to games actually in the library.
 - [On-device MCP server](docs/mcp-server.md) — a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 
 ## What This Is Not
