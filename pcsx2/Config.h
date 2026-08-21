@@ -484,6 +484,41 @@ enum class GSUpscaler : u8
 	FSR1,          ///< AMD FidelityFX Super Resolution 1 (EASU + RCAS compute passes, Vulkan).
 };
 
+/// Per-texture upscaling filter, applied when a texture is uploaded rather than to the
+/// presented frame. Grouped by family because that is how the menu groups them.
+///
+/// Persisted as an integer, so this is APPEND ONLY - inserting a value silently re-points
+/// every existing config at a different algorithm, the same trap GSUpscaler documents above.
+enum class GSTextureUpscaleAlgorithm : u8
+{
+	// Resample / sharpen. Neutral and nearly free; never makes art look wrong, only softer.
+	Bilinear,   ///< Soft and safe. The do-no-harm option.
+	Bicubic,    ///< Catmull-Rom. Slightly sharper than bilinear.
+	Lanczos,    ///< Sharpest classical resample; can ring on hard edges.
+	LanczosCAS, ///< Lanczos then contrast-adaptive sharpen. Best neutral pick.
+
+	// Pixel-art / edge-directed. Best on indexed sprite and UI art, which is most of what
+	// PS2 stores - 4MB of VRAM pushed games hard toward PSMT8/PSMT4.
+	Scale2x,    ///< Fastest. Blocky but clean; good on very low-res sprites.
+	Eagle,      ///< Old and chunky. Nostalgic look more than a quality pick.
+	SuperEagle, ///< Sharper Eagle variant.
+	SaI2x,      ///< Smoother, softer edges.
+	SuperSaI2x, ///< Smoother still; loses fine detail.
+	HQx,        ///< Smooth gradients, rounded corners. The classic emulator look.
+	xBR,        ///< Strong edge detection; preserves line art well.
+	xBRZ,       ///< Sharpest edges, fewest artifacts. Best default for 2D.
+	SuperxBR,   ///< Less cartoony than xBRZ; better on semi-photographic art.
+	ScaleFX,    ///< Shader-based; keeps fine detail others smear.
+	MMPX,       ///< Built for pixel art. Excellent on tiny sprites and text.
+	OmniScale,  ///< Hybrid; handles flat art and gradients in one pass.
+
+	// Neural. Best on painted and photographic textures, worst on crisp UI.
+	Anime4K,    ///< Cel-shaded and anime art; restores line work.
+	FSRCNN,     ///< Classic real-time SR CNN.
+	SESR,       ///< Arm-designed for mobile. Most efficient neural option here.
+	ESPCN,      ///< Cheapest CNN, weakest result.
+};
+
 enum class GSHWAutoFlushLevel : u8
 {
 	Disabled,
@@ -1071,6 +1106,27 @@ struct Pcsx2Config
 		// Optical-flow resolution, as a percentage of the presented image (25..100). Lower is
 		// cheaper and blurrier. Handed to the library as a DIVISOR — see GSLsfg.cpp.
 		u8 LsfgFlowScale = 100;
+
+		// Texture upscaling - runs per texture at UPLOAD time, not on the presented frame.
+		// The result lives in the hash cache, so the cost is once per unique texture and
+		// steady state returns to zero. This is the opposite cost model to GSUpscaler above;
+		// do not conflate the two.
+		//
+		// World/3D and UI/2D are deliberately independent, each with its own enable and its
+		// own algorithm: a neural model that flatters a painted wall will mangle a HUD font.
+		// See docs/texture-upscaling-research.md.
+		bool TextureUpscaleWorldEnabled = false;
+		GSTextureUpscaleAlgorithm TextureUpscaleWorldAlgorithm = GSTextureUpscaleAlgorithm::xBRZ;
+		bool TextureUpscaleUiEnabled = false;
+		GSTextureUpscaleAlgorithm TextureUpscaleUiAlgorithm = GSTextureUpscaleAlgorithm::MMPX;
+		// Scale factor per class, 2 or 4. Thor's panel is 1080x1920, so past 4x the extra
+		// pixels cannot be shown and only cost VRAM.
+		u8 TextureUpscaleWorldScale = 2;
+		u8 TextureUpscaleUiScale = 2;
+		// Ceiling on upscaled textures held in the hash cache, in MB. On reaching it the user
+		// is warned once, then entries are batch-evicted down to a low-water mark - never one
+		// at a time at 100%, which pins a busy scene at the ceiling and thrashes.
+		u16 TextureUpscaleVramBudgetMB = 512;
 
 		u8 CAS_Sharpness = 50;
 		// FSR1's RCAS pass, 0..100. Mapped to AMD's "stops" scale in GSDevice::FSR1Upscale,

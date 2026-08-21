@@ -933,6 +933,14 @@ bool Pcsx2Config::GSOptions::OptionsAreEqual(const GSOptions& right) const
 		OpEqu(LsfgPerformance) &&
 		OpEqu(LsfgFlowScale) &&
 
+		OpEqu(TextureUpscaleWorldEnabled) &&
+		OpEqu(TextureUpscaleWorldAlgorithm) &&
+		OpEqu(TextureUpscaleUiEnabled) &&
+		OpEqu(TextureUpscaleUiAlgorithm) &&
+		OpEqu(TextureUpscaleWorldScale) &&
+		OpEqu(TextureUpscaleUiScale) &&
+		OpEqu(TextureUpscaleVramBudgetMB) &&
+
 		OpEqu(CaptureContainer) &&
 		OpEqu(VideoCaptureCodec) &&
 		OpEqu(VideoCaptureFormat) &&
@@ -1211,6 +1219,16 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapEntryEx(LsfgDllPath, "LsfgDllPath");
 	SettingsWrapEntryEx(LsfgPerformance, "LsfgPerformance");
 	SettingsWrapBitfieldEx(LsfgFlowScale, "LsfgFlowScale");
+
+	SettingsWrapEntryEx(TextureUpscaleWorldEnabled, "TextureUpscaleWorldEnabled");
+	SettingsWrapIntEnumEx(TextureUpscaleWorldAlgorithm, "TextureUpscaleWorldAlgorithm");
+	SettingsWrapEntryEx(TextureUpscaleUiEnabled, "TextureUpscaleUiEnabled");
+	SettingsWrapIntEnumEx(TextureUpscaleUiAlgorithm, "TextureUpscaleUiAlgorithm");
+	// Bitfield, not Entry: these are u8/u16 and the plain entry wrapper has no overload for
+	// one — the same reason LsfgFlowScale above uses it.
+	SettingsWrapBitfieldEx(TextureUpscaleWorldScale, "TextureUpscaleWorldScale");
+	SettingsWrapBitfieldEx(TextureUpscaleUiScale, "TextureUpscaleUiScale");
+	SettingsWrapBitfieldEx(TextureUpscaleVramBudgetMB, "TextureUpscaleVramBudgetMB");
 
 	SettingsWrapEntryEx(CaptureContainer, "CaptureContainer");
 	SettingsWrapEntryEx(VideoCaptureCodec, "VideoCaptureCodec");

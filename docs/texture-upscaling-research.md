@@ -211,6 +211,45 @@ In rough order of how likely each is to sink the feature:
 - **Filtering interaction.** Upscaled textures change how `TriFilter` and the
   bilinear hacks behave. Expect per-game regressions.
 
+## Implementation Map
+
+Traced against the tree on 2026-08-21. More of this exists than expected.
+
+### Native — where the work goes
+
+- **Config.** `GSTextureUpscaleAlgorithm` and the seven `TextureUpscale*` fields are in
+  `pcsx2/Config.h`, serialized in `pcsx2/Pcsx2Config.cpp` (`OpEqu` block plus
+  `SettingsWrapIntEnumEx` / `SettingsWrapBitfieldEx`). Done.
+- **Hook point.** `GSTextureCache::LookupHashCache`, after the "expand/upload texture"
+  block near `GSTextureCache.cpp:7290`, where `CreateTexture` + `PreloadTexture` produce
+  the native texture and it is inserted as
+  `const HashCacheEntry entry{tex, 1u, 0u, alpha_minmax, compute_alpha_minmax, false};`
+- **Replacement path is the template.** The `if (replace)` branch just above
+  (`GSTextureCache.cpp:7245`) already builds a `HashCacheEntry` from a foreign texture and
+  accounts for it. An upscaled texture is the same shape.
+- **Memory accounting already exists.** `m_hash_cache_memory_usage` and
+  `m_hash_cache_replacement_memory_usage` are maintained on both insert and
+  `RemoveFromHashCache`. The VRAM budget extends these rather than adding a parallel
+  counter.
+- **Batch eviction already exists.** `AgeHashCache()` (`GSTextureCache.cpp:7349`) runs
+  `MAX_HASH_CACHE_SIZE = 800` / `MAX_HASH_CACHE_AGE = 30` and purges through
+  `s_hash_cache_purge_list` in a batch, not one entry at a time. The low-water-mark
+  behavior the design calls for is largely there; it evicts by count and needs to also
+  evict by bytes.
+
+### Android — where the UI goes
+
+The fork's established pattern is one section in `ui/common/`, mounted from two call sites
+so a single definition serves both All Settings and the pause menu, with the caller wiring
+its own settings tier:
+
+- Define `TextureUpscaleSection.kt` in
+  `platforms/android/app/src/main/java/com/armsx2/ui/common/`, following `LsfgSection.kt`.
+- Mount from `ui/settings/RendererTab.kt` and `ui/emulation/EmulationMenuScreen.kt`.
+- Register the new fields in `ui/settingshub/SettingsResetFields.kt` so Reset covers them.
+- Two sections, not one — world and UI classes are independent everywhere, config keys
+  included.
+
 ## Suggested Order Of Work
 
 1. **Scaffold with one cheap scaler.** Hash-cache hook, stability heuristic, VRAM
