@@ -38,38 +38,73 @@ import com.armsx2.ui.settings.ToggleRow
  * guess wrong is exactly why each class is switchable on its own.
  */
 
-/** Ordinals of the native `GSTextureUpscaleAlgorithm` enum, which is APPEND ONLY. Only the
- *  filters with a kernel are listed; the native side declines anything else and leaves the
- *  texture native, so offering them here would be a menu of no-ops. */
-private val ALGORITHM_ORDINALS = listOf(20, 0, 22, 1, 21, 2, 3, 4, 5, 6, 7, 8, 10, 16, 17, 18, 19)
+/** Ordinals of the native `GSTextureUpscaleAlgorithm` enum, which is APPEND ONLY, grouped
+ *  into the families the menu shows. Only filters with a kernel appear; the native side
+ *  declines anything else and leaves the texture native, so listing them would be a menu of
+ *  no-ops. Each family's ordinal and label lists must stay the same length - a mismatch
+ *  silently selects a different filter than the one named. */
+private val FAMILY_RESAMPLE = listOf(20, 0, 22, 1, 21, 2, 3)
+private val LABELS_RESAMPLE = listOf("Nearest", "Bilinear", "Sharp", "Bicubic", "Mitchell", "Lanczos", "L+CAS")
 
-private val ALGORITHM_LABELS = listOf(
-    // Ordered softest-to-sharpest within the resample family, then edge-directed, then
-    // neural - which is how someone auditions filters, and not the enum's historical order.
-    "Nearest", "Bilinear", "Sharp Bilinear", "Bicubic", "Mitchell", "Lanczos", "Lanczos + CAS",
-    "Scale2x", "Eagle", "SuperEagle", "2xSaI", "Super2xSaI", "xBR",
-    "Anime4K (model)", "FSRCNN (model)", "SESR (model)", "ESPCN (model)",
+private val FAMILY_EDGE = listOf(4, 5, 6, 7, 8, 10)
+private val LABELS_EDGE = listOf("Scale2x", "Eagle", "SuperEagle", "2xSaI", "S2xSaI", "xBR")
+
+private val FAMILY_NEURAL = listOf(16, 17, 18, 19)
+private val LABELS_NEURAL = listOf("Anime4K", "FSRCNN", "SESR", "ESPCN")
+
+/** Description key per ordinal. */
+private val DESCRIPTION_KEYS = mapOf(
+    20 to "renderer.textureUpscale.algorithm.nearest",
+    0 to "renderer.textureUpscale.algorithm.bilinear",
+    22 to "renderer.textureUpscale.algorithm.sharpbilinear",
+    1 to "renderer.textureUpscale.algorithm.bicubic",
+    21 to "renderer.textureUpscale.algorithm.mitchell",
+    2 to "renderer.textureUpscale.algorithm.lanczos",
+    3 to "renderer.textureUpscale.algorithm.lanczoscas",
+    4 to "renderer.textureUpscale.algorithm.scale2x",
+    5 to "renderer.textureUpscale.algorithm.eagle",
+    6 to "renderer.textureUpscale.algorithm.supereagle",
+    7 to "renderer.textureUpscale.algorithm.sai2x",
+    8 to "renderer.textureUpscale.algorithm.supersai2x",
+    10 to "renderer.textureUpscale.algorithm.xbr",
+    16 to "renderer.textureUpscale.algorithm.neural",
+    17 to "renderer.textureUpscale.algorithm.neural",
+    18 to "renderer.textureUpscale.algorithm.neural",
+    19 to "renderer.textureUpscale.algorithm.neural",
 )
 
-private val ALGORITHM_DESCRIPTION_KEYS = listOf(
-    "renderer.textureUpscale.algorithm.nearest",
-    "renderer.textureUpscale.algorithm.bilinear",
-    "renderer.textureUpscale.algorithm.sharpbilinear",
-    "renderer.textureUpscale.algorithm.bicubic",
-    "renderer.textureUpscale.algorithm.mitchell",
-    "renderer.textureUpscale.algorithm.lanczos",
-    "renderer.textureUpscale.algorithm.lanczoscas",
-    "renderer.textureUpscale.algorithm.scale2x",
-    "renderer.textureUpscale.algorithm.eagle",
-    "renderer.textureUpscale.algorithm.supereagle",
-    "renderer.textureUpscale.algorithm.sai2x",
-    "renderer.textureUpscale.algorithm.supersai2x",
-    "renderer.textureUpscale.algorithm.xbr",
-    "renderer.textureUpscale.algorithm.neural",
-    "renderer.textureUpscale.algorithm.neural",
-    "renderer.textureUpscale.algorithm.neural",
-    "renderer.textureUpscale.algorithm.neural",
-)
+/**
+ * Three chip rows, one per family, rather than one control listing seventeen filters.
+ *
+ * Only the family owning the current selection highlights anything; the others pass -1,
+ * which SegmentedRow renders as no selection. That is what makes "which family am I in"
+ * readable at a glance instead of something you work out from a name.
+ */
+@Composable
+private fun AlgorithmPicker(current: Int, onChange: (Int) -> Unit) {
+    val described = DESCRIPTION_KEYS[current]
+    SegmentedRow(
+        str("renderer.textureUpscale.family.resample"),
+        LABELS_RESAMPLE,
+        FAMILY_RESAMPLE.indexOf(current),
+        description = if (described != null && current in FAMILY_RESAMPLE) str(described) else null,
+    ) { onChange(FAMILY_RESAMPLE[it]) }
+
+    SegmentedRow(
+        str("renderer.textureUpscale.family.edge"),
+        LABELS_EDGE,
+        FAMILY_EDGE.indexOf(current),
+        description = if (described != null && current in FAMILY_EDGE) str(described) else null,
+    ) { onChange(FAMILY_EDGE[it]) }
+
+    SegmentedRow(
+        str("renderer.textureUpscale.family.neural"),
+        LABELS_NEURAL,
+        FAMILY_NEURAL.indexOf(current),
+        description = if (described != null && current in FAMILY_NEURAL) str(described)
+                      else str("renderer.textureUpscale.family.neuralHint"),
+    ) { onChange(FAMILY_NEURAL[it]) }
+}
 
 private val SCALE_LABELS = listOf("2x", "4x")
 
@@ -78,9 +113,6 @@ private val SCALE_LABELS = listOf("2x", "4x")
 private fun scaleToIndex(scale: Int): Int = if (scale >= 4) 1 else 0
 
 private fun indexToScale(index: Int): Int = if (index == 1) 4 else 2
-
-private fun algorithmToIndex(ordinal: Int): Int =
-    ALGORITHM_ORDINALS.indexOf(ordinal).let { if (it < 0) ALGORITHM_ORDINALS.indexOf(4) else it }
 
 @Composable
 fun TextureUpscaleSection(
@@ -118,17 +150,7 @@ fun TextureUpscaleSection(
         // chain and LSFG sections. It also keeps dead rows out of the controller focus
         // registry rather than parking focus on something inert.
         if (worldEnabled) {
-            val worldIndex = algorithmToIndex(worldAlgorithm)
-            IntSliderRow(
-                str("renderer.textureUpscale.algorithm.label"),
-                worldIndex,
-                min = 0,
-                max = ALGORITHM_LABELS.size - 1,
-                description = str(ALGORITHM_DESCRIPTION_KEYS[worldIndex]),
-                valueFormatter = { ALGORITHM_LABELS[it.coerceIn(0, ALGORITHM_LABELS.size - 1)] },
-            ) {
-                onWorldAlgorithmChange(ALGORITHM_ORDINALS[it.coerceIn(0, ALGORITHM_ORDINALS.size - 1)])
-            }
+            AlgorithmPicker(worldAlgorithm) { onWorldAlgorithmChange(it) }
             SegmentedRow(
                 str("renderer.textureUpscale.scale.label"),
                 SCALE_LABELS,
@@ -148,17 +170,7 @@ fun TextureUpscaleSection(
             onUiEnabledChange(it)
         }
         if (uiEnabled) {
-            val uiIndex = algorithmToIndex(uiAlgorithm)
-            IntSliderRow(
-                str("renderer.textureUpscale.algorithm.label"),
-                uiIndex,
-                min = 0,
-                max = ALGORITHM_LABELS.size - 1,
-                description = str(ALGORITHM_DESCRIPTION_KEYS[uiIndex]),
-                valueFormatter = { ALGORITHM_LABELS[it.coerceIn(0, ALGORITHM_LABELS.size - 1)] },
-            ) {
-                onUiAlgorithmChange(ALGORITHM_ORDINALS[it.coerceIn(0, ALGORITHM_ORDINALS.size - 1)])
-            }
+            AlgorithmPicker(uiAlgorithm) { onUiAlgorithmChange(it) }
             SegmentedRow(
                 str("renderer.textureUpscale.scale.label"),
                 SCALE_LABELS,

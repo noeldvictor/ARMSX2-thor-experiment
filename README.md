@@ -28,9 +28,9 @@ Screenshots are from a personal AYN Thor test device.
 | --- | --- |
 | ![ARMSX2 Thor game selector with cover art and cheat badges](docs/media/armsx2-library-device.png) | ![Texture upscaling section in the in-game menu, showing the world-texture toggle, the Bilinear/Scale2x/Eagle algorithm picker and the 2x/4x scale selector](docs/media/armsx2-texture-upscaling-device.png) |
 
-| Running, no touch overlay | In-game OSD |
-| --- | --- |
-| ![7 Blades running on the Thor with no on-screen controls drawn over the game](docs/media/armsx2-ingame-device.png) | ![ARMSX2 Thor in-game OSD drawer](docs/media/armsx2-osd-device.png) |
+| Running, no touch overlay |
+| --- |
+| ![7 Blades running on the Thor with no on-screen controls drawn over the game](docs/media/armsx2-ingame-device.png) |
 
 ## Where This Fork Diverges
 
