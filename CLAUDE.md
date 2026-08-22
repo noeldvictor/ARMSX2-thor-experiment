@@ -45,6 +45,12 @@ does **not** upscale the finished frame. Present-time upscaling already exists h
   [docs/neural-models.md](docs/neural-models.md). `tools/make_a2nn.py --identity` proves the
   path end to end without weights. There is a 4000 MACs/pixel ceiling because inference is
   on the CPU; raising it is the wrong fix, moving to Vulkan compute is the right one.
+- **A model self-test runs at texture-cache creation**, independent of whether upscaling is
+  enabled, and logs dimensions plus a checksum. For the `--identity` x2 model the checksum is
+  deterministically `b2870000`. Use it rather than trying to force settings from a shell -
+  settings live in SharedPreferences (`config.global` / `config.game.<serial>`), and
+  `armsx2-settings.json` in the data folder is only a reinstall BACKUP, not the live store.
+  Editing either from adb does not work; the UI is the only reliable way to change settings.
 - Style presets rather than a curated per-game table.
 - VRAM: warn once, then evict in a batch to a low-water mark, with a declined-hash
   set so a full budget cannot thrash.
