@@ -297,6 +297,149 @@ namespace GSTextureUpscaler
 			}
 		}
 
+		void ScaleNearest(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride, u32 scale)
+		{
+			const int dw = sw * static_cast<int>(scale);
+			const int dh = sh * static_cast<int>(scale);
+			for (int y = 0; y < dh; y++)
+			{
+				const int sy = y / static_cast<int>(scale);
+				for (int x = 0; x < dw; x++)
+					dst[static_cast<size_t>(y) * dst_stride + x] =
+						SamplePixel(src, sw, sh, src_stride, x / static_cast<int>(scale), sy);
+			}
+		}
+
+		/// Mitchell-Netravali with B = C = 1/3, the values the original paper settles on as the
+		/// best subjective compromise. Softer than Catmull-Rom but it does not ring, which makes
+		/// it the safer of the two on textures with hard colour steps.
+		inline float MitchellKernel(float x)
+		{
+			constexpr float B = 1.0f / 3.0f;
+			constexpr float C = 1.0f / 3.0f;
+			x = std::fabs(x);
+			const float x2 = x * x;
+			const float x3 = x2 * x;
+			if (x < 1.0f)
+				return ((12.0f - 9.0f * B - 6.0f * C) * x3 + (-18.0f + 12.0f * B + 6.0f * C) * x2 +
+						   (6.0f - 2.0f * B)) /
+					   6.0f;
+			if (x < 2.0f)
+				return ((-B - 6.0f * C) * x3 + (6.0f * B + 30.0f * C) * x2 + (-12.0f * B - 48.0f * C) * x +
+						   (8.0f * B + 24.0f * C)) /
+					   6.0f;
+			return 0.0f;
+		}
+
+		inline float MitchellWeight(float t, int tap)
+		{
+			// Taps sit at -1, 0, 1, 2 relative to the floored source pixel.
+			const float distances[4] = {t + 1.0f, t, 1.0f - t, 2.0f - t};
+			return MitchellKernel(distances[tap]);
+		}
+
+		void ScaleMitchell(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride, u32 scale)
+		{
+			const int dw = sw * static_cast<int>(scale);
+			const int dh = sh * static_cast<int>(scale);
+			const float inv = 1.0f / static_cast<float>(scale);
+
+			for (int y = 0; y < dh; y++)
+			{
+				const float sy = (static_cast<float>(y) + 0.5f) * inv - 0.5f;
+				const int y0 = static_cast<int>(std::floor(sy));
+				const float ty = sy - static_cast<float>(y0);
+				float wy[4];
+				for (int i = 0; i < 4; i++)
+					wy[i] = MitchellWeight(ty, i);
+
+				for (int x = 0; x < dw; x++)
+				{
+					const float sx = (static_cast<float>(x) + 0.5f) * inv - 0.5f;
+					const int x0 = static_cast<int>(std::floor(sx));
+					const float tx = sx - static_cast<float>(x0);
+					float wx[4];
+					for (int i = 0; i < 4; i++)
+						wx[i] = MitchellWeight(tx, i);
+
+					float acc[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+					for (int j = 0; j < 4; j++)
+					{
+						for (int i = 0; i < 4; i++)
+						{
+							const u32 p = SamplePixel(src, sw, sh, src_stride, x0 - 1 + i, y0 - 1 + j);
+							const float w = wx[i] * wy[j];
+							for (int c = 0; c < 4; c++)
+								acc[c] += w * static_cast<float>((p >> (c * 8)) & 0xFF);
+						}
+					}
+
+					u32 out = 0;
+					for (int c = 0; c < 4; c++)
+						out |= static_cast<u32>(std::clamp(static_cast<int>(acc[c] + 0.5f), 0, 255)) << (c * 8);
+					dst[static_cast<size_t>(y) * dst_stride + x] = out;
+				}
+			}
+		}
+
+		/// Sharp bilinear. Keeps each source texel flat and confines the blend to a one-output-
+		/// pixel ramp at the boundary, so it reads as crisp as nearest without nearest's uneven
+		/// block sizes. The usual choice for pixel art that should not look filtered at all.
+		void ScaleSharpBilinear(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride,
+			u32 scale)
+		{
+			const int dw = sw * static_cast<int>(scale);
+			const int dh = sh * static_cast<int>(scale);
+			const float inv = 1.0f / static_cast<float>(scale);
+			const float fscale = static_cast<float>(scale);
+			// Half the texel, minus half an output pixel: the width of the flat region either
+			// side of a texel centre. Everything outside it is the ramp.
+			const float region = 0.5f - 0.5f / fscale;
+
+			const auto remap = [&](float coord) -> float {
+				const float floored = std::floor(coord);
+				const float frac = coord - floored;
+				const float centre_dist = frac - 0.5f;
+				const float ramped =
+					(centre_dist - std::clamp(centre_dist, -region, region)) * fscale + 0.5f;
+				return floored + ramped;
+			};
+
+			for (int y = 0; y < dh; y++)
+			{
+				const float sy = remap((static_cast<float>(y) + 0.5f) * inv);
+				const int y0 = static_cast<int>(std::floor(sy - 0.5f));
+				const float ty = (sy - 0.5f) - static_cast<float>(y0);
+
+				for (int x = 0; x < dw; x++)
+				{
+					const float sx = remap((static_cast<float>(x) + 0.5f) * inv);
+					const int x0 = static_cast<int>(std::floor(sx - 0.5f));
+					const float tx = (sx - 0.5f) - static_cast<float>(x0);
+
+					const u32 p00 = SamplePixel(src, sw, sh, src_stride, x0, y0);
+					const u32 p10 = SamplePixel(src, sw, sh, src_stride, x0 + 1, y0);
+					const u32 p01 = SamplePixel(src, sw, sh, src_stride, x0, y0 + 1);
+					const u32 p11 = SamplePixel(src, sw, sh, src_stride, x0 + 1, y0 + 1);
+
+					u32 out = 0;
+					for (int c = 0; c < 4; c++)
+					{
+						const int shift = c * 8;
+						const float c00 = static_cast<float>((p00 >> shift) & 0xFF);
+						const float c10 = static_cast<float>((p10 >> shift) & 0xFF);
+						const float c01 = static_cast<float>((p01 >> shift) & 0xFF);
+						const float c11 = static_cast<float>((p11 >> shift) & 0xFF);
+						const float top = c00 + (c10 - c00) * tx;
+						const float bot = c01 + (c11 - c01) * tx;
+						const float v = top + (bot - top) * ty;
+						out |= static_cast<u32>(std::clamp(static_cast<int>(v + 0.5f), 0, 255)) << shift;
+					}
+					dst[static_cast<size_t>(y) * dst_stride + x] = out;
+				}
+			}
+		}
+
 		inline float Sinc(float x)
 		{
 			if (std::fabs(x) < 1e-6f)
@@ -887,6 +1030,9 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::SaI2x:
 			case GSTextureUpscaleAlgorithm::SuperSaI2x:
 			case GSTextureUpscaleAlgorithm::xBR:
+			case GSTextureUpscaleAlgorithm::Nearest:
+			case GSTextureUpscaleAlgorithm::Mitchell:
+			case GSTextureUpscaleAlgorithm::SharpBilinear:
 				return true;
 
 			// Architecture is present; whether it can actually run depends on a model file
@@ -987,6 +1133,18 @@ namespace GSTextureUpscaler
 
 			case GSTextureUpscaleAlgorithm::Bicubic:
 				ScaleBicubic(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
+				return true;
+
+			case GSTextureUpscaleAlgorithm::Nearest:
+				ScaleNearest(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
+				return true;
+
+			case GSTextureUpscaleAlgorithm::Mitchell:
+				ScaleMitchell(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
+				return true;
+
+			case GSTextureUpscaleAlgorithm::SharpBilinear:
+				ScaleSharpBilinear(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
 				return true;
 
 			case GSTextureUpscaleAlgorithm::Lanczos:

@@ -41,17 +41,22 @@ import com.armsx2.ui.settings.ToggleRow
 /** Ordinals of the native `GSTextureUpscaleAlgorithm` enum, which is APPEND ONLY. Only the
  *  filters with a kernel are listed; the native side declines anything else and leaves the
  *  texture native, so offering them here would be a menu of no-ops. */
-private val ALGORITHM_ORDINALS = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 16, 17, 18, 19)
+private val ALGORITHM_ORDINALS = listOf(20, 0, 22, 1, 21, 2, 3, 4, 5, 6, 7, 8, 10, 16, 17, 18, 19)
 
 private val ALGORITHM_LABELS = listOf(
-    "Bilinear", "Bicubic", "Lanczos", "Lanczos + CAS",
+    // Ordered softest-to-sharpest within the resample family, then edge-directed, then
+    // neural - which is how someone auditions filters, and not the enum's historical order.
+    "Nearest", "Bilinear", "Sharp Bilinear", "Bicubic", "Mitchell", "Lanczos", "Lanczos + CAS",
     "Scale2x", "Eagle", "SuperEagle", "2xSaI", "Super2xSaI", "xBR",
     "Anime4K (model)", "FSRCNN (model)", "SESR (model)", "ESPCN (model)",
 )
 
 private val ALGORITHM_DESCRIPTION_KEYS = listOf(
+    "renderer.textureUpscale.algorithm.nearest",
     "renderer.textureUpscale.algorithm.bilinear",
+    "renderer.textureUpscale.algorithm.sharpbilinear",
     "renderer.textureUpscale.algorithm.bicubic",
+    "renderer.textureUpscale.algorithm.mitchell",
     "renderer.textureUpscale.algorithm.lanczos",
     "renderer.textureUpscale.algorithm.lanczoscas",
     "renderer.textureUpscale.algorithm.scale2x",

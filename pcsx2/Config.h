@@ -517,6 +517,12 @@ enum class GSTextureUpscaleAlgorithm : u8
 	FSRCNN,     ///< Classic real-time SR CNN.
 	SESR,       ///< Arm-designed for mobile. Most efficient neural option here.
 	ESPCN,      ///< Cheapest CNN, weakest result.
+
+	// Appended after the first release of this enum. Order below this line is history, not
+	// grouping - the enum is persisted as an integer, so entries can only ever be added.
+	Nearest,        ///< No filtering. The A/B baseline for judging everything else.
+	Mitchell,       ///< Mitchell-Netravali bicubic. Softer than Catmull-Rom, no ringing.
+	SharpBilinear,  ///< Crisp texel edges with a one-pixel ramp. Sharp without the blockiness.
 };
 
 enum class GSHWAutoFlushLevel : u8

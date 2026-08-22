@@ -96,6 +96,25 @@ LRU is available.
 Roughly twenty, grouped as the menu groups them. Comments here are the source for
 the menu comments.
 
+**Status.** Seventeen entries are selectable:
+
+- *Resample*: Nearest, Bilinear, Sharp Bilinear, Bicubic (Catmull-Rom), Mitchell,
+  Lanczos-3, Lanczos+CAS
+- *Edge-directed*: Scale2x, Eagle, SuperEagle, 2xSaI, Super2xSaI, xBR
+- *Neural*: Anime4K, FSRCNN, SESR, ESPCN — architecture only, each needs a model file
+  (see [neural-models.md](neural-models.md))
+
+Still declining and left native: **HQx, xBRZ, SuperxBR, ScaleFX, OmniScale**. These
+were deliberately not written from memory. HQ2x is a 256-case table keyed on a
+neighbour-difference pattern, xBRZ is several hundred lines of rotation-based blend
+decisions, and the other three are shader-shaped rather than scalar. A subtly wrong
+implementation shipped under a famous filter's name is worse than an absent one -
+people would judge the filter, not the bug. They need porting from a reference, not
+reconstructing.
+
+The picker orders entries softest-to-sharpest within a family rather than by enum
+order, because that is how someone actually auditions filters.
+
 ### Pixel-art / edge-directed
 Best on indexed, sprite, and UI art — which is most of what PS2 stores, since its
 4MB VRAM pushed games hard toward PSMT8/PSMT4.

@@ -31,10 +31,13 @@ does **not** upscale the finished frame. Present-time upscaling already exists h
   and scale. A filter that flatters a painted wall will mangle a HUD font.
 - Explicit Off / 2x / 4x. Thor's panel is 1080x1920, so 4x is the useful ceiling.
 - Per-game with a global default.
-- ~20 algorithms in the enum across pixel-art / resample / neural families. **Fourteen are
-  selectable**: Bilinear, Bicubic, Lanczos, Lanczos+CAS, Scale2x, Eagle, SuperEagle, 2xSaI,
-  Super2xSaI, xBR, plus the four neural entries. HQx, xBRZ, SuperxBR, ScaleFX and OmniScale
-  still decline and leave the texture native.
+- **Seventeen algorithms are selectable**: Nearest, Bilinear, Sharp Bilinear, Bicubic,
+  Mitchell, Lanczos, Lanczos+CAS, Scale2x, Eagle, SuperEagle, 2xSaI, Super2xSaI, xBR, and the
+  four neural entries. HQx, xBRZ, SuperxBR, ScaleFX and OmniScale still decline and leave the
+  texture native - deliberately not reconstructed from memory, since a subtly wrong filter
+  under a famous name gets the filter blamed rather than the bug.
+- The enum is **append only** and the picker's ordinal/label/description lists must stay the
+  same length - a mismatch silently selects the wrong filter.
 - **The upscale runs on a worker thread**, not the GS thread. The native texture is created
   immediately and the upscaled one swaps in a frame or two later via
   `ProcessUpscaledTextures`. Do not move it back inline - that was the original mistake.
