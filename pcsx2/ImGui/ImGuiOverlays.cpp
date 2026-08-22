@@ -616,10 +616,10 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				{
 					const GSTextureUpscaler::Stats& us = GSTextureUpscaler::GetStats();
 					s_texture_upscale_line.format(
-						"TexUp: {} up | {} held ({:.1f} MB) | guard {} | impl {} | rate {} | budget {}",
+						"TexUp: {} up | {} held ({:.1f} MB) | guard {} | impl {} | rate {} | budget {} | nomodel {}",
 						us.upscaled, us.held, static_cast<double>(us.memory_usage) / (1024.0 * 1024.0),
 						us.skipped_guard, us.declined_unimplemented, us.declined_rate_limit,
-						us.declined_budget);
+						us.declined_budget, us.declined_no_model);
 					DRAW_LINE(osd_font, font_size, s_texture_upscale_line.c_str(), OsdTextColor());
 				}
 			}

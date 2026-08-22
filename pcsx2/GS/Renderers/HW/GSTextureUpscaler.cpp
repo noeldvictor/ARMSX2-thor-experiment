@@ -4,6 +4,7 @@
 #include "GS/Renderers/HW/GSTextureUpscaler.h"
 
 #include "GS/GS.h"
+#include "GS/Renderers/HW/GSTextureUpscalerNN.h"
 
 #include "common/Console.h"
 
@@ -887,6 +888,17 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::SuperSaI2x:
 			case GSTextureUpscaleAlgorithm::xBR:
 				return true;
+
+			// Architecture is present; whether it can actually run depends on a model file
+			// being installed, which ScaleBuffer answers per texture. Reported implemented so
+			// the picker offers them and the user is told what is missing, rather than the
+			// entries silently not existing.
+			case GSTextureUpscaleAlgorithm::Anime4K:
+			case GSTextureUpscaleAlgorithm::FSRCNN:
+			case GSTextureUpscaleAlgorithm::SESR:
+			case GSTextureUpscaleAlgorithm::ESPCN:
+				return true;
+
 			default:
 				return false;
 		}
@@ -989,6 +1001,19 @@ namespace GSTextureUpscaler
 				ApplyCAS(dst_px, sw * scale, sh * scale, dst_stride, 0.6f);
 				return true;
 
+			case GSTextureUpscaleAlgorithm::Anime4K:
+			case GSTextureUpscaleAlgorithm::FSRCNN:
+			case GSTextureUpscaleAlgorithm::SESR:
+			case GSTextureUpscaleAlgorithm::ESPCN:
+			{
+				if (GSTextureUpscalerNN::Run(algorithm, src_px, sw, sh, src_stride, dst_px, dst_stride, scale))
+					return true;
+				// No model installed, or the texture is outside the size one will be run on.
+				// Counted so the OSD can say which, instead of the user seeing nothing happen.
+				s_stats.declined_no_model++;
+				return false;
+			}
+
 			default:
 				break;
 		}
@@ -1056,6 +1081,10 @@ namespace GSTextureUpscaler
 		s_pending.clear();
 		s_completed.clear();
 		s_in_flight.clear();
+		lock.unlock();
+
+		// Models are keyed by the texture folder, which moves with the game.
+		GSTextureUpscalerNN::Reset();
 	}
 
 	void QueueUpscale(const GSTextureCache::HashCacheKey& key, const u8* src, int sw, int sh, u32 src_pitch,

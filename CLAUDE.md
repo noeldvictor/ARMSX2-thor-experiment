@@ -31,9 +31,17 @@ does **not** upscale the finished frame. Present-time upscaling already exists h
   and scale. A filter that flatters a painted wall will mangle a HUD font.
 - Explicit Off / 2x / 4x. Thor's panel is 1080x1920, so 4x is the useful ceiling.
 - Per-game with a global default.
-- ~20 algorithms in the enum across pixel-art / resample / neural families. **Only
-  Bilinear, Scale2x and Eagle have kernels**; the rest decline and leave the texture
-  native, and the picker only offers implemented ones.
+- ~20 algorithms in the enum across pixel-art / resample / neural families. **Fourteen are
+  selectable**: Bilinear, Bicubic, Lanczos, Lanczos+CAS, Scale2x, Eagle, SuperEagle, 2xSaI,
+  Super2xSaI, xBR, plus the four neural entries. HQx, xBRZ, SuperxBR, ScaleFX and OmniScale
+  still decline and leave the texture native.
+- **The upscale runs on a worker thread**, not the GS thread. The native texture is created
+  immediately and the upscaled one swaps in a frame or two later via
+  `ProcessUpscaledTextures`. Do not move it back inline - that was the original mistake.
+- **Neural needs a user-supplied model.** Architecture only; no weights ship. See
+  [docs/neural-models.md](docs/neural-models.md). `tools/make_a2nn.py --identity` proves the
+  path end to end without weights. There is a 4000 MACs/pixel ceiling because inference is
+  on the CPU; raising it is the wrong fix, moving to Vulkan compute is the right one.
 - Style presets rather than a curated per-game table.
 - VRAM: warn once, then evict in a batch to a low-water mark, with a declined-hash
   set so a full budget cannot thrash.

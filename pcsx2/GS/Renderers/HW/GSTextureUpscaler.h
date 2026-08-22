@@ -54,6 +54,8 @@ namespace GSTextureUpscaler
 		u32 declined_unimplemented = 0;
 		u32 declined_rate_limit = 0;
 		u32 declined_budget = 0;
+		/// A neural algorithm was selected but no usable model file is installed.
+		u32 declined_no_model = 0;
 	};
 
 	/// A finished upscale, waiting to be turned into a texture on the GS thread.

@@ -50,7 +50,8 @@ Screenshots are from a personal AYN Thor test device.
 
 Notes on what I am poking at. Some of it is built, most of it is not. No promises, no dates.
 
-- [Texture upscaling on AYN Thor](docs/texture-upscaling-research.md) — upscaling each texture inside the emulator as you play, rather than upscaling the screen. Scaffold and three filters are in; the rest of the library is not.
+- [Texture upscaling on AYN Thor](docs/texture-upscaling-research.md) — upscaling each texture inside the emulator as you play, rather than upscaling the screen. Ten filters plus a neural path, all on a worker thread.
+- [Neural models](docs/neural-models.md) — the `.a2nn` format, why no weights ship, and a tool that proves the path works before you have any.
 - [ARM64 optimization review](docs/arm64-optimization-review.md) — the Thor is four different CPU cores, and local debug builds were quietly testing different codegen than every release.
 - [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats. What it would take to close that.
 - [Texture pack getter](docs/texture-pack-getter.md) — browse and install HD packs, scoped to games actually in the library.
