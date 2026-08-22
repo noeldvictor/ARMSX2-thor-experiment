@@ -53,11 +53,11 @@ import com.armsx2.ui.settings.controllerFocusable
 private val FAMILY_RESAMPLE = listOf(20, 0, 22, 1, 21, 2, 3)
 private val LABELS_RESAMPLE = listOf("Nearest", "Bilinear", "Sharp", "Bicubic", "Mitchell", "Lanczos", "L+CAS")
 
-private val FAMILY_EDGE = listOf(4, 5, 6, 7, 8, 10)
-private val LABELS_EDGE = listOf("Scale2x", "Eagle", "SuperEagle", "2xSaI", "S2xSaI", "xBR")
+private val FAMILY_EDGE = listOf(4, 5, 6, 7, 8, 10, 16)
+private val LABELS_EDGE = listOf("Scale2x", "Eagle", "SuperEagle", "2xSaI", "S2xSaI", "xBR", "Anime4K")
 
-private val FAMILY_NEURAL = listOf(16, 17, 18, 19)
-private val LABELS_NEURAL = listOf("Anime4K", "FSRCNN", "SESR", "ESPCN")
+private val FAMILY_NEURAL = listOf(17, 18, 19)
+private val LABELS_NEURAL = listOf("FSRCNN", "SESR", "ESPCN")
 
 /** Description key per ordinal. */
 private val DESCRIPTION_KEYS = mapOf(
@@ -74,7 +74,7 @@ private val DESCRIPTION_KEYS = mapOf(
     7 to "renderer.textureUpscale.algorithm.sai2x",
     8 to "renderer.textureUpscale.algorithm.supersai2x",
     10 to "renderer.textureUpscale.algorithm.xbr",
-    16 to "renderer.textureUpscale.algorithm.neural",
+    16 to "renderer.textureUpscale.algorithm.anime4k",
     17 to "renderer.textureUpscale.algorithm.neural",
     18 to "renderer.textureUpscale.algorithm.neural",
     19 to "renderer.textureUpscale.algorithm.neural",

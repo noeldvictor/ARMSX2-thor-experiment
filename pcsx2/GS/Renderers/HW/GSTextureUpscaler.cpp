@@ -441,6 +441,218 @@ namespace GSTextureUpscaler
 			}
 		}
 
+		// -------------------------------------------------------------------------------
+		// Anime4K (v1 "push/gradient"), ported from the GLSL texture filter in Citra/Azahar,
+		// which is itself bloc97's Anime4K under the MIT licence. See docs/third-party.md.
+		//
+		// The thing worth knowing: Anime4K v1 is NOT a neural network. It is a hand-written
+		// edge-refinement pass - Sobel gradient, then push colours along it - which is exactly
+		// why it can ship as an algorithm with no weights file, while the later Anime4K CNN
+		// modes cannot. So it belongs beside the edge-directed filters, not the model-driven
+		// ones.
+		// -------------------------------------------------------------------------------
+
+		/// BT.2020 luma weights, matching the original.
+		inline float Luma(u32 px)
+		{
+			const float r = static_cast<float>((px >> 0) & 0xFF) * (1.0f / 255.0f);
+			const float g = static_cast<float>((px >> 8) & 0xFF) * (1.0f / 255.0f);
+			const float b = static_cast<float>((px >> 16) & 0xFF) * (1.0f / 255.0f);
+			return 0.2627f * r + 0.6780f * g + 0.0593f * b;
+		}
+
+		inline u32 Anime4KAverage(u32 cc, u32 a, u32 b, u32 c, float strength)
+		{
+			u32 out = 0;
+			for (int ch = 0; ch < 4; ch++)
+			{
+				const int shift = ch * 8;
+				const float mean = (static_cast<float>((a >> shift) & 0xFF) +
+									   static_cast<float>((b >> shift) & 0xFF) +
+									   static_cast<float>((c >> shift) & 0xFF)) /
+								   3.0f;
+				const float v = static_cast<float>((cc >> shift) & 0xFF) * (1.0f - strength) + mean * strength;
+				out |= static_cast<u32>(std::clamp(static_cast<int>(v + 0.5f), 0, 255)) << shift;
+			}
+			return out;
+		}
+
+		void ScaleAnime4K(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride, u32 scale)
+		{
+			// Refinement runs at the OUTPUT resolution: it sharpens the soft edges the resample
+			// just created, so doing it first would refine detail that is about to be blurred
+			// away again.
+			ScaleBilinear(src, sw, sh, src_stride, dst, dst_stride, scale);
+
+			const int w = sw * static_cast<int>(scale);
+			const int h = sh * static_cast<int>(scale);
+			const size_t n = static_cast<size_t>(w) * static_cast<size_t>(h);
+
+			const auto colour = [&](int x, int y) -> u32 {
+				x = std::clamp(x, 0, w - 1);
+				y = std::clamp(y, 0, h - 1);
+				return dst[static_cast<size_t>(y) * dst_stride + x];
+			};
+
+			// Pass 1, horizontal half of a separable Sobel: (difference, weighted sum).
+			std::vector<float> gx(n), gy(n);
+			for (int y = 0; y < h; y++)
+			{
+				for (int x = 0; x < w; x++)
+				{
+					const float l = Luma(colour(x - 1, y));
+					const float c = Luma(colour(x, y));
+					const float r = Luma(colour(x + 1, y));
+					gx[static_cast<size_t>(y) * w + x] = r - l;
+					gy[static_cast<size_t>(y) * w + x] = l + 2.0f * c + r;
+				}
+			}
+
+			// Pass 2, vertical half. lumad is 1 - |gradient|, so a HIGH value means a flat area
+			// and a low one means an edge - which is why the threshold below reads as "leave
+			// flat areas alone" rather than the other way round.
+			std::vector<float> lumad(n);
+			for (int y = 0; y < h; y++)
+			{
+				for (int x = 0; x < w; x++)
+				{
+					const auto at = [&](int yy) -> size_t {
+						return static_cast<size_t>(std::clamp(yy, 0, h - 1)) * static_cast<size_t>(w) +
+							   static_cast<size_t>(x);
+					};
+					const float sum = gx[at(y - 1)] + 2.0f * gx[at(y)] + gx[at(y + 1)];
+					const float diff = gy[at(y + 1)] - gy[at(y - 1)];
+					lumad[static_cast<size_t>(y) * w + x] = 1.0f - std::sqrt(sum * sum + diff * diff);
+				}
+			}
+
+			// Pass 3: push. Eight directional kernels, each asking "is there a light ridge on
+			// one side and a darker one opposite", and if so blending the centre toward the
+			// light side. That is what straightens a staircased diagonal.
+			constexpr float LINE_DETECT_THRESHOLD = 0.4f;
+			constexpr float STRENGTH = 0.6f;
+
+			std::vector<u32> refined(n);
+			const auto lum = [&](int x, int y) -> float {
+				x = std::clamp(x, 0, w - 1);
+				y = std::clamp(y, 0, h - 1);
+				return lumad[static_cast<size_t>(y) * w + x];
+			};
+			const auto min3 = [](float a, float b, float c) { return std::min(std::min(a, b), c); };
+			const auto max3 = [](float a, float b, float c) { return std::max(std::max(a, b), c); };
+
+			for (int y = 0; y < h; y++)
+			{
+				for (int x = 0; x < w; x++)
+				{
+					const u32 cc = colour(x, y);
+					const float ccl = lum(x, y);
+					u32 result = cc;
+
+					// Flat area: nothing to straighten, leave it exactly as the resample left it.
+					if (ccl <= LINE_DETECT_THRESHOLD)
+					{
+						const u32 tl = colour(x - 1, y - 1), tc = colour(x, y - 1), tr = colour(x + 1, y - 1);
+						const u32 lc = colour(x - 1, y), rc = colour(x + 1, y);
+						const u32 bl = colour(x - 1, y + 1), bc = colour(x, y + 1), br = colour(x + 1, y + 1);
+						const float tll = lum(x - 1, y - 1), tcl = lum(x, y - 1), trl = lum(x + 1, y - 1);
+						const float lcl = lum(x - 1, y), rcl = lum(x + 1, y);
+						const float bll = lum(x - 1, y + 1), bcl = lum(x, y + 1), brl = lum(x + 1, y + 1);
+
+						bool done = false;
+						float maxDark, minLight;
+
+						// Kernels 0 and 4 - horizontal ridges.
+						maxDark = max3(brl, bcl, bll);
+						minLight = min3(tll, tcl, trl);
+						if (minLight > ccl && minLight > maxDark)
+						{
+							result = Anime4KAverage(cc, tl, tc, tr, STRENGTH);
+							done = true;
+						}
+						else
+						{
+							maxDark = max3(tll, tcl, trl);
+							minLight = min3(brl, bcl, bll);
+							if (minLight > ccl && minLight > maxDark)
+							{
+								result = Anime4KAverage(cc, br, bc, bl, STRENGTH);
+								done = true;
+							}
+						}
+
+						// Kernels 1 and 5 - one diagonal.
+						if (!done)
+						{
+							maxDark = max3(ccl, lcl, bcl);
+							minLight = min3(rcl, tcl, trl);
+							if (minLight > maxDark)
+							{
+								result = Anime4KAverage(cc, rc, tc, tr, STRENGTH);
+								done = true;
+							}
+							else
+							{
+								maxDark = max3(ccl, rcl, tcl);
+								minLight = min3(bll, lcl, bcl);
+								if (minLight > maxDark)
+								{
+									result = Anime4KAverage(cc, bl, lc, bc, STRENGTH);
+									done = true;
+								}
+							}
+						}
+
+						// Kernels 2 and 6 - vertical ridges.
+						if (!done)
+						{
+							maxDark = max3(lcl, tll, bll);
+							minLight = min3(rcl, brl, trl);
+							if (minLight > ccl && minLight > maxDark)
+							{
+								result = Anime4KAverage(cc, rc, br, tr, STRENGTH);
+								done = true;
+							}
+							else
+							{
+								maxDark = max3(rcl, brl, trl);
+								minLight = min3(lcl, tll, bll);
+								if (minLight > ccl && minLight > maxDark)
+								{
+									result = Anime4KAverage(cc, lc, tl, bl, STRENGTH);
+									done = true;
+								}
+							}
+						}
+
+						// Kernels 3 and 7 - the other diagonal.
+						if (!done)
+						{
+							maxDark = max3(ccl, lcl, tcl);
+							minLight = min3(rcl, brl, bcl);
+							if (minLight > maxDark)
+							{
+								result = Anime4KAverage(cc, rc, br, bc, STRENGTH);
+							}
+							else
+							{
+								maxDark = max3(ccl, rcl, bcl);
+								minLight = min3(tcl, lcl, tll);
+								if (minLight > maxDark)
+									result = Anime4KAverage(cc, tc, lc, tl, STRENGTH);
+							}
+						}
+					}
+
+					refined[static_cast<size_t>(y) * w + x] = result;
+				}
+			}
+
+			for (int y = 0; y < h; y++)
+				for (int x = 0; x < w; x++)
+					dst[static_cast<size_t>(y) * dst_stride + x] = refined[static_cast<size_t>(y) * w + x];
+		}
+
 		inline float Sinc(float x)
 		{
 			if (std::fabs(x) < 1e-6f)
@@ -1031,6 +1243,7 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::SaI2x:
 			case GSTextureUpscaleAlgorithm::SuperSaI2x:
 			case GSTextureUpscaleAlgorithm::xBR:
+			case GSTextureUpscaleAlgorithm::Anime4K:
 			case GSTextureUpscaleAlgorithm::Nearest:
 			case GSTextureUpscaleAlgorithm::Mitchell:
 			case GSTextureUpscaleAlgorithm::SharpBilinear:
@@ -1040,7 +1253,6 @@ namespace GSTextureUpscaler
 			// being installed, which ScaleBuffer answers per texture. Reported implemented so
 			// the picker offers them and the user is told what is missing, rather than the
 			// entries silently not existing.
-			case GSTextureUpscaleAlgorithm::Anime4K:
 			case GSTextureUpscaleAlgorithm::FSRCNN:
 			case GSTextureUpscaleAlgorithm::SESR:
 			case GSTextureUpscaleAlgorithm::ESPCN:
@@ -1148,6 +1360,10 @@ namespace GSTextureUpscaler
 				ScaleSharpBilinear(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
 				return true;
 
+			case GSTextureUpscaleAlgorithm::Anime4K:
+				ScaleAnime4K(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
+				return true;
+
 			case GSTextureUpscaleAlgorithm::Lanczos:
 				ScaleLanczos(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
 				return true;
@@ -1160,7 +1376,6 @@ namespace GSTextureUpscaler
 				ApplyCAS(dst_px, sw * scale, sh * scale, dst_stride, 0.6f);
 				return true;
 
-			case GSTextureUpscaleAlgorithm::Anime4K:
 			case GSTextureUpscaleAlgorithm::FSRCNN:
 			case GSTextureUpscaleAlgorithm::SESR:
 			case GSTextureUpscaleAlgorithm::ESPCN:
@@ -1336,10 +1551,10 @@ namespace GSTextureUpscaler
 			GSTextureUpscaleAlgorithm::LanczosCAS, GSTextureUpscaleAlgorithm::Scale2x,
 			GSTextureUpscaleAlgorithm::Eagle, GSTextureUpscaleAlgorithm::SuperEagle,
 			GSTextureUpscaleAlgorithm::SaI2x, GSTextureUpscaleAlgorithm::SuperSaI2x,
-			GSTextureUpscaleAlgorithm::xBR};
+			GSTextureUpscaleAlgorithm::xBR, GSTextureUpscaleAlgorithm::Anime4K};
 		static const char* const NAMES[] = {"Nearest", "Bilinear", "SharpBilinear", "Bicubic",
 			"Mitchell", "Lanczos", "LanczosCAS", "Scale2x", "Eagle", "SuperEagle", "2xSaI",
-			"Super2xSaI", "xBR"};
+			"Super2xSaI", "xBR", "Anime4K"};
 		static_assert(std::size(ALL) == std::size(NAMES), "filter self-test name list out of step");
 
 		constexpr int W = 8;

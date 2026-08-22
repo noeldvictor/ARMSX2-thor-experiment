@@ -1490,6 +1490,7 @@ val EN: Map<String, String> = mapOf(
     "renderer.textureUpscale.algorithm.sai2x" to "2xSaI — smooth, rounded edges. Classic emulator look.",
     "renderer.textureUpscale.algorithm.supersai2x" to "Super2xSaI — smoother still. Loses fine detail on busy art.",
     "renderer.textureUpscale.algorithm.xbr" to "xBR — edge detection by colour distance, so it copes with gradients and anti-aliased art, not just flat pixel art.",
+    "renderer.textureUpscale.algorithm.anime4k" to "Anime4K - detects edges and pushes colours along them to straighten staircased diagonals. Built for hand-drawn art, so it suits cel-shaded and 2D games far more than photographic textures. Needs no model file.",
     "renderer.textureUpscale.algorithm.neural" to "Neural — needs a trained model in <textures>/models. No weights ship with ARMSX2, so this leaves textures untouched until you install one. Slower than the filters above, and it runs on a worker thread.",
     "renderer.textureUpscale.budget.label" to "VRAM budget",
     "renderer.textureUpscale.budget.description" to "Ceiling for upscaled textures. At the limit, further textures stay at native resolution rather than evicting the ones already scaled. Lower the scale if you hit it often.",
