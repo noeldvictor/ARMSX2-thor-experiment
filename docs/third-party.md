@@ -90,7 +90,24 @@ offset with a modest visual effect, so matching the reference mattered more than
 that under the ScaleForce name would mean handing over a filter that ignores most colour
 edges.
 
+## Deposterize — GPLv2-or-later
+
+Ported from [PPSSPP](https://github.com/hrydgard/ppsspp)'s
+`GPU/Common/TextureScalerCommon.cpp` (`deposterizeH` / `deposterizeV`), Copyright 2012-
+PPSSPP Project, GPLv2-or-later.
+
+A pre-pass rather than a filter. It only interpolates where the centre already equals one
+neighbour and the other is within 8/255 of it — the signature of a quantisation step rather
+than a real two-colour boundary — which is what keeps it from being a blur.
+
+Run as H, V, H, V (two full separable passes), matching PPSSPP. A single pass leaves diagonal
+banding visibly untouched.
+
+Particularly apt here: PS2 stores a great deal of texture data as PSMCT16, which is 5:5:5:1,
+so posterised gradients are the norm rather than an occasional artefact — and a good scaler
+otherwise preserves the banding faithfully and then makes it larger.
+
 ## Licence compatibility
 
-ARMSX2 is GPLv3. MIT is compatible with it, and Citra's own code is GPLv2-or-later, which is
-also compatible. The MIT notice above is reproduced because MIT requires it.
+ARMSX2 is GPLv3. MIT is compatible with it, and Citra's and PPSSPP's code is
+GPLv2-or-later, which is also compatible. The MIT notice above is reproduced because MIT requires it.

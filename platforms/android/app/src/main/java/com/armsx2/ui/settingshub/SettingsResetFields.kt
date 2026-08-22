@@ -51,7 +51,7 @@ internal val SETTINGS_CATEGORY_FIELDS: Map<SettingsCategory, List<String>> = map
         // upscaler above it.
         "textureUpscaleWorldEnabled", "textureUpscaleUiEnabled", "textureUpscaleWorldAlgorithm",
         "textureUpscaleUiAlgorithm", "textureUpscaleWorldScale", "textureUpscaleUiScale",
-        "textureUpscaleVramBudgetMb",
+        "textureUpscaleVramBudgetMb", "textureUpscaleDeposterize",
         "upscaler", "vsyncEnable",
     ),
     // AudioTab.kt

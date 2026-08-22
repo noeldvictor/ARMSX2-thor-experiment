@@ -194,6 +194,7 @@ fun TextureUpscaleSection(
     uiAlgorithm: Int,
     uiScale: Int,
     vramBudgetMb: Int,
+    deposterize: Boolean,
     onWorldEnabledChange: (Boolean) -> Unit,
     onWorldAlgorithmChange: (Int) -> Unit,
     onWorldScaleChange: (Int) -> Unit,
@@ -201,6 +202,7 @@ fun TextureUpscaleSection(
     onUiAlgorithmChange: (Int) -> Unit,
     onUiScaleChange: (Int) -> Unit,
     onVramBudgetChange: (Int) -> Unit,
+    onDeposterizeChange: (Boolean) -> Unit,
 ) {
     Column(Modifier.fillMaxWidth()) {
         Text(
@@ -254,6 +256,17 @@ fun TextureUpscaleSection(
         // Shared, not per class: the budget is one pool and splitting it would just make two
         // numbers the user has to keep in their head.
         if (worldEnabled || uiEnabled) {
+            SettingsDivider()
+            // A pre-pass rather than a filter choice, hence a toggle beside the picker instead
+            // of another chip: it runs BEFORE whichever filter is selected, so it composes with
+            // all of them rather than competing.
+            ToggleRow(
+                str("renderer.textureUpscale.deposterize.label"),
+                deposterize,
+                description = str("renderer.textureUpscale.deposterize.description"),
+            ) {
+                onDeposterizeChange(it)
+            }
             SettingsDivider()
             IntSliderRow(
                 str("renderer.textureUpscale.budget.label"),

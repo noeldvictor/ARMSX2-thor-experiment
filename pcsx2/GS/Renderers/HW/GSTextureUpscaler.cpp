@@ -63,6 +63,7 @@ namespace GSTextureUpscaler
 			u32 src_stride = 0;
 			GSTextureUpscaleAlgorithm algorithm = GSTextureUpscaleAlgorithm::Bilinear;
 			u8 scale = 2;
+			bool deposterize = false;
 			std::pair<u8, u8> alpha_minmax{0u, 255u};
 		};
 
@@ -78,6 +79,9 @@ namespace GSTextureUpscaler
 		/// upscale is still in flight does not queue the same work several times over.
 		std::unordered_set<u64> s_in_flight;
 
+		// Defined further down with the other kernels; the worker is declared before them.
+		void Deposterize(std::vector<u32>& px, int w, int h);
+
 		void WorkerLoop()
 		{
 			for (;;)
@@ -91,6 +95,11 @@ namespace GSTextureUpscaler
 					job = std::move(s_pending.front());
 					s_pending.pop_front();
 				}
+
+				// Pre-pass first: it is cheap, and every filter below benefits from not
+				// being handed banded input.
+				if (job.deposterize)
+					Deposterize(job.src, job.sw, job.sh);
 
 				const int dw = job.sw * static_cast<int>(job.scale);
 				const int dh = job.sh * static_cast<int>(job.scale);
@@ -1071,6 +1080,73 @@ namespace GSTextureUpscaler
 						ScaleForceSampleBicubic(src, sw, sh, src_stride, tx - offx, ty + offy);
 				}
 			}
+		}
+
+		// -------------------------------------------------------------------------------
+		// Deposterize, ported from PPSSPP's TextureScalerCommon.cpp (GPLv2-or-later).
+		//
+		// A PRE-pass, not a filter: it removes the stair-stepping that low-bit-depth sources
+		// leave in gradients, before any scaler runs. Without it a good scaler faithfully
+		// preserves the banding and then makes it bigger.
+		//
+		// Especially apt on PS2, where PSMCT16 is 5:5:5:1 - posterised gradients are the norm
+		// there, not an occasional artefact.
+		// -------------------------------------------------------------------------------
+
+		/// One separable half-pass. `horizontal` picks the neighbour axis.
+		void DeposterizePass(const std::vector<u32>& in, std::vector<u32>& out, int w, int h, bool horizontal)
+		{
+			// Only a step of this size or less counts as banding. Anything larger is a real
+			// edge and must survive untouched - which is what separates this from a blur.
+			constexpr int T = 8;
+
+			out.resize(in.size());
+			for (int y = 0; y < h; y++)
+			{
+				for (int x = 0; x < w; x++)
+				{
+					const size_t idx = static_cast<size_t>(y) * w + x;
+					const u32 centre = in[idx];
+
+					const bool at_edge = horizontal ? (x == 0 || x == w - 1) : (y == 0 || y == h - 1);
+					if (at_edge)
+					{
+						out[idx] = centre;
+						continue;
+					}
+
+					const u32 a = horizontal ? in[idx - 1] : in[idx - static_cast<size_t>(w)];
+					const u32 b = horizontal ? in[idx + 1] : in[idx + static_cast<size_t>(w)];
+
+					u32 result = 0;
+					for (int c = 0; c < 4; c++)
+					{
+						const int shift = c * 8;
+						const int ac = static_cast<int>((a >> shift) & 0xFF);
+						const int cc = static_cast<int>((centre >> shift) & 0xFF);
+						const int bc = static_cast<int>((b >> shift) & 0xFF);
+
+						// Only interpolate where the centre already equals one neighbour and the
+						// other is within a hair of it: that is the signature of a quantisation
+						// step, as opposed to a genuine two-colour boundary.
+						const bool banding = (ac != bc) && ((ac == cc && std::abs(bc - cc) <= T) ||
+															   (bc == cc && std::abs(ac - cc) <= T));
+						result |= static_cast<u32>(banding ? ((bc + ac) / 2) : cc) << shift;
+					}
+					out[idx] = result;
+				}
+			}
+		}
+
+		/// H, V, H, V - two full separable passes, matching PPSSPP. One pass alone leaves
+		/// diagonal banding visibly untouched.
+		void Deposterize(std::vector<u32>& px, int w, int h)
+		{
+			std::vector<u32> tmp;
+			DeposterizePass(px, tmp, w, h, true);
+			DeposterizePass(tmp, px, w, h, false);
+			DeposterizePass(px, tmp, w, h, true);
+			DeposterizePass(tmp, px, w, h, false);
 		}
 
 		inline float Sinc(float x)
@@ -2068,6 +2144,7 @@ namespace GSTextureUpscaler
 		job.src_stride = static_cast<u32>(sw);
 		job.algorithm = algorithm;
 		job.scale = scale;
+		job.deposterize = GSConfig.TextureUpscaleDeposterize;
 		job.alpha_minmax = alpha_minmax;
 
 		// Compacted to a tight sw-wide buffer on the way in. The caller's buffer is a shared

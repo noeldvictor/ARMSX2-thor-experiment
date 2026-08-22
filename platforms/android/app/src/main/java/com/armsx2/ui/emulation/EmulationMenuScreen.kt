@@ -1010,6 +1010,7 @@ private fun GraphicsPane(state: EmulationMenuUiState, viewModel: EmulationMenuVi
             uiAlgorithm = settings.textureUpscaleUiAlgorithm,
             uiScale = settings.textureUpscaleUiScale,
             vramBudgetMb = settings.textureUpscaleVramBudgetMb,
+            deposterize = settings.textureUpscaleDeposterize,
             onWorldEnabledChange = { on -> viewModel.updateSettings { it.copy(textureUpscaleWorldEnabled = on) } },
             onWorldAlgorithmChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleWorldAlgorithm = v) } },
             onWorldScaleChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleWorldScale = v) } },
@@ -1017,6 +1018,7 @@ private fun GraphicsPane(state: EmulationMenuUiState, viewModel: EmulationMenuVi
             onUiAlgorithmChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleUiAlgorithm = v) } },
             onUiScaleChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleUiScale = v) } },
             onVramBudgetChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleVramBudgetMb = v) } },
+            onDeposterizeChange = { on -> viewModel.updateSettings { it.copy(textureUpscaleDeposterize = on) } },
         )
     }
 }

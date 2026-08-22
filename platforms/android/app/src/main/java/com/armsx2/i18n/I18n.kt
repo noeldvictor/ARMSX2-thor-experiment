@@ -1496,6 +1496,8 @@ val EN: Map<String, String> = mapOf(
     "renderer.textureUpscale.algorithm.mmpx" to "MMPX - rule-based and style preserving. It keeps the source palette instead of inventing in-between colours, so small sprites and text stay legible where smoother filters turn them to mush.",
     "renderer.textureUpscale.algorithm.anime4k" to "Anime4K - detects edges and pushes colours along them to straighten staircased diagonals. Built for hand-drawn art, so it suits cel-shaded and 2D games far more than photographic textures. Needs no model file.",
     "renderer.textureUpscale.algorithm.neural" to "Neural — needs a trained model in <textures>/models. No weights ship with ARMSX2, so this leaves textures untouched until you install one. Slower than the filters above, and it runs on a worker thread.",
+    "renderer.textureUpscale.deposterize.label" to "Deposterize first",
+    "renderer.textureUpscale.deposterize.description" to "Smooths the banding that low-colour-depth textures leave in gradients, before the filter runs. PS2 stores a lot of textures at 16-bit, and without this a good filter faithfully enlarges the banding along with everything else.",
     "renderer.textureUpscale.budget.label" to "VRAM budget",
     "renderer.textureUpscale.budget.description" to "Ceiling for upscaled textures. At the limit, further textures stay at native resolution rather than evicting the ones already scaled. Lower the scale if you hit it often.",
     "renderer.trilinear.description" to "Mip texture filtering. Auto is safest for compatibility.",

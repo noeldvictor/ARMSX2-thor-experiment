@@ -940,6 +940,7 @@ bool Pcsx2Config::GSOptions::OptionsAreEqual(const GSOptions& right) const
 		OpEqu(TextureUpscaleWorldScale) &&
 		OpEqu(TextureUpscaleUiScale) &&
 		OpEqu(TextureUpscaleVramBudgetMB) &&
+		OpEqu(TextureUpscaleDeposterize) &&
 
 		OpEqu(CaptureContainer) &&
 		OpEqu(VideoCaptureCodec) &&
@@ -1229,6 +1230,7 @@ void Pcsx2Config::GSOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitfieldEx(TextureUpscaleWorldScale, "TextureUpscaleWorldScale");
 	SettingsWrapBitfieldEx(TextureUpscaleUiScale, "TextureUpscaleUiScale");
 	SettingsWrapBitfieldEx(TextureUpscaleVramBudgetMB, "TextureUpscaleVramBudgetMB");
+	SettingsWrapEntryEx(TextureUpscaleDeposterize, "TextureUpscaleDeposterize");
 
 	SettingsWrapEntryEx(CaptureContainer, "CaptureContainer");
 	SettingsWrapEntryEx(VideoCaptureCodec, "VideoCaptureCodec");

@@ -477,6 +477,7 @@ fun RendererTab(state: MutableState<Settings>) {
                 uiAlgorithm = s.textureUpscaleUiAlgorithm,
                 uiScale = s.textureUpscaleUiScale,
                 vramBudgetMb = s.textureUpscaleVramBudgetMb,
+                deposterize = s.textureUpscaleDeposterize,
                 onWorldEnabledChange = { apply(s.copy(textureUpscaleWorldEnabled = it)) },
                 onWorldAlgorithmChange = { apply(s.copy(textureUpscaleWorldAlgorithm = it)) },
                 onWorldScaleChange = { apply(s.copy(textureUpscaleWorldScale = it)) },
@@ -484,6 +485,7 @@ fun RendererTab(state: MutableState<Settings>) {
                 onUiAlgorithmChange = { apply(s.copy(textureUpscaleUiAlgorithm = it)) },
                 onUiScaleChange = { apply(s.copy(textureUpscaleUiScale = it)) },
                 onVramBudgetChange = { apply(s.copy(textureUpscaleVramBudgetMb = it)) },
+                onDeposterizeChange = { apply(s.copy(textureUpscaleDeposterize = it)) },
             )
         }
         SettingsDivider()

@@ -1137,6 +1137,11 @@ struct Pcsx2Config
 		// is warned once, then entries are batch-evicted down to a low-water mark - never one
 		// at a time at 100%, which pins a busy scene at the ceiling and thrashes.
 		u16 TextureUpscaleVramBudgetMB = 512;
+		// Deposterize pre-pass: smooths the banding that low-bit-depth sources leave behind,
+		// BEFORE any filter runs, so every filter downstream benefits. Unusually well matched
+		// to PS2, where PSMCT16 is 5:5:5:1 and posterised gradients are the norm rather than
+		// the exception - and where a scaler otherwise faithfully preserves the banding.
+		bool TextureUpscaleDeposterize = false;
 
 		u8 CAS_Sharpness = 50;
 		// FSR1's RCAS pass, 0..100. Mapped to AMD's "stops" scale in GSDevice::FSR1Upscale,

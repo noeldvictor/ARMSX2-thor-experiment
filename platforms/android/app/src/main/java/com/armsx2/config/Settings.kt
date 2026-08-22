@@ -587,6 +587,10 @@ data class Settings(
     val textureUpscaleWorldScale: Int = 2,
     val textureUpscaleUiScale: Int = 2,
     val textureUpscaleVramBudgetMb: Int = 512,
+    /** EmuCore/GS/TextureUpscaleDeposterize — pre-pass that removes low-bit-depth banding
+     *  before any filter runs. PS2 leans on PSMCT16 (5:5:5:1), so posterised gradients are
+     *  the norm and a scaler would otherwise faithfully enlarge the banding. */
+    val textureUpscaleDeposterize: Boolean = false,
     /** EmuCore/GS/LsfgEnabled + /LsfgMultiplier + /LsfgDllPath — LSFG frame generation,
      *  inserted into the Vulkan present path. Off unless the user both enables it AND
      *  supplies their own Lossless.dll: the interpolation shaders are read out of that
@@ -1212,6 +1216,7 @@ data class Settings(
             textureUpscaleWorldScale = intAt("EmuCore/GS/TextureUpscaleWorldScale") ?: this.textureUpscaleWorldScale,
             textureUpscaleUiScale = intAt("EmuCore/GS/TextureUpscaleUiScale") ?: this.textureUpscaleUiScale,
             textureUpscaleVramBudgetMb = intAt("EmuCore/GS/TextureUpscaleVramBudgetMB") ?: this.textureUpscaleVramBudgetMb,
+            textureUpscaleDeposterize = boolAt("EmuCore/GS/TextureUpscaleDeposterize") ?: this.textureUpscaleDeposterize,
             lsfgEnabled = boolAt("EmuCore/GS/LsfgEnabled") ?: this.lsfgEnabled,
             lsfgMultiplier = intAt("EmuCore/GS/LsfgMultiplier") ?: this.lsfgMultiplier,
             lsfgDllPath = strAt("EmuCore/GS/LsfgDllPath") ?: this.lsfgDllPath,
@@ -1425,6 +1430,7 @@ data class Settings(
         put("EmuCore/GS", "TextureUpscaleWorldScale", "int", (if (textureUpscaleWorldScale >= 4) 4 else 2).toString())
         put("EmuCore/GS", "TextureUpscaleUiScale", "int", (if (textureUpscaleUiScale >= 4) 4 else 2).toString())
         put("EmuCore/GS", "TextureUpscaleVramBudgetMB", "int", textureUpscaleVramBudgetMb.coerceIn(64, 2048).toString())
+        put("EmuCore/GS", "TextureUpscaleDeposterize", "bool", textureUpscaleDeposterize.toString())
         put("EmuCore/GS", "LsfgEnabled", "bool", lsfgEnabled.toString())
         put("EmuCore/GS", "LsfgMultiplier", "int", lsfgMultiplier.toString())
         put("EmuCore/GS", "LsfgDllPath", "string", lsfgDllPath)
@@ -1623,6 +1629,7 @@ data class Settings(
             textureUpscaleWorldScale != other.textureUpscaleWorldScale ||
             textureUpscaleUiScale != other.textureUpscaleUiScale ||
             textureUpscaleVramBudgetMb != other.textureUpscaleVramBudgetMb ||
+            textureUpscaleDeposterize != other.textureUpscaleDeposterize ||
             lsfgEnabled != other.lsfgEnabled ||
             lsfgMultiplier != other.lsfgMultiplier ||
             lsfgDllPath != other.lsfgDllPath ||
@@ -1852,6 +1859,7 @@ data class Settings(
         put("textureUpscaleWorldScale", textureUpscaleWorldScale)
         put("textureUpscaleUiScale", textureUpscaleUiScale)
         put("textureUpscaleVramBudgetMb", textureUpscaleVramBudgetMb)
+        put("textureUpscaleDeposterize", textureUpscaleDeposterize)
         // These five were missing from the JSON round-trip entirely, which IS the persistence
         // format — so every LSFG choice, the imported DLL path included, was thrown away the
         // moment the app was restarted.
@@ -2148,6 +2156,7 @@ data class Settings(
                 textureUpscaleWorldScale = json.optInt("textureUpscaleWorldScale", def.textureUpscaleWorldScale),
                 textureUpscaleUiScale = json.optInt("textureUpscaleUiScale", def.textureUpscaleUiScale),
                 textureUpscaleVramBudgetMb = json.optInt("textureUpscaleVramBudgetMb", def.textureUpscaleVramBudgetMb),
+                textureUpscaleDeposterize = json.optBoolean("textureUpscaleDeposterize", def.textureUpscaleDeposterize),
                 lsfgEnabled = json.optBoolean("lsfgEnabled", def.lsfgEnabled),
                 lsfgMultiplier = json.optInt("lsfgMultiplier", def.lsfgMultiplier),
                 lsfgDllPath = json.optString("lsfgDllPath", def.lsfgDllPath),
@@ -2399,6 +2408,7 @@ data class Settings(
             if (current.textureUpscaleWorldScale != base.textureUpscaleWorldScale) j.put("textureUpscaleWorldScale", current.textureUpscaleWorldScale)
             if (current.textureUpscaleUiScale != base.textureUpscaleUiScale) j.put("textureUpscaleUiScale", current.textureUpscaleUiScale)
             if (current.textureUpscaleVramBudgetMb != base.textureUpscaleVramBudgetMb) j.put("textureUpscaleVramBudgetMb", current.textureUpscaleVramBudgetMb)
+            if (current.textureUpscaleDeposterize != base.textureUpscaleDeposterize) j.put("textureUpscaleDeposterize", current.textureUpscaleDeposterize)
             if (current.lsfgEnabled         != base.lsfgEnabled)         j.put("lsfgEnabled", current.lsfgEnabled)
             if (current.lsfgMultiplier      != base.lsfgMultiplier)      j.put("lsfgMultiplier", current.lsfgMultiplier)
             if (current.lsfgDllPath         != base.lsfgDllPath)         j.put("lsfgDllPath", current.lsfgDllPath)
