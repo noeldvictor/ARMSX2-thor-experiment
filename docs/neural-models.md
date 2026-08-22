@@ -1,5 +1,8 @@
 # Neural Texture Upscaling Models
 
+**Verified on device (AYN Thor, 2026-08-21):** the loader, inference and pixel shuffle run
+and produce the expected checksum. See The self-test below.
+
 ARMSX2 contains the network architecture but **no trained weights**. Every neural
 algorithm declines — leaving textures at native resolution — until a model file is
 installed. Shipping someone else's trained weights is a licensing question rather

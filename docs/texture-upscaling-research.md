@@ -1,8 +1,12 @@
 # Texture Upscaling On AYN Thor
 
-Design direction plus the research behind it. The scaffold, three scalers and the
-settings UI are implemented and running; the rest of the algorithm library and the
-neural path are not.
+Design direction plus the research behind it.
+
+**Verified on device (AYN Thor, 2026-08-21):** all thirteen filter kernels pass their
+self-test at both scales with no out-of-bounds writes (26/26), and the neural path loads a
+model, runs inference and pixel-shuffles to the expected checksum. What is *not* yet
+measured is how it looks or what it costs in a real scene - that needs the OSD counters
+read during actual play.
 
 Last researched: 2026-08-21.
 

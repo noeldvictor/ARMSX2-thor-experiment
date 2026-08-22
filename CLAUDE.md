@@ -18,7 +18,9 @@ contradict decisions already made. Implementation status is stated per item.
 
 ### Texture upscaling — in the emulator, not on the screen
 
-**Implemented and running.** Full notes:
+**Implemented and verified on device.** 26/26 filter self-tests pass and the neural path
+runs to the expected checksum (`b2870000` for the identity model). Still unmeasured: how it
+looks, and what it costs in a real scene. Full notes:
 [docs/texture-upscaling-research.md](docs/texture-upscaling-research.md).
 
 The core distinction, and the easiest thing to get wrong: this upscales **each
