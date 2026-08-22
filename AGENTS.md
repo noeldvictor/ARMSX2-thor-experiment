@@ -70,6 +70,13 @@
 - Prefer Vulkan compute over the Hexagon NPU for texture work: the data is already in GPU memory, QNN/SNPE is a per-SoC packaging burden, and NNAPI is deprecated as of Android 15.
 - Design notes live in `docs/texture-upscaling-research.md`. Update that file rather than restating its conclusions in code comments.
 
+## Shared Test Device
+- The AYN Thor is SHARED. Several Claude sessions do emulator work against it at once, so another session's app stealing foreground focus is normal, not a fault to debug.
+- Never fight for the device. If `adb` taps land in another app, focus jumps, or a different emulator is in the foreground, stop driving it and do code work instead - the device being busy is never a reason to stop working or to end a turn.
+- Do not force-stop other apps to take focus. That is someone else's session in the middle of something.
+- Always `adb shell am force-stop com.armsx2` when finished with a device run, so the next session gets a clean device.
+- Device verification is therefore best-effort and opportunistic. Build, compile checks and code review do not need the device; schedule those first and take the device only for the step that genuinely requires it.
+
 ## Dev Automation
 - The planned on-device MCP server is off by default, binds localhost only, and is reached over `adb forward`. Do not add a LAN bind or an auth scheme without being asked.
 - Keep it `github`-flavor only and compiled out of `play`, matching how storage access and LSFG are already handled. The emulator must build and run identically with it compiled out.

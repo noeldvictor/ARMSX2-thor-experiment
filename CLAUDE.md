@@ -117,3 +117,13 @@ Reference manuals for the Thor's exact cores in
   physical-controls-device setting.
 - A stored preference always wins over a default, so changing a default does nothing for
   an existing install. Worth remembering before concluding a default change "did not work".
+
+### Working with the shared Thor
+
+- **The device is shared with other Claude sessions.** Foreground focus being stolen
+  mid-run is other agents working, not a bug on the device. Full rules in `AGENTS.md`.
+- **Never stop because the Thor is busy.** There is always code work available - filters,
+  tooling, docs, review. Device time is opportunistic; take it for the one step that needs
+  it and give it back.
+- **Close the emulator when done**: `adb shell am force-stop com.armsx2`.
+- Do not force-stop other apps to grab focus.
