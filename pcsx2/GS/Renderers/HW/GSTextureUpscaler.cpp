@@ -497,7 +497,7 @@ namespace GSTextureUpscaler
 			const int h = sh * static_cast<int>(scale);
 			const size_t n = static_cast<size_t>(w) * static_cast<size_t>(h);
 
-			const auto colour = [&](int x, int y) -> u32 {
+			const auto image = [&](int x, int y) -> u32 {
 				x = std::clamp(x, 0, w - 1);
 				y = std::clamp(y, 0, h - 1);
 				return dst[static_cast<size_t>(y) * dst_stride + x];
@@ -509,9 +509,9 @@ namespace GSTextureUpscaler
 			{
 				for (int x = 0; x < w; x++)
 				{
-					const float l = Luma(colour(x - 1, y));
-					const float c = Luma(colour(x, y));
-					const float r = Luma(colour(x + 1, y));
+					const float l = Luma(image(x - 1, y));
+					const float c = Luma(image(x, y));
+					const float r = Luma(image(x + 1, y));
 					gx[static_cast<size_t>(y) * w + x] = r - l;
 					gy[static_cast<size_t>(y) * w + x] = l + 2.0f * c + r;
 				}
@@ -541,7 +541,13 @@ namespace GSTextureUpscaler
 			constexpr float LINE_DETECT_THRESHOLD = 0.4f;
 			constexpr float STRENGTH = 0.6f;
 
-			std::vector<u32> refined(n);
+			// gx/gy have done their job; releasing them here halves peak scratch before the
+			// push pass allocates anything.
+			gx.clear();
+			gx.shrink_to_fit();
+			gy.clear();
+			gy.shrink_to_fit();
+
 			const auto lum = [&](int x, int y) -> float {
 				x = std::clamp(x, 0, w - 1);
 				y = std::clamp(y, 0, h - 1);
@@ -550,15 +556,34 @@ namespace GSTextureUpscaler
 			const auto min3 = [](float a, float b, float c) { return std::min(std::min(a, b), c); };
 			const auto max3 = [](float a, float b, float c) { return std::max(std::max(a, b), c); };
 
+			// Rolling originals: prev = row y-1 as it was before the push wrote it, cur = row y.
+			// Row y+1 is still untouched in dst, so it can be read directly.
+			std::vector<u32> prev(w), cur(w), line(w);
+			for (int x = 0; x < w; x++)
+				cur[static_cast<size_t>(x)] = dst[static_cast<size_t>(0) * dst_stride + x];
+			prev = cur;
+
 			for (int y = 0; y < h; y++)
 			{
+				const auto colour = [&](int cx, int cy) -> u32 {
+					cx = std::clamp(cx, 0, w - 1);
+					if (cy < y)
+						return prev[static_cast<size_t>(cx)];
+					if (cy == y)
+						return cur[static_cast<size_t>(cx)];
+					const int ny2 = std::min(y + 1, h - 1);
+					return dst[static_cast<size_t>(ny2) * dst_stride + cx];
+				};
+
 				for (int x = 0; x < w; x++)
 				{
 					const u32 cc = colour(x, y);
 					const float ccl = lum(x, y);
 					u32 result = cc;
 
-					// Flat area: nothing to straighten, leave it exactly as the resample left it.
+					// lumad is 1 - |gradient|, so LOW means a strong edge. This branch is the
+					// one that pushes; a flat area (high lumad) falls through and keeps exactly
+					// what the resample produced.
 					if (ccl <= LINE_DETECT_THRESHOLD)
 					{
 						const u32 tl = colour(x - 1, y - 1), tc = colour(x, y - 1), tr = colour(x + 1, y - 1);
@@ -653,13 +678,20 @@ namespace GSTextureUpscaler
 						}
 					}
 
-					refined[static_cast<size_t>(y) * w + x] = result;
+					line[static_cast<size_t>(x)] = result;
 				}
-			}
 
-			for (int y = 0; y < h; y++)
+				// Rows are rotated rather than kept in a full-size scratch image: the push reads
+				// one row either side, and rows below have not been written yet, so three rolling
+				// rows is all the history needed. A whole extra output-sized buffer here was the
+				// difference between tens and hundreds of megabytes on a large texture.
+				prev.swap(cur);
+				const int ny = std::min(y + 1, h - 1);
 				for (int x = 0; x < w; x++)
-					dst[static_cast<size_t>(y) * dst_stride + x] = refined[static_cast<size_t>(y) * w + x];
+					cur[static_cast<size_t>(x)] = dst[static_cast<size_t>(ny) * dst_stride + x];
+				for (int x = 0; x < w; x++)
+					dst[static_cast<size_t>(y) * dst_stride + x] = line[static_cast<size_t>(x)];
+			}
 		}
 
 		// -------------------------------------------------------------------------------
@@ -700,8 +732,14 @@ namespace GSTextureUpscaler
 			const float c1 = dr * (-0.5f * KR / (1.0f - KB)) + dg * (-0.5f * KG / (1.0f - KB)) + db * 0.5f;
 			const float c2 = dr * 0.5f + dg * (-0.5f * KG / (1.0f - KR)) + db * (-0.5f * KB / (1.0f - KR));
 
+			// Alpha weighting, with one guard the reference does not need. PS2 sources expanded
+			// through TEXA can be uniformly alpha-0 (PSMCT24 with TA0 = 0), and the reference
+			// then returns 0 for EVERY pair - so every blend test fails and the filter silently
+			// degrades to nearest while the OSD still counts the texture as upscaled. When both
+			// alphas are zero there is no transparency information to weight by, so ignore it.
+			const float aw = (aa <= 0.0f && ba <= 0.0f) ? 1.0f : (aa * ba);
 			const float d = std::sqrt(c0 * c0 + c1 * c1 + c2 * c2);
-			return std::sqrt(aa * ba * d * d + da * da);
+			return std::sqrt(aw * d * d + da * da);
 		}
 
 		inline bool XbrzPixEqual(u32 a, u32 b)
@@ -958,10 +996,13 @@ namespace GSTextureUpscaler
 			const float x = s0;
 			const float y = s1 - 4.0f * s0;
 			const float z = s2 - 4.0f * s1 + 6.0f * s0;
-			w[3] = x / 6.0f;
-			w[2] = y / 6.0f;
-			w[1] = z / 6.0f;
-			w[0] = (6.0f - x - y - z) / 6.0f;
+			// (x, y, z, w) are the weights for taps at offsets -1, 0, +1, +2 in that order,
+			// which is the order the caller walks them in. Assigning them in reverse mirrors the
+			// reconstruction about the texel centre and slides the whole image one source texel.
+			w[0] = x / 6.0f;
+			w[1] = y / 6.0f;
+			w[2] = z / 6.0f;
+			w[3] = (6.0f - x - y - z) / 6.0f;
 		}
 
 		u32 ScaleForceSampleBicubic(const u32* src, int sw, int sh, u32 src_stride, float fx, float fy)
@@ -1012,8 +1053,13 @@ namespace GSTextureUpscaler
 			const float cb = dr * (-0.5f * KR / (1.0f - KB)) + dg * (-0.5f * KG / (1.0f - KB)) + db * 0.5f;
 			const float cr = dr * 0.5f + dg * (-0.5f * KG / (1.0f - KR)) + db * (-0.5f * KB / (1.0f - KR));
 
+			// Same uniformly-transparent guard as XbrzColorDist; without it a PSMCT24 texture
+			// expanded with TA0 = 0 makes every distance zero, ScaleForce takes its
+			// total_dist <= 0 early-out for every pixel, and the whole texture passes through
+			// unfiltered.
+			const float aw = (oa <= 0.0f && ca <= 0.0f) ? 1.0f : (oa * ca);
 			const float d = std::sqrt(y * y + cb * cb + cr * cr);
-			return std::sqrt((d * d + std::fabs(da)) * oa * ca);
+			return std::sqrt((d * d + std::fabs(da)) * aw);
 		}
 
 		void ScaleForceFilter(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride,
@@ -1714,8 +1760,11 @@ namespace GSTextureUpscaler
 		/// the smoother filters turn letterforms to mush.
 		void PassMMPX(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride)
 		{
-			// Luma is weighted by (1 - alpha) exactly as the reference does: a transparent texel
-			// reads as dark, which is what keeps cutout edges from being treated as detail.
+			// Weighted by (1 - alpha) exactly as the reference does, which is worth stating
+			// plainly because it is counter-intuitive: an OPAQUE texel scores 0 and a fully
+			// transparent one scores its full colour luma. The luma comparisons below therefore
+			// order by transparency first and brightness second. Kept as-is to match MMPX, but
+			// do not read these as brightness tests.
 			const auto luma = [](u32 c) -> float {
 				const float r = static_cast<float>((c >> 0) & 0xFF) * (1.0f / 255.0f);
 				const float g = static_cast<float>((c >> 8) & 0xFF) * (1.0f / 255.0f);
