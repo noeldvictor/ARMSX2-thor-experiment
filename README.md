@@ -42,18 +42,21 @@ Screenshots are from a personal AYN Thor test device.
 - Widescreen and 60 FPS patch metadata are intentionally not used for cheat badges or cheat switches.
 - The Compose pause menu has Thor-friendly shortcuts for renderer changes, fast forward, game state, disc changes, imports, and individual cheat toggles.
 - The refreshed upstream Kotlin/Compose frontend and PCSX2-derived native core are the active path.
-- Texture upscaling runs per texture as the emulator uploads it, not on the finished frame, with separate settings for world and UI textures.
-- Texture upscaling scale and algorithm are changeable from the in-game menu, so filters can actually be compared side by side.
-- On-screen touch controls default to off. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs.
+- Texture upscaling runs per texture as the emulator uploads it, not on the finished frame, with separate settings for world and UI textures. Because the result is cached, a texture is scaled once rather than every frame.
+- Seventeen filters grouped by how they decide — resample, pixel art, edge-directed, neural — plus a Deposterize pre-pass for the banding 16-bit PS2 textures leave in gradients.
+- Scale and algorithm are changeable from the in-game menu, so filters can be compared without leaving the game.
+- Scaling runs on a worker thread; the native texture is drawn immediately and the upscaled one swaps in when it is ready.
+- On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
 ## Exploration Notes
 
-Notes on what I am poking at. Some of it is built, most of it is not. No promises, no dates.
+Notes on what I am poking at. The texture filters are built and running; most of the rest is not. No promises, no dates.
 
-- [Texture upscaling on AYN Thor](docs/texture-upscaling-research.md) — upscaling each texture inside the emulator as you play, rather than upscaling the screen. Ten filters plus a neural path, all on a worker thread.
+- [Texture upscaling on AYN Thor](docs/texture-upscaling-research.md) — upscaling each texture inside the emulator as you play, rather than upscaling the screen. Why that cost model works on a handheld and what would sink it.
+- [Third-party ports](docs/third-party.md) — where the filters come from, their licences, and the two places I deliberately match a reference's quirk rather than "fixing" it.
 - [Neural models](docs/neural-models.md) — the `.a2nn` format, why no weights ship, and a tool that proves the path works before you have any.
 - [ARM64 optimization review](docs/arm64-optimization-review.md) — the Thor is four different CPU cores, and local debug builds were quietly testing different codegen than every release.
-- [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats. What it would take to close that.
+- [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats, and the public collections turn out to be the same set we already bundle. Closing that gap means authoring, not importing.
 - [Texture pack getter](docs/texture-pack-getter.md) — browse and install HD packs, scoped to games actually in the library.
 - [On-device MCP server](docs/mcp-server.md) — a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 
