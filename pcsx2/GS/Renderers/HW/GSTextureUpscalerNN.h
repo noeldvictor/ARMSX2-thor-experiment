@@ -44,4 +44,13 @@ namespace GSTextureUpscalerNN
 
 	/// Drop cached models. Called when the texture folder or game changes.
 	void Reset();
+
+	/// Once per session, run every installed model over a small synthetic texture and log the
+	/// result.
+	///
+	/// Deliberately independent of whether upscaling is switched on: "is my model file valid"
+	/// and "is upscaling enabled" are different questions, and answering the first should not
+	/// require getting the second right. Costs nothing when no model is installed, which is
+	/// the normal case.
+	void RunSelfTestOnce();
 } // namespace GSTextureUpscalerNN

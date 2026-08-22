@@ -4,6 +4,7 @@
 #include "GSTextureCache.h"
 #include "GSTextureReplacements.h"
 #include "GSTextureUpscaler.h"
+#include "GSTextureUpscalerNN.h"
 #include "GSRendererHW.h"
 #include "GS/GSState.h"
 #include "GS/GSGL.h"
@@ -59,6 +60,12 @@ GSTextureCache::GSTextureCache()
 	pxAssertRel(s_unswizzle_buffer, "Failed to allocate unswizzle buffer");
 
 	m_surface_offset_cache.reserve(S_SURFACE_OFFSET_CACHE_MAX_SIZE);
+
+	// Validates any installed neural model and logs the outcome. Runs whether or not
+	// upscaling is switched on, because "is my model file usable" is a different question
+	// from "is the feature enabled" and should not require getting the second one right
+	// first. No model installed means no work.
+	GSTextureUpscalerNN::RunSelfTestOnce();
 }
 
 GSTextureCache::~GSTextureCache()

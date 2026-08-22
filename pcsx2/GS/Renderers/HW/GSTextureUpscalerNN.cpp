@@ -353,4 +353,60 @@ namespace GSTextureUpscalerNN
 		std::unique_lock<std::mutex> lock(s_mutex);
 		s_models.clear();
 	}
+
+	void RunSelfTestOnce()
+	{
+		static bool tested = false;
+		if (tested)
+			return;
+		tested = true;
+
+		static constexpr GSTextureUpscaleAlgorithm ALGORITHMS[] = {
+			GSTextureUpscaleAlgorithm::Anime4K, GSTextureUpscaleAlgorithm::FSRCNN,
+			GSTextureUpscaleAlgorithm::SESR, GSTextureUpscaleAlgorithm::ESPCN};
+
+		// A gradient with a hard edge down the middle: enough structure that a checksum
+		// changes if the convolution or the pixel shuffle is wrong, small enough to be free.
+		constexpr int W = 8;
+		constexpr int H = 8;
+		u32 src[W * H];
+		for (int y = 0; y < H; y++)
+		{
+			for (int x = 0; x < W; x++)
+			{
+				const u32 r = static_cast<u32>(x * 32);
+				const u32 g = static_cast<u32>(y * 32);
+				const u32 b = (x < W / 2) ? 0u : 255u;
+				src[y * W + x] = 0xFF000000u | (b << 16) | (g << 8) | r;
+			}
+		}
+
+		for (const GSTextureUpscaleAlgorithm algorithm : ALGORITHMS)
+		{
+			const char* name = AlgorithmBaseName(algorithm);
+			for (const u8 scale : {u8(2), u8(4)})
+			{
+				if (!IsAvailable(algorithm, scale))
+					continue;
+
+				const int dw = W * scale;
+				const int dh = H * scale;
+				std::vector<u32> dst(static_cast<size_t>(dw) * static_cast<size_t>(dh), 0u);
+				if (!Run(algorithm, src, W, H, W, dst.data(), static_cast<u32>(dw), scale))
+				{
+					Console.Error("Texture upscaling: model self-test %s x%u FAILED to run.", name,
+						static_cast<u32>(scale));
+					continue;
+				}
+
+				u32 checksum = 0;
+				for (const u32 px : dst)
+					checksum = (checksum * 31u) + px;
+
+				Console.WriteLn("Texture upscaling: model self-test %s x%u OK - %dx%d to %dx%d, "
+								"checksum %08x. The neural path ran.",
+					name, static_cast<u32>(scale), W, H, dw, dh, checksum);
+			}
+		}
+	}
 } // namespace GSTextureUpscalerNN

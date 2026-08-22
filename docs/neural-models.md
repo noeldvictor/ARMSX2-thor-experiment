@@ -41,6 +41,26 @@ whole path — load, validate, convolve, pixel-shuffle, write back — with an o
 can check by eye. If the result looks like plain nearest-neighbour 2x, the plumbing
 is correct and only the weights are missing.
 
+## The self-test
+
+Every session, the first time the texture cache is created, each installed model is run
+over a small synthetic 8x8 gradient with a hard edge and the result is logged:
+
+```
+Texture upscaling: loaded .../espcn_x2.a2nn (1 layers, 36 MACs/pixel).
+Texture upscaling: model self-test espcn x2 OK - 8x8 to 16x16, checksum b2870000. The neural path ran.
+```
+
+This runs **whether or not upscaling is switched on**. "Is my model file usable" and "is
+the feature enabled" are different questions, and answering the first should not require
+getting the second right first — which is exactly the trap that made this hard to verify in
+the first place. No model installed means no work and no output.
+
+The checksum is over the whole output in row-major order (`checksum = checksum * 31 + pixel`,
+32-bit wrapping). For the `--identity` model at x2 it is deterministic: **`b2870000`**. Any
+other value means the convolution or the pixel shuffle is wrong, not merely that something
+ran.
+
 ## Converting a real model
 
 ```
