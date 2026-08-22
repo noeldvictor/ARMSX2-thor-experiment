@@ -65,6 +65,7 @@ GSTextureCache::GSTextureCache()
 	// upscaling is switched on, because "is my model file usable" is a different question
 	// from "is the feature enabled" and should not require getting the second one right
 	// first. No model installed means no work.
+	GSTextureUpscaler::RunFilterSelfTestOnce();
 	GSTextureUpscalerNN::RunSelfTestOnce();
 }
 

@@ -128,4 +128,13 @@ namespace GSTextureUpscaler
 
 	/// Session counters. See Stats.
 	const Stats& GetStats();
+
+	/// Once per session, run every implemented filter over a small synthetic texture and log a
+	/// one-line summary, naming any that fail.
+	///
+	/// These kernels are pure functions of a pixel buffer, so a smoke test is cheap and catches
+	/// the failure that matters most here - a filter that crashes, writes out of bounds, or
+	/// silently produces nothing - without needing a game, a setting, or the right texture to
+	/// come along.
+	void RunFilterSelfTestOnce();
 } // namespace GSTextureUpscaler

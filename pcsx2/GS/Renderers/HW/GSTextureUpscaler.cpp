@@ -12,6 +12,7 @@
 #include <cmath>
 #include <condition_variable>
 #include <deque>
+#include <iterator>
 #include <mutex>
 #include <thread>
 #include <unordered_map>
@@ -1319,6 +1320,78 @@ namespace GSTextureUpscaler
 	u32 GetMemoryUsage()
 	{
 		return s_memory_usage;
+	}
+
+	void RunFilterSelfTestOnce()
+	{
+		static bool tested = false;
+		if (tested)
+			return;
+		tested = true;
+
+		static constexpr GSTextureUpscaleAlgorithm ALL[] = {
+			GSTextureUpscaleAlgorithm::Nearest, GSTextureUpscaleAlgorithm::Bilinear,
+			GSTextureUpscaleAlgorithm::SharpBilinear, GSTextureUpscaleAlgorithm::Bicubic,
+			GSTextureUpscaleAlgorithm::Mitchell, GSTextureUpscaleAlgorithm::Lanczos,
+			GSTextureUpscaleAlgorithm::LanczosCAS, GSTextureUpscaleAlgorithm::Scale2x,
+			GSTextureUpscaleAlgorithm::Eagle, GSTextureUpscaleAlgorithm::SuperEagle,
+			GSTextureUpscaleAlgorithm::SaI2x, GSTextureUpscaleAlgorithm::SuperSaI2x,
+			GSTextureUpscaleAlgorithm::xBR};
+		static const char* const NAMES[] = {"Nearest", "Bilinear", "SharpBilinear", "Bicubic",
+			"Mitchell", "Lanczos", "LanczosCAS", "Scale2x", "Eagle", "SuperEagle", "2xSaI",
+			"Super2xSaI", "xBR"};
+		static_assert(std::size(ALL) == std::size(NAMES), "filter self-test name list out of step");
+
+		constexpr int W = 8;
+		constexpr int H = 8;
+		std::vector<u32> src(W * H);
+		for (int y = 0; y < H; y++)
+		{
+			for (int x = 0; x < W; x++)
+			{
+				const u32 r = static_cast<u32>(x * 32);
+				const u32 g = static_cast<u32>(y * 32);
+				const u32 b = (x < W / 2) ? 0u : 255u;
+				src[static_cast<size_t>(y) * W + x] = 0xFF000000u | (b << 16) | (g << 8) | r;
+			}
+		}
+
+		u32 passed = 0;
+		u32 failed = 0;
+		for (size_t i = 0; i < std::size(ALL); i++)
+		{
+			for (const u8 scale : {u8(2), u8(4)})
+			{
+				const int dw = W * scale;
+				const int dh = H * scale;
+				// Guard band: filled with a sentinel and checked afterwards, so a kernel that
+				// writes past its rows is caught here rather than as heap corruption later.
+				constexpr u32 SENTINEL = 0xDEADBEEFu;
+				std::vector<u32> dst(static_cast<size_t>(dw) * static_cast<size_t>(dh) + 16, SENTINEL);
+
+				const bool ok = ScaleBuffer(ALL[i], reinterpret_cast<const u8*>(src.data()), W, H,
+					W * sizeof(u32), reinterpret_cast<u8*>(dst.data()), static_cast<u32>(dw) * sizeof(u32),
+					scale);
+
+				bool overran = false;
+				for (size_t g = dst.size() - 16; g < dst.size(); g++)
+					overran |= (dst[g] != SENTINEL);
+
+				if (!ok || overran)
+				{
+					failed++;
+					Console.Error("Texture upscaling: filter self-test %s x%u %s.", NAMES[i],
+						static_cast<u32>(scale), overran ? "WROTE OUT OF BOUNDS" : "failed to run");
+					continue;
+				}
+				passed++;
+			}
+		}
+
+		if (failed == 0)
+			Console.WriteLn("Texture upscaling: filter self-test %u/%u OK.", passed, passed);
+		else
+			Console.Error("Texture upscaling: filter self-test %u OK, %u FAILED.", passed, failed);
 	}
 
 	const Stats& GetStats()
