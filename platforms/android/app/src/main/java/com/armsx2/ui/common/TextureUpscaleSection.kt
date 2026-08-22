@@ -53,8 +53,11 @@ import com.armsx2.ui.settings.controllerFocusable
 private val FAMILY_RESAMPLE = listOf(20, 0, 22, 1, 21, 2, 3)
 private val LABELS_RESAMPLE = listOf("Nearest", "Bilinear", "Sharp", "Bicubic", "Mitchell", "Lanczos", "L+CAS")
 
-private val FAMILY_EDGE = listOf(4, 5, 6, 7, 8, 10, 16)
-private val LABELS_EDGE = listOf("Scale2x", "Eagle", "SuperEagle", "2xSaI", "S2xSaI", "xBR", "Anime4K")
+private val FAMILY_PIXELART = listOf(4, 5, 6, 7, 8, 14)
+private val LABELS_PIXELART = listOf("Scale2x", "Eagle", "SuperEagle", "2xSaI", "S2xSaI", "MMPX")
+
+private val FAMILY_EDGE = listOf(10, 16)
+private val LABELS_EDGE = listOf("xBR", "Anime4K")
 
 private val FAMILY_NEURAL = listOf(17, 18, 19)
 private val LABELS_NEURAL = listOf("FSRCNN", "SESR", "ESPCN")
@@ -73,6 +76,7 @@ private val DESCRIPTION_KEYS = mapOf(
     6 to "renderer.textureUpscale.algorithm.supereagle",
     7 to "renderer.textureUpscale.algorithm.sai2x",
     8 to "renderer.textureUpscale.algorithm.supersai2x",
+    14 to "renderer.textureUpscale.algorithm.mmpx",
     10 to "renderer.textureUpscale.algorithm.xbr",
     16 to "renderer.textureUpscale.algorithm.anime4k",
     17 to "renderer.textureUpscale.algorithm.neural",
@@ -131,9 +135,18 @@ private fun FamilyChips(
 }
 
 /**
- * Three families rather than one control listing seventeen filters. Only the family owning
- * the current selection has a filled chip, so which family you are in is readable at a
- * glance rather than something you work out from a name.
+ * Grouped by how each filter DECIDES, which is what actually predicts how it looks:
+ *
+ *  - **Resample** — weighted averages with no notion of an edge. Soft, never wrong.
+ *  - **Pixel art** — exact colour matches and rule tables. Keeps the source palette, so it
+ *    holds up on sprites and text where the smooth filters turn letterforms to mush.
+ *  - **Edge-directed** — colour *distance* and gradients rather than equality, so gradients
+ *    and anti-aliased source art survive instead of being treated as noise.
+ *  - **Neural** — a trained model, when one is installed.
+ *
+ * The usual way these are listed is by vintage (2xSaI, HQx, xBR, ...), which tells you
+ * nothing about which to reach for. Only the family owning the current selection has a
+ * filled chip, so where you are is readable at a glance.
  */
 @Composable
 private fun AlgorithmPicker(current: Int, keyPrefix: String, onChange: (Int) -> Unit) {
@@ -143,6 +156,11 @@ private fun AlgorithmPicker(current: Int, keyPrefix: String, onChange: (Int) -> 
         str("renderer.textureUpscale.family.resample"), FAMILY_RESAMPLE, LABELS_RESAMPLE,
         current, "$keyPrefix.resample",
         if (current in FAMILY_RESAMPLE) described else null, onChange,
+    )
+    FamilyChips(
+        str("renderer.textureUpscale.family.pixelart"), FAMILY_PIXELART, LABELS_PIXELART,
+        current, "$keyPrefix.pixelart",
+        if (current in FAMILY_PIXELART) described else null, onChange,
     )
     FamilyChips(
         str("renderer.textureUpscale.family.edge"), FAMILY_EDGE, LABELS_EDGE,

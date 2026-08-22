@@ -1209,6 +1209,169 @@ namespace GSTextureUpscaler
 			}
 		}
 
+		/// MMPX, ported from the GLSL texture filter in Citra/Azahar (GPLv2-or-later), itself
+		/// an implementation of McGuire & Barr-Brisebois' style-preserving magnification.
+		///
+		/// Unlike the SaI family this is a rule table over exact-colour matches, and unlike xBR
+		/// it never invents a colour outside the source palette beyond a single 50% blend - which
+		/// is what "style preserving" means and why it holds up on small sprites and text where
+		/// the smoother filters turn letterforms to mush.
+		void PassMMPX(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride)
+		{
+			// Luma is weighted by (1 - alpha) exactly as the reference does: a transparent texel
+			// reads as dark, which is what keeps cutout edges from being treated as detail.
+			const auto luma = [](u32 c) -> float {
+				const float r = static_cast<float>((c >> 0) & 0xFF) * (1.0f / 255.0f);
+				const float g = static_cast<float>((c >> 8) & 0xFF) * (1.0f / 255.0f);
+				const float b = static_cast<float>((c >> 16) & 0xFF) * (1.0f / 255.0f);
+				const float a = static_cast<float>((c >> 24) & 0xFF) * (1.0f / 255.0f);
+				return (0.2126f * r + 0.7152f * g + 0.0722f * b) * (1.0f - a);
+			};
+
+			for (int y = 0; y < sh; y++)
+			{
+				for (int x = 0; x < sw; x++)
+				{
+					const auto at = [&](int dx, int dy) -> u32 {
+						return SamplePixel(src, sw, sh, src_stride, x + dx, y + dy);
+					};
+
+					const u32 E = at(0, 0);
+					const u32 A = at(-1, -1), B = at(0, -1), C = at(1, -1);
+					const u32 D = at(-1, 0), F = at(1, 0);
+					const u32 G = at(-1, 1), H = at(0, 1), I = at(1, 1);
+
+					u32 J = E, K = E, L = E, M = E;
+
+					const bool flat = (E == A && E == B && E == C && E == D && E == F && E == G &&
+									   E == H && E == I);
+					if (!flat)
+					{
+						// P and S are both (0,2) here, matching the Citra shader exactly rather
+						// than the paper. Reproduced deliberately: this is the behaviour Azahar
+						// ships and what people have actually looked at, and silently "fixing" it
+						// would make this filter differ from the reference it claims to be.
+						const u32 P = at(0, 2), Q = at(-2, 0), R = at(2, 0), S = at(0, 2);
+
+						const float Bl = luma(B), Dl = luma(D), El = luma(E), Fl = luma(F), Hl = luma(H);
+
+						const auto any_eq3 = [](u32 b, u32 a0, u32 a1, u32 a2) {
+							return b == a0 || b == a1 || b == a2;
+						};
+						const auto all_eq2 = [](u32 b, u32 a0, u32 a1) { return b == a0 && b == a1; };
+						const auto all_eq3 = [](u32 b, u32 a0, u32 a1, u32 a2) {
+							return b == a0 && b == a1 && b == a2;
+						};
+						const auto all_eq4 = [](u32 b, u32 a0, u32 a1, u32 a2, u32 a3) {
+							return b == a0 && b == a1 && b == a2 && b == a3;
+						};
+						const auto none_eq2 = [](u32 b, u32 a0, u32 a1) { return b != a0 && b != a1; };
+						const auto none_eq4 = [](u32 b, u32 a0, u32 a1, u32 a2, u32 a3) {
+							return b != a0 && b != a1 && b != a2 && b != a3;
+						};
+
+						if ((D == B && D != H && D != F) && ((El >= Dl) || E == A) && any_eq3(E, A, C, G) &&
+							((El < Dl) || A != D || E != P || E != Q))
+							J = Mix2(D, J);
+						if ((B == F && B != D && B != H) && ((El >= Bl) || E == C) && any_eq3(E, A, C, I) &&
+							((El < Bl) || C != B || E != P || E != R))
+							K = Mix2(B, K);
+						if ((H == D && H != F && H != B) && ((El >= Hl) || E == G) && any_eq3(E, A, G, I) &&
+							((El < Hl) || G != H || E != S || E != Q))
+							L = Mix2(H, L);
+						if ((F == H && F != B && F != D) && ((El >= Fl) || E == I) && any_eq3(E, C, G, I) &&
+							((El < Fl) || I != H || E != R || E != S))
+							M = Mix2(F, M);
+
+						if ((E != F && all_eq4(E, C, I, D, Q) && all_eq2(F, B, H)) && F != at(3, 0))
+						{
+							M = Mix2(M, F);
+							K = Mix2(K, M);
+						}
+						if ((E != D && all_eq4(E, A, G, F, R) && all_eq2(D, B, H)) && D != at(-3, 0))
+						{
+							L = Mix2(L, D);
+							J = Mix2(J, L);
+						}
+						if ((E != H && all_eq4(E, G, I, B, P) && all_eq2(H, D, F)) && H != at(0, 3))
+						{
+							M = Mix2(M, H);
+							L = Mix2(L, M);
+						}
+						if ((E != B && all_eq4(E, A, C, H, S) && all_eq2(B, D, F)) && B != at(0, -3))
+						{
+							K = Mix2(K, B);
+							J = Mix2(J, K);
+						}
+
+						if ((Bl < El) && all_eq4(E, G, H, I, S) && none_eq4(E, A, D, C, F))
+						{
+							K = Mix2(K, B);
+							J = Mix2(J, K);
+						}
+						if ((Hl < El) && all_eq4(E, A, B, C, P) && none_eq4(E, D, G, I, F))
+						{
+							M = Mix2(M, H);
+							L = Mix2(L, M);
+						}
+						if ((Fl < El) && all_eq4(E, A, D, G, Q) && none_eq4(E, B, C, I, H))
+						{
+							M = Mix2(M, F);
+							K = Mix2(K, M);
+						}
+						if ((Dl < El) && all_eq4(E, C, F, I, R) && none_eq4(E, B, A, G, H))
+						{
+							L = Mix2(L, D);
+							J = Mix2(J, L);
+						}
+
+						if (H != B)
+						{
+							if (H != A && H != E && H != C)
+							{
+								if (all_eq3(H, G, F, R) && none_eq2(H, D, at(2, -1)))
+									L = Mix2(M, L);
+								if (all_eq3(H, I, D, Q) && none_eq2(H, F, at(-2, -1)))
+									M = Mix2(L, M);
+							}
+							if (B != I && B != G && B != E)
+							{
+								if (all_eq3(B, A, F, R) && none_eq2(B, D, at(2, 1)))
+									J = Mix2(K, L);
+								if (all_eq3(B, C, D, Q) && none_eq2(B, F, at(-2, 1)))
+									K = Mix2(J, K);
+							}
+						}
+
+						if (F != D)
+						{
+							if (D != I && D != E && D != C)
+							{
+								if (all_eq3(D, A, H, S) && none_eq2(D, B, at(1, 2)))
+									J = Mix2(L, J);
+								if (all_eq3(D, G, B, P) && none_eq2(D, H, at(1, 2)))
+									L = Mix2(J, L);
+							}
+							if (F != E && F != A && F != G)
+							{
+								if (all_eq3(F, C, H, S) && none_eq2(F, B, at(-1, 2)))
+									K = Mix2(M, K);
+								if (all_eq3(F, I, B, P) && none_eq2(F, H, at(-1, -2)))
+									M = Mix2(K, M);
+							}
+						}
+					}
+
+					// J top-left, K top-right, L bottom-left, M bottom-right.
+					u32* out = dst + (static_cast<size_t>(y) * 2) * dst_stride + (static_cast<size_t>(x) * 2);
+					out[0] = J;
+					out[1] = K;
+					out[dst_stride] = L;
+					out[dst_stride + 1] = M;
+				}
+			}
+		}
+
 		using PassFn = void (*)(const u32*, int, int, u32, u32*, u32);
 
 		PassFn PassForAlgorithm(GSTextureUpscaleAlgorithm algorithm)
@@ -1221,6 +1384,7 @@ namespace GSTextureUpscaler
 				case GSTextureUpscaleAlgorithm::SuperSaI2x: return PassSuper2xSaI;
 				case GSTextureUpscaleAlgorithm::SuperEagle: return PassSuperEagle;
 				case GSTextureUpscaleAlgorithm::xBR: return PassXbr;
+				case GSTextureUpscaleAlgorithm::MMPX: return PassMMPX;
 				default: return nullptr;
 			}
 		}
@@ -1243,6 +1407,7 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::SaI2x:
 			case GSTextureUpscaleAlgorithm::SuperSaI2x:
 			case GSTextureUpscaleAlgorithm::xBR:
+			case GSTextureUpscaleAlgorithm::MMPX:
 			case GSTextureUpscaleAlgorithm::Anime4K:
 			case GSTextureUpscaleAlgorithm::Nearest:
 			case GSTextureUpscaleAlgorithm::Mitchell:
@@ -1551,10 +1716,11 @@ namespace GSTextureUpscaler
 			GSTextureUpscaleAlgorithm::LanczosCAS, GSTextureUpscaleAlgorithm::Scale2x,
 			GSTextureUpscaleAlgorithm::Eagle, GSTextureUpscaleAlgorithm::SuperEagle,
 			GSTextureUpscaleAlgorithm::SaI2x, GSTextureUpscaleAlgorithm::SuperSaI2x,
-			GSTextureUpscaleAlgorithm::xBR, GSTextureUpscaleAlgorithm::Anime4K};
+			GSTextureUpscaleAlgorithm::xBR, GSTextureUpscaleAlgorithm::MMPX,
+			GSTextureUpscaleAlgorithm::Anime4K};
 		static const char* const NAMES[] = {"Nearest", "Bilinear", "SharpBilinear", "Bicubic",
 			"Mitchell", "Lanczos", "LanczosCAS", "Scale2x", "Eagle", "SuperEagle", "2xSaI",
-			"Super2xSaI", "xBR", "Anime4K"};
+			"Super2xSaI", "xBR", "MMPX", "Anime4K"};
 		static_assert(std::size(ALL) == std::size(NAMES), "filter self-test name list out of step");
 
 		constexpr int W = 8;
@@ -1627,6 +1793,7 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::SaI2x: return "2xSaI";
 			case GSTextureUpscaleAlgorithm::SuperSaI2x: return "Super2xSaI";
 			case GSTextureUpscaleAlgorithm::xBR: return "xBR";
+			case GSTextureUpscaleAlgorithm::MMPX: return "MMPX";
 			case GSTextureUpscaleAlgorithm::Anime4K: return "Anime4K";
 			case GSTextureUpscaleAlgorithm::FSRCNN: return "FSRCNN";
 			case GSTextureUpscaleAlgorithm::SESR: return "SESR";
