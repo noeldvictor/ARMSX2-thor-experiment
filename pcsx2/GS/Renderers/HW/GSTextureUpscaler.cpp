@@ -928,6 +928,151 @@ namespace GSTextureUpscaler
 			}
 		}
 
+		// -------------------------------------------------------------------------------
+		// ScaleForce, ported from Citra/Azahar's scale_force.frag (MIT). Rather than choosing
+		// between neighbours, it nudges the sampling position away from edges and then samples
+		// bicubically - so it smooths without softening the edges themselves.
+		//
+		// DEVIATION FROM THE REFERENCE, deliberate: the shader computes its colour distance as
+		// the SUM of the YCbCr components. The chroma rows of any YCbCr matrix sum to zero, so
+		// that expression collapses to 0.6 * (red difference) and discards green and blue
+		// entirely - a green-on-blue edge measures as zero distance. Here the distance is the
+		// LENGTH of the YCbCr vector instead, which is what the surrounding code plainly means
+		// and what xBRZ's ColorDist in the same codebase already does. See docs/third-party.md.
+		// -------------------------------------------------------------------------------
+
+		/// Cubic B-spline basis, matching the reference's cubic().
+		inline void ScaleForceCubic(float v, float* w)
+		{
+			const float n0 = 1.0f - v, n1 = 2.0f - v, n2 = 3.0f - v;
+			const float s0 = n0 * n0 * n0, s1 = n1 * n1 * n1, s2 = n2 * n2 * n2;
+			const float x = s0;
+			const float y = s1 - 4.0f * s0;
+			const float z = s2 - 4.0f * s1 + 6.0f * s0;
+			w[3] = x / 6.0f;
+			w[2] = y / 6.0f;
+			w[1] = z / 6.0f;
+			w[0] = (6.0f - x - y - z) / 6.0f;
+		}
+
+		u32 ScaleForceSampleBicubic(const u32* src, int sw, int sh, u32 src_stride, float fx, float fy)
+		{
+			const float px = fx - 0.5f;
+			const float py = fy - 0.5f;
+			const int x0 = static_cast<int>(std::floor(px));
+			const int y0 = static_cast<int>(std::floor(py));
+			float wx[4], wy[4];
+			ScaleForceCubic(px - static_cast<float>(x0), wx);
+			ScaleForceCubic(py - static_cast<float>(y0), wy);
+
+			float acc[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+			for (int j = 0; j < 4; j++)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					const u32 p = SamplePixel(src, sw, sh, src_stride, x0 - 1 + i, y0 - 1 + j);
+					const float w = wx[i] * wy[j];
+					for (int c = 0; c < 4; c++)
+						acc[c] += w * static_cast<float>((p >> (c * 8)) & 0xFF);
+				}
+			}
+
+			u32 out = 0;
+			for (int c = 0; c < 4; c++)
+				out |= static_cast<u32>(std::clamp(static_cast<int>(acc[c] + 0.5f), 0, 255)) << (c * 8);
+			return out;
+		}
+
+		/// Distance from the centre colour, weighted by both alphas so a difference behind a
+		/// transparent texel does not pull the sample position around.
+		inline float ScaleForceDist(u32 other, u32 centre)
+		{
+			const float dr = (static_cast<float>((other >> 0) & 0xFF) -
+								 static_cast<float>((centre >> 0) & 0xFF)) * (1.0f / 255.0f);
+			const float dg = (static_cast<float>((other >> 8) & 0xFF) -
+								 static_cast<float>((centre >> 8) & 0xFF)) * (1.0f / 255.0f);
+			const float db = (static_cast<float>((other >> 16) & 0xFF) -
+								 static_cast<float>((centre >> 16) & 0xFF)) * (1.0f / 255.0f);
+			const float oa = static_cast<float>((other >> 24) & 0xFF) * (1.0f / 255.0f);
+			const float ca = static_cast<float>((centre >> 24) & 0xFF) * (1.0f / 255.0f);
+			const float da = oa - ca;
+
+			constexpr float KR = 0.2627f, KG = 0.6780f, KB = 0.0593f;
+			constexpr float LW = 0.6f;
+			const float y = dr * KR * LW + dg * KG * LW + db * KB * LW;
+			const float cb = dr * (-0.5f * KR / (1.0f - KB)) + dg * (-0.5f * KG / (1.0f - KB)) + db * 0.5f;
+			const float cr = dr * 0.5f + dg * (-0.5f * KG / (1.0f - KR)) + db * (-0.5f * KB / (1.0f - KR));
+
+			const float d = std::sqrt(y * y + cb * cb + cr * cr);
+			return std::sqrt((d * d + std::fabs(da)) * oa * ca);
+		}
+
+		void ScaleForceFilter(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride,
+			u32 scale)
+		{
+			const int dw = sw * static_cast<int>(scale);
+			const int dh = sh * static_cast<int>(scale);
+			const float fscale = static_cast<float>(scale);
+
+			for (int oy = 0; oy < dh; oy++)
+			{
+				for (int ox = 0; ox < dw; ox++)
+				{
+					const float tx = (static_cast<float>(ox) + 0.5f) / fscale;
+					const float ty = (static_cast<float>(oy) + 0.5f) / fscale;
+					const int bx = static_cast<int>(std::floor(tx));
+					const int by = static_cast<int>(std::floor(ty));
+
+					// Named as the reference names them, where +y is UP; this buffer has +y
+					// down, hence the negated row offsets.
+					const auto at = [&](int dx, int dy) -> u32 {
+						return SamplePixel(src, sw, sh, src_stride, bx + dx, by - dy);
+					};
+
+					const u32 cc = at(0, 0);
+					const u32 tl = at(-1, 1), tc = at(0, 1), tr = at(1, 1);
+					const u32 cl = at(-1, 0), cr = at(1, 0);
+					const u32 bl = at(-1, -1), bc = at(0, -1), br = at(1, -1);
+
+					const float o_tl[4] = {ScaleForceDist(tl, cc), ScaleForceDist(tc, cc),
+						ScaleForceDist(tr, cc), ScaleForceDist(cr, cc)};
+					const float o_br[4] = {ScaleForceDist(br, cc), ScaleForceDist(bc, cc),
+						ScaleForceDist(bl, cc), ScaleForceDist(cl, cc)};
+
+					float total_dist = 0.0f;
+					for (int i = 0; i < 4; i++)
+						total_dist += o_tl[i] + o_br[i];
+
+					if (total_dist <= 0.0f)
+					{
+						// Bicubic just past an edge where the offset is zero produces black
+						// floaters, and with no colour change the filter choice is moot anyway.
+						dst[static_cast<size_t>(oy) * dst_stride + ox] = cc;
+						continue;
+					}
+
+					float tmp[4];
+					for (int i = 0; i < 4; i++)
+						tmp[i] = o_tl[i] - o_br[i];
+
+					// total_offset = tmp.wy + tmp.zz + vec2(-tmp.x, tmp.x)
+					float offx = tmp[3] + tmp[2] - tmp[0];
+					float offy = tmp[1] + tmp[2] + tmp[0];
+
+					// Thin features split apart when the offset reaches into clear areas; this
+					// keeps it bounded, exactly as the reference does.
+					const float clamp_val = std::sqrt(offx * offx + offy * offy) / total_dist;
+					offx = std::clamp(offx, -clamp_val, clamp_val);
+					offy = std::clamp(offy, -clamp_val, clamp_val);
+
+					// The offset is in the reference's +y-up space, so subtracting it there is
+					// adding it here.
+					dst[static_cast<size_t>(oy) * dst_stride + ox] =
+						ScaleForceSampleBicubic(src, sw, sh, src_stride, tx - offx, ty + offy);
+				}
+			}
+		}
+
 		inline float Sinc(float x)
 		{
 			if (std::fabs(x) < 1e-6f)
@@ -1684,6 +1829,7 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::xBR:
 			case GSTextureUpscaleAlgorithm::MMPX:
 			case GSTextureUpscaleAlgorithm::xBRZ:
+			case GSTextureUpscaleAlgorithm::ScaleForce:
 			case GSTextureUpscaleAlgorithm::Anime4K:
 			case GSTextureUpscaleAlgorithm::Nearest:
 			case GSTextureUpscaleAlgorithm::Mitchell:
@@ -1807,6 +1953,10 @@ namespace GSTextureUpscaler
 
 			case GSTextureUpscaleAlgorithm::xBRZ:
 				ScaleXbrz(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
+				return true;
+
+			case GSTextureUpscaleAlgorithm::ScaleForce:
+				ScaleForceFilter(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
 				return true;
 
 			case GSTextureUpscaleAlgorithm::Lanczos:
@@ -1997,11 +2147,11 @@ namespace GSTextureUpscaler
 			GSTextureUpscaleAlgorithm::Eagle, GSTextureUpscaleAlgorithm::SuperEagle,
 			GSTextureUpscaleAlgorithm::SaI2x, GSTextureUpscaleAlgorithm::SuperSaI2x,
 			GSTextureUpscaleAlgorithm::xBR, GSTextureUpscaleAlgorithm::MMPX,
-			GSTextureUpscaleAlgorithm::xBRZ,
+			GSTextureUpscaleAlgorithm::xBRZ, GSTextureUpscaleAlgorithm::ScaleForce,
 			GSTextureUpscaleAlgorithm::Anime4K};
 		static const char* const NAMES[] = {"Nearest", "Bilinear", "SharpBilinear", "Bicubic",
 			"Mitchell", "Lanczos", "LanczosCAS", "Scale2x", "Eagle", "SuperEagle", "2xSaI",
-			"Super2xSaI", "xBR", "MMPX", "xBRZ", "Anime4K"};
+			"Super2xSaI", "xBR", "MMPX", "xBRZ", "ScaleForce", "Anime4K"};
 		static_assert(std::size(ALL) == std::size(NAMES), "filter self-test name list out of step");
 
 		constexpr int W = 8;
@@ -2076,6 +2226,7 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::xBR: return "xBR";
 			case GSTextureUpscaleAlgorithm::MMPX: return "MMPX";
 			case GSTextureUpscaleAlgorithm::xBRZ: return "xBRZ";
+			case GSTextureUpscaleAlgorithm::ScaleForce: return "ScaleForce";
 			case GSTextureUpscaleAlgorithm::Anime4K: return "Anime4K";
 			case GSTextureUpscaleAlgorithm::FSRCNN: return "FSRCNN";
 			case GSTextureUpscaleAlgorithm::SESR: return "SESR";

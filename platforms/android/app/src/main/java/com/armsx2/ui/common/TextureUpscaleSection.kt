@@ -56,8 +56,8 @@ private val LABELS_RESAMPLE = listOf("Nearest", "Bilinear", "Sharp", "Bicubic", 
 private val FAMILY_PIXELART = listOf(4, 5, 6, 7, 8, 14)
 private val LABELS_PIXELART = listOf("Scale2x", "Eagle", "SuperEagle", "2xSaI", "S2xSaI", "MMPX")
 
-private val FAMILY_EDGE = listOf(10, 11, 16)
-private val LABELS_EDGE = listOf("xBR", "xBRZ", "Anime4K")
+private val FAMILY_EDGE = listOf(10, 11, 23, 16)
+private val LABELS_EDGE = listOf("xBR", "xBRZ", "ScaleForce", "Anime4K")
 
 private val FAMILY_NEURAL = listOf(17, 18, 19)
 private val LABELS_NEURAL = listOf("FSRCNN", "SESR", "ESPCN")
@@ -79,6 +79,7 @@ private val DESCRIPTION_KEYS = mapOf(
     14 to "renderer.textureUpscale.algorithm.mmpx",
     10 to "renderer.textureUpscale.algorithm.xbr",
     11 to "renderer.textureUpscale.algorithm.xbrz",
+    23 to "renderer.textureUpscale.algorithm.scaleforce",
     16 to "renderer.textureUpscale.algorithm.anime4k",
     17 to "renderer.textureUpscale.algorithm.neural",
     18 to "renderer.textureUpscale.algorithm.neural",

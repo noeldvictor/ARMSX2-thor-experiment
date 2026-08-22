@@ -60,6 +60,36 @@ Two notes on fidelity, since both were ported rather than reinvented:
   where that pixel sits inside its source texel. That is why it is dispatched like a
   resampler rather than as a doubling pass, and why 4x is one pass instead of 2x twice.
 
+## ScaleForce — MIT
+
+Ported from Citra/Azahar's `texture_filtering/scale_force.frag` (MIT).
+
+**One deliberate deviation.** The reference computes its colour distance as the *sum* of the
+YCbCr components:
+
+```glsl
+vec4 color_dist = vec3(1.0) * YCbCr;   // sum of each column
+```
+
+The chroma rows of a YCbCr matrix sum to zero by construction, so that expression collapses
+to `0.6 * (red difference)` and discards green and blue entirely — a green-on-blue edge
+measures as zero distance. Checked numerically against the shader's own constants:
+
+```
+col0 (Y)  sum =  0.600000
+col1 (Cb) sum =  0.000000
+col2 (Cr) sum = -0.000000
+```
+
+This port uses the *length* of the YCbCr vector instead, which is plainly what the
+surrounding code means and what xBRZ's `ColorDist` in the same codebase already does.
+
+This is the opposite call to the MMPX one above, on purpose. MMPX's difference is a tap
+offset with a modest visual effect, so matching the reference mattered more than being
+"right". Here the metric is degenerate across two of three colour channels, and shipping
+that under the ScaleForce name would mean handing over a filter that ignores most colour
+edges.
+
 ## Licence compatibility
 
 ARMSX2 is GPLv3. MIT is compatible with it, and Citra's own code is GPLv2-or-later, which is

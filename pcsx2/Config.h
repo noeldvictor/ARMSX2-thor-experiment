@@ -523,6 +523,7 @@ enum class GSTextureUpscaleAlgorithm : u8
 	Nearest,        ///< No filtering. The A/B baseline for judging everything else.
 	Mitchell,       ///< Mitchell-Netravali bicubic. Softer than Catmull-Rom, no ringing.
 	SharpBilinear,  ///< Crisp texel edges with a one-pixel ramp. Sharp without the blockiness.
+	ScaleForce,     ///< Edge-aware warp then bicubic. Smooth without softening edges.
 };
 
 enum class GSHWAutoFlushLevel : u8

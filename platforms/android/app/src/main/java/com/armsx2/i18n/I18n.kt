@@ -1492,6 +1492,7 @@ val EN: Map<String, String> = mapOf(
     "renderer.textureUpscale.algorithm.supersai2x" to "Super2xSaI — smoother still. Loses fine detail on busy art.",
     "renderer.textureUpscale.algorithm.xbr" to "xBR — edge detection by colour distance, so it copes with gradients and anti-aliased art, not just flat pixel art.",
     "renderer.textureUpscale.algorithm.xbrz" to "xBRZ - the refined xBR. Free-scale, so it decides per output pixel rather than doubling twice, which keeps 4x cleaner. The usual best pick for 2D and sprite-heavy games.",
+    "renderer.textureUpscale.algorithm.scaleforce" to "ScaleForce - nudges the sample away from edges, then samples bicubically. Smooth overall without softening the edges, so it suits detailed 3D textures more than flat sprite art.",
     "renderer.textureUpscale.algorithm.mmpx" to "MMPX - rule-based and style preserving. It keeps the source palette instead of inventing in-between colours, so small sprites and text stay legible where smoother filters turn them to mush.",
     "renderer.textureUpscale.algorithm.anime4k" to "Anime4K - detects edges and pushes colours along them to straighten staircased diagonals. Built for hand-drawn art, so it suits cel-shaded and 2D games far more than photographic textures. Needs no model file.",
     "renderer.textureUpscale.algorithm.neural" to "Neural — needs a trained model in <textures>/models. No weights ship with ARMSX2, so this leaves textures untouched until you install one. Slower than the filters above, and it runs on a worker thread.",
