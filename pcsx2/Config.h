@@ -1113,6 +1113,17 @@ struct Pcsx2Config
 		// Optical-flow resolution, as a percentage of the presented image (25..100). Lower is
 		// cheaper and blurrier. Handed to the library as a DIVISOR — see GSLsfg.cpp.
 		u8 LsfgFlowScale = 100;
+		// Target OUTPUT rate in Hz for the adaptive pacer; 0 holds LsfgMultiplier fixed.
+		//
+		// A fixed multiplier is the wrong shape for a game that oscillates between 60 and 30fps
+		// on a 60Hz panel: at x2 it presents 120 then 60, and every transition is visible as
+		// judder. Given a target, the pacer varies the generation count instead — two
+		// interpolated frames while the game runs at 30, one while it runs at 60 — so the
+		// presented rate stays put while the rendered rate moves underneath it.
+		//
+		// u16 because 0..1000 covers every panel; 0 is the default so behaviour is unchanged
+		// until the user opts in.
+		u16 LsfgTargetRate = 0;
 
 		// Texture upscaling - runs per texture at UPLOAD time, not on the presented frame.
 		// The result lives in the hash cache, so the cost is once per unique texture and
@@ -1722,7 +1733,12 @@ struct Pcsx2Config
 	void CopyRuntimeConfig(Pcsx2Config& cfg);
 
 	/// Copies configuration from one file to another. Does not copy controller settings.
-	static void CopyConfiguration(SettingsInterface* dest_si, SettingsInterface& src_si);
+	/// Copies a configuration into a per-game settings file, writing only the values
+	/// that deviate from what the game would run with anyway — stock defaults, and the
+	/// game database's own opinion for `game_serial`. Everything else is left absent,
+	/// because in a per-game file a key that is present is a key the player is taken to
+	/// have claimed, and the database then stands aside for it.
+	static void CopyConfiguration(SettingsInterface* dest_si, SettingsInterface& src_si, std::string_view game_serial);
 
 	/// Clears all core keys from the specified interface.
 	static void ClearConfiguration(SettingsInterface* dest_si);
