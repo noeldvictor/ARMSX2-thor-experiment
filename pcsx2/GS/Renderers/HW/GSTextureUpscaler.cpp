@@ -653,6 +653,281 @@ namespace GSTextureUpscaler
 					dst[static_cast<size_t>(y) * dst_stride + x] = refined[static_cast<size_t>(y) * w + x];
 		}
 
+		// -------------------------------------------------------------------------------
+		// xBRZ (free-scale), ported from Citra/Azahar's GLSL texture filter (GPLv2-or-later),
+		// itself derived from Zenju's xBRZ. See docs/third-party.md.
+		//
+		// "Free-scale" is why this one is dispatched like a resampler rather than as a 2x pass:
+		// it decides a blend per OUTPUT pixel from that pixel's position inside its source
+		// texel, so any scale factor works and 4x is a single pass rather than 2x applied twice.
+		// -------------------------------------------------------------------------------
+
+		constexpr int XBRZ_BLEND_NONE = 0;
+		constexpr int XBRZ_BLEND_NORMAL = 1;
+		constexpr int XBRZ_BLEND_DOMINANT = 2;
+		constexpr float XBRZ_EQUAL_COLOR_TOLERANCE = 30.0f / 255.0f;
+		constexpr float XBRZ_STEEP_DIRECTION_THRESHOLD = 2.2f;
+		constexpr float XBRZ_DOMINANT_DIRECTION_THRESHOLD = 3.6f;
+
+		/// Distance in a BT.2020-derived YCbCr space, weighted by alpha at both ends so a
+		/// difference behind a transparent texel does not read as an edge.
+		inline float XbrzColorDist(u32 pa, u32 pb)
+		{
+			const float ar = static_cast<float>((pa >> 0) & 0xFF) * (1.0f / 255.0f);
+			const float ag = static_cast<float>((pa >> 8) & 0xFF) * (1.0f / 255.0f);
+			const float ab = static_cast<float>((pa >> 16) & 0xFF) * (1.0f / 255.0f);
+			const float aa = static_cast<float>((pa >> 24) & 0xFF) * (1.0f / 255.0f);
+			const float br = static_cast<float>((pb >> 0) & 0xFF) * (1.0f / 255.0f);
+			const float bg = static_cast<float>((pb >> 8) & 0xFF) * (1.0f / 255.0f);
+			const float bb = static_cast<float>((pb >> 16) & 0xFF) * (1.0f / 255.0f);
+			const float ba = static_cast<float>((pb >> 24) & 0xFF) * (1.0f / 255.0f);
+
+			const float dr = ar - br, dg = ag - bg, db = ab - bb, da = aa - ba;
+
+			constexpr float KR = 0.2627f, KG = 0.6780f, KB = 0.0593f;
+			// Columns of the GLSL mat3, kept in that layout so this stays comparable with the
+			// shader it came from.
+			const float c0 = dr * KR + dg * KG + db * KB;
+			const float c1 = dr * (-0.5f * KR / (1.0f - KB)) + dg * (-0.5f * KG / (1.0f - KB)) + db * 0.5f;
+			const float c2 = dr * 0.5f + dg * (-0.5f * KG / (1.0f - KR)) + db * (-0.5f * KB / (1.0f - KR));
+
+			const float d = std::sqrt(c0 * c0 + c1 * c1 + c2 * c2);
+			return std::sqrt(aa * ba * d * d + da * da);
+		}
+
+		inline bool XbrzPixEqual(u32 a, u32 b)
+		{
+			return XbrzColorDist(a, b) < XBRZ_EQUAL_COLOR_TOLERANCE;
+		}
+
+		inline float XbrzSmoothStep(float edge0, float edge1, float x)
+		{
+			const float t = std::clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
+			return t * t * (3.0f - 2.0f * t);
+		}
+
+		/// How far the output pixel sits on the "left" side of a blending line, smoothed. This
+		/// is the part that makes the result scale-independent.
+		inline float XbrzLeftRatio(float cx, float cy, float ox, float oy, float dx, float dy, float scale)
+		{
+			const float p0x = cx - ox;
+			const float p0y = cy - oy;
+			const float dd = dx * dx + dy * dy;
+			const float t = (dd > 0.0f) ? ((p0x * dx + p0y * dy) / dd) : 0.0f;
+			const float distx = p0x - dx * t;
+			const float disty = p0y - dy * t;
+			// Orthogonal of the direction, to get which side we are on.
+			const float side = (p0x * -dy + p0y * dx) < 0.0f ? -1.0f : 1.0f;
+			const float v = side * std::sqrt((distx * scale) * (distx * scale) + (disty * scale) * (disty * scale));
+			constexpr float H = 0.70710678f; // sqrt(2)/2
+			return XbrzSmoothStep(-H, H, v);
+		}
+
+		inline u32 XbrzMix(u32 a, u32 b, float t)
+		{
+			u32 out = 0;
+			for (int c = 0; c < 4; c++)
+			{
+				const int shift = c * 8;
+				const float av = static_cast<float>((a >> shift) & 0xFF);
+				const float bv = static_cast<float>((b >> shift) & 0xFF);
+				const float v = av + (bv - av) * t;
+				out |= static_cast<u32>(std::clamp(static_cast<int>(v + 0.5f), 0, 255)) << shift;
+			}
+			return out;
+		}
+
+		void ScaleXbrz(const u32* src, int sw, int sh, u32 src_stride, u32* dst, u32 dst_stride, u32 scale)
+		{
+			const int dw = sw * static_cast<int>(scale);
+			const int dh = sh * static_cast<int>(scale);
+			const float fscale = static_cast<float>(scale);
+
+			for (int oy = 0; oy < dh; oy++)
+			{
+				for (int ox = 0; ox < dw; ox++)
+				{
+					// Texel this output pixel belongs to, and where inside it we are.
+					const float tx = (static_cast<float>(ox) + 0.5f) / fscale;
+					const float ty = (static_cast<float>(oy) + 0.5f) / fscale;
+					const int bx = static_cast<int>(std::floor(tx));
+					const int by = static_cast<int>(std::floor(ty));
+					const float posx = (tx - static_cast<float>(bx)) - 0.5f;
+					const float posy = (ty - static_cast<float>(by)) - 0.5f;
+
+					const auto P = [&](int x, int y) -> u32 {
+						return SamplePixel(src, sw, sh, src_stride, bx + x, by + y);
+					};
+
+					const u32 A = P(-1, -1), B = P(0, -1), C = P(1, -1);
+					const u32 D = P(-1, 0), E = P(0, 0), F = P(1, 0);
+					const u32 G = P(-1, 1), H = P(0, 1), I = P(1, 1);
+
+					int blend_x = XBRZ_BLEND_NONE, blend_y = XBRZ_BLEND_NONE;
+					int blend_z = XBRZ_BLEND_NONE, blend_w = XBRZ_BLEND_NONE;
+
+					if (!((E == F && H == I) || (E == H && F == I)))
+					{
+						const float dist_H_F = XbrzColorDist(G, E) + XbrzColorDist(E, C) +
+											   XbrzColorDist(P(0, 2), I) + XbrzColorDist(I, P(2, 0)) +
+											   4.0f * XbrzColorDist(H, F);
+						const float dist_E_I = XbrzColorDist(D, H) + XbrzColorDist(H, P(1, 2)) +
+											   XbrzColorDist(B, F) + XbrzColorDist(F, P(2, 1)) +
+											   4.0f * XbrzColorDist(E, I);
+						const bool dominant = (XBRZ_DOMINANT_DIRECTION_THRESHOLD * dist_H_F) < dist_E_I;
+						blend_z = ((dist_H_F < dist_E_I) && E != F && E != H) ?
+									  (dominant ? XBRZ_BLEND_DOMINANT : XBRZ_BLEND_NORMAL) :
+									  XBRZ_BLEND_NONE;
+					}
+					if (!((D == E && G == H) || (D == G && E == H)))
+					{
+						const float dist_G_E = XbrzColorDist(P(-2, 1), D) + XbrzColorDist(D, B) +
+											   XbrzColorDist(P(-1, 2), H) + XbrzColorDist(H, F) +
+											   4.0f * XbrzColorDist(G, E);
+						const float dist_D_H = XbrzColorDist(P(-2, 0), G) + XbrzColorDist(G, P(0, 2)) +
+											   XbrzColorDist(A, E) + XbrzColorDist(E, I) +
+											   4.0f * XbrzColorDist(D, H);
+						const bool dominant = (XBRZ_DOMINANT_DIRECTION_THRESHOLD * dist_D_H) < dist_G_E;
+						blend_w = ((dist_G_E > dist_D_H) && E != D && E != H) ?
+									  (dominant ? XBRZ_BLEND_DOMINANT : XBRZ_BLEND_NORMAL) :
+									  XBRZ_BLEND_NONE;
+					}
+					if (!((B == C && E == F) || (B == E && C == F)))
+					{
+						const float dist_E_C = XbrzColorDist(D, B) + XbrzColorDist(B, P(1, -2)) +
+											   XbrzColorDist(H, F) + XbrzColorDist(F, P(2, -1)) +
+											   4.0f * XbrzColorDist(E, C);
+						const float dist_B_F = XbrzColorDist(A, E) + XbrzColorDist(E, I) +
+											   XbrzColorDist(P(0, -2), C) + XbrzColorDist(C, P(2, 0)) +
+											   4.0f * XbrzColorDist(B, F);
+						const bool dominant = (XBRZ_DOMINANT_DIRECTION_THRESHOLD * dist_B_F) < dist_E_C;
+						blend_y = ((dist_E_C > dist_B_F) && E != B && E != F) ?
+									  (dominant ? XBRZ_BLEND_DOMINANT : XBRZ_BLEND_NORMAL) :
+									  XBRZ_BLEND_NONE;
+					}
+					if (!((A == B && D == E) || (A == D && B == E)))
+					{
+						const float dist_D_B = XbrzColorDist(P(-2, 0), A) + XbrzColorDist(A, P(0, -2)) +
+											   XbrzColorDist(G, E) + XbrzColorDist(E, C) +
+											   4.0f * XbrzColorDist(D, B);
+						const float dist_A_E = XbrzColorDist(P(-2, -1), D) + XbrzColorDist(D, H) +
+											   XbrzColorDist(P(-1, -2), B) + XbrzColorDist(B, F) +
+											   4.0f * XbrzColorDist(A, E);
+						const bool dominant = (XBRZ_DOMINANT_DIRECTION_THRESHOLD * dist_D_B) < dist_A_E;
+						blend_x = ((dist_D_B < dist_A_E) && E != D && E != B) ?
+									  (dominant ? XBRZ_BLEND_DOMINANT : XBRZ_BLEND_NORMAL) :
+									  XBRZ_BLEND_NONE;
+					}
+
+					u32 res = E;
+					constexpr float INV_SQRT2 = 0.70710678f;
+
+					if (blend_z != XBRZ_BLEND_NONE)
+					{
+						const float dist_F_G = XbrzColorDist(F, G);
+						const float dist_H_C = XbrzColorDist(H, C);
+						const bool doLineBlend =
+							(blend_z == XBRZ_BLEND_DOMINANT ||
+								!((blend_y != XBRZ_BLEND_NONE && !XbrzPixEqual(E, G)) ||
+									(blend_w != XBRZ_BLEND_NONE && !XbrzPixEqual(E, C)) ||
+									(XbrzPixEqual(G, H) && XbrzPixEqual(H, I) && XbrzPixEqual(I, F) &&
+										XbrzPixEqual(F, C) && !XbrzPixEqual(E, I))));
+						float ox2 = 0.0f, oy2 = INV_SQRT2, dx = 1.0f, dy = -1.0f;
+						if (doLineBlend)
+						{
+							const bool shallow =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_F_G <= dist_H_C) && E != G && D != G;
+							const bool steep =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_H_C <= dist_F_G) && E != C && B != C;
+							ox2 = 0.0f;
+							oy2 = shallow ? 0.25f : 0.5f;
+							dx += shallow ? 1.0f : 0.0f;
+							dy -= steep ? 1.0f : 0.0f;
+						}
+						const u32 blendPix = (XbrzColorDist(E, H) >= XbrzColorDist(E, F)) ? F : H;
+						res = XbrzMix(res, blendPix, XbrzLeftRatio(posx, posy, ox2, oy2, dx, dy, fscale));
+					}
+					if (blend_w != XBRZ_BLEND_NONE)
+					{
+						const float dist_H_A = XbrzColorDist(H, A);
+						const float dist_D_I = XbrzColorDist(D, I);
+						const bool doLineBlend =
+							(blend_w == XBRZ_BLEND_DOMINANT ||
+								!((blend_z != XBRZ_BLEND_NONE && !XbrzPixEqual(E, A)) ||
+									(blend_x != XBRZ_BLEND_NONE && !XbrzPixEqual(E, I)) ||
+									(XbrzPixEqual(A, D) && XbrzPixEqual(D, G) && XbrzPixEqual(G, H) &&
+										XbrzPixEqual(H, I) && !XbrzPixEqual(E, G))));
+						float ox2 = -INV_SQRT2, oy2 = 0.0f, dx = 1.0f, dy = 1.0f;
+						if (doLineBlend)
+						{
+							const bool shallow =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_H_A <= dist_D_I) && E != A && B != A;
+							const bool steep =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_D_I <= dist_H_A) && E != I && F != I;
+							ox2 = shallow ? -0.25f : -0.5f;
+							oy2 = 0.0f;
+							dy += shallow ? 1.0f : 0.0f;
+							dx += steep ? 1.0f : 0.0f;
+						}
+						const u32 blendPix = (XbrzColorDist(E, H) >= XbrzColorDist(E, D)) ? D : H;
+						res = XbrzMix(res, blendPix, XbrzLeftRatio(posx, posy, ox2, oy2, dx, dy, fscale));
+					}
+					if (blend_y != XBRZ_BLEND_NONE)
+					{
+						const float dist_B_I = XbrzColorDist(B, I);
+						const float dist_F_A = XbrzColorDist(F, A);
+						const bool doLineBlend =
+							(blend_y == XBRZ_BLEND_DOMINANT ||
+								!((blend_x != XBRZ_BLEND_NONE && !XbrzPixEqual(E, I)) ||
+									(blend_z != XBRZ_BLEND_NONE && !XbrzPixEqual(E, A)) ||
+									(XbrzPixEqual(I, F) && XbrzPixEqual(F, C) && XbrzPixEqual(C, B) &&
+										XbrzPixEqual(B, A) && !XbrzPixEqual(E, C))));
+						float ox2 = INV_SQRT2, oy2 = 0.0f, dx = -1.0f, dy = -1.0f;
+						if (doLineBlend)
+						{
+							const bool shallow =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_B_I <= dist_F_A) && E != I && H != I;
+							const bool steep =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_F_A <= dist_B_I) && E != A && D != A;
+							ox2 = shallow ? 0.25f : 0.5f;
+							oy2 = 0.0f;
+							dy -= shallow ? 1.0f : 0.0f;
+							dx -= steep ? 1.0f : 0.0f;
+						}
+						const u32 blendPix = (XbrzColorDist(E, F) >= XbrzColorDist(E, B)) ? B : F;
+						res = XbrzMix(res, blendPix, XbrzLeftRatio(posx, posy, ox2, oy2, dx, dy, fscale));
+					}
+					if (blend_x != XBRZ_BLEND_NONE)
+					{
+						const float dist_D_C = XbrzColorDist(D, C);
+						const float dist_B_G = XbrzColorDist(B, G);
+						const bool doLineBlend =
+							(blend_x == XBRZ_BLEND_DOMINANT ||
+								!((blend_w != XBRZ_BLEND_NONE && !XbrzPixEqual(E, C)) ||
+									(blend_y != XBRZ_BLEND_NONE && !XbrzPixEqual(E, G)) ||
+									(XbrzPixEqual(C, B) && XbrzPixEqual(B, A) && XbrzPixEqual(A, D) &&
+										XbrzPixEqual(D, G) && !XbrzPixEqual(E, A))));
+						float ox2 = 0.0f, oy2 = -INV_SQRT2, dx = -1.0f, dy = 1.0f;
+						if (doLineBlend)
+						{
+							const bool shallow =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_D_C <= dist_B_G) && E != C && F != C;
+							const bool steep =
+								(XBRZ_STEEP_DIRECTION_THRESHOLD * dist_B_G <= dist_D_C) && E != G && H != G;
+							ox2 = 0.0f;
+							oy2 = shallow ? -0.25f : -0.5f;
+							dx -= shallow ? 1.0f : 0.0f;
+							dy += steep ? 1.0f : 0.0f;
+						}
+						const u32 blendPix = (XbrzColorDist(E, D) >= XbrzColorDist(E, B)) ? B : D;
+						res = XbrzMix(res, blendPix, XbrzLeftRatio(posx, posy, ox2, oy2, dx, dy, fscale));
+					}
+
+					dst[static_cast<size_t>(oy) * dst_stride + ox] = res;
+				}
+			}
+		}
+
 		inline float Sinc(float x)
 		{
 			if (std::fabs(x) < 1e-6f)
@@ -1408,6 +1683,7 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::SuperSaI2x:
 			case GSTextureUpscaleAlgorithm::xBR:
 			case GSTextureUpscaleAlgorithm::MMPX:
+			case GSTextureUpscaleAlgorithm::xBRZ:
 			case GSTextureUpscaleAlgorithm::Anime4K:
 			case GSTextureUpscaleAlgorithm::Nearest:
 			case GSTextureUpscaleAlgorithm::Mitchell:
@@ -1527,6 +1803,10 @@ namespace GSTextureUpscaler
 
 			case GSTextureUpscaleAlgorithm::Anime4K:
 				ScaleAnime4K(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
+				return true;
+
+			case GSTextureUpscaleAlgorithm::xBRZ:
+				ScaleXbrz(src_px, sw, sh, src_stride, dst_px, dst_stride, scale);
 				return true;
 
 			case GSTextureUpscaleAlgorithm::Lanczos:
@@ -1717,10 +1997,11 @@ namespace GSTextureUpscaler
 			GSTextureUpscaleAlgorithm::Eagle, GSTextureUpscaleAlgorithm::SuperEagle,
 			GSTextureUpscaleAlgorithm::SaI2x, GSTextureUpscaleAlgorithm::SuperSaI2x,
 			GSTextureUpscaleAlgorithm::xBR, GSTextureUpscaleAlgorithm::MMPX,
+			GSTextureUpscaleAlgorithm::xBRZ,
 			GSTextureUpscaleAlgorithm::Anime4K};
 		static const char* const NAMES[] = {"Nearest", "Bilinear", "SharpBilinear", "Bicubic",
 			"Mitchell", "Lanczos", "LanczosCAS", "Scale2x", "Eagle", "SuperEagle", "2xSaI",
-			"Super2xSaI", "xBR", "MMPX", "Anime4K"};
+			"Super2xSaI", "xBR", "MMPX", "xBRZ", "Anime4K"};
 		static_assert(std::size(ALL) == std::size(NAMES), "filter self-test name list out of step");
 
 		constexpr int W = 8;
@@ -1794,6 +2075,7 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::SuperSaI2x: return "Super2xSaI";
 			case GSTextureUpscaleAlgorithm::xBR: return "xBR";
 			case GSTextureUpscaleAlgorithm::MMPX: return "MMPX";
+			case GSTextureUpscaleAlgorithm::xBRZ: return "xBRZ";
 			case GSTextureUpscaleAlgorithm::Anime4K: return "Anime4K";
 			case GSTextureUpscaleAlgorithm::FSRCNN: return "FSRCNN";
 			case GSTextureUpscaleAlgorithm::SESR: return "SESR";

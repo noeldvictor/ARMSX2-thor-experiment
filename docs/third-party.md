@@ -40,6 +40,26 @@ slang-shader pack the in-app **Download** button already pulls from ships
 The two are complementary, not alternatives — one sharpens each texture as it is uploaded and
 is cached, the other filters the finished frame every frame.
 
+## MMPX and xBRZ — GPLv2-or-later
+
+Both are ports of the GLSL texture filters in [Citra](https://github.com/citra-emu/citra) /
+Azahar (`texture_filtering/mmpx.frag`, `texture_filtering/xbrz_freescale.frag`), Copyright
+2023 Citra Emulator Project, licensed GPLv2-or-later.
+
+Upstream of those: MMPX is McGuire & Barr-Brisebois'
+[style-preserving pixel-art magnification](https://casual-effects.com/research/McGuire2021PixelArt/McGuire2021PixelArt.pdf),
+and xBRZ is Zenju's refinement of Hyllian's xBR.
+
+Two notes on fidelity, since both were ported rather than reinvented:
+
+- **MMPX**: Citra's shader has `P` and `S` both at offset `(0, 2)`, which differs from the
+  paper. Reproduced as-is. That is the behaviour Azahar ships and what people have actually
+  compared against; quietly correcting it would make this filter differ from the reference it
+  claims to be.
+- **xBRZ**: this is the *free-scale* variant, which decides a blend per output pixel from
+  where that pixel sits inside its source texel. That is why it is dispatched like a
+  resampler rather than as a doubling pass, and why 4x is one pass instead of 2x twice.
+
 ## Licence compatibility
 
 ARMSX2 is GPLv3. MIT is compatible with it, and Citra's own code is GPLv2-or-later, which is
