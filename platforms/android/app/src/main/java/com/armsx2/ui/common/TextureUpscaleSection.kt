@@ -1,8 +1,14 @@
 package com.armsx2.ui.common
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +19,7 @@ import com.armsx2.ui.settings.IntSliderRow
 import com.armsx2.ui.settings.SegmentedRow
 import com.armsx2.ui.settings.SettingsDivider
 import com.armsx2.ui.settings.ToggleRow
+import com.armsx2.ui.settings.controllerFocusable
 
 /**
  * Texture upscaling rows: a toggle, algorithm and scale per texture class, and the shared
@@ -74,36 +81,80 @@ private val DESCRIPTION_KEYS = mapOf(
 )
 
 /**
- * Three chip rows, one per family, rather than one control listing seventeen filters.
+ * One family of filters as wrapping chips.
  *
- * Only the family owning the current selection highlights anything; the others pass -1,
- * which SegmentedRow renders as no selection. That is what makes "which family am I in"
- * readable at a glance instead of something you work out from a name.
+ * FlowRow rather than a single row: seven chips do not fit the width and a plain row
+ * silently CLIPS the overflow, so Lanczos, L+CAS and xBR existed but could not be seen or
+ * reached. Wrapping is also what lets the labels stay readable words instead of slivers.
  */
 @Composable
-private fun AlgorithmPicker(current: Int, onChange: (Int) -> Unit) {
-    val described = DESCRIPTION_KEYS[current]
-    SegmentedRow(
-        str("renderer.textureUpscale.family.resample"),
-        LABELS_RESAMPLE,
-        FAMILY_RESAMPLE.indexOf(current),
-        description = if (described != null && current in FAMILY_RESAMPLE) str(described) else null,
-    ) { onChange(FAMILY_RESAMPLE[it]) }
+private fun FamilyChips(
+    title: String,
+    ordinals: List<Int>,
+    labels: List<String>,
+    current: Int,
+    keyPrefix: String,
+    description: String?,
+    onChange: (Int) -> Unit,
+) {
+    Column(Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
+        Text(title, style = MaterialTheme.typography.titleSmall)
+        if (description != null) {
+            Spacer(Modifier.height(4.dp))
+            Text(
+                description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Spacer(Modifier.height(8.dp))
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(7.dp),
+            verticalArrangement = Arrangement.spacedBy(7.dp),
+        ) {
+            ordinals.forEachIndexed { index, ordinal ->
+                val apply = { onChange(ordinal) }
+                FilterChip(
+                    selected = current == ordinal,
+                    onClick = apply,
+                    label = { Text(labels[index]) },
+                    shape = RoundedCornerShape(11.dp),
+                    modifier = Modifier.controllerFocusable(
+                        "$keyPrefix.$ordinal",
+                        RoundedCornerShape(11.dp),
+                        onConfirm = apply,
+                    ),
+                )
+            }
+        }
+    }
+}
 
-    SegmentedRow(
-        str("renderer.textureUpscale.family.edge"),
-        LABELS_EDGE,
-        FAMILY_EDGE.indexOf(current),
-        description = if (described != null && current in FAMILY_EDGE) str(described) else null,
-    ) { onChange(FAMILY_EDGE[it]) }
+/**
+ * Three families rather than one control listing seventeen filters. Only the family owning
+ * the current selection has a filled chip, so which family you are in is readable at a
+ * glance rather than something you work out from a name.
+ */
+@Composable
+private fun AlgorithmPicker(current: Int, keyPrefix: String, onChange: (Int) -> Unit) {
+    val described = DESCRIPTION_KEYS[current]?.let { str(it) }
 
-    SegmentedRow(
-        str("renderer.textureUpscale.family.neural"),
-        LABELS_NEURAL,
-        FAMILY_NEURAL.indexOf(current),
-        description = if (described != null && current in FAMILY_NEURAL) str(described)
-                      else str("renderer.textureUpscale.family.neuralHint"),
-    ) { onChange(FAMILY_NEURAL[it]) }
+    FamilyChips(
+        str("renderer.textureUpscale.family.resample"), FAMILY_RESAMPLE, LABELS_RESAMPLE,
+        current, "$keyPrefix.resample",
+        if (current in FAMILY_RESAMPLE) described else null, onChange,
+    )
+    FamilyChips(
+        str("renderer.textureUpscale.family.edge"), FAMILY_EDGE, LABELS_EDGE,
+        current, "$keyPrefix.edge",
+        if (current in FAMILY_EDGE) described else null, onChange,
+    )
+    FamilyChips(
+        str("renderer.textureUpscale.family.neural"), FAMILY_NEURAL, LABELS_NEURAL,
+        current, "$keyPrefix.neural",
+        if (current in FAMILY_NEURAL) described else str("renderer.textureUpscale.family.neuralHint"),
+        onChange,
+    )
 }
 
 private val SCALE_LABELS = listOf("2x", "4x")
@@ -150,7 +201,7 @@ fun TextureUpscaleSection(
         // chain and LSFG sections. It also keeps dead rows out of the controller focus
         // registry rather than parking focus on something inert.
         if (worldEnabled) {
-            AlgorithmPicker(worldAlgorithm) { onWorldAlgorithmChange(it) }
+            AlgorithmPicker(worldAlgorithm, "texUpscale.world") { onWorldAlgorithmChange(it) }
             SegmentedRow(
                 str("renderer.textureUpscale.scale.label"),
                 SCALE_LABELS,
@@ -170,7 +221,7 @@ fun TextureUpscaleSection(
             onUiEnabledChange(it)
         }
         if (uiEnabled) {
-            AlgorithmPicker(uiAlgorithm) { onUiAlgorithmChange(it) }
+            AlgorithmPicker(uiAlgorithm, "texUpscale.ui") { onUiAlgorithmChange(it) }
             SegmentedRow(
                 str("renderer.textureUpscale.scale.label"),
                 SCALE_LABELS,

@@ -397,7 +397,8 @@ object TouchControls {
 
     /** On-screen touch controls visibility. 0 = Never show (for physical-
      *  controls devices like the RP6 — also hides the settings cog so nothing
-     *  overlaps R1); 1..10 = auto-hide after that many seconds of no touch;
+     *  overlaps R1, and the top-right pause glyph, whose corner stays tappable);
+     *  1..10 = auto-hide after that many seconds of no touch;
      *  11 = Auto — show on screen touch, hide when a controller is used
      *  (upstream's default). Persisted.
      *

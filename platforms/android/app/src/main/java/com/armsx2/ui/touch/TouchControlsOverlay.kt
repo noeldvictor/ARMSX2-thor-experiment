@@ -835,7 +835,14 @@ private fun PauseWidget(cfg: TouchButtonCfg, edit: Boolean) {
         val opacity = TouchControls.opacity.floatValue
         // Drawn unless the user picked tap-to-reveal, or disabled the widget outright — a disabled
         // pause is treated as hidden-but-tappable rather than gone, so it can't strand you.
-        val alwaysVisible = cfg.enabled && !TouchControls.pauseTapToReveal.value
+        //
+        // Also hidden when on-screen controls are set to Never (mode 0). That mode already means
+        // "this device has physical controls" - it is what hides the settings cog - and leaving a
+        // ⏸ glyph floating over the game after every other touch control has gone is just the
+        // last piece of touch UI nobody asked for. The tap zone below stays live either way, so
+        // the corner still opens the menu.
+        val alwaysVisible = cfg.enabled && !TouchControls.pauseTapToReveal.value &&
+            TouchControls.visibilityMode.intValue != 0
         var revealed by remember { mutableStateOf(false) }
         LaunchedEffect(revealed) {
             if (revealed) {

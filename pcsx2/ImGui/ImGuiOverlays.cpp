@@ -607,21 +607,25 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				if (!s_gs_memory_stats_line.empty())
 					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), OsdTextColor());
 				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), OsdTextColor());
+			}
 
-				// Texture upscaling counters. Every decline reason is listed separately because
-				// "nothing is being upscaled" has several very different causes - a full budget
-				// and a texture set that is entirely palettised need opposite fixes, and the
-				// totals alone cannot tell them apart.
-				if (GSTextureUpscaler::IsEnabled())
-				{
-					const GSTextureUpscaler::Stats& us = GSTextureUpscaler::GetStats();
-					s_texture_upscale_line.format(
-						"TexUp: {} up | {} held ({:.1f} MB) | guard {} | impl {} | rate {} | budget {} | nomodel {}",
-						us.upscaled, us.held, static_cast<double>(us.memory_usage) / (1024.0 * 1024.0),
-						us.skipped_guard, us.declined_unimplemented, us.declined_rate_limit,
-						us.declined_budget, us.declined_no_model);
-					DRAW_LINE(osd_font, font_size, s_texture_upscale_line.c_str(), OsdTextColor());
-				}
+			// Texture upscaling counters. OUTSIDE the GS-stats gate on purpose: "is this
+			// actually doing anything" is the first question the feature raises, and burying
+			// the answer behind a setting that also prints eight unrelated lines meant the
+			// honest answer was "you cannot tell". Costs one branch when upscaling is off.
+			//
+			// Every decline reason is separate because "nothing is being upscaled" has several
+			// very different causes - a full budget and an all-palette texture set need
+			// opposite fixes, and a total cannot tell them apart.
+			if (GSTextureUpscaler::IsEnabled())
+			{
+				const GSTextureUpscaler::Stats& us = GSTextureUpscaler::GetStats();
+				s_texture_upscale_line.format(
+					"TexUp {}: {} up | {} held ({:.1f} MB) | guard {} | rate {} | budget {} | nomodel {}",
+					GSTextureUpscaler::CurrentAlgorithmName(), us.upscaled, us.held,
+					static_cast<double>(us.memory_usage) / (1024.0 * 1024.0), us.skipped_guard,
+					us.declined_rate_limit, us.declined_budget, us.declined_no_model);
+				DRAW_LINE(osd_font, font_size, s_texture_upscale_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowResolution)
@@ -796,9 +800,10 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				if (!s_gs_memory_stats_line.empty())
 					DRAW_LINE(osd_font, font_size, s_gs_memory_stats_line.c_str(), OsdTextColor());
 				DRAW_LINE(osd_font, font_size, s_gs_frame_times_line.c_str(), OsdTextColor());
-				if (!s_texture_upscale_line.empty())
-					DRAW_LINE(osd_font, font_size, s_texture_upscale_line.c_str(), OsdTextColor());
 			}
+
+			if (!s_texture_upscale_line.empty() && GSTextureUpscaler::IsEnabled())
+				DRAW_LINE(osd_font, font_size, s_texture_upscale_line.c_str(), OsdTextColor());
 
 			if (GSConfig.OsdShowResolution)
 				DRAW_LINE(osd_font, font_size, s_resolution_line.c_str(), OsdTextColor());

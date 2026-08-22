@@ -1394,6 +1394,32 @@ namespace GSTextureUpscaler
 			Console.Error("Texture upscaling: filter self-test %u OK, %u FAILED.", passed, failed);
 	}
 
+	const char* CurrentAlgorithmName()
+	{
+		switch (GSConfig.TextureUpscaleWorldEnabled ? GSConfig.TextureUpscaleWorldAlgorithm :
+													  GSConfig.TextureUpscaleUiAlgorithm)
+		{
+			case GSTextureUpscaleAlgorithm::Nearest: return "Nearest";
+			case GSTextureUpscaleAlgorithm::Bilinear: return "Bilinear";
+			case GSTextureUpscaleAlgorithm::SharpBilinear: return "SharpBilinear";
+			case GSTextureUpscaleAlgorithm::Bicubic: return "Bicubic";
+			case GSTextureUpscaleAlgorithm::Mitchell: return "Mitchell";
+			case GSTextureUpscaleAlgorithm::Lanczos: return "Lanczos";
+			case GSTextureUpscaleAlgorithm::LanczosCAS: return "Lanczos+CAS";
+			case GSTextureUpscaleAlgorithm::Scale2x: return "Scale2x";
+			case GSTextureUpscaleAlgorithm::Eagle: return "Eagle";
+			case GSTextureUpscaleAlgorithm::SuperEagle: return "SuperEagle";
+			case GSTextureUpscaleAlgorithm::SaI2x: return "2xSaI";
+			case GSTextureUpscaleAlgorithm::SuperSaI2x: return "Super2xSaI";
+			case GSTextureUpscaleAlgorithm::xBR: return "xBR";
+			case GSTextureUpscaleAlgorithm::Anime4K: return "Anime4K";
+			case GSTextureUpscaleAlgorithm::FSRCNN: return "FSRCNN";
+			case GSTextureUpscaleAlgorithm::SESR: return "SESR";
+			case GSTextureUpscaleAlgorithm::ESPCN: return "ESPCN";
+			default: return "?";
+		}
+	}
+
 	const Stats& GetStats()
 	{
 		s_stats.held = static_cast<u32>(s_held.size());

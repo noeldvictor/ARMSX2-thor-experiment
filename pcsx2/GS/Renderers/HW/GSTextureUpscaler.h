@@ -129,6 +129,11 @@ namespace GSTextureUpscaler
 	/// Session counters. See Stats.
 	const Stats& GetStats();
 
+	/// Short name of the world-texture algorithm currently selected, for the OSD. Seeing the
+	/// filter's name on screen is how you tell a setting actually took effect - "it says
+	/// Scale2x" and "I chose Scale2x" being the same thing is the whole point.
+	const char* CurrentAlgorithmName();
+
 	/// Once per session, run every implemented filter over a small synthetic texture and log a
 	/// one-line summary, naming any that fail.
 	///
