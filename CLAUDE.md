@@ -95,12 +95,17 @@ existing worker thread with no Vulkan work.
   class carried through the worker job, self-test at texture-cache creation (checksum
   `6d1bd0ec` with the first general kernels). Verified bit-exact against the numpy reference
   with a host harness (`raisr-data/hosttest/`, clang against thin stubs).
-- **Shipped kernels**: one general set fit on Xenosaga III + Ape Escape 2 + TimeSplitters 2
-  (9,126 textures), copied to both `world_*` and `ui_*` in `assets/resources/upscale/`
-  (`.a2rk` files are force-refreshed on app update). Held-out 2x PSNR vs Lanczos: UI-type
-  pack +3.6 dB, TimeSplitters +0.9, Ape Escape +0.1; 4x on TimeSplitters +0.5. A
-  pack-specific fit is worth ~1 dB on UI art, so the planned refit is a small-texture vs
-  large-texture split, which is what the World/UI size classes already are.
+- **Shipped kernels**: one general 2x set fit on nine packs (Xenosaga III, Ape Escape 2,
+  TimeSplitters 2, Suikoden V, Dual Hearts, Tales of Rebirth, Wild Arms 5, Cold Winter,
+  Mega Man X7; 17,320 textures), copied to both `world_x2` and `ui_x2` in
+  `assets/resources/upscale/` (`.a2rk` files are force-refreshed on app update). Held-out
+  2x PSNR vs Lanczos, per pack: +3.5, +0.1, +1.0, +2.1, +0.6, +0.7, +1.0, +0.7, +0.7 - it
+  wins on every pack. **The small/large split is retired**: specialist sets fit on the
+  <=128 and >128 bands gained <=0.06 dB over the general set on their own bands
+  (`raisr-data/fit_round2.log`), so one set serves both classes. The 4x set is still the
+  three-pack fit until the nine-pack 4x lands.
+- God Hand's pack (1.8 GB) failed mid-download on an HTTP/2 stream error; refetch it for a
+  later round. Mega Man X7's pack is mostly mip files (184 usable textures).
 - **Found and fixed on device**: with upstream's `hwMipmap = true` default, the upscaler's
   guard used to skip every mipmapped texture, which in Wizardry is all of them -
   `skippedGuard` climbed, `upscaled` stayed 0. `lod` is no longer a guard: level 0 is

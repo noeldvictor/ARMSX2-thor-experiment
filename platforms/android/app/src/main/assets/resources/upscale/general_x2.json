@@ -2,9 +2,15 @@
  "datasets": [
   "xenosaga3",
   "apeescape2",
-  "timesplitters2"
+  "timesplitters2",
+  "suikoden5",
+  "dualhearts",
+  "talesofrebirth",
+  "wildarms5",
+  "coldwinter",
+  "megamanx7"
  ],
- "textures": 9126,
+ "textures": 17320,
  "scale": 2,
  "kernel": 9,
  "angles": 24,
@@ -14,8 +20,21 @@
  "sigma": 1.5,
  "ridge": 0.0001,
  "augment": true,
- "pixels_per_texture": 3000,
+ "pixels_per_texture": 1200,
+ "native_min": 0,
+ "native_max": 1048576,
  "empty_buckets": 0,
- "seconds": 1639,
- "note": "Fit by tools/raisr_train.py; world_x2 and ui_x2 are this same general set until the per-class refit lands."
+ "seconds": 2606,
+ "note": "Fit by tools/raisr_train.py on nine HD packs; world_x2 and ui_x2 are this same general set (a small/large split gained <0.1 dB).",
+ "heldout_psnr_vs_lanczos": {
+  "xenosaga3": "+3.5",
+  "suikoden5": "+2.1",
+  "timesplitters2": "+1.0",
+  "wildarms5": "+1.0",
+  "megamanx7": "+0.7",
+  "coldwinter": "+0.7",
+  "talesofrebirth": "+0.7",
+  "dualhearts": "+0.6",
+  "apeescape2": "+0.1"
+ }
 }
