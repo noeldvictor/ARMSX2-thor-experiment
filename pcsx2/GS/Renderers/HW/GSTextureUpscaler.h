@@ -65,6 +65,8 @@ namespace GSTextureUpscaler
 		std::vector<u32> pixels;
 		int width = 0;
 		int height = 0;
+		/// The source was sampled with mip levels, so the injected texture needs a chain too.
+		bool mipmap = false;
 		std::pair<u8, u8> alpha_minmax{0u, 255u};
 	};
 
@@ -109,7 +111,7 @@ namespace GSTextureUpscaler
 	/// inline puts Lanczos on the GS thread at upload time, which is exactly the hitch this
 	/// feature must not cause.
 	void QueueUpscale(const GSTextureCache::HashCacheKey& key, const u8* src, int sw, int sh, u32 src_pitch,
-		GSTextureUpscaleAlgorithm algorithm, u8 scale, TextureClass texture_class,
+		GSTextureUpscaleAlgorithm algorithm, u8 scale, TextureClass texture_class, bool mipmap,
 		const std::pair<u8, u8>& alpha_minmax);
 
 	/// Move finished jobs out for injection, stopping once `max_bytes` have been taken so a

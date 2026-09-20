@@ -65,6 +65,7 @@ namespace GSTextureUpscaler
 			GSTextureUpscaleAlgorithm algorithm = GSTextureUpscaleAlgorithm::Bilinear;
 			u8 scale = 2;
 			TextureClass texture_class = TextureClass::World;
+			bool mipmap = false;
 			bool deposterize = false;
 			std::pair<u8, u8> alpha_minmax{0u, 255u};
 		};
@@ -121,6 +122,7 @@ namespace GSTextureUpscaler
 				done.pixels = std::move(out);
 				done.width = dw;
 				done.height = dh;
+				done.mipmap = job.mipmap;
 				done.alpha_minmax = job.alpha_minmax;
 				s_completed.push_back(std::move(done));
 			}
@@ -2198,7 +2200,7 @@ namespace GSTextureUpscaler
 	}
 
 	void QueueUpscale(const GSTextureCache::HashCacheKey& key, const u8* src, int sw, int sh, u32 src_pitch,
-		GSTextureUpscaleAlgorithm algorithm, u8 scale, TextureClass texture_class,
+		GSTextureUpscaleAlgorithm algorithm, u8 scale, TextureClass texture_class, bool mipmap,
 		const std::pair<u8, u8>& alpha_minmax)
 	{
 		const u32 src_stride = src_pitch / sizeof(u32);
@@ -2211,6 +2213,7 @@ namespace GSTextureUpscaler
 		job.algorithm = algorithm;
 		job.scale = scale;
 		job.texture_class = texture_class;
+		job.mipmap = mipmap;
 		job.deposterize = GSConfig.TextureUpscaleDeposterize;
 		job.alpha_minmax = alpha_minmax;
 

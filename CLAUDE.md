@@ -64,8 +64,7 @@ does **not** upscale the finished frame. Present-time upscaling already exists h
 
 ### RAISR-HD learned kernels
 
-**Trainer, runtime and bundled kernels implemented; mipmapped textures still excluded (in
-progress).** The "pseudo-HD without a pack" path: RAISR
+**Trainer, runtime, bundled kernels and mipmap support implemented; verified on device.** The "pseudo-HD without a pack" path: RAISR
 (Romano/Isidoro/Milanfar 2016) - not a neural net. Each input pixel is hashed by gradient
 angle/strength/coherence into one of 216 buckets; each bucket owns one small kernel per
 output phase, fit by least squares on HD-pack pairs. Cost is ~550 MACs per input pixel, an
@@ -102,12 +101,18 @@ existing worker thread with no Vulkan work.
   pack +3.6 dB, TimeSplitters +0.9, Ape Escape +0.1; 4x on TimeSplitters +0.5. A
   pack-specific fit is worth ~1 dB on UI art, so the planned refit is a small-texture vs
   large-texture split, which is what the World/UI size classes already are.
-- **Found on device**: with upstream's `hwMipmap = true` default, the upscaler's guard
-  (`paltex || lod || region`) skips every mipmapped texture, which in Wizardry is all of
-  them - `skippedGuard` climbs, `upscaled` stays 0. Fix in progress: drop `lod` from the
-  guard and create the injected texture with a full mip chain (the replacement path already
-  does this; `GenerateMipmapsIfNeeded` fills it). `gpuPaletteConversion` is off by default,
-  so palettes are not the blocker.
+- **Found and fixed on device**: with upstream's `hwMipmap = true` default, the upscaler's
+  guard used to skip every mipmapped texture, which in Wizardry is all of them -
+  `skippedGuard` climbed, `upscaled` stayed 0. `lod` is no longer a guard: level 0 is
+  scaled and the injected texture gets a full mip chain via `GenerateMipmapsIfNeeded`,
+  as the replacement path does. `gpuPaletteConversion` is off by default, so palettes are
+  not a blocker. First A/B on the Wizardry opening dialogue (same frame, IR 3x, reload
+  between): RAISR-HD is visibly crisper than native on hair and line art; mean |diff|
+  2.5/255. Screenshots in `raisr-data/shots/`.
+- **Follow-ups seen in that A/B**: Lanczos+CAS produces rainbow speckle on Wizardry's
+  portrait art (pre-existing filter bug, now reproducible with the server); the dialogue
+  font never reaches the upscaler (region-texture or target path - one of the remaining
+  guards).
 - Wizardry also ran at `upscaleFloat = 1` (native internal resolution) on the test device;
   texture sharpness is invisible until IR is 2-3x. Set it before judging the look.
 - RAISR is an interpolator: it sharpens along edges and cannot invent detail. Expect "a much

@@ -7248,7 +7248,7 @@ extern bool FMVstarted;
 /// time, which is the hitch this feature exists to avoid.
 static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& key, const GIFRegTEX0& TEX0,
 	const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region, int tw, int th, u8 scale,
-	GSTextureUpscaleAlgorithm algorithm, GSTextureUpscaler::TextureClass texture_class)
+	GSTextureUpscaleAlgorithm algorithm, GSTextureUpscaler::TextureClass texture_class, bool mipmap)
 {
 	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
 	const GSVector2i& bs = psm.bs;
@@ -7273,7 +7273,7 @@ static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& 
 	// range is a subset of the source's - the bound stays correct and we avoid a second pass.
 	const std::pair<u8, u8> alpha_minmax = GSGetRGBA8AlphaMinMax(ptr, tw, th, src_pitch);
 
-	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, texture_class, alpha_minmax);
+	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, texture_class, mipmap, alpha_minmax);
 }
 
 GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, bool& paltex, const u32* clut, const GSVector2i* lod, SourceRegion region)
@@ -7391,11 +7391,13 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	const int th = region.HasY() ? region.GetHeight() : (1 << TEX0.TH);
 	const int tlevels = lod ? (GSConfig.HWMipmap ? std::min(lod->y - lod->x + 1, GSDevice::GetMipmapLevelsForSize(tw, th)) : -1) : 1;
 
-	// Texture upscaling. Deliberately narrow for now: no palette, because the buffer would
-	// hold indices rather than colour and has to resolve through its CLUT first; no mips,
-	// because each level would need scaling and the level count changes with it; and no
-	// source region, because the sub-rect changes what "the texture" even is. Each of those
-	// gets its own handling later - see docs/texture-upscaling-research.md.
+	// Texture upscaling. Deliberately narrow: no GPU-palette textures, because the buffer
+	// would hold indices rather than colour and has to resolve through its CLUT first; and
+	// no source region, because the sub-rect changes what "the texture" even is. Mipmapped
+	// textures ARE taken: only level 0 is read and scaled, and the injected texture gets a
+	// full chain generated on the GPU (the replacement path does the same). Excluding them
+	// excluded almost everything on device - with HWMipmap on, a 3D game's world textures
+	// all carry a LOD - so "upscaled" stayed at zero while "skippedGuard" climbed.
 	//
 	// A larger texture in the hash cache is not a new idea here: the replacement path above
 	// already inserts higher-resolution textures against the same unscaled_size/m_scale, so
@@ -7404,7 +7406,7 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	// A pending pack texture also skips: pack wins over upscaler. A replacement found
 	// synchronously returned above, but one still loading would otherwise race the upscale
 	// worker for InjectHashCacheTexture, and whichever landed last would win.
-	if (GSTextureUpscaler::IsEnabled() && (paltex || lod || region.HasX() || region.HasY() || replacement_texture_pending))
+	if (GSTextureUpscaler::IsEnabled() && (paltex || region.HasX() || region.HasY() || replacement_texture_pending))
 	{
 		// Counted rather than silently dropped: if a game turns out to be mostly palette or
 		// mipmapped textures, "the upscaler does nothing" and "the upscaler is off" look
@@ -7418,7 +7420,7 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		{
 			GL_CACHE("TC: HC Upscale queued x%u: %" PRIx64 " %dx%d", plan.scale, key.TEX0Hash, tw, th);
 			QueueUpscaleForHashCacheTexture(key, TEX0, TEXA, region, tw, th, plan.scale, plan.algorithm,
-				plan.texture_class);
+				plan.texture_class, lod != nullptr);
 			// Deliberately falls through: the native texture is created below so the game has
 			// something to draw this frame, and the upscale replaces it when the worker is done.
 		}
@@ -7497,12 +7499,24 @@ void GSTextureCache::ProcessUpscaledTextures()
 
 	for (GSTextureUpscaler::CompletedUpscale& done : completed)
 	{
-		GSTexture* tex = g_gs_device->CreateTexture(done.width, done.height, 1, GSTexture::Format::Color);
+		// A mipmapped source gets a full chain: the game samples specific levels (manual LOD)
+		// or asks for automatic ones, and either way a single-level texture in their place
+		// would clamp every distant sample to level 0. Level 0 is the upscale; the rest are
+		// generated on the GPU from it, exactly as a replacement without mip files is.
+		const int levels = done.mipmap ? GSDevice::GetMipmapLevelsForSize(done.width, done.height) : 1;
+		GSTexture* tex = g_gs_device->CreateTexture(done.width, done.height, levels, GSTexture::Format::Color);
 		if (!tex)
 			continue;
 
-		tex->Update(GSVector4i(0, 0, done.width, done.height), done.pixels.data(),
-			static_cast<u32>(done.width) * sizeof(u32), 0);
+		if (!tex->Update(GSVector4i(0, 0, done.width, done.height), done.pixels.data(),
+				static_cast<u32>(done.width) * sizeof(u32), 0))
+		{
+			// Undefined contents would be worse than the native texture it replaces.
+			g_gs_device->Recycle(tex);
+			continue;
+		}
+		if (levels > 1)
+			tex->GenerateMipmapsIfNeeded();
 
 		GSTextureUpscaler::NoteUpscaled(done.key.TEX0Hash, tex->GetMemUsage());
 		InjectHashCacheTexture(done.key, tex, done.alpha_minmax);
