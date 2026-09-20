@@ -55,6 +55,7 @@
 #include "SPU2/spu2.h"
 #include "GS/Renderers/Vulkan/VKLoader.h"
 #include "GS/Renderers/HW/GSTextureReplacements.h"
+#include "GS/Renderers/HW/GSTextureUpscaler.h" // dev server: getTextureUpscaleStats
 #include "GS/Renderers/Common/GSRenderer.h"
 #include "SDL3/SDL.h"
 #include "ps2/BiosTools.h"
@@ -1245,6 +1246,27 @@ Java_kr_co_iefriends_pcsx2_NativeApp_toggleTextureDumping(JNIEnv *env, jclass cl
             MTGS::ApplySettings();
     }, /*block=*/true);
     return newval ? JNI_TRUE : JNI_FALSE;
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getTextureUpscaleStats(JNIEnv *env, jclass clazz) {
+    // Diagnostics for the dev server. The counters are plain u32s written by the GS thread and
+    // read here without a lock: a torn read costs a stale number, which is fine for a readout.
+    const GSTextureUpscaler::Stats& s = GSTextureUpscaler::GetStats();
+    const std::string json = fmt::format(
+        "{{\"worldEnabled\":{},\"uiEnabled\":{},\"worldAlgorithm\":{},\"uiAlgorithm\":{},"
+        "\"worldScale\":{},\"uiScale\":{},\"deposterize\":{},\"budgetMB\":{},"
+        "\"upscaled\":{},\"evicted\":{},\"held\":{},\"memoryUsage\":{},\"skippedGuard\":{},"
+        "\"declinedClassDisabled\":{},\"declinedUnimplemented\":{},\"declinedRateLimit\":{},"
+        "\"declinedBudget\":{},\"declinedNoModel\":{}}}",
+        EmuConfig.GS.TextureUpscaleWorldEnabled, EmuConfig.GS.TextureUpscaleUiEnabled,
+        static_cast<int>(EmuConfig.GS.TextureUpscaleWorldAlgorithm), static_cast<int>(EmuConfig.GS.TextureUpscaleUiAlgorithm),
+        static_cast<int>(EmuConfig.GS.TextureUpscaleWorldScale), static_cast<int>(EmuConfig.GS.TextureUpscaleUiScale),
+        EmuConfig.GS.TextureUpscaleDeposterize, static_cast<int>(EmuConfig.GS.TextureUpscaleVramBudgetMB),
+        s.upscaled, s.evicted, s.held, s.memory_usage, s.skipped_guard, s.declined_class_disabled,
+        s.declined_unimplemented, s.declined_rate_limit, s.declined_budget, s.declined_no_model);
+    return env->NewStringUTF(json.c_str());
 }
 
 extern "C"

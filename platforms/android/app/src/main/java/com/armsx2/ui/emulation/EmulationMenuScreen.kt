@@ -1108,23 +1108,33 @@ private fun GraphicsPane(state: EmulationMenuUiState, viewModel: EmulationMenuVi
     // already-cached textures stay native until they are evicted and re-uploaded, so a change
     // shows up gradually rather than instantly.
     SectionCard(str("renderer.textureUpscale.title")) {
+        // Its own store, not Settings fields (see TextureUpscaleSettings). Saved in the same
+        // scope the rest of this menu saves in, and applied live through the GS reconfigure.
+        com.armsx2.config.TextureUpscaleStore.revision.intValue
+        val tuScope = com.armsx2.ui.InGameOverlay.settingsScope.value
+        val tuSerial = com.armsx2.ui.InGameOverlay.currentSerial.value
+        val tu = com.armsx2.config.TextureUpscaleStore.forScope(tuScope, tuSerial)
+        val applyTu = { updated: com.armsx2.config.TextureUpscaleSettings ->
+            com.armsx2.config.TextureUpscaleStore.saveAndApply(tuScope, tuSerial, updated, tu)
+        }
         com.armsx2.ui.common.TextureUpscaleSection(
-            worldEnabled = settings.textureUpscaleWorldEnabled,
-            worldAlgorithm = settings.textureUpscaleWorldAlgorithm,
-            worldScale = settings.textureUpscaleWorldScale,
-            uiEnabled = settings.textureUpscaleUiEnabled,
-            uiAlgorithm = settings.textureUpscaleUiAlgorithm,
-            uiScale = settings.textureUpscaleUiScale,
-            vramBudgetMb = settings.textureUpscaleVramBudgetMb,
-            deposterize = settings.textureUpscaleDeposterize,
-            onWorldEnabledChange = { on -> viewModel.updateSettings { it.copy(textureUpscaleWorldEnabled = on) } },
-            onWorldAlgorithmChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleWorldAlgorithm = v) } },
-            onWorldScaleChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleWorldScale = v) } },
-            onUiEnabledChange = { on -> viewModel.updateSettings { it.copy(textureUpscaleUiEnabled = on) } },
-            onUiAlgorithmChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleUiAlgorithm = v) } },
-            onUiScaleChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleUiScale = v) } },
-            onVramBudgetChange = { v -> viewModel.updateSettings { it.copy(textureUpscaleVramBudgetMb = v) } },
-            onDeposterizeChange = { on -> viewModel.updateSettings { it.copy(textureUpscaleDeposterize = on) } },
+            worldEnabled = tu.worldEnabled,
+            worldAlgorithm = tu.worldAlgorithm,
+            worldScale = tu.worldScale,
+            uiEnabled = tu.uiEnabled,
+            uiAlgorithm = tu.uiAlgorithm,
+            uiScale = tu.uiScale,
+            vramBudgetMb = tu.vramBudgetMb,
+            deposterize = tu.deposterize,
+            onWorldEnabledChange = { applyTu(tu.copy(worldEnabled = it)) },
+            onWorldAlgorithmChange = { applyTu(tu.copy(worldAlgorithm = it)) },
+            onWorldScaleChange = { applyTu(tu.copy(worldScale = it)) },
+            onUiEnabledChange = { applyTu(tu.copy(uiEnabled = it)) },
+            onUiAlgorithmChange = { applyTu(tu.copy(uiAlgorithm = it)) },
+            onUiScaleChange = { applyTu(tu.copy(uiScale = it)) },
+            onVramBudgetChange = { applyTu(tu.copy(vramBudgetMb = it)) },
+            onDeposterizeChange = { applyTu(tu.copy(deposterize = it)) },
+            onReloadTextures = { MainActivityRuntime.instance?.reloadTextures() },
         )
     }
 }

@@ -526,6 +526,7 @@ enum class GSTextureUpscaleAlgorithm : u8
 	Mitchell,       ///< Mitchell-Netravali bicubic. Softer than Catmull-Rom, no ringing.
 	SharpBilinear,  ///< Crisp texel edges with a one-pixel ramp. Sharp without the blockiness.
 	ScaleForce,     ///< Edge-aware warp then bicubic. Smooth without softening edges.
+	RaisrHD,        ///< Learned kernels fit on HD texture packs (RAISR). Bundled; the default.
 };
 
 enum class GSHWAutoFlushLevel : u8
@@ -1129,13 +1130,13 @@ struct Pcsx2Config
 		// World/3D and UI/2D are deliberately independent, each with its own enable and its
 		// own algorithm: a neural model that flatters a painted wall will mangle a HUD font.
 		// See docs/texture-upscaling-research.md.
-		bool TextureUpscaleWorldEnabled = false;
-		bool TextureUpscaleUiEnabled = false;
+		bool TextureUpscaleWorldEnabled = true;
+		bool TextureUpscaleUiEnabled = true;
 		// Scale2x rather than the xBRZ/MMPX the design recommends, because those have no
 		// kernel yet and defaulting to one would make enabling the feature silently do
 		// nothing. Move these when the recommended filters land.
-		GSTextureUpscaleAlgorithm TextureUpscaleWorldAlgorithm = GSTextureUpscaleAlgorithm::Scale2x;
-		GSTextureUpscaleAlgorithm TextureUpscaleUiAlgorithm = GSTextureUpscaleAlgorithm::Scale2x;
+		GSTextureUpscaleAlgorithm TextureUpscaleWorldAlgorithm = GSTextureUpscaleAlgorithm::RaisrHD;
+		GSTextureUpscaleAlgorithm TextureUpscaleUiAlgorithm = GSTextureUpscaleAlgorithm::RaisrHD;
 		// Scale factor per class, 2 or 4. Thor's panel is 1080x1920, so past 4x the extra
 		// pixels cannot be shown and only cost VRAM.
 		u8 TextureUpscaleWorldScale = 2;

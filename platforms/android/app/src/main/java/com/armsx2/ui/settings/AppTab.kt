@@ -447,6 +447,16 @@ fun AppTab() {
             description = str("app.bootLogo.desc"),
             onChange = { BootLogoPreferences.set(it) },
         )
+        // On-device MCP server for dev automation over adb (docs/mcp-server.md). Github
+        // flavor only: the play stub never runs and DEV_SERVER hides the row there.
+        if (com.armsx2.BuildConfig.DEV_SERVER) {
+            ToggleRow(
+                label = str("app.devServer"),
+                value = com.armsx2.devtools.DevServer.enabled.value,
+                description = str("app.devServer.desc"),
+                onChange = { com.armsx2.devtools.DevServer.setEnabled(appContext, it) },
+            )
+        }
         // Custom intro: a video the user picked from their own device, copied into app storage
         // so it survives the source moving and plays even before an SD card mounts. Only shown
         // while the boot animation is on, since it is what that toggle plays.

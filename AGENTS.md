@@ -37,6 +37,7 @@
   - `README.md` - keep the fork identity text. Upstream's "Current status" feature checklist does not belong here.
   - `platforms/android/app/src/main/java/com/armsx2/ui/patches/PatchManagerViewModel.kt` - take upstream's `refresh()` body (serial/CRC scoping, no `syncAllEnableLists`) and keep the fork's leading `CheatPresenceIndex.invalidate()` call.
 - After resolving, run `.\gradlew.bat :app:compileGithubDebugKotlin` from `platforms/android` before pushing.
+- Also run `.\gradlew.bat :app:testGithubDebugUnitTest --tests com.armsx2.SettingsSizeTest`. `Settings`' constructor must stay at 245 parameters or fewer or the APK crashes at launch (dex range-invoke limit; see CLAUDE.md). Never add fork fields to that constructor; use a side store like `TextureUpscaleSettings`.
 
 ## Fork Identity
 - Treat this as the personal AYN Thor experiment fork, not official ARMSX2.

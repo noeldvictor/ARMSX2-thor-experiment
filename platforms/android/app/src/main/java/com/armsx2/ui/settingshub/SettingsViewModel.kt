@@ -55,6 +55,12 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         // (or no) tab.
         if (!categoryHasResettableSettings(category)) return
         val serial = uiState.value.game?.settingsKey
+        // Texture-time upscaling lives in its own store (TextureUpscaleSettings); it sits on
+        // the Graphics tab, so the tab's Reset covers it in the same scope.
+        if (category == SettingsCategory.Graphics) {
+            if (serial != null) com.armsx2.config.TextureUpscaleStore.clearOverrides(serial)
+            else com.armsx2.config.TextureUpscaleStore.resetGlobal()
+        }
         if (serial != null) {
             // Per-game: drop just this tab's override keys, so those settings fall back to
             // global while every other per-game tweak the user made is preserved.

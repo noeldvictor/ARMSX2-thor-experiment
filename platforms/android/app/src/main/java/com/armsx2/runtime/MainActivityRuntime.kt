@@ -950,6 +950,10 @@ open class MainActivityRuntime : ComponentActivity() {
                 else -> NativeApp.renderAuto()
             }
             resolved.applyTo()
+            // Texture-time upscaling settings ride separately (TextureUpscaleSettings) but
+            // reach the core the same way, resolved for this game.
+            runCatching { com.armsx2.config.TextureUpscaleStore.resolve(currentGame.value?.serial).applyTo() }
+            runCatching { com.armsx2.config.PineStore.get().applyTo() }
             // applyTo() pushed the per-stat OSD flags (= "Custom"); re-assert the stored OSD
             // mode on top so a Full / Min / Off choice from the menu or hotkey survives a
             // relaunch instead of snapping back to the per-stat selection every boot.
@@ -2341,8 +2345,17 @@ open class MainActivityRuntime : ComponentActivity() {
         // there is no polling; the toggle lives in App settings.
         com.armsx2.OverlayRepo.load()
         com.armsx2.CoverRegionIndex.load()
+        // Texture-time upscaling settings moved out of Settings (see TextureUpscaleSettings);
+        // lift what an earlier install had stored inside config.global, once.
+        com.armsx2.config.TextureUpscaleStore.migrateFromSettingsJson()
+        com.armsx2.config.PineStore.migrateFromSettingsJson()
         // HD-pack cover badges: publish the cached catalog now, refresh it off-main if stale.
         com.armsx2.TexturePackPresenceIndex.warm(applicationContext, lifecycleScope)
+        // On-device MCP server (github flavor; a stub on play). Off unless the App-settings
+        // toggle is on or this launch carried `--ez devserver true` from adb.
+        com.armsx2.devtools.DevServer.load(applicationContext)
+        if (intent?.getBooleanExtra("devserver", false) == true)
+            com.armsx2.devtools.DevServer.start(applicationContext)
         // Only parses the 2.6MB GameDB when a non-default cover region is actually in use.
         if (com.armsx2.CoverRegionIndex.needsIndex())
             com.armsx2.CoverRegionIndex.ensureBuilt(applicationContext)
@@ -3513,6 +3526,10 @@ open class MainActivityRuntime : ComponentActivity() {
                     if (down && event.repeatCount == 0) toggleSecondScreen()
                     return true
                 }
+                ControllerMappings.SysHotkey.RELOAD_TEXTURES -> {
+                    if (down && event.repeatCount == 0) reloadTextures()
+                    return true
+                }
                 ControllerMappings.SysHotkey.GYRO_HOLD -> {
                     // "Only while aiming": gyro is live only while the button is held.
                     // Same shape as the FAST_FORWARD hold — act on both edges, ignore
@@ -3849,6 +3866,14 @@ open class MainActivityRuntime : ComponentActivity() {
         val on = !com.armsx2.SecondScreen.enabled.value
         com.armsx2.SecondScreen.set(applicationContext, on)
         hotkeyToast(if (on) "Second screen ON" else "Second screen OFF")
+    }
+
+    /** Flush the texture cache so every visible texture re-runs through the current upscale
+     *  filter and any freshly installed pack. The same core call the Texture Packs screen
+     *  makes after an install; here it is one press, mid-scene, for comparing filters. */
+    fun reloadTextures() {
+        val queued = runCatching { NativeApp.reloadTextureReplacements() }.getOrDefault(false)
+        hotkeyToast(com.armsx2.i18n.I18n.get(if (queued) "renderer.textureUpscale.reload.toast" else "renderer.textureUpscale.reload.noGame"))
     }
 
     private fun cycleDisplayRefresh() {
@@ -5158,6 +5183,7 @@ open class MainActivityRuntime : ComponentActivity() {
             ControllerMappings.SysHotkey.TOGGLE_KEYBOARD -> toggleSoftKeyboard()
             ControllerMappings.SysHotkey.DISPLAY_REFRESH -> cycleDisplayRefresh()
             ControllerMappings.SysHotkey.SECOND_SCREEN -> toggleSecondScreen()
+            ControllerMappings.SysHotkey.RELOAD_TEXTURES -> reloadTextures()
             ControllerMappings.SysHotkey.PREV_SLOT -> cycleSaveSlot(-1)
             // Hold-type hotkeys have no one-shot stick-edge meaning.
             ControllerMappings.SysHotkey.FAST_FORWARD,
@@ -5516,6 +5542,8 @@ open class MainActivityRuntime : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        if (intent.getBooleanExtra("devserver", false))
+            com.armsx2.devtools.DevServer.start(applicationContext)
         handleExternalLaunchIntent(intent)
     }
 

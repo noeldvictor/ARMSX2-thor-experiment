@@ -212,8 +212,9 @@ def _process_one(args, item, tmp_dir):
         return None
     hw, hh = img.size
     # The pack texture must be an integer multiple of the native; anything else is a
-    # region/mip oddity the runtime would not upscale either.
-    if hw % nw or hh % nh or hw // nw != hh // nh:
+    # region/mip oddity the runtime would not upscale either. A zero side comes from a
+    # region name like "-r0x64" (one axis unbounded), which is the same oddity.
+    if nw <= 0 or nh <= 0 or hw % nw or hh % nh or hw // nw != hh // nh:
         return None
     scale = hw // nw
     if scale < 2 or scale > 8:
@@ -537,9 +538,16 @@ def raisr_upscale(lr: np.ndarray, scale: int, k: int, hasher: Hasher, kernels: n
 
 
 def pil_upscale(lr: np.ndarray, scale: int, method) -> np.ndarray:
-    img = Image.fromarray(np.clip(np.rint(lr), 0, 255).astype(np.uint8), "RGBA")
+    """Per-channel resample. Pillow resamples RGBA through premultiplied alpha, which bleeds
+    the garbage colour under transparent pixels into their neighbours; the emulator's filters
+    treat each channel independently, so the baseline must too or it loses for the wrong reason."""
     h, w = lr.shape[:2]
-    return np.asarray(img.resize((w * scale, h * scale), method), dtype=np.float32)
+    src = np.clip(np.rint(lr), 0, 255).astype(np.uint8)
+    out = np.zeros((h * scale, w * scale, src.shape[2]), dtype=np.float32)
+    for ch in range(src.shape[2]):
+        plane = Image.fromarray(src[..., ch], "L").resize((w * scale, h * scale), method)
+        out[..., ch] = np.asarray(plane, dtype=np.float32)
+    return out
 
 
 def psnr(a: np.ndarray, b: np.ndarray) -> float:

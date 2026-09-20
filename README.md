@@ -48,7 +48,9 @@ Screenshots are from a personal AYN Thor test device.
 - Scale and algorithm are changeable from the in-game menu, so filters can be compared without leaving the game.
 - Scaling runs on a worker thread; the native texture is drawn immediately and the upscaled one swaps in when it is ready.
 - A texture covered by an HD pack is never upscaled, even while the pack texture is still loading; the upscaler only fills in what the pack leaves native.
-- In progress: **RAISR-HD**, learned upscaling kernels fit on the HD texture packs so a game with no pack still gets a sharper, edge-aware 2x on the fly. Not a neural net; a few hundred operations per pixel on the existing worker thread. `tools/raisr_train.py` fits the kernels from any pack.
+- **RAISR-HD**: learned upscaling kernels fit on the HD texture packs, bundled in the APK and on by default, so a game with no pack still gets a sharper, edge-aware 2x on the fly. Not a neural net; a few hundred operations per pixel on the existing worker thread. On held-out pack textures it beats Lanczos by +0.1 to +3.6 dB depending on the art. `tools/raisr_train.py` fits the kernels from any pack. Mipmapped textures are still excluded (being fixed).
+- A **Reload textures** button in the pause menu and a matching hotkey re-run every visible texture through the current filter, so switching filters mid-game is instantly visible.
+- An on-device **MCP dev server** (github flavor only, off by default, localhost over `adb forward`) can boot games, read and write settings, save and load states, capture screenshots and read upscaler counters, so the filters can be compared by a script rather than by hand.
 - On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
 ## Exploration Notes
@@ -62,7 +64,7 @@ Notes on what I am poking at. The texture filters are built and running; most of
 - [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats, and the public collections turn out to be the same set we already bundle. Closing that gap means authoring, not importing.
 - [RAISR kernel trainer](tools/raisr_train.py) — fits the RAISR-HD kernels from HD packs and reports PSNR/SSIM against Lanczos on held-out textures. Kernels are general, not per game.
 - [Texture pack getter](docs/texture-pack-getter.md) — written before upstream shipped its own catalogue and one-tap installer, which this fork now inherits. Kept for the reasoning; the fork's part is the cover badge.
-- [On-device MCP server](docs/mcp-server.md) — a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
+- [On-device MCP server](docs/mcp-server.md) — now built: a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 
 ## What This Is Not
 

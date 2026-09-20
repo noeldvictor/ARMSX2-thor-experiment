@@ -540,23 +540,33 @@ fun RendererTab(state: MutableState<Settings>) {
         // present-time, so grouping it with the screen filters is exactly the confusion to
         // avoid. Lifted to ui/common so the pause menu can render the same rows.
         CollapsibleSection(str("renderer.textureUpscale.title")) {
+            // Its own store, not Settings fields: see TextureUpscaleSettings for why. Same
+            // scope and serial InGameOverlay.saveSettings would use, so Global/Game behaves
+            // exactly like every other row on this tab.
+            com.armsx2.config.TextureUpscaleStore.revision.intValue
+            val tuScope = InGameOverlay.settingsScope.value
+            val tuSerial = InGameOverlay.currentSerial.value
+            val tu = com.armsx2.config.TextureUpscaleStore.forScope(tuScope, tuSerial)
+            val applyTu = { updated: com.armsx2.config.TextureUpscaleSettings ->
+                com.armsx2.config.TextureUpscaleStore.saveAndApply(tuScope, tuSerial, updated, tu)
+            }
             com.armsx2.ui.common.TextureUpscaleSection(
-                worldEnabled = s.textureUpscaleWorldEnabled,
-                worldAlgorithm = s.textureUpscaleWorldAlgorithm,
-                worldScale = s.textureUpscaleWorldScale,
-                uiEnabled = s.textureUpscaleUiEnabled,
-                uiAlgorithm = s.textureUpscaleUiAlgorithm,
-                uiScale = s.textureUpscaleUiScale,
-                vramBudgetMb = s.textureUpscaleVramBudgetMb,
-                deposterize = s.textureUpscaleDeposterize,
-                onWorldEnabledChange = { apply(s.copy(textureUpscaleWorldEnabled = it)) },
-                onWorldAlgorithmChange = { apply(s.copy(textureUpscaleWorldAlgorithm = it)) },
-                onWorldScaleChange = { apply(s.copy(textureUpscaleWorldScale = it)) },
-                onUiEnabledChange = { apply(s.copy(textureUpscaleUiEnabled = it)) },
-                onUiAlgorithmChange = { apply(s.copy(textureUpscaleUiAlgorithm = it)) },
-                onUiScaleChange = { apply(s.copy(textureUpscaleUiScale = it)) },
-                onVramBudgetChange = { apply(s.copy(textureUpscaleVramBudgetMb = it)) },
-                onDeposterizeChange = { apply(s.copy(textureUpscaleDeposterize = it)) },
+                worldEnabled = tu.worldEnabled,
+                worldAlgorithm = tu.worldAlgorithm,
+                worldScale = tu.worldScale,
+                uiEnabled = tu.uiEnabled,
+                uiAlgorithm = tu.uiAlgorithm,
+                uiScale = tu.uiScale,
+                vramBudgetMb = tu.vramBudgetMb,
+                deposterize = tu.deposterize,
+                onWorldEnabledChange = { applyTu(tu.copy(worldEnabled = it)) },
+                onWorldAlgorithmChange = { applyTu(tu.copy(worldAlgorithm = it)) },
+                onWorldScaleChange = { applyTu(tu.copy(worldScale = it)) },
+                onUiEnabledChange = { applyTu(tu.copy(uiEnabled = it)) },
+                onUiAlgorithmChange = { applyTu(tu.copy(uiAlgorithm = it)) },
+                onUiScaleChange = { applyTu(tu.copy(uiScale = it)) },
+                onVramBudgetChange = { applyTu(tu.copy(vramBudgetMb = it)) },
+                onDeposterizeChange = { applyTu(tu.copy(deposterize = it)) },
             )
         }
         SettingsDivider()

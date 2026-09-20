@@ -5,6 +5,7 @@
 
 #include "GS/GS.h"
 #include "GS/Renderers/HW/GSTextureUpscalerNN.h"
+#include "GS/Renderers/HW/GSTextureUpscalerRaisr.h"
 
 #include "common/Console.h"
 
@@ -63,6 +64,7 @@ namespace GSTextureUpscaler
 			u32 src_stride = 0;
 			GSTextureUpscaleAlgorithm algorithm = GSTextureUpscaleAlgorithm::Bilinear;
 			u8 scale = 2;
+			TextureClass texture_class = TextureClass::World;
 			bool deposterize = false;
 			std::pair<u8, u8> alpha_minmax{0u, 255u};
 		};
@@ -107,7 +109,7 @@ namespace GSTextureUpscaler
 
 				const bool ok = ScaleBuffer(job.algorithm, reinterpret_cast<const u8*>(job.src.data()), job.sw,
 					job.sh, job.src_stride * sizeof(u32), reinterpret_cast<u8*>(out.data()),
-					static_cast<u32>(dw) * sizeof(u32), job.scale);
+					static_cast<u32>(dw) * sizeof(u32), job.scale, job.texture_class);
 
 				std::unique_lock<std::mutex> lock(s_worker_mutex);
 				s_in_flight.erase(job.key.TEX0Hash);
@@ -1970,6 +1972,11 @@ namespace GSTextureUpscaler
 			case GSTextureUpscaleAlgorithm::ESPCN:
 				return true;
 
+			// Kernels ship in the APK, so this one really does run out of the box; a missing
+			// or damaged kernel file declines per texture the same way a missing model does.
+			case GSTextureUpscaleAlgorithm::RaisrHD:
+				return true;
+
 			default:
 				return false;
 		}
@@ -2040,7 +2047,7 @@ namespace GSTextureUpscaler
 	}
 
 	bool ScaleBuffer(GSTextureUpscaleAlgorithm algorithm, const u8* src, int sw, int sh, u32 src_pitch,
-		u8* dst, u32 dst_pitch, u8 scale)
+		u8* dst, u32 dst_pitch, u8 scale, TextureClass texture_class)
 	{
 		if (sw <= 0 || sh <= 0 || (scale != 2 && scale != 4))
 			return false;
@@ -2104,6 +2111,14 @@ namespace GSTextureUpscaler
 					return true;
 				// No model installed, or the texture is outside the size one will be run on.
 				// Counted so the OSD can say which, instead of the user seeing nothing happen.
+				s_stats.declined_no_model++;
+				return false;
+			}
+
+			case GSTextureUpscaleAlgorithm::RaisrHD:
+			{
+				if (GSTextureUpscalerRaisr::Run(texture_class, src_px, sw, sh, src_stride, dst_px, dst_stride, scale))
+					return true;
 				s_stats.declined_no_model++;
 				return false;
 			}
@@ -2179,10 +2194,12 @@ namespace GSTextureUpscaler
 
 		// Models are keyed by the texture folder, which moves with the game.
 		GSTextureUpscalerNN::Reset();
+		GSTextureUpscalerRaisr::Reset();
 	}
 
 	void QueueUpscale(const GSTextureCache::HashCacheKey& key, const u8* src, int sw, int sh, u32 src_pitch,
-		GSTextureUpscaleAlgorithm algorithm, u8 scale, const std::pair<u8, u8>& alpha_minmax)
+		GSTextureUpscaleAlgorithm algorithm, u8 scale, TextureClass texture_class,
+		const std::pair<u8, u8>& alpha_minmax)
 	{
 		const u32 src_stride = src_pitch / sizeof(u32);
 
@@ -2193,6 +2210,7 @@ namespace GSTextureUpscaler
 		job.src_stride = static_cast<u32>(sw);
 		job.algorithm = algorithm;
 		job.scale = scale;
+		job.texture_class = texture_class;
 		job.deposterize = GSConfig.TextureUpscaleDeposterize;
 		job.alpha_minmax = alpha_minmax;
 

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -50,6 +51,11 @@ import com.armsx2.ui.settings.controllerFocusable
  *  declines anything else and leaves the texture native, so listing them would be a menu of
  *  no-ops. Each family's ordinal and label lists must stay the same length - a mismatch
  *  silently selects a different filter than the one named. */
+// RAISR-HD: kernels fit on HD texture packs, bundled in the APK. First because it is the
+// default and the one entry that needs no explanation to pick.
+private val FAMILY_LEARNED = listOf(24)
+private val LABELS_LEARNED = listOf("RAISR-HD")
+
 private val FAMILY_RESAMPLE = listOf(20, 0, 22, 1, 21, 2, 3)
 private val LABELS_RESAMPLE = listOf("Nearest", "Bilinear", "Sharp", "Bicubic", "Mitchell", "Lanczos", "L+CAS")
 
@@ -64,6 +70,7 @@ private val LABELS_NEURAL = listOf("FSRCNN", "SESR", "ESPCN")
 
 /** Description key per ordinal. */
 private val DESCRIPTION_KEYS = mapOf(
+    24 to "renderer.textureUpscale.algorithm.raisrhd",
     20 to "renderer.textureUpscale.algorithm.nearest",
     0 to "renderer.textureUpscale.algorithm.bilinear",
     22 to "renderer.textureUpscale.algorithm.sharpbilinear",
@@ -155,6 +162,11 @@ private fun AlgorithmPicker(current: Int, keyPrefix: String, onChange: (Int) -> 
     val described = DESCRIPTION_KEYS[current]?.let { str(it) }
 
     FamilyChips(
+        str("renderer.textureUpscale.family.learned"), FAMILY_LEARNED, LABELS_LEARNED,
+        current, "$keyPrefix.learned",
+        if (current in FAMILY_LEARNED) described else null, onChange,
+    )
+    FamilyChips(
         str("renderer.textureUpscale.family.resample"), FAMILY_RESAMPLE, LABELS_RESAMPLE,
         current, "$keyPrefix.resample",
         if (current in FAMILY_RESAMPLE) described else null, onChange,
@@ -203,6 +215,11 @@ fun TextureUpscaleSection(
     onUiScaleChange: (Int) -> Unit,
     onVramBudgetChange: (Int) -> Unit,
     onDeposterizeChange: (Boolean) -> Unit,
+    /** In-game only: flush the texture cache so every visible texture re-runs through the
+     *  current filter. Null where there is no running game (All Settings), and the row is
+     *  simply absent. Without it a filter change only reaches textures uploaded afterwards,
+     *  which reads as "the setting does nothing". */
+    onReloadTextures: (() -> Unit)? = null,
 ) {
     Column(Modifier.fillMaxWidth()) {
         Text(
@@ -211,6 +228,25 @@ fun TextureUpscaleSection(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
         )
+        if (onReloadTextures != null) {
+            OutlinedButton(
+                onClick = onReloadTextures,
+                shape = RoundedCornerShape(14.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .controllerFocusable("texUpscale.reload", RoundedCornerShape(14.dp), onConfirm = onReloadTextures),
+            ) {
+                Text("\u21bb  " + str("renderer.textureUpscale.reload.label"))
+            }
+            Text(
+                str("renderer.textureUpscale.reload.description"),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 4.dp),
+            )
+            Spacer(Modifier.height(6.dp))
+        }
 
         ToggleRow(
             str("renderer.textureUpscale.world.label"),

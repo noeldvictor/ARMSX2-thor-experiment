@@ -227,18 +227,6 @@ data class Settings(
     /** Achievements/NotificationScale — size of the achievement popups and in-game indicators, as a
      *  percentage of the stock layout (50..250). The stock size was hard to read on a handheld. */
     val achievementsNotificationScale: Int = 100,
-    /** EmuCore/EnablePINE — the IPC server external tools drive the emulator through
-     *  (read/write guest memory, savestates, GS dumps). On Android it listens on loopback
-     *  TCP, so it is reachable from a workstation only after `adb forward`; nothing outside
-     *  the device can see it. Off by default: it is a debugging tool, and a listening socket
-     *  a player did not ask for should not exist. */
-    val pineEnabled: Boolean = false,
-    /** EmuCore/PINESlot — the port [pineEnabled] listens on. Deliberately has no UI row: the
-     *  only reason to move it is running two emulators at once, which does not happen on a
-     *  handheld, and a free-entry port field is a support burden for a knob nobody turns.
-     *  Kept in the model anyway so the toggle's description can state the real port rather
-     *  than assuming the default. Editable in the INI for the rare case that needs it. */
-    val pineSlot: Int = 28011,
     /** EmuCore/EnableGameFixes — master switch that lets the GameDB apply each game's
      *  curated compatibility gamefixes (e.g. VuAddSubHack, SkipMPEGHack). Defaults TRUE
      *  to match upstream PCSX2 (Pcsx2Config.cpp EnableGameFixes = true) and trak's Mac:
@@ -622,23 +610,6 @@ data class Settings(
      *  off regardless of the flag, and it's a no-op if this build has no librashader. */
     val shaderChainEnabled: Boolean = false,
     val shaderChainPreset: String = "",
-    /** EmuCore/GS/TextureUpscale* — per-texture upscaling, applied when a texture is
-     *  uploaded rather than to the presented frame, so the cost is once per unique texture
-     *  instead of every frame. World/3D and UI/2D are independent on purpose: a filter that
-     *  flatters a painted wall will mangle a HUD font. Algorithm values are ordinals of the
-     *  native GSTextureUpscaleAlgorithm enum, which is append-only. Scale is 2 or 4.
-     *  See docs/texture-upscaling-research.md. */
-    val textureUpscaleWorldEnabled: Boolean = false,
-    val textureUpscaleUiEnabled: Boolean = false,
-    val textureUpscaleWorldAlgorithm: Int = 4,
-    val textureUpscaleUiAlgorithm: Int = 4,
-    val textureUpscaleWorldScale: Int = 2,
-    val textureUpscaleUiScale: Int = 2,
-    val textureUpscaleVramBudgetMb: Int = 512,
-    /** EmuCore/GS/TextureUpscaleDeposterize — pre-pass that removes low-bit-depth banding
-     *  before any filter runs. PS2 leans on PSMCT16 (5:5:5:1), so posterised gradients are
-     *  the norm and a scaler would otherwise faithfully enlarge the banding. */
-    val textureUpscaleDeposterize: Boolean = false,
     /** EmuCore/GS/LsfgEnabled + /LsfgMultiplier + /LsfgDllPath — LSFG frame generation,
      *  inserted into the Vulkan present path. Off unless the user both enables it AND
      *  supplies their own Lossless.dll: the interpolation shaders are read out of that
@@ -957,8 +928,6 @@ data class Settings(
         put("Achievements", "NotificationScale", "int", achievementsNotificationScale.coerceIn(50, 250).toString())
         // VMManager::ReloadPINE compares these against the live server and starts, stops or
         // rebinds it, so a commit is enough — no game restart.
-        put("EmuCore", "EnablePINE", "bool", pineEnabled.toString())
-        put("EmuCore", "PINESlot", "int", pineSlot.toString())
         put("EmuCore", "EnableGameFixes", "bool", enableGameFixes.toString())
         put("EmuCore/Gamefixes", "SoftwareRendererFMVHack", "bool", gamefixSoftwareRendererFmv.toString())
         put("EmuCore/Gamefixes", "SkipMPEGHack", "bool", gamefixSkipMpeg.toString())
@@ -1204,8 +1173,6 @@ data class Settings(
             achievementsNotificationPosition = intAt("Achievements/NotificationPosition") ?: this.achievementsNotificationPosition,
             achievementsOverlayPosition = intAt("Achievements/OverlayPosition") ?: this.achievementsOverlayPosition,
             achievementsNotificationScale = intAt("Achievements/NotificationScale") ?: this.achievementsNotificationScale,
-            pineEnabled = boolAt("EmuCore/EnablePINE") ?: this.pineEnabled,
-            pineSlot = intAt("EmuCore/PINESlot") ?: this.pineSlot,
             enableGameFixes = boolAt("EmuCore/EnableGameFixes") ?: this.enableGameFixes,
             // ---- EmuCore/Gamefixes ----
             gamefixSoftwareRendererFmv = boolAt("EmuCore/Gamefixes/SoftwareRendererFMVHack") ?: this.gamefixSoftwareRendererFmv,
@@ -1329,14 +1296,6 @@ data class Settings(
             fxaa = boolAt("EmuCore/GS/fxaa") ?: this.fxaa,
             shaderChainEnabled = boolAt("EmuCore/GS/ShaderChainEnabled") ?: this.shaderChainEnabled,
             shaderChainPreset = strAt("EmuCore/GS/ShaderChainPreset") ?: this.shaderChainPreset,
-            textureUpscaleWorldEnabled = boolAt("EmuCore/GS/TextureUpscaleWorldEnabled") ?: this.textureUpscaleWorldEnabled,
-            textureUpscaleUiEnabled = boolAt("EmuCore/GS/TextureUpscaleUiEnabled") ?: this.textureUpscaleUiEnabled,
-            textureUpscaleWorldAlgorithm = intAt("EmuCore/GS/TextureUpscaleWorldAlgorithm") ?: this.textureUpscaleWorldAlgorithm,
-            textureUpscaleUiAlgorithm = intAt("EmuCore/GS/TextureUpscaleUiAlgorithm") ?: this.textureUpscaleUiAlgorithm,
-            textureUpscaleWorldScale = intAt("EmuCore/GS/TextureUpscaleWorldScale") ?: this.textureUpscaleWorldScale,
-            textureUpscaleUiScale = intAt("EmuCore/GS/TextureUpscaleUiScale") ?: this.textureUpscaleUiScale,
-            textureUpscaleVramBudgetMb = intAt("EmuCore/GS/TextureUpscaleVramBudgetMB") ?: this.textureUpscaleVramBudgetMb,
-            textureUpscaleDeposterize = boolAt("EmuCore/GS/TextureUpscaleDeposterize") ?: this.textureUpscaleDeposterize,
             lsfgEnabled = boolAt("EmuCore/GS/LsfgEnabled") ?: this.lsfgEnabled,
             lsfgMultiplier = intAt("EmuCore/GS/LsfgMultiplier") ?: this.lsfgMultiplier,
             lsfgDllPath = strAt("EmuCore/GS/LsfgDllPath") ?: this.lsfgDllPath,
@@ -1588,16 +1547,6 @@ data class Settings(
         put("EmuCore/GS", "fxaa", "bool", fxaa.toString())
         put("EmuCore/GS", "ShaderChainEnabled", "bool", shaderChainEnabled.toString())
         put("EmuCore/GS", "ShaderChainPreset", "string", shaderChainPreset)
-        put("EmuCore/GS", "TextureUpscaleWorldEnabled", "bool", textureUpscaleWorldEnabled.toString())
-        put("EmuCore/GS", "TextureUpscaleUiEnabled", "bool", textureUpscaleUiEnabled.toString())
-        put("EmuCore/GS", "TextureUpscaleWorldAlgorithm", "int", textureUpscaleWorldAlgorithm.toString())
-        put("EmuCore/GS", "TextureUpscaleUiAlgorithm", "int", textureUpscaleUiAlgorithm.toString())
-        // Only 2 and 4 are meaningful; the native side clamps too, but sending a junk value
-        // here would still round-trip through the UI as if it had been accepted.
-        put("EmuCore/GS", "TextureUpscaleWorldScale", "int", (if (textureUpscaleWorldScale >= 4) 4 else 2).toString())
-        put("EmuCore/GS", "TextureUpscaleUiScale", "int", (if (textureUpscaleUiScale >= 4) 4 else 2).toString())
-        put("EmuCore/GS", "TextureUpscaleVramBudgetMB", "int", textureUpscaleVramBudgetMb.coerceIn(64, 2048).toString())
-        put("EmuCore/GS", "TextureUpscaleDeposterize", "bool", textureUpscaleDeposterize.toString())
         put("EmuCore/GS", "LsfgEnabled", "bool", lsfgEnabled.toString())
         put("EmuCore/GS", "LsfgMultiplier", "int", lsfgMultiplier.toString())
         put("EmuCore/GS", "LsfgDllPath", "string", lsfgDllPath)
@@ -1794,14 +1743,6 @@ data class Settings(
             shadeBoostSaturation != other.shadeBoostSaturation ||
             shadeBoostGamma != other.shadeBoostGamma ||
             fxaa != other.fxaa ||
-            textureUpscaleWorldEnabled != other.textureUpscaleWorldEnabled ||
-            textureUpscaleUiEnabled != other.textureUpscaleUiEnabled ||
-            textureUpscaleWorldAlgorithm != other.textureUpscaleWorldAlgorithm ||
-            textureUpscaleUiAlgorithm != other.textureUpscaleUiAlgorithm ||
-            textureUpscaleWorldScale != other.textureUpscaleWorldScale ||
-            textureUpscaleUiScale != other.textureUpscaleUiScale ||
-            textureUpscaleVramBudgetMb != other.textureUpscaleVramBudgetMb ||
-            textureUpscaleDeposterize != other.textureUpscaleDeposterize ||
             lsfgEnabled != other.lsfgEnabled ||
             lsfgMultiplier != other.lsfgMultiplier ||
             lsfgDllPath != other.lsfgDllPath ||
@@ -1918,8 +1859,6 @@ data class Settings(
         put("achievementsNotificationPosition", achievementsNotificationPosition)
         put("achievementsOverlayPosition", achievementsOverlayPosition)
         put("achievementsNotificationScale", achievementsNotificationScale)
-        put("pineEnabled", pineEnabled)
-        put("pineSlot", pineSlot)
         put("enableGameFixes", enableGameFixes)
         put("gamefixSoftwareRendererFmv", gamefixSoftwareRendererFmv)
         put("gamefixSkipMpeg", gamefixSkipMpeg)
@@ -2043,14 +1982,6 @@ data class Settings(
         put("shaderChainEnabled", shaderChainEnabled)
         put("shaderChainPreset", shaderChainPreset)
         put("shaderChainParams", shaderChainParamsToJson(shaderChainParams))
-        put("textureUpscaleWorldEnabled", textureUpscaleWorldEnabled)
-        put("textureUpscaleUiEnabled", textureUpscaleUiEnabled)
-        put("textureUpscaleWorldAlgorithm", textureUpscaleWorldAlgorithm)
-        put("textureUpscaleUiAlgorithm", textureUpscaleUiAlgorithm)
-        put("textureUpscaleWorldScale", textureUpscaleWorldScale)
-        put("textureUpscaleUiScale", textureUpscaleUiScale)
-        put("textureUpscaleVramBudgetMb", textureUpscaleVramBudgetMb)
-        put("textureUpscaleDeposterize", textureUpscaleDeposterize)
         // These five were missing from the JSON round-trip entirely, which IS the persistence
         // format — so every LSFG choice, the imported DLL path included, was thrown away the
         // moment the app was restarted.
@@ -2242,8 +2173,6 @@ data class Settings(
                 achievementsNotificationPosition = json.optInt("achievementsNotificationPosition", def.achievementsNotificationPosition),
                 achievementsOverlayPosition = json.optInt("achievementsOverlayPosition", def.achievementsOverlayPosition),
                 achievementsNotificationScale = json.optInt("achievementsNotificationScale", def.achievementsNotificationScale),
-                pineEnabled = json.optBoolean("pineEnabled", def.pineEnabled),
-                pineSlot = json.optInt("pineSlot", def.pineSlot),
                 enableGameFixes = json.optBoolean("enableGameFixes", def.enableGameFixes),
                 gamefixSoftwareRendererFmv = json.optBoolean("gamefixSoftwareRendererFmv", def.gamefixSoftwareRendererFmv),
                 gamefixSkipMpeg = json.optBoolean("gamefixSkipMpeg", def.gamefixSkipMpeg),
@@ -2378,14 +2307,6 @@ data class Settings(
                 shaderChainPreset = json.optString("shaderChainPreset", def.shaderChainPreset),
                 shaderChainParams = json.optJSONObject("shaderChainParams")
                     ?.let { shaderChainParamsFromJson(it) } ?: def.shaderChainParams,
-                textureUpscaleWorldEnabled = json.optBoolean("textureUpscaleWorldEnabled", def.textureUpscaleWorldEnabled),
-                textureUpscaleUiEnabled = json.optBoolean("textureUpscaleUiEnabled", def.textureUpscaleUiEnabled),
-                textureUpscaleWorldAlgorithm = json.optInt("textureUpscaleWorldAlgorithm", def.textureUpscaleWorldAlgorithm),
-                textureUpscaleUiAlgorithm = json.optInt("textureUpscaleUiAlgorithm", def.textureUpscaleUiAlgorithm),
-                textureUpscaleWorldScale = json.optInt("textureUpscaleWorldScale", def.textureUpscaleWorldScale),
-                textureUpscaleUiScale = json.optInt("textureUpscaleUiScale", def.textureUpscaleUiScale),
-                textureUpscaleVramBudgetMb = json.optInt("textureUpscaleVramBudgetMb", def.textureUpscaleVramBudgetMb),
-                textureUpscaleDeposterize = json.optBoolean("textureUpscaleDeposterize", def.textureUpscaleDeposterize),
                 lsfgEnabled = json.optBoolean("lsfgEnabled", def.lsfgEnabled),
                 lsfgMultiplier = json.optInt("lsfgMultiplier", def.lsfgMultiplier),
                 lsfgDllPath = json.optString("lsfgDllPath", def.lsfgDllPath),
@@ -2649,14 +2570,6 @@ data class Settings(
             if (current.shaderChainEnabled  != base.shaderChainEnabled)  j.put("shaderChainEnabled", current.shaderChainEnabled)
             if (current.shaderChainPreset   != base.shaderChainPreset)   j.put("shaderChainPreset", current.shaderChainPreset)
             if (current.shaderChainParams   != base.shaderChainParams)   j.put("shaderChainParams", shaderChainParamsToJson(current.shaderChainParams))
-            if (current.textureUpscaleWorldEnabled != base.textureUpscaleWorldEnabled) j.put("textureUpscaleWorldEnabled", current.textureUpscaleWorldEnabled)
-            if (current.textureUpscaleUiEnabled != base.textureUpscaleUiEnabled) j.put("textureUpscaleUiEnabled", current.textureUpscaleUiEnabled)
-            if (current.textureUpscaleWorldAlgorithm != base.textureUpscaleWorldAlgorithm) j.put("textureUpscaleWorldAlgorithm", current.textureUpscaleWorldAlgorithm)
-            if (current.textureUpscaleUiAlgorithm != base.textureUpscaleUiAlgorithm) j.put("textureUpscaleUiAlgorithm", current.textureUpscaleUiAlgorithm)
-            if (current.textureUpscaleWorldScale != base.textureUpscaleWorldScale) j.put("textureUpscaleWorldScale", current.textureUpscaleWorldScale)
-            if (current.textureUpscaleUiScale != base.textureUpscaleUiScale) j.put("textureUpscaleUiScale", current.textureUpscaleUiScale)
-            if (current.textureUpscaleVramBudgetMb != base.textureUpscaleVramBudgetMb) j.put("textureUpscaleVramBudgetMb", current.textureUpscaleVramBudgetMb)
-            if (current.textureUpscaleDeposterize != base.textureUpscaleDeposterize) j.put("textureUpscaleDeposterize", current.textureUpscaleDeposterize)
             if (current.lsfgEnabled         != base.lsfgEnabled)         j.put("lsfgEnabled", current.lsfgEnabled)
             if (current.lsfgMultiplier      != base.lsfgMultiplier)      j.put("lsfgMultiplier", current.lsfgMultiplier)
             if (current.lsfgDllPath         != base.lsfgDllPath)         j.put("lsfgDllPath", current.lsfgDllPath)
@@ -2785,13 +2698,6 @@ data class Settings(
             achievementsNotificationPosition = if (overrides.has("achievementsNotificationPosition")) overrides.getInt("achievementsNotificationPosition") else base.achievementsNotificationPosition,
             achievementsOverlayPosition = if (overrides.has("achievementsOverlayPosition")) overrides.getInt("achievementsOverlayPosition") else base.achievementsOverlayPosition,
             achievementsNotificationScale = if (overrides.has("achievementsNotificationScale")) overrides.getInt("achievementsNotificationScale") else base.achievementsNotificationScale,
-            // Always the global value: PINE is one server for the process, so "this game runs
-            // with PINE on" is not a thing that can be true. Deliberately absent from the diff
-            // above too, so a per-game file never acquires the key -- but it still has to be
-            // listed HERE, because this is a full constructor and an omitted field silently
-            // resets to the default rather than inheriting from base.
-            pineEnabled = base.pineEnabled,
-            pineSlot = base.pineSlot,
             enableGameFixes = if (overrides.has("enableGameFixes")) overrides.getBoolean("enableGameFixes") else base.enableGameFixes,
             gamefixSoftwareRendererFmv = if (overrides.has("gamefixSoftwareRendererFmv")) overrides.getBoolean("gamefixSoftwareRendererFmv") else base.gamefixSoftwareRendererFmv,
             gamefixSkipMpeg = if (overrides.has("gamefixSkipMpeg")) overrides.getBoolean("gamefixSkipMpeg") else base.gamefixSkipMpeg,

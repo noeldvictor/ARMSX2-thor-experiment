@@ -503,18 +503,19 @@ fun FixesTab(state: MutableState<Settings>) {
  *  needed — the listener is on loopback, so it does nothing until it is forwarded, and you cannot
  *  forward a port you were not told. */
 @Composable
-private fun PineSection(state: MutableState<Settings>) {
-    val s = state.value
-    fun apply(updated: Settings) = InGameOverlay.saveSettings(updated)
+private fun PineSection(@Suppress("UNUSED_PARAMETER") state: MutableState<Settings>) {
+    // Process-wide, its own store (PineSettings): one server per process, never per game.
+    com.armsx2.config.PineStore.revision.intValue
+    val pine = com.armsx2.config.PineStore.get()
 
     CollapsibleSection(str("fixes.section.pine")) {
         HelpText(str("fixes.section.pine.help"))
         ToggleRow(
             str("fixes.pine.enable"),
-            s.pineEnabled,
-            description = "${str("fixes.pine.enable.desc")} (127.0.0.1:${s.pineSlot})",
-        ) { apply(s.copy(pineEnabled = it)) }
-        if (s.pineEnabled) HelpText("adb forward tcp:${s.pineSlot} tcp:${s.pineSlot}")
+            pine.enabled,
+            description = "${str("fixes.pine.enable.desc")} (127.0.0.1:${pine.slot})",
+        ) { com.armsx2.config.PineStore.save(pine.copy(enabled = it)) }
+        if (pine.enabled) HelpText("adb forward tcp:${pine.slot} tcp:${pine.slot}")
     }
 }
 

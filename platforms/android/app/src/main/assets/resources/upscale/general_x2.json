@@ -1,0 +1,21 @@
+{
+ "datasets": [
+  "xenosaga3",
+  "apeescape2",
+  "timesplitters2"
+ ],
+ "textures": 9126,
+ "scale": 2,
+ "kernel": 9,
+ "angles": 24,
+ "strengths": 3,
+ "coherences": 3,
+ "window": 7,
+ "sigma": 1.5,
+ "ridge": 0.0001,
+ "augment": true,
+ "pixels_per_texture": 3000,
+ "empty_buckets": 0,
+ "seconds": 1639,
+ "note": "Fit by tools/raisr_train.py; world_x2 and ui_x2 are this same general set until the per-class refit lands."
+}

@@ -348,8 +348,8 @@ object ConfigStore {
             // Promote just those fields, by copying them onto global rather than saving
             // `updated` wholesale -- `updated` is the game's resolved settings, and writing all
             // of it to global would leak every per-game value into the global layer.
-            if (updated.pineEnabled != global.pineEnabled || updated.pineSlot != global.pineSlot)
-                saveGlobal(global.copy(pineEnabled = updated.pineEnabled, pineSlot = updated.pineSlot))
+            // (PINE used to be promoted here; it now lives in PineStore, process-wide by
+            // construction, so there is nothing left to promote.)
             val overrides = Settings.diff(global, updated)
             // Every field, so a pinned key can be given its CURRENT value even when that
             // value equals global's (the diff above necessarily omits it).

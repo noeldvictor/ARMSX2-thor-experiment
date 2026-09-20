@@ -234,6 +234,7 @@ fun LibraryStatusCluster(modifier: Modifier = Modifier, compact: Boolean = false
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            DevServerIndicator()
             ClockIndicator()
             BatteryIndicator()
         }
@@ -243,9 +244,27 @@ fun LibraryStatusCluster(modifier: Modifier = Modifier, compact: Boolean = false
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Center,
         ) {
+            DevServerIndicator()
             ClockIndicator()
             Spacer(Modifier.height(1.dp))
             BatteryIndicator()
         }
     }
+}
+
+/**
+ * "MCP :port" while the on-device dev server is listening. A remote-control interface on a
+ * handheld must be visible whenever it is live (docs/mcp-server.md); this rides in the same
+ * cluster as the clock so it is on the library bar and the pause menu alike. Nothing in the
+ * play flavor ever sets running, so the chip never appears there.
+ */
+@Composable
+fun DevServerIndicator() {
+    if (!com.armsx2.devtools.DevServer.running.value) return
+    Text(
+        "MCP :" + com.armsx2.devtools.DevServer.port.value,
+        color = Color(0xFFFF6B6B),
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Bold,
+    )
 }

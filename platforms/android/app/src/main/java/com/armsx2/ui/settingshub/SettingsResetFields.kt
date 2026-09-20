@@ -47,11 +47,8 @@ internal val SETTINGS_CATEGORY_FIELDS: Map<SettingsCategory, List<String>> = map
         "shadeBoost", "shadeBoostBrightness", "shadeBoostContrast", "shadeBoostGamma",
         "shadeBoostSaturation", "shaderChainEnabled", "shaderChainParams", "shaderChainPreset",
         "textureFiltering", "texturePreloading", "triFilter", "tvShader", "upscaleFloat",
-        // TextureUpscaleSection lives on this tab. Texture-time upscaling, not the screen
-        // upscaler above it.
-        "textureUpscaleWorldEnabled", "textureUpscaleUiEnabled", "textureUpscaleWorldAlgorithm",
-        "textureUpscaleUiAlgorithm", "textureUpscaleWorldScale", "textureUpscaleUiScale",
-        "textureUpscaleVramBudgetMb", "textureUpscaleDeposterize",
+        // The TextureUpscaleSection on this tab is backed by TextureUpscaleStore, not by
+        // Settings fields; SettingsViewModel.resetCategory resets that store alongside.
         "upscaler", "vsyncEnable",
     ),
     // AudioTab.kt
@@ -77,7 +74,7 @@ internal val SETTINGS_CATEGORY_FIELDS: Map<SettingsCategory, List<String>> = map
     // FixesTab.kt — also owns the GameDB fixes and the recompiler toggles, which moved here
     // from Performance and from the retired Recompiler tab.
     SettingsCategory.Advanced to listOf(
-        "enableFastBoot", "enableGameFixes", "pineEnabled", "pineSlot",
+        "enableFastBoot", "enableGameFixes",
         "gamefixBlitInternalFps", "gamefixDmaBusy", "gamefixEETiming",
         "gamefixFullVu0Sync", "gamefixGifFifo", "gamefixGoemonTlb", "gamefixIbit",
         "gamefixInstantDma", "gamefixOphFlag", "gamefixSkipMpeg",

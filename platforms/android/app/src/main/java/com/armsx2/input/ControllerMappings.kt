@@ -1027,6 +1027,9 @@ object ControllerMappings {
         // the panel goes to the monitor, and turning it off meant unplugging or digging into App
         // settings (SoraNo, on a Thor). Appended last for the persisted-by-ordinal reason above.
         SECOND_SCREEN("pad.secondscreen.keycode", "Second Screen Panel (toggle)"),
+        // Flush the texture cache so every visible texture re-runs through the current
+        // upscale filter (or a freshly installed pack). Appended last, persisted by ordinal.
+        RELOAD_TEXTURES("pad.reloadtextures.keycode", "Reload Textures"),
     }
 
     // A hotkey is either a single button or a two-button combo. The main key is

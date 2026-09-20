@@ -381,9 +381,12 @@ public class MainActivity extends AppCompatActivity {
         // GameDB override (armsx2_overrides.yaml — the whole point of that file is
         // shipping per-game fixes like VP2/LEGO Batman; without force-refresh an
         // existing user keeps the original copy and override edits never land).
+        // Same for the RAISR-HD kernel files (resources/upscale/*.a2rk): a refit ships as a
+        // new APK and must replace the copy an earlier install left behind.
         final boolean forceFresh = srcFile.contains("shaders")
                 || srcFile.endsWith("GameIndex.yaml")
-                || srcFile.endsWith("armsx2_overrides.yaml");
+                || srcFile.endsWith("armsx2_overrides.yaml")
+                || srcFile.endsWith(".a2rk");
         try {
             is = assetMgr.open(srcFile);
             File destFileObj = new File(destFile);

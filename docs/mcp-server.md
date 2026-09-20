@@ -1,6 +1,6 @@
 # On-Device MCP Server
 
-Design direction. Not implemented.
+Design direction, now implemented in `platforms/android/app/src/github/java/com/armsx2/devtools/`. The tool list and usage live in CLAUDE.md; this file keeps the reasoning.
 
 ## Why
 

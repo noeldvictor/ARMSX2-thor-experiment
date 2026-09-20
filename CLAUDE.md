@@ -64,7 +64,8 @@ does **not** upscale the finished frame. Present-time upscaling already exists h
 
 ### RAISR-HD learned kernels
 
-**Trainer implemented; runtime in progress.** The "pseudo-HD without a pack" path: RAISR
+**Trainer, runtime and bundled kernels implemented; mipmapped textures still excluded (in
+progress).** The "pseudo-HD without a pack" path: RAISR
 (Romano/Isidoro/Milanfar 2016) - not a neural net. Each input pixel is hashed by gradient
 angle/strength/coherence into one of 216 buckets; each bucket owns one small kernel per
 output phase, fit by least squares on HD-pack pairs. Cost is ~550 MACs per input pixel, an
@@ -90,21 +91,52 @@ existing worker thread with no Vulkan work.
 - Training data comes from sashkinbro's GitHub Releases ZIPs (lossless PNG). ARMSX2's B2
   bucket has a daily cap and returned 403 `download_cap_exceeded` on 2026-09-20. The data
   workspace is outside the repo at `F:\Projectsrmsx2-thoraisr-data\`.
-- Wizardry: Tale of the Forsaken Land (SLUS-20258, no pack exists) is the user's live test.
+- Wizardry: Tale of the Forsaken Land (SLUS-20259, no pack exists) is the user's live test.
+- **Runtime**: `GSTextureUpscalerRaisr.{h,cpp}`, enum entry `RaisrHD` (ordinal 24), texture
+  class carried through the worker job, self-test at texture-cache creation (checksum
+  `6d1bd0ec` with the first general kernels). Verified bit-exact against the numpy reference
+  with a host harness (`raisr-data/hosttest/`, clang against thin stubs).
+- **Shipped kernels**: one general set fit on Xenosaga III + Ape Escape 2 + TimeSplitters 2
+  (9,126 textures), copied to both `world_*` and `ui_*` in `assets/resources/upscale/`
+  (`.a2rk` files are force-refreshed on app update). Held-out 2x PSNR vs Lanczos: UI-type
+  pack +3.6 dB, TimeSplitters +0.9, Ape Escape +0.1; 4x on TimeSplitters +0.5. A
+  pack-specific fit is worth ~1 dB on UI art, so the planned refit is a small-texture vs
+  large-texture split, which is what the World/UI size classes already are.
+- **Found on device**: with upstream's `hwMipmap = true` default, the upscaler's guard
+  (`paltex || lod || region`) skips every mipmapped texture, which in Wizardry is all of
+  them - `skippedGuard` climbs, `upscaled` stays 0. Fix in progress: drop `lod` from the
+  guard and create the injected texture with a full mip chain (the replacement path already
+  does this; `GenerateMipmapsIfNeeded` fills it). `gpuPaletteConversion` is off by default,
+  so palettes are not the blocker.
+- Wizardry also ran at `upscaleFloat = 1` (native internal resolution) on the test device;
+  texture sharpness is invisible until IR is 2-3x. Set it before judging the look.
 - RAISR is an interpolator: it sharpens along edges and cannot invent detail. Expect "a much
   better Lanczos", not an ESRGAN pack. Pixel-art sprites still want xBR; both stay in the
   picker.
 ### On-device MCP server
 
-**Not implemented.** Full notes: [docs/mcp-server.md](docs/mcp-server.md).
+**Implemented** (`platforms/android/app/src/github/java/com/armsx2/devtools/`). Full notes:
+[docs/mcp-server.md](docs/mcp-server.md). It exists to make the upscaling work measurable,
+and it paid for itself on day one: it is how the mipmap guard finding above was made.
 
-Exists mainly to make the upscaling work measurable — comparing twenty algorithms by
-hand across a library is not realistic.
-
-- Drives screenshots/framebuffer capture, settings read/write, emulator control, and
-  texture dump/replace control.
-- Localhost only over `adb forward`. Off by default, visible indicator when running.
-- `github` flavor only, compiled out of `play`, never a hard dependency.
+- Start: `adb forward tcp:27183 tcp:27183` then
+  `adb shell am start -n com.armsx2/.BootSplashActivity --ez devserver true`, or the
+  App-settings toggle "Dev server (MCP)". An `MCP :27183` chip shows on the library bar and
+  the pause menu while it runs. 127.0.0.1 only. `play` gets a no-op stub (`DEV_SERVER`
+  build flag is false there).
+- Transport: MCP Streamable HTTP on `POST /mcp` (JSON-RPC, JSON responses, no SSE) plus
+  curl-friendly `POST /tool/<name>` with the arguments as the body, and `GET /screenshot`
+  for the PNG bytes.
+- Tools: `status`, `library`, `boot`, `close`, `pause`, `resume`, `save_state`,
+  `load_state`, `screenshot`, `settings_get`, `settings_set` (patch of Settings fields;
+  texture upscaling under a `textureUpscale` object), `hotkey`, `texture_stats`,
+  `texture_dump`, `log`, `logcat`. `texture_stats` comes from a new JNI
+  `getTextureUpscaleStats()`.
+- `boot` must hand the core a plain path for `file:` URIs (`HomeViewModel.launch` does the
+  same); the raw `file:///...%20...` string fails VM init. A `file:` VIEW intent from adb
+  hits Android's app chooser because three activities accept it; use the server instead.
+- Save states are the checkpoint primitive: load slot, change a setting, screenshot,
+  compare. Slot 1 of Wizardry is the current checkpoint.
 
 ### ARM64 optimization
 
@@ -158,6 +190,23 @@ implementation and are kept for the reasoning, not as a to-do.
 - Runtime resolution order is pack → upscaler → native. A pack texture still loading
   now suppresses the upscale for that key (see `LookupHashCache`), otherwise the two
   async paths raced for `InjectHashCacheTexture`.
+
+### Settings constructor limit (dex)
+
+- `Settings` is a data class; its `copy$default` is a static method taking the instance,
+  every constructor parameter, one Int mask per 32 parameters and a marker. A dex
+  range-invoke encodes its register count in **8 bits**. Past 255, D8 silently wraps the
+  count, the build succeeds, and ART rejects every class that calls `copy()` at load -
+  `MainActivityRuntime` on 2026-09-20, so the app crashed on launch after the refresh.
+- Upstream's constructor is at 246 fields = 256 registers, i.e. at or past the limit
+  itself. **Fork fields never go in that constructor.** The fork's texture-upscaling fields
+  live in `TextureUpscaleSettings` / `TextureUpscaleStore` and PINE in `PineSettings` /
+  `PineStore` (both `config/`), with the same global + per-game scope rules and a one-shot
+  migration from the old JSON keys. That leaves 244 fields = 254 registers.
+- `SettingsSizeTest` fails the unit tests when the count would overflow. Run
+  `:app:testGithubDebugUnitTest --tests com.armsx2.SettingsSizeTest` after every refresh.
+  `dexdump -d classes*.dex | grep "copy\$default"` shows the encoded register list if in
+  doubt.
 
 ### Device defaults
 

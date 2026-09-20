@@ -890,6 +890,9 @@ public class NativeApp {
 	 *  Returns the new state. Runtime-only; no-op (returns false) with no VM. */
 	public static native boolean toggleTextureDumping();
 
+	/** Texture-upscaler counters and active configuration as a JSON string (dev server). */
+	public static native String getTextureUpscaleStats();
+
 	/** Create a memory card in the memcards folder. type: 1=File, 2=Folder.
 	 *  fileType (File only): 1=8MB, 2=16MB, 3=32MB, 4=64MB. Returns success. */
 	public static native boolean createMemoryCard(String name, int type, int fileType);

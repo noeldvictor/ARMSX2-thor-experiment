@@ -5,6 +5,7 @@
 #include "GSTextureReplacements.h"
 #include "GSTextureUpscaler.h"
 #include "GSTextureUpscalerNN.h"
+#include "GSTextureUpscalerRaisr.h"
 #include "GSRendererHW.h"
 #include "GS/GSState.h"
 #include "GS/GSGL.h"
@@ -67,6 +68,7 @@ GSTextureCache::GSTextureCache()
 	// first. No model installed means no work.
 	GSTextureUpscaler::RunFilterSelfTestOnce();
 	GSTextureUpscalerNN::RunSelfTestOnce();
+	GSTextureUpscalerRaisr::RunSelfTestOnce();
 }
 
 GSTextureCache::~GSTextureCache()
@@ -7246,7 +7248,7 @@ extern bool FMVstarted;
 /// time, which is the hitch this feature exists to avoid.
 static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& key, const GIFRegTEX0& TEX0,
 	const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region, int tw, int th, u8 scale,
-	GSTextureUpscaleAlgorithm algorithm)
+	GSTextureUpscaleAlgorithm algorithm, GSTextureUpscaler::TextureClass texture_class)
 {
 	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
 	const GSVector2i& bs = psm.bs;
@@ -7271,7 +7273,7 @@ static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& 
 	// range is a subset of the source's - the bound stays correct and we avoid a second pass.
 	const std::pair<u8, u8> alpha_minmax = GSGetRGBA8AlphaMinMax(ptr, tw, th, src_pitch);
 
-	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, alpha_minmax);
+	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, texture_class, alpha_minmax);
 }
 
 GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, bool& paltex, const u32* clut, const GSVector2i* lod, SourceRegion region)
@@ -7415,7 +7417,8 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		if (plan.scale > 1)
 		{
 			GL_CACHE("TC: HC Upscale queued x%u: %" PRIx64 " %dx%d", plan.scale, key.TEX0Hash, tw, th);
-			QueueUpscaleForHashCacheTexture(key, TEX0, TEXA, region, tw, th, plan.scale, plan.algorithm);
+			QueueUpscaleForHashCacheTexture(key, TEX0, TEXA, region, tw, th, plan.scale, plan.algorithm,
+				plan.texture_class);
 			// Deliberately falls through: the native texture is created below so the game has
 			// something to draw this frame, and the upscale replaces it when the worker is done.
 		}

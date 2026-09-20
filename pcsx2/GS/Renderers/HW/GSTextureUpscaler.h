@@ -82,9 +82,10 @@ namespace GSTextureUpscaler
 	/// Scale an RGBA8 buffer. Returns false when the algorithm is not implemented, in which
 	/// case the caller must fall back to the native texture path.
 	///
-	/// `scale` must be 2 or 4; 4 is two 2x passes.
+	/// `scale` must be 2 or 4; 4 is two 2x passes for the classic filters. `texture_class`
+	/// only matters to RAISR-HD, which carries a kernel set per class.
 	bool ScaleBuffer(GSTextureUpscaleAlgorithm algorithm, const u8* src, int sw, int sh, u32 src_pitch,
-		u8* dst, u32 dst_pitch, u8 scale);
+		u8* dst, u32 dst_pitch, u8 scale, TextureClass texture_class = TextureClass::World);
 
 	/// Whether this algorithm has an implementation yet. The enum deliberately lists the
 	/// whole intended library, so most of it answers false for now.
@@ -108,7 +109,8 @@ namespace GSTextureUpscaler
 	/// inline puts Lanczos on the GS thread at upload time, which is exactly the hitch this
 	/// feature must not cause.
 	void QueueUpscale(const GSTextureCache::HashCacheKey& key, const u8* src, int sw, int sh, u32 src_pitch,
-		GSTextureUpscaleAlgorithm algorithm, u8 scale, const std::pair<u8, u8>& alpha_minmax);
+		GSTextureUpscaleAlgorithm algorithm, u8 scale, TextureClass texture_class,
+		const std::pair<u8, u8>& alpha_minmax);
 
 	/// Move finished jobs out for injection, stopping once `max_bytes` have been taken so a
 	/// burst cannot stall one frame. GS thread only.

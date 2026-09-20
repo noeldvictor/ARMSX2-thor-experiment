@@ -258,6 +258,9 @@ android {
             // Play distribution should carry. The NATIVE side is gated here rather than in
             // Kotlin so a play build never even fetches the library.
             buildConfigField("boolean", "LSFG", "true")
+            // On-device MCP server (src/github/.../devtools). Localhost over adb forward,
+            // off by default; the play flavor gets the no-op stub and no settings row.
+            buildConfigField("boolean", "DEV_SERVER", "true")
             externalNativeBuild { cmake { arguments += "-DARMSX2_ENABLE_LSFG=ON" } }
         }
         create("play") {
@@ -265,6 +268,7 @@ android {
             buildConfigField("boolean", "STORAGE_ALL_FILES", "false")
             buildConfigField("boolean", "IN_APP_UPDATER", "false")
             buildConfigField("boolean", "LSFG", "false")
+            buildConfigField("boolean", "DEV_SERVER", "false")
             externalNativeBuild { cmake { arguments += "-DARMSX2_ENABLE_LSFG=OFF" } }
         }
     }
