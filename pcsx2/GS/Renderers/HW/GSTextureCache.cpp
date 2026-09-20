@@ -7332,9 +7332,11 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	GL_CACHE("TC: HC Miss: %" PRIx64 " %" PRIx64 " R-%ux%u", key.TEX0Hash, key.CLUTHash, key.region_width, key.region_height);
 
 	// check for a replacement texture with the full clut key
+	// Outside the block because the upscaler gate below reads it: a pack texture that is
+	// still loading must not be raced by an upscale of the same key.
+	bool replacement_texture_pending = false;
 	if (replace)
 	{
-		bool replacement_texture_pending = false;
 		std::pair<u8, u8> alpha_minmax;
 		GSTexture* replacement_tex = GSTextureReplacements::LookupReplacementTexture(key, lod != nullptr,
 			&replacement_texture_pending, &alpha_minmax);
@@ -7396,7 +7398,11 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 	// A larger texture in the hash cache is not a new idea here: the replacement path above
 	// already inserts higher-resolution textures against the same unscaled_size/m_scale, so
 	// sampling handles it.
-	if (GSTextureUpscaler::IsEnabled() && (paltex || lod || region.HasX() || region.HasY()))
+	//
+	// A pending pack texture also skips: pack wins over upscaler. A replacement found
+	// synchronously returned above, but one still loading would otherwise race the upscale
+	// worker for InjectHashCacheTexture, and whichever landed last would win.
+	if (GSTextureUpscaler::IsEnabled() && (paltex || lod || region.HasX() || region.HasY() || replacement_texture_pending))
 	{
 		// Counted rather than silently dropped: if a game turns out to be mostly palette or
 		// mipmapped textures, "the upscaler does nothing" and "the upscaler is off" look

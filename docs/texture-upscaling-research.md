@@ -243,6 +243,13 @@ In rough order of how likely each is to sink the feature:
   separate `CLUTHash`.
 - **Alpha.** `InjectHashCacheTexture` takes `alpha_minmax` and the HW renderer makes
   real decisions from it. An upscaler that shifts alpha range breaks those.
+- **Pack precedence.** Pack wins over upscaler. A replacement found synchronously
+  returns from `LookupHashCache` before the upscaler gate, but one still loading only
+  sets `replacement_texture_pending`, and the async loader and the upscale worker both
+  land through `InjectHashCacheTexture` with last-writer-wins. The gate therefore also
+  skips on `replacement_texture_pending`. Cost: a pack texture that then fails to load
+  (device without ASTC) stays native rather than upscaled, which is the right side to
+  err on.
 - **Filtering interaction.** Upscaled textures change how `TriFilter` and the
   bilinear hacks behave. Expect per-game regressions.
 
