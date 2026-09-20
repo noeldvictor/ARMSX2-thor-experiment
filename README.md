@@ -37,6 +37,7 @@ Screenshots are from a personal AYN Thor test device.
 - AYN Thor is the target device for layout, workflow, and sanity checks.
 - The game selector favors cover-first browsing and hardcoded xlenore PS2 cover defaults.
 - Cover cards show `CHEATS` only when real `.pnach` files exist in the selected ARMSX2 data root `cheats` folder.
+- Cover cards also show an `HD` badge: solid when a texture pack is installed for that game, hollow when the online catalogue has one to download. Tapping it, or the long-press menu row, opens Texture Packs with that game selected. Installed means the pack folder exists, so hand-copied packs count too.
 - Bundled real cheat PNACHs from the NetherSX2 patch collection are included under `platforms/android/app/src/main/assets/cheats` and copied only when missing.
 - Cheat controls are split by PNACH section so each cheat section can be toggled on its own.
 - Widescreen and 60 FPS patch metadata are intentionally not used for cheat badges or cheat switches.
@@ -46,6 +47,7 @@ Screenshots are from a personal AYN Thor test device.
 - Seventeen filters grouped by how they decide — resample, pixel art, edge-directed, neural — plus a Deposterize pre-pass for the banding 16-bit PS2 textures leave in gradients.
 - Scale and algorithm are changeable from the in-game menu, so filters can be compared without leaving the game.
 - Scaling runs on a worker thread; the native texture is drawn immediately and the upscaled one swaps in when it is ready.
+- A texture covered by an HD pack is never upscaled, even while the pack texture is still loading; the upscaler only fills in what the pack leaves native.
 - On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
 ## Exploration Notes
@@ -57,7 +59,7 @@ Notes on what I am poking at. The texture filters are built and running; most of
 - [Neural models](docs/neural-models.md) — the `.a2nn` format, why no weights ship, and a tool that proves the path works before you have any.
 - [ARM64 optimization review](docs/arm64-optimization-review.md) — the Thor is four different CPU cores, and local debug builds were quietly testing different codegen than every release.
 - [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats, and the public collections turn out to be the same set we already bundle. Closing that gap means authoring, not importing.
-- [Texture pack getter](docs/texture-pack-getter.md) — browse and install HD packs, scoped to games actually in the library.
+- [Texture pack getter](docs/texture-pack-getter.md) — written before upstream shipped its own catalogue and one-tap installer, which this fork now inherits. Kept for the reasoning; the fork's part is the cover badge.
 - [On-device MCP server](docs/mcp-server.md) — a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 
 ## What This Is Not
@@ -93,5 +95,6 @@ This fork stands on the work of:
 - [PCSX2_ARM64](https://github.com/pontos2024/PCSX2_ARM64)
 - [xlenore/ps2-covers](https://github.com/xlenore/ps2-covers)
 - [NetherSX2-patch](https://github.com/noeldvictor/NetherSX2-patch)
+- [sashkinbro/EmuCoreX-Textures](https://github.com/sashkinbro/EmuCoreX-Textures) — the texture pack catalogue ARMSX2 mirrors, which the `HD` badges read
 
 Licensed under GPLv3. See [COPYING.GPLv3](COPYING.GPLv3).
