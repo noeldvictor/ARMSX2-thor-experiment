@@ -26,7 +26,6 @@ private val BASE_SEARCH_INDEX: List<SettingsSearchEntry> = listOf(
     SettingsSearchEntry("app.launcherRotation", true, SettingsCategory.General),
     SettingsSearchEntry("app.bgColor", true, SettingsCategory.General),
     SettingsSearchEntry("app.menuSfx", true, SettingsCategory.General),
-    SettingsSearchEntry("update.includeNightly", true, SettingsCategory.General),
     SettingsSearchEntry("perf.fix.skipBios", true, SettingsCategory.Advanced),
     SettingsSearchEntry("perf.fix.gamedbFixes", true, SettingsCategory.Advanced),
     SettingsSearchEntry("perf.fix.skipMpeg", true, SettingsCategory.Advanced),
@@ -70,6 +69,7 @@ private val BASE_SEARCH_INDEX: List<SettingsSearchEntry> = listOf(
     SettingsSearchEntry("perf.adpf.label", true, SettingsCategory.Performance),
     SettingsSearchEntry("perf.eeFpuClamping.label", true, SettingsCategory.Performance),
     SettingsSearchEntry("perf.vuClamping.label", true, SettingsCategory.Performance),
+    SettingsSearchEntry("perf.vu1Clamping.label", true, SettingsCategory.Performance),
     SettingsSearchEntry("perf.eeFpuRoundMode.label", true, SettingsCategory.Performance),
     SettingsSearchEntry("perf.vu0RoundMode.label", true, SettingsCategory.Performance),
     SettingsSearchEntry("perf.vu1RoundMode.label", true, SettingsCategory.Performance),
@@ -111,7 +111,12 @@ private val BASE_SEARCH_INDEX: List<SettingsSearchEntry> = listOf(
     SettingsSearchEntry("renderer.textureFiltering.label", true, SettingsCategory.Graphics),
     SettingsSearchEntry("renderer.texturePreloading.label", true, SettingsCategory.Graphics),
     SettingsSearchEntry("renderer.displayFilter.label", true, SettingsCategory.Graphics),
-    SettingsSearchEntry("renderer.fsr1.label", true, SettingsCategory.Graphics),
+    // The FSR1 switch became the Display-upscaler picker when SGSR joined it; searching for the
+    // old key would land on a row that no longer exists.
+    // Missing from the index entirely, so nobody could search their way to it -- which is
+    // exactly what #629 reported ("If one exists, I can't seem to find it").
+    SettingsSearchEntry("overlay.toggle.fastForwardPopups", true, SettingsCategory.Graphics),
+    SettingsSearchEntry("renderer.upscaler.label", true, SettingsCategory.Graphics),
     SettingsSearchEntry("renderer.cas.label", true, SettingsCategory.Graphics),
     SettingsSearchEntry("renderer.blendingAccuracy.label", true, SettingsCategory.Graphics),
     SettingsSearchEntry("renderer.trilinear.label", true, SettingsCategory.Graphics),

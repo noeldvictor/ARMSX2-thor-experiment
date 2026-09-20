@@ -539,22 +539,14 @@ void ARMSX2IOSApplyRetroAchievementsOverlayDefaults(SettingsInterface* si, const
         reason ? reason : "unknown");
 }
 
-bool ARMSX2IOSPathStartsWith(const std::string& value, const std::string& prefix)
-{
-    return value.size() >= prefix.size() && value.compare(0, prefix.size(), prefix) == 0;
-}
-
 bool ARMSX2IOSPathIsInsideRoot(const std::string& path, const std::string& root)
 {
-    return path == root || ARMSX2IOSPathStartsWith(path, root + "/");
+    return path == root || path.starts_with(root + "/");
 }
 
 bool ARMSX2IOSPathContainsContainerFragment(const std::string& path)
 {
-    return path.find("Data/Application/") != std::string::npos ||
-           path.find("/Containers/Data/Application/") != std::string::npos ||
-           path.find("/var/mobile/Containers/Data/Application/") != std::string::npos ||
-           path.find("/private/var/mobile/Containers/Data/Application/") != std::string::npos;
+    return path.find("Data/Application/") != std::string::npos;
 }
 
 std::string ARMSX2IOSResolveFolderPath(const std::string& root, const std::string& value)
@@ -646,7 +638,6 @@ void ARMSX2IOSSanitizeFolderSettings(SettingsInterface* si, const std::string& d
         {"Cache", "cache", false},
         {"Textures", "textures", false},
         {"InputProfiles", "inputprofiles", false},
-        {"Videos", "videos", false},
         {"DebuggerLayouts", "debuggerlayouts", true},
         {"DebuggerSettings", "debuggersettings", true},
     };
@@ -869,7 +860,6 @@ void ARMSX2SetIOSOsdFlags(bool show_fps, bool show_vps, bool show_speed, bool sh
     EmuConfig.GS.OsdShowFrameTimes = show_frame_times;
     EmuConfig.GS.OsdShowVersion = show_version;
     EmuConfig.GS.OsdShowHardwareInfo = show_hardware_info;
-    EmuConfig.GS.OsdShowVideoCapture = false;
     EmuConfig.GS.OsdShowInputRec = false;
 }
 
@@ -891,7 +881,6 @@ void ARMSX2WriteIOSOsdFlagsToSettings()
     s_settings_interface->SetBoolValue("EmuCore/GS", "OsdShowFrameTimes", EmuConfig.GS.OsdShowFrameTimes);
     s_settings_interface->SetBoolValue("EmuCore/GS", "OsdShowVersion", EmuConfig.GS.OsdShowVersion);
     s_settings_interface->SetBoolValue("EmuCore/GS", "OsdShowHardwareInfo", EmuConfig.GS.OsdShowHardwareInfo);
-    s_settings_interface->SetBoolValue("EmuCore/GS", "OsdShowVideoCapture", false);
     s_settings_interface->SetBoolValue("EmuCore/GS", "OsdShowInputRec", false);
 }
 

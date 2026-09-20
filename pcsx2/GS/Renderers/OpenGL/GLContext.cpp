@@ -22,6 +22,10 @@
 
 #include "glad/gl.h"
 
+#if defined(ENABLE_LIBRETRO)
+#include "GS/Renderers/OpenGL/GLLibretro.h"
+#endif
+
 static bool ShouldPreferESContext()
 {
 	const char* value = std::getenv("PREFER_GLES_CONTEXT");
@@ -74,15 +78,31 @@ std::unique_ptr<GLContext> GLContext::Create(const WindowInfo& wi, Error* error)
 	}
 
 	std::unique_ptr<GLContext> context;
+	// Libretro: the frontend owns the only context that can reach the screen,
+	// and it is current on the frontend's own thread - so this thread, the GS
+	// thread, gets one that shares its objects rather than one of its own. See
+	// GLLibretro. Nothing below could help here anyway: there is no window for
+	// a platform context to attach to.
+#if defined(ENABLE_LIBRETRO)
+	if (GLLibretro::Active)
+	{
+		context = GLLibretro::CreateSharedContext(
+			wi, std::span<const Version>(versions_to_try, num_versions_to_try), error);
+		if (!context)
+			return nullptr;
+	}
+#endif
+
 #ifdef __ANDROID__
-	if (wi.type == WindowInfo::Type::Android)
+	if (!context && wi.type == WindowInfo::Type::Android)
 		context = GLContextEGLAndroid::Create(wi, versions_to_try, num_versions_to_try);
 #endif
 #if defined(_WIN32)
-	context = GLContextWGL::Create(wi, std::span<const Version>(versions_to_try, num_versions_to_try), error);
+	if (!context)
+		context = GLContextWGL::Create(wi, std::span<const Version>(versions_to_try, num_versions_to_try), error);
 #else
 #ifdef X11_API
-	if (wi.type == WindowInfo::Type::X11)
+	if (!context && wi.type == WindowInfo::Type::X11)
 		context = GLContextEGLX11::Create(wi, std::span<const Version>(versions_to_try, num_versions_to_try), error);
 #endif
 #ifdef WAYLAND_API

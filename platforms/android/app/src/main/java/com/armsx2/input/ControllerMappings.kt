@@ -389,6 +389,61 @@ object ControllerMappings {
         kr.co.iefriends.pcsx2.NativeApp.sHapticScale = hapticIntensity() / 100f
     }
 
+    // What to do when the active controller exposes NO motor to Android. Off (default) leaves
+    // an external pad silent rather than buzzing the phone it is paired to (#433). On buzzes
+    // this device instead, which is the only feedback available for pads Android cannot drive
+    // at all -- Xbox Series X/S over Bluetooth, some DualSense BT modes (#646). Built-in
+    // handheld pads are unaffected either way: they are not external, so #241 still buzzes.
+    private const val KEY_RUMBLE_FALLBACK = "pad.rumble.fallbackExternal"
+    /**
+     * Whether buzzing THIS device is the right default when the pad exposes no motor.
+     *
+     * On a phone it is not: #433 was a handset in a stand or a pocket buzzing while the user
+     * held a controller, and InputDevice.isExternal() is what tells those apart. On a gaming
+     * HANDHELD it always is -- the device and the thing in your hands are the same object, so
+     * a pad with no motor should fall through to the handheld's own vibrator (#241).
+     *
+     * The problem is that isExternal() cannot be trusted to make that call. The Odin 3's
+     * BUILT-IN controller enumerates as "Xbox Wireless Controller", on /sys/devices/virtual,
+     * with no Bluetooth address and on the USB bus -- and still sets EXTERNAL. So the #433
+     * guard suppressed the only vibrator the device has and the handheld went silent.
+     *
+     * Rather than try to out-guess isExternal(), key the DEFAULT on whether this is a handheld
+     * at all. A false positive here is harmless: on a real handheld, buzzing the device is the
+     * correct behaviour whatever the pad claims. A false positive on a PHONE would reintroduce
+     * #433, so the list is manufacturers who only ship handhelds -- never a model glob that a
+     * phone could match.
+     *
+     * Only a DEFAULT. An explicit choice in the Pad tab is stored and always wins.
+     */
+    private fun handheldWithBuiltInPad(): Boolean {
+        val vendor = (android.os.Build.MANUFACTURER ?: "").lowercase()
+        val brand = (android.os.Build.BRAND ?: "").lowercase()
+        val model = (android.os.Build.MODEL ?: "").lowercase()
+
+        // Short vendor tokens are matched EXACTLY -- "ayn" as a substring would also match a
+        // manufacturer like "dayna", and a false positive on a phone reintroduces #433.
+        if (vendor == "ayn" || vendor == "gpd" || brand == "ayn" || brand == "gpd")
+            return true
+
+        // Distinctive enough to match anywhere in vendor, brand or model. Model matters
+        // because these handhelds often report the SoC vendor as the brand: the Odin 3 says
+        // brand=qti, and the Retroid Pocket 6 carries its identity only in the model string.
+        val handheldNames = listOf("retroid", "ayaneo", "anbernic", "odin")
+        return handheldNames.any { vendor.contains(it) || brand.contains(it) || model.contains(it) }
+    }
+
+    fun rumbleFallbackExternal(): Boolean =
+        MainActivityRuntime.prefs.getBoolean(KEY_RUMBLE_FALLBACK, handheldWithBuiltInPad())
+    fun setRumbleFallbackExternal(on: Boolean) {
+        MainActivityRuntime.prefs.edit { putBoolean(KEY_RUMBLE_FALLBACK, on) }
+        kr.co.iefriends.pcsx2.NativeApp.sRumbleFallbackExternal = on
+    }
+    /** Push the persisted fallback choice into the native gate; call once at app start. */
+    fun syncRumbleFallback() {
+        kr.co.iefriends.pcsx2.NativeApp.sRumbleFallbackExternal = rumbleFallbackExternal()
+    }
+
     // PS2 Multitap master switch. OFF (default) = classic 2-player co-op. ON = up to 8
     // controllers routed to the 2 ports x 4 slots. Extra pads (slots 2-7) reuse the P1
     // button mapping. Also drives PadRouter's routing gate.
@@ -836,6 +891,42 @@ object ControllerMappings {
         invalidateRuntimeCaches()
     }
 
+    // A latch-flagged button toggles on a TAP instead of following the physical button: press
+    // once to hold the PS2 button down, press again to release. The on-screen controls have had
+    // this ("tap to hold") since they existed; physical buttons never did, so a game that wants a
+    // button held while you do something else with the d-pad is unplayable for anyone who cannot
+    // hold two controls at once. Requested by bobo123g (#612), who cannot hold R1 and aim at the
+    // same time in Metal Gear Solid 2.
+    //
+    // Global rather than per-game, and stored the same way turbo is, because it describes the
+    // player rather than the title.
+    private const val LATCH_PREFIX = "pad.latch."
+    private fun latchKey(action: Action, player: Int) = playerPrefix(player) + LATCH_PREFIX + action.id
+    fun isLatchAction(action: Action, player: Int = 0): Boolean =
+        MainActivityRuntime.prefs.getBoolean(latchKey(action, player), false)
+    fun setLatchAction(action: Action, player: Int, on: Boolean) {
+        MainActivityRuntime.prefs.edit { putBoolean(latchKey(action, player), on) }
+        invalidateRuntimeCaches()
+        // Changing this mid-game must not stand a button up permanently: if it is latched down
+        // right now, the tap that would have released it no longer toggles anything.
+        MainActivityRuntime.releaseLatches()
+    }
+
+    /** True when a physical button's PS2 target [targetKeyCode] is latch-flagged. */
+    fun isLatchTarget(targetKeyCode: Int, player: Int = 0): Boolean {
+        return targetKeyCode in runtimeBindings().latchTargets[if (player == P2) P2 else P1]
+    }
+
+    /** The slot a per-slot save/load hotkey targets, or -1 for every other hotkey. */
+    fun slotForHotkey(h: SysHotkey): Int = when {
+        h.name.startsWith("SAVE_SLOT_") -> h.name.removePrefix("SAVE_SLOT_").toIntOrNull() ?: -1
+        h.name.startsWith("LOAD_SLOT_") -> h.name.removePrefix("LOAD_SLOT_").toIntOrNull() ?: -1
+        else -> -1
+    }
+
+    /** True for the save half of the per-slot pair. */
+    fun isSaveSlotHotkey(h: SysHotkey): Boolean = h.name.startsWith("SAVE_SLOT_")
+
     /** True when a physical button's PS2 target [targetKeyCode] is turbo-flagged. */
     fun isTurboTarget(targetKeyCode: Int, player: Int = 0): Boolean {
         return targetKeyCode in runtimeBindings().turboTargets[if (player == P2) P2 else P1]
@@ -876,6 +967,36 @@ object ControllerMappings {
         // MainActivityRuntime.dispatchKeyEvent (sets TouchControls.pressureModifierHeld), not as a
         // one-shot action like the others.
         PRESSURE_MOD("pad.pressuremod.keycode", "Pressure Modifier (hold)"),
+
+        // Per-slot save/load and a backwards slot step, matching what NetherSX2 exposes. The
+        // existing trio (Quick Save, Quick Load, Cycle Slot) only reaches the SELECTED slot and
+        // only cycles forwards, so getting to slot 7 meant seven presses and there was no way to
+        // bind "save to 3" outright.
+        //
+        // ★ APPENDED, never inserted. stickCodeForHotkey() is HOTKEY_STICK_CODE_BASE + ordinal,
+        // so an entry added in the middle silently re-points every stick-bound hotkey somebody
+        // already has.
+        PREV_SLOT("pad.prevslot.keycode", "Select Previous Save Slot"),
+        SAVE_SLOT_0("pad.saveslot0.keycode", "Save State To Slot 0"),
+        SAVE_SLOT_1("pad.saveslot1.keycode", "Save State To Slot 1"),
+        SAVE_SLOT_2("pad.saveslot2.keycode", "Save State To Slot 2"),
+        SAVE_SLOT_3("pad.saveslot3.keycode", "Save State To Slot 3"),
+        SAVE_SLOT_4("pad.saveslot4.keycode", "Save State To Slot 4"),
+        SAVE_SLOT_5("pad.saveslot5.keycode", "Save State To Slot 5"),
+        SAVE_SLOT_6("pad.saveslot6.keycode", "Save State To Slot 6"),
+        SAVE_SLOT_7("pad.saveslot7.keycode", "Save State To Slot 7"),
+        SAVE_SLOT_8("pad.saveslot8.keycode", "Save State To Slot 8"),
+        SAVE_SLOT_9("pad.saveslot9.keycode", "Save State To Slot 9"),
+        LOAD_SLOT_0("pad.loadslot0.keycode", "Load State From Slot 0"),
+        LOAD_SLOT_1("pad.loadslot1.keycode", "Load State From Slot 1"),
+        LOAD_SLOT_2("pad.loadslot2.keycode", "Load State From Slot 2"),
+        LOAD_SLOT_3("pad.loadslot3.keycode", "Load State From Slot 3"),
+        LOAD_SLOT_4("pad.loadslot4.keycode", "Load State From Slot 4"),
+        LOAD_SLOT_5("pad.loadslot5.keycode", "Load State From Slot 5"),
+        LOAD_SLOT_6("pad.loadslot6.keycode", "Load State From Slot 6"),
+        LOAD_SLOT_7("pad.loadslot7.keycode", "Load State From Slot 7"),
+        LOAD_SLOT_8("pad.loadslot8.keycode", "Load State From Slot 8"),
+        LOAD_SLOT_9("pad.loadslot9.keycode", "Load State From Slot 9"),
         // Gyro on/off (issue #337) — bind any spare button so gyro can be silenced
         // mid-game without opening settings. TOGGLE flips it and stays; HOLD is the
         // "only while aiming" binding (gyro live only while the button is held, so the
@@ -902,6 +1023,10 @@ object ControllerMappings {
         // Requested for battery — dropping a 120Hz panel to 60 while a 60fps game runs costs
         // nothing visually. Appended last for the persisted-by-ordinal reason above.
         DISPLAY_REFRESH("pad.displayrefresh.keycode", "Cycle Display Refresh Rate"),
+        // The second-screen panel on/off without leaving the game. Docked to a monitor over USB-C,
+        // the panel goes to the monitor, and turning it off meant unplugging or digging into App
+        // settings (SoraNo, on a Thor). Appended last for the persisted-by-ordinal reason above.
+        SECOND_SCREEN("pad.secondscreen.keycode", "Second Screen Panel (toggle)"),
     }
 
     // A hotkey is either a single button or a two-button combo. The main key is
@@ -924,6 +1049,7 @@ object ControllerMappings {
         val serial: String?,
         val targets: Array<Map<Int, Int>>,
         val turboTargets: Array<Set<Int>>,
+        val latchTargets: Array<Set<Int>>,
         val hotkeys: List<RuntimeHotkey>,
         val dpadAsLeftStick: Boolean,
     )
@@ -949,6 +1075,12 @@ object ControllerMappings {
                 .map { it.targetKeyCode }
                 .toSet()
         }
+        val latchTargets = Array(2) { player ->
+            actions.asSequence()
+                .filter { isLatchAction(it, player) }
+                .map { it.targetKeyCode }
+                .toSet()
+        }
         val hotkeys = SysHotkey.values().map { action ->
             RuntimeHotkey(action, hotkeyCode(action), hotkeyModCode(action))
         }
@@ -956,6 +1088,7 @@ object ControllerMappings {
             serial,
             targets,
             turboTargets,
+            latchTargets,
             hotkeys,
             resolveBoolean(KEY_DPAD_AS_LSTICK, false),
         )

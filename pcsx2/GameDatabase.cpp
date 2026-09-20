@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 #include "GameDatabase.h"
+#ifdef ARMSX2_EMBEDDED_RESOURCES
+#include "EmbeddedResources.h"
+#endif
 #include "GS/GS.h"
 #include "Host.h"
 #include "IconsFontAwesome.h"
@@ -418,6 +421,7 @@ static const char* s_gs_hw_fix_names[] = {
 	"nativePaletteDraw",
 	"estimateTextureRegion",
 	"drawBuffering",
+	"rewriteLargeST",
 	"PCRTCOffsets",
 	"PCRTCOverscan",
 	"coalesceRenderPasses",
@@ -534,6 +538,8 @@ static std::optional<GSUserHackOverride> UserHackOverrideForHWFix(GameDatabaseSc
 			return GSUserHackOverride::CPUCLUTRender;
 		case GameDatabaseSchema::GSHWFixId::GPUTargetCLUT:
 			return GSUserHackOverride::GPUTargetCLUT;
+		case GameDatabaseSchema::GSHWFixId::RewriteLargeST:
+			return GSUserHackOverride::RewriteLargeST;
 		default:
 			return std::nullopt;
 	}
@@ -637,6 +643,7 @@ void GameDatabaseSchema::GameEntry::applyGameFixes(
 			config.Cpu.Recompiler.vu0Overflow = (clampMode >= 1);
 			config.Cpu.Recompiler.vu0ExtraOverflow = (clampMode >= 2);
 			config.Cpu.Recompiler.vu0SignOverflow = (clampMode >= 3);
+			config.Cpu.Recompiler.vu0ExactMode = (clampMode >= 4);
 		}
 	}
 
@@ -650,6 +657,7 @@ void GameDatabaseSchema::GameEntry::applyGameFixes(
 			config.Cpu.Recompiler.vu1Overflow = (clampMode >= 1);
 			config.Cpu.Recompiler.vu1ExtraOverflow = (clampMode >= 2);
 			config.Cpu.Recompiler.vu1SignOverflow = (clampMode >= 3);
+			config.Cpu.Recompiler.vu1ExactMode = (clampMode >= 4);
 		}
 	}
 
@@ -756,6 +764,9 @@ bool GameDatabaseSchema::GameEntry::configMatchesHWFix(const Pcsx2Config::GSOpti
 
 		case GSHWFixId::DrawBuffering:
 			return (static_cast<int>(config.UserHacks_DrawBuffering) == value);
+		
+		case GSHWFixId::RewriteLargeST:
+			return (static_cast<int>(config.UserHacks_RewriteLargeST) == value);
 
 		case GSHWFixId::PCRTCOffsets:
 			return (static_cast<int>(config.PCRTCOffsets) == value);
@@ -968,6 +979,10 @@ void GameDatabaseSchema::GameEntry::applyGSHardwareFixes(
 
 			case GSHWFixId::DrawBuffering:
 				config.UserHacks_DrawBuffering = (value > 0);
+				break;
+
+			case GSHWFixId::RewriteLargeST:
+				config.UserHacks_RewriteLargeST = (value > 0);
 				break;
 
 			case GSHWFixId::PCRTCOffsets:
@@ -1213,9 +1228,68 @@ void GameDatabaseSchema::GameEntry::applyGSHardwareFixes(
 	}
 }
 
+std::vector<GameDatabaseSchema::GameEntry::ClaimableSetting> GameDatabaseSchema::GameEntry::claimableSettings() const
+{
+	std::vector<ClaimableSetting> out;
+
+	// Names match the labels applyGameFixes() logs, so the list and a log line read together.
+	const auto add_knob = [&out](CoreGameDBKnob knob, const char* name, int value) {
+		const PerGameOverrideKeys::CoreKnobKeys keys = PerGameOverrideKeys::ForCoreKnob(knob);
+		if (!keys.section)
+			return;
+
+		ClaimableSetting& setting = out.emplace_back(ClaimableSetting{name, value, true, false, {}});
+		for (u32 i = 0; i < keys.count; i++)
+			setting.keys.emplace_back(keys.section, keys.keys[i]);
+	};
+
+	if (eeRoundMode < FPRoundMode::MaxCount)
+		add_knob(CoreGameDBKnob::EERoundMode, "eeRoundMode", static_cast<int>(eeRoundMode));
+	if (eeDivRoundMode < FPRoundMode::MaxCount)
+		add_knob(CoreGameDBKnob::EEDivRoundMode, "eeDivRoundMode", static_cast<int>(eeDivRoundMode));
+	if (vu0RoundMode < FPRoundMode::MaxCount)
+		add_knob(CoreGameDBKnob::VU0RoundMode, "vu0RoundMode", static_cast<int>(vu0RoundMode));
+	if (vu1RoundMode < FPRoundMode::MaxCount)
+		add_knob(CoreGameDBKnob::VU1RoundMode, "vu1RoundMode", static_cast<int>(vu1RoundMode));
+	if (eeClampMode != ClampMode::Undefined)
+		add_knob(CoreGameDBKnob::EEClampMode, "eeClampMode", enum_cast(eeClampMode));
+	if (vu0ClampMode != ClampMode::Undefined)
+		add_knob(CoreGameDBKnob::VU0ClampMode, "vu0ClampMode", enum_cast(vu0ClampMode));
+	if (vu1ClampMode != ClampMode::Undefined)
+		add_knob(CoreGameDBKnob::VU1ClampMode, "vu1ClampMode", enum_cast(vu1ClampMode));
+
+	for (const auto& [hack, value] : speedHacks)
+	{
+		if (const char* key = PerGameOverrideKeys::ForSpeedHack(hack))
+			out.push_back({Pcsx2Config::SpeedhackOptions::GetSpeedHackName(hack), value, true, false, {{"EmuCore/Speedhacks", key}}});
+	}
+
+	for (const GamefixId id : gameFixes)
+	{
+		if (const char* key = PerGameOverrideKeys::ForGamefix(id))
+			out.push_back({Pcsx2Config::GamefixOptions::GetGameFixName(id), 1, true, false, {{"EmuCore/Gamefixes", key}}});
+	}
+
+	for (const auto& [id, value] : gsHWFixes)
+	{
+		if (const char* key = PerGameOverrideKeys::ForGSHWFix(id))
+			out.push_back({getHWFixName(id), value, false, isUserHackHWFix(id), {{"EmuCore/GS", key}}});
+	}
+
+	return out;
+}
+
 void GameDatabase::loadFile(const std::string& path, const std::string& name, bool is_override)
 {
-	const std::optional<std::string> buffer = FileSystem::ReadFileToString(path.c_str());
+	std::optional<std::string> buffer = FileSystem::ReadFileToString(path.c_str());
+#ifdef ARMSX2_EMBEDDED_RESOURCES
+	// Same deal as the shaders: a core is handed a system directory and there is
+	// no telling what is in it. Without the database every game runs without its
+	// fixes and patches, which is not a failure anyone would connect back to a
+	// missing file, so carry a copy.
+	if (!buffer.has_value() && !is_override)
+		buffer = EmbeddedResources::Read(name.c_str());
+#endif
 	if (!buffer.has_value())
 	{
 		// Override file is optional — silent skip when not shipped.

@@ -42,6 +42,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.nativeKeyCode
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -177,7 +178,7 @@ fun PadTab(@Suppress("UNUSED_PARAMETER") state: MutableState<Settings>) {
         // here since this tab scrolls far from that toggle.
         Text(
             when {
-                editSerial != null -> "● Editing controls for THIS GAME ($editSerial) — switch to Global up top to change all games."
+                editSerial != null -> "● Editing controls for THIS GAME ($editSerial). Switch to Global up top to change all games."
                 padSerial != null -> str("pad.scopeHint.globalWithGameHint")
                 else -> str("pad.scopeHint.global")
             },
@@ -270,20 +271,6 @@ fun PadTab(@Suppress("UNUSED_PARAMETER") state: MutableState<Settings>) {
                 onChange = { ControllerMappings.setHapticIntensity(it); refreshToken.intValue++ },
             )
             SettingsDivider()
-            // How hard the DS2 pressure modifier presses. There was a PRESSURE button (on-screen
-            // and bindable as "Pressure Modifier (hold)") but no way to choose the amount, so it
-            // was permanently stuck at the hardcoded 50%. Range is deliberately 5..95: 0 collides
-            // with the "full press" sentinel and 100 is just a normal press.
-            IntSliderRow(
-                label = str("pad.pressureAmount.label"),
-                value = com.armsx2.ui.touch.TouchControls.pressurePercent.intValue,
-                min = 5,
-                max = 95,
-                description = str("pad.pressureAmount.description"),
-                valueFormatter = { "${it}%" },
-                onChange = { com.armsx2.ui.touch.TouchControls.setPressurePercent(it) },
-            )
-            SettingsDivider()
             // PS2 Multitap: route up to 8 controllers (both ports become 4-slot taps).
             // The pref drives PadRouter's slot count + the boot-time native arming; when a
             // game is already running we also arm it live. setMultitap parks the VM, so it
@@ -294,6 +281,88 @@ fun PadTab(@Suppress("UNUSED_PARAMETER") state: MutableState<Settings>) {
                 description = str("pad.multitap.description"),
             ) { on ->
                 ControllerMappings.setMultitapEnabled(on)
+                refreshToken.intValue++
+            }
+            SettingsDivider()
+            // Which physical controller is which player, and where its rumble goes.
+            //
+            // Slots are otherwise claimed first-to-press, which cannot express "the DualSense is
+            // player 1 and the built-in pad is player 2" -- and on a handheld the built-in pad is
+            // usually whatever presses something first. Pins are stored per controller (by
+            // descriptor, so they survive reconnects) and set once, rather than raced for at the
+            // start of every session.
+            val pads = remember(refreshToken.intValue) { com.armsx2.input.PadRouter.connectedPads() }
+            if (pads.isNotEmpty()) {
+                HelpText(str("pad.assign.help"))
+                // Only the slots Multitap actually arms. Offering player 3-8 with Multitap off
+                // would let the user pin a pad at an un-armed PS2 port, where its input goes
+                // nowhere at all -- the router ignores such a pin, so the picker must not show it.
+                val slotCount =
+                    if (ControllerMappings.multitapEnabled()) com.armsx2.input.PadRouter.MAX_PADS else 2
+                val slotLabels = listOf(str("pad.assign.auto")) +
+                    (0 until slotCount).map { str("pad.player${it + 1}") }
+                val rumbleModes = com.armsx2.input.PadRouter.RumbleMode.entries
+                val rumbleLabels = listOf(
+                    str("pad.assign.auto"),
+                    str("pad.assign.rumble.controller"),
+                    str("pad.assign.rumble.device"),
+                    str("pad.assign.rumble.off"),
+                )
+                pads.forEach { pad ->
+                    val pinnedPort = com.armsx2.input.PadRouter.pins()[pad.descriptor]
+                    SegmentedRow(
+                        label = pad.name,
+                        options = slotLabels,
+                        selectedIndex = (pinnedPort?.plus(1) ?: 0).coerceIn(0, slotLabels.lastIndex),
+                        onChange = { index ->
+                            com.armsx2.input.PadRouter.setPin(
+                                pad.descriptor,
+                                if (index == 0) null else index - 1,
+                            )
+                            refreshToken.intValue++
+                        },
+                    )
+                    // Where THIS pad's rumble goes. A controller can report motors it never
+                    // drives -- a handheld bridging an external pad through its own HID node
+                    // does exactly that -- and no API call can tell that apart from a working
+                    // motor, so the fallback has to be selectable rather than detected.
+                    SegmentedRow(
+                        label = pad.name + ": " + str("pad.assign.rumble"),
+                        options = rumbleLabels,
+                        selectedIndex = rumbleModes.indexOf(
+                            com.armsx2.input.PadRouter.rumbleMode(pad.descriptor),
+                        ).coerceAtLeast(0),
+                        onChange = { index ->
+                            com.armsx2.input.PadRouter.setRumbleMode(pad.descriptor, rumbleModes[index])
+                            refreshToken.intValue++
+                        },
+                    )
+                }
+                SettingsDivider()
+                // Taking the pad over on USB is the only way to reach a PlayStation controller's
+                // motors when the platform's own vibrator for it does nothing. It claims the
+                // pad's single HID interface, so input has to come through us too -- which is
+                // why it is a switch and not something done quietly on the user's behalf.
+                ToggleRow(
+                    str("pad.usbTakeover.label"),
+                    com.armsx2.input.UsbRumble.takeover,
+                    description = str("pad.usbTakeover.description"),
+                ) {
+                    com.armsx2.input.UsbRumble.setTakeover(it)
+                    refreshToken.intValue++
+                }
+                SettingsDivider()
+            }
+            // Escape hatch for pads Android will not drive. #433 stopped the phone buzzing for
+            // an external pad; #646 (same reporter) is the other half of that trade -- their
+            // Xbox pad exposes no motor, so suppressing the fallback left them with nothing.
+            // A handheld's own built-in pad is not external and never took this path.
+            ToggleRow(
+                str("pad.rumbleFallback.label"),
+                ControllerMappings.rumbleFallbackExternal(),
+                description = str("pad.rumbleFallback.description"),
+            ) { on ->
+                ControllerMappings.setRumbleFallbackExternal(on)
                 refreshToken.intValue++
             }
             SettingsDivider()
@@ -378,6 +447,38 @@ fun PadTab(@Suppress("UNUSED_PARAMETER") state: MutableState<Settings>) {
                         Text(
                             if (turbo.value) "ON" else "OFF",
                             color = if (turbo.value) Color(0xFF4DA3FF)
+                            else Color(0xFF808080),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
+                    // Tap to hold (#612) — the on-screen buttons have always had this; an
+                    // accessibility request brought it to physical ones, for games that expect a
+                    // button held while another control is worked. Sits with Turbo because both
+                    // change what holding the button means, and both need a binding to act on.
+                    val latch = remember(action.id, editPlayer.intValue, refreshToken.intValue) {
+                        mutableStateOf(ControllerMappings.isLatchAction(action, editPlayer.intValue))
+                    }
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                val nv = !latch.value
+                                latch.value = nv
+                                ControllerMappings.setLatchAction(action, editPlayer.intValue, nv)
+                            }
+                            .padding(start = 18.dp, end = 10.dp, top = 2.dp, bottom = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            "\u21b3 Tap to hold (press once to hold, again to release)",
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 14.sp,
+                            modifier = Modifier.weight(1f),
+                        )
+                        Text(
+                            if (latch.value) "ON" else "OFF",
+                            color = if (latch.value) Color(0xFF4DA3FF)
                             else Color(0xFF808080),
                             fontSize = 15.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -530,14 +631,32 @@ fun PadTab(@Suppress("UNUSED_PARAMETER") state: MutableState<Settings>) {
             SettingsDivider()
             val visibilityOff = str("setup.toggle.off")
             val visibilityAuto = str("backend.renderer.auto")
+            val visibilityAlways = str("pad.onScreenControls.always")
             IntSliderRow(
                 label = str("pad.onScreenControls.label"),
                 value = TouchControls.visibilityMode.value,
                 min = 0,
-                max = 11,
+                max = TouchControls.VISIBILITY_ALWAYS,
                 description = str("pad.onScreenControls.description"),
-                valueFormatter = { when (it) { 0 -> visibilityOff; 11 -> visibilityAuto; else -> "${it}s" } },
+                valueFormatter = {
+                    when (it) {
+                        0 -> visibilityOff
+                        11 -> visibilityAuto
+                        TouchControls.VISIBILITY_ALWAYS -> visibilityAlways
+                        else -> "${it}s"
+                    }
+                },
                 onChange = { TouchControls.setVisibilityMode(it) },
+            )
+            SettingsDivider()
+            // Touch as Player 2: one person on a controller, another on the screen. Asked for by
+            // players who share a device; Player 1 is the controller's, so nothing else changes.
+            SegmentedRow(
+                label = str("pad.touchPlayer.label"),
+                options = listOf(str("pad.player1"), str("pad.player2")),
+                selectedIndex = TouchControls.touchPlayer.intValue,
+                description = str("pad.touchPlayer.description"),
+                onChange = { TouchControls.setTouchPlayer(it) },
             )
             SettingsDivider()
             // Touch Haptics (#247): vibrate on on-screen button presses.
@@ -557,6 +676,22 @@ fun PadTab(@Suppress("UNUSED_PARAMETER") state: MutableState<Settings>) {
                 description = str("pad.multiTouch.description"),
                 valueFormatter = { "${it}%" },
                 onChange = { TouchControls.setMultiTouchRadius(it / 100f) },
+            )
+            SettingsDivider()
+            // How hard the DS2 pressure modifier presses. There was a PRESSURE button (on-screen
+            // and bindable as "Pressure Modifier (hold)") but no way to choose the amount, so it
+            // was permanently stuck at the hardcoded 50%. Range is deliberately 5..95: 0 collides
+            // with the "full press" sentinel and 100 is just a normal press. Here, next to the
+            // rest of the on-screen controls, because that is where the P button is; it sat under
+            // Player & Rumble, where nobody looking for it found it.
+            IntSliderRow(
+                label = str("pad.pressureAmount.label"),
+                value = TouchControls.pressurePercent.intValue,
+                min = 5,
+                max = 95,
+                description = str("pad.pressureAmount.description"),
+                valueFormatter = { "${it}%" },
+                onChange = { TouchControls.setPressurePercent(it) },
             )
             // D-Pad key spacing lives in the Touch Layout editor now: open the editor,
             // tap the D-Pad to select it, and use the "D-Pad spacing" slider to spread
@@ -868,7 +1003,7 @@ private fun StickDirPickerRow(
     }
     if (showPicker.value) {
         StickTargetPickerDialog(
-            title = "${str(if (leftStick) "pad.leftStick.label" else "pad.rightStick.label")} — ${dir.id.replaceFirstChar { it.uppercase() }}",
+            title = "${str(if (leftStick) "pad.leftStick.label" else "pad.rightStick.label")}: ${dir.id.replaceFirstChar { it.uppercase() }}",
             current = code,
             onPick = { picked ->
                 if (picked == null) ControllerMappings.resetStickCode(leftStick, dir, player, serial)
@@ -905,12 +1040,23 @@ private fun StickTargetPickerDialog(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
             tonalElevation = 6.dp,
         ) {
-            Column(Modifier.padding(20.dp)) {
+            // Capped to the display so the weighted list above has a bounded height to share
+            // out; without this the Column is unbounded and weight() changes nothing.
+            Column(
+                Modifier
+                    .padding(20.dp)
+                    .heightIn(max = (LocalConfiguration.current.screenHeightDp * 0.82f).dp),
+            ) {
                 Text(title, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(8.dp))
                 Column(
                     Modifier
-                        .heightIn(max = 360.dp)
+                        // Bounded by the SCREEN, not a fixed 360dp. In landscape the display is
+                        // shorter than 360dp plus a title plus a button row, so the list took
+                        // more than there was and pushed Save/Cancel off the bottom -- with no
+                        // way to commit or dismiss (reported for the macro editor). weight()
+                        // lets the buttons claim their height first and gives the list the rest.
+                        .weight(1f, fill = false)
                         .verticalScroll(rememberScrollState()),
                 ) {
                     Text(
@@ -1332,6 +1478,25 @@ internal fun MacrosSection(
                     onChange = { TouchControls.setMacroFrequency(mid, it) },
                 )
             }
+            // Pressure, per macro. Two macros for the same button at different pressures is how
+            // NetherSX2 players got two map zoom levels out of Square (Cotcho); the only pressure
+            // here used to be the one global amount. Shown with any button, like Frequency above,
+            // rather than only once a pressure-sensitive one is in: hidden until then, it could not
+            // be found. The description says which buttons feel it.
+            if (buttons.isNotEmpty()) {
+                val pressure = TouchControls.macroPressure(mid)
+                val fullLabel = str("pad.macro.pressure.full")
+                IntSliderRow(
+                    label = str("pad.macro.pressure.label"),
+                    value = pressure,
+                    min = TouchControls.MACRO_PRESSURE_MIN,
+                    max = 100,
+                    description = str("pad.macro.pressure.description"),
+                    valueFormatter = { if (it >= 100) fullLabel else "$it%" },
+                    onReset = if (pressure >= 100) null else ({ TouchControls.setMacroPressure(mid, 100) }),
+                    onChange = { TouchControls.setMacroPressure(mid, it) },
+                )
+            }
             SettingsDivider()
         }
         macroDialogFor.value?.let { mid ->
@@ -1370,7 +1535,13 @@ private fun MacroConfigDialog(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
             tonalElevation = 6.dp,
         ) {
-            Column(Modifier.padding(20.dp)) {
+            // Capped to the display so the weighted list above has a bounded height to share
+            // out; without this the Column is unbounded and weight() changes nothing.
+            Column(
+                Modifier
+                    .padding(20.dp)
+                    .heightIn(max = (LocalConfiguration.current.screenHeightDp * 0.82f).dp),
+            ) {
                 Text(
                     "${str("pad.action.edit")}: ${macroId.label}",
                     color = MaterialTheme.colorScheme.onSurface,
@@ -1380,7 +1551,12 @@ private fun MacroConfigDialog(
                 // Plain Column, not Lazy — see the note on the stick picker.
                 Column(
                     Modifier
-                        .heightIn(max = 360.dp)
+                        // Bounded by the SCREEN, not a fixed 360dp. In landscape the display is
+                        // shorter than 360dp plus a title plus a button row, so the list took
+                        // more than there was and pushed Save/Cancel off the bottom -- with no
+                        // way to commit or dismiss (reported for the macro editor). weight()
+                        // lets the buttons claim their height first and gives the list the rest.
+                        .weight(1f, fill = false)
                         .verticalScroll(rememberScrollState()),
                 ) {
                     Text(

@@ -76,7 +76,8 @@ private val ExitRed = Color(0xFFE60012)
 // Community/project links for the drawer's About section. Plain https on purpose: Android App
 // Links hand these to the Discord/GitHub apps when they're installed and fall back to the
 // browser when they aren't, so there's no app-specific scheme to special-case.
-private const val DiscordUrl = "https://discord.gg/2Tynvwhc4A"
+/** Our Discord invite. Also where new texture packs are sent (TextureOnlineSection). */
+internal const val DiscordUrl = "https://discord.gg/2Tynvwhc4A"
 private const val GithubUrl = "https://github.com/noeldvictor/ARMSX2-thor-experiment"
 private const val WebsiteUrl = "https://armsx2.net/"
 
@@ -193,6 +194,9 @@ private fun DrawerContent(selected: AppRoute, onNavigate: (AppRoute) -> Unit, on
         // Boot straight into the PS2 system BIOS with no disc — distinct from "BIOS Location"
         // below, which only points the emulator at your BIOS file.
         DrawerItem("bios.boot.title", "▶️", onAction = { MainActivityRuntime.startBios(); onDismiss() }),
+        // Pick a file and run it, without it joining the library. Sits next to Boot BIOS because
+        // both are "start something that is not a library entry".
+        DrawerItem("action.launchGame", "📂", onAction = { MainActivityRuntime.promptLaunchGame(); onDismiss() }),
         DrawerItem("ra.title", "🏆", AppRoute.Achievements, iconRes = com.armsx2.R.drawable.ic_trophy,
             iconTint = TrophyGold),
         DrawerItem("action.settings", "⚙️", AppRoute.Settings()),
@@ -282,7 +286,12 @@ private fun DrawerSection(
     )
     items.forEachIndexed { index, item ->
         DrawerRow(
-            controllerId = "drawer.${item.destination?.let { it::class.simpleName } ?: item.titleKey}",
+            // Keyed by titleKey, NOT by the destination class: SettingsControllerNav keys both
+            // register() and setPosition() by this id, so two rows sharing one id collapse into a
+            // single entry at whichever row composed last -- and the other becomes unreachable by
+            // controller while still clickable by touch. Every row here happens to carry a distinct
+            // destination today, but that is luck; titleKeys are unique by construction.
+            controllerId = "drawer.${item.titleKey}",
             title = str(item.titleKey),
             glyph = item.glyph,
             iconRes = item.iconRes,

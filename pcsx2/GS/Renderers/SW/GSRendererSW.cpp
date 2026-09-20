@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 #include "GS/Renderers/SW/GSRendererSW.h"
+#include "GS/Renderers/SW/GSLevelOfDetail.h"
+#include "GS/Renderers/SW/GSCoordinateLag.h"
+#include "GS/Renderers/SW/GSVertexQDivide.h"
 #include "GS/GSGL.h"
 #include "GS/GSPng.h"
 #include "GS/GSUtil.h"
@@ -33,6 +36,12 @@ GSRendererSW::GSRendererSW(int threads)
 
 	std::fill(std::begin(m_fzb_pages), std::end(m_fzb_pages), 0);
 	std::fill(std::begin(m_tex_pages), std::end(m_tex_pages), 0);
+
+	// The GSState constructor armed the parse handlers with the base GetAutoFlushLevel (a
+	// virtual resolves to the base from inside a base constructor); re-arm now that the
+	// override below is live. Matters when this engine runs under a hardware
+	// GSCurrentRenderer, i.e. as another renderer's fallback floor.
+	ResetHandlers();
 }
 
 GSRendererSW::~GSRendererSW()
@@ -287,125 +296,6 @@ void ConvertVertexBuffer(const GSDrawingContext* RESTRICT ctx, GSVertexSW* RESTR
 	}
 }
 
-// Fix ST coordinates that would overflow the rasterizer fixed point format by rewriting the vertices.
-template <u32 primclass>
-void GSRendererSW::RewriteVerticesIfSTOverflow()
-{
-	if (PRIM->TME && PRIM->FST == 0)
-	{
-		const GSVector4 tsize = GSVector4(
-			static_cast<float>(1 << m_context->TEX0.TW),
-			static_cast<float>(1 << m_context->TEX0.TH),
-			1.0f,
-			1.0f);
-
-		// SW rasterizer stores UV in 1.15.16 format so clamp to +/- (2^15 - 2) (-2 so bilinear doesn't overflow).
-		// Do the division by texture size here to avoid divisions for each vertex.
-		const GSVector4 OVERFLOW_VAL = GSVector4::cxpr(static_cast<float>((1 << 15) - 2)) / tsize;
-
-		// Only rewrite big/small S or T when the clamping mode is CLAMP or REGION_CLAMP.
-		const GSVector4i clamp_mode = GSVector4i(
-			(m_context->CLAMP.WMS == CLAMP_CLAMP || m_context->CLAMP.WMS == CLAMP_REGION_CLAMP) ? 0xFFFFFFFF : 0,
-			(m_context->CLAMP.WMT == CLAMP_CLAMP || m_context->CLAMP.WMT == CLAMP_REGION_CLAMP) ? 0xFFFFFFFF : 0,
-			0,
-			0);
-
-		const bool st_overflow =
-			((GSVector4i::cast(m_vt.m_min.t <= -OVERFLOW_VAL * tsize) & clamp_mode).mask() & 3) ||
-			((GSVector4i::cast(m_vt.m_max.t >= OVERFLOW_VAL * tsize) & clamp_mode).mask() & 3) ||
-			m_vt.nan.value;
-
-		if (st_overflow)
-		{
-			constexpr int n = GSUtil::GetClassVertexCount(primclass);
-
-			// Make sure the copy buffer is large enough.
-			while (m_vertex->maxcount < m_index->tail)
-				GrowVertexBuffer();
-
-			GSVertex* RESTRICT vertex = m_vertex->buff;
-			GSVertex* RESTRICT vertex_copy = m_vertex->buff_copy;
-			u16* RESTRICT index = m_index->buff;
-
-			for (int i = 0; i < static_cast<int>(m_index->tail); i += n)
-			{
-				GSVector4 stcq[n];
-
-				// Load STQ for this primitive.
-				for (int j = 0; j < n; j++)
-					stcq[j] = GSVector4::cast(GSVector4i(vertex[index[i + j]].m[0]));
-
-				// Perform Q division and see which values need to be rewritten.
-				GSVector4 uv[n];
-				GSVector4i small{}, big{}, nan{};
-				for (int j = 0; j < n; j++)
-				{
-					// For sprites always use Q of second vertex.
-					const GSVector4 q = primclass == GS_SPRITE_CLASS ? stcq[1].wwww() : stcq[j].wwww();
-					uv[j] = (stcq[j] / q).xyzw(GSVector4::zero());
-					small |= GSVector4i::cast(uv[j] <= -OVERFLOW_VAL);
-					big |= GSVector4i::cast(uv[j] >= OVERFLOW_VAL);
-					nan |= GSVector4i::cast(uv[j] != uv[j]);
-				}
-
-				// Get the new values for fields that will be rewritten.
-				// The follows rules are used:
-				// 1. If there are small values but not big or nans, make all vertices small.
-				// 2. If there are big values but not small or nans, make all vertices big.
-				// 3. If there are both big and small values, or nans, make all vertices zero.
-				GSVector4 uv_new = GSVector4::zero();
-				uv_new = uv_new.blend32(-OVERFLOW_VAL, GSVector4::cast(small));
-				uv_new = uv_new.blend32(OVERFLOW_VAL, GSVector4::cast(big));
-				uv_new = uv_new.blend32(GSVector4::zero(), GSVector4::cast((small & big) | nan));
-
-				const GSVector4i rewrite = (((small | big) & clamp_mode) | nan).upl64(GSVector4i::zero());
-
-				// If both S and T are rewritten, no point in keeping Q. Just set it to 1.0f;
-				if ((GSVector4::cast(rewrite).mask() & 3) == 3)
-				{
-					for (int j = 0; j < n; j++)
-						stcq[j] = stcq[j].template insert32<0, 3>(GSVector4::m_one);
-				}
-				
-				// Rewrite the fields that require it and write to the copy buffer.
-				for (int j = 0; j < n; j++)
-				{
-					// For sprites always use Q of second vertex.
-					const GSVector4 q = (primclass == GS_SPRITE_CLASS) ? stcq[1].wwww() : stcq[j].wwww();
-					stcq[j] = stcq[j].blend32(uv_new * q, GSVector4::cast(rewrite));
-
-					vertex_copy[i + j].m[0] = GSVector4i::cast(stcq[j]);
-					vertex_copy[i + j].m[1] = vertex[index[i + j]].m[1];
-					index[i + j] = i + j;
-				}
-			}
-
-			// Swap the buffers and fix the counts.
-			std::swap(m_vertex->buff, m_vertex->buff_copy);
-			m_vertex->head = m_vertex->next = m_vertex->tail = m_index->tail;
-			
-			// Recalculate ST min/max/eq in the vertex trace.
-			GSVector4 tmin = GSVector4::cxpr(FLT_MAX);
-			GSVector4 tmax = GSVector4::cxpr(-FLT_MAX);
-			for (int i = 0; i < static_cast<int>(m_index->tail); i += n)
-			{
-				for (int j = 0; j < n; j++)
-				{
-					GSVector4 stcq = GSVector4::cast(GSVector4i(m_vertex->buff[i + j].m[0]));
-					const float Q = (primclass == GS_SPRITE_CLASS) ? stcq.w : m_vertex->buff[i + 1].RGBAQ.Q;
-					stcq = (stcq / Q).xyzw(stcq);
-					
-					tmin = tmin.min(stcq);
-					tmax = tmax.max(stcq);
-				}
-			}
-			m_vt.m_min.t = tmin.xyww() * tsize;
-			m_vt.m_max.t = tmax.xyww() * tsize;
-			m_vt.m_eq.stq = (m_vt.m_min.t == m_vt.m_max.t).mask();
-		}
-	}
-}
-
 void GSVertexSWInitStatic()
 {
 #define InitCVB4(P, T, F, Q) GSVertexSW::s_cvb[P][T][F][Q] = ConvertVertexBuffer<P, T, F, Q>;
@@ -427,24 +317,25 @@ MULTI_ISA_UNSHARED_END
 void GSRendererSW::Draw()
 {
 	const GSDrawingContext* context = m_context;
-
-	switch (m_vt.m_primclass)
+	if (!GSConfig.UserHacks_RewriteLargeST)
 	{
-		case GS_POINT_CLASS:
-			RewriteVerticesIfSTOverflow<GS_POINT_CLASS>();
-			break;
-		case GS_LINE_CLASS:
-			RewriteVerticesIfSTOverflow<GS_LINE_CLASS>();
-			break;
-		case GS_TRIANGLE_CLASS:
-			RewriteVerticesIfSTOverflow<GS_TRIANGLE_CLASS>();
-			break;
-		case GS_SPRITE_CLASS:
-			RewriteVerticesIfSTOverflow<GS_SPRITE_CLASS>();
-			break;
-		default:
-			pxFailRel("Unknown primitive class.");
-			break;
+		// SW rasterizer stores UV in 1.15.16 format so clamp to +/- (2^15 - 2) (-2 so bilinear doesn't overflow).
+		// Also only do this for CLAMP and CLAMP_REGION modes to reduce the performance impact.
+		const GSVector4 tsize = GSVector4(
+			static_cast<float>(1 << m_context->TEX0.TW),
+			static_cast<float>(1 << m_context->TEX0.TH),
+			1.0f,
+			1.0f);
+
+		// Large value is given in terms of normalized ST / Q coordinates.
+		const GSVector4 large_val = GSVector4::cxpr(static_cast<float>((1 << 15) - 2)) / tsize;
+		RewriteVerticesIfLargeST(large_val, true);
+	}
+	else
+	{
+		// More sensitive as the rewrite threshold is lower and we do it for all clamp mode.
+		// The performance cost will also be higher.
+		RewriteVerticesIfLargeST(GSVector4::cxpr(16.0f), false);
 	}
 	
 	auto data = m_vertex_heap.make_shared<SharedData>().cast<GSRasterizerData>();
@@ -461,7 +352,8 @@ void GSRendererSW::Draw()
 	// skip per pixel division if q is constant.
 	// Optimize the division by 1 with a nop. It also means that GS_SPRITE_CLASS must be processed when !m_vt.m_eq.q.
 	// If you have both GS_SPRITE_CLASS && m_vt.m_eq.q, it will depends on the first part of the 'OR'
-	u32 q_div = !IsMipMapActive() && ((m_vt.m_eq.q && m_vt.m_min.t.z != 1.0f) || (!m_vt.m_eq.q && m_vt.m_primclass == GS_SPRITE_CLASS));
+	const u32 q_div = GSUseVertexQDivide(m_vt.m_primclass, IsMipMapActive(),
+		m_vt.m_eq.q != 0, m_vt.m_min.t.z) ? 1u : 0u;
 
 	GSVertexSW::s_cvb[m_vt.m_primclass][PRIM->TME][PRIM->FST][q_div](m_context, sd->vertex, m_vertex->buff, m_vertex->next);
 
@@ -539,6 +431,19 @@ void GSRendererSW::Draw()
 		_zb_pages = m_context->offset.zb.pageLooperForRect(r);
 		zb_pages = &_zb_pages;
 	}
+
+	// The rasterizer hands each worker a set of scanlines, and that is a safe
+	// division of the work only because distinct rows normally mean distinct
+	// bytes. Past the buffer's own page row the GS folds the address onto the row
+	// one page below instead of clamping or wrapping (gs-mem), so those two rows
+	// hold the same bytes while belonging to two workers, and whichever finishes
+	// second wins. Silicon has no such race, and neither does the single-threaded
+	// arm -- which is the one that scores gs-clip 100.00%. Run the draw there.
+	sd->serial =
+		(sd->global.sel.fb && r.right > m_context->offset.fb.pageRowWidth() &&
+			m_rl->RowsFoldAcrossWorkers(GSLocalMemory::m_psm[m_context->offset.fb.psm()].pgs.y)) ||
+		(sd->global.sel.zb && r.right > m_context->offset.zb.pageRowWidth() &&
+			m_rl->RowsFoldAcrossWorkers(GSLocalMemory::m_psm[m_context->offset.zb.psm()].pgs.y));
 
 	// check if there is an overlap between this and previous targets
 
@@ -1062,6 +967,9 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 
 	gd.sel.key = 0;
 
+	gd.coord_grain_floor[0] = 0;
+	gd.coord_grain_floor[1] = 0;
+
 	gd.sel.fpsm = 3;
 	gd.sel.zpsm = 3;
 	gd.sel.atst = ATST_ALWAYS;
@@ -1177,7 +1085,10 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 
 			GIFRegTEX0 TEX0 = m_context->GetSizeFixedTEX0(m_vt.m_min.t.xyxy(m_vt.m_max.t), m_vt.IsLinear(), mipmap);
 
-			GSVector4i r = GetTextureMinMax(TEX0, context->CLAMP, gd.sel.ltf, true).coverage;
+			GSVector4i r = GSCoverageWithCoordinateField(
+				GSCoverageWithCoordinateLag(
+					GetTextureMinMax(TEX0, context->CLAMP, gd.sel.ltf, true).coverage, m_vt.m_primclass),
+				m_vt.m_min.t, m_vt.m_max.t, TEX0);
 
 			GSTextureCacheSW::Texture* t = m_tc->Lookup(TEX0, env.TEXA);
 
@@ -1224,11 +1135,6 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 					gd.sel.mmin = 1; // tri-linear is meaningless
 				}
 
-				if (gd.sel.mmin == 2)
-				{
-					mxl--; // don't sample beyond the last level (TODO: add a dummy level instead?)
-				}
-
 				if (gd.sel.fst)
 				{
 					pxAssert(gd.sel.lcm == 1);
@@ -1245,7 +1151,13 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 					}
 
 					gd.lod.i = GSVector4i(lod >> 16);
-					gd.lod.f = GSVector4i(lod & 0xffff).xxxxl().xxzz();
+					// Every 16-bit lane must carry the fraction: the scanline blends
+					// [r,b]/[g,a] channel pairs of four pixels against these lanes.
+					// The previous xxxxl().xxzz() left lanes 5 and 7 zero (xxxxl
+					// passes the upper half through, and the scalar broadcast's
+					// upper 16 bits are zero there), so pixels 2 and 3 of every
+					// quad blended r/g but never b/a under a constant LOD.
+					gd.lod.f = GSVector4i(lod & 0xffff).xxxxlh();
 
 					// TODO: lot to optimize when lod is constant
 				}
@@ -1254,6 +1166,17 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 					gd.mxl = GSVector4((float)mxl);
 					gd.l = GSVector4((float)(-(0x10000 << context->TEX1.L)));
 					gd.k = GSVector4((float)k);
+
+					// The level of detail is a table read on Q's mantissa, not a
+					// curve: GSLevelOfDetail.h carries the measurement and the
+					// tables. TEX1.K is already in sixteenths of a level, which is
+					// what the table's own units are, so it goes across unscaled --
+					// `k` above is the same field shifted into 16.16 for the float
+					// path the scanline no longer takes.
+					gd.lodtab = GSLevelOfDetailTable[context->TEX1.L];
+					gd.lodk = context->TEX1.K;
+					gd.lodshift = 4 + context->TEX1.L;
+					gd.lodmxl = mxl;
 				}
 
 				GIFRegCLAMP MIP_CLAMP = context->CLAMP;
@@ -1281,7 +1204,8 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 						return false;
 					}
 
-					GSVector4i r = GetTextureMinMax(MIP_TEX0, MIP_CLAMP, gd.sel.ltf, true).coverage;
+					GSVector4i r = GSCoverageWithCoordinateLag(
+						GetTextureMinMax(MIP_TEX0, MIP_CLAMP, gd.sel.ltf, true).coverage, m_vt.m_primclass);
 
 					data->SetSource(t, r, i);
 				}
@@ -1291,10 +1215,61 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 			}
 			else
 			{
-				// skip per pixel division if q is constant. Sprite uses flat
-				// q, so it's always constant by primitive.
-				// Note: the 'q' division was done in GSRendererSW::ConvertVertexBuffer
-				gd.sel.fst |= (m_vt.m_eq.q || primclass == GS_SPRITE_CLASS);
+				// Tell the scanline the coordinate is affine only where the vertex
+				// conversion actually divided it -- the two must agree, and they were
+				// decided by different predicates. A constant-Q triangle keeps its Q
+				// and takes the console's reciprocal per pixel: silicon does not
+				// divide, it multiplies by a reciprocal truncated to fourteen
+				// fractional bits, and dividing at the vertex computes the exact
+				// quotient instead. See GSVertexQDivide.h for the measurement.
+				gd.sel.fst |= (GSUseVertexQDivide(primclass, IsMipMapActive(), m_vt.m_eq.q != 0,
+					m_vt.m_min.t.z) || GSUseAffineRoute(primclass, m_vt.m_eq.q != 0, m_vt.m_min.t.z));
+
+				// An affine STQ triangle's coordinate is held to ONE grain for the whole
+				// primitive, not one per vertex, and its gradient sits on a grid a
+				// thousandth of that grain. GSCoordinateWalk.h carries the measurement
+				// and the rest of the rule; the rasterizer needs only where the grain
+				// stops shrinking, which is TEX0's own size.
+				//
+				// The gate is the front end's own texel rounding -- a sprite or a
+				// constant-Z draw, STQ, textured -- narrowed to the triangles that then
+				// take the affine route. Staying inside it is what makes the widening an
+				// identity: those vertices are already truncated on the finer grid, so
+				// truncating them again onto the primitive's lands where the front end
+				// would have landed had its own rule been the primitive's.
+				if (primclass == GS_TRIANGLE_CLASS && !PRIM->FST && m_vt.m_eq.z
+					&& GSUseAffineRoute(primclass, m_vt.m_eq.q != 0, m_vt.m_min.t.z))
+				{
+					gd.coord_grain_floor[0] = static_cast<s32>(context->TEX0.TW) + 2;
+					gd.coord_grain_floor[1] = static_cast<s32>(context->TEX0.TH) + 2;
+				}
+
+				// The console chooses MMAG versus MMIN per pixel, from that pixel's own
+				// level. When this primitive straddles the crossing and the two filters
+				// differ, hand the scanline the Q at which the level reaches zero and let
+				// it decide per pixel. Only meaningful where Q actually varies -- a
+				// constant-Q primitive has one level throughout and cannot straddle.
+				//
+				// lod = -log2(Q) * 2^L + K, so lod > 0 is exactly Q < 2^(K / 2^L),
+				// which is one constant. No logarithm is needed in the inner loop.
+				//
+				// Per-pixel MMAG/MMIN is implemented in the C++ reference scanline and in
+				// the ARM64 scanline generator. The x86 generator does not have it yet,
+				// so the selector is gated: leaving it set on x86 would make an x86
+				// build's JIT and its own C++ fallback disagree, which is worse than the
+				// per-primitive approximation. The consequence is that x86 software
+				// output differs from ARM64 software output on draws that cross the LOD
+				// filter threshold. The rule to port is in GSDrawScanline.cpp.
+#ifdef ARCH_ARM64
+				if (m_vt.IsFilterCrossover() && !gd.sel.fst)
+				{
+					const float K = static_cast<float>(context->TEX1.K) / 16;
+
+					gd.sel.ltfx = 1;
+					gd.sel.ltfx_ge = m_vt.IsCrossoverLinearOnMag();
+					gd.ltfx_q = GSVector4(std::exp2(K / static_cast<float>(1 << context->TEX1.L)));
+				}
+#endif
 
 				if (gd.sel.ltf && gd.sel.fst)
 				{
@@ -1385,6 +1360,29 @@ bool GSRendererSW::GetScanlineGlobalData(SharedData* data)
 			gd.t.max = gd.t.max.xxxxlh();
 			gd.t.mask = gd.t.mask.xxzz();
 			gd.t.invmask = ~gd.t.mask;
+
+			// Which coordinates walk in the console's 12.15 truncating accumulator,
+			// and it is not the same set as `fst`. That bit says only that the
+			// scanline reads a 16.16 integer, and by here it has grown to cover
+			// three different coordinates. Hardware splits them:
+			//
+			//   * the UV register, and a SPRITE whose ST the vertex conversion
+			//     resolved, both take the accumulator;
+			//   * a constant-Q TRIANGLE's ST plane refuses it and keeps its own
+			//     exact plane.
+			//
+			// ⚠️ It is a SUBSET of fst, and has to be read from the final value:
+			// a mipmapped STQ sprite never reaches the widening above, so it walks
+			// the perspective route, and telling setup to write it an integer step
+			// and no Q step corrupts thousands of words of a game frame.
+			//
+			// ARM64 only, for the reason ltfx carries above: the x86 setup
+			// generator does not implement the walk, and leaving the bit set there
+			// would make an x86 JIT disagree with its own C++ fallback. An x86
+			// software build keeps the wide accumulator on every road.
+#ifdef ARCH_ARM64
+			gd.sel.uvwalk = gd.sel.fst && (PRIM->FST || primclass == GS_SPRITE_CLASS);
+#endif
 		}
 
 		if (PRIM->FGE)
@@ -1546,6 +1544,16 @@ bool GSRendererSW::IsCoverageAlphaSupported()
 	return IsCoverageAlpha();
 }
 
+// The SW engine's flush rule regardless of process renderer type: a renderer can run this
+// engine as its fallback floor under a hardware GSCurrentRenderer, and the parse-time flush
+// decision must follow the engine that consumes the draws or the floor diverges from this
+// renderer on self-texturing draws (FlatOut 2 diverged byte-for-byte when it did not).
+// SpritesOnly is a hardware-renderer notion; the SW rule is all-or-nothing.
+GSHWAutoFlushLevel GSRendererSW::GetAutoFlushLevel() const
+{
+	return GSConfig.AutoFlushSW ? GSHWAutoFlushLevel::Enabled : GSHWAutoFlushLevel::Disabled;
+}
+
 GSRendererSW::SharedData::SharedData()
 	: m_fpsm(0)
 	, m_zpsm(0)
@@ -1655,11 +1663,14 @@ void GSRendererSW::SharedData::SetSource(GSTextureCacheSW::Texture* t, const GSV
 
 void GSRendererSW::SharedData::UpdateSource()
 {
+	size_t levels = 0;
+
 	for (size_t i = 0; m_tex[i].t; i++)
 	{
 		if (m_tex[i].t->Update(m_tex[i].r))
 		{
 			global.tex[i] = m_tex[i].t->m_buff;
+			levels = i + 1;
 		}
 		else
 		{
@@ -1668,6 +1679,13 @@ void GSRendererSW::SharedData::UpdateSource()
 			global.sel.tfx = TFX_NONE;
 		}
 	}
+
+	// The dummy level the trilinear ceiling reads: see GSScanlineEnvironment.h.
+	// A level of detail at or above MXL is MXL at weight zero on the console, so
+	// the second tap has to be a legal pointer to the SAME level rather than one
+	// past the end.
+	if (levels != 0)
+		global.tex[levels] = global.tex[levels - 1];
 
 	if (GSConfig.SaveTexture && GSConfig.ShouldDump(g_gs_renderer->s_n, g_perfmon.GetFrame()))
 	{

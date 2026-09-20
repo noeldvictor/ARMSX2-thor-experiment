@@ -52,7 +52,6 @@ static void SetupIOSDirectories(const std::string& dataRoot)
     EmuFolders::GameSettings = dataRoot + "/gamesettings";
     EmuFolders::Textures = dataRoot + "/textures";
     EmuFolders::InputProfiles = dataRoot + "/inputprofiles";
-    EmuFolders::Videos = dataRoot + "/videos";
     EmuFolders::UserResources = dataRoot + "/resources";
 }
 
@@ -158,11 +157,9 @@ static void SetupIOSDirectories(const std::string& dataRoot)
 }
 
 - (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
-    // Called when a new scene session is being created.
-    // Use this method to select a configuration to create the new scene with.
-    UISceneConfiguration *config = [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
-    config.delegateClass = [PCSX2SceneDelegate class];
-    return config;
+    const BOOL external = [connectingSceneSession.role isEqualToString:UIWindowSceneSessionRoleExternalDisplayNonInteractive];
+    return [UISceneConfiguration configurationWithName:(external ? @"External Display" : @"Default Configuration")
+        sessionRole:connectingSceneSession.role];
 }
 
 - (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {

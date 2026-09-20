@@ -11,8 +11,10 @@
 #include "common/ZipHelpers.h"
 #include "pcsx2/GS.h"
 #include "pcsx2/Counters.h"
+#include "pcsx2/Elfheader.h" // ElfObject, for the boot-ELF disc pairing
 #include "pcsx2/VMManager.h"
 #include "pcsx2/CDVD/CDVDcommon.h"
+#include "pcsx2/CDVD/IsoReader.h" // ISO extraction for host: quick-loading setups
 #include "pcsx2/CDVD/CDVD.h" // cdvdSaveNVRAM (flush BIOS NVM on background)
 #include "SIO/Memcard/MemoryCardFile.h"
 #include "SIO/Sio.h" // MemcardBusy — save-state refusal reason
@@ -68,8 +70,11 @@
 #include <deque>
 #include <future>
 #include <functional>
+#include <optional>
+#include <fcntl.h>
 #include <thread>
 #include <regex>
+#include <tuple>
 #include <vector>
 
 
@@ -261,6 +266,10 @@ Java_kr_co_iefriends_pcsx2_NativeApp_emulog(JNIEnv *env, jclass, jstring p_msg) 
         Console.WriteLnFmt("{}", msg);
 }
 
+// Defined in VMManager.cpp; see AndroidWriteStagedGameIni.
+extern void (*g_android_before_game_settings_load)(const std::string& serial, const std::string& path);
+static void AndroidWriteStagedGameIni(const std::string& serial, const std::string& path);
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_initialize(JNIEnv *env, jclass clazz,
@@ -278,9 +287,16 @@ Java_kr_co_iefriends_pcsx2_NativeApp_initialize(JNIEnv *env, jclass clazz,
     // where DataRoot points.
     std::string _szPath = GetJavaString(env, p_szpath);
     std::string _szBiosFolder = GetJavaString(env, p_szbiosfolder);
+    g_android_before_game_settings_load = &AndroidWriteStagedGameIni;
     EmuFolders::AppRoot = _szPath;
     EmuFolders::DataRoot = _szPath;
     EmuFolders::SetResourcesDirectory();
+
+    // The host: filesystem root (see Hle_SetHostRoot). Created up front rather than at boot so
+    // it is already sitting in the data folder when someone goes looking for somewhere to put
+    // the files a host:-loading game wants -- an empty folder that exists is a usable
+    // instruction; one that appears only after a failed boot is not.
+    FileSystem::CreateDirectoryPath(Path::Combine(EmuFolders::DataRoot, "hostfs").c_str(), true);
 
 #ifdef ARMSX2_PGO_GENERATE
     // PGO instrument build: redirect the .profraw output to an on-device writable
@@ -592,14 +608,11 @@ Java_kr_co_iefriends_pcsx2_NativeApp_loginAchievements(JNIEnv *env, jclass clazz
         s_secrets_settings_interface->Save();
     }
 
-    // Achievements::Initialize is gated on EmuConfig.Achievements.Enabled —
-    // a returning user with the old default-off config might still have it
-    // off. Push Enabled=true and ApplySettings so UpdateSettings detects
-    // the change and runs Initialize for any current/future VM. Initialize
-    // reads the just-persisted Token and re-logs in on the persistent
-    // s_client, then BeginLoadGame loads the running game's achievement
-    // set.
-    Host::SetBaseBoolSettingValue("Achievements", "Enabled", true);
+    // Enabled is NOT forced on here any more. It used to be, for a returning user with an old
+    // default-off config, but it is a standard setting now (Settings.achievementsEnabled, global
+    // and per game) that the app writes at every launch and settings change, and forcing it would
+    // switch RetroAchievements on for a game the player turned it off for. ApplySettings still
+    // runs, so a game that has it on picks the new login up straight away.
     // ApplySettings owns EmuConfig and resets the JIT caches, so it is the CPU thread's to run;
     // see the assert at the top of VMManager::ApplySettings().
     Host::RunOnCPUThread([]() {
@@ -639,6 +652,12 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_setHardcoreMode(JNIEnv *env, jclass clazz, jboolean enabled) {
     Host::SetBaseBoolSettingValue("Achievements", "ChallengeMode", enabled == JNI_TRUE);
+    // This is the user driving the toggle, so it outranks whatever
+    // setAchievementsHostOverride stashed: drop the saved value so clearing the
+    // override later restores nothing and leaves this choice standing. Keeps
+    // hardcore under the user's own control while an override is active — the
+    // override only supplies the default.
+    Host::RemoveBaseSettingValue("Achievements", "HostOverrideSavedHardcore");
     if (s_settings_interface && s_settings_interface->IsDirty())
         s_settings_interface->Save();
     // ApplySettings owns EmuConfig and resets the JIT caches, so it is the CPU thread's to run;
@@ -779,9 +798,19 @@ static void PersistAndApplyAchievementsSettings() {
 
 // Point the RetroAchievements client at a loopback proxy. Drives the same
 // [Achievements] Host setting CreateClient reads, so the override survives a
-// cold start. Hardcore mode is left untouched here so it can be exercised
-// against the dev proxy; it stays under the user's own control. An empty
-// host is ignored (use the clear path instead).
+// cold start. An empty host is ignored (use the clear path instead).
+//
+// Hardcore is forced off for the duration. The receiver only accepts loopback
+// hosts, and what listens there in practice is an offline RA proxy, which
+// cannot honour a hardcore award: the unlock is rejected server-side and
+// rcheevos surfaces nothing, so the user loses achievements silently. The
+// user's own setting is stashed in HostOverrideSavedHardcore and put back by
+// clearAchievementsHostOverride, so this borrows the setting rather than
+// overwriting it. Turning hardcore back on by hand while the override is
+// active still works and still wins (see setHardcoreMode) — the dev-proxy
+// case keeps working, it just is not the default any more.
+//
+// Hardcore handling contributed by misantronic (PR #617).
 extern "C"
 JNIEXPORT void JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_setAchievementsHostOverride(JNIEnv *env, jclass clazz, jstring p_host) {
@@ -791,9 +820,16 @@ Java_kr_co_iefriends_pcsx2_NativeApp_setAchievementsHostOverride(JNIEnv *env, jc
 
     Host::SetBaseStringSettingValue("Achievements", "Host", host.c_str());
 
-    // Older builds saved/forced hardcore off while an override was active;
-    // we no longer touch hardcore, so drop any leftover saved-state key.
-    Host::RemoveBaseSettingValue("Achievements", "HostOverrideSavedHardcore");
+    // Only stash on the first set: a re-broadcast of the same override (the
+    // pending-replay path in RetroAchievementsHostOverrideReceiver fires one on
+    // every cold start) must not overwrite the saved value with the forced-off
+    // one and lose the user's setting.
+    if (!Host::ContainsBaseSettingValue("Achievements", "HostOverrideSavedHardcore")) {
+        const bool hardcore = Host::GetBaseBoolSettingValue("Achievements", "ChallengeMode", false);
+        Host::SetBaseBoolSettingValue("Achievements", "HostOverrideSavedHardcore", hardcore);
+        if (hardcore)
+            Host::SetBaseBoolSettingValue("Achievements", "ChallengeMode", false);
+    }
 
     PersistAndApplyAchievementsSettings();
     RestartAchievementsForHostChange();
@@ -803,7 +839,17 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_clearAchievementsHostOverride(JNIEnv *env, jclass clazz) {
     Host::RemoveBaseSettingValue("Achievements", "Host");
-    Host::RemoveBaseSettingValue("Achievements", "HostOverrideSavedHardcore");
+
+    // Give the user's hardcore setting back. Absent key = nothing was borrowed
+    // (no override was active, or the user set hardcore by hand while it was),
+    // in which case ChallengeMode is already what they want and must be left
+    // alone. A restored ON only engages on the next boot, same as any other
+    // hardcore enable.
+    if (Host::ContainsBaseSettingValue("Achievements", "HostOverrideSavedHardcore")) {
+        const bool saved = Host::GetBaseBoolSettingValue("Achievements", "HostOverrideSavedHardcore", false);
+        Host::RemoveBaseSettingValue("Achievements", "HostOverrideSavedHardcore");
+        Host::SetBaseBoolSettingValue("Achievements", "ChallengeMode", saved);
+    }
 
     PersistAndApplyAchievementsSettings();
     RestartAchievementsForHostChange();
@@ -846,6 +892,66 @@ extern "C"
 JNIEXPORT jfloat JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_getNominalFrameRate(JNIEnv*, jclass) {
     return VMManager::HasValidVM() ? static_cast<jfloat>(VMManager::GetFrameRate()) : 0.0f;
+}
+
+/*
+ * The rest of what the in-game OSD shows, for the second-screen panel.
+ *
+ * The panel could only reach getFPS(), so it could show frames and a percentage of nominal and
+ * nothing else -- "I would appreciate more info from the OSD available on the second screen"
+ * (Mike22). PerformanceMetrics already computes all of this for the OSD; none of it had a way
+ * across the JNI boundary. Each returns 0 with no VM rather than the last value, so a panel
+ * sitting in the library reads as idle instead of frozen on whatever the last game was doing.
+ */
+/*
+ * Hand the overlay the device temperatures the app layer read. See ImGuiOverlays.h for why the
+ * core cannot read them itself. Values use ARMSX2_THERMAL_NONE for "no reading", so a device
+ * that exposes no usable zone shows nothing rather than a plausible-looking zero.
+ */
+extern "C"
+JNIEXPORT void JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_setThermals(JNIEnv*, jclass, jfloat cpu, jfloat gpu,
+                                                 jfloat battery, jboolean show) {
+    Armsx2Thermals::cpu.store(cpu, std::memory_order_relaxed);
+    Armsx2Thermals::gpu.store(gpu, std::memory_order_relaxed);
+    Armsx2Thermals::battery.store(battery, std::memory_order_relaxed);
+    Armsx2Thermals::show.store(show == JNI_TRUE, std::memory_order_relaxed);
+}
+
+extern "C"
+JNIEXPORT jfloat JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getVPS(JNIEnv*, jclass) {
+    return VMManager::HasValidVM() ? static_cast<jfloat>(PerformanceMetrics::GetInternalFPS()) : 0.0f;
+}
+
+extern "C"
+JNIEXPORT jfloat JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getEmuSpeedPercent(JNIEnv*, jclass) {
+    return VMManager::HasValidVM() ? static_cast<jfloat>(PerformanceMetrics::GetSpeed()) : 0.0f;
+}
+
+extern "C"
+JNIEXPORT jfloat JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getCpuThreadUsage(JNIEnv*, jclass) {
+    return VMManager::HasValidVM() ? static_cast<jfloat>(PerformanceMetrics::GetCPUThreadUsage()) : 0.0f;
+}
+
+extern "C"
+JNIEXPORT jfloat JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getGsThreadUsage(JNIEnv*, jclass) {
+    return VMManager::HasValidVM() ? static_cast<jfloat>(PerformanceMetrics::GetGSThreadUsage()) : 0.0f;
+}
+
+extern "C"
+JNIEXPORT jfloat JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getGpuUsage(JNIEnv*, jclass) {
+    return VMManager::HasValidVM() ? static_cast<jfloat>(PerformanceMetrics::GetGPUUsage()) : 0.0f;
+}
+
+extern "C"
+JNIEXPORT jfloat JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getAverageFrameTime(JNIEnv*, jclass) {
+    return VMManager::HasValidVM() ? static_cast<jfloat>(PerformanceMetrics::GetAverageFrameTime()) : 0.0f;
 }
 
 extern "C"
@@ -1369,7 +1475,11 @@ public:
     // until a manual menu resume. The CPU/MTGS/MTVU threads are still parked
     // for the JIT/GS rebuild; only the audio pause edges are suppressed, and
     // the stream emits silence on underrun so there's no audible artifact.
-    explicit ScopedVMPause(bool pause_audio = true) {
+    // resume_on_destroy=false leaves the VM parked when the guard goes out of
+    // scope. Used by the disc-swap path, where Kotlin is the single resume
+    // authority and unpauses only after the caller has returned.
+    explicit ScopedVMPause(bool pause_audio = true, bool resume_on_destroy = true) {
+        m_resume_on_destroy = resume_on_destroy;
         m_was_running = (VMManager::GetState() == VMState::Running);
         m_was_paused = (VMManager::GetState() == VMState::Paused);
         if (m_was_running)
@@ -1381,18 +1491,59 @@ public:
                 m_audio_pause_suppressed = true;
                 SPU2::SetOutputPauseSuppressed(true);
             }
-            VMManager::SetPaused(true);
+            // Queue the pause onto the CPU thread instead of flipping it here.
+            // SetState(Paused) calls MTGS::WaitGS() -- and vu1Thread.WaitVU()
+            // when MTVU is on -- and both land in WorkSema::WaitForEmpty(),
+            // which supports exactly one waiter ("Multiple threads attempted to
+            // wait for empty (not currently supported)"). The EE issues its own
+            // MTGS waits continuously while emulating, so pausing from this JNI
+            // thread races it. A Debug build aborts on the assert; a Release
+            // build silently leaves the semaphore with two waiters and the EE
+            // blocks inside WaitForEmpty forever -- it never reaches a safe
+            // point, the park below times out as cpu_thread_not_parked, no state
+            // file is written, and the resumes the UI queues meanwhile never
+            // drain, so the game stays paused until the process is killed.
+            // Reproduced on both builds; turning MTVU off only removes one of
+            // the two semaphores and makes it rarer, not absent. The UI pause
+            // path (pauseVM) has always queued it this way -- only this
+            // savestate path did it inline.
+            Host::RunOnCPUThread([]() {
+                if (VMManager::HasValidVM() && VMManager::GetState() == VMState::Running)
+                    VMManager::SetPaused(true);
+            });
             if (!s_execute_exit.load(std::memory_order_acquire) && Cpu)
                 Cpu->ExitExecution();
         }
-        // A healthy VM exits Execute() within a frame of the state flip;
-        // allow a generous 3s before declaring failure.
-        for (int i = 0; i < 3000 && !s_execute_exit.load(std::memory_order_acquire); ++i)
+        // A healthy VM exits Execute() and applies the queued pause within a
+        // frame; allow a generous 3s before declaring failure.
+        //
+        // Because the pause is queued, leaving Execute() is not sufficient on
+        // its own — ParkedNow() also requires the state to have flipped, so a
+        // state op can never start while the pause is still in the queue.
+        //
+        // Keep nudging the EE out, rate-limited, exactly like the stop path
+        // does: one ExitExecution() can land in the window where runVMThread
+        // has cleared s_execute_exit but has not re-entered Execute() yet, and
+        // then nothing would ask it to leave again before the timeout.
+        for (int i = 0; i < 3000 && !ParkedNow(); ++i)
+        {
+            if ((i % 16) == 0 && !s_execute_exit.load(std::memory_order_acquire) && Cpu)
+                Cpu->ExitExecution();
             usleep(1000);
-        m_parked = s_execute_exit.load(std::memory_order_acquire) || m_was_paused;
+        }
+        m_parked = ParkedNow() || m_was_paused;
+        // A healthy park is silent; anything logged here means the CPU thread
+        // never reached a safe point and the caller must skip the state op.
+        if (!m_parked)
+        {
+            Console.Error("Failed to park the CPU thread for a state operation "
+                          "(state=%d execute_exit=%d)",
+                          static_cast<int>(VMManager::GetState()),
+                          s_execute_exit.load(std::memory_order_acquire) ? 1 : 0);
+        }
     }
     ~ScopedVMPause() {
-        if (m_was_running && !s_stop_requested.load(std::memory_order_acquire))
+        if (m_was_running && m_resume_on_destroy && !s_stop_requested.load(std::memory_order_acquire))
             VMManager::SetPaused(false);
         if (m_audio_pause_suppressed)
             SPU2::SetOutputPauseSuppressed(false);
@@ -1403,10 +1554,20 @@ public:
     bool parked() const { return m_parked; }
 
 private:
+    // Parked == the CPU thread is outside Cpu->Execute() AND the queued pause
+    // has been applied. Checking only s_execute_exit would let a state op start
+    // while the pause was still sitting in the CPU thread's queue.
+    static bool ParkedNow()
+    {
+        return s_execute_exit.load(std::memory_order_acquire) &&
+               VMManager::GetState() == VMState::Paused;
+    }
+
     bool m_was_running = false;
     bool m_was_paused = false;
     bool m_parked = false;
     bool m_audio_pause_suppressed = false;
+    bool m_resume_on_destroy = true;
 };
 
 static void LogAndroidGSSettings(const char* reason)
@@ -2275,8 +2436,9 @@ Java_kr_co_iefriends_pcsx2_NativeApp_setAutoRendererGpuStrings(
     g_gs_android_prefer_vk = GSUtil::AndroidAutoPrefersVulkan(vendor_str, renderer_str, version_str);
 }
 
-// Affinity Control Mode (VMManager.cpp). 0 = Disabled/scheduler-decides (default), 1-6 = explicit
-// EE/VU/GS priority orders, 7 = Performance Cores. Read by SetEmuThreadAffinities when the VM
+// Affinity Control Mode (VMManager.cpp). 0 = Disabled/scheduler-decides, 1-6 = explicit
+// EE/VU/GS priority orders, 7 = Performance Cores (the default). Out-of-range values fall back
+// to 0 rather than the default: a bad value means a bug upstream, so do the least. Read by SetEmuThreadAffinities when the VM
 // boots, so the app sets it before runVMThread; changing it takes effect on the next boot.
 extern int g_android_affinity_mode;
 extern "C"
@@ -2886,6 +3048,16 @@ Java_kr_co_iefriends_pcsx2_NativeApp_lsfgAvailability(JNIEnv *env, jclass clazz,
 
 extern "C"
 JNIEXPORT void JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_lsfgDllChanged(JNIEnv *env, jclass clazz) {
+    // The import rewrites the same file every time, so the path never changes and SetDllPath()
+    // cannot tell the file is new. Only the importer knows, so only the importer says so —
+    // lsfgAvailability() stays a pure query, and EndPresent, which asks once per frame, keeps
+    // answering from the cache instead of re-reading the DLL inside the present path.
+    GSLsfg::InvalidateDllVerdict();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_flushShaderCache(JNIEnv *env, jclass clazz) {
     // Persist the Vulkan pipeline cache so cold restarts don't re-compile every
     // pipeline. Hooked from onPause so the typical background-then-swipe-kill
@@ -3151,18 +3323,16 @@ Java_kr_co_iefriends_pcsx2_NativeApp_changeDisc(JNIEnv *env, jclass clazz, jstri
         return false;
     // ChangeDisc mutates live CDVD/IOP/tray state OWNED by the CPU thread, so it
     // must run THERE, not from JNI (doing it here races the emulator and hangs).
-    // Park the CPU thread so the paused idle loop (runVMThread) drains the queue
-    // within a frame; RunOnCPUThread(block) then waits for the swap to finish.
-    // We deliberately do NOT resume here — the Kotlin caller unpauses afterward
+    // Park through the same guard the save-state path uses instead of flipping
+    // the pause from this JNI thread: SetState(Paused) runs MTGS::WaitGS() (and
+    // vu1Thread.WaitVU() under MTVU), which end in WorkSema::WaitForEmpty() — a
+    // primitive that supports exactly one waiter — so pausing here races the
+    // EE's own MTGS waits. RunOnCPUThread(block) then waits for the swap to
+    // finish. resume_on_destroy is off: the Kotlin caller unpauses afterward
     // (single resume authority), so the game runs and detects the new disc.
-    const bool was_running = (VMManager::GetState() == VMState::Running);
-    if (was_running) {
-        VMManager::SetPaused(true);
-        if (!s_execute_exit.load(std::memory_order_acquire) && Cpu)
-            Cpu->ExitExecution();
-        for (int i = 0; i < 3000 && !s_execute_exit.load(std::memory_order_acquire); ++i)
-            usleep(1000);
-    }
+    const ScopedVMPause vm_pause(/*pause_audio=*/true, /*resume_on_destroy=*/false);
+    if (!vm_pause.parked())
+        return false;
     bool ok = false;
     Host::RunOnCPUThread([&path, &ok]() {
         ok = VMManager::ChangeDisc(CDVD_SourceType::Iso, path);
@@ -3578,14 +3748,6 @@ bool Host::IsFullscreen()
 }
 
 void Host::SetFullscreen(bool enabled)
-{
-}
-
-void Host::OnCaptureStarted(const std::string& filename)
-{
-}
-
-void Host::OnCaptureStopped()
 {
 }
 
@@ -4252,6 +4414,29 @@ Java_kr_co_iefriends_pcsx2_NativeApp_osdApplyFlags(JNIEnv*, jclass,
 // next boot via UpdateGameSettingsLayer.
 static std::unique_ptr<INISettingsInterface> s_export_game_ini;
 
+using GameIniClaims = std::vector<std::pair<std::string, std::string>>;
+using GameIniEntries = std::vector<std::tuple<std::string, std::string, std::string>>;
+
+// Keys the export has to leave in the file even when the app wrote nothing for them: GameDB
+// entries the player switched off for this game. See gameIniClaim.
+static GameIniClaims s_export_claims;
+
+// While gameIniBeginStage is active the stream builds a STAGED copy instead of writing a file.
+static bool s_export_is_stage = false;
+static std::string s_export_stage_serial;
+static GameIniEntries s_export_stage_entries;
+
+// A game's per-game file, built at launch and waiting to be written. The app knows the serial
+// then, but the file is <serial>_<CRC>.ini and nothing knows the CRC until the core has read the
+// disc -- so VMManager calls AndroidWriteStagedGameIni with the name just before loading it.
+struct StagedGameIni {
+    std::string serial;
+    GameIniEntries entries;
+    GameIniClaims claims;
+};
+static std::mutex s_staged_game_ini_mutex;
+static std::optional<StagedGameIni> s_staged_game_ini;
+
 // The [sections] applyTo() owns and fully regenerates on each per-game write. We LOAD the
 // existing file and clear only these, rather than starting from a FRESH (unloaded) interface:
 // a fresh start dropped every FOREIGN key in the file, most visibly the [Patches]/[Cheats]
@@ -4272,11 +4457,14 @@ static constexpr const char* OWNED_GAME_INI_SECTIONS[] = {
     "EmuCore/Gamefixes", "EmuCore/Speedhacks", "Framerate", "MemoryCards",
     "DEV9", "DEV9/Eth", "DEV9/Eth/Hosts", "DEV9/Hdd",
     "SPU2", "SPU2/Output", "USB1",
+    // RetroAchievements' on/off is a per-game setting too (Settings.achievementsEnabled). Only
+    // that key is ever written here: the account lives in the base layer and in secrets.ini.
+    "Achievements",
 };
 
-// Open [path] as the active export interface for the gameIniPut/gameIniCommitWrite stream that
-// follows: load what's there (so foreign keys survive), then blank the sections we regenerate.
-static void BeginGameIniExport(const std::string& path) {
+// Open [path] for a per-game write: load what's there (so foreign keys survive), then blank the
+// sections we regenerate.
+static std::unique_ptr<INISettingsInterface> OpenGameIniForExport(const std::string& path) {
     auto ini = std::make_unique<INISettingsInterface>(path);
     ini->Load(); // failure just means there was no file yet, i.e. nothing to preserve
     // Per-host DNS entries live in INDEXED sections (DEV9/Eth/Hosts/Host0, Host1, ...) that can't
@@ -4288,7 +4476,101 @@ static void BeginGameIniExport(const std::string& path) {
         ini->ClearSection(sec);
     for (int i = 0, n = std::max(host_count, 8) + 8; i < n; i++)
         ini->ClearSection(fmt::format("DEV9/Eth/Hosts/Host{}", i).c_str());
-    s_export_game_ini = std::move(ini);
+    return ini;
+}
+
+// Open [path] as the active export interface for the gameIniPut/gameIniCommitWrite stream that
+// follows.
+static void BeginGameIniExport(const std::string& path) {
+    s_export_game_ini = OpenGameIniForExport(path);
+    s_export_claims.clear();
+    s_export_is_stage = false;
+    s_export_stage_serial.clear();
+    s_export_stage_entries.clear();
+}
+
+// Give each claimed key a value where the app wrote none. It has no control for some of what the
+// database sets -- the EE division rounding mode, for one -- so switching such an entry off has
+// nothing of the app's to write. What goes in is what the game would run with if the database
+// stayed out: the player's base-layer value, else the stock default. The key's PRESENCE is what
+// makes the database skip the entry (ComputePerGameOverrides); the value only has to be neutral.
+static void FillGameIniClaims(INISettingsInterface& ini, const GameIniClaims& claims) {
+    std::unique_ptr<MemorySettingsInterface> stock;
+    for (const auto& [section, key] : claims) {
+        if (ini.ContainsValue(section.c_str(), key.c_str()))
+            continue;
+        std::string value = Host::GetBaseStringSettingValue(section.c_str(), key.c_str(), "");
+        if (value.empty()) {
+            if (!stock) {
+                stock = std::make_unique<MemorySettingsInterface>();
+                Pcsx2Config defaults;
+                SettingsSaveWrapper wrapper(*stock);
+                defaults.LoadSaveCore(wrapper);
+            }
+            stock->GetStringValue(section.c_str(), key.c_str(), &value);
+        }
+        if (!value.empty())
+            ini.SetStringValue(section.c_str(), key.c_str(), value.c_str());
+        else
+            Console.WarningFmt("@@ANDROID_GAMEINI@@ no value to claim {}/{} with", section, key);
+    }
+}
+
+// Finish a per-game write: claims filled in, empty sections dropped, and the file deleted when
+// nothing is left in it (FullscreenUI parity). [what] only labels the log line.
+static bool CommitGameIniExport(INISettingsInterface& ini, const GameIniClaims& claims, const char* what) {
+    Error error;
+    bool ok = true;
+
+    FillGameIniClaims(ini, claims);
+
+    // The [Patches]/[Cheats] enable lists are preserved by loading the file instead of starting
+    // fresh; nothing to carry over here. Log what actually survives so a "my patches vanished"
+    // report can be diagnosed from an emulog instead of guesswork.
+    const size_t kept_patches = ini.GetStringList("Patches", "Enable").size();
+    const size_t kept_cheats = ini.GetStringList("Cheats", "Enable").size();
+
+    ini.RemoveEmptySections();
+    const bool empty = ini.IsEmpty();
+    if (empty) {
+        // No per-game overrides — remove the file entirely (FullscreenUI parity).
+        const std::string fn = ini.GetFileName();
+        if (FileSystem::FileExists(fn.c_str()))
+            ok = FileSystem::DeleteFilePath(fn.c_str(), &error);
+    } else {
+        ok = ini.Save(&error);
+    }
+    Console.WriteLnFmt("@@ANDROID_GAMEINI@@ {} {} patches={} cheats={} claims={}",
+        what, empty ? "removed" : "saved", kept_patches, kept_cheats, claims.size());
+    if (!ok)
+        Console.ErrorFmt("@@ANDROID_GAMEINI@@ {} failed: {}", what, error.GetDescription());
+    return ok;
+}
+
+// VMManager::UpdateGameSettingsLayer calls this with the file it is about to read. If the app
+// staged this game's settings at launch, now is the first moment the file can be named, so write
+// it before the read: that is what lets a per-game choice outrank the database from the first
+// boot, instead of only once the player has saved something in-game.
+static void AndroidWriteStagedGameIni(const std::string& serial, const std::string& path) {
+    std::optional<StagedGameIni> staged;
+    {
+        std::lock_guard lock(s_staged_game_ini_mutex);
+        if (!s_staged_game_ini)
+            return;
+        // Used once. Whatever writes the file after this (an in-game save, a reset) knows better,
+        // and a launch-time copy replayed over it on a later reload would undo it.
+        staged = std::move(s_staged_game_ini);
+        s_staged_game_ini.reset();
+    }
+    if (serial.empty() || !StringUtil::compareNoCase(staged->serial, serial)) {
+        Console.WriteLnFmt("@@ANDROID_GAMEINI@@ staged settings for {} unused, booting '{}'", staged->serial, serial);
+        return;
+    }
+
+    std::unique_ptr<INISettingsInterface> ini = OpenGameIniForExport(path);
+    for (const auto& [section, key, value] : staged->entries)
+        ini->SetStringValue(section.c_str(), key.c_str(), value.c_str());
+    CommitGameIniExport(*ini, staged->claims, "boot");
 }
 
 extern "C" JNIEXPORT jboolean JNICALL
@@ -4314,6 +4596,229 @@ Java_kr_co_iefriends_pcsx2_NativeApp_gameIniBeginWrite(JNIEnv*, jclass) {
 // file the JSON prune couldn't reach, which we rewrite from the post-reset settings the Kotlin
 // stream puts next; no match means there is nothing to shadow global and JNI_FALSE tells Kotlin
 // to skip the (now unnecessary) put/commit.
+/**
+ * Where host: reads from: <EmuFolders::DataRoot>/hostfs.
+ *
+ * Exposed because the Kotlin side must NOT recompute it. DataRoot and the app's user-facing
+ * "system directory" preference are different values whenever the data folder lives on an SD
+ * card, so deriving the path on both sides put extraction and the ELF copy in different
+ * folders -- and would have had the library scanning a directory nothing was ever written to.
+ */
+extern "C" JNIEXPORT jstring JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getHostfsDir(JNIEnv* env, jclass) {
+    const std::string dir = Path::Combine(EmuFolders::DataRoot, "hostfs");
+    FileSystem::CreateDirectoryPath(dir.c_str(), true);
+    return env->NewStringUTF(dir.c_str());
+}
+
+/**
+ * Copy every file out of an ISO into <DataRoot>/hostfs/<subdir>/, for host:-loading setups.
+ *
+ * The obsrv "quick loading" method for Biohazard Outbreak wants the disc's contents sitting in a
+ * folder, with one file swapped for a modified ELF. On desktop you mount the ISO in the OS file
+ * manager and drag the files out. Android cannot mount an ISO at all, so that step is simply not
+ * available to a user here -- which is why the method has never worked on Android no matter what
+ * anyone put where. The app has to do it.
+ *
+ * Opened the way IsoHasher does (lock CDVD, point it at the file, DoCDVDopen), because IsoReader
+ * reads through the global CDVD rather than taking a handle. REFUSES to run while a VM is alive:
+ * that would yank the disc out from under a running game.
+ *
+ * Returns the number of files written, or -1 on failure. Flat copy of the root directory, which
+ * is the layout the method wants -- these discs keep their data files at the top level.
+ */
+extern "C" JNIEXPORT jint JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_extractIsoToHostfs(JNIEnv* env, jclass, jstring p_iso, jstring p_subdir) {
+    if (!p_iso || !p_subdir)
+        return -1;
+    if (VMManager::HasValidVM()) {
+        Console.Error("extractIsoToHostfs: refusing while a VM is running");
+        return -1;
+    }
+    const std::string iso_path = GetJavaString(env, p_iso);
+    const std::string subdir = GetJavaString(env, p_subdir);
+    if (iso_path.empty() || subdir.empty())
+        return -1;
+
+    const std::string dest = Path::Combine(Path::Combine(EmuFolders::DataRoot, "hostfs"), subdir);
+    if (!FileSystem::CreateDirectoryPath(dest.c_str(), true)) {
+        Console.Error("extractIsoToHostfs: cannot create '%s'", dest.c_str());
+        return -1;
+    }
+
+    Error error;
+    if (!cdvdLock(&error)) {
+        Console.Error("extractIsoToHostfs: cdvdLock failed");
+        return -1;
+    }
+    CDVDsys_SetFile(CDVD_SourceType::Iso, iso_path);
+    CDVDsys_ChangeSource(CDVD_SourceType::Iso);
+
+    int written = -1;
+    if (!DoCDVDopen(&error)) {
+        Console.Error("extractIsoToHostfs: cannot open '%s'", iso_path.c_str());
+    } else {
+        IsoReader iso;
+        if (!iso.Open(&error)) {
+            Console.Error("extractIsoToHostfs: not a readable ISO filesystem");
+        } else {
+            written = 0;
+            // Recursive: GetFilesInDirectory returns subdirectories alongside files, and a PS2
+            // disc keeps plenty below the root (Outbreak has /PROG and /NTGUI2). A flat copy of
+            // the root silently produced a folder missing most of the game.
+            std::function<void(const std::string&)> copy_dir = [&](const std::string& dir) {
+                for (const std::string& name : iso.GetFilesInDirectory(dir, &error)) {
+                    // Discs list files as NAME;1 -- the ISO9660 version suffix. Strip it, or every
+                    // filename the game asks for by name misses.
+                    const std::string clean(IsoReader::RemoveVersionIdentifierFromPath(name));
+                    const std::string out = Path::Combine(dest, clean);
+
+                    if (iso.DirectoryExists(name, nullptr)) {
+                        FileSystem::CreateDirectoryPath(out.c_str(), true);
+                        copy_dir(name);
+                        continue;
+                    }
+
+                    // STREAMED, sector at a time. IsoReader::ReadFile loads the whole file into a
+                    // vector first, and a PS2 disc carries files far too large for that: the
+                    // lowmemorykiller took the app at ~2GB RSS mid-extract. Copy through a fixed
+                    // buffer so peak memory is one sector regardless of how big the file is.
+                    const std::optional<IsoReader::ISODirectoryEntry> de = iso.LocateFile(name, &error);
+                    if (!de.has_value()) {
+                        Console.Error("extractIsoToHostfs: cannot locate '%s'", name.c_str());
+                        continue;
+                    }
+
+                    auto fp = FileSystem::OpenManagedCFile(out.c_str(), "wb", &error);
+                    if (!fp) {
+                        Console.Error("extractIsoToHostfs: failed opening '%s'", out.c_str());
+                        continue;
+                    }
+
+                    u8 sector[2048];
+                    u64 remaining = de->length_le;
+                    u32 lsn = de->location_le;
+                    bool ok = true;
+                    while (remaining > 0) {
+                        if (DoCDVDreadSector(sector, lsn, CDVD_MODE_2048) != 0) {
+                            Console.Error("extractIsoToHostfs: read error in '%s' at lsn %u",
+                                name.c_str(), lsn);
+                            ok = false;
+                            break;
+                        }
+                        const size_t chunk = static_cast<size_t>(
+                            std::min<u64>(remaining, sizeof(sector)));
+                        if (std::fwrite(sector, 1, chunk, fp.get()) != chunk) {
+                            Console.Error("extractIsoToHostfs: failed writing '%s'", out.c_str());
+                            ok = false;
+                            break;
+                        }
+                        remaining -= chunk;
+                        lsn++;
+                    }
+                    // Push this file out and drop it from the page cache before moving on.
+                    //
+                    // Without this the whole extraction -- several GB for a DVD -- accumulates as
+                    // DIRTY pages. They cannot be reclaimed until writeback completes, so on a
+                    // device with modest RAM and slow storage the kernel is left stalling on
+                    // writeback with nothing it can free: lmkd reports "device is not responding"
+                    // and kills the app, which then looks like a crash on the NEXT thing the user
+                    // does. Seen on a 6GB tablet ~20s after a 4.7GB extraction, while the same
+                    // build was fine on a faster 8GB device.
+                    //
+                    // fsync before FADV_DONTNEED because the advice is a no-op on pages that are
+                    // still dirty -- dropping has to happen after they are clean.
+                    std::fflush(fp.get());
+                    const int out_fd = fileno(fp.get());
+                    if (out_fd >= 0) {
+                        fsync(out_fd);
+                        posix_fadvise(out_fd, 0, 0, POSIX_FADV_DONTNEED);
+                    }
+                    fp.reset();
+                    if (!ok) {
+                        FileSystem::DeleteFilePath(out.c_str());
+                        continue;
+                    }
+                    written++;
+                }
+            };
+            copy_dir(std::string());
+            Console.WriteLnFmt("extractIsoToHostfs: wrote {} file(s) to {}", written, dest);
+        }
+        DoCDVDclose();
+    }
+    cdvdUnlock();
+    // Leave CDVD pointing at nothing, so a later boot cannot inherit this ISO by accident.
+    CDVDsys_ChangeSource(CDVD_SourceType::NoDisc);
+    return written;
+}
+
+/**
+ * Pair a boot ELF with the disc it needs, the way desktop's "Properties -> Disc Path" does.
+ *
+ * VMManager::Initialize routes a filename ending in .elf through GetDiscOverrideFromGameSettings,
+ * which opens the ELF, takes its CRC, and reads EmuCore/DiscPath out of gamesettings/<CRC>.ini.
+ * With no disc it falls through to CDVD_SourceType::NoDisc -- the ELF runs, and the game then sits
+ * on its loading screen forever waiting on disc reads that never come.
+ *
+ * Nothing on Android wrote that key, so every ELF that needs a disc was unbootable here. That is
+ * the Biohazard Outbreak "quick-load" method: a modified SLPM_xxx.xx.elf plus the original ISO.
+ *
+ * Empty disc_path clears the pairing. Returns false when the ELF cannot be read or has no CRC,
+ * which is also how the caller learns a file is not a usable ELF.
+ */
+extern "C" JNIEXPORT jboolean JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_setElfDiscOverride(JNIEnv* env, jclass, jstring p_elf, jstring p_disc) {
+    if (!p_elf)
+        return JNI_FALSE;
+    const std::string elf_path = GetJavaString(env, p_elf);
+    const std::string disc_path = p_disc ? GetJavaString(env, p_disc) : std::string();
+    if (elf_path.empty())
+        return JNI_FALSE;
+
+    // Same read the core does, so the CRC we key on is the one it will look for. OpenFile goes
+    // through FileSystem, which is content:// aware, so a SAF-picked ELF resolves here too.
+    ElfObject elfo;
+    if (!elfo.OpenFile(elf_path, false, nullptr)) {
+        Console.Error("setElfDiscOverride: cannot read ELF '%s'", elf_path.c_str());
+        return JNI_FALSE;
+    }
+    const u32 crc = elfo.GetCRC();
+    if (crc == 0) {
+        Console.Error("setElfDiscOverride: ELF '%s' has no CRC", elf_path.c_str());
+        return JNI_FALSE;
+    }
+
+    // Empty serial + CRC == gamesettings/<CRC>.ini, which is exactly the file
+    // GetDiscOverrideFromGameSettings loads.
+    const std::string ini_path = VMManager::GetGameSettingsPath(std::string_view(), crc);
+    INISettingsInterface si(ini_path);
+    si.Load();  // keep whatever else is in there; this is the same file per-game settings use
+    if (disc_path.empty())
+        si.DeleteValue("EmuCore", "DiscPath");
+    else
+        si.SetStringValue("EmuCore", "DiscPath", disc_path.c_str());
+    if (!si.Save()) {
+        Console.Error("setElfDiscOverride: failed writing '%s'", ini_path.c_str());
+        return JNI_FALSE;
+    }
+
+    Console.WriteLnFmt("setElfDiscOverride: ELF {:08X} -> disc '{}'", crc, disc_path);
+    return JNI_TRUE;
+}
+
+/** The disc currently paired with [p_elf], or empty when there is none. */
+extern "C" JNIEXPORT jstring JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getElfDiscOverride(JNIEnv* env, jclass, jstring p_elf) {
+    std::string out;
+    if (p_elf) {
+        const std::string elf_path = GetJavaString(env, p_elf);
+        if (!elf_path.empty())
+            out = VMManager::GetDiscOverrideFromGameSettings(elf_path);
+    }
+    return env->NewStringUTF(out.c_str());
+}
+
 extern "C" JNIEXPORT jboolean JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_gameIniBeginWriteForSerial(JNIEnv* env, jclass, jstring p_serial) {
     if (!p_serial)
@@ -4337,15 +4842,19 @@ Java_kr_co_iefriends_pcsx2_NativeApp_gameIniBeginWriteForSerial(JNIEnv* env, jcl
 extern "C" JNIEXPORT void JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_gameIniPut(JNIEnv* env, jclass,
                                                 jstring p_section, jstring p_key, jstring p_value) {
-    if (!s_export_game_ini)
+    if (!s_export_game_ini && !s_export_is_stage)
         return;
     const char* section = env->GetStringUTFChars(p_section, nullptr);
     const char* key = env->GetStringUTFChars(p_key, nullptr);
     const char* value = env->GetStringUTFChars(p_value, nullptr);
     // CSimpleIni is untyped string storage; the typed getters (GetBoolValue etc.)
     // parse the string back, so writing the Kotlin string repr round-trips.
-    if (section && key && value)
-        s_export_game_ini->SetStringValue(section, key, value);
+    if (section && key && value) {
+        if (s_export_is_stage)
+            s_export_stage_entries.emplace_back(section, key, value);
+        else
+            s_export_game_ini->SetStringValue(section, key, value);
+    }
     if (value) env->ReleaseStringUTFChars(p_value, value);
     if (key) env->ReleaseStringUTFChars(p_key, key);
     if (section) env->ReleaseStringUTFChars(p_section, section);
@@ -4353,33 +4862,103 @@ Java_kr_co_iefriends_pcsx2_NativeApp_gameIniPut(JNIEnv* env, jclass,
 
 extern "C" JNIEXPORT jboolean JNICALL
 Java_kr_co_iefriends_pcsx2_NativeApp_gameIniCommitWrite(JNIEnv*, jclass) {
+    if (s_export_is_stage) {
+        // Nothing to write yet: the file cannot be named before the core knows the disc CRC.
+        std::lock_guard lock(s_staged_game_ini_mutex);
+        Console.WriteLnFmt("@@ANDROID_GAMEINI@@ staged {} keys={} claims={}",
+            s_export_stage_serial, s_export_stage_entries.size(), s_export_claims.size());
+        s_staged_game_ini = StagedGameIni{std::move(s_export_stage_serial), std::move(s_export_stage_entries),
+            std::move(s_export_claims)};
+        s_export_is_stage = false;
+        s_export_stage_serial.clear();
+        s_export_stage_entries.clear();
+        s_export_claims.clear();
+        return JNI_TRUE;
+    }
     if (!s_export_game_ini)
         return JNI_FALSE;
-    Error error;
-    bool ok = true;
-
-    // The [Patches]/[Cheats] enable lists are preserved by gameIniBeginWrite loading the file
-    // instead of starting fresh; nothing to carry over here. Log what actually survives so a
-    // "my patches vanished" report can be diagnosed from an emulog instead of guesswork.
-    const size_t kept_patches = s_export_game_ini->GetStringList("Patches", "Enable").size();
-    const size_t kept_cheats = s_export_game_ini->GetStringList("Cheats", "Enable").size();
-
-    s_export_game_ini->RemoveEmptySections();
-    const bool empty = s_export_game_ini->IsEmpty();
-    if (empty) {
-        // No per-game overrides — remove the file entirely (FullscreenUI parity).
-        const std::string fn = s_export_game_ini->GetFileName();
-        if (FileSystem::FileExists(fn.c_str()))
-            ok = FileSystem::DeleteFilePath(fn.c_str(), &error);
-    } else {
-        ok = s_export_game_ini->Save(&error);
-    }
-    Console.WriteLnFmt("@@ANDROID_GAMEINI@@ commit {} patches={} cheats={}",
-        empty ? "removed" : "saved", kept_patches, kept_cheats);
+    const bool ok = CommitGameIniExport(*s_export_game_ini, s_export_claims, "commit");
     s_export_game_ini.reset();
-    if (!ok)
-        Console.ErrorFmt("@@ANDROID_GAMEINI@@ commit failed: {}", error.GetDescription());
+    s_export_claims.clear();
     return ok ? JNI_TRUE : JNI_FALSE;
+}
+
+// Build a game's per-game file at launch, for the core to write when it loads it. The same
+// put/claim/commit stream as gameIniBeginWrite; see AndroidWriteStagedGameIni for why the
+// writing has to wait.
+extern "C" JNIEXPORT jboolean JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_gameIniBeginStage(JNIEnv* env, jclass, jstring p_serial) {
+    const std::string serial = p_serial ? GetJavaString(env, p_serial) : std::string();
+    if (serial.empty())
+        return JNI_FALSE;
+    s_export_game_ini.reset();
+    s_export_claims.clear();
+    s_export_stage_entries.clear();
+    s_export_stage_serial = serial;
+    s_export_is_stage = true;
+    return JNI_TRUE;
+}
+
+// Drop whatever is staged, for a launch with nothing of its own to write.
+extern "C" JNIEXPORT void JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_gameIniClearStage(JNIEnv*, jclass) {
+    std::lock_guard lock(s_staged_game_ini_mutex);
+    s_staged_game_ini.reset();
+}
+
+// Keep [section]/[key] in the file being written even if the app writes nothing for it. The key's
+// presence is what tells the core the player decided that setting for this game, so this is how a
+// GameDB entry gets switched off. The value is filled in at commit (FillGameIniClaims).
+extern "C" JNIEXPORT void JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_gameIniClaim(JNIEnv* env, jclass, jstring p_section, jstring p_key) {
+    if (!s_export_game_ini && !s_export_is_stage)
+        return;
+    std::string section = p_section ? GetJavaString(env, p_section) : std::string();
+    std::string key = p_key ? GetJavaString(env, p_key) : std::string();
+    if (!section.empty() && !key.empty())
+        s_export_claims.emplace_back(std::move(section), std::move(key));
+}
+
+// Re-read the running game's per-game file into the game layer, after the app rewrote it. The
+// layer is otherwise only read at boot, so the commit that follows would still apply what the
+// file said then -- values, and which database entries the player had taken back. Applies
+// nothing itself; the caller's commit does.
+extern "C" JNIEXPORT void JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_reloadGameSettingsLayer(JNIEnv*, jclass) {
+    if (!VMManager::HasValidVM())
+        return;
+    Host::RunOnCPUThread([]() { VMManager::ReloadGameSettingsLayer(); }, /*block=*/true);
+}
+
+// What the game database sets for [serial], one line per setting a per-game key can claim:
+//   name <TAB> value <TAB> flags <TAB> section/key[|section/key...]
+// flags: 'c' skipped while automatic game fixes are off, 'u' skipped while manual hardware fixes
+// are on, '-' neither. Empty when the game has no entry or sets nothing claimable.
+extern "C" JNIEXPORT jstring JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_getGameDbEntries(JNIEnv* env, jclass, jstring p_serial) {
+    std::string out;
+    const std::string serial = p_serial ? GetJavaString(env, p_serial) : std::string();
+    const GameDatabaseSchema::GameEntry* game = serial.empty() ? nullptr : GameDatabase::findGame(serial);
+    if (game) {
+        for (const GameDatabaseSchema::GameEntry::ClaimableSetting& setting : game->claimableSettings()) {
+            std::string keys;
+            for (const auto& [section, key] : setting.keys)
+                fmt::format_to(std::back_inserter(keys), "{}{}/{}", keys.empty() ? "" : "|", section, key);
+            const char* flags = setting.core ? "c" : (setting.user_hack ? "u" : "-");
+            fmt::format_to(std::back_inserter(out), "{}\t{}\t{}\t{}\n", setting.name, setting.value, flags, keys);
+        }
+    }
+    return env->NewStringUTF(out.c_str());
+}
+
+// Every settings key whose presence in a per-game file claims some database setting, one
+// "section/key" per line.
+extern "C" JNIEXPORT jstring JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_gameDbClaimingKeys(JNIEnv* env, jclass) {
+    std::string out;
+    for (const auto& [section, key] : PerGameOverrideKeys::AllClaimingKeys())
+        fmt::format_to(std::back_inserter(out), "{}/{}\n", section, key);
+    return env->NewStringUTF(out.c_str());
 }
 
 // ---------------------------------------------------------------------------
@@ -5065,4 +5644,141 @@ Java_kr_co_iefriends_pcsx2_NativeApp_setShaderChainParams(
     }
 
     GSDevice::SetShaderChainParams(std::move(preset), std::move(params));
+}
+
+// ---- texture-pack tar+zstd streaming decoder ------------------------------------------------
+//
+// Strict single-frame zstd streaming for the texture-pack installer (plan
+// 2026-09-06-0905). Contract: exactly one standard frame with window log <= 27, no
+// dictionaries, cumulative output capped, at most 256 KiB consumed and produced per call,
+// poisoning on every error path. Handles are opaque jlongs; nothing here receives paths or
+// retains Java buffers across calls.
+
+#include <zstd.h>
+
+namespace
+{
+struct JniZstdDecoder
+{
+	ZSTD_DCtx* ctx = nullptr;
+	u64 produced_total = 0;
+	u64 max_output_bytes = 0;
+	bool frame_done = false;
+	bool poisoned = false;
+};
+
+constexpr size_t kZstdChunkBytes = 256 * 1024;
+constexpr u64 kZstdMaxOutputCap = 16ull << 30; // 16 GiB application maximum
+constexpr int kZstdMaxWindowLog = 27;
+
+JniZstdDecoder* AsDecoder(jlong handle)
+{
+	return reinterpret_cast<JniZstdDecoder*>(static_cast<intptr_t>(handle));
+}
+} // namespace
+
+extern "C" JNIEXPORT jlong JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_zstdDecoderCreate(JNIEnv*, jclass, jlong max_output_bytes)
+{
+	if (max_output_bytes <= 0 || static_cast<u64>(max_output_bytes) > kZstdMaxOutputCap)
+		return 0;
+
+	JniZstdDecoder* d = new (std::nothrow) JniZstdDecoder();
+	if (!d)
+		return 0;
+	d->ctx = ZSTD_createDCtx();
+	d->max_output_bytes = static_cast<u64>(max_output_bytes);
+	if (!d->ctx ||
+		ZSTD_DCtx_setParameter(d->ctx, ZSTD_d_windowLogMax, kZstdMaxWindowLog) != 0)
+	{
+		if (d->ctx)
+			ZSTD_freeDCtx(d->ctx);
+		delete d;
+		return 0;
+	}
+	return static_cast<jlong>(reinterpret_cast<intptr_t>(d));
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_zstdDecoderDestroy(JNIEnv*, jclass, jlong handle)
+{
+	JniZstdDecoder* d = AsDecoder(handle);
+	if (!d)
+		return;
+	if (d->ctx)
+		ZSTD_freeDCtx(d->ctx);
+	delete d;
+}
+
+// Streams one bounded step. Returns produced bytes (>= 0), or -1 after poisoning. status is
+// long[3]: consumed input, produced output, and 1 once the frame has completed.
+extern "C" JNIEXPORT jint JNICALL
+Java_kr_co_iefriends_pcsx2_NativeApp_zstdDecoderDecode(
+	JNIEnv* env, jclass, jlong handle, jbyteArray in, jint in_off, jint in_len,
+	jbyteArray out, jint out_off, jint out_len, jlongArray status)
+{
+	JniZstdDecoder* d = AsDecoder(handle);
+	if (!d)
+		return -1;
+
+	const auto fail = [&](const char* why) -> jint {
+		if (!d->poisoned)
+		{
+			d->poisoned = true;
+			Console.WriteLnFmt("zstd texture decoder poisoned: {}", why);
+		}
+		return -1;
+	};
+
+	if (d->poisoned)
+		return -1;
+	if (d->frame_done)
+		return fail("decode after frame completion");
+	if (!in || !out || !status)
+		return fail("null array");
+	const jsize in_size = env->GetArrayLength(in);
+	const jsize out_size = env->GetArrayLength(out);
+	if (in_off < 0 || in_len < 0 || in_off > in_size || in_len > in_size - in_off)
+		return fail("input window");
+	if (out_off < 0 || out_len < 0 || out_off > out_size || out_len > out_size - out_off)
+		return fail("output window");
+	if (env->GetArrayLength(status) < 3)
+		return fail("status array too small");
+	if (in_len == 0 && out_len == 0)
+		return fail("no room to make progress");
+
+	const size_t in_bytes = std::min<size_t>(static_cast<size_t>(in_len), kZstdChunkBytes);
+	const size_t out_bytes = std::min<size_t>(static_cast<size_t>(out_len), kZstdChunkBytes);
+
+	// Thread-local so repeated calls do not churn allocations; decode is confined to one thread.
+	thread_local std::vector<jbyte> in_buf, out_buf;
+	in_buf.resize(in_bytes);
+	out_buf.resize(out_bytes);
+	if (in_bytes > 0)
+		env->GetByteArrayRegion(in, in_off, static_cast<jsize>(in_bytes), in_buf.data());
+
+	ZSTD_inBuffer zi{in_buf.data(), in_bytes, 0};
+	ZSTD_outBuffer zo{out_buf.data(), out_bytes, 0};
+	const size_t ret = ZSTD_decompressStream(d->ctx, &zo, &zi);
+	if (ZSTD_isError(ret))
+		return fail(ZSTD_getErrorName(ret));
+
+	d->produced_total += zo.pos;
+	if (d->produced_total > d->max_output_bytes)
+		return fail("decompressed output exceeds declared limit");
+
+	const bool frame_done = (ret == 0);
+	if (frame_done)
+	{
+		if (zi.pos < zi.size)
+			return fail("trailing compressed bytes after frame");
+		d->frame_done = true;
+	}
+
+	const jlong status_values[3] = {
+		static_cast<jlong>(zi.pos), static_cast<jlong>(zo.pos), frame_done ? 1 : 0};
+	env->SetLongArrayRegion(status, 0, 3, status_values);
+	if (zo.pos > 0)
+		env->SetByteArrayRegion(out, out_off, static_cast<jsize>(zo.pos), out_buf.data());
+	return static_cast<jint>(zo.pos);
 }

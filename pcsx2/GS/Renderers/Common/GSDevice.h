@@ -6,6 +6,7 @@
 #include "common/HashCombine.h"
 #include "common/WindowInfo.h"
 #include "GS/GS.h"
+#include "GS/GSRegs.h" // GetAlphaTestPS speaks in ATST_* register values
 #include "GS/Renderers/Common/GSFastList.h"
 #include "GS/Renderers/Common/GSGPUProfile.h"
 #include "GS/Renderers/Common/GSShaderEnums.h"
@@ -378,6 +379,13 @@ public:
 		return ShaderEntryPoint(Shader());
 	}
 
+	constexpr ShaderConvertSelector SetShader(ShaderConvert shader = ShaderConvert::COPY)
+	{
+		ShaderConvertSelector tmp = *this;
+		tmp.fields.shader = static_cast<u32>(shader);
+		return tmp;
+	}
+
 	constexpr ShaderConvertSelector SetMask(u8 mask = 0xf) const
 	{
 		ShaderConvertSelector tmp = *this;
@@ -449,7 +457,7 @@ public:
 };
 
 static inline ShaderConvertSelector GetConvertShader(GSTexture::Format src, GSTexture::Format dst,
-	u32 src_bpp = 32, u32 dst_bpp = 32, u8 mask = 0xf)
+	u32 src_bpp = 32, u32 dst_bpp = 32, u8 mask = 0xf, Filter linear = Nearest)
 {
 	ShaderConvert shader = static_cast<ShaderConvert>(-1);
 	switch (src)
@@ -534,7 +542,7 @@ static inline ShaderConvertSelector GetConvertShader(GSTexture::Format src, GSTe
 			break;
 	}
 
-	return ShaderConvertSelector(shader, mask, dst == GSTexture::Format::DepthStencil);
+	return ShaderConvertSelector(shader, mask, dst == GSTexture::Format::DepthStencil, linear);
 }
 
 static inline ShaderConvertSelector GetConvertShader(const GSTexture* src, const GSTexture* dst, u32 src_bpp, u32 dst_bpp, u8 mask = 0xf)
@@ -747,6 +755,21 @@ struct alignas(16) GSHWDrawConfig
 				u32 shuffle_across : 1;
 				u32 write_rg : 1;
 				u32 fbmask   : 1;
+				// Quantize the colour to integers on all four channels, the way the fbmask road
+				// does on its way to merging the destination. Set on its own by a draw whose
+				// framebuffer mask was dropped as a no-op, so the drop keeps the rounding the mask
+				// used to impose without also keeping the destination read, the barrier or the
+				// render-target clone. Deliberately absent from IsFeedbackLoopRT(): this reads
+				// nothing.
+				u32 quantize_color : 1;
+				// Write the render target's known alpha bits into the alpha byte instead of
+				// reading the target to merge them. Set on a draw whose alpha framebuffer mask
+				// was proved to hold back bits the tracker knows for every pixel: the shader
+				// produces the masked write's own answer out of SubstituteAlphaKeep and
+				// SubstituteAlphaValue, so the mask, the destination read, the barrier and the
+				// render-target clone all go. Deliberately absent from IsFeedbackLoopRT(): this
+				// reads nothing either.
+				u32 substitute_alpha : 1;
 
 				// Blend and Colclip
 				u32 blend_a        : 2;
@@ -766,6 +789,7 @@ struct alignas(16) GSHWDrawConfig
 				u32 no_color       : 1; // disables color output entirely (depth only)
 				u32 no_color1      : 1; // disables second color output (when unnecessary)
 				u32 blend_factor_in_alpha : 1; // writes the blend factor to the first output's alpha instead of the second output (no dual-source blend)
+				u32 af_in_src1     : 1; // writes the fixed blend factor (AFIX/128) to the second output, for a driver that ignores the blend constant
 
 				// Others ways to fetch the texture
 				u32 channel : 3;
@@ -801,6 +825,11 @@ struct alignas(16) GSHWDrawConfig
 				// ROVs
 				u32 rov_color : 1;
 				PS_ROV_DEPTH rov_depth : 2;
+
+				// Alpha stencil counter drawn by the blend unit (GSFastStencilShadow.h): the shader
+				// writes the per-triangle alpha step to both outputs instead of a colour, for a blend
+				// of source DST_ALPHA and destination SRC1_ALPHA. Reads nothing.
+				u32 stencil_counter : 1;
 			};
 
 			struct
@@ -862,6 +891,10 @@ struct alignas(16) GSHWDrawConfig
 
 			// no point having fbmask, since we're not writing. DATE has to stay.
 			fbmask = 0;
+
+			// nor quantizing a colour that never reaches a target, nor substituting its alpha.
+			quantize_color = 0;
+			substitute_alpha = 0;
 
 			// disable both outputs.
 			no_color = no_color1 = 1;
@@ -1129,9 +1162,15 @@ struct alignas(16) GSHWDrawConfig
 
 		GSVector4 ScaleFactor;
 		float LineCovScale;
+		/// PS_SUBSTITUTE_ALPHA: the alpha byte becomes (a & SubstituteAlphaKeep) |
+		/// SubstituteAlphaValue, which is the masked write's own (a & ~M) | (known & M) with the
+		/// negation done here. Keep is a full 32-bit word so an alpha above 255 survives it the
+		/// way the masked road's own AND leaves it alone. Not folded into FbMask: ConfigureROV
+		/// overwrites that whole vector with a channel mask on any draw whose shader is not
+		/// merging one, which a substituting draw's is not.
+		u32 SubstituteAlphaKeep;
+		u32 SubstituteAlphaValue;
 		float _pad0;
-		float _pad1;
-		float _pad2;
 
 		__fi PSConstantBuffer()
 		{
@@ -1332,6 +1371,60 @@ struct alignas(16) GSHWDrawConfig
 		return blend.enable || blend_multi_pass.enable || ps.IsSWBlending();
 	}
 
+	/// Maps a PS2 alpha test onto the four comparisons the shader implements.
+	///
+	/// The GS compares eight-bit integers, so the four missing comparisons come from
+	/// nudging AREF by half a step: LESS is LEQUAL against a reference a hair below,
+	/// GREATER is GEQUAL against one a hair below the next integer. The nudge is two
+	/// ULP at the top of the range, so it can never land between two representable
+	/// alphas. invert_test asks for the complement instead, which is what a second
+	/// pass over the failing fragments needs.
+	///
+	/// It lives here, beside the PS_ATST enum it produces, rather than as a private of
+	/// GSRendererHW, so a second hardware draw path reaches one definition instead of
+	/// copying it -- a drift between two copies would be a silent one-level difference
+	/// exactly at the test boundary, the hardest kind of divergence to notice.
+	static void GetAlphaTestPS(u32 atst, u8 aref, bool invert_test, PS_ATST& ps_atst_out, float& aref_out)
+	{
+		static constexpr u32 inverted_atst[] = {
+			ATST_ALWAYS, ATST_NEVER, ATST_GEQUAL, ATST_GREATER, ATST_NOTEQUAL, ATST_LESS, ATST_LEQUAL, ATST_EQUAL};
+
+		constexpr float small_val = 0x100p-23f;
+
+		switch (invert_test ? inverted_atst[atst & 7] : atst)
+		{
+			case ATST_LESS:
+				aref_out = static_cast<float>(aref) - small_val;
+				ps_atst_out = PS_ATST::LEQUAL;
+				break;
+			case ATST_LEQUAL:
+				aref_out = static_cast<float>(aref) - small_val + 1.0f;
+				ps_atst_out = PS_ATST::LEQUAL;
+				break;
+			case ATST_GEQUAL:
+				aref_out = static_cast<float>(aref) - small_val;
+				ps_atst_out = PS_ATST::GEQUAL;
+				break;
+			case ATST_GREATER:
+				aref_out = static_cast<float>(aref) - small_val + 1.0f;
+				ps_atst_out = PS_ATST::GEQUAL;
+				break;
+			case ATST_EQUAL:
+				aref_out = static_cast<float>(aref);
+				ps_atst_out = PS_ATST::EQUAL;
+				break;
+			case ATST_NOTEQUAL:
+				aref_out = static_cast<float>(aref);
+				ps_atst_out = PS_ATST::NOTEQUAL;
+				break;
+			case ATST_NEVER:
+			case ATST_ALWAYS:
+			default:
+				ps_atst_out = PS_ATST::NONE;
+				break;
+		}
+	}
+
 	// Dumping
 	static void DumpConfig(const std::string& path, const GSHWDrawConfig& conf,
 		bool ps = true, bool vs = true, bool bs = true, bool dss = true, bool ss = true, bool asp = true, bool bmp = true,
@@ -1400,13 +1493,16 @@ public:
 		bool texture_barrier      : 1; ///< Supports sampling rt and hopefully texture barrier
 		bool multidraw_fb_copy    : 1; ///< Replacement for texture barrier.
 		bool cheap_rt_feedback_read : 1; ///< A feedback read costs nothing structural — no render-pass break, no tile flush — so the renderer may take one on a draw that did not need it. ⚠️ `!texture_barrier` is NOT a substitute: it is equally true of every driver on the RT-copy feedback workaround, where the read is the most expensive one we have.
+		bool fast_stencil_shadow  : 1; ///< The alpha stencil counter (flat triangles storing their own pixel's alpha times 127/128 or 130/128) is drawn by one dual-source blend instead of a render-target read, and the hardware renderer stops auto-flush from splitting it. Set by Vulkan only, when texture barriers are off, so that each read would be a pass break plus a copy, and dual-source blending exists. See GSFastStencilShadow.h. ⚠️ Never infer it from `!texture_barrier`: D3D11 runs without barriers too, with cheap copies and no shader for it.
 		bool provoking_vertex_last: 1; ///< Supports using the last vertex in a primitive as the value for flat shading.
 		bool point_expand         : 1; ///< Supports point expansion in hardware.
 		bool line_expand          : 1; ///< Supports line expansion in hardware.
 		bool prefer_new_textures  : 1; ///< Allocate textures up to the pool size before reusing them, to avoid render pass restarts.
 		bool dxt_textures         : 1; ///< Supports DXTn texture compression, i.e. S3TC and BC1-3.
 		bool bptc_textures        : 1; ///< Supports BC6/7 texture compression.
+		bool astc_textures        : 1; ///< Can create and sample every standard 2D ASTC LDR UNORM format used by the replacement loader.
 		bool framebuffer_fetch    : 1; ///< Can sample from the framebuffer without texture barriers.
+		bool feedback_loop_layout : 1; ///< The backend reaches an attachment it also writes through the attachment-feedback-loop image layout and an ordinary sampler, rather than through an in-tile read. Vulkan-only, and mutually exclusive with `framebuffer_fetch` there.
 		bool framebuffer_fetch_orders_overlap : 1; ///< Framebuffer fetch also orders overlapping primitives *within* a single draw, so a full barrier is redundant. Vulkan's rasterization-order attachment access, Metal's programmable blending and GL's ARM_shader_framebuffer_fetch all guarantee this by spec; GL's EXT_shader_framebuffer_fetch does not deliver it in practice.
 		bool stencil_buffer       : 1; ///< Supports stencil buffer, and can use for DATE.
 		bool cas_sharpening       : 1; ///< Supports sufficient functionality for contrast adaptive sharpening.
@@ -1417,8 +1513,10 @@ public:
 		bool rov                  : 1; ///< Supports rasterizer ordered views for both depth and color.
 		bool metalfx_spatial      : 1; ///< Supports Apple MetalFX spatial upscaling (Metal backend, macOS 13+).
 		bool fsr1                 : 1; ///< Supports AMD FidelityFX Super Resolution 1 (two compute passes).
+		bool sgsr                 : 1; ///< Supports Qualcomm Snapdragon Game Super Resolution 1 (one compute pass).
 		bool dual_source_blend    : 1; ///< Supports a second fragment output (SRC1) as a hardware blend factor.
 		bool broken_mad_deinterlace : 1; ///< Driver can't reliably preserve/read the two-bank FastMAD history target.
+		bool broken_blend_constant : 1; ///< Driver applies a CONST_COLOR / INV_CONST_COLOR blend factor as if the constant were zero. A fixed (AFIX) factor rides the second fragment output instead -- see GSBlendConstantPolicy.h.
 		FeatureSupport()
 		{
 			memset(this, 0, sizeof(*this));
@@ -1470,8 +1568,7 @@ protected:
 	// SetRuntimeGPUProfile (Vulkan, Metal, DX12 — none of them did) silently identified as Adreno,
 	// and so did desktop OpenGL on anything not-Mali. That made IsAdrenoGPUProfile() fire
 	// Adreno-only workarounds on Apple Silicon, and made IsMaliGPUProfile() permanently false under
-	// Vulkan — which quietly disabled the Tekken 5 MediaTek-Mali GameDB fix on our default renderer.
-	// Unknown means "no vendor quirks", which is the only safe thing to assume before detection.
+	// Vulkan. Unknown means "no vendor quirks", which is the only safe thing to assume before detection.
 	RuntimeGpuProfile m_runtime_gpu_profile = RuntimeGpuProfile::Unknown;
 	// Per-vendor mobile GPU identity + GS tuning (pool sizes / ages / constrained), resolved from the
 	// GPU-profile system (sashkinbro/EmuCoreX). Drives texture/target pool sizing on Android below.
@@ -1483,10 +1580,6 @@ protected:
 	// miscompiles shaders (see GSGPUDriverProfile.cpp). Empty/conservative until a backend
 	// resolves it, so a device with no matching rule behaves exactly as it did before.
 	MobileDriverProfile m_mobile_driver_profile;
-	// Android: true when the SoC is MediaTek (Dimensity/Helio). Hoisted from GSDeviceVK
-	// so both backends + GS.cpp Android GameDB overrides can read it. Set during device
-	// open from the resolved GPU profile.
-	bool m_is_mediatek_soc = false;
 
 	struct
 	{
@@ -1518,6 +1611,12 @@ protected:
 	// Sample, but Sample still decorates to byte offset 64, so both passes push all 80 bytes
 	// - a short push leaves Sample undefined and the shader squares the whole image.
 	static constexpr u32 NUM_FSR1_CONSTANTS = 20;
+	/// dstSize(2) + uvOffset(2) + uvScale(2) + srcSize(2) + invSrcSize(2) + edgeSharpness(1),
+	/// as u32 words. Mixed uint/float, so the host packs it rather than the type saying so.
+	static constexpr u32 NUM_SGSR_CONSTANTS = 11;
+	/// Plain and edge-direction. Two modules from one file, like FSR1's two passes: the variant
+	/// is a preprocessor gate, so it cannot be a specialization constant.
+	static constexpr u32 NUM_SGSR_PIPELINES = 2;
 	static constexpr u32 EXPAND_BUFFER_SIZE = sizeof(u16) * 16383 * 6;
 
 	WindowInfo m_window_info;
@@ -1532,13 +1631,13 @@ protected:
 	GSTexture* m_mad = nullptr;
 	GSTexture* m_target_tmp = nullptr;
 	GSTexture* m_current = nullptr;
-	/// Whether a chain is loaded in the backend, so ApplyShaderChain can free it on the
-	/// frame the player turns shaders off rather than polling for it.
+	/// Whether the backend holds a chain, so ApplyShaderChain knows there is one to free.
 	bool m_shader_chain_loaded = false;
 	GSTexture* m_cas = nullptr;
 	GSTexture* m_mfx_output = nullptr; ///< MetalFX spatial upscale destination (Metal backend).
 	GSTexture* m_fsr1_easu = nullptr; ///< FSR1 EASU output, at display size; RCAS reads it back.
 	GSTexture* m_fsr1_output = nullptr; ///< FSR1 RCAS output, the texture actually presented.
+	GSTexture* m_sgsr_output = nullptr; ///< SGSR output. One pass, so one target, unlike FSR1.
 	GSTexture* m_colclip_rt = nullptr; ///< Temp hw colclip texture
 	GSTexture* m_ds_as_rt = nullptr; ///< Depth as color
 
@@ -1571,10 +1670,8 @@ protected:
 	/// the Vulkan/OpenGL devices override it, everything else keeps the no-op.
 	virtual bool DoApplyShaderChain(GSTexture* sTex, GSTexture* dTex) { return false; }
 
-	/// Free whatever the chain is holding. A loaded chain owns a render target and a
-	/// pipeline per pass and the collection runs to forty of them, so leaving it resident
-	/// after the player turns shaders off is the memory that matters on a handheld. Same
-	/// override rule as above: only the librashader-capable backends implement it.
+	/// Frees what the chain holds, a render target and a pipeline per pass. Only the
+	/// librashader backends implement it.
 	virtual void ReleaseShaderChain() {}
 
 	/// Generation of the parameter-override store, bumped on every SetShaderChainParams.
@@ -1587,6 +1684,12 @@ protected:
 	/// (and leaving [out] alone) when the store holds another preset's values or none at
 	/// all. Takes the lock, so call it only once the generation says something changed.
 	static bool GetShaderChainParams(const std::string& preset, std::vector<std::pair<std::string, float>>* out);
+
+	/// Bumped by RetryShaderChain; a backend that latched a failed preset tries it again once it moves.
+	static u64 GetShaderChainRetry();
+
+	/// Records why the chain built for [preset] failed; an empty preset clears it.
+	static void SetShaderChainError(std::string preset, std::string message);
 
 	/// Resolves CAS shader includes for the specified source.
 	static bool GetCASShaderSource(std::string* source);
@@ -1608,6 +1711,11 @@ protected:
 	/// Both no-op in the base class so only the backends that gate Features().fsr1 on need them.
 	virtual bool DoFSR1EASU(GSTexture* sTex, GSTexture* dTex, const std::array<u32, NUM_FSR1_CONSTANTS>& constants) { return false; }
 	virtual bool DoFSR1RCAS(GSTexture* sTex, GSTexture* dTex, const std::array<u32, NUM_FSR1_CONSTANTS>& constants) { return false; }
+
+	/// SGSR: edge-directed spatial upsample from sTex to dTex's size, in a single dispatch.
+	/// No-op in the base class, like the FSR1 pair above.
+	virtual bool DoSGSR(GSTexture* sTex, GSTexture* dTex, const std::array<u32, NUM_SGSR_CONSTANTS>& constants,
+		bool edge_direction) { return false; }
 
 	/// Perform texture operations for ImGui
 	void UpdateImGuiTextures();
@@ -1684,6 +1792,12 @@ public:
 	/// same-named parameters.
 	static void SetShaderChainParams(std::string preset, std::vector<std::pair<std::string, float>> params);
 
+	/// Asks the backend to try a preset that failed to load once more.
+	static void RetryShaderChain();
+
+	/// Copies librashader's message into [message] when the last chain built for [preset] failed.
+	static bool GetShaderChainError(const std::string& preset, std::string* message);
+
 	/// Parses the configured fullscreen mode into its components (width * height @ refresh Hz)
 	static bool GetRequestedExclusiveFullscreenMode(u32* width, u32* height, float* refresh_rate);
 
@@ -1724,8 +1838,6 @@ public:
 	}
 	__fi bool IsConstrainedMobileGPUProfile() const { return m_mobile_gs_tuning.constrained; }
 	__fi RuntimeGpuProfile GetRuntimeGPUProfile() const { return m_runtime_gpu_profile; }
-	__fi void SetMediaTekSoC(bool v) { m_is_mediatek_soc = v; }
-	__fi bool IsMediaTekSoC() const { return m_is_mediatek_soc; }
 	__fi bool IsMaliGPUProfile() const { return (m_runtime_gpu_profile == RuntimeGpuProfile::Mali); }
 	__fi bool IsAdrenoGPUProfile() const { return (m_runtime_gpu_profile == RuntimeGpuProfile::Adreno); }
 	__fi bool IsPowerVRGPUProfile() const { return (m_runtime_gpu_profile == RuntimeGpuProfile::PowerVR); }
@@ -2033,6 +2145,11 @@ public:
 
 	/// Same contract as MetalFXUpscale(), via FSR1's two compute passes.
 	void FSR1Upscale(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src_uv, const GSVector4& draw_rect);
+
+	/// Same contract again, via SGSR's single compute pass. Cheaper than FSR1 on mobile, which is
+	/// the point of having it: SGSR was designed for Adreno, FSR1's two passes were not.
+	void SGSRUpscale(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src_uv, const GSVector4& draw_rect,
+		bool edge_direction);
 
 	bool ResizeRenderTarget(GSTexture** t, int w, int h, bool preserve_contents, bool recycle);
 

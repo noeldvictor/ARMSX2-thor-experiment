@@ -16,6 +16,7 @@
 #include <atomic>
 #include <cstdio>
 #include <cstring>
+#include <mutex>
 
 #ifdef ARMSX2_HAS_LSFG
 #include "GS/Renderers/Vulkan/GSDeviceVK.h"
@@ -37,6 +38,9 @@ namespace GSLsfg
 {
 	namespace
 	{
+		// Guards s_dll_path, s_dll_checked and s_dll_ok: SetDllPath() runs on the UI and the GS
+		// thread, and GetUnavailableReason() reads from both.
+		std::mutex s_dll_mutex;
 		std::string s_dll_path;
 
 		// Written once from the GS thread at device creation, read from the UI thread whenever
@@ -52,10 +56,11 @@ namespace GSLsfg
 
 		// The structural PE check reads the file, and GetUnavailableReason() runs once per frame
 		// from EndPresent while the feature is on — so without this the GS thread did an
-		// fopen/fread/fseek/fread/fclose on the present path every single frame. The verdict can
-		// only change when the path does, which is exactly when SetDllPath() clears it.
-		std::atomic<bool> s_dll_checked{false};
-		std::atomic<bool> s_dll_ok{false};
+		// fopen/fread/fseek/fread/fclose on the present path every single frame. Cleared by
+		// SetDllPath() on a path change, and by InvalidateDllVerdict() when the file itself was
+		// rewritten under an unchanged path.
+		bool s_dll_checked = false;
+		bool s_dll_ok = false;
 
 		// What the overlay reports. Written from the GS thread in the present path, read from
 		// whichever thread draws the OSD, so both are atomic rather than mutex'd — a recent
@@ -65,6 +70,9 @@ namespace GSLsfg
 		// initialisation can fail. Both are InitFailed to the settings screen, but they are
 		// different problems: one is fixed by updating Lossless Scaling, the other is not.
 		std::atomic<float> s_display_fps{0.0f};
+		/// Set when the swap chain cannot spare an image for generated frames. Distinct from
+		/// "failed": everything initialised, there is simply nowhere to put a generated frame.
+		std::atomic<bool> s_no_headroom{false};
 		std::atomic<bool> s_no_shaders{false};
 	} // namespace
 
@@ -77,16 +85,28 @@ namespace GSLsfg
 
 	void SetDllPath(std::string path)
 	{
+		std::unique_lock lock(s_dll_mutex);
 		if (s_dll_path == path)
 			return;
 		s_dll_path = std::move(path);
+		s_dll_checked = false;
 		// A new DLL deserves a fresh attempt; the previous failure may have been this file.
 		s_init_failed.store(false, std::memory_order_relaxed);
-		s_dll_checked.store(false, std::memory_order_relaxed);
 		s_no_shaders.store(false, std::memory_order_relaxed);
 	}
 
-	const std::string& GetDllPath() { return s_dll_path; }
+	void InvalidateDllVerdict()
+	{
+		std::unique_lock lock(s_dll_mutex);
+		s_dll_checked = false;
+	}
+
+	// By value: a reference would outlive the lock.
+	std::string GetDllPath()
+	{
+		std::unique_lock lock(s_dll_mutex);
+		return s_dll_path;
+	}
 
 	bool LooksLikeLosslessDll(const std::string& path)
 	{
@@ -139,15 +159,18 @@ namespace GSLsfg
 				return Unavailable::GpuUnsupported;
 		}
 
-		if (s_dll_path.empty())
-			return Unavailable::NoDll;
-		if (!s_dll_checked.load(std::memory_order_acquire))
 		{
-			s_dll_ok.store(LooksLikeLosslessDll(s_dll_path), std::memory_order_relaxed);
-			s_dll_checked.store(true, std::memory_order_release);
+			std::unique_lock lock(s_dll_mutex);
+			if (s_dll_path.empty())
+				return Unavailable::NoDll;
+			if (!s_dll_checked)
+			{
+				s_dll_ok = LooksLikeLosslessDll(s_dll_path);
+				s_dll_checked = true;
+			}
+			if (!s_dll_ok)
+				return Unavailable::DllUnreadable;
 		}
-		if (!s_dll_ok.load(std::memory_order_relaxed))
-			return Unavailable::DllUnreadable;
 		if (s_init_failed.load(std::memory_order_relaxed))
 			return Unavailable::InitFailed;
 		return Unavailable::Available;
@@ -193,6 +216,9 @@ namespace GSLsfg
 			default:
 				return "LSFG: unavailable";
 		}
+
+		if (s_no_headroom.load(std::memory_order_relaxed))
+			return "LSFG: no display headroom";
 
 		// Available but no window has closed yet: bring-up, or the first second of a session.
 		const float fps = s_display_fps.load(std::memory_order_relaxed);
@@ -573,6 +599,40 @@ namespace GSLsfg
 		s_frame_index = 0;
 		s_active = true;
 		s_init_failed.store(false, std::memory_order_relaxed);
+
+		// ★ The swap chain only asks for the extra images frame generation needs when
+		// GSConfig.LsfgEnabled was true AT CREATION (see VKSwapChain::CreateSwapChain). Enabling
+		// LSFG per-game turns it on LONG after that -- observed 17 seconds after the swap chain
+		// was built -- so the chain was sized without the extra image, GetExtraAcquirableImages()
+		// is 0, and every generation is silently skipped while this function still reports
+		// "active". Display rate then reads exactly the real rate forever, with nothing anywhere
+		// admitting why.
+		//
+		// Rebuild it now that the setting is actually on. Same size, so this is only about the
+		// image count. If the driver still will not give us headroom, say so rather than claiming
+		// to be running.
+		if (swap_chain->GetExtraAcquirableImages() == 0)
+		{
+			Console.WriteLn("LSFG: swap chain has no spare images; rebuilding it.");
+			// Scale passed through explicitly: ResizeSwapChain defaults it to 1.0, which would
+			// silently drop a non-default surface scale while we are only after the image count.
+			if (!swap_chain->ResizeSwapChain(swap_chain->GetWidth(), swap_chain->GetHeight(),
+					swap_chain->GetScale()) ||
+				swap_chain->GetExtraAcquirableImages() == 0)
+			{
+				Console.Error("LSFG: the display cannot spare an image for generated frames.");
+				s_no_headroom.store(true, std::memory_order_relaxed);
+				s_active = false;
+				DestroyResources();
+				s_frame_gen.reset();
+				s_allocator.reset();
+				s_device.reset();
+				s_vk_device = VK_NULL_HANDLE;
+				return false;
+			}
+		}
+		s_no_headroom.store(false, std::memory_order_relaxed);
+
 		Console.WriteLn("LSFG: frame generation active (%ux, %ux%u).", multiplier, extent.width, extent.height);
 		return true;
 	}

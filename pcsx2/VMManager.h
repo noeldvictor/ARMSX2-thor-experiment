@@ -158,6 +158,12 @@ namespace VMManager
 	/// Reloads game specific settings, and applys any changes present.
 	bool ReloadGameSettings();
 
+	/// Re-reads this game's settings file into the game settings layer and applies nothing,
+	/// for a frontend that has just rewritten the file and is about to apply settings itself.
+	/// The layer is otherwise only read at boot, so until then it keeps answering with what
+	/// the file said then, both for values and for which settings the database may overwrite.
+	bool ReloadGameSettingsLayer();
+
 	/// Reloads game patches.
 	void ReloadPatches(bool reload_files, bool reload_enabled_list, bool verbose, bool verbose_if_changed);
 
@@ -333,11 +339,6 @@ namespace VMManager
 		/// (or Host::RunOnGSThread(), which chains through it). Returns true when no CPU thread is
 		/// registered, so startup/teardown and CPU-thread-less test harnesses stay unencumbered.
 		bool IsOnCPUThread();
-
-		/// Android: affinity mask of the performance ("big") CPU cluster hosting the
-		/// EE/VU/GS threads, so adjacent helper threads (e.g. the Oboe audio callback)
-		/// can pin onto the same cluster. Returns 0 when pinning is off / unresolved.
-		u64 GetPerformanceClusterAffinityMask();
 
 		/// Android: affinity mask of the performance ("big") CPU cluster hosting the
 		/// EE/VU/GS threads, so adjacent helper threads (e.g. the Oboe audio callback)

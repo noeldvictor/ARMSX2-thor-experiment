@@ -7,7 +7,6 @@
 #include "GS/GS.h"
 #include "GS/Renderers/HW/GSTextureUpscaler.h"
 #include "GS/GSShaderCompileIndicator.h"
-#include "GS/GSCapture.h"
 #include "GS/GSVector.h"
 #include "GS/Renderers/Common/GSDevice.h"
 #ifdef _WIN32
@@ -65,6 +64,8 @@ Common::Timer s_last_update_timer_cpu_info = Common::Timer(0.0);
 
 ImU32 s_speed_line_color;
 SmallString s_speed_line;
+// Device temperatures (Android), on a line of their own under the speed line.
+SmallString s_thermal_line;
 SmallString s_gs_stats_line;
 SmallString s_gs_memory_stats_line;
 SmallString s_gs_frame_times_line;
@@ -78,7 +79,6 @@ SmallString s_cpu_usage_gs_line;
 SmallString s_cpu_usage_gs_back_line;
 SmallString s_cpu_usage_vu_line;
 std::vector<SmallString> s_software_thread_lines;
-SmallString s_capture_line;
 SmallString s_gpu_usage_line;
 SmallString s_gpu_debug_info_line;
 SmallString s_gpu_stats_line;
@@ -240,7 +240,6 @@ namespace ImGuiManager
 	static void DrawSettingsOverlay(float scale, float margin, float bottom_margin, float spacing);
 	static void DrawInputsOverlay(float scale, float margin, float bottom_margin, float spacing);
 	static void DrawInputRecordingOverlay(float& position_y, float scale, float margin, float spacing);
-	static void DrawVideoCaptureOverlay(float& position_y, float scale, float margin, float spacing);
 	static void DrawTextureReplacementsOverlay(float& position_y, float scale, float margin, float spacing);
 	static void DrawIndicatorsOverlay(float& position_y, float scale, float margin, float spacing);
 } // namespace ImGuiManager
@@ -490,10 +489,32 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 			const float speed = PerformanceMetrics::GetSpeed();
 
 			s_speed_line.clear();
+			s_thermal_line.clear();
 
 #if defined(__ANDROID__)
 			if (const u32 skip = GSGetManualFrameSkip(); skip > 0)
 				s_speed_line.append_format("{}SKIP: {}", s_speed_line.empty() ? "" : " | ", skip);
+
+			// Device thermals, pushed in from the Android side (Cotcho: "temp sensor on
+			// applicable device as part of stats OSD"). The core cannot read them itself --
+			// there is no portable API, and on Android the only route is a vendor-specific
+			// sysfs the app layer already discovers. So this draws what it was given and knows
+			// nothing about where it came from; a sensor that could not be read is simply
+			// absent rather than shown as a zero.
+			if (Armsx2Thermals::show.load(std::memory_order_relaxed))
+			{
+				const float cpu_t = Armsx2Thermals::cpu.load(std::memory_order_relaxed);
+				const float gpu_t = Armsx2Thermals::gpu.load(std::memory_order_relaxed);
+				const float bat_t = Armsx2Thermals::battery.load(std::memory_order_relaxed);
+				// Their own line (drawn after the speed line): appended to the speed line they ran
+				// straight into the FPS readout, "BAT 38°FPS: 60.00" (Ladi Altera, Cotcho).
+				if (cpu_t > ARMSX2_THERMAL_NONE)
+					s_thermal_line.append_format("{}CPU {:.0f}\xc2\xb0", s_thermal_line.empty() ? "" : " | ", cpu_t);
+				if (gpu_t > ARMSX2_THERMAL_NONE)
+					s_thermal_line.append_format("{}GPU {:.0f}\xc2\xb0", s_thermal_line.empty() ? "" : " | ", gpu_t);
+				if (bat_t > ARMSX2_THERMAL_NONE)
+					s_thermal_line.append_format("{}BAT {:.0f}\xc2\xb0", s_thermal_line.empty() ? "" : " | ", bat_t);
+			}
 #endif
 
 			if (GSConfig.OsdShowFPS)
@@ -501,16 +522,16 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 				switch (PerformanceMetrics::GetInternalFPSMethod())
 				{
 					case PerformanceMetrics::InternalFPSMethod::GSPrivilegedRegister:
-						s_speed_line.append_format("FPS: {:.2f} [P]", PerformanceMetrics::GetInternalFPS());
+						s_speed_line.append_format("{}FPS: {:.2f} [P]", s_speed_line.empty() ? "" : " | ", PerformanceMetrics::GetInternalFPS());
 						break;
 
 					case PerformanceMetrics::InternalFPSMethod::DISPFBBlit:
-						s_speed_line.append_format("FPS: {:.2f} [B]", PerformanceMetrics::GetInternalFPS());
+						s_speed_line.append_format("{}FPS: {:.2f} [B]", s_speed_line.empty() ? "" : " | ", PerformanceMetrics::GetInternalFPS());
 						break;
 
 					case PerformanceMetrics::InternalFPSMethod::None:
 					default:
-						s_speed_line.append("FPS: N/A");
+						s_speed_line.append_format("{}FPS: N/A", s_speed_line.empty() ? "" : " | ");
 						break;
 				}
 
@@ -581,6 +602,9 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 			// user comparing "the game runs at 30" with "the screen gets 60" wants them adjacent.
 			if (!s_lsfg_line.empty())
 				DRAW_LINE(osd_font, font_size, s_lsfg_line.c_str(), OsdTextColor());
+
+			if (!s_thermal_line.empty())
+				DRAW_LINE(osd_font, font_size, s_thermal_line.c_str(), OsdTextColor());
 
 #if defined(__APPLE__) && TARGET_OS_IPHONE
 			if (ARMSX2_iOSShouldShowDeviceStatsOverlay())
@@ -729,13 +753,6 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					FormatProcessorStat(s_software_thread_lines[thread], PerformanceMetrics::GetGSSWThreadUsage(thread), PerformanceMetrics::GetGSSWThreadAverageTime(thread));
 					DRAW_LINE(osd_font, font_size, s_software_thread_lines[thread].c_str(), OsdTextColor());
 				}
-
-				if (GSCapture::IsCapturing())
-				{
-					s_capture_line.assign("CAP: ");
-					FormatProcessorStat(s_capture_line, PerformanceMetrics::GetCaptureThreadUsage(), PerformanceMetrics::GetCaptureThreadAverageTime());
-					DRAW_LINE(osd_font, font_size, s_capture_line.c_str(), OsdTextColor());
-				}
 			}
 
 			if (GSConfig.OsdShowGPU)
@@ -788,6 +805,9 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 			if (!s_lsfg_line.empty())
 				DRAW_LINE(osd_font, font_size, s_lsfg_line.c_str(), OsdTextColor());
 
+			if (!s_thermal_line.empty())
+				DRAW_LINE(osd_font, font_size, s_thermal_line.c_str(), OsdTextColor());
+
 #if defined(__APPLE__) && TARGET_OS_IPHONE
 			if (ARMSX2_iOSShouldShowDeviceStatsOverlay() && !s_ios_device_stats_line.empty())
 				DRAW_LINE(osd_font, font_size, s_ios_device_stats_line.c_str(), ARMSX2IOSDeviceStatsColor());
@@ -832,9 +852,6 @@ __ri void ImGuiManager::DrawPerformanceOverlay(float& position_y, float scale, f
 					static_cast<u32>(s_software_thread_lines.size()));
 				for (u32 thread = 0; thread < thread_count; thread++)
 					DRAW_LINE(osd_font, font_size, s_software_thread_lines[thread].c_str(), OsdTextColor());
-
-				if (GSCapture::IsCapturing())
-					DRAW_LINE(osd_font, font_size, s_capture_line.c_str(), OsdTextColor());
 			}
 
 			if (GSConfig.OsdShowGPU)
@@ -1287,6 +1304,8 @@ __ri void ImGuiManager::DrawSettingsOverlay(float scale, float margin, float bot
 			APPEND("ETR ");
 		if (GSConfig.UserHacks_DrawBuffering)
 			APPEND("DRWB ");
+		if (GSConfig.UserHacks_RewriteLargeST)
+			APPEND("RWST ");
 		if (GSConfig.HWSpinGPUForReadbacks)
 			APPEND("RBSG ");
 		if (GSConfig.HWSpinCPUForReadbacks)
@@ -1528,43 +1547,6 @@ __ri void ImGuiManager::DrawInputRecordingOverlay(float& position_y, float scale
 	DRAW_LINE(osd_font, font_size, g_InputRecordingData.undo_count_message.c_str(), IM_COL32(117, 255, 241, 255));
 
 #undef DRAW_LINE
-}
-
-__ri void ImGuiManager::DrawVideoCaptureOverlay(float& position_y, float scale, float margin, float spacing)
-{
-	if (!GSConfig.OsdShowVideoCapture ||
-		!GSCapture::IsCapturing() ||
-		FullscreenUI::HasActiveWindow())
-		return;
-
-	const float shadow_offset = std::ceil(scale);
-	ImFont* const osd_font = ImGuiManager::GetOSDFont();
-	float font_size = ImGuiManager::GetFontSizeStandard();
-	ImDrawList* dl = ImGui::GetBackgroundDrawList();
-
-	static constexpr const char* ICON = ICON_PF_CIRCLE;
-	const TinyString text_msg = TinyString::from_format(" {}", GSCapture::GetElapsedTime());
-	const ImVec2 icon_size = osd_font->CalcTextSizeA(font_size, std::numeric_limits<float>::max(),
-		-1.0f, ICON, nullptr, nullptr);
-	const ImVec2 text_size = osd_font->CalcTextSizeA(font_size, std::numeric_limits<float>::max(),
-		-1.0f, text_msg.c_str(), text_msg.end_ptr(), nullptr);
-
-	// Shadow
-	dl->AddText(osd_font, font_size,
-		ImVec2(GetWindowWidth() - margin - text_size.x - icon_size.x + shadow_offset, position_y + shadow_offset),
-		IM_COL32(0, 0, 0, 100), ICON);
-	dl->AddText(osd_font, font_size,
-		ImVec2(GetWindowWidth() - margin - text_size.x + shadow_offset, position_y + shadow_offset),
-		IM_COL32(0, 0, 0, 100), text_msg.c_str(), text_msg.end_ptr());
-
-	// Text
-	dl->AddText(osd_font, font_size,
-		ImVec2(GetWindowWidth() - margin - text_size.x - icon_size.x, position_y), IM_COL32(255, 0, 0, 255), ICON);
-	dl->AddText(osd_font, font_size,
-		ImVec2(GetWindowWidth() - margin - text_size.x, position_y), white_color, text_msg.c_str(),
-		text_msg.end_ptr());
-
-	position_y += std::max(icon_size.y, text_size.y) + spacing;
 }
 
 __ri void ImGuiManager::DrawTextureReplacementsOverlay(float& position_y, float scale, float margin, float spacing)
@@ -2089,6 +2071,18 @@ void SaveStateSelectorUI::ShowSlotOSDMessage()
 }
 
 #ifdef __ANDROID__
+// Device temperatures, written by the Android app layer and read by the perf overlay above.
+// Atomics because the writer is a UI-thread poll and the reader is the GS thread; relaxed
+// because these are three independent display values with no ordering relationship to
+// anything -- a torn read would at worst show one stale number for one frame.
+namespace Armsx2Thermals
+{
+	std::atomic<float> cpu{ARMSX2_THERMAL_NONE};
+	std::atomic<float> gpu{ARMSX2_THERMAL_NONE};
+	std::atomic<float> battery{ARMSX2_THERMAL_NONE};
+	std::atomic<bool> show{false};
+} // namespace Armsx2Thermals
+
 namespace {
 	// Reload-immune snapshot of the Android UI's OSD choice. VMManager::ApplySettings
 	// re-derives EmuConfig.GS from the layered settings interface (base + per-game) every
@@ -2173,7 +2167,6 @@ void ImGuiManager::RenderOverlays()
 	float position_y = base_margin + inset_top;
 
 	DrawIndicatorsOverlay(position_y, scale, margin, spacing);
-	DrawVideoCaptureOverlay(position_y, scale, margin, spacing);
 	DrawInputRecordingOverlay(position_y, scale, margin, spacing);
 	DrawTextureReplacementsOverlay(position_y, scale, margin, spacing);
 	if (GSConfig.OsdPerformancePos != OsdOverlayPos::None)

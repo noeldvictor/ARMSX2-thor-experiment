@@ -4,11 +4,19 @@
 #pragma once
 
 #include "GS/GSState.h"
+#include "GS/MultiISA.h"
 #include <memory>
 #include <string>
 
+MULTI_ISA_DEF(class GSSwPrimRenderFunctions;)
+
 class GSRenderer : public GSState
 {
+	// The software prim render reads the drawing state through a GSRenderer reference, so its
+	// friendship has to sit here and not on one derived renderer: any hardware renderer can
+	// send draws down that road.
+	MULTI_ISA_FRIEND(GSSwPrimRenderFunctions)
+
 private:
 	enum class MergeMode
 	{
@@ -85,8 +93,6 @@ public:
 	bool IsDumpRecording() const { return static_cast<bool>(m_dump); }
 	void StopGSDump();
 	void PresentCurrentFrame();
-	bool BeginCapture(std::string filename, const GSVector2i& size = GSVector2i(0, 0));
-	void EndCapture();
 };
 
 extern std::unique_ptr<GSRenderer> g_gs_renderer;

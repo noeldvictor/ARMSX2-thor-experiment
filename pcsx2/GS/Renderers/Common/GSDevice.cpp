@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 #include "GS/Renderers/Common/GSDevice.h"
+#ifdef ARMSX2_EMBEDDED_RESOURCES
+#include "EmbeddedResources.h"
+#endif
 #include "GS/Renderers/Common/GSPassScheduler.h"
 #include "GS/GSGL.h"
 #include "GS/GS.h"
@@ -35,6 +38,10 @@ namespace
 	std::string s_shader_param_preset;
 	std::vector<std::pair<std::string, float>> s_shader_params;
 	std::atomic<u64> s_shader_param_generation{0};
+	std::atomic<u64> s_shader_chain_retry{0};
+	std::mutex s_shader_chain_error_mutex;
+	std::string s_shader_chain_error_preset;
+	std::string s_shader_chain_error;
 } // namespace
 
 void GSDevice::SetShaderChainParams(std::string preset, std::vector<std::pair<std::string, float>> params)
@@ -53,6 +60,36 @@ void GSDevice::SetShaderChainParams(std::string preset, std::vector<std::pair<st
 u64 GSDevice::GetShaderChainParamGeneration()
 {
 	return s_shader_param_generation.load(std::memory_order_acquire);
+}
+
+void GSDevice::RetryShaderChain()
+{
+	{
+		std::unique_lock lock(s_shader_chain_error_mutex);
+		s_shader_chain_error_preset.clear();
+	}
+	s_shader_chain_retry.fetch_add(1, std::memory_order_release);
+}
+
+u64 GSDevice::GetShaderChainRetry()
+{
+	return s_shader_chain_retry.load(std::memory_order_acquire);
+}
+
+void GSDevice::SetShaderChainError(std::string preset, std::string message)
+{
+	std::unique_lock lock(s_shader_chain_error_mutex);
+	s_shader_chain_error_preset = std::move(preset);
+	s_shader_chain_error = std::move(message);
+}
+
+bool GSDevice::GetShaderChainError(const std::string& preset, std::string* message)
+{
+	std::unique_lock lock(s_shader_chain_error_mutex);
+	if (preset.empty() || s_shader_chain_error_preset != preset)
+		return false;
+	*message = s_shader_chain_error;
+	return true;
 }
 
 bool GSDevice::GetShaderChainParams(const std::string& preset, std::vector<std::pair<std::string, float>>* out)
@@ -293,7 +330,7 @@ GSDevice::GSDevice()
 GSDevice::~GSDevice()
 {
 	// should've been cleaned up in Destroy()
-	pxAssert(m_pool[0].empty() && m_pool[1].empty() && !m_merge && !m_weavebob && !m_blend && !m_mad && !m_target_tmp && !m_cas && !m_mfx_output && !m_fsr1_easu && !m_fsr1_output);
+	pxAssert(m_pool[0].empty() && m_pool[1].empty() && !m_merge && !m_weavebob && !m_blend && !m_mad && !m_target_tmp && !m_cas && !m_mfx_output && !m_fsr1_easu && !m_fsr1_output && !m_sgsr_output);
 }
 
 GSVector2i GSDevice::GetPresentationSize() const
@@ -421,7 +458,19 @@ GSVector4i GSDevice::ProcessCopyArea(const GSVector4i& rtsize, const GSVector4i&
 
 std::optional<std::string> GSDevice::ReadShaderSource(const char* filename)
 {
-	return FileSystem::ReadFileToString(Path::Combine(EmuFolders::Resources, filename).c_str());
+	std::optional<std::string> source =
+		FileSystem::ReadFileToString(Path::Combine(EmuFolders::Resources, filename).c_str());
+
+#ifdef ARMSX2_EMBEDDED_RESOURCES
+	// The resources directory wins, so a user can still edit a shader in place;
+	// the built-in copy is what makes a build that has no resources directory
+	// at all - the libretro core, typically - come up instead of failing to
+	// create the device and leaving the frontend with a black screen.
+	if (!source.has_value())
+		source = EmbeddedResources::Read(filename);
+#endif
+
+	return source;
 }
 
 int GSDevice::GetMipmapLevelsForSize(int width, int height)
@@ -1230,6 +1279,7 @@ void GSDevice::ClearCurrent()
 	delete m_mfx_output;
 	delete m_fsr1_easu;
 	delete m_fsr1_output;
+	delete m_sgsr_output;
 
 	m_merge = nullptr;
 	m_weavebob = nullptr;
@@ -1240,6 +1290,7 @@ void GSDevice::ClearCurrent()
 	m_mfx_output = nullptr;
 	m_fsr1_easu = nullptr;
 	m_fsr1_output = nullptr;
+	m_sgsr_output = nullptr;
 }
 
 void GSDevice::Merge(GSTexture* sTex[3], GSVector4* sRect, GSVector4* dRect, const GSVector2i& fs, const GSRegPMODE& PMODE, const GSRegEXTBUF& EXTBUF, u32 c)
@@ -1338,8 +1389,8 @@ bool GSDevice::ApplyShaderChain(const GSVector2i& output_size)
 	// Guarded here rather than in the backends so a device that never overrides
 	// DoApplyShaderChain (software, or a build without librashader) costs nothing.
 	const bool wanted = GSConfig.ShaderChainEnabled && !GSConfig.ShaderChainPreset.empty();
-	// On the edge, not every frame: turning the chain off used to leave every pass's target
-	// and pipeline resident until the preset changed or the device died.
+	// Frees a chain that is no longer wanted. GSRenderer::Merge only calls this while one is,
+	// so the release doesn't run from there.
 	if (!wanted && m_shader_chain_loaded)
 	{
 		ReleaseShaderChain();
@@ -1678,6 +1729,88 @@ void GSDevice::FSR1Upscale(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src
 	}
 
 	tex = m_fsr1_output;
+	src_rect = GSVector4i(0, 0, dst_width, dst_height);
+	src_uv = GSVector4(0.0f, 0.0f, 1.0f, 1.0f);
+}
+
+// Qualcomm Snapdragon Game Super Resolution 1, "mobile" variant. A single compute pass, unlike
+// FSR1's two, and written by Qualcomm for Adreno — which is why it is here at all.
+//
+// Feature suggested by CamilleLaVey, who authored the upstream refinements this is based on
+// (eden-emu/eden PR #4293: wider sharpening range and explicit crop handling). The filter itself
+// is Qualcomm's, BSD-3-Clause; see shaders/vulkan/sgsr.glsl for the notices and for what the
+// fragment-to-compute conversion changed.
+void GSDevice::SGSRUpscale(GSTexture*& tex, GSVector4i& src_rect, GSVector4& src_uv, const GSVector4& draw_rect,
+	bool edge_direction)
+{
+	FlushDeferredDraws();
+	const int dst_width = static_cast<int>(std::ceil(draw_rect.z - draw_rect.x));
+	const int dst_height = static_cast<int>(std::ceil(draw_rect.w - draw_rect.y));
+	if (dst_width <= 0 || dst_height <= 0)
+		return;
+
+	GSTexture* src_tex = tex;
+
+	static int s_logged_w = 0, s_logged_h = 0;
+	if (s_logged_w != dst_width || s_logged_h != dst_height)
+	{
+		s_logged_w = dst_width;
+		s_logged_h = dst_height;
+		Console.WriteLnFmt("@@ANDROID_SGSR@@ upscaling {}x{} -> {}x{} (sharpness {}{})",
+			src_rect.width(), src_rect.height(), dst_width, dst_height, GSConfig.SGSR_Sharpness,
+			edge_direction ? ", edge-direction" : "");
+	}
+
+	// One target, unlike FSR1: SGSR is a single pass, so there is no intermediate to hand on.
+	if (!m_sgsr_output || m_sgsr_output->GetWidth() != dst_width || m_sgsr_output->GetHeight() != dst_height)
+	{
+		delete m_sgsr_output;
+		m_sgsr_output = CreateSurface(GSTexture::ShaderWriteTexture, dst_width, dst_height, 1, GSTexture::Format::Color);
+		if (!m_sgsr_output)
+		{
+			Console.Error("Failed to allocate SGSR output texture.");
+			return;
+		}
+	}
+
+	// The picture occupies src_rect inside a larger merge target, so the shader is told where it
+	// is rather than assuming the whole texture — the same problem FsrEasuConOffset solves for
+	// FSR1 by taking an offset.
+	const float src_tex_w = static_cast<float>(src_tex->GetWidth());
+	const float src_tex_h = static_cast<float>(src_tex->GetHeight());
+	const float uv_off_x = static_cast<float>(src_rect.x) / src_tex_w;
+	const float uv_off_y = static_cast<float>(src_rect.y) / src_tex_h;
+	const float uv_scale_x = static_cast<float>(src_rect.width()) / src_tex_w;
+	const float uv_scale_y = static_cast<float>(src_rect.height()) / src_tex_h;
+
+	// Its OWN setting, 0..200, where 100 is Qualcomm's default of 1.0. Sharing FSR's would mean
+	// an existing FSR configuration quietly means something different under SGSR, and widening
+	// FSR's to reach 2.0 would change what every FSR value already in the wild means. Neither is
+	// worth saving one setting. See Pcsx2Config::GSOptions::SGSR_Sharpness.
+	const float sharpness = std::clamp(static_cast<float>(GSConfig.SGSR_Sharpness) * 0.01f, 0.0f, 2.0f);
+
+	std::array<u32, NUM_SGSR_CONSTANTS> consts = {};
+	const auto put_f = [&consts](u32 i, float v) { std::memcpy(&consts[i], &v, sizeof(float)); };
+	consts[0] = static_cast<u32>(dst_width);
+	consts[1] = static_cast<u32>(dst_height);
+	put_f(2, uv_off_x);
+	put_f(3, uv_off_y);
+	put_f(4, uv_scale_x);
+	put_f(5, uv_scale_y);
+	put_f(6, src_tex_w);
+	put_f(7, src_tex_h);
+	put_f(8, 1.0f / src_tex_w);
+	put_f(9, 1.0f / src_tex_h);
+	put_f(10, sharpness);
+
+	if (!DoSGSR(src_tex, m_sgsr_output, consts, edge_direction))
+	{
+		// leave textures intact if we failed
+		Console.Warning("Applying SGSR failed.");
+		return;
+	}
+
+	tex = m_sgsr_output;
 	src_rect = GSVector4i(0, 0, dst_width, dst_height);
 	src_uv = GSVector4(0.0f, 0.0f, 1.0f, 1.0f);
 }
@@ -2064,6 +2197,8 @@ static void DumpPSSelector(DrawConfigWriter& out, const GSHWDrawConfig::PSSelect
 	out.WriteLn("shuffle_across: {}", ps.shuffle_across);
 	out.WriteLn("write_rg: {}", ps.write_rg);
 	out.WriteLn("fbmask: {}", ps.fbmask);
+	out.WriteLn("quantize_color: {}", ps.quantize_color);
+	out.WriteLn("substitute_alpha: {}", ps.substitute_alpha);
 	out.WriteLn("blend: ({} - {}) * {} + {}", GetPSBlendABDName(ps.blend_a), GetPSBlendABDName(ps.blend_b), GetPSBlendCName(ps.blend_c), GetPSBlendABDName(ps.blend_d));
 	out.WriteLn("fixed_one_a: {}", ps.fixed_one_a);
 	out.WriteLn("blend_hw: {} ({})", GetHWBlendTypeName(static_cast<HWBlendType>(ps.blend_hw), ps.blend_mix), ps.blend_hw);
@@ -2077,6 +2212,8 @@ static void DumpPSSelector(DrawConfigWriter& out, const GSHWDrawConfig::PSSelect
 	out.WriteLn("pabe: {}", ps.pabe);
 	out.WriteLn("no_color: {}", ps.no_color);
 	out.WriteLn("no_color1: {}", ps.no_color1);
+	out.WriteLn("blend_factor_in_alpha: {}", ps.blend_factor_in_alpha);
+	out.WriteLn("af_in_src1: {}", ps.af_in_src1);
 	out.WriteLn("channel: {} ({})", GetPSChannelName(static_cast<ChannelFetch>(ps.channel)), ps.channel);
 	out.WriteLn("dither: {} ({})", GetPSDitherName(ps.dither), ps.dither);
 	out.WriteLn("dither_adjust: {}", ps.dither_adjust);

@@ -642,6 +642,22 @@ static constexpr MTLPixelFormat ConvertPixelFormat(GSTexture::Format format)
 		case GSTexture::Format::BC2:          return MTLPixelFormatBC2_RGBA;
 		case GSTexture::Format::BC3:          return MTLPixelFormatBC3_RGBA;
 		case GSTexture::Format::BC7:          return MTLPixelFormatBC7_RGBAUnorm;
+			// Metal ASTC is optional and unimplemented; the replacement loader rejects ASTC
+			// before anything can ask for a pixel format. Keep the switch exhaustive.
+		case GSTexture::Format::ASTC4x4:
+		case GSTexture::Format::ASTC5x4:
+		case GSTexture::Format::ASTC5x5:
+		case GSTexture::Format::ASTC6x5:
+		case GSTexture::Format::ASTC6x6:
+		case GSTexture::Format::ASTC8x5:
+		case GSTexture::Format::ASTC8x6:
+		case GSTexture::Format::ASTC8x8:
+		case GSTexture::Format::ASTC10x5:
+		case GSTexture::Format::ASTC10x6:
+		case GSTexture::Format::ASTC10x8:
+		case GSTexture::Format::ASTC10x10:
+		case GSTexture::Format::ASTC12x10:
+		case GSTexture::Format::ASTC12x12:    return MTLPixelFormatInvalid;
 	}
 }
 
@@ -760,6 +776,11 @@ void GSDeviceMTL::DoMerge(GSTexture* sTex[3], GSVector4* sRect, GSTexture* dTex,
 
 	if (feedback_write_1) // FIXME I'm not sure dRect[0] is always correct
 		StretchRect(dTex, full_r, sTex[2], dRect[0], ShaderConvert::YUV, filter);
+
+	// With both circuits off nothing was drawn, so the clear above is the whole frame and it is
+	// still only deferred. Everyone downstream binds the native texture, and none of them can
+	// commit a clear, so do it here while a pass can still be opened.
+	FlushClears(dTex);
 }}
 
 void GSDeviceMTL::DoInterlace(GSTexture* sTex, const GSVector4& sRect, GSTexture* dTex, const GSVector4& dRect, ShaderInterlace shader, Filter filter, const InterlaceConstantBuffer& cb)
@@ -789,12 +810,14 @@ void GSDeviceMTL::DoShadeBoost(GSTexture* sTex, GSTexture* dTex, const float par
 
 #ifdef ARMSX2_HAS_LIBRASHADER
 
-static void ReportShaderChainError(const char* what, libra_error_t err)
+static std::string ReportShaderChainError(const char* what, libra_error_t err)
 {
+	std::string message;
 	char* msg = nullptr;
 	if (libra_error_write(err, &msg) == 0 && msg)
 	{
 		Console.Error("(GS) librashader %s failed: %s", what, msg);
+		message = msg;
 		libra_error_free_string(&msg);
 	}
 	else
@@ -802,6 +825,7 @@ static void ReportShaderChainError(const char* what, libra_error_t err)
 		Console.Error("(GS) librashader %s failed (errno %d)", what, static_cast<int>(libra_error_errno(err)));
 	}
 	libra_error_free(&err);
+	return message;
 }
 
 #endif
@@ -851,12 +875,17 @@ bool GSDeviceMTL::DoApplyShaderChain(GSTexture* sTex, GSTexture* dTex)
 #else
 	// Latch it, or a preset that fails to compile runs a full slang compile every frame
 	if (m_shader_chain_failed && m_shader_chain_preset == GSConfig.ShaderChainPreset)
-		return false;
+	{
+		if (m_shader_chain_retry == GetShaderChainRetry())
+			return false;
+		DestroyShaderChain();
+	}
 
 	if (!m_shader_chain || m_shader_chain_preset != GSConfig.ShaderChainPreset)
 	{
 		DestroyShaderChain();
 		m_shader_chain_preset = GSConfig.ShaderChainPreset;
+		m_shader_chain_retry = GetShaderChainRetry();
 
 		libra_shader_preset_t preset = nullptr;
 		if (libra_error_t err = libra_preset_create(m_shader_chain_preset.c_str(), &preset))
@@ -870,12 +899,13 @@ bool GSDeviceMTL::DoApplyShaderChain(GSTexture* sTex, GSTexture* dTex)
 		libra_mtl_filter_chain_t chain = nullptr;
 		if (libra_error_t err = libra_mtl_filter_chain_create(&preset, m_queue, nullptr, &chain))
 		{
-			ReportShaderChainError("chain create", err);
+			SetShaderChainError(m_shader_chain_preset, ReportShaderChainError("chain create", err));
 			m_shader_chain_failed = true;
 			return false;
 		}
 
 		m_shader_chain = chain;
+		SetShaderChainError({}, {});
 		m_shader_frame_count = 0;
 		m_shader_param_generation = 0;
 		Console.WriteLn("(GS) librashader: loaded preset '%s'", m_shader_chain_preset.c_str());
@@ -895,20 +925,17 @@ bool GSDeviceMTL::DoApplyShaderChain(GSTexture* sTex, GSTexture* dTex)
 	if (libra_error_t err = libra_mtl_filter_chain_frame(
 			&chain, GetRenderCmdBuf(), m_shader_frame_count, src, dst, &vp, nullptr, nullptr))
 	{
-		ReportShaderChainError("frame", err);
+		SetShaderChainError(m_shader_chain_preset, ReportShaderChainError("frame", err));
 		m_shader_chain_failed = true;
-		// A chain that failed partway has already encoded passes into this command buffer, and
-		// the ring it recycles per-frame objects over is shallower than our deferred-submit
-		// window. The success path flushes for exactly that reason; so must this one.
+		// A failed frame may already have encoded passes, so it flushes like the success path.
 		FlushEncoders();
 		return false;
 	}
 	m_shader_frame_count++;
 	dTex->SetState(GSTexture::State::Dirty);
 
-	// librashader recycles per-frame objects over a ring shallower than our deferred-submit
-	// window, so a frame is only safe once a submit follows it. This also clears the
-	// deferred-submit counters, so a chain frame always ends a batch
+	// librashader reuses per-frame objects over a ring shallower than the deferred-submit window,
+	// so every chain frame is submitted before the next. This also ends the current batch.
 	FlushEncoders();
 	return true;
 #endif
@@ -1370,9 +1397,10 @@ bool GSDeviceMTL::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 
 	// Init metal stuff
 	m_fn_constants = MRCTransfer([MTLFunctionConstantValues new]);
-	setFnConstantB(m_fn_constants, m_features.framebuffer_fetch,    GSMTLConstantIndex_FRAMEBUFFER_FETCH);
-	setFnConstantB(m_fn_constants, m_features.depth_feedback,       GSMTLConstantIndex_DEPTH_FEEDBACK);
-	setFnConstantB(m_fn_constants, m_dev.features.rov_requires_r32, GSMTLConstantIndex_ROV_NEEDS_R32);
+	setFnConstantB(m_fn_constants, m_features.framebuffer_fetch,       GSMTLConstantIndex_FRAMEBUFFER_FETCH);
+	setFnConstantB(m_fn_constants, m_features.depth_feedback,          GSMTLConstantIndex_DEPTH_FEEDBACK);
+	setFnConstantB(m_fn_constants, m_dev.features.rov_requires_r32,    GSMTLConstantIndex_ROV_NEEDS_R32);
+	setFnConstantB(m_fn_constants, m_dev.features.broken_shader_depth, GSMTLConstantIndex_BROKEN_SHADER_DEPTH);
 
 	m_draw_sync_fence = MRCTransfer([m_dev.dev newFence]);
 	[m_draw_sync_fence setLabel:@"Draw Sync Fence"];
@@ -2117,6 +2145,9 @@ void GSDeviceMTL::PresentRect(GSTexture* sTex, const GSVector4& sRect, GSTexture
 	else
 	{
 		// !dTex → Use current draw encoder
+		// This pass is already open, so a clear still pending on the source can no longer be
+		// committed here. Whoever produced sTex owes us the flush.
+		pxAssertMsg(sTex->GetState() != GSTexture::State::Cleared, "Presented texture still has a pending clear");
 		[m_current_render.encoder setRenderPipelineState:pipe];
 		[m_current_render.encoder setFragmentSamplerState:m_sampler_hw[filter == Biln ? SamplerSelector::Linear().key : SamplerSelector::Point().key] atIndex:0];
 		[m_current_render.encoder setFragmentTexture:static_cast<GSTextureMTL*>(sTex)->GetTexture() atIndex:0];
@@ -2338,6 +2369,15 @@ void GSDeviceMTL::MRESetHWPipelineState(GSHWDrawConfig::VSSelector vssel, GSHWDr
 	}
 	else
 	{
+		// af_in_src1 reroutes a fixed (AFIX) blend factor through the second fragment output, for a
+		// driver whose blend constant is broken. Only the Vulkan shader implements it, and only
+		// GSDeviceVK raises features.broken_blend_constant, so nothing reaches this today. If a
+		// driver-database entry ever does, the blend state moves to SRC1 factors while this shader
+		// keeps writing As, which is wrong colour and nothing else would say so.
+		if (pssel.af_in_src1)
+			Console.Error("PS_AF_IN_SRC1 is not implemented in this backend's shader.");
+		pxAssert(!pssel.af_in_src1);
+
 		setFnConstantB(m_fn_constants, pssel.fst,                   GSMTLConstantIndex_FST);
 		setFnConstantB(m_fn_constants, pssel.iip,                   GSMTLConstantIndex_IIP);
 		setFnConstantI(m_fn_constants, pssel.aem_fmt,               GSMTLConstantIndex_PS_AEM_FMT);
@@ -2366,6 +2406,8 @@ void GSDeviceMTL::MRESetHWPipelineState(GSHWDrawConfig::VSSelector vssel, GSHWDr
 		setFnConstantB(m_fn_constants, pssel.real16src,             GSMTLConstantIndex_PS_READ16_SRC);
 		setFnConstantB(m_fn_constants, pssel.write_rg,              GSMTLConstantIndex_PS_WRITE_RG);
 		setFnConstantB(m_fn_constants, pssel.fbmask,                GSMTLConstantIndex_PS_FBMASK);
+		setFnConstantB(m_fn_constants, pssel.quantize_color,        GSMTLConstantIndex_PS_QUANTIZE_COLOR);
+		setFnConstantB(m_fn_constants, pssel.substitute_alpha,      GSMTLConstantIndex_PS_SUBSTITUTE_ALPHA);
 		setFnConstantI(m_fn_constants, pssel.blend_a,               GSMTLConstantIndex_PS_BLEND_A);
 		setFnConstantI(m_fn_constants, pssel.blend_b,               GSMTLConstantIndex_PS_BLEND_B);
 		setFnConstantI(m_fn_constants, pssel.blend_c,               GSMTLConstantIndex_PS_BLEND_C);
@@ -2695,6 +2737,9 @@ void GSDeviceMTL::DoRenderHW(GSHWDrawConfig& config)
 { @autoreleasepool {
 	if (config.tex && (config.ds == config.tex || config.rt == config.tex))
 		EndRenderPass(); // Barrier
+
+	if (m_dev.features.broken_shader_depth && (config.depth.ztst >= ZTST_GEQUAL || config.depth.zwe))
+		config.ps.zfloor = true; // Depth must always go through shader (see tfx vs for comment with details)
 
 	size_t vertsize = config.nverts * sizeof(*config.verts);
 	size_t idxsize = config.vs.UseFixedExpandIndexBuffer() ? 0 : (config.nindices * sizeof(*config.indices));

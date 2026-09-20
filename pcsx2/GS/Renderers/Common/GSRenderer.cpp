@@ -7,7 +7,6 @@
 #include "GS/Renderers/Common/GSInterlaceModePolicy.h"
 #include "GS/Renderers/Common/GSPresentationPolicy.h"
 #include "GS/Renderers/Common/GSSnapshotPolicy.h"
-#include "GS/GSCapture.h"
 #include "GS/GSDump.h"
 #include "GS/GSGL.h"
 #include "GS/GSPerfMon.h"
@@ -100,7 +99,6 @@ void GSRenderer::Reset(bool hardware_reset)
 
 void GSRenderer::Destroy()
 {
-	GSCapture::EndCapture();
 }
 
 void GSRenderer::UpdateRenderFixes()
@@ -115,12 +113,6 @@ bool GSRenderer::Merge(int field)
 	float tex_scale[3] = { 0.0f, 0.0f, 0.0f };
 	int y_offset[3] = { 0, 0, 0 };
 	const bool feedback_merge = m_regs->EXTWRITE.WRITE == 1;
-
-	if (!PCRTCDisplays.PCRTCDisplays[0].enabled && !PCRTCDisplays.PCRTCDisplays[1].enabled)
-	{
-		m_real_size = GSVector2i(0, 0);
-		return false;
-	}
 
 	// Need to do this here, if the user has Anti-Blur enabled, these offsets can get wiped out/changed.
 	const bool game_deinterlacing = (PCRTCDisplays.PCRTCDisplays[0].prevFramebufferOffsets.y != PCRTCDisplays.PCRTCDisplays[0].framebufferOffsets.y) !=
@@ -165,8 +157,6 @@ bool GSRenderer::Merge(int field)
 
 	if (!tex[0] && !tex[1])
 	{
-		m_real_size = GSVector2i(0, 0);
-
 		// Clear out the MAD buffer as some remnants of the previously shown frame came be left over, causing a flash for one frame.
 		if (GSConfig.InterlaceMode == GSInterlaceMode::Automatic || GSConfig.InterlaceMode >= GSInterlaceMode::AdaptiveTFF)
 		{
@@ -178,7 +168,13 @@ bool GSRenderer::Merge(int field)
 				mad_tex = nullptr;
 			}
 		}
-		return false;
+
+		// Both circuits off still outputs BGCOLOR on real hardware.
+		if (PCRTCDisplays.PCRTCDisplays[0].enabled || PCRTCDisplays.PCRTCDisplays[1].enabled)
+		{
+			m_real_size = GSVector2i(0, 0);
+			return false;
+		}
 	}
 
 	s_n++;
@@ -193,8 +189,8 @@ bool GSRenderer::Merge(int field)
 		return true;
 	}
 
-	GSVector4 src_gs_read[2];
-	GSVector4 dst[3];
+	GSVector4 src_gs_read[2] = {};
+	GSVector4 dst[3] = {};
 
 	// Use offset for bob deinterlacing always, extra offset added later for FFMD mode.
 	const bool scanmask_frame = m_scanmask_used && abs(PCRTCDisplays.PCRTCDisplays[0].displayRect.y - PCRTCDisplays.PCRTCDisplays[1].displayRect.y) != 1;
@@ -277,7 +273,7 @@ bool GSRenderer::Merge(int field)
 
 	m_real_size = GSVector2i(fs.x, fs.y);
 
-	if ((tex[0] == tex[1]) && (src_gs_read[0] == src_gs_read[1]).alltrue() && (dst[0] == dst[1]).alltrue() &&
+	if ((tex[0] || tex[1]) && (tex[0] == tex[1]) && (src_gs_read[0] == src_gs_read[1]).alltrue() && (dst[0] == dst[1]).alltrue() &&
 		(PCRTCDisplays.PCRTCDisplays[0].displayRect == PCRTCDisplays.PCRTCDisplays[1].displayRect).alltrue() &&
 		(PCRTCDisplays.PCRTCDisplays[0].framebufferRect == PCRTCDisplays.PCRTCDisplays[1].framebufferRect).alltrue() &&
 		!feedback_merge && !m_regs->PMODE.SLBG)
@@ -289,7 +285,7 @@ bool GSRenderer::Merge(int field)
 	const u32 c = (m_regs->BGCOLOR.U32[0] & 0x00FFFFFFu) | (m_regs->PMODE.ALP << 24);
 	g_gs_device->Merge(tex, src_gs_read, dst, fs, m_regs->PMODE, m_regs->EXTBUF, c);
 
-	if (isReallyInterlaced() && GSConfig.InterlaceMode != GSInterlaceMode::Off)
+	if ((tex[0] || tex[1]) && isReallyInterlaced() && GSConfig.InterlaceMode != GSInterlaceMode::Off)
 	{
 		const float offset = is_bob ? (tex[1] ? tex_scale[1] : tex_scale[0]) : 0.0f;
 
@@ -831,7 +827,7 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 	const bool fb_sprite_frame = (fb_sprite_blits > 0);
 
 	bool skip_frame = false;
-	if (GSConfig.SkipDuplicateFrames && !GSCapture::IsCapturingVideo())
+	if (GSConfig.SkipDuplicateFrames)
 	{
 		bool is_unique_frame;
 		switch (PerformanceMetrics::GetInternalFPSMethod())
@@ -927,7 +923,7 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 		fps_cap_present_skip && GSGetPresentCapRenderSkip() &&
 		GSIsHardwareRenderer() &&
 		m_regs->EXTWRITE.WRITE == 0 &&
-		m_snapshot.empty() && !m_dump && m_dump_frames == 0 && !GSCapture::IsCapturingVideo() &&
+		m_snapshot.empty() && !m_dump && m_dump_frames == 0 &&
 		!GSConfig.ShouldDump(s_n, g_perfmon.GetFrame()) && g_gs_device->GetCurrent() != nullptr;
 
 	bool merged_frame;
@@ -1077,6 +1073,30 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 			// present render pass is already open by the time DoBeginPresent runs.
 			// It is CAS's `if`, not a second branch beside it: FSR's second pass *is* RCAS, a
 			// contrast-adaptive sharpener, so letting CAS run afterward sharpens twice.
+			// SGSR sits in the same place and under the same rule as FSR1 below: a single
+			// compute pass before the present render pass opens, and inside CAS's `if` rather
+			// than beside it, because SGSR sharpens as part of upscaling and letting CAS run
+			// afterwards would sharpen twice.
+			if (GSConfig.Upscaler == GSUpscaler::SGSR || GSConfig.Upscaler == GSUpscaler::SGSREdge)
+			{
+				static bool sgsr_log_once = false;
+				if (g_gs_device->Features().sgsr)
+				{
+					const int draw_w = static_cast<int>(std::ceil(draw_rect.z - draw_rect.x));
+					const int draw_h = static_cast<int>(std::ceil(draw_rect.w - draw_rect.y));
+					if (current->GetWidth() < draw_w && current->GetHeight() < draw_h)
+						g_gs_device->SGSRUpscale(current, src_rect, src_uv, draw_rect,
+							GSConfig.Upscaler == GSUpscaler::SGSREdge);
+				}
+				else if (!sgsr_log_once)
+				{
+					Host::AddIconOSDMessage("SGSRUnsupported", ICON_FA_TRIANGLE_EXCLAMATION,
+						TRANSLATE_SV("GS", "SGSR upscaling is not available, your graphics driver does not support the required functionality."),
+						10.0f);
+					sgsr_log_once = true;
+				}
+			}
+
 			if (GSConfig.Upscaler == GSUpscaler::FSR1)
 			{
 				static bool fsr1_log_once = false;
@@ -1261,41 +1281,6 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 		}
 	}
 
-	// capture
-	if (GSCapture::IsCapturingVideo())
-	{
-		const GSVector2i size = GSCapture::GetSize();
-		if (GSTexture* current = g_gs_device->GetCurrent())
-		{
-			// TODO: Maybe avoid this copy in the future? We can use swscale to fix it up on the dumping thread..
-			if (current->GetSize() != size)
-			{
-				GSTexture* temp = g_gs_device->CreateRenderTarget(size.x, size.y, GSTexture::Format::Color, false);
-				if (temp)
-				{
-					g_gs_device->StretchRect(current, temp, GSVector4(0, 0, size.x, size.y), ShaderConvert::COPY, Biln);
-					GSCapture::DeliverVideoFrame(temp);
-					g_gs_device->Recycle(temp);
-				}
-			}
-			else
-			{
-				GSCapture::DeliverVideoFrame(current);
-			}
-		}
-		else
-		{
-			// Bit janky, but unless we want to make variable frame rate files, we need to deliver *a* frame to
-			// the video file, so just grab a blank RT.
-			GSTexture* temp = g_gs_device->CreateRenderTarget(size.x, size.y, GSTexture::Format::Color, true);
-			if (temp)
-			{
-				GSCapture::DeliverVideoFrame(temp);
-				g_gs_device->Recycle(temp);
-			}
-		}
-	}
-
 	if (GSConfig.ShouldDump(s_n, g_perfmon.GetFrame()) && GSConfig.SaveTransferImages)
 		DumpTransferImages();
 }
@@ -1383,27 +1368,6 @@ std::string GSGetBaseSnapshotFilename()
 	return Path::Combine(EmuFolders::Snapshots, GSGetBaseFilename());
 }
 
-std::string GSGetBaseVideoFilename()
-{
-	// If organize by game is enabled, use or create a game-specific folder.
-	if (GSConfig.OrganizeVideoCaptureByGame)
-	{
-		const bool prefer_english = Host::GetBaseBoolSettingValue("UI", "PreferEnglishGameList", false);
-		std::string game_name = VMManager::GetTitle(prefer_english);
-		if (!game_name.empty())
-		{
-			Path::SanitizeFileName(&game_name);
-			const std::string game_dir = Path::Combine(EmuFolders::Videos, game_name);
-
-			// Make sure the per-game directory exists or that we can successfully create it.
-			if (FileSystem::DirectoryExists(game_dir.c_str()) || FileSystem::CreateDirectoryPath(game_dir.c_str(), false))
-				return Path::Combine(game_dir, GSGetBaseFilename());
-		}
-	}
-	// prepend video directory
-	return Path::Combine(EmuFolders::Videos, GSGetBaseFilename());
-}
-
 void GSRenderer::StopGSDump()
 {
 	m_snapshot = {};
@@ -1472,28 +1436,6 @@ void GSSetPortraitRenderTopAlign(bool enabled)
 void GSSetLandscapeRenderTopAlign(bool enabled)
 {
 	s_landscape_render_top = enabled;
-}
-
-bool GSRenderer::BeginCapture(std::string filename, const GSVector2i& size)
-{
-	// GV7-2: capture start/stop can run mid-frame on the MTGS thread; teardown
-	// frees download textures on the device the back thread may be drawing on.
-	DrainBackQueue();
-	const GSVector2i capture_resolution = (size.x != 0 && size.y != 0) ?
-											  size :
-											  (GSConfig.VideoCaptureAutoResolution ?
-													  GetInternalResolution() :
-													  GSVector2i(GSConfig.VideoCaptureWidth, GSConfig.VideoCaptureHeight));
-
-	return GSCapture::BeginCapture(GetTvRefreshRate(), capture_resolution,
-		GetCurrentAspectRatioFloat(GetVideoMode() == GSVideoMode::SDTV_480P),
-		std::move(filename));
-}
-
-void GSRenderer::EndCapture()
-{
-	DrainBackQueue(); // see BeginCapture
-	GSCapture::EndCapture();
 }
 
 GSTexture* GSRenderer::LookupPaletteSource(u32 CBP, u32 CPSM, u32 CBW, GSVector2i& offset, float* scale, const GSVector2i& size)

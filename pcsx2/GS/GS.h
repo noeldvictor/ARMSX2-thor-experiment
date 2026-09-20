@@ -93,7 +93,6 @@ void GSSetPresentCapSuspended(bool suspended);
 bool GSGetPresentCapSuspended();
 int GSfreeze(FreezeAction mode, freezeData* data);
 std::string GSGetBaseSnapshotFilename();
-std::string GSGetBaseVideoFilename();
 // False if there is no renderer, or a snapshot is already queued and this request was dropped.
 bool GSQueueSnapshot(const std::string& path, u32 gsdump_frames = 0);
 // True while a dump is open and taking frames. Queueing a snapshot over one of these does not
@@ -104,8 +103,6 @@ bool GSIsDumpRecording();
 // split is unsupported, so this is the only way to tell whether the mode really engaged.
 bool GSHasFrontParser();
 void GSStopGSDump();
-bool GSBeginCapture(std::string filename);
-void GSEndCapture();
 void GSPresentCurrentFrame();
 void GSThrottlePresentation();
 void GSGameChanged();
@@ -122,6 +119,14 @@ void GSSetVSyncMode(GSVSyncMode mode, bool allow_present_throttle);
 
 GSRendererType GSGetCurrentRenderer();
 bool GSIsHardwareRenderer();
+
+/// Whether this renderer's GetOutput() reads the framebuffer at the display's own offset,
+/// block-aligning as it goes, rather than reading the whole buffer and leaving the offset
+/// for the presenter. Today this is exactly "is the software renderer", but it is a property
+/// of the output path rather than of the renderer kind, and it is resolved per renderer
+/// instance so it stays that way. Ask this — never GSIsHardwareRenderer() — when the
+/// question is about presentation geometry.
+bool GSPresenterOffsetsFramebufferRead();
 std::string GetDefaultAdapter();
 bool GSWantsExclusiveFullscreen();
 std::optional<float> GSGetHostRefreshRate();
@@ -161,9 +166,6 @@ namespace Host
 	/// Alters fullscreen state of hosting application.
 	void SetFullscreen(bool enabled);
 
-	/// Called when video capture starts or stops. Called on the MTGS thread.
-	void OnCaptureStarted(const std::string& filename);
-	void OnCaptureStopped();
 }
 
 extern Pcsx2Config::GSOptions GSConfig;

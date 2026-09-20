@@ -178,6 +178,53 @@ fun RendererTab(state: MutableState<Settings>) {
                     onChange = { pct -> apply(s.copy(upscaleFloat = pct / 100f)) },
                 )
             }
+            // Texture packs, right under the resolution they are usually paired with. They were a
+            // collapsed section near the bottom of this tab, which for one of the most-used
+            // features on the device was far too deep.
+            SettingsDivider()
+            TextureManagerRow()
+            SettingsDivider()
+            ToggleRow(
+                str("renderer.loadTexturePacks.label"),
+                s.loadTextureReplacements,
+                description = str("renderer.loadTexturePacks.description"),
+            ) {
+                apply(s.copy(loadTextureReplacements = it))
+            }
+            SettingsDivider()
+            ToggleRow(
+                str("renderer.asyncTextureLoading.label"),
+                s.loadTextureReplacementsAsync,
+                description = str("renderer.asyncTextureLoading.description"),
+            ) {
+                apply(s.copy(loadTextureReplacementsAsync = it))
+            }
+            SettingsDivider()
+            ToggleRow(
+                str("renderer.precacheTexturePacks.label"),
+                s.precacheTextureReplacements,
+                description = str("renderer.precacheTexturePacks.description"),
+            ) {
+                apply(s.copy(precacheTextureReplacements = it))
+            }
+            SettingsDivider()
+            TexturePackImportRow()
+            SettingsDivider()
+            ToggleRow(
+                str("renderer.dumpReplaceableTextures.label"),
+                s.dumpReplaceableTextures,
+                description = str("renderer.dumpReplaceableTextures.description"),
+            ) {
+                apply(s.copy(dumpReplaceableTextures = it))
+            }
+            SettingsDivider()
+            ToggleRow(
+                str("renderer.texturePackOsd.label"),
+                s.osdShowTextureReplacements,
+                description = str("renderer.texturePackOsd.description"),
+            ) {
+                apply(s.copy(osdShowTextureReplacements = it))
+            }
             SettingsDivider()
             SegmentedRow(
                 label = str("renderer.displayMode.label"),
@@ -399,25 +446,49 @@ fun RendererTab(state: MutableState<Settings>) {
                 apply(s.copy(fxaa = it))
             }
             SettingsDivider()
-            val fsr1On = s.upscaler == Settings.UPSCALER_FSR1
-            ToggleRow(
-                str("renderer.fsr1.label"),
-                fsr1On,
-                description = str("renderer.fsr1.description"),
-            ) {
-                apply(s.copy(upscaler = if (it) Settings.UPSCALER_FSR1 else Settings.UPSCALER_OFF))
-            }
-            if (fsr1On) {
+            // A picker rather than the on/off toggle this was: with SGSR there are three
+            // mutually exclusive upscalers, and two toggles that silently turn each other off
+            // is a worse way to say that than one list. The UI index is NOT the enum value --
+            // MetalFX is 1 and is Apple-only, so it has no row here.
+            val upscalerValues = listOf(
+                Settings.UPSCALER_OFF, Settings.UPSCALER_FSR1,
+                Settings.UPSCALER_SGSR, Settings.UPSCALER_SGSR_EDGE,
+            )
+            val sgsrOn = s.upscaler == Settings.UPSCALER_SGSR || s.upscaler == Settings.UPSCALER_SGSR_EDGE
+            val upscalerOn = s.upscaler == Settings.UPSCALER_FSR1 || sgsrOn
+            SegmentedRow(
+                label = str("renderer.upscaler.label"),
+                options = listOf(str("common.off"), "FSR 1", "SGSR", "SGSR Edge"),
+                selectedIndex = upscalerValues.indexOf(s.upscaler).coerceAtLeast(0),
+                onChange = { apply(s.copy(upscaler = upscalerValues[it])) },
+            )
+            // One slider per upscaler, not one shared. They are never both on screen, and the
+            // ranges genuinely differ: FSR1's RCAS is natively 0..100, SGSR's edge sharpness is
+            // 0..2 with 100 as Qualcomm's default. Sharing a field would redefine an existing FSR
+            // configuration the moment SGSR was picked.
+            if (upscalerOn) {
                 SettingsDivider()
-                IntSliderRow(
-                    label = str("renderer.fsr1.sharpness.label"),
-                    value = s.fsrSharpness.coerceIn(0, 100),
-                    min = 0,
-                    max = 100,
-                    valueFormatter = { "$it%" },
-                    onChange = { apply(s.copy(fsrSharpness = it)) },
-                )
+                if (sgsrOn) {
+                    IntSliderRow(
+                        label = str("renderer.sgsr.sharpness.label"),
+                        value = s.sgsrSharpness.coerceIn(0, 200),
+                        min = 0,
+                        max = 200,
+                        valueFormatter = { "$it%" },
+                        onChange = { apply(s.copy(sgsrSharpness = it)) },
+                    )
+                } else {
+                    IntSliderRow(
+                        label = str("renderer.fsr1.sharpness.label"),
+                        value = s.fsrSharpness.coerceIn(0, 100),
+                        min = 0,
+                        max = 100,
+                        valueFormatter = { "$it%" },
+                        onChange = { apply(s.copy(fsrSharpness = it)) },
+                    )
+                }
             }
+            val fsr1On = upscalerOn
             // FSR's second pass IS RCAS, a contrast-adaptive sharpener, so the core runs one or
             // the other and never both. Showing CAS while FSR is on would offer a slider that
             // does nothing.
@@ -493,52 +564,6 @@ fun RendererTab(state: MutableState<Settings>) {
         // shader manager inside a collapsed section, nobody could find it.
         CollapsibleSection(str("renderer.section.overlayArt")) {
             OverlayArtSection()
-        }
-        SettingsDivider()
-        CollapsibleSection(str("renderer.section.texturePacks")) {
-            ToggleRow(
-                str("renderer.loadTexturePacks.label"),
-                s.loadTextureReplacements,
-                description = str("renderer.loadTexturePacks.description"),
-            ) {
-                apply(s.copy(loadTextureReplacements = it))
-            }
-            SettingsDivider()
-            ToggleRow(
-                str("renderer.asyncTextureLoading.label"),
-                s.loadTextureReplacementsAsync,
-                description = str("renderer.asyncTextureLoading.description"),
-            ) {
-                apply(s.copy(loadTextureReplacementsAsync = it))
-            }
-            SettingsDivider()
-            ToggleRow(
-                str("renderer.precacheTexturePacks.label"),
-                s.precacheTextureReplacements,
-                description = str("renderer.precacheTexturePacks.description"),
-            ) {
-                apply(s.copy(precacheTextureReplacements = it))
-            }
-            SettingsDivider()
-            TexturePackImportRow()
-            SettingsDivider()
-            GsDumpCaptureRow()
-            SettingsDivider()
-            ToggleRow(
-                str("renderer.dumpReplaceableTextures.label"),
-                s.dumpReplaceableTextures,
-                description = str("renderer.dumpReplaceableTextures.description"),
-            ) {
-                apply(s.copy(dumpReplaceableTextures = it))
-            }
-            SettingsDivider()
-            ToggleRow(
-                str("renderer.texturePackOsd.label"),
-                s.osdShowTextureReplacements,
-                description = str("renderer.texturePackOsd.description"),
-            ) {
-                apply(s.copy(osdShowTextureReplacements = it))
-            }
         }
         SettingsDivider()
         CollapsibleSection(str("renderer.section.blendingAdvanced")) {
@@ -659,6 +684,51 @@ fun RendererTab(state: MutableState<Settings>) {
                 onChange = {
                     apply(s.copy(gpuProfile = it))
                 },
+            )
+            // Here rather than among the texture pack rows, where it used to sit: a GS dump is a
+            // renderer bug report. The in-game menu's Session page has the one-tap version.
+            SettingsDivider()
+            GsDumpCaptureRow()
+        }
+    }
+}
+
+/**
+ * Opens the texture pack manager: the game's installed packs, community downloads and import.
+ * Over a running game it opens in place of this screen, the way the in-game menu's button does;
+ * from the library it is its own screen.
+ */
+@Composable
+private fun TextureManagerRow() {
+    val open = {
+        if (com.armsx2.ui.WindowImpl.inGameScreen.value != null)
+            com.armsx2.ui.WindowImpl.openInGameScreen(com.armsx2.ui.InGameScreen.Textures)
+        else
+            com.armsx2.navigation.UiNavigator.navigate(com.armsx2.navigation.AppRoute.TextureManager)
+    }
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(rowAura())
+            .controllerFocusable("renderer.textureManager", RoundedCornerShape(16.dp), onConfirm = open)
+            .clickable(onClick = open)
+            .padding(horizontal = 6.dp, vertical = 5.dp),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Column {
+            Text(
+                str("renderer.section.texturePacks"),
+                color = MaterialTheme.colorScheme.onSurface,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(Modifier.height(2.dp))
+            Text(
+                str("renderer.texturePacks.manage.description"),
+                color = Colors.pasx2_blue,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
             )
         }
     }
@@ -973,7 +1043,7 @@ private fun ClearShaderCacheRow() {
             .clickable {
                 val n = clearShaderCache(File(MainActivityRuntime.assetCopyRoot(context), "cache"))
                 status.value = if (n > 0)
-                    "Cleared $n shader-cache file${if (n == 1) "" else "s"} — restart the game to rebuild."
+                    "Cleared $n shader-cache file${if (n == 1) "" else "s"}. Restart the game to rebuild."
                 else
                     I18n.get("renderer.clearShaderCache.alreadyEmpty")
                 Toast.makeText(context, status.value, Toast.LENGTH_SHORT).show()

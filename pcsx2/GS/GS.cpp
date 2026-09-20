@@ -6,7 +6,6 @@
 #include "ImGui/FullscreenUI.h"
 #include "ImGui/ImGuiManager.h"
 #include "GS/GS.h"
-#include "GS/GSCapture.h"
 #include "GS/GSExtra.h"
 #include "GS/GSGL.h"
 #include "GS/GSLzma.h"
@@ -65,6 +64,7 @@
 Pcsx2Config::GSOptions GSConfig;
 
 static GSRendererType GSCurrentRenderer;
+static bool GSCurrentPresenterOffsetsRead;
 
 GSRendererType GSGetCurrentRenderer()
 {
@@ -75,6 +75,14 @@ bool GSIsHardwareRenderer()
 {
 	// Null gets flagged as hw.
 	return (GSCurrentRenderer != GSRendererType::SW);
+}
+
+bool GSPresenterOffsetsFramebufferRead()
+{
+	// Resolved per renderer instance in OpenGSRenderer rather than derived from the renderer
+	// type here, because it is a property of the output path. Today it equals "is the software
+	// renderer".
+	return GSCurrentPresenterOffsetsRead;
 }
 
 std::string GetDefaultAdapter()
@@ -217,32 +225,6 @@ static void GSClampUpscaleMultiplier(Pcsx2Config::GSOptions& config)
 	config.UpscaleMultiplier = static_cast<float>(max_upscale_multiplier);
 }
 
-#ifdef __ANDROID__
-// Some MediaTek Mali drivers render duplicated horizontal framebuffer regions in Tekken 5
-// when the GameDB's Native half-pixel-offset mode (value 4) is active. Force the offset Off
-// there — and ONLY there — preserving Native for every other GPU and game and respecting a
-// user's manual hacks. Ported from sashkinbro/EmuCoreX. Reachable only while the Tekken 5
-// GameDB entries keep halfPixelOffset: Native.
-static bool IsTekken5Serial(const std::string_view serial)
-{
-	static constexpr std::array<std::string_view, 11> k_tekken5_serials = {
-		"SCAJ-20125", "SCAJ-20126", "SCAJ-20199", "SCED-53538", "SCES-53202",
-		"SCKA-20049", "SCKA-20081", "SLPS-25510", "SLPS-73223", "SLUS-21059", "SLUS-21160"};
-	return std::find(k_tekken5_serials.begin(), k_tekken5_serials.end(), serial) != k_tekken5_serials.end();
-}
-
-static void ApplyAndroidGameDBOverrides()
-{
-	if (!g_gs_device || !g_gs_device->IsMaliGPUProfile() || !g_gs_device->IsMediaTekSoC() ||
-		GSConfig.ManualUserHacks || GSConfig.UserHacks_HalfPixelOffset != GSHalfPixelOffset::Native)
-		return;
-	if (!IsTekken5Serial(VMManager::GetDiscSerial()))
-		return;
-	GSConfig.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off;
-	Console.WriteLn("Android: Tekken 5 on MediaTek Mali — forcing HalfPixelOffset Off (duplicated-framebuffer fix).");
-}
-#endif
-
 // GV7-1d-ii: the front parser object of the two-object split (GSState.h).
 // Non-null only when GSBackThreadMode::Pipelined engaged; all GIF-parse entry
 // points below route to it, while draw/present/TC stay on g_gs_renderer.
@@ -259,6 +241,11 @@ static bool OpenGSRenderer(GSRendererType renderer, u8* basemem)
 	// Must be done first, initialization routines in GSState use GSIsHardwareRenderer().
 	GSCurrentRenderer = renderer;
 
+	// The software renderer's GetOutput() offsets the read itself; everything else reads the
+	// whole framebuffer and leaves the offset to the presenter. Set before any renderer is
+	// constructed, for the reason above.
+	GSCurrentPresenterOffsetsRead = (renderer == GSRendererType::SW);
+
 	GSVertexSW::InitStatic();
 
 	if (renderer == GSRendererType::Null)
@@ -267,6 +254,12 @@ static bool OpenGSRenderer(GSRendererType renderer, u8* basemem)
 	}
 	else if (renderer != GSRendererType::SW)
 	{
+		// Verify-by-effect for measurement harnesses: a scorer should not trust the command
+		// line about which renderer a run used. It can read this line out of the emulog and
+		// refuse a run whose identity does not match what it asked for; without it a
+		// misconfigured run scores as whatever actually ran, under the name that was asked for.
+		Console.WriteLn("GS: Classic renderer active (renderer=%s)",
+			Pcsx2Config::GSOptions::GetRendererName(renderer));
 		GSClampUpscaleMultiplier(GSConfig);
 		g_gs_renderer = std::make_unique<GSRendererHW>();
 	}
@@ -381,16 +374,6 @@ bool GSreopen(bool recreate_device, bool recreate_renderer, GSRendererType new_r
 		g_gs_renderer->ReadbackTextureCache();
 	}
 
-	std::string capture_filename;
-	GSVector2i capture_size;
-	if (GSCapture::IsCapturing())
-	{
-		capture_filename = GSCapture::GetNextCaptureFileName();
-		capture_size = GSCapture::GetSize();
-		Console.Warning(fmt::format("Restarting video capture to {}.", capture_filename));
-		g_gs_renderer->EndCapture();
-	}
-
 	u8* basemem = g_gs_renderer->GetRegsMem();
 
 	freezeData fd = {};
@@ -444,9 +427,6 @@ bool GSreopen(bool recreate_device, bool recreate_renderer, GSRendererType new_r
 
 	if (recreate_renderer)
 	{
-#ifdef __ANDROID__
-		ApplyAndroidGameDBOverrides();
-#endif
 		if (!OpenGSRenderer(new_renderer, basemem))
 		{
 			Console.Error("(GSreopen) Failed to create new renderer");
@@ -459,9 +439,6 @@ bool GSreopen(bool recreate_device, bool recreate_renderer, GSRendererType new_r
 			return false;
 		}
 	}
-
-	if (!capture_filename.empty())
-		g_gs_renderer->BeginCapture(std::move(capture_filename), capture_size);
 
 	return true;
 }
@@ -477,9 +454,6 @@ bool GSopen(const Pcsx2Config::GSOptions& config, GSRendererType renderer, u8* b
 	bool res = OpenGSDevice(renderer, true, false, vsync_mode, allow_present_throttle);
 	if (res)
 	{
-#ifdef __ANDROID__
-		ApplyAndroidGameDBOverrides();
-#endif
 		res = OpenGSRenderer(renderer, basemem);
 		if (!res)
 			CloseGSDevice(true);
@@ -499,9 +473,6 @@ bool GSopen(const Pcsx2Config::GSOptions& config, GSRendererType renderer, u8* b
 
 void GSclose()
 {
-	if (GSCapture::IsCapturing())
-		GSCapture::EndCapture();
-
 	CloseGSRenderer();
 	CloseGSDevice(true);
 	Host::ReleaseRenderWindow();
@@ -515,17 +486,6 @@ void GSreset(bool hardware_reset)
 	if (g_gs_front)
 		g_gs_front->Reset(hardware_reset);
 	g_gs_renderer->Reset(hardware_reset);
-
-	// Restart video capture if it's been started.
-	// Otherwise we get a buildup of audio frames from the CPU thread.
-	if (hardware_reset && GSCapture::IsCapturing())
-	{
-		std::string next_filename = GSCapture::GetNextCaptureFileName();
-		const GSVector2i size = GSCapture::GetSize();
-		Console.Warning(fmt::format("Restarting video capture to {}.", next_filename));
-		g_gs_renderer->EndCapture();
-		g_gs_renderer->BeginCapture(std::move(next_filename), size);
-	}
 }
 
 void GSgifSoftReset(u32 mask)
@@ -671,11 +631,6 @@ int GSfreeze(FreezeAction mode, freezeData* data)
 		// out the current textures.
 		g_gs_device->ClearCurrent();
 
-		// Dump audio frames in video capture if it's been started, otherwise we get
-		// a buildup of audio frames from the CPU thread.
-		if (GSCapture::IsCapturing())
-			GSCapture::Flush();
-
 		return GSParseTarget()->Defrost(data);
 	}
 }
@@ -699,20 +654,6 @@ bool GSIsDumpRecording()
 bool GSHasFrontParser()
 {
 	return static_cast<bool>(g_gs_front);
-}
-
-bool GSBeginCapture(std::string filename)
-{
-	if (g_gs_renderer)
-		return g_gs_renderer->BeginCapture(std::move(filename));
-	else
-		return false;
-}
-
-void GSEndCapture()
-{
-	if (g_gs_renderer)
-		g_gs_renderer->EndCapture();
 }
 
 void GSPresentCurrentFrame()
@@ -750,9 +691,6 @@ void GSGameChanged()
 		GSHwHack::ResetState();
 		GSTextureReplacements::GameChanged();
 	}
-
-	if (!VMManager::HasValidVM() && GSCapture::IsCapturing())
-		GSCapture::EndCapture();
 }
 
 bool GSHasDisplayWindow()
@@ -1440,7 +1378,7 @@ static bool HasConfiguredOSD()
 		   EmuConfig.GS.OsdShowGPU || EmuConfig.GS.OsdShowGPUDebug || EmuConfig.GS.OsdShowIndicators ||
 		   EmuConfig.GS.OsdShowFrameTimes || EmuConfig.GS.OsdShowHardwareInfo || EmuConfig.GS.OsdShowVersion ||
 		   EmuConfig.GS.OsdShowSettings || EmuConfig.GS.OsdshowPatches || EmuConfig.GS.OsdShowInputs ||
-		   EmuConfig.GS.OsdShowInputRec || EmuConfig.GS.OsdShowVideoCapture || EmuConfig.GS.OsdShowTextureReplacements;
+		   EmuConfig.GS.OsdShowInputRec || EmuConfig.GS.OsdShowTextureReplacements;
 }
 
 static void SetForcedSimpleOSD(bool enabled)
@@ -1469,7 +1407,6 @@ static void HotkeyToggleOSD()
 	GSConfig.OsdshowPatches ^= EmuConfig.GS.OsdshowPatches;
 	GSConfig.OsdShowInputs ^= EmuConfig.GS.OsdShowInputs;
 	GSConfig.OsdShowInputRec ^= EmuConfig.GS.OsdShowInputRec;
-	GSConfig.OsdShowVideoCapture ^= EmuConfig.GS.OsdShowVideoCapture;
 	GSConfig.OsdShowTextureReplacements ^= EmuConfig.GS.OsdShowTextureReplacements;
 
 	GSConfig.OsdMessagesPos =
@@ -1486,26 +1423,6 @@ BEGIN_HOTKEY_LIST(g_gs_hotkeys){"Screenshot", TRANSLATE_NOOP("Hotkeys", "Graphic
 			MTGS::RunOnGSThread([]() { GSQueueSnapshot(std::string(), 0); });
 		}
 	}},
-	{"ToggleVideoCapture", TRANSLATE_NOOP("Hotkeys", "Graphics"), TRANSLATE_NOOP("Hotkeys", "Toggle Video Capture"),
-		[](s32 pressed) {
-			if (!pressed)
-			{
-				if (GSCapture::IsCapturing())
-				{
-					MTGS::RunOnGSThread([]() { g_gs_renderer->EndCapture(); });
-					MTGS::WaitGS(false, false, false);
-					return;
-				}
-
-				MTGS::RunOnGSThread([]() {
-					std::string filename(fmt::format("{}.{}", GSGetBaseVideoFilename(), GSConfig.CaptureContainer));
-					g_gs_renderer->BeginCapture(std::move(filename));
-				});
-
-				// Sync GS thread. We want to start adding audio at the same time as video.
-				MTGS::WaitGS(false, false, false);
-			}
-		}},
 	{"GSDumpSingleFrame", TRANSLATE_NOOP("Hotkeys", "Graphics"), TRANSLATE_NOOP("Hotkeys", "Save Single Frame GS Dump"),
 		[](s32 pressed) {
 			if (!pressed)
