@@ -104,15 +104,20 @@ existing worker thread with no Vulkan work.
 - **Found and fixed on device**: with upstream's `hwMipmap = true` default, the upscaler's
   guard used to skip every mipmapped texture, which in Wizardry is all of them -
   `skippedGuard` climbed, `upscaled` stayed 0. `lod` is no longer a guard: level 0 is
-  scaled and the injected texture gets a full mip chain via `GenerateMipmapsIfNeeded`,
-  as the replacement path does. `gpuPaletteConversion` is off by default, so palettes are
+  scaled and the injected texture is a **single level**, exactly like a pack texture
+  without mip files (manual-LOD sampling clamps to level 0). A generated chain was tried
+  first and produced rainbow speckle on Wizardry's portraits - levels 1..N sampled before
+  they held data in manual-LOD mode - so do not reintroduce it without generating the
+  chain on the worker and uploading every level explicitly. `gpuPaletteConversion` is off by default, so palettes are
   not a blocker. First A/B on the Wizardry opening dialogue (same frame, IR 3x, reload
   between): RAISR-HD is visibly crisper than native on hair and line art; mean |diff|
   2.5/255. Screenshots in `raisr-data/shots/`.
-- **Follow-ups seen in that A/B**: Lanczos+CAS produces rainbow speckle on Wizardry's
-  portrait art (pre-existing filter bug, now reproducible with the server); the dialogue
-  font never reaches the upscaler (region-texture or target path - one of the remaining
-  guards).
+- **Follow-ups seen in that A/B**: the dialogue font never reaches the upscaler
+  (region-texture or target path - one of the remaining guards); and on the opening
+  dialogue `upscaled`/`evicted` climb ~4/s with `held` flat, i.e. a few textures churn
+  through the hash cache continuously (snow particles or a fade) and get re-upscaled each
+  time - cheap here, but the stability heuristic in the design is not yet applied. The
+  earlier "Lanczos+CAS speckle" was the same mip-chain bug, not a filter fault.
 - Wizardry also ran at `upscaleFloat = 1` (native internal resolution) on the test device;
   texture sharpness is invisible until IR is 2-3x. Set it before judging the look.
 - RAISR is an interpolator: it sharpens along edges and cannot invent detail. Expect "a much

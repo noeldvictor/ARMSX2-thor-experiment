@@ -7499,12 +7499,13 @@ void GSTextureCache::ProcessUpscaledTextures()
 
 	for (GSTextureUpscaler::CompletedUpscale& done : completed)
 	{
-		// A mipmapped source gets a full chain: the game samples specific levels (manual LOD)
-		// or asks for automatic ones, and either way a single-level texture in their place
-		// would clamp every distant sample to level 0. Level 0 is the upscale; the rest are
-		// generated on the GPU from it, exactly as a replacement without mip files is.
-		const int levels = done.mipmap ? GSDevice::GetMipmapLevelsForSize(done.width, done.height) : 1;
-		GSTexture* tex = g_gs_device->CreateTexture(done.width, done.height, levels, GSTexture::Format::Color);
+		// One level, even for a mipmapped source - the same shape as a pack texture that ships
+		// without mip files, which the renderer has handled for years: manual-LOD sampling
+		// clamps to level 0, automatic LOD has nothing to generate. A generated chain was tried
+		// first and read back as rainbow speckle on Wizardry's portraits in manual-LOD mode -
+		// levels 1..N sampled before they held anything - so the known-good shape wins.
+		// (`done.mipmap` is kept in the job for when a chain is generated on the worker instead.)
+		GSTexture* tex = g_gs_device->CreateTexture(done.width, done.height, 1, GSTexture::Format::Color);
 		if (!tex)
 			continue;
 
@@ -7515,8 +7516,6 @@ void GSTextureCache::ProcessUpscaledTextures()
 			g_gs_device->Recycle(tex);
 			continue;
 		}
-		if (levels > 1)
-			tex->GenerateMipmapsIfNeeded();
 
 		GSTextureUpscaler::NoteUpscaled(done.key.TEX0Hash, tex->GetMemUsage());
 		InjectHashCacheTexture(done.key, tex, done.alpha_minmax);
