@@ -48,6 +48,7 @@ Screenshots are from a personal AYN Thor test device.
 - Scale and algorithm are changeable from the in-game menu, so filters can be compared without leaving the game.
 - Scaling runs on a worker thread; the native texture is drawn immediately and the upscaled one swaps in when it is ready.
 - A texture covered by an HD pack is never upscaled, even while the pack texture is still loading; the upscaler only fills in what the pack leaves native.
+- In progress: **RAISR-HD**, learned upscaling kernels fit on the HD texture packs so a game with no pack still gets a sharper, edge-aware 2x on the fly. Not a neural net; a few hundred operations per pixel on the existing worker thread. `tools/raisr_train.py` fits the kernels from any pack.
 - On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
 ## Exploration Notes
@@ -59,6 +60,7 @@ Notes on what I am poking at. The texture filters are built and running; most of
 - [Neural models](docs/neural-models.md) — the `.a2nn` format, why no weights ship, and a tool that proves the path works before you have any.
 - [ARM64 optimization review](docs/arm64-optimization-review.md) — the Thor is four different CPU cores, and local debug builds were quietly testing different codegen than every release.
 - [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats, and the public collections turn out to be the same set we already bundle. Closing that gap means authoring, not importing.
+- [RAISR kernel trainer](tools/raisr_train.py) — fits the RAISR-HD kernels from HD packs and reports PSNR/SSIM against Lanczos on held-out textures. Kernels are general, not per game.
 - [Texture pack getter](docs/texture-pack-getter.md) — written before upstream shipped its own catalogue and one-tap installer, which this fork now inherits. Kept for the reasoning; the fork's part is the cover badge.
 - [On-device MCP server](docs/mcp-server.md) — a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 

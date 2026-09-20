@@ -62,6 +62,38 @@ does **not** upscale the finished frame. Present-time upscaling already exists h
 - Build order was scaffold → cheap scalers → neural last, as Vulkan compute. Do not
   jump to the neural path.
 
+### RAISR-HD learned kernels
+
+**Trainer implemented; runtime in progress.** The "pseudo-HD without a pack" path: RAISR
+(Romano/Isidoro/Milanfar 2016) - not a neural net. Each input pixel is hashed by gradient
+angle/strength/coherence into one of 216 buckets; each bucket owns one small kernel per
+output phase, fit by least squares on HD-pack pairs. Cost is ~550 MACs per input pixel, an
+order of magnitude under the CPU worker's 4000 MACs/pixel ceiling, so it stays on the
+existing worker thread with no Vulkan work.
+
+- `tools/raisr_train.py`: `extract` (ZIP or B2 tar+zstd; PNG, BC1/BC3 DDS, or `.astc` via
+  astcenc), `train`, `eval` (PSNR/SSIM vs nearest/bilinear/bicubic/Lanczos on held-out
+  textures, plus side-by-side crops). Native size and PSM come from the PCSX2 replacement
+  filename (`TEX0Hash[-CLUT][-rWxH]-bits`, bits = PSM:6 TW:4 TH:4).
+- **Training pairs**: HD pack texture as the target. Until real dumps exist, the input is
+  synthetic: box-downscale the pack back to native size, then quantise the way the PSM says
+  the native was stored (5551 for CT16, 256 colours for PSMT8, 16 for PSMT4). Real dumps from
+  `textures/<serial>/dumps/` drop into the same `lr/` folder by filename and the fit reruns.
+- **One general kernel set per class per scale**, never per game: `world_x2/x4`, `ui_x2/x4`.
+  UI is fit on the small-texture subset (the size heuristic in `ClassifyTexture`).
+- **Decided**: bundle the four `.a2rk` files in the APK; picker entry named **RAISR-HD**
+  (enum appended, picker lists in lockstep); fresh installs default to upscaling ON with
+  RAISR-HD 2x on both classes (a stored preference still wins); a Reload-textures button in
+  the pause menu plus a hotkey that flushes the hash cache, so a filter change is visible
+  without a scene change. Same kernel is applied to R, G, B and A, chosen from luma, so
+  alpha edges stay aligned with colour edges.
+- Training data comes from sashkinbro's GitHub Releases ZIPs (lossless PNG). ARMSX2's B2
+  bucket has a daily cap and returned 403 `download_cap_exceeded` on 2026-09-20. The data
+  workspace is outside the repo at `F:\Projectsrmsx2-thoraisr-data\`.
+- Wizardry: Tale of the Forsaken Land (SLUS-20258, no pack exists) is the user's live test.
+- RAISR is an interpolator: it sharpens along edges and cannot invent detail. Expect "a much
+  better Lanczos", not an ESRGAN pack. Pixel-art sprites still want xBR; both stay in the
+  picker.
 ### On-device MCP server
 
 **Not implemented.** Full notes: [docs/mcp-server.md](docs/mcp-server.md).
