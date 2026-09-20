@@ -357,6 +357,14 @@ def load_pair(dataset: str, name: str, pack_scale: int, scale: int):
     return lr, hr
 
 
+def size_filter(rows, native_min: int, native_max: int):
+    """Keep textures whose longer native side is within [native_min, native_max]. The fork
+    classifies textures by size at runtime (UI_CLASS_MAX_DIMENSION), so a kernel set fit on
+    the same size band is the natural way to specialise per class without touching the
+    classifier."""
+    return [r for r in rows if native_min <= max(r[1], r[2]) <= native_max]
+
+
 def split_names(rows, holdout: float, seed: int = 1234):
     rng = np.random.default_rng(seed)
     names = sorted(r[0] for r in rows)
@@ -399,7 +407,7 @@ def cmd_train(args) -> int:
 
     items = []
     for ds in args.datasets:
-        rows = load_meta(ds)
+        rows = size_filter(load_meta(ds), args.native_min, args.native_max)
         train_rows, _ = split_names(rows, args.holdout)
         items += [(ds, r) for r in train_rows if r[4] % scale == 0]
     if not items:
@@ -479,6 +487,7 @@ def cmd_train(args) -> int:
             "angles": args.angles, "strengths": args.strengths, "coherences": args.coherences,
             "window": args.window, "sigma": args.sigma, "ridge": args.ridge,
             "augment": args.augment, "pixels_per_texture": args.pixels_per_texture,
+            "native_min": args.native_min, "native_max": args.native_max,
             "empty_buckets": empty, "seconds": round(time.time() - t0),
         }, f, indent=1)
     print(f"wrote {args.out} ({os.path.getsize(args.out) / 1024:.0f} KB)")
@@ -575,7 +584,7 @@ def cmd_eval(args) -> int:
     scale, k, hasher, kernels = read_a2rk(args.model)
     items = []
     for ds in args.datasets:
-        rows = load_meta(ds)
+        rows = size_filter(load_meta(ds), args.native_min, args.native_max)
         _, held = split_names(rows, args.holdout)
         items += [(ds, r) for r in held if r[4] % scale == 0]
     rng = np.random.default_rng(args.seed)
@@ -687,6 +696,8 @@ def main() -> int:
     tr.add_argument("--threshold-textures", type=int, default=60)
     tr.add_argument("--holdout", type=float, default=0.1, help="fraction of textures kept out for eval")
     tr.add_argument("--no-augment", dest="augment", action="store_false", help="skip the 8 dihedral transforms")
+    tr.add_argument("--native-min", type=int, default=0, help="only textures whose longer native side is >= this")
+    tr.add_argument("--native-max", type=int, default=1 << 20, help="only textures whose longer native side is <= this")
     tr.add_argument("--seed", type=int, default=1)
     tr.set_defaults(func=cmd_train)
 
@@ -697,6 +708,8 @@ def main() -> int:
     ev.add_argument("--holdout", type=float, default=0.1)
     ev.add_argument("--max-textures", type=int, default=200)
     ev.add_argument("--samples", type=int, default=12, help="comparison sheets to write")
+    ev.add_argument("--native-min", type=int, default=0)
+    ev.add_argument("--native-max", type=int, default=1 << 20)
     ev.add_argument("--seed", type=int, default=1)
     ev.set_defaults(func=cmd_eval)
 
