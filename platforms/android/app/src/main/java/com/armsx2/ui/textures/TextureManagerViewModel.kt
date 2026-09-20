@@ -83,6 +83,9 @@ class TextureManagerViewModel(application: Application) : AndroidViewModel(appli
                 // catalogue entry greyed out as "Installed" forever, which also blocked reinstalling
                 // or switching packs for that game. Reconcile against what is actually on disk.
                 TexturePackInstallState.reconcile(packs.map { it.serial.uppercase() }.toSet())
+                // The cover badge keys "installed" off the same folders; a folder import or an
+                // out-of-app delete changes them without touching the install record.
+                com.armsx2.TexturePackPresenceIndex.invalidateInstalled()
 
                 val settings = ConfigStore.loadGlobal()
                 // Cached scan results only — loadCached() reads the stored list, it does not walk

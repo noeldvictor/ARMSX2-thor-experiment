@@ -2341,6 +2341,8 @@ open class MainActivityRuntime : ComponentActivity() {
         // there is no polling; the toggle lives in App settings.
         com.armsx2.OverlayRepo.load()
         com.armsx2.CoverRegionIndex.load()
+        // HD-pack cover badges: publish the cached catalog now, refresh it off-main if stale.
+        com.armsx2.TexturePackPresenceIndex.warm(applicationContext, lifecycleScope)
         // Only parses the 2.6MB GameDB when a non-default cover region is actually in use.
         if (com.armsx2.CoverRegionIndex.needsIndex())
             com.armsx2.CoverRegionIndex.ensureBuilt(applicationContext)

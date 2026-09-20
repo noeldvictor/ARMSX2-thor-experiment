@@ -87,6 +87,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.armsx2.CheatPresenceIndex
+import com.armsx2.TexturePackPresenceIndex
 import com.armsx2.CoverArtStyle
 import com.armsx2.EnglishTitles
 import com.armsx2.GridLabels
@@ -1054,6 +1055,25 @@ fun HomeScreen(
                     menuGame = null
                     com.armsx2.navigation.UiNavigator.navigate(com.armsx2.navigation.AppRoute.BiosManager(game))
                 }
+                // The controller-reachable twin of the cover's HD badge tap: only offered when a
+                // pack exists for this game, so the menu does not grow a row that leads nowhere.
+                TexturePackPresenceIndex.generation.intValue
+                val packState = TexturePackPresenceIndex.stateFor(context, game)
+                if (packState != TexturePackPresenceIndex.State.NONE) {
+                    GameMenuAction(
+                        "🖌️",
+                        str("renderer.section.texturePacks"),
+                        "game-menu.texturepacks",
+                        trailing = str(
+                            if (packState == TexturePackPresenceIndex.State.INSTALLED) "games.badge.hdInstalled.short"
+                            else "games.badge.hdAvailable.short",
+                        ),
+                    ) {
+                        menuGame = null
+                        com.armsx2.runtime.MainActivityRuntime.contextGame.value = game
+                        com.armsx2.navigation.UiNavigator.navigate(com.armsx2.navigation.AppRoute.TextureManager)
+                    }
+                }
                 // Cover art from another region, for THIS game only. The library-wide switch
                 // in the overflow menu is the wrong grain by itself: wanting the Japanese cover
                 // for a couple of games does not mean wanting every Western cover swapped. Only
@@ -2005,6 +2025,9 @@ private fun GameCover(
     val custom = remember(game.uri, customCoverMap) { CustomCovers.matchIn(customCoverMap, game) }
     val model = custom ?: game.coverUrl
     val hasCheats = CheatPresenceIndex.hasCheats(context, game)
+    // Subscribe to catalog arrivals and pack installs; the lookup itself is two set probes.
+    TexturePackPresenceIndex.generation.intValue
+    val packState = TexturePackPresenceIndex.stateFor(context, game)
     // Upstream added coverRegion/coverPins to the key set so a region change re-resolves the
     // art; this fork's hasCheats lookup sits alongside it rather than instead of it.
     val request = remember(model, use3d, coverRegion, coverPins) {
@@ -2049,23 +2072,67 @@ private fun GameCover(
                 },
             )
         }
-        if (hasCheats) {
-            Surface(
-                modifier = Modifier.align(Alignment.TopEnd).padding(6.dp),
-                shape = RoundedCornerShape(4.dp),
-                color = Color(0xFFD9363E),
-                shadowElevation = 2.dp,
-            ) {
-                Text(
-                    text = "CHEATS",
-                    modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
-                    color = Color.White,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 0.sp,
-                )
+        Column(
+            modifier = Modifier.align(Alignment.TopEnd).padding(6.dp),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            if (hasCheats) {
+                Surface(
+                    shape = RoundedCornerShape(4.dp),
+                    color = Color(0xFFD9363E),
+                    shadowElevation = 2.dp,
+                ) {
+                    Text(
+                        text = "CHEATS",
+                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                        color = Color.White,
+                        fontSize = 9.sp,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.sp,
+                    )
+                }
+            }
+            if (packState != TexturePackPresenceIndex.State.NONE) {
+                HdPackBadge(game, installed = packState == TexturePackPresenceIndex.State.INSTALLED)
             }
         }
+    }
+}
+
+private val HdBadgeGreen = Color(0xFF2E9E5B)
+
+/**
+ * One "HD" pill in two weights: solid when the pack is on disk, hollow when the catalog has one
+ * to download. Tapping opens Texture Packs with this game in context, so its pack sorts first -
+ * the same contextGame handoff the long-press menu uses for the Save Manager. The tap wins over
+ * the card's own click by being the innermost pointer target; nothing else in the card changes.
+ */
+@Composable
+private fun HdPackBadge(game: GameInfo, installed: Boolean) {
+    val open = {
+        com.armsx2.runtime.MainActivityRuntime.contextGame.value = game
+        com.armsx2.navigation.UiNavigator.navigate(com.armsx2.navigation.AppRoute.TextureManager)
+    }
+    Surface(
+        modifier = Modifier.clickable(
+            onClickLabel = str(if (installed) "games.badge.hdInstalled" else "games.badge.hdAvailable"),
+            onClick = open,
+        ),
+        shape = RoundedCornerShape(4.dp),
+        // The hollow state still needs a scrim: a bare 1dp outline vanishes on busy box art.
+        color = if (installed) HdBadgeGreen else Color(0x99000000),
+        border = if (installed) null else BorderStroke(1.dp, HdBadgeGreen),
+        shadowElevation = 2.dp,
+    ) {
+        Text(
+            text = "HD",
+            modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+            color = if (installed) Color.White else HdBadgeGreen,
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = 0.sp,
+        )
     }
 }
 

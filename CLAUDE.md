@@ -108,17 +108,24 @@ Reference manuals for the Thor's exact cores in
 
 ### Texture pack getter
 
-**Not implemented.** Full notes:
-[docs/texture-pack-getter.md](docs/texture-pack-getter.md).
+**Upstream ships it; the fork adds cover badges.** The design notes in
+[docs/texture-pack-getter.md](docs/texture-pack-getter.md) predate upstream's
+implementation and are kept for the reasoning, not as a to-do.
 
-- Only offer packs for games in the library — that scoping is the point of the
-  feature, not a filter on top of it.
-- Catalogue must be keyed by **serial and CRC**, never title. Title matching leaves
-  ~16% unresolved on a real library, and a catalogue can just carry the right key.
-- Installs to `<DataRoot>/textures/<SERIAL>/`, the folder the existing replacement
-  loader already scans.
-- Runtime resolution order is pack → upscaler → native, which is what makes partial
-  pack coverage acceptable.
+- Upstream: `TextureCatalog` (serial-keyed, ARMSX2's B2 bucket first, sashkinbro's
+  GitHub catalogue as fallback), `TextureOnlineSection` in the Texture Packs screen,
+  `TexturePackInstaller` (tar+zstd, ASTC textures uploaded compressed on Vulkan/GLES).
+  Library games sort first; the catalogue is cached on disk for 6 hours.
+- Fork: `TexturePackPresenceIndex` drives an `HD` pill on library covers - solid when
+  `<DataRoot>/textures/<SERIAL>/replacements` exists, hollow when the catalogue has a
+  pack. Installed is decided by the folder, not the install record, because the folder
+  is what the loader scans. Serial only, no title matching. Tap, or the long-press
+  menu row, opens Texture Packs with that game as `contextGame`.
+- The catalogue refreshes in the background at app start (`warm`) so badges are right
+  in the first session; the Texture Packs screen's own fetch publishes to the index too.
+- Runtime resolution order is pack → upscaler → native. A pack texture still loading
+  now suppresses the upscale for that key (see `LookupHashCache`), otherwise the two
+  async paths raced for `InjectHashCacheTexture`.
 
 ### Device defaults
 

@@ -107,6 +107,9 @@ fun TextureOnlineSection(
         val result = withContext(Dispatchers.IO) {
             TextureCatalog.fetch(context)
         }
+        // The cover badges read the same catalog; a fresh fetch here should not wait for the
+        // next launch to reach them.
+        result?.let { com.armsx2.TexturePackPresenceIndex.publish(it.packs) }
         packs = result?.packs.orEmpty()
         fromCache = result?.fromCache == true
         failed = result == null
