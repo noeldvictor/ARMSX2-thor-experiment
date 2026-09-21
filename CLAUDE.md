@@ -102,8 +102,9 @@ existing worker thread with no Vulkan work.
   2x PSNR vs Lanczos, per pack: +3.5, +0.1, +1.0, +2.1, +0.6, +0.7, +1.0, +0.7, +0.7 - it
   wins on every pack. **The small/large split is retired**: specialist sets fit on the
   <=128 and >128 bands gained <=0.06 dB over the general set on their own bands
-  (`raisr-data/fit_round2.log`), so one set serves both classes. The 4x set is still the
-  three-pack fit until the nine-pack 4x lands.
+  (`raisr-data/fit_round2.log`), so one set serves both classes. The 4x set is the same
+  nine-pack general fit (small band +0.6 dB over Lanczos; specialists again within
+  0.06 dB).
 - God Hand's pack (1.8 GB) failed mid-download on an HTTP/2 stream error; refetch it for a
   later round. Mega Man X7's pack is mostly mip files (184 usable textures).
 - **Found and fixed on device**: with upstream's `hwMipmap = true` default, the upscaler's

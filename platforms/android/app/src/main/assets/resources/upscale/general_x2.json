@@ -25,7 +25,7 @@
  "native_max": 1048576,
  "empty_buckets": 0,
  "seconds": 2606,
- "note": "Fit by tools/raisr_train.py on nine HD packs; world_x2 and ui_x2 are this same general set (a small/large split gained <0.1 dB).",
+ "note": "Fit by tools/raisr_train.py on nine HD packs; world/ui x2 and x4 are the same general sets (a small/large split gained <0.1 dB at both scales).",
  "heldout_psnr_vs_lanczos": {
   "xenosaga3": "+3.5",
   "suikoden5": "+2.1",
@@ -36,5 +36,9 @@
   "talesofrebirth": "+0.7",
   "dualhearts": "+0.6",
   "apeescape2": "+0.1"
+ },
+ "x4": {
+  "textures": "same nine packs, 4x-pack textures only",
+  "heldout_psnr_vs_lanczos_small_band": "+0.6"
  }
 }
