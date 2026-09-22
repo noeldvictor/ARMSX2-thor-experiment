@@ -345,6 +345,39 @@ implementation and are kept for the reasoning, not as a to-do.
   now suppresses the upscale for that key (see `LookupHashCache`), otherwise the two
   async paths raced for `InjectHashCacheTexture`.
 
+### Okage frame drops
+
+**Diagnosed on desktop PCSX2 2.8.2 (D3D12, native res, Tenel outdoor scene, PCSX2's own OSD
+counters).** The game is not GPU-heavy; it is *render-pass* heavy under the GameDB defaults:
+
+| config | barriers | render passes | GS thread | GPU |
+| --- | --- | --- | --- | --- |
+| GameDB default (autoFlush sprites, blending Medium) | 656 | **144** | 2.76 ms | 4.70 ms |
+| autoFlush off, blending Medium | 580 | 10 | 2.12 ms | 4.76 ms |
+| autoFlush off, blending Minimum | 257 | 8 | 1.90 ms | 3.31 ms |
+| indoors, GameDB default | 621 | 5 | - | - |
+
+- The 134 extra render passes are the depth-of-field pass: the game reads its frame buffer
+  back through a PSMT4HH channel shuffle (TEX0 at block 0x1180, the other frame buffer, TBW 4,
+  CLUT 0x267A/0x267E double-buffered) and `autoFlush: 1` flushes every sprite of it. On a
+  tiled GPU a render-pass break is a full tile store/load of the frame buffer; at 3x IR that
+  is the frame drop. **Fork GameDB now omits autoFlush for SCUS-97129** (visually identical at
+  native res, mean |diff| 1/255).
+- ~320 of the barriers are shader-emulated blends at Medium accuracy; `recommendedBlendingLevel`
+  in the GameDB can only raise the level, so lowering it is a global user setting (the Thor
+  already runs Basic = 577; Minimum = 257, only Ari's shadow blend changes).
+- `skipdraw` cannot remove the DoF: skipping 1 draw leaves the blur, 2+ kills the field merge
+  (dark scanlines) - the DoF draws come later than the first frame-buffer-sampling draw.
+- The DoF display list is **built once per scene** (a PINE poke to the TEX0 qword survives),
+  so a write breakpoint fires only on a scene load, and `sq` stores are covered by PCSX2's
+  memchecks. The builder was not found yet: no TEX0 template in .data, PSM 0x2C is passed as
+  an argument (the generic 4-bit texture creator at `00194A20` also uses 4HL/4HH layouts), so
+  the next step is a memory write breakpoint on the packet with the debugger open *across* a
+  scene load (do not relaunch PCSX2 in between - the debugger and its breakpoints die with the
+  process). `tools/pcsx2_mcp` has `click`/`type_text` and multi-monitor window capture for
+  driving the Qt debugger; `find_window` skips the debugger window.
+- Not yet measured on the Thor (the device was reserved by the Xbox 360 session).
+
 ### Settings constructor limit (dex)
 
 - `Settings` is a data class; its `copy$default` is a static method taking the instance,

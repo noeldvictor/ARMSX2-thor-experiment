@@ -116,7 +116,7 @@ def find_window(cfg: Config) -> int | None:
         nonlocal best
         pid = wt.DWORD()
         user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
-        if pid.value in pids and user32.IsWindowVisible(hwnd):
+        if pid.value in pids and user32.IsWindowVisible(hwnd) and "Debugger" not in window_title(hwnd):
             r = wt.RECT()
             user32.GetClientRect(hwnd, ctypes.byref(r))
             area = (r.right - r.left) * (r.bottom - r.top)
@@ -250,6 +250,32 @@ def _key(vk: int, down: bool) -> None:
         raise OSError(f"SendInput failed: {ctypes.get_last_error()}")
 
 
+def click(x: int, y: int, button: str = "left", double: bool = False) -> None:
+    """Click at absolute screen coordinates (any monitor). For Qt menus/dialogs of PCSX2,
+    which do not take synthesised keyboard mnemonics while the game window has focus."""
+    MOUSEEVENTF_LEFTDOWN, MOUSEEVENTF_LEFTUP = 0x0002, 0x0004
+    MOUSEEVENTF_RIGHTDOWN, MOUSEEVENTF_RIGHTUP = 0x0008, 0x0010
+    down, up = (MOUSEEVENTF_RIGHTDOWN, MOUSEEVENTF_RIGHTUP) if button == "right" else (MOUSEEVENTF_LEFTDOWN, MOUSEEVENTF_LEFTUP)
+    user32.SetCursorPos(int(x), int(y))
+    time.sleep(0.05)
+    for _ in range(2 if double else 1):
+        user32.mouse_event(down, 0, 0, 0, 0)
+        time.sleep(0.03)
+        user32.mouse_event(up, 0, 0, 0, 0)
+        time.sleep(0.08)
+
+
+def type_text(text: str) -> None:
+    """Type printable text via SendInput unicode events (dialog fields)."""
+    KEYEVENTF_UNICODE, KEYEVENTF_KEYUP = 0x0004, 0x0002
+    for ch in text:
+        for flags in (KEYEVENTF_UNICODE, KEYEVENTF_UNICODE | KEYEVENTF_KEYUP):
+            inp = _INPUT(type=1)
+            inp.ki = _KEYBDINPUT(0, ord(ch), flags, 0, None)
+            user32.SendInput(1, ctypes.byref(inp), ctypes.sizeof(_INPUT))
+        time.sleep(0.02)
+
+
 def pad_bindings(cfg: Config) -> dict[str, str]:
     """PS2 button -> key name, from [Pad1] in PCSX2.ini (e.g. {'cross': 'k', 'lup': 'w'})."""
     ini = configparser.RawConfigParser(strict=False)
@@ -310,7 +336,7 @@ def screenshot(cfg: Config, mode: str = "frame", timeout: float = 5.0) -> str:
         focus_window(hwnd)
         r = wt.RECT()
         user32.GetWindowRect(hwnd, ctypes.byref(r))
-        img = ImageGrab.grab(bbox=(r.left, r.top, r.right, r.bottom))
+        img = ImageGrab.grab(bbox=(r.left, r.top, r.right, r.bottom), all_screens=True)  # the window may sit on a second monitor
         cfg.snaps.mkdir(exist_ok=True)
         path = cfg.snaps / f"window_{int(time.time())}.png"
         img.save(path)

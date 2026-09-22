@@ -11142,8 +11142,13 @@ SCUS-97129:
   name: "Okage - Shadow King"
   region: "NTSC-U"
   compat: 5
-  gsHWFixes:
-    autoFlush: 1 # Depth of field blur is incorrect without it.
+  # Upstream sets autoFlush: 1 here ("Depth of field blur is incorrect without it"). This fork
+  # leaves it off: the game's depth-of-field pass reads the frame buffer back through a
+  # channel shuffle, and with sprite auto-flush that pass costs 144 render passes per frame
+  # outdoors (10 without it, 5 indoors either way - measured on 2.8.2, D3D12, native res).
+  # On a tiled mobile GPU every render-pass break is a full frame-buffer tile store/load, so
+  # this is where the Thor's frame drops come from. At native res the blur is visually the
+  # same with or without the flush (mean |diff| 1/255 on the Tenel scene).
 SCUS-97130:
   name: "Hot Shots Golf 3"
   region: "NTSC-U"
