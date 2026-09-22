@@ -1,5 +1,9 @@
 # AGENTS.md
 
+The single instruction file for this repository, for every agent and tool (there is no
+CLAUDE.md any more). Rules first, then "Current Thinking": active work, decisions already
+made, and implementation status per item. Update this file rather than adding another.
+
 ## Project Shape
 - ARMSX2 is a cross-platform PCSX2-derived monorepo. Android lives under `platforms/android`.
 - The Android frontend is Kotlin/Compose under `platforms/android/app/src/main/java/com/armsx2`.
@@ -350,6 +354,30 @@ implementation and are kept for the reasoning, not as a to-do.
 `docs/games/<game>.md` holds what was measured, shipped and left open for one game
 (`docs/games/okage.md` is the first). Put game-specific findings there, not here; this file
 keeps the cross-cutting rules and the one-paragraph status below.
+
+### Desktop measurements do not transfer to the Thor as-is
+
+Learned the hard way on Okage (2026-09-22): desktop PCSX2 on D3D12 said the house scene was
+cheap (GS 2.4 ms), and the Thor ran it at 45 fps with fast-forward on. The desktop OSD was
+showing the answer and it was read as harmless: **1,389 barriers per frame**. A barrier on
+desktop is a cheap in-pass texture barrier; on the Thor's Qualcomm proprietary Vulkan
+driver the log says `unreliable in-pass render-target self-read - forcing the RT-copy blend
+path` and `ROAA=NO fbfetch=NO(barrier-fallback)`, so every barrier is *end render pass, copy
+the render target, restart the pass* - GS thread 99% (21 ms) and GPU 81% on the device.
+
+- Count **BAR** as well as RP on desktop, and treat each BAR as a render-pass break plus a
+  copy on the Thor. Render passes alone understated the cost by two orders of magnitude.
+- Measure on the device, not by analogy: the emulator's `PerfLog` line in `emulog.txt`
+  (30 s averages of fps, EE, GS, VU, GPU) over wireless adb, settings flipped live through
+  the dev server (`am start -n com.armsx2/.Main --ez devserver true` reaches a running game
+  through `onNewIntent` without restarting it).
+- Get the frame itself: pause menu > Capture GS Dump writes `snaps/*.gs.zst`; desktop PCSX2
+  replays it with the OSD counters (`pcsx2-qt.exe -- dump.gs.zst`), and
+  `pcsx2-gsrunner` (NDK executable, built from the Android tree with
+  `ninja <build>/intermediates/cxx/Debug/<hash>/obj/arm64-v8a/pcsx2-gsrunner`) replays it on
+  the Thor's own GPU with `-perf -stats-json`.
+- Blending accuracy is not a free knob here: Minimum moved Okage's load onto the GPU
+  (40 fps, GPU 98%) instead of removing it. Texture upscaling cost nothing measurable.
 
 ### Okage frame drops
 
