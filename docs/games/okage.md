@@ -132,10 +132,39 @@ What was tried on the live Tenel scene (desktop):
   Character Shadows (Much Faster)" in `E0426FC6.pnach` (off by default):
   `201B0FB8 = 0005283C`, `201B0FBC = 00000000`, `20202E30 = 0001000C`.
 
-The real fix keeps the shadows and is renderer work: recognise "`FBMSK == 7FFFFFFF`, no
-blending" (set/clear alpha bit 7) and the DATE pass that follows, and do them without a
-frame-buffer read on drivers without fbfetch/ROAA (stencil DATE with a stencil-only mark
-pass, or a logic-op/blend trick on the alpha channel). Until then: the switch.
+### Shadows kept, reads removed (renderer, 2026-09-22)
+
+Two renderer changes, both Vulkan-only and both only on devices where a frame read is a
+pass break plus a copy (no texture barriers - the Thor's Qualcomm driver). Measured by
+replaying the Thor's own house-scene dump on the Thor with `pcsx2-gsrunner -perf`, 30 loops:
+
+| build | GS thread / frame | render passes / frame | image |
+| --- | --- | --- | --- |
+| before | 18.6-19.0 ms | - | reference |
+| + logic-op mark/clear (`45b27da3f5`) | 14.0 ms | 708 | bit-identical |
+| + stencil copy of the DATE result (`ce83c8f019`) | **5.9 ms** | **161** | bit-identical |
+| shadows removed entirely (dump edit, for scale) | 5.7 ms | - | no shadows |
+
+So the shadows now cost ~0.2 ms a frame instead of ~13.
+
+1. **Mark and clear through a logic op** (`GSAlphaBitLogicOp.h`). A draw with
+   `FBMSK 7FFFFFFF`, black, no blending only sets or clears alpha bit 7. With the shader's
+   alpha forced to 0x80, `VK_LOGIC_OP_OR` sets it and `AND_INVERTED` clears it, keeping
+   bits 0-6 (the next draw's blend factor) without reading the target.
+2. **The DATE draw from a stencil copy that the flag draws keep current.** The shadow draw
+   writes alpha 0 under DATM 0, so it never flips its own test: a stencil snapshot of the
+   test is exact (plain stencil DATE instead of primitive-ID tracking). The first such draw
+   after a flag draw in a render pass takes the snapshot over the whole target (one setup
+   pass per frame instead of one per strip); the mark and clear pipelines then also
+   `REPLACE` the stencil with the result they leave (where the depth test passes - exactly
+   where the logic op writes), and the following DATE draws test it with no setup at all.
+   Any other alpha write, a StencilOne DATE draw, an in-pass colour clear or the end of the
+   pass drops the copy; the pass variant carrying it stores stencil so a command-buffer
+   restart keeps it.
+
+Nothing game-specific: any game that uses alpha bit 7 as a one-bit stencil this way gets
+the same path. The switch "No Character Shadows (Much Faster)" stays in the cheat file for
+anyone who wants the last 0.2 ms, off by default.
 
 ## What did not work
 

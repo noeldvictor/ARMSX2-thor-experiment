@@ -73,6 +73,7 @@ made, and implementation status per item. Update this file rather than adding an
 - World/3D and UI/2D textures are separate user-facing classes, each with its own on/off and its own algorithm. Keep them independent everywhere, including config keys.
 - Anything that upscales textures needs a VRAM budget with batch eviction to a low-water mark, a "do not retry" mark on evicted hashes, and a hash-stability heuristic. Animated textures re-hash every frame and will otherwise generate unbounded work.
 - Gate any new GPU feature on the existing `MobileGpuArchitecture` detection in `pcsx2/GS/Renderers/Common/GSGPUProfile.h`. Thor ships both an 8 Gen 2 (Adreno 740) and an 865 (Adreno 650) variant, so never assume 8 Gen 2.
+- On the Thor's Qualcomm driver (texture barriers off) every draw that reads its own target is an end-pass + copy + restart. Before accepting one, look for a no-read form of the same result: dual-source blend (`GSFastStencilShadow.h`), logic ops and a stencil copy kept current inside the pass (`GSAlphaBitLogicOp.h`). Gate such paths on the device features they need (`!texture_barrier`, `logicOp`, `stencil_buffer`), never on `!texture_barrier` alone, and prove them with a bit-exact frame compare from a gsrunner replay on the device.
 - Prefer Vulkan compute over the Hexagon NPU for texture work: the data is already in GPU memory, QNN/SNPE is a per-SoC packaging burden, and NNAPI is deprecated as of Android 15.
 - Design notes live in `docs/texture-upscaling-research.md`. Update that file rather than restating its conclusions in code comments.
 
@@ -425,8 +426,11 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   draw, clear) = 1,389 barriers in a house scene, each a render-target copy on the Adreno
   driver (GS 99%, 45 fps with fast-forward on). Removing the stencil trick breaks the
   outdoor silhouette; removing the shadows (switch "No Character Shadows (Much Faster)") takes
-  it to 1 barrier. The keep-the-shadows fix is renderer work: a no-read path for alpha-bit-7
-  mark/clear + DATE when fbfetch/ROAA are absent. Full notes in `docs/games/okage.md`.
+  it to 1 barrier. **Fixed in the renderer with the shadows kept** (Vulkan, no-texture-barrier
+  devices only): mark/clear via logic ops (`GSAlphaBitLogicOp.h`), the DATE draw from a stencil
+  copy of the test that the mark/clear pipelines keep current inside the render pass. Thor
+  replay: GS 18.8 -> 5.9 ms a frame, 708 -> 161 render passes, frames bit-identical. Full notes
+  in `docs/games/okage.md`.
 - GS dumps parse fine in Python (zstd; header, state, 0x2000-byte priv regs, then packets
   0 = transfer / 1 = vsync / 2 = readfifo / 3 = regs); rewriting A+D register values in a dump
   and replaying it on desktop is the fastest way to test "what if the game did X" before
