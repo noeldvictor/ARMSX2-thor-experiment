@@ -84,6 +84,7 @@ RDown = Keyboard/G
 RLeft = Keyboard/F
 [Hotkeys]
 Screenshot = Keyboard/F8
+GSDumpSingleFrame = Keyboard/F9
 SaveStateToSlot = Keyboard/F1
 LoadStateFromSlot = Keyboard/F3
 NextSaveStateSlot = Keyboard/F2

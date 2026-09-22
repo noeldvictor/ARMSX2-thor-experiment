@@ -134,7 +134,7 @@ def screenshot(mode: str = "frame") -> dict:
 
 
 def press(buttons: list[str] | str, hold_ms: int = 80, repeat: int = 1, gap_ms: int = 120) -> dict:
-    """Press PS2 buttons together (names from [Pad1]: up/down/left/right/cross/circle/square/triangle/start/select/l1/r1/l2/r2/lup/ldown/lleft/lright...) or hotkeys (screenshot/save_state/load_state/pause). hold_ms is how long they stay down."""
+    """Press PS2 buttons together (names from [Pad1]: up/down/left/right/cross/circle/square/triangle/start/select/l1/r1/l2/r2/lup/ldown/lleft/lright...) or hotkeys (screenshot/gs_dump/save_state/load_state/pause). gs_dump writes a single-frame snaps/*.gs.zst, which pcsx2-gsrunner replays on the Thor. hold_ms is how long they stay down."""
     if isinstance(buttons, str):
         buttons = [b.strip() for b in buttons.replace("+", ",").split(",") if b.strip()]
     ctl.press(CFG, buttons, hold_ms, repeat, gap_ms)

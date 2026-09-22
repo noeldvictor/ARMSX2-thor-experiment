@@ -382,6 +382,16 @@ the render target, restart the pass* - GS thread 99% (21 ms) and GPU 81% on the 
   `pcsx2-gsrunner` (NDK executable, built from the Android tree with
   `ninja <build>/intermediates/cxx/Debug/<hash>/obj/arm64-v8a/pcsx2-gsrunner`) replays it on
   the Thor's own GPU with `-perf -stats-json`.
+- For correctness, compare with the software renderer, not with the previous build: Okage's
+  shadow was wrong on the Thor in every build, so "bit-identical to before" proved nothing
+  about it. Desktop PCSX2 makes the dump from any save state (`tools/pcsx2_mcp` hotkey
+  `gs_dump`, F9); replay it on the Thor with `-renderer vulkan` and `-renderer sw` and diff.
+  Per-draw targets and HW config for a draw range: `-set EmuCore/GS/DumpGSData=true`,
+  `HWDumpDirectory`/`SWDumpDirectory`, `SaveRT`, `SaveAlpha`, `SaveHWConfig`,
+  `SaveDrawStart`/`SaveDrawCount`, `SaveFrameStart`/`SaveFrameCount`.
+- Desktop save states load on the Thor when the save-state version matches
+  (`g_SaveVersion` in `pcsx2/SaveState.h`, `0x9A59` for both on 2026-09-22); copy them to
+  `<DataRoot>/sstates/` and use the dev server's `load_state`.
 - Blending accuracy is not a free knob here: Minimum moved Okage's load onto the GPU
   (40 fps, GPU 98%) instead of removing it. Texture upscaling cost nothing measurable.
 
@@ -429,8 +439,10 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   it to 1 barrier. **Fixed in the renderer with the shadows kept** (Vulkan, no-texture-barrier
   devices only): mark/clear via logic ops (`GSAlphaBitLogicOp.h`), the DATE draw from a stencil
   copy of the test that the mark/clear pipelines keep current inside the render pass. Thor
-  replay: GS 18.8 -> 5.9 ms a frame, 708 -> 161 render passes, frames bit-identical. Full notes
-  in `docs/games/okage.md`.
+  replay: GS 18.8 -> 5.9 ms a frame, 708 -> 161 render passes, frames bit-identical. In game:
+  2x fast-forward holds 119.9 fps outdoors (113-116 in the World Library, GS-bound). The
+  shadow's *shape* was also wrong on the Thor in every build (half-strength Ad blend, fixed by
+  an alpha-doubling pass under the stencil). Full notes in `docs/games/okage.md`.
 - GS dumps parse fine in Python (zstd; header, state, 0x2000-byte priv regs, then packets
   0 = transfer / 1 = vsync / 2 = readfifo / 3 = regs); rewriting A+D register values in a dump
   and replaying it on desktop is the fastest way to test "what if the game did X" before

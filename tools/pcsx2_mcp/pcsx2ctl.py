@@ -289,7 +289,7 @@ def pad_bindings(cfg: Config) -> dict[str, str]:
     return out
 
 
-HOTKEYS = {"screenshot": "f8", "save_state": "f1", "load_state": "f3", "next_slot": "f2", "pause": "space", "turbo": "tab", "menu": "escape"}
+HOTKEYS = {"screenshot": "f8", "gs_dump": "f9", "save_state": "f1", "load_state": "f3", "next_slot": "f2", "pause": "space", "turbo": "tab", "menu": "escape"}
 
 
 def _resolve_keys(cfg: Config, names: list[str]) -> list[int]:

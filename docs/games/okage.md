@@ -166,6 +166,38 @@ Nothing game-specific: any game that uses alpha bit 7 as a one-bit stencil this 
 the same path. The switch "No Character Shadows (Much Faster)" stays in the cheat file for
 anyone who wants the last 0.2 ms, off by default.
 
+**In game on the Thor** (APK with both changes, native resolution, blending Basic, DoF patch
+on, desktop save states copied to the Thor - same save-state version `0x9A59`):
+
+| scene | normal speed | 2x fast-forward |
+| --- | --- | --- |
+| Tenel, outside the inn (state 2) | 59.9 fps, EE 46% GS 34% GPU 26% | **119.9 fps**, EE 81% GS 69% GPU 53% |
+| World Library, three characters (state 1) | - | 113-116 fps, EE 88-91% GS 99% GPU 90-92% |
+
+Before: 45-49 fps with fast-forward on, GS 99%.
+
+### The shadow's shape was wrong on the Thor all along (fixed 2026-09-22)
+
+Seen in game after the speed fix: Ari's shadow was a pale smear with jagged dark pieces, where
+desktop PCSX2 draws a solid Shadow King silhouette. Not caused by the speed work: a desktop GS
+dump of the same frame (state 2, `F9` single-frame dump) replayed on the Thor gave identical
+pixels with the old, logic-op and stencil-copy builds, and `-renderer sw` on the same dump drew
+the right silhouette. Per-draw target dumps (`-set EmuCore/GS/DumpGSData=true ... SaveRT/SaveAlpha/
+SaveHWConfig`, Vulkan vs SW) located it at the first strip:
+
+- the shadow draw is `Cd * (1 - Ad)`; the mark draw before it unscales the target's alpha (its
+  1-bit mask needs the raw bits), so the hardware blend reads Ad as `a/255` - for the ground's
+  alpha 0x40 that darkens by 25% instead of 50%, and the error compounds over 350 strips;
+- upstream's correct road is a software blend (a frame read); desktop takes it through texture
+  barriers, the Thor cannot, so it fell back to the half-strength hardware blend at every
+  blending-accuracy level (High gave the same picture).
+
+Fix (`820fd43af3`, Vulkan, stencil DATE only): run the draw twice under the stencil copy - an
+alpha-only pass `Ad * 1 + Ad` on the passing pixels (stencil 1 -> 2, so overlapping triangles do
+not double twice), then the draw over stencil 2 (-> 1), which now reads Ad double-scaled like
+RTA correction does. No reads, same pass, GS time unchanged. Replay vs SW: shadow area |diff|
+3.29 -> 0.68, whole frame 1.07 -> 0.68.
+
 ## What did not work
 
 - `skipdraw` cannot isolate the DoF: skipping 1 draw after the first frame-buffer-sampling
@@ -223,6 +255,13 @@ turbo, and let PCSX2's dumper write every upload. Then upscale the dumps offline
 neural model on the PC, not the Thor's 4000 MACs/pixel ceiling) and ship the folder as a
 pack: pack textures win over the on-device upscaler by design. That is the "HD pack in
 advance" the question is after, with the PC doing the heavy lifting once per game.
+
+## HD textures
+
+No released pack (checked 2026-09-22): not in ARMSX2's B2 catalogue (517 packs) or sashkinbro's
+(621), and Panda_Venom's GBAtemp list only has 2023 work-in-progress screenshots of Okage, not
+a release. On the Thor the on-device upscaler is already on for it (RAISR-HD 2x, world and UI);
+at internal resolution 1x the gain is hard to see - raise the internal resolution to judge it.
 
 ## Cheats
 
