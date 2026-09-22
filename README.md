@@ -53,6 +53,29 @@ Screenshots are from a personal AYN Thor test device.
 - An on-device **MCP dev server** (github flavor only, off by default, localhost over `adb forward`) can boot games, read and write settings, save and load states, capture screenshots and read upscaler counters, so the filters can be compared by a script rather than by hand.
 - On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
+## Hotkeys
+
+**On the Thor (ARMSX2).** System hotkeys are unbound by default. Bind them in Settings ->
+Controller -> System hotkeys, as a single button or a two-button combo (hold the first,
+press the second). The actions: Menu / Pause, Quick Save State, Quick Load State, Cycle
+Save Slot, Screenshot, Fast Forward (hold), Fast Forward (toggle), Slow Down (toggle),
+Increase / Decrease Resolution, Cycle Perf Stats (OSD), Toggle Texture Dumping, Reload
+Textures, Gyro (hold). Fast forward is also on the Thor's second-screen panel, the pause
+menu, the on-screen widget, and the dev server (`POST /tool/hotkey {"name":"fast_forward"}`;
+also `quick_save`, `quick_load`, `reload_textures`, `texture_dump`).
+
+**On the desktop PCSX2 cheat lab** (`tools/pcsx2_mcp/setup.py` writes this ini):
+
+| Key | Action | | Key | PS2 pad |
+| --- | --- | --- | --- | --- |
+| Tab | Turbo (fast forward) toggle | | Arrows | D-pad |
+| F8 | Screenshot to `snaps/` | | W A S D | Left stick |
+| F1 / F3 | Save / load state slot | | T F G H | Right stick |
+| F2 / Shift+F2 | Next / previous slot | | K L J I | Cross, Circle, Square, Triangle |
+| Space | Pause | | Enter / Backspace | Start / Select |
+| Esc | Pause menu | | Q E / 1 3 / 2 4 | L1 R1 / L2 R2 / L3 R3 |
+| Alt+Enter | Fullscreen | | | |
+
 ## Exploration Notes
 
 Notes on what I am poking at. The texture filters are built and running; most of the rest is not. No promises, no dates.
@@ -61,7 +84,7 @@ Notes on what I am poking at. The texture filters are built and running; most of
 - [Third-party ports](docs/third-party.md) — where the filters come from, their licences, and the two places I deliberately match a reference's quirk rather than "fixing" it.
 - [Neural models](docs/neural-models.md) — the `.a2nn` format, why no weights ship, and a tool that proves the path works before you have any.
 - [ARM64 optimization review](docs/arm64-optimization-review.md) — the Thor is four different CPU cores, and local debug builds were quietly testing different codegen than every release.
-- [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats, and the public collections turn out to be the same set we already bundle. Closing that gap means authoring, not importing.
+- [Cheat tooling](docs/cheat-tooling.md) — measured: 46% of the games on my card have no bundled cheats, and the public collections turn out to be the same set we already bundle. Closing that gap means authoring, not importing — which the `ps2-cheat` skill and the `pcsx2` MCP server (`tools/pcsx2_mcp/`) now do on desktop PCSX2. First result: Okage's no-encounter cheat, found and shipped in one session.
 - [RAISR kernel trainer](tools/raisr_train.py) — fits the RAISR-HD kernels from HD packs and reports PSNR/SSIM against Lanczos on held-out textures. Kernels are general, not per game.
 - [Texture pack getter](docs/texture-pack-getter.md) — written before upstream shipped its own catalogue and one-tap installer, which this fork now inherits. Kept for the reasoning; the fork's part is the cover badge.
 - [On-device MCP server](docs/mcp-server.md) — now built: a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
