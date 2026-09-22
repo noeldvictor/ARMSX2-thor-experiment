@@ -1050,7 +1050,10 @@ struct alignas(16) GSHWDrawConfig
 				u8 wb : 1;
 				u8 wa : 1;
 
-				u8 _free : 4;
+				// GSAlphaBitLogicOp: 0 none, 1 OR, 2 AND_INVERTED. Only the Vulkan backend sets it
+				// (alpha_bit_logic_op), so every other backend's key is unchanged.
+				u8 logic_op : 2;
+				u8 _free : 2;
 			};
 			struct
 			{
@@ -1493,6 +1496,7 @@ public:
 		bool texture_barrier      : 1; ///< Supports sampling rt and hopefully texture barrier
 		bool multidraw_fb_copy    : 1; ///< Replacement for texture barrier.
 		bool cheap_rt_feedback_read : 1; ///< A feedback read costs nothing structural — no render-pass break, no tile flush — so the renderer may take one on a draw that did not need it. ⚠️ `!texture_barrier` is NOT a substitute: it is equally true of every driver on the RT-copy feedback workaround, where the read is the most expensive one we have.
+		bool alpha_bit_logic_op   : 1; ///< A draw that only sets or clears the frame's alpha bit 7 (FBMSK 0x7FFFFFFF, black, no blending) uses a Vulkan logic op (OR / AND_INVERTED) instead of the shader-emulated mask's render-target read. Vulkan only, with the logicOp feature, and only while texture barriers are off, where that read is a pass break plus a copy. See GSAlphaBitLogicOp.h.
 		bool fast_stencil_shadow  : 1; ///< The alpha stencil counter (flat triangles storing their own pixel's alpha times 127/128 or 130/128) is drawn by one dual-source blend instead of a render-target read, and the hardware renderer stops auto-flush from splitting it. Set by Vulkan only, when texture barriers are off, so that each read would be a pass break plus a copy, and dual-source blending exists. See GSFastStencilShadow.h. ⚠️ Never infer it from `!texture_barrier`: D3D11 runs without barriers too, with cheap copies and no shader for it.
 		bool provoking_vertex_last: 1; ///< Supports using the last vertex in a primitive as the value for flat shading.
 		bool point_expand         : 1; ///< Supports point expansion in hardware.

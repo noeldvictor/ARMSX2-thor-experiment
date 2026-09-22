@@ -37,6 +37,7 @@ namespace
 	constexpr u64 kLibretroRetireFrames = 6;
 } // namespace
 #include "GS/Renderers/Common/GSDevice.h"
+#include "GS/Renderers/Common/GSAlphaBitLogicOp.h"
 #include "GS/Renderers/Common/GSFastStencilShadow.h"
 #include "GS/Renderers/Common/GSFeedbackLoopCarryPolicy.h"
 #include "GS/Renderers/Common/GSFramebufferFetchPolicy.h"
@@ -570,6 +571,8 @@ bool GSDeviceVK::SelectDeviceFeatures()
 	m_device_features.geometryShader = available_features.geometryShader;
 	m_device_features.fragmentStoresAndAtomics = available_features.fragmentStoresAndAtomics;
 	m_device_features.pipelineStatisticsQuery = available_features.pipelineStatisticsQuery;
+	// For GSAlphaBitLogicOp: pipelines with logicOpEnable need the feature enabled at creation.
+	m_device_features.logicOp = available_features.logicOp;
 
 	return true;
 }
@@ -4120,6 +4123,11 @@ bool GSDeviceVK::CheckFeatures()
 	m_features.fast_stencil_shadow =
 		GSFastStencilShadow::DeviceQualifies(GetRenderAPI(), m_features.texture_barrier, m_features.dual_source_blend);
 
+	// The destination-alpha flag through the colour output stage (GSAlphaBitLogicOp.h). Same
+	// reasoning as above: only worth it where a frame read is a pass break plus a copy.
+	m_features.alpha_bit_logic_op =
+		GSAlphaBitLogicOp::DeviceQualifies(GetRenderAPI(), m_device_features.logicOp != 0, m_features.texture_barrier);
+
 	// Mali-G57 r13p0-class drivers can expose alternating/stale FastMAD history banks instead of the
 	// reconstructed frame; GSRenderer::Merge falls those back to weave+blend. Ported from sashkinbro/EmuCoreX.
 	m_features.broken_mad_deinterlace = is_mali_g57;
@@ -7467,6 +7475,14 @@ VkPipeline GSDeviceVK::CreateTFXPipeline(const PipelineSelector& p)
 		gpb.SetBlendAttachment(0, true, vk_blend_factors[pbs.src_factor], vk_blend_factors[pbs.dst_factor],
 			vk_blend_ops[pbs.op], vk_blend_factors[pbs.src_factor_alpha], vk_blend_factors[pbs.dst_factor_alpha],
 			VK_BLEND_OP_ADD, p.cms.wrgba);
+	}
+	else if (p.cms.logic_op != GSAlphaBitLogicOp::None)
+	{
+		// GSAlphaBitLogicOp: blending off, logic op on, alpha written alone. The shader's colour is
+		// black, so a driver that ignores the write mask still leaves RGB as it was (0|d, ~0&d).
+		gpb.SetBlendAttachment(0, false, VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, VK_BLEND_OP_ADD,
+			VK_BLEND_FACTOR_ONE, VK_BLEND_FACTOR_ZERO, VK_BLEND_OP_ADD, p.cms.wrgba);
+		gpb.SetLogicOp(true, (p.cms.logic_op == GSAlphaBitLogicOp::SetBit) ? VK_LOGIC_OP_OR : VK_LOGIC_OP_AND_INVERTED);
 	}
 	else if (m_broken_colormask_with_depth && (p.cms.wrgba & 0x7u) == 0 &&
 			 (p.dss.ztst != ZTST_ALWAYS || p.dss.zwe))

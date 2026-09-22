@@ -9,6 +9,7 @@
 #include "GS/Renderers/HW/GSSpriteEdgeSnap.h"
 #include "GS/Renderers/HW/GSTextureReplacements.h"
 #include "GS/Renderers/Common/GSBlendConstantPolicy.h"
+#include "GS/Renderers/Common/GSAlphaBitLogicOp.h"
 #include "GS/Renderers/Common/GSFastStencilShadow.h"
 #include "GS/Renderers/Common/GSFramebufferFetchPolicy.h"
 #include "GS/Renderers/Common/GSSelfReadCopyPolicy.h"
@@ -10701,6 +10702,31 @@ __ri void GSRendererHW::DrawPrims(GSTextureCache::Target* rt, GSTextureCache::Ta
 		GL_INS("HW: RT alpha is now %s", rt->m_rt_alpha_scale ? "scaled" : "NOT scaled");
 		rt->m_rt_alpha_scale = new_scale_rt_alpha;
 		m_conf.ps.rta_correction = rt->m_rt_alpha_scale;
+	}
+
+	// The destination-alpha flag through the colour output stage instead of a target read
+	// (GSAlphaBitLogicOp.h). Here because the target's alpha representation is final: the logic op
+	// works on the stored bits, so a scaled (RTA-corrected) or HDR target does not qualify.
+	if (rt && g_gs_device->Features().alpha_bit_logic_op && m_conf.ps.fbmask && !m_conf.ps.rta_correction &&
+		!m_conf.ps.colclip_hw && !m_conf.ps.colclip && !m_conf.blend_multi_pass.enable &&
+		!m_conf.alpha_second_pass.enable && m_conf.destination_alpha == GSHWDrawConfig::DestinationAlphaMode::Off &&
+		m_conf.ps.dst_fmt == GSLocalMemory::PSM_FMT_32 && !m_conf.ps.date &&
+		rt->GetTexture()->GetFormat() == GSTexture::Format::Color)
+	{
+		const u8 logic_op = GSAlphaBitLogicOp::Classify(*PRIM, m_cached_ctx.FRAME, m_cached_ctx.TEST, m_context->FBA,
+			m_vt.m_min.c, m_vt.m_max.c);
+		if (logic_op != GSAlphaBitLogicOp::None)
+		{
+			GL_INS("HW: alpha bit 7 %s through a logic op", (logic_op == GSAlphaBitLogicOp::SetBit) ? "set" : "cleared");
+			m_conf.ps.fbmask = 0;
+			m_conf.ps.fba = 1; // source alpha exactly 0x80 for both ops
+			m_conf.blend = {};
+			m_conf.colormask.wrgba = 0x8;
+			m_conf.colormask.logic_op = logic_op;
+			// Untextured, unblended, no DATE and no alpha test: the mask was this draw's only read.
+			m_conf.require_one_barrier = false;
+			m_conf.require_full_barrier = false;
+		}
 	}
 
 	// Call before computing the full drawlist in case ROV is used and we don't need it.
