@@ -33,6 +33,8 @@ VALID_TYPES = (0, 1, 2, 3, 4, 5, 6, 7, 0xC, 0xD, 0xE)
 
 
 def norm(t: str) -> str:
+    import unicodedata
+    t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode()  # Böse -> Bose, the site's spelling
     t = t.lower().replace("&", "and")
     t = re.sub(r"\(.*?\)|\[.*?\]", " ", t)
     t = re.sub(r"[^a-z0-9]+", " ", t)

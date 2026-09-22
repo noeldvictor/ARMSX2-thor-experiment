@@ -91,6 +91,7 @@ Notes on what I am poking at. The texture filters are built and running; most of
 - [Games without cheats](docs/games-without-cheats.txt) — the missing list with what exists online for each: the serial-keyed GitHub DB, then gamehacking.org's PCSX2 export (`tools/cheat_finder/`, the `find-ps2-cheats` skill), fetched slowly and cleaned of un-decrypted codes.
 - [RAISR kernel trainer](tools/raisr_train.py) — fits the RAISR-HD kernels from HD packs and reports PSNR/SSIM against Lanczos on held-out textures. Kernels are general, not per game.
 - [Texture pack getter](docs/texture-pack-getter.md) — written before upstream shipped its own catalogue and one-tap installer, which this fork now inherits. Kept for the reasoning; the fork's part is the cover badge.
+- [Game notes](docs/games/) — per-game measurements and fixes; [Okage](docs/games/okage.md) first: why it drops frames (144 render passes a frame from a depth-of-field read-back under auto-flush), what shipped, and the "HD pack in advance" idea.
 - [On-device MCP server](docs/mcp-server.md) — now built: a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 
 ## What This Is Not

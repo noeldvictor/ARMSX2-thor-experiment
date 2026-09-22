@@ -345,9 +345,15 @@ implementation and are kept for the reasoning, not as a to-do.
   now suppresses the upscale for that key (see `LookupHashCache`), otherwise the two
   async paths raced for `InjectHashCacheTexture`.
 
+### Per-game notes
+
+`docs/games/<game>.md` holds what was measured, shipped and left open for one game
+(`docs/games/okage.md` is the first). Put game-specific findings there, not here; this file
+keeps the cross-cutting rules and the one-paragraph status below.
+
 ### Okage frame drops
 
-**Diagnosed on desktop PCSX2 2.8.2 (D3D12, native res, Tenel outdoor scene, PCSX2's own OSD
+**Full notes: [docs/games/okage.md](docs/games/okage.md).** Diagnosed on desktop PCSX2 2.8.2 (D3D12, native res, Tenel outdoor scene, PCSX2's own OSD
 counters).** The game is not GPU-heavy; it is *render-pass* heavy under the GameDB defaults:
 
 | config | barriers | render passes | GS thread | GPU |
