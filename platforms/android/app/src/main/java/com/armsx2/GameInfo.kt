@@ -686,3 +686,76 @@ object FilenameParser {
         return title to serial
     }
 }
+
+/**
+ * Multi-disc games: the discs of one title are separate library entries with separate serials
+ * (Shadow Hearts: Covenant is SLUS-21041 + SLUS-21044). Nothing in the DB links them except the
+ * title, which carries "[Disc 1 of 2]" for every multi-disc entry, so the link is made here from
+ * the title - the GameDB one when the serial resolved, the filename otherwise ("(Disc 2)",
+ * "CD1", "Disc 2 of 3"). A set never crosses regions or platforms: the PAL and NTSC-U discs of
+ * one game are different games to the emulator, so the serial's four-letter prefix is part of
+ * the key.
+ */
+object DiscSets {
+    data class Tag(val number: Int, val count: Int?)
+
+    private val TAG = Regex(
+        """[\[(]?\s*(?:disc|disk|cd)\s*[-_ ]?(\d+)(?:\s*(?:of|/)\s*(\d+))?\s*[\])]?""",
+        RegexOption.IGNORE_CASE,
+    )
+
+    fun tagIn(text: String): Tag? {
+        val m = TAG.find(text) ?: return null
+        val n = m.groupValues[1].toIntOrNull() ?: return null
+        if (n !in 1..9) return null
+        return Tag(n, m.groupValues[2].toIntOrNull())
+    }
+
+    /** The title with the disc tag and dump cruft removed, lower-cased, whitespace-collapsed. */
+    fun baseTitle(text: String): String =
+        text.replace(TAG, " ")
+            .replace(Regex("""\[[^\]]*]|\([^)]*\)"""), " ")
+            .lowercase()
+            .replace(Regex("""[^\p{L}\p{N}]+"""), " ")
+            .trim()
+
+    private fun fileName(game: GameInfo): String =
+        (game.uri.lastPathSegment?.substringAfterLast('/')?.substringAfterLast(':') ?: "")
+            .substringBeforeLast('.')
+
+    /** Disc number/count for [game], or null when neither the title nor the filename says. */
+    fun tagFor(game: GameInfo): Tag? = tagIn(game.title) ?: tagIn(fileName(game))
+
+    /** Grouping key, or null for a single-disc game. */
+    fun keyFor(game: GameInfo): String? {
+        val fromTitle = tagIn(game.title) != null
+        val source = if (fromTitle) game.title else fileName(game).takeIf { tagIn(it) != null } ?: return null
+        val base = baseTitle(source)
+        if (base.isEmpty()) return null
+        val region = game.serial?.take(4)?.uppercase() ?: "FILE"
+        return "${game.platform.name}|$region|$base"
+    }
+
+    /** Every set with more than one disc, discs in order. */
+    fun groups(games: List<GameInfo>): Map<String, List<GameInfo>> =
+        games.groupBy { keyFor(it) }
+            .filterKeys { it != null }
+            .mapKeys { it.key!! }
+            .filterValues { it.size > 1 }
+            .mapValues { (_, discs) -> discs.sortedBy { tagFor(it)?.number ?: Int.MAX_VALUE } }
+}
+
+/**
+ * The library's current disc sets, published by HomeViewModel after each scan/filter so the
+ * cover badge, the long-press menu and the pause menu's disc list all read one answer. Mirrors
+ * how CheatPresenceIndex and TexturePackPresenceIndex are reached from the cards.
+ */
+object DiscSetIndex {
+    val sets = mutableStateOf<Map<String, List<GameInfo>>>(emptyMap())
+
+    /** All discs of [game]'s set (itself included), or just [game] when it is single-disc. */
+    fun discsOf(game: GameInfo): List<GameInfo> =
+        DiscSets.keyFor(game)?.let { sets.value[it] }?.takeIf { it.size > 1 } ?: listOf(game)
+
+    fun discNumber(game: GameInfo): Int? = DiscSets.tagFor(game)?.number
+}

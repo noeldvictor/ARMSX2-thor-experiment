@@ -1394,6 +1394,19 @@ open class MainActivityRuntime : ComponentActivity() {
          *  (the in-game menu) to the Activity-scoped ActivityResult launcher; the
          *  picker + native swap were intact but had no trigger after the monorepo
          *  UI migration, so Swap Disc silently did nothing. */
+        /** Swap the mounted disc to [uri] without rebooting (what the picker callback does once
+         *  it has a file); the pause menu's per-disc rows call this directly. */
+        fun swapDiscTo(uri: String) {
+            if (uri.isEmpty()) return
+            println("@@ANDROID_SWAP_DISC@@ uri=${uri.take(240)}")
+            kotlin.concurrent.thread {
+                runCatching { NativeApp.changeDisc(uri) }
+                // Resume either way: on failure native already restored the old disc, and the
+                // screen would otherwise sit frozen on the paused frame.
+                instance?.runOnUiThread { resume() }
+            }
+        }
+
         fun promptSwapDisc() {
             val activity = instance ?: return
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

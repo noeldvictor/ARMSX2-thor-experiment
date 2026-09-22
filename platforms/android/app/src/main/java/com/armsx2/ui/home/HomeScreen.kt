@@ -1045,6 +1045,19 @@ fun HomeScreen(
                         com.armsx2.navigation.UiNavigator.navigate(com.armsx2.navigation.AppRoute.SaveManager)
                     }
                 }
+                // The other discs of a multi-disc game live behind this card (see DiscSets):
+                // one row per disc, so disc 2 can be booted directly for a save that ends there.
+                val discs = com.armsx2.DiscSetIndex.sets.value.let { com.armsx2.DiscSetIndex.discsOf(game) }
+                if (discs.size > 1) {
+                    discs.forEach { disc ->
+                        if (disc.uri == game.uri) return@forEach
+                        val number = com.armsx2.DiscSetIndex.discNumber(disc)?.toString() ?: "?"
+                        GameMenuAction("💿", str("games.menu.playDisc").replace("%d", number), "game-menu.disc$number") {
+                            menuGame = null
+                            viewModel.launch(disc)
+                        }
+                    }
+                }
                 GameMenuAction("⚙", str("action.settings"), "game-menu.settings") {
                     menuGame = null
                     onOpenGameSettings(game)
@@ -2095,6 +2108,25 @@ private fun GameCover(
             }
             if (packState != TexturePackPresenceIndex.State.NONE) {
                 HdPackBadge(game, installed = packState == TexturePackPresenceIndex.State.INSTALLED)
+            }
+            // One card stands for every disc of a multi-disc game; say so, or the other discs
+            // look missing from the library.
+            val discCount = com.armsx2.DiscSetIndex.sets.value.let { com.armsx2.DiscSetIndex.discsOf(game).size }
+            if (discCount > 1) {
+                Surface(
+                    shape = RoundedCornerShape(4.dp),
+                    color = Color(0xFF2F6FD6),
+                    shadowElevation = 2.dp,
+                ) {
+                    Text(
+                        text = str("games.badge.discs").replace("%d", discCount.toString()),
+                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                        color = Color.White,
+                        fontSize = 9.sp,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.sp,
+                    )
+                }
             }
         }
     }

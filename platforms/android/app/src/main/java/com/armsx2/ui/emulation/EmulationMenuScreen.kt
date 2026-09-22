@@ -656,6 +656,16 @@ private fun SessionPane(state: EmulationMenuUiState, viewModel: EmulationMenuVie
                 if (MainActivityRuntime.fastForwardToggleActive) Success else null,
             ) { MainActivityRuntime.instance?.toggleFastForward(); viewModel.resume() },
             MenuAction(str("memcard.restart"), str("action.reset"), "↻", null, MainActivityRuntime::restart),
+            // The other discs of the running game, straight from the library's disc sets - no
+            // file picker for the one swap multi-disc games actually need.
+            *MainActivityRuntime.currentGame.value?.let { running ->
+                com.armsx2.DiscSetIndex.discsOf(running).filter { it.uri != running.uri }.map { disc ->
+                    val number = com.armsx2.DiscSetIndex.discNumber(disc)?.toString() ?: "?"
+                    MenuAction(str("action.insertDisc").replace("%d", number), disc.displayTitle(com.armsx2.EnglishTitles.enabled.value), "💿", null) {
+                        MainActivityRuntime.swapDiscTo(disc.uri.toString())
+                    }
+                }
+            }.orEmpty().toTypedArray(),
             MenuAction(str("action.swapDisc"), str("action.swapDisc.detail"), "⏏", null, MainActivityRuntime::promptSwapDisc),
             // Here and not only in Settings > Renderer, where it sat at the bottom of a long page:
             // a GS dump is what gets asked for when someone reports a graphics bug, and this is

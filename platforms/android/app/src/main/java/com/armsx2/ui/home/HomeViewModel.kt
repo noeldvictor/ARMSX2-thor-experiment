@@ -200,10 +200,17 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     .thenBy { it.sortKey(forceEn).lowercase() },
             )
         }
+        // One card per multi-disc game: the lowest disc stands for the set, the others are
+        // reached from its badge/menu. Computed on the whole library, not the filtered list, so
+        // a set stays whole when the query only matched one of its discs.
+        val sets = com.armsx2.DiscSets.groups(base.allGames)
+        com.armsx2.DiscSetIndex.sets.value = sets
+        val hidden = sets.values.flatMap { it.drop(1) }.map { it.uri }.toSet()
+        val collapsed = sorted.filter { it.uri !in hidden }
         return base.copy(
-            visibleGames = sorted,
+            visibleGames = collapsed,
             recentGames = recents,
-            selectedIndex = base.selectedIndex.coerceIn(0, (sorted.size - 1).coerceAtLeast(0)),
+            selectedIndex = base.selectedIndex.coerceIn(0, (collapsed.size - 1).coerceAtLeast(0)),
         )
     }
 
