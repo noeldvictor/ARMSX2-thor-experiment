@@ -382,7 +382,13 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   scene load (do not relaunch PCSX2 in between - the debugger and its breakpoints die with the
   process). `tools/pcsx2_mcp` has `click`/`type_text` and multi-monitor window capture for
   driving the Qt debugger; `find_window` skips the debugger window.
-- Not yet measured on the Thor (the device was reserved by the Xbox 360 session).
+- **DoF removed by code patch** (GameDB `patches: E0426FC6`, also a bundle cheat switch): the
+  effect-slot wrapper `00192E08` returns 0 (`jr ra` / `addiu v0,zero,0`), so the frame loop
+  links no DoF packet. 15,740 -> 3,083 primitives and 144 -> 5 render passes a frame. Found
+  with a debugger write breakpoint across a scene load and the save state's `cpuRegs` for the
+  return chain - the pattern for any "who builds this packet" question.
+- Not yet measured on the Thor (the device was reserved by the Xbox 360 session); the user's
+  target is 2x fast-forward.
 
 ### Settings constructor limit (dex)
 

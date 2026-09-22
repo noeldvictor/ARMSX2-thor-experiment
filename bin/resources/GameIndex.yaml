@@ -11149,6 +11149,22 @@ SCUS-97129:
   # On a tiled mobile GPU every render-pass break is a full frame-buffer tile store/load, so
   # this is where the Thor's frame drops come from. At native res the blur is visually the
   # same with or without the flush (mean |diff| 1/255 on the Tenel scene).
+  patches:
+    E0426FC6:
+      content: |-
+        author=ARMSX2 Thor fork
+        // No depth-of-field pass. docs/games/okage.md has the measurements.
+        //
+        // The frame loop asks effect slot 6 (function table 002003B0, entry 002003C8) for its
+        // packet through the 3-instruction wrapper at 00192E08, which calls the DoF builder at
+        // 00190A20: per object it reads the frame buffer back as PSMT4HH and blurs it, 12,000
+        // primitives, 140 draws and 134 render-pass breaks a frame outdoors. The dispatcher
+        // (001C96C0) links nothing when the callback returns 0, so the wrapper becomes
+        // "return 0": jr ra with addiu v0,zero,0 in the delay slot. Same scene afterwards:
+        // 3,083 primitives, 537 draws, 5 render passes, GS thread 16.5% -> 9.7%. Fades, menus
+        // and the field-to-battle transition use other slots and are untouched.
+        patch=1,EE,20192E08,extended,03E00008
+        patch=1,EE,20192E0C,extended,24020000
 SCUS-97130:
   name: "Hot Shots Golf 3"
   region: "NTSC-U"

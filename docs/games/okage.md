@@ -57,14 +57,40 @@ thread and the GPU render-pass count are.
   done. Do that first when it is free: boot, `hotkey` OSD, screenshot, compare FPS with and
   without the ini above.
 
+## The depth-of-field patch (shipped)
+
+Found with the PCSX2 debugger: an 8-byte write breakpoint on the rebuilt packet's TEX0
+qword, armed across a scene load (inn -> outside), stopped in the generic display-list qword
+appender at `001900F0`; the return chain from the save state's `cpuRegs` (`sp` walk) was
+`00100630 -> 0018FA48 -> 0018F97C (jalr) -> 00192E18 -> 00190DB8 -> 0018FF08`. So:
+
+- `0018F928` is an effect dispatcher: entry `index` of a table at `[0x332934]` (32-byte
+  records: enabled, a0, a1, a2) and a static function table at `002003B0`; it `jalr`s the
+  function, then hands the returned packet handle to `001C96C0`, which **does nothing when the
+  handle is 0**.
+- slot 6 (`002003C8`) is the DoF: the wrapper `00192E08` -> builder `00190A20`, which per
+  object assembles TEX0 (PSM from a VRAM descriptor via `0x1cbc58`, `dsll 0x14`), emits
+  TEST/ALPHA/RGBAQ/TEX0/TEX1 through `0x1aedd8(reg, value)` and the sprites through
+  `0018FE10` (30 call sites in the builder = 30 blur sprites max).
+- **Patch**: `00192E08 = 03E00008` (`jr ra`), `00192E0C = 24020000` (`addiu v0,zero,0` in the
+  delay slot). The frame loop asks for the DoF packet, gets NULL, links nothing.
+
+Same scene, autoflush still on: 15,740 -> **3,083 primitives**, 678 -> 537 draws,
+144 -> **5 render passes**, GS thread 16.5% -> 9.7%. The image is simply sharp. Fades and
+the inn transition are unaffected (they are other slots; 7 and 8 are `00192E70`).
+
+Shipped as an automatic GameDB patch (`patches: E0426FC6` in the fork's GameIndex.yaml) and
+as a bundle cheat switch "No Depth of Field Blur (Faster)" for builds that predate it. On
+the Thor right now: the active cheat file and the game ini enable it (plus autoflush off);
+the next APK build makes all of that the default. Target on device: 2x fast-forward.
+
 ## What did not work
 
 - `skipdraw` cannot isolate the DoF: skipping 1 draw after the first frame-buffer-sampling
   draw leaves the blur; skipping 2 or more removes the field merge (every other line dark,
   Ari drawn black). The DoF draws come later in the frame than the first target read (the
   overhead map / field blend), and skipdraw only counts from the first.
-- Removing the blur by **code patch** (the user's preference: no DoF at all) is still open.
-  Facts established: the DoF display list is built **once per scene load** and re-sent by
+- (Now solved above.) Facts that led there: the DoF display list is built **once per scene load** and re-sent by
   DMA every frame (a PINE poke to the TEX0 qword at `01BE8570` survives indefinitely; the
   list lives in the heap and moves per scene: `01BE8570` and `01CE8570` in Tenel, elsewhere
   in the World Library). There is no TEX0 template in `.data`; PSM 0x2C is passed to a

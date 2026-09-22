@@ -3,3 +3,8 @@ gametitle=Okage - Shadow King (SCUS-97129)
 [Cheats/No Enemy Encounters (Ghosts Pass Through)]
 // Ghosts still roam the field but touching Ari never starts a battle. Scripted battles are unaffected.
 // patch=1,EE,20137508,extended,10000077
+
+[Cheats/No Depth of Field Blur (Faster)]
+// Skips the per-object frame-buffer read-back blur: 15,740 -> 3,083 primitives and 144 -> 5 render passes a frame outdoors. The fork's GameDB applies this automatically; the switch is for builds that predate it.
+// patch=1,EE,20192E08,extended,03E00008
+// patch=1,EE,20192E0C,extended,24020000
