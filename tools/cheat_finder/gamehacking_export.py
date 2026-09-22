@@ -63,12 +63,16 @@ def clean(text: str) -> tuple[str, int, int]:
             cur = [line]
             continue
         if line.startswith("patch="):
-            m = re.match(r"patch=1,EE,([0-9A-Fa-f]{8}),extended,([0-9A-Fa-f]{8})", line)
+            # extended: type nibble + address; byte/short/word/double: the plain address.
+            m = re.match(r"patch=[01],EE,([0-9A-Fa-f]{1,8}),(extended|byte|short|word|double|beshort|beword|bedouble),([0-9A-Fa-f]{1,16})", line, re.IGNORECASE)
             if not m:
                 ok = False
             else:
                 w = int(m.group(1), 16)
-                if (w >> 28) not in VALID_TYPES or (w & 0x0FFFFFFF) >= 0x02000000:
+                if m.group(2).lower() == "extended":
+                    if (w >> 28) not in VALID_TYPES or (w & 0x0FFFFFFF) >= 0x02000000:
+                        ok = False
+                elif w >= 0x02000000:
                     ok = False
         if cur:
             cur.append(line)
@@ -137,9 +141,12 @@ async def run(targets: list[tuple[str, str, str]], out: Path, pace: float) -> di
                     }
                     return out; }""")
                 rec["results"] = res[:15]
-                nt = norm(title)
-                exact = [r for r in res if norm(r[0]) == nt and want in r[0]]
-                loose = [r for r in res if want in r[0] and (norm(r[0]).startswith(nt) or nt.startswith(norm(r[0])))]
+                # Spaceless compare: the site writes "MegaMan X7" where the GameDB has "Mega Man X7".
+                nt = norm(title).replace(" ", "")
+                exact = [r for r in res if norm(r[0]).replace(" ", "") == nt and want in r[0]]
+                # Only the site title may be the longer one (a subtitle we lack); the reverse
+                # once matched "Shadow Hearts - Covenant" to plain "Shadow Hearts".
+                loose = [r for r in res if want in r[0] and norm(r[0]).replace(" ", "").startswith(nt)]
                 pick = (exact or loose or [None])[0]
                 if pick is None:
                     rec["skip"] = True
@@ -152,6 +159,13 @@ async def run(targets: list[tuple[str, str, str]], out: Path, pace: float) -> di
                 body = await pg.inner_text("body")
                 m = re.search(r"Serial\s*\n.*?([A-Z]{4}-\d{5})", body, re.S)
                 rec["page_serial"] = m.group(1) if m else None
+                if rec["page_serial"] and rec["page_serial"] != serial:
+                    # Another revision or region of the same title: addresses differ, so it is
+                    # not this disc's cheat file. Left in the report as a lead, not exported.
+                    rec["skip"] = True
+                    rec["error"] = f"page is {rec['page_serial']}, not {serial}"
+                    print(serial, title, "-> page serial", rec["page_serial"], "differs; skipped", flush=True)
+                    continue
                 btn = await pg.query_selector("button:has-text('Download')")
                 if btn is None:
                     rec["error"] = "no download button"

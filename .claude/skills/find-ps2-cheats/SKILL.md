@@ -52,6 +52,22 @@ panel and requires the full title + region tag to match.
   and an `index.tsv` row. gamehacking exports are unverified community codes - keep them on
   the device, not in `assets/cheats`.
 
+## Checks that caught real mistakes
+
+- **Page serial must equal the target serial.** The tool skips otherwise; before that rule,
+  "Shadow Hearts - Covenant" exported plain "Shadow Hearts" (SLUS-20347), Psi-Ops PAL got the
+  other PAL revision, Shadow Tower Abyss (SCAJ) got the Japanese SLPS. Only the site title may
+  be the longer one; never match when ours is longer.
+- **Older pnach syntax is valid**: `patch=1,EE,00325B70,word,00000000` (plain address, no type
+  nibble). The filter accepts byte/short/word/double as well as extended.
+- **Not every hit is a gameplay cheat.** X-Files' only entry was a 50 FPS patch; the fork does
+  not count frame-rate or widescreen patches as cheats, so it was left out.
+- The GitHub DB's generator doubles headers and leaves `[checked_by=...]` pseudo-sections and
+  un-decrypted lines; run its files through the same filter and `dedupe_pnach.py`.
+- Review `dedupe_pnach.py --dry-run` before writing: duplicates are byte-identical patch sets,
+  but a second name with the same lines is often a source typo ("25% Health" == "75% Health").
+  The tool keeps that name as ` / alias` in the surviving header so nothing is silently lost.
+
 ## What was tried and does not work
 
 - `curl`/WebFetch on gamehacking.org, GameFAQs, PS2-HOME, Neoseeker: 403/Cloudflare.

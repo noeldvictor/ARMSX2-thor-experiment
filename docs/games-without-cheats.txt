@@ -1,152 +1,67 @@
-Games on the Thor without bundled cheats - what exists online (2026-09-22)
+Games on the Thor still without cheats
 
-How to use a file: copy it to /sdcard/armsxdata/cheats/ on the Thor keeping its name
-(SERIAL_00000000.pnach matches the app's serial-scoped cheat glob), rescan the library, then
-flip the switches in the pause menu's cheat manager. gamehacking exports are community codes,
-unverified here; encrypted GameShark v1 sections were stripped (see 'dropped').
+Checked: the bundle (assets/cheats), XiGuanChi/PCSX2-CheatsDB on GitHub (serial-exact), and
+gamehacking.org's PCSX2 export. What is left needs authoring (the ps2-cheat skill) or a
+region-specific port of the hit listed under it.
 
-=== gamehacking.org: PNACH exported (11) - files in F:\Projects\pcsx2-desktop\gamehacking\ ===
-SLES-50109  7 Blades  ->  7 Blades (PAL-Unk)  | 18 codes kept, 0 dropped
-    https://gamehacking.org/game/100718
-    file: SLES-50109_00000000.pnach
-SLUS-21096  Ape Escape - Pumped & Primed  ->  Ape Escape - Pumped & Primed (NTSC-U)  | 92 codes kept, 25 dropped
-    https://gamehacking.org/game/103205
-    file: SLUS-21096_00000000.pnach
-SLUS-21165  Arc the Lad - End of Darkness  ->  Arc the Lad - End of Darkness (NTSC-U)  | 342 codes kept, 14 dropped
-    https://gamehacking.org/game/103213
-    file: SLUS-21165_00000000.pnach
-SLES-53764  Atelier Iris - Eternal Mana  ->  Atelier Iris - Eternal Mana (PAL-Unk)  | 7 codes kept, 0 dropped
-    https://gamehacking.org/game/100815
-    file: SLES-53764_00000000.pnach
-SLUS-20499  Breath of Fire - Dragon Quarter  ->  Breath of Fire - Dragon Quarter (NTSC-U)  | 6609 codes kept, 34 dropped
-    https://gamehacking.org/game/103338
-    file: SLUS-20499_00000000.pnach
-SLUS-20895  Bujingai - The Forsaken City  ->  Bujingai - The Forsaken City (NTSC-U)  | 111 codes kept, 1 dropped
-    https://gamehacking.org/game/103345
-    file: SLUS-20895_00000000.pnach
-SLUS-20733  Castlevania - Lament of Innocence  ->  Castlevania - Lament of Innocence (NTSC-U)  | 805 codes kept, 299 dropped
-    https://gamehacking.org/game/103393
-    file: SLUS-20733_00000000.pnach
-SLES-53564  Darkwatch  ->  Darkwatch (PAL-Unk)  | 29 codes kept, 0 dropped
-    https://gamehacking.org/game/101105
-    file: SLES-53564_00000000.pnach
-SLUS-20994  Full Metal Alchemist and The Broken Angel  ->  Full Metal Alchemist and The Broken Angel (NTSC-U)  | 415 codes kept, 5 dropped
-    https://gamehacking.org/game/103789
-    file: SLUS-20994_00000000.pnach
-SLUS-21020  Gungrave - OverDose  ->  GunGrave - OverDose (NTSC-U)  | 162 codes kept, 0 dropped
-    https://gamehacking.org/game/103897
-    file: SLUS-21020_00000000.pnach
-SLUS-20683  Lupin the 3rd - Treasure of the Sorcerer King  ->  Lupin the 3rd - Treasure of the Sorcerer King (NTSC-U)  | 40 codes kept, 0 dropped
-    https://gamehacking.org/game/104165
-    file: SLUS-20683_00000000.pnach
-
-=== gamehacking.org: nothing usable (8) ===
-SLES-55444  Ar tonelico II - Melody of Metafalica  -  no PS2 match for region PAL; seen: 
-SLES-54822  Atelier Iris 3 - Grand Phantasm  -  no PS2 match for region PAL; seen: Atelier Iris 3 - Grand Phantasm (NTSC-U)
-SLES-53414  Echo Night - Beyond  -  no PS2 match for region PAL; seen: Echo Night - Beyond (NTSC-U)
-SCAJ-20166  Front Mission 5 - Scars of the War  -  no PS2 match for region NTSC-J; seen: 
-SLES-51058  Maken Shao - Demon Sword  -  no PS2 match for region PAL; seen: 
-SLUS-21890  Mana Khemia 2 - Fall Of Alchemy  -  no PS2 match for region NTSC-U; seen: 
-SLUS-20487  Mega Man X7  -  no PS2 match for region NTSC-U; seen: MegaMan X7 (NTSC-U), MegaMan X7 (PAL-Unk)
-SLUS-21330  Monster Rancher Evo  -  ElementHandle.type: Target page, context or browser has been closed
-
-=== GitHub (XiGuanChi/PCSX2-CheatsDB) check ===
-Games without bundled cheats - online check
-
-=== FOUND in XiGuanChi/PCSX2-CheatsDB, exact serial (5) ===
-SLES-50109  7 Blades
-    https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLES-50109_97AE372A.pnach
-SLES-53414  Echo Night - Beyond
-    https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLES-53414_BBF8C3D6.pnach
-SLUS-21020  Gungrave - OverDose
-    https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLUS-21020_83C9749E.pnach
-SLES-52341  The X-Files - Resist or Serve
-    https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLES-52341_F4D70887.pnach
-SCUS-97203  Wild ARMs 3
-    https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SCUS-97203_06441001.pnach
-
-=== OTHER REGION ONLY in that DB - not usable as-is (7) ===
-SLES-53564  Darkwatch
-    SLUS-21042  Darkwatch: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLUS-21042_327053e8.pnach
-SLUS-20487  Mega Man X7
-    SLES-51885  Mega Man X7: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v5/cheats/SLES-51885_E3D9C115.pnach
-SLUS-20393  Onimusha 2 - Samurai's Destiny
-    SLES-50177  Oni: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v5/cheats/SLES-50177_32629F36.pnach
-SLES-52702  Psi-Ops - The Mindgate Conspiracy
-    SLES-52703  Psi-Ops - The Mindgate Conspiracy: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLES-52703_C08BE6C0.pnach
-    SLUS-20688  Psi-Ops - The Mindgate Conspiracy: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLUS-20688_9C71B59E.pnach
-SLUS-21187  Samurai Western
-    SLES-53234  Samurai Western: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v5/cheats/SLES-53234_89D8ECCE.pnach
-SLES-82001  Summoner
-    SLES-82005  Summoner: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLES-82005_24C43406.pnach
-SLUS-21041  Shadow Hearts - Covenant
-    SLUS-20347  Shadow Hearts: https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v5/cheats/SLUS-20347_8BE3D7B2.pnach
-
-=== NOT IN THAT DB (42) - try gamehacking_export.py, then the ps2-cheat skill ===
-SLUS-21096  Ape Escape - Pumped & Primed
 SLES-55444  Ar tonelico II - Melody of Metafalica
-SLUS-21165  Arc the Lad - End of Darkness
-SLES-53764  Atelier Iris - Eternal Mana
+    gamehacking: no PAL PS2 entry (seen: no results)
 SLES-54822  Atelier Iris 3 - Grand Phantasm
-SLUS-20499  Breath of Fire - Dragon Quarter
-SLUS-20895  Bujingai - The Forsaken City
-SLUS-20733  Castlevania - Lament of Innocence
+    gamehacking: no PAL PS2 entry (seen: Atelier Iris 3 - Grand Phantasm (NTSC-U))
 SCAJ-20166  Front Mission 5 - Scars of the War
-SLUS-20994  Full Metal Alchemist and The Broken Angel
-SLUS-20683  Lupin the 3rd - Treasure of the Sorcerer King
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SLES-51058  Maken Shao - Demon Sword
+    gamehacking: no PAL PS2 entry (seen: no results)
 SLUS-21890  Mana Khemia 2 - Fall Of Alchemy
+    gamehacking: no NTSC-U PS2 entry (seen: no results)
 SLUS-21330  Monster Rancher Evo
-SLUS-21270  MS Saga - A New Dawn
-SLES-53521  Musashi - Samurai Legend
-SLES-50062  Orphen - Scion of Sorcery
+    gamehacking: Page.evaluate: TypeError: Cannot read properties of null (reading 'querySelector')
+SLES-52702  Psi-Ops - The Mindgate Conspiracy
+    gamehacking: page is SLES-52703, not SLES-52702 (export discarded)
+    other region in GitHub DB: SLES-52703 Psi-Ops - The Mindgate Conspiracy - https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLES-52703_C08BE6C0.pnach
+    other region in GitHub DB: SLUS-20688 Psi-Ops - The Mindgate Conspiracy - https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLUS-20688_9C71B59E.pnach
 SLES-54587  Raw Danger
-SLUS-21275  River King - A Wonderful Journey
+    gamehacking: no PAL PS2 entry (seen: Raw Danger (NTSC-U))
 SCAJ-20162  Rogue Galaxy
-SLES-51445  Rygar - The Legendary Adventure
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SCAJ-20045  Shadow Tower Abyss
-SLUS-21845  Shin Megami Tensei - Devil Summoner 2 - Raidou Kuzunoha vs. King Abaddon
+    gamehacking: page is SLPS-25217, not SCAJ-20045 (export discarded)
 SLUS-21567  Shining Force EXA
+    gamehacking: no NTSC-U PS2 entry (seen: no results)
 SLPM-66670  STELLA DEUS [ATLUS BEST COLLECTION]
+    gamehacking: no NTSC-J PS2 entry (seen: Stella Deus - The Gate of Eternity (NTSC-U), Stella Deus - The Gate of Eternity (PAL-Unk))
 SCES-54794  Syphon Filter - Dark Mirror
-SCUS-97584  Syphon Filter - Logan's Shadow
+    gamehacking: no PAL PS2 entry (seen: Syphon Filter - Dark Mirror (NTSC-U), Syphon Filter - Logan's Shadow (NTSC-U), Syphon Filter - The Omega Strain (NTSC-U))
 SCAJ-20112  Tales of Rebirth
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SLES-53768  The Sword of Etheria
-SLES-52678  Viewtiful Joe
-SLUS-20937  Wild ARMs - Alter Code F
+    gamehacking: no PAL PS2 entry (seen: no results)
+SLES-52341  The X-Files - Resist or Serve
+    gamehacking: not searched yet
+    other region in GitHub DB: SLUS-20179 The X-Files - Resist or Serve - https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v6/SLUS-20179_E79C7749.pnach
 SCAJ-30001  Xenosaga Episode I - Der Wille zur Macht [PlayStation2 the Best]
+    gamehacking: no NTSC-J PS2 entry (seen: Xenosaga - Episode I - Der Wille zur Macht (NTSC-U), Xenosaga - Episode II - Jenseits von Gut und Bose [Disc1of2] (NTSC-U), Xenosaga - Episode III - Also Sprach Zarathustra [Disc1of2] (NTSC-U))
 SCAJ-20179  Xenosaga Episode III - Also Sprach Zarathustra [Disc 1 of 2]
+    gamehacking: no NTSC-J PS2 entry (seen: Xenosaga - Episode III - Also Sprach Zarathustra [Disc1of2] (NTSC-U), Xenosaga Episode III - Also Sprach Zarathustra [Disc1of2] (NTSC-Unk))
 SLPM-55234  Zill O'll ～infinite～ [KOEI The Best]
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SLPS-25987  Amagami ebKore+
-SCPS-15026  Boku no Natsuyasumi 2
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SLPM-65395  Di Gi Charat Fantasy Excellent
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SLPM-66513  Fate/stay night Realta Nua
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SLPS-25426  Meitantei Conan - Daiei Teikoku no Isan
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 SCKA-20055  Mystic Nights
-SLPM-66360  Ys V - Lost Kefin
+    gamehacking: no NTSC-K PS2 entry (seen: no results)
+SLUS-21041  Shadow Hearts - Covenant
+    gamehacking: page is SLUS-20347, not SLUS-21041 (export discarded)
+    other region in GitHub DB: SLUS-20347 Shadow Hearts - https://raw.githubusercontent.com/XiGuanChi/PCSX2-CheatsDB/main/cheats-v5/cheats/SLUS-20347_8BE3D7B2.pnach
 SCAJ-20193  Tales of Destiny Director's Cut
+    gamehacking: no NTSC-J PS2 entry (seen: no results)
 
-=== hand-resolved files (already bundled = the badge just could not read the filename) ===
-SLPS-25987  Amagami ebKore+  
-SCPS-15026  Boku no Natsuyasumi 2  
-SLPM-65395  Di Gi Charat Fantasy Excellent  
-SLPM-65555  Dragon Quest V  [bundled]
-SLPM-66513  Fate/stay night Realta Nua  
-SLPM-66511  Kowloon Youma Gakuenki Re-charge  [bundled]
-SLPS-25426  Meitantei Conan - Daiei Teikoku no Isan  
-SCKA-20055  Mystic Nights  
-SLPM-62553  Phantasy Star Generation 2  [bundled]
-SLUS-21041  Shadow Hearts - Covenant  
-SLUS-21063  Shining Tears  [bundled]
-SLUS-20387  Suikoden III  [bundled]
-SLUS-20979  Suikoden IV  [bundled]
-SLUS-21386  Tales of the Abyss  [bundled]
-SLPS-25497  Berwick Saga  [bundled]
-SLPM-62506  Vampire Panic  [bundled]
-SLPM-66360  Ys V - Lost Kefin  
-SCAJ-20193  Tales of Destiny Director's Cut  
-
-=== unresolved filenames (pass --extra with their serials) ===
+Filenames the library cannot resolve to a serial (status unknown until mapped in extra.txt):
   Amagami (Japan) (ebKore Plus) [T-En by Ni-shi-shi Translations v0.9.1] [Older].chd
   Boku no Natsuyasumi 2 - Umi no Bouken Hen (English v1.2).chd
   CodeBreaker v10.chd
@@ -166,3 +81,6 @@ SCAJ-20193  Tales of Destiny Director's Cut
   TearRing Saga - Berwick Saga - Lazberia Chronicle - Chapter 174 (Japan) [T-En by Aethin v2.3] [n].chd
   Vampire Panic (Japan) [T-En by TransGen v1.0 Beta] (CD).chd
   Ys V - Lost Kefin, Kingdom of Sand (English Beta 01).chd
+
+Found and bundled from gamehacking so far: 26 games (assets/cheats/SERIAL_00000000.pnach, switched off).
+Still without cheats: 26.
