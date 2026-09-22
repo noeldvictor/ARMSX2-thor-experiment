@@ -103,6 +103,14 @@ def load_cheat_index(path: str) -> tuple[set[str], int]:
             if len(parts) >= 2 and parts[1].strip():
                 serials.add(normalize_serial(parts[1].strip()))
                 rows += 1
+    # Serial-named files (SERIAL_CRC.pnach, the modern PCSX2 name) sit next to the index
+    # without a row in it; the app's badge index reads the serial off the filename, so the
+    # coverage report has to as well.
+    for name in os.listdir(os.path.dirname(path)):
+        match = re.match(r"([A-Z]{4}-\d{5})_[0-9A-Fa-f]{8}\.pnach$", name, re.IGNORECASE)
+        if match:
+            serials.add(normalize_serial(match.group(1)))
+            rows += 1
     return serials, rows
 
 

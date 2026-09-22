@@ -126,6 +126,7 @@ This fork stands on the work of:
 - [PCSX2_ARM64](https://github.com/pontos2024/PCSX2_ARM64)
 - [xlenore/ps2-covers](https://github.com/xlenore/ps2-covers)
 - [NetherSX2-patch](https://github.com/noeldvictor/NetherSX2-patch)
+- [GameHacking.org](https://gamehacking.org) — the `SERIAL_00000000.pnach` files under `assets/cheats` are its PCSX2 exports of community codes (credited per code inside each file), fetched slowly with its own export and shipped switched off
 - [sashkinbro/EmuCoreX-Textures](https://github.com/sashkinbro/EmuCoreX-Textures) — the texture pack catalogue ARMSX2 mirrors, which the `HD` badges read
 
 Licensed under GPLv3. See [COPYING.GPLv3](COPYING.GPLv3).
