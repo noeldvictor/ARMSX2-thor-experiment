@@ -160,6 +160,7 @@ def main() -> int:
     source.add_argument("--adb", action="store_true", help="list games from a connected device")
     source.add_argument("--dir", help="local directory of disc images")
     source.add_argument("--list", help="text file with one filename per line")
+    source.add_argument("--library", help="JSON from the on-device dev server's `library` tool: real serials, no filename guessing")
     parser.add_argument("--device", help="adb device serial, for --adb with more than one device")
     parser.add_argument(
         "--remote-dir",
@@ -169,7 +170,21 @@ def main() -> int:
     parser.add_argument("--show-unmatched", action="store_true", help="list files no serial could be resolved for")
     args = parser.parse_args()
 
-    if args.adb:
+    library: dict[str, str] = {}  # filename -> serial, when the app's scan is available
+    if args.library:
+        # The app reads SYSTEM.CNF, so this is the truth the filename heuristics only guess at:
+        # "Xenosaga Episode I (USA)" is SLUS-20469, not the Asian SCAJ the title match picked.
+        import json
+        import urllib.parse
+
+        with open(args.library, encoding="utf-8") as handle:
+            data = json.load(handle)
+        for game in data.get("games", data) if isinstance(data, dict) else data:
+            if (game.get("platform") or "PS2") != "PS2" or not game.get("serial"):
+                continue
+            library[urllib.parse.unquote(game["uri"].rsplit("/", 1)[-1])] = normalize_serial(game["serial"])
+        names = sorted(library)
+    elif args.adb:
         names = list_from_adb(args.device, args.remote_dir)
     elif args.dir:
         names = sorted(os.listdir(args.dir))
@@ -189,7 +204,10 @@ def main() -> int:
     unmatched: list[str] = []
 
     for name in names:
-        serial, how = resolve_serial(name, title_to_serials)
+        if name in library:
+            serial, how = library[name], "serial-in-filename"
+        else:
+            serial, how = resolve_serial(name, title_to_serials)
         if serial is None:
             unmatched.append(name)
             continue

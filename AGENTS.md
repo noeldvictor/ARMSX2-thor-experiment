@@ -315,8 +315,14 @@ skill (`.claude/skills/ps2-cheat/SKILL.md`) driving the `pcsx2` MCP server
   Result of the 2026-09-22 sweep is `docs/games-without-cheats.txt`
   (`tools/cheat_finder/write_report.py` merges the two checks); the exported files sit in
   `F:\Projects\pcsx2-desktop\gamehacking\` until the user installs them on the Thor.
-- The library's serial resolution misses translation patches and undubs; their serials come
-  from `GameIndex.yaml` `name-en:` (do not guess: SLUS-20952 is Tak 2, not Shadow Hearts).
+- **Use real serials, not filename guesses.** `cheat_coverage.py --library` takes the dev
+  server's `library` JSON (the app reads SYSTEM.CNF); the title matcher had "Xenosaga Episode I
+  (USA)" as the Asian SCAJ disc and six US discs as PAL, so cheats were fetched for discs the
+  Thor does not have. By real serial the library is 83/123 covered (2026-09-22). Translation
+  patches keep the original serial (`GameIndex.yaml` `name-en:`; never guess - SLUS-20952 is
+  Tak 2, not Shadow Hearts).
+- Frame-rate / no-interlace / widescreen entries found under a "cheats" DB are not cheats
+  here (AGENTS rule above); drop those sections before bundling.
 
 ### Texture pack getter
 

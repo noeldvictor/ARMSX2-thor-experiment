@@ -10,10 +10,21 @@ server (`tools/pcsx2_mcp/`, registered in `.mcp.json`) drives it. If its tools a
 listed, run `/mcp` to connect, or use the same tools from a shell:
 `tools\pcsx2_mcp\.venv\Scripts\python tools\pcsx2_mcp\server.py cli <tool> ...`.
 
+## The standard set to author per game
+
+What the user wants for every RPG/action game that has nothing online, in this order:
+**Infinite HP**, **Infinite MP/SP**, **Max money**, **Infinite/max skill points** (AP, SP,
+level-up points - whatever the game calls them), **Max stats / attack**, **No encounters**
+(random-battle or visible-enemy contact), and **Infinite ammo** where the game has guns.
+Data cheats are per-frame writes (`patch=1` extended, value = the game's own maximum as read
+off its status screen - not 9999 blindly, a 999-cap game overflows its display); "no
+encounters" is usually a code patch, see section 3. Ship one `[Cheats/Name]` section each.
+
 ## 0. Check before authoring
 
-1. `tools/cheat_coverage.py` and the SD-card collection first - a code that exists is
-   cheaper than one you find. Community codes are often encrypted (AR MAX / CodeBreaker);
+1. `tools/cheat_coverage.py --library <dev-server library JSON>` first (the filename
+   resolver guessed the wrong region for a dozen discs; the app's own scan reads SYSTEM.CNF),
+   then the `find-ps2-cheats` skill - a code that exists is cheaper than one you find. Community codes are often encrypted (AR MAX / CodeBreaker);
    an encrypted list with no matching entry is still a "no".
 2. Bundled cheats are keyed by **CRC** (PCSX2 log: `Game CRC = XXXXXXXX`; `status` shows it).
 
