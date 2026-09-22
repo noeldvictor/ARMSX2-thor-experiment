@@ -1,0 +1,4 @@
+.venv/
+config.local.json
+_thor.pnach
+__pycache__/

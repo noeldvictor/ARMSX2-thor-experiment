@@ -1,0 +1,6 @@
+mcp>=1.2
+numpy
+capstone
+zstandard
+pillow
+mymcplus
