@@ -8,3 +8,9 @@ gametitle=Okage - Shadow King (SCUS-97129)
 // Skips the per-object frame-buffer read-back blur: 15,740 -> 3,083 primitives and 144 -> 5 render passes a frame outdoors. The fork's GameDB applies this automatically; the switch is for builds that predate it.
 // patch=1,EE,20192E08,extended,03E00008
 // patch=1,EE,20192E0C,extended,24020000
+
+[Cheats/No Character Shadows (Much Faster)]
+// Skips the floor-shadow pass. Okage draws every shadow strip three times with a 1-bit destination-alpha stencil (mark, DATE-gated draw, clear); each of those draws needs a frame-buffer read, which on the Thor's Adreno driver is a full render-target copy: 1,389 per frame in a house scene. Off: 1 barrier, and draw calls 1,594 -> 206 there. Characters lose their shadows; nothing else changes. Details: docs/games/okage.md.
+// patch=1,EE,201B0FB8,extended,0005283C
+// patch=1,EE,201B0FBC,extended,00000000
+// patch=1,EE,20202E30,extended,0001000C

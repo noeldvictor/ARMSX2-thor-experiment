@@ -415,8 +415,17 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   links no DoF packet. 15,740 -> 3,083 primitives and 144 -> 5 render passes a frame. Found
   with a debugger write breakpoint across a scene load and the save state's `cpuRegs` for the
   return chain - the pattern for any "who builds this packet" question.
-- Not yet measured on the Thor (the device was reserved by the Xbox 360 session); the user's
-  target is 2x fast-forward.
+- **On the Thor the remaining cost is the shadows**, not the DoF: 350 shadow strips a frame,
+  each drawn three times with a 1-bit destination-alpha stencil (`FBMSK 7FFFFFFF` mark, DATE
+  draw, clear) = 1,389 barriers in a house scene, each a render-target copy on the Adreno
+  driver (GS 99%, 45 fps with fast-forward on). Removing the stencil trick breaks the
+  outdoor silhouette; removing the shadows (switch "No Character Shadows (Much Faster)") takes
+  it to 1 barrier. The keep-the-shadows fix is renderer work: a no-read path for alpha-bit-7
+  mark/clear + DATE when fbfetch/ROAA are absent. Full notes in `docs/games/okage.md`.
+- GS dumps parse fine in Python (zstd; header, state, 0x2000-byte priv regs, then packets
+  0 = transfer / 1 = vsync / 2 = readfifo / 3 = regs); rewriting A+D register values in a dump
+  and replaying it on desktop is the fastest way to test "what if the game did X" before
+  looking for the code.
 
 ### Settings constructor limit (dex)
 

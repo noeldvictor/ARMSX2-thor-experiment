@@ -84,6 +84,59 @@ as a bundle cheat switch "No Depth of Field Blur (Faster)" for builds that preda
 the Thor right now: the active cheat file and the game ini enable it (plus autoflush off);
 the next APK build makes all of that the default. Target on device: 2x fast-forward.
 
+## On the Thor: it is the shadows (2026-09-22)
+
+The DoF patch and dropped auto-flush did not fix the Thor. A house scene (dialogue, fast
+forward on) measured on the device over wireless adb, 60-second `PerfLog` averages:
+
+| config | fps | GS thread | GPU |
+| --- | --- | --- | --- |
+| blending Basic (the user's setting) | 45 | 99% | 81% |
+| blending Minimum | 40 | 67% | 98% |
+| Minimum, texture upscaling off | 40 | 70% | 98% |
+| Basic, texture upscaling off | 45 | 99% | 81% |
+
+The same frame, captured on the Thor (pause menu > Capture GS Dump) and replayed in desktop
+PCSX2, has **1,256 draws and 1,389 barriers**. Desktop shrugs; the Thor's Qualcomm driver
+has no usable in-pass self-read (`ROAA=NO fbfetch=NO`, "forcing the RT-copy blend path"), so
+each barrier is end-pass + copy the render target + restart - that is the 21 ms GS thread.
+
+Where the barriers come from, from a parse of the dump's GIF stream: **350 shadow strips
+per frame, each drawn three times** (12-vertex untextured triangle strips, colour 0, alpha 0):
+
+1. `FRAME.FBMSK = 7FFFFFFF` (only alpha bit 31 writable), `FBA = 1`, no blending - set the bit
+2. `TEST = 0005400C` (DATE, DATM 0), `ALPHA = 0x54` `(Cs-Cd)*Ad+Cd` - the shadow
+3. `FBMSK = 7FFFFFFF`, `FBA = 0` - clear the bit
+
+A 1-bit alpha mask is a partial channel mask, emulated in the shader by reading the frame
+buffer (`ps.fbmask` -> one barrier), and the DATE pass needs one too. Replaying the dump with
+the shadow draws removed: **0 barriers, 206 draw calls** (from 1,594). All 1,389 barriers
+are shadows.
+
+The shadow pass is built from a 9-qword GIF template at `00202DE0` that `001B0F90` refreshes
+every frame (it stores the FRAME values into it - the mask comes from
+`addiu a1,zero,-1; dsll32 a1,a1,1; dsrl a1,a1,1` at `001B0FB4`) and uploads to VU1, whose
+microprogram replays it per strip; a setup packet in the heap (`ALPHA 0x54`, `FRAME
+7FFFFFFF`, `TEST 5000C`, `FBA 0`) opens each batch.
+
+What was tried on the live Tenel scene (desktop):
+
+- Only DATE off: the shadow becomes a solid black band - the shape depends on the trick.
+- Mark/clear write nothing + DATE off ("no trick", every `7FFFFFFF` including the setup
+  packet's): indoors it is visually identical to the original (mean |diff| 0.03/255), 0
+  barriers; **outdoors the crisp silhouette turns into faint streaks**, so not shippable.
+- Pass 2 with a fixed blend factor (`ALPHA` FIX 0x80 in place of the `FBA` slot): solid black
+  band again.
+- **Shadows off** (mark/clear write nothing, shadow draw `ZTST = NEVER`): **576 -> 1 barrier,
+  640 -> 65 draw calls** outdoors, clean image, no shadows. Shipped as the switch "No
+  Character Shadows (Much Faster)" in `E0426FC6.pnach` (off by default):
+  `201B0FB8 = 0005283C`, `201B0FBC = 00000000`, `20202E30 = 0001000C`.
+
+The real fix keeps the shadows and is renderer work: recognise "`FBMSK == 7FFFFFFF`, no
+blending" (set/clear alpha bit 7) and the DATE pass that follows, and do them without a
+frame-buffer read on drivers without fbfetch/ROAA (stencil DATE with a stencil-only mark
+pass, or a logic-op/blend trick on the alpha channel). Until then: the switch.
+
 ## What did not work
 
 - `skipdraw` cannot isolate the DoF: skipping 1 draw after the first frame-buffer-sampling
