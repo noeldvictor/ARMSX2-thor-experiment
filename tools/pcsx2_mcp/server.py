@@ -246,7 +246,11 @@ def pnach_write(sections: dict[str, list[str]] | str, target: str = "desktop", c
         sections = json.loads(sections)
     crc = (crc or _crc()).upper()
     if target == "desktop":
-        return {"path": ctl.write_pnach(CFG.cheats / f"{crc}.pnach", sections, gametitle, enabled=True), "note": "call restart(state_slot) so PCSX2 reloads patches"}
+        path = ctl.write_pnach(CFG.cheats / f"{crc}.pnach", sections, gametitle, enabled=True)
+        with _pine() as p:
+            serial = p.serial()
+        ini = ctl.enable_cheats(CFG, serial, crc, [f"Cheats/{n}" for n in sections])  # the enable list matches the full [header]
+        return {"path": path, "enabled_in": str(ini), "note": "quit + launch(game, state_slot) so PCSX2 reloads patches"}
     if target == "repo":
         path = ctl.REPO / "platforms/android/app/src/main/assets/cheats" / f"{crc}.pnach"
         return {"path": ctl.write_pnach(path, sections, gametitle, enabled=False), "note": "add the CRC to assets/cheats/index.tsv"}

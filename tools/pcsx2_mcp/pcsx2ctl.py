@@ -546,6 +546,28 @@ def write_pnach(path: Path, sections: dict[str, list[str]], gametitle: str | Non
     return str(path)
 
 
+def enable_cheats(cfg: Config, serial: str, crc: str, names: list[str]) -> Path:
+    """Named [Cheats/<name>] sections are off until listed under [Cheats] Enable in the per-game
+    ini (gamesettings/<SERIAL>_<CRC>.ini). Rewrites that list with `names`."""
+    path = cfg.pcsx2_dir / "gamesettings" / f"{serial}_{crc.upper()}.ini"
+    lines: list[str] = []
+    if path.exists():
+        in_cheats = False
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if line.startswith("["):
+                in_cheats = line.strip() == "[Cheats]"
+                if in_cheats:
+                    continue
+            if in_cheats and line.split("=", 1)[0].strip() == "Enable":
+                continue
+            if not in_cheats:
+                lines.append(line)
+    lines += ["[Cheats]"] + [f"Enable = {n}" for n in names]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    return path
+
+
 def read_log(cfg: Config, lines: int = 100, contains: str | None = None) -> list[str]:
     if not cfg.logs.exists():
         return []

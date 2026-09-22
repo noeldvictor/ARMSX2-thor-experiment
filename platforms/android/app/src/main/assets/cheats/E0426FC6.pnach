@@ -1,0 +1,5 @@
+gametitle=Okage - Shadow King (SCUS-97129)
+
+[Cheats/No Enemy Encounters (Ghosts Pass Through)]
+// Ghosts still roam the field but touching Ari never starts a battle. Scripted battles are unaffected.
+// patch=1,EE,20137508,extended,10000077
