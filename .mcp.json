@@ -2,7 +2,11 @@
   "mcpServers": {
     "pcsx2": {
       "command": "cmd",
-      "args": ["/c", "tools\pcsx2_mcp\run.cmd"]
+      "args": ["/c", "tools/pcsx2_mcp/run.cmd"]
+    },
+    "armsx2-thor": {
+      "type": "http",
+      "url": "http://127.0.0.1:27183/mcp"
     }
   }
 }
