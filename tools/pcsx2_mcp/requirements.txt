@@ -4,3 +4,5 @@ capstone
 zstandard
 pillow
 mymcplus
+playwright
+playwright-stealth

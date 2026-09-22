@@ -303,6 +303,18 @@ skill (`.claude/skills/ps2-cheat/SKILL.md`) driving the `pcsx2` MCP server
   `.max`/`.cbs`/`.psu` into a fresh `.ps2` image.
 - PCSX2 v2.8 reads the **contents** of `portable.txt` as the data root; the file must be
   empty, or the ini lands in `<exe dir>/<that text>/inis` and the setup wizard reappears.
+- **Finding cheats that already exist** is the `find-ps2-cheats` skill with
+  `tools/cheat_finder/`. Sources, in order: the bundle; XiGuanChi/PCSX2-CheatsDB on GitHub
+  (23k `SERIAL_CRC.pnach` files, the only serial-keyed public DB - the CRC-named
+  collections are the NetherSX2 set we already ship); then gamehacking.org, which exports
+  PCSX2 `.pnach` per game but sits behind Cloudflare - stealth Playwright in a headed
+  Chromium typing into its search form gets through, `?q=` URLs and plain fetches do not.
+  **The user asked that gamehacking not be hammered**: ~10 s between requests, three
+  requests per game, one pass, no retries. Its exports still contain un-decrypted GameShark
+  v1 lines (`91F68566`-style addresses); `gamehacking_export.py` drops those sections.
+  Result of the 2026-09-22 sweep is `docs/games-without-cheats.txt`.
+- The library's serial resolution misses translation patches and undubs; their serials come
+  from `GameIndex.yaml` `name-en:` (do not guess: SLUS-20952 is Tak 2, not Shadow Hearts).
 
 ### Texture pack getter
 
