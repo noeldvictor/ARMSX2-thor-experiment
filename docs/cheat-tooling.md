@@ -84,7 +84,13 @@ patch, so making one means finding the address — the classic loop being: searc
 a value, change it in game, search again for what changed, repeat until one address
 remains.
 
-Nothing in this fork supports that today. A minimal useful version:
+Since 2026-09-22 this exists as the `ps2-cheat` skill plus the `pcsx2` MCP server in
+`tools/pcsx2_mcp/` (see the "Cheat tooling" item in `AGENTS.md` for the working notes).
+It runs against desktop PCSX2 on the PC rather than the Thor, because desktop PCSX2
+already has PINE, uncompressed save states and the same PNACH loader; the Thor gets the
+finished `.pnach`. The first cheat authored this way is Okage: Shadow King's "No Enemy
+Encounters" (`E0426FC6.pnach`). The original sketch of what the tool needed follows, and
+it turned out to be right except that breakpoints were never needed:
 
 - **Memory search over the running VM** — seed a search, filter by
   changed/unchanged/greater/less across iterations, and land on candidate addresses.

@@ -255,18 +255,53 @@ Reference manuals for the Thor's exact cores in
 
 ### Cheat tooling
 
-**Analysis tool implemented, rest not.** Full notes:
-[docs/cheat-tooling.md](docs/cheat-tooling.md).
+**Coverage tool and an authoring workflow implemented.** Full notes:
+[docs/cheat-tooling.md](docs/cheat-tooling.md). The workflow is the `ps2-cheat`
+skill (`.claude/skills/ps2-cheat/SKILL.md`) driving the `pcsx2` MCP server
+(`tools/pcsx2_mcp/`, registered in `.mcp.json`).
 
 - `tools/cheat_coverage.py` measures the gap. On the test library: 590 bundled files
   covering 534 serials, and **46% of resolvable games have no cheats**.
-- Unresolved filenames are reported separately from missing on purpose — unknown is
+- Unresolved filenames are reported separately from missing on purpose - unknown is
   not the same as absent, and merging them overstates the gap.
-- Two separate problems: importing cheats that exist (use the tool's missing list),
-  and authoring ones that do not (memory search — likely better driven over MCP than
-  through an on-device UI).
 - Bundled files are keyed by **CRC**, not serial. That is the real friction when
   importing for a game you do not own.
+- **Authoring happens on desktop PCSX2 on the PC, not on the Thor.** The Thor build has
+  no debugger; desktop PCSX2 (`F:\Projects\pcsx2-desktop\pcsx2`, portable, v2.8.2) has
+  PINE, save states and the same PNACH loader, so an address found there is the address
+  on the Thor (same ELF, same CRC). `tools/pcsx2_mcp/setup.py` reproduces the install.
+- The MCP server does: PINE memory read/write, save/load state, button presses via
+  SendInput, screenshots (F8 hotkey), 32 MB RAM snapshots from uncompressed save states,
+  a snapshot-diff search, capstone disassembly, lui/lo cross-refs and PNACH output for
+  desktop, the repo bundle and the Thor. `server.py cli <tool>` is the same thing from a
+  shell; each CLI call is a fresh process, so snapshots do not persist between calls.
+- **PCSX2 2.x treats a named `[Cheats/Name]` section as a switch that is off by default.**
+  It only applies once `gamesettings/<SERIAL>_<CRC>.ini` lists it under
+  `[Cheats] Enable = Cheats/Name` - the full header, prefix included. `pnach_write`
+  handles that for desktop. On the Thor the switch is the same ini entry **plus** the
+  `patch=` line uncommented in `<DataRoot>/cheats/<CRC>.pnach` (the bundle ships the line
+  commented, the in-app cheat manager uncomments it) **plus** `enableCheats` on globally.
+  A file whose lines are all commented is "0 cheats found", not "found, disabled".
+- **The technique that worked** (Okage, no encounters): a burst of snapshots while walking
+  into a ghost, then diff "constant across the field snapshots, changed at the swirl
+  frame", restricted to the ELF `.data/.bss` band (`0x1F0000-0x320000`) because the battle
+  overlay load swamps everything above `0x320000`. That gave the encounter record and the
+  field controller's state field; every `sw x, 0x48(base)` site listed the one store of
+  the encounter state, and that function is the ghost update with the distance compare.
+  Forcing the compare's `bc1f` into `b` (same offset, delay slot untouched) is the cheat.
+  Prefer that over a data freeze: one line, no per-frame write.
+- Okage: Shadow King (SCUS-97129, CRC `E0426FC6`): field ghost update at `00137218`,
+  contact branch at `00137508`, encounter record at `002D9BC0`, battle flag
+  `002D9ABC` (0 field, 1 battle), field controller state at `+0x48` (8/11 = encounter).
+  Ari's field position is a vec3 at `001FB980`. Shipped as
+  `assets/cheats/E0426FC6.pnach`, verified on desktop and loaded on the Thor.
+- Saves for a game with no progress come from GameFAQs; its pages sit behind
+  Cloudflare, so fetch with Playwright in `F:\Projects\pcsx2-desktop\.venv` (headed
+  Chromium passes the challenge) or ask the user to download. Okage keeps every slot in
+  one save directory, so a second save needs a second memory card. `mymcplus` imports
+  `.max`/`.cbs`/`.psu` into a fresh `.ps2` image.
+- PCSX2 v2.8 reads the **contents** of `portable.txt` as the data root; the file must be
+  empty, or the ini lands in `<exe dir>/<that text>/inis` and the setup wizard reappears.
 
 ### Texture pack getter
 
