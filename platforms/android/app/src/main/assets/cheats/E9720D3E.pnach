@@ -139,28 +139,16 @@
 [Cheats/Balor's Eye]
 // patch=1,EE,005FC0C3,extended,00000005
 
-[Cheats/Dirk]
+[Cheats/Dirk / Claymore]
 // patch=1,EE,005FC0C4,extended,00000001
 
-[Cheats/Silver Dirk]
+[Cheats/Silver Dirk / Claidbeamh Soluis]
 // patch=1,EE,005FC0C4,extended,00000002
 
-[Cheats/Vipersteel Dirk]
+[Cheats/Vipersteel Dirk / Lochaber Axe]
 // patch=1,EE,005FC0C4,extended,00000003
 
-[Cheats/Basluath]
-// patch=1,EE,005FC0C4,extended,00000004
-
-[Cheats/Claymore]
-// patch=1,EE,005FC0C4,extended,00000001
-
-[Cheats/Claidbeamh Soluis]
-// patch=1,EE,005FC0C4,extended,00000002
-
-[Cheats/Lochaber Axe]
-// patch=1,EE,005FC0C4,extended,00000003
-
-[Cheats/Frecraid]
+[Cheats/Basluath / Frecraid]
 // patch=1,EE,005FC0C4,extended,00000004
 
 [Cheats/Longbow]

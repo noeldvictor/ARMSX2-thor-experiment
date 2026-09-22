@@ -9,7 +9,7 @@ description=
 // patch=1,EE,0029D49D,extended,00000081
 
 
-[Have Character Display Card Codes\Alec]
+[Have Character Display Card Codes\Alec / Elc]
 author=Code Master
 description=
 // patch=1,EE,0029D49E,extended,000000E3
@@ -27,7 +27,7 @@ description=
 // patch=1,EE,0029D54C,extended,000000E3
 
 
-[Have Parts Display Card Codes\Angel Statuette]
+[Have Parts Display Card Codes\Angel Statuette / Goddess Statuette]
 author=Code Master
 description=
 // patch=1,EE,0029D565,extended,000000E3
@@ -147,7 +147,7 @@ description=
 // patch=1,EE,0029D55B,extended,000000E3
 
 
-[Have Parts Display Card Codes\Battle Armband]
+[Have Parts Display Card Codes\Battle Armband / Muscle Wristband]
 author=Code Master
 description=
 // patch=1,EE,0029D505,extended,000000E3
@@ -177,7 +177,7 @@ description=
 // patch=1,EE,0029D490,extended,00000081
 
 
-[Have Ability Display Card Codes\Bent Throwing-Knife]
+[Have Ability Display Card Codes\Bent Throwing-Knife / Numbling Ball]
 author=Code Master
 description=
 // patch=1,EE,0029D4EB,extended,000000E3
@@ -201,13 +201,13 @@ description=
 // patch=1,EE,0029D4C4,extended,000000E3
 
 
-[Have Parts Display Card Codes\Blade Boots]
+[Have Parts Display Card Codes\Blade Boots / Craft Gloves]
 author=Code Master
 description=
 // patch=1,EE,0029D535,extended,000000E3
 
 
-[Have Ability Display Card Codes\Blade Rain]
+[Have Ability Display Card Codes\Blade Rain / Napalm Frenzy]
 author=Code Master
 description=
 // patch=1,EE,0029D4BB,extended,000000E3
@@ -219,7 +219,7 @@ description=
 // patch=1,EE,0029D56B,extended,000000E3
 
 
-[Have Ability Display Card Codes\Bloody Thorn]
+[Have Ability Display Card Codes\Bloody Thorn / Ice Smasher]
 author=Code Master
 description=
 // patch=1,EE,0029D4AE,extended,000000E3
@@ -261,7 +261,7 @@ description=
 // patch=1,EE,0029D491,extended,000000E3
 
 
-[Have Parts Display Card Codes\Cane Secrets]
+[Have Parts Display Card Codes\Cane Secrets / Mystery Card]
 author=Code Master
 description=
 // patch=1,EE,0029D572,extended,000000E3
@@ -279,7 +279,7 @@ description=
 // patch=1,EE,0029D49B,extended,00000081
 
 
-[Have Character Display Card Codes\Cheryl]
+[Have Character Display Card Codes\Cheryl / Tosh]
 author=Code Master
 description=
 // patch=1,EE,0029D49B,extended,000000E3
@@ -303,13 +303,13 @@ description=
 // patch=1,EE,0029D493,extended,000000E3
 
 
-[Have Parts Display Card Codes\Clivis' Book]
+[Have Parts Display Card Codes\Clivis' Book / Dragon's Scales]
 author=Code Master
 description=
 // patch=1,EE,0029D552,extended,000000E3
 
 
-[Have Parts Display Card Codes\Cloth Belt]
+[Have Parts Display Card Codes\Cloth Belt / Magical Belt]
 author=Code Master
 description=
 // patch=1,EE,0029D558,extended,000000E3
@@ -321,22 +321,16 @@ description=
 // patch=1,EE,0029D523,extended,000000E3
 
 
-[Have Parts Display Card Codes\Combat Gear]
+[Have Parts Display Card Codes\Combat Gear / Leather Vest]
 author=Code Master
 description=
 // patch=1,EE,0029D525,extended,000000E3
 
 
-[Have Parts Display Card Codes\Complete Combat]
+[Have Parts Display Card Codes\Complete Combat / Weaponry Manual]
 author=Code Master
 description=
 // patch=1,EE,0029D515,extended,000000E3
-
-
-[Have Parts Display Card Codes\Craft Gloves]
-author=Code Master
-description=
-// patch=1,EE,0029D535,extended,000000E3
 
 
 [Have Ability Display Card Codes\Cragh Spirit]
@@ -363,7 +357,7 @@ description=
 // patch=1,EE,0029D4BC,extended,000000E3
 
 
-[Have Parts Display Card Codes\Crystal Beads]
+[Have Parts Display Card Codes\Crystal Beads / Jade Beads]
 author=Code Master
 description=
 // patch=1,EE,0029D50B,extended,000000E3
@@ -375,13 +369,7 @@ description=
 // patch=1,EE,0029D4D9,extended,000000E3
 
 
-[Have Ability Display Card Codes\Cure II]
-author=Code Master
-description=
-// patch=1,EE,0029D4DB,extended,000000E3
-
-
-[Have Ability Display Card Codes\Cure III]
+[Have Ability Display Card Codes\Cure II / Cure III]
 author=Code Master
 description=
 // patch=1,EE,0029D4DB,extended,000000E3
@@ -399,13 +387,7 @@ description=
 // patch=1,EE,0029D48C,extended,000000E3
 
 
-[Have Ability Display Card Codes\Dark Sphere]
-author=Code Master
-description=
-// patch=1,EE,0029D4D8,extended,000000E3
-
-
-[Have Ability Display Card Codes\Dark Sphere II]
+[Have Ability Display Card Codes\Dark Sphere / Dark Sphere II]
 author=Code Master
 description=
 // patch=1,EE,0029D4D8,extended,000000E3
@@ -430,19 +412,13 @@ description=
 // patch=1,EE,0029D48E,extended,000000E3
 
 
-[Have Parts Display Card Codes\Devil Armband]
+[Have Parts Display Card Codes\Devil Armband / Monster's Fang]
 author=Code Master
 description=
 // patch=1,EE,0029D508,extended,000000E3
 
 
-[Have Ability Display Card Codes\Diamond Dust]
-author=Code Master
-description=
-// patch=1,EE,0029D4C8,extended,000000E3
-
-
-[Have Ability Display Card Codes\Diamond Dust II]
+[Have Ability Display Card Codes\Diamond Dust / Diamond Dust II]
 author=Code Master
 description=
 // patch=1,EE,0029D4C8,extended,000000E3
@@ -478,7 +454,7 @@ description=
 // patch=1,EE,0029D4EF,extended,000000E3
 
 
-[Have Parts Display Card Codes\Dilz Unit]
+[Have Parts Display Card Codes\Dilz Unit / Nidellia Hilt]
 author=Code Master
 description=
 // patch=1,EE,0029D51B,extended,000000E3
@@ -490,7 +466,7 @@ description=
 // patch=1,EE,0029D500,extended,000000E3
 
 
-[Have Ability Display Card Codes\Divide]
+[Have Ability Display Card Codes\Divide / Thunder Storm II]
 author=Code Master
 description=
 // patch=1,EE,0029D4D5,extended,000000E3
@@ -520,12 +496,6 @@ description=
 // patch=1,EE,0029D52D,extended,000000E3
 
 
-[Have Parts Display Card Codes\Dragon's Scales]
-author=Code Master
-description=
-// patch=1,EE,0029D552,extended,000000E3
-
-
 [Have Parts Display Card Codes\Dubach Mask]
 author=Code Master
 description=
@@ -544,13 +514,7 @@ description=
 // patch=1,EE,0029D49E,extended,00000081
 
 
-[Have Character Display Card Codes\Elc]
-author=Code Master
-description=
-// patch=1,EE,0029D49E,extended,000000E3
-
-
-[Have Parts Display Card Codes\Elven Chain-Mail]
+[Have Parts Display Card Codes\Elven Chain-Mail / Ranger Suit]
 author=Code Master
 description=
 // patch=1,EE,0029D528,extended,000000E3
@@ -616,7 +580,7 @@ description=
 // patch=1,EE,0029D512,extended,000000E3
 
 
-[Have Parts Display Card Codes\Fiona's Outfit]
+[Have Parts Display Card Codes\Fiona's Outfit / Power Stone]
 author=Code Master
 description=
 // patch=1,EE,0029D548,extended,000000E3
@@ -658,7 +622,7 @@ description=
 // patch=1,EE,C0F5ACF3,extended,7986C96B
 
 
-[Have Parts Display Card Codes\Gauntlet]
+[Have Parts Display Card Codes\Gauntlet / Ninja Hand Guard]
 author=Code Master
 description=
 // patch=1,EE,0029D538,extended,000000E3
@@ -706,12 +670,6 @@ description=
 // patch=1,EE,0029D4A9,extended,000000E3
 
 
-[Have Parts Display Card Codes\Goddess Statuette]
-author=Code Master
-description=
-// patch=1,EE,0029D565,extended,000000E3
-
-
 [Have Parts Display Card Codes\Gold Rosary]
 author=Code Master
 description=
@@ -742,7 +700,7 @@ description=
 // patch=1,EE,0029D4EE,extended,000000E3
 
 
-[Have Ability Display Card Codes\Hard Metal]
+[Have Ability Display Card Codes\Hard Metal / Light Metal]
 author=Code Master
 description=
 // patch=1,EE,0029D4E8,extended,000000E3
@@ -784,7 +742,7 @@ description=
 // patch=1,EE,0029D4FD,extended,000000E3
 
 
-[Have Ability Display Card Codes\Heat Cyclone]
+[Have Ability Display Card Codes\Heat Cyclone / Shuffle Shot]
 author=Code Master
 description=
 // patch=1,EE,0029D4A8,extended,000000E3
@@ -850,7 +808,7 @@ description=
 // patch=1,EE,0029D522,extended,000000E3
 
 
-[Have Parts Display Card Codes\Holy Mother's Sash]
+[Have Parts Display Card Codes\Holy Mother's Sash / Monji's Coat]
 author=Code Master
 description=
 // patch=1,EE,0029D542,extended,000000E3
@@ -860,12 +818,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D546,extended,000000E3
-
-
-[Have Ability Display Card Codes\Ice Smasher]
-author=Code Master
-description=
-// patch=1,EE,0029D4AE,extended,000000E3
 
 
 [Unlock Character Card\Iga]
@@ -917,7 +869,7 @@ description=
 // patch=1,EE,201CF260,extended,0C030088
 
 
-[Infinite Money]
+[Infinite Money / Max Gold]
 author=MadCatz
 description=
 // patch=1,EE,2029D3B0,extended,000F423F
@@ -939,12 +891,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D506,extended,000000E3
-
-
-[Have Parts Display Card Codes\Jade Beads]
-author=Code Master
-description=
-// patch=1,EE,0029D50B,extended,000000E3
 
 
 [Unlock Character Card\Kharg]
@@ -977,7 +923,7 @@ description=
 // patch=1,EE,0029D49C,extended,000000E3
 
 
-[Have Parts Display Card Codes\Lamda Crest]
+[Have Parts Display Card Codes\Lamda Crest / Nidellia Crest]
 author=Code Master
 description=
 // patch=1,EE,0029D568,extended,000000E3
@@ -1011,12 +957,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D536,extended,000000E3
-
-
-[Have Parts Display Card Codes\Leather Vest]
-author=Code Master
-description=
-// patch=1,EE,0029D525,extended,000000E3
 
 
 [Have Parts Display Card Codes\Leather Wristband]
@@ -1073,12 +1013,6 @@ description=
 // patch=1,EE,0029D431,extended,00000008
 
 
-[Have Ability Display Card Codes\Light Metal]
-author=Code Master
-description=
-// patch=1,EE,0029D4E8,extended,000000E3
-
-
 [Unlock Character Card\Lilia]
 author=MadCatz
 description=
@@ -1103,7 +1037,7 @@ description=
 // patch=1,EE,0029D52E,extended,000000E3
 
 
-[Have Parts Display Card Codes\Lizard Hide]
+[Have Parts Display Card Codes\Lizard Hide / Universal Cloth]
 author=Code Master
 description=
 // patch=1,EE,0029D555,extended,000000E3
@@ -1115,7 +1049,7 @@ description=
 // patch=1,EE,0029D53E,extended,000000E3
 
 
-[Have Ability Display Card Codes\Lusah Cane]
+[Have Ability Display Card Codes\Lusah Cane / Slow Bomb]
 author=Code Master
 description=
 // patch=1,EE,0029D4F8,extended,000000E3
@@ -1157,19 +1091,13 @@ description=
 // patch=1,EE,0029D533,extended,000000E3
 
 
-[Have Parts Display Card Codes\Magical Belt]
-author=Code Master
-description=
-// patch=1,EE,0029D558,extended,000000E3
-
-
 [Have Parts Display Card Codes\Magical Stone]
 author=Code Master
 description=
 // patch=1,EE,0029D549,extended,000000E3
 
 
-[Have Parts Display Card Codes\Manual Of Warfare]
+[Have Parts Display Card Codes\Manual Of Warfare / War God Tome]
 author=Code Master
 description=
 // patch=1,EE,0029D518,extended,000000E3
@@ -1181,7 +1109,7 @@ description=
 // patch=1,EE,0029D487,extended,00000081
 
 
-[Have Character Display Card Codes\Maru]
+[Have Character Display Card Codes\Maru / Paulette]
 author=Code Master
 description=
 // patch=1,EE,0029D488,extended,000000E3
@@ -1221,12 +1149,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D431,extended,00000005
-
-
-[Miscellaneous Codes\Max Gold]
-author=Code Master
-description=
-// patch=1,EE,2029D3B0,extended,000F423F
 
 
 [Miscellaneous Codes\Max HP (In-Battle)]
@@ -1289,82 +1211,28 @@ description=
 // patch=1,EE,0029D4AF,extended,000000E3
 
 
-[Have Ability Display Card Codes\Mirage Field]
+[Have Ability Display Card Codes\Mirage Field / Pyron Summons]
 author=Code Master
 description=
 // patch=1,EE,0029D4AB,extended,000000E3
 
 
-[Have Parts Display Card Codes\Monji's Coat]
-author=Code Master
-description=
-// patch=1,EE,0029D542,extended,000000E3
-
-
-[Have Parts Display Card Codes\Monster's Fang]
-author=Code Master
-description=
-// patch=1,EE,0029D508,extended,000000E3
-
-
-[Have Ability Display Card Codes\Mortal Spray]
+[Have Ability Display Card Codes\Mortal Spray / Ravish]
 author=Code Master
 description=
 // patch=1,EE,0029D4B8,extended,000000E3
 
 
-[Have Parts Display Card Codes\Muscle Wristband]
-author=Code Master
-description=
-// patch=1,EE,0029D505,extended,000000E3
-
-
-[Have Ability Display Card Codes\Mysterious Ore]
+[Have Ability Display Card Codes\Mysterious Ore / Small Stone Sack]
 author=Code Master
 description=
 // patch=1,EE,0029D4E5,extended,000000E3
-
-
-[Have Parts Display Card Codes\Mystery Card]
-author=Code Master
-description=
-// patch=1,EE,0029D572,extended,000000E3
-
-
-[Have Ability Display Card Codes\Napalm Frenzy]
-author=Code Master
-description=
-// patch=1,EE,0029D4BB,extended,000000E3
-
-
-[Have Parts Display Card Codes\Nidellia Crest]
-author=Code Master
-description=
-// patch=1,EE,0029D568,extended,000000E3
-
-
-[Have Parts Display Card Codes\Nidellia Hilt]
-author=Code Master
-description=
-// patch=1,EE,0029D51B,extended,000000E3
-
-
-[Have Parts Display Card Codes\Ninja Hand Guard]
-author=Code Master
-description=
-// patch=1,EE,0029D538,extended,000000E3
 
 
 [Have Parts Display Card Codes\Ninja Scarf]
 author=Code Master
 description=
 // patch=1,EE,0029D559,extended,000000E3
-
-
-[Have Ability Display Card Codes\Numbling Ball]
-author=Code Master
-description=
-// patch=1,EE,0029D4EB,extended,000000E3
 
 
 [Have Ability Display Card Codes\Oil Orb]
@@ -1397,12 +1265,6 @@ description=
 // patch=1,EE,0029D488,extended,00000081
 
 
-[Have Character Display Card Codes\Paulette]
-author=Code Master
-description=
-// patch=1,EE,0029D488,extended,000000E3
-
-
 [Have Parts Display Card Codes\Physical Secrets]
 author=Code Master
 description=
@@ -1415,7 +1277,7 @@ description=
 // patch=1,EE,0029D53D,extended,000000E3
 
 
-[Have Ability Display Card Codes\Poison Bomb]
+[Have Ability Display Card Codes\Poison Bomb / Time-Bomb]
 author=Code Master
 description=
 // patch=1,EE,0029D4F5,extended,000000E3
@@ -1433,12 +1295,6 @@ description=
 // patch=1,EE,0029D51D,extended,000000E3
 
 
-[Have Parts Display Card Codes\Power Stone]
-author=Code Master
-description=
-// patch=1,EE,0029D548,extended,000000E3
-
-
 [Have Parts Display Card Codes\Power Wristband]
 author=Code Master
 description=
@@ -1451,28 +1307,10 @@ description=
 // patch=1,EE,0029D4E0,extended,000000E3
 
 
-[Have Ability Display Card Codes\Pyron Summons]
-author=Code Master
-description=
-// patch=1,EE,0029D4AB,extended,000000E3
-
-
 [Have Parts Display Card Codes\Pyulka Jacket]
 author=Code Master
 description=
 // patch=1,EE,0029D543,extended,000000E3
-
-
-[Have Parts Display Card Codes\Ranger Suit]
-author=Code Master
-description=
-// patch=1,EE,0029D528,extended,000000E3
-
-
-[Have Ability Display Card Codes\Ravish]
-author=Code Master
-description=
-// patch=1,EE,0029D4B8,extended,000000E3
 
 
 [Have Parts Display Card Codes\Red Earrings]
@@ -1505,7 +1343,7 @@ description=
 // patch=1,EE,0029D563,extended,000000E3
 
 
-[Have Parts Display Card Codes\Romantic Stone]
+[Have Parts Display Card Codes\Romantic Stone / Yellow Earrings]
 author=Code Master
 description=
 // patch=1,EE,0029D562,extended,000000E3
@@ -1559,7 +1397,7 @@ description=
 // patch=1,EE,0029D4B4,extended,000000E3
 
 
-[Have Parts Display Card Codes\Sasha's Tool Bag]
+[Have Parts Display Card Codes\Sasha's Tool Bag / Scar Of The Elite]
 author=Code Master
 description=
 // patch=1,EE,0029D545,extended,000000E3
@@ -1569,12 +1407,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D530,extended,000000E3
-
-
-[Have Parts Display Card Codes\Scar Of The Elite]
-author=Code Master
-description=
-// patch=1,EE,0029D545,extended,000000E3
 
 
 [Have Parts Display Card Codes\Shell]
@@ -1589,7 +1421,7 @@ description=
 // patch=1,EE,0029D50F,extended,000000E3
 
 
-[Have Ability Display Card Codes\Shockwaver]
+[Have Ability Display Card Codes\Shockwaver / Steel Trap]
 author=Code Master
 description=
 // patch=1,EE,0029D4FB,extended,000000E3
@@ -1613,28 +1445,10 @@ description=
 // patch=1,EE,0029D4A1,extended,000000E3
 
 
-[Have Ability Display Card Codes\Shuffle Shot]
-author=Code Master
-description=
-// patch=1,EE,0029D4A8,extended,000000E3
-
-
 [Have Parts Display Card Codes\Silver Rosary]
 author=Code Master
 description=
 // patch=1,EE,0029D50E,extended,000000E3
-
-
-[Have Ability Display Card Codes\Slow Bomb]
-author=Code Master
-description=
-// patch=1,EE,0029D4F8,extended,000000E3
-
-
-[Have Ability Display Card Codes\Small Stone Sack]
-author=Code Master
-description=
-// patch=1,EE,0029D4E5,extended,000000E3
 
 
 [Have Parts Display Card Codes\Smelian Armor]
@@ -1659,12 +1473,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D4FE,extended,000000E3
-
-
-[Have Ability Display Card Codes\Steel Trap]
-author=Code Master
-description=
-// patch=1,EE,0029D4FB,extended,000000E3
 
 
 [Have Ability Display Card Codes\Stone]
@@ -1739,25 +1547,13 @@ description=
 // patch=1,EE,0029D4D3,extended,000000E3
 
 
-[Have Ability Display Card Codes\Thunder Storm II]
-author=Code Master
-description=
-// patch=1,EE,0029D4D5,extended,000000E3
-
-
-[Have Ability Display Card Codes\Time-Bomb]
-author=Code Master
-description=
-// patch=1,EE,0029D4F5,extended,000000E3
-
-
 [Have Parts Display Card Codes\Tome Of Five Rings]
 author=Code Master
 description=
 // patch=1,EE,0029D516,extended,000000E3
 
 
-[Have Ability Display Card Codes\Tornado]
+[Have Ability Display Card Codes\Tornado / Wind Slash II]
 author=Code Master
 description=
 // patch=1,EE,0029D4CB,extended,000000E3
@@ -1773,12 +1569,6 @@ description=
 author=MadCatz
 description=
 // patch=1,EE,0029D49A,extended,00000081
-
-
-[Have Character Display Card Codes\Tosh]
-author=Code Master
-description=
-// patch=1,EE,0029D49B,extended,000000E3
 
 
 [Have Ability Display Card Codes\Total Healing]
@@ -1803,12 +1593,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D52F,extended,000000E3
-
-
-[Have Parts Display Card Codes\Universal Cloth]
-author=Code Master
-description=
-// patch=1,EE,0029D555,extended,000000E3
 
 
 [Unlock All Ability Cards (View/Equip Cards To Activate)]
@@ -1894,12 +1678,6 @@ description=
 // patch=1,EE,0029D48F,extended,000000E3
 
 
-[Have Parts Display Card Codes\War God Tome]
-author=Code Master
-description=
-// patch=1,EE,0029D518,extended,000000E3
-
-
 [Have Parts Display Card Codes\Warrior Charm]
 author=Code Master
 description=
@@ -1918,12 +1696,6 @@ description=
 // patch=1,EE,0029D4C6,extended,000000E3
 
 
-[Have Parts Display Card Codes\Weaponry Manual]
-author=Code Master
-description=
-// patch=1,EE,0029D515,extended,000000E3
-
-
 [Have Parts Display Card Codes\Whirlwind Bandana]
 author=Code Master
 description=
@@ -1936,12 +1708,6 @@ description=
 // patch=1,EE,0029D4C9,extended,000000E3
 
 
-[Have Ability Display Card Codes\Wind Slash II]
-author=Code Master
-description=
-// patch=1,EE,0029D4CB,extended,000000E3
-
-
 [Have Ability Display Card Codes\Windblade Shot]
 author=Code Master
 description=
@@ -1952,10 +1718,3 @@ description=
 author=Code Master
 description=
 // patch=1,EE,0029D501,extended,000000E3
-
-
-[Have Parts Display Card Codes\Yellow Earrings]
-author=Code Master
-description=
-// patch=1,EE,0029D562,extended,000000E3
-

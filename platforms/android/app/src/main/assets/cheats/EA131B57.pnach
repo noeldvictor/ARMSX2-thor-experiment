@@ -115,16 +115,10 @@
 [Cheats/Always Grandmaster Rank]
 // patch=1,EE,1087869C,extended,0000001A
 
-[Cheats/Max Wins]
+[Cheats/Max Wins / Max Losses]
 // patch=1,EE,108786A0,extended,0000C350
 
-[Cheats/No Wins]
-// patch=1,EE,108786A0,extended,00000000
-
-[Cheats/Max Losses]
-// patch=1,EE,108786A0,extended,0000C350
-
-[Cheats/No Losses]
+[Cheats/No Wins / No Losses]
 // patch=1,EE,108786A0,extended,00000000
 
 [Cheats/Have All Items]

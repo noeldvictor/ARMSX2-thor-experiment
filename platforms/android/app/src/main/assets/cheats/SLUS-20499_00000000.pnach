@@ -157,7 +157,7 @@ description=
 // patch=1,EE,10765902,extended,00005905
 
 
-[Item Codes\Access All 45 Item Slots]
+[Item Codes\Access All 45 Item Slots / Unlock 9 Item Pages]
 author=Code Master
 description=
 // patch=1,EE,107657B8,extended,0000002D
@@ -997,7 +997,7 @@ description=
 // patch=1,EE,10765902,extended,00002100
 
 
-[Quantity Digits\Armor Modifier Quantity Digits]
+[Quantity Digits\Armor Modifier Quantity Digits / Items Modifier Quantity Digits / Shield & Weapon Skill Modifier Quantity Digits]
 author=NA
 description=00 - Nothing
 01 - Ranger Suit
@@ -3067,7 +3067,7 @@ description=
 // patch=1,EE,107656F2,extended,0000270F
 
 
-[Main Codes\Bosch: Max ATK]
+[Main Codes\Bosch: Max ATK / Max Overall ATK]
 author=MadCatz
 description=
 // patch=1,EE,107656F4,extended,000003E7
@@ -3085,37 +3085,37 @@ description=
 // patch=1,EE,10765738,extended,000003E7
 
 
-[Main Codes\Bosch: Max Current DEF]
+[Main Codes\Bosch: Max Current DEF / Max DEF]
 author=MadCatz
 description=
 // patch=1,EE,1076573E,extended,000003E7
 
 
-[Main Codes\Bosch: Max Current HP]
+[Main Codes\Bosch: Max Current HP / Infinite HP]
 author=MadCatz
 description=
 // patch=1,EE,107656A0,extended,000003E7
 
 
-[Main Codes\Bosch: Max Current MAG]
+[Main Codes\Bosch: Max Current MAG / Max MAG]
 author=MadCatz
 description=
 // patch=1,EE,10765742,extended,000003E7
 
 
-[Main Codes\Bosch: Max Current MOV]
+[Main Codes\Bosch: Max Current MOV / Max MOV]
 author=MadCatz
 description=
 // patch=1,EE,10765744,extended,000003E7
 
 
-[Main Codes\Bosch: Max Current SPD]
+[Main Codes\Bosch: Max Current SPD / Max SPD]
 author=MadCatz
 description=
 // patch=1,EE,10765740,extended,000003E7
 
 
-[Main Codes\Bosch: Max DEF]
+[Main Codes\Bosch: Max DEF / Max Overall DEF]
 author=MadCatz
 description=
 // patch=1,EE,107656F6,extended,000003E7
@@ -3133,19 +3133,19 @@ description=
 // patch=1,EE,107656A6,extended,000003E7
 
 
-[Main Codes\Bosch: Max MAG]
+[Main Codes\Bosch: Max MAG / Max Overall MAG]
 author=MadCatz
 description=
 // patch=1,EE,107656FA,extended,000003E7
 
 
-[Main Codes\Bosch: Max MOV]
+[Main Codes\Bosch: Max MOV / Max Overall MOV]
 author=MadCatz
 description=
 // patch=1,EE,107656FC,extended,000003E7
 
 
-[Main Codes\Bosch: Max SPD]
+[Main Codes\Bosch: Max SPD / Max Overall SPD]
 author=MadCatz
 description=
 // patch=1,EE,107656F8,extended,000003E7
@@ -10291,16 +10291,10 @@ description=
 // patch=1,EE,20765358,extended,000003E7
 
 
-[Ryu Codes\Infinite HP]
+[Ryu Codes\Infinite HP / Max HP / Ryu: Max HP]
 author=Codejunkies
 description=
 // patch=1,EE,107653A4,extended,000003E7
-
-
-[Bosch Codes\Infinite HP]
-author=Codejunkies
-description=
-// patch=1,EE,107656A0,extended,000003E7
 
 
 [Miscellaneous Codes\Infinite Item Usage]
@@ -10309,7 +10303,7 @@ description=
 // patch=1,EE,201BC680,extended,00000000
 
 
-[Main Codes\Infinite Party XP]
+[Main Codes\Infinite Party XP / Max Party XP]
 author=MadCatz
 description=
 // patch=1,EE,207657B0,extended,0098967F
@@ -10321,19 +10315,7 @@ description=
 // patch=1,EE,107657B0,extended,0000FFFF
 
 
-[Zenny Codes\Infinite Party XP]
-author=Codejunkies
-description=
-// patch=1,EE,207657B0,extended,0098967F
-
-
-[Page 11\Infinite Zenny]
-author=MadCatz
-description=
-// patch=1,EE,207657A8,extended,0098967F
-
-
-[Main Codes\Infinite Zenny]
+[Page 11\Infinite Zenny / Max Zenny]
 author=MadCatz
 description=
 // patch=1,EE,207657A8,extended,0098967F
@@ -10343,293 +10325,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,107657A8,extended,0000FFFF
-
-
-[Zenny Codes\Infinite Zenny]
-author=Codejunkies
-description=
-// patch=1,EE,207657A8,extended,0098967F
-
-
-[Quantity Digits\Items Modifier Quantity Digits]
-author=NA
-description=Items
-
-0000 - Nothing
-0100 - Confushroom
-0200 - Fresh Meat
-0300 - Rotten Meat
-0400 - Sleepyshroom
-0500 - Poisonshroom
-0600 - Bomb
-0700 - Dynamite
-0800 - Bind Bomb
-0900 - Firebomb
-0A00 - Prox Bomb
-0B00 - Heal Kit
-0C00 - Aid Kit
-0D00 - Med Kit
-0E00 - Trauma Kit
-0F00 - Life Kit
-1000 - AP Charge
-1100 - Full AP
-1200 - Antidote
-1300 - Eye Drops
-1400 - Unlock
-1500 - Vaccine
-1600 - Multimeds
-1700 - Tonic
-1800 - Panacea
-1900 - HP Plus
-1A00 - AP Plus
-1B00 - Power Meal
-1C00 - Protein
-1D00 - JuJu
-1E00 - Reflex
-1F00 - Longfoot
-2000 - Power Boost
-2100 - Armor Boost
-2200 - Magic Boost
-2300 - Speed Boost
-2400 - Range Boost
-2500 - Save Token
-2600 - Escape
-2700 - Mega Panacea
-2800 - 7th Sense
-2900 - Wake Up
-2A00 - Footloose
-2B00 - Mega Aid Kit
-3300 - Tracker
-3400 - Present
-3500 - Gold XP
-3600 - Fairy Drops
-
-Weapons
-
-0101 - Ranger Edge
-0201 - Buster Sword
-0301 - Strong Sword
-0401 - Celtis
-0501 - Ruby Master
-0601 - Sapph. Maser
-0701 - Plasma Maser
-0801 - Mandau Blade
-0901 - Dragon Blade
-0A01 - Legend Blade
-0B01 - Violet Blade
-0D01 - Pyromania
-0E01 - Glacier
-0F01 - Thor Hammer
-1001 - Magic Wand
-1101 - Wizard Wand
-1201 - Holy Heart
-1301 - Demonscythe
-1401 - Antenna
-1501 - DeluxAntenna
-1601 - Slapper
-1701 - Buki
-1901 - Victorious
-1A01 - AutoRifle
-1B01 - Handgun
-1C01 - SniperScope
-1D01 - Stinger
-1E01 - Grenade
-1F01 - FlameBlaster
-2001 - IceCannon
-2101 - ThunderRifle
-2201 - Pistol
-2301 - Cleaner
-2501 - Beast Blade
-
-Armors
-
-0102 - Ranger Suit
-0202 - Light Suit
-0302 - Heavy Suit
-0402 - Strider Suit
-0502 - Superlight
-0602 - Superheavy
-0702 - Fire Gear
-0802 - Ice Gear
-0902 - Plasma Gear
-0A02 - Poison Gear
-0B02 - Virus Gear
-0C02 - Chaos Gear
-0D02 - Sleep Gear
-0E02 - Blind Gear
-0F02 - Bind Gear
-1002 - Stun Gear
-1102 - Lock Gear
-1202 - Death Gear
-1302 - Impact Gear
-1402 - Excel Suit
-1502 - Protect Suit
-1602 - SlaveClothes
-1702 - SlaveClothes 2
-1802 - SlaveClothes 3
-1902 - SlaveClothes 4
-1A02 - LightClothes
-1B02 - HeavyClothes
-1C02 - White Robe
-1D02 - Light Robe
-1E02 - Heavy Robe
-1F02 - Fire Check
-2002 - Ice Check
-2102 - Plasma Check
-2202 - Poison Check
-2302 - Virus Check
-2402 - Chaos Check
-2502 - Sleep Check
-2602 - Blind Check
-2702 - Bind Check
-2802 - Stun Check
-2902 - Lock Check
-2A02 - Death Check
-2B02 - Impact Check
-2C02 - Angel Coat
-2D02 - Divine Coat
-2E02 - Wild Chaps
-2F02 - Wild Chaps 2
-3002 - Wild Chaps 3
-3102 - Wild Chaps 4
-3202 - Quick Chaps
-3302 - Heavy Chaps
-3402 - Wild Garter
-3502 - Quick Garter
-3602 - Heavy Garter
-3702 - Fireproof
-3802 - Iceproof
-3902 - Plasmaproof
-3A02 - Poisonproof
-3B02 - Virusproof
-3C02 - Chaosproof
-3D02 - Sleepproof
-3E02 - Blindproof
-3F02 - Bindproof
-4002 - Stunproof
-4102 - Lockproof
-4202 - Deathproof
-4302 - Impactproof
-4402 - PrincessGard
-4502 - SaveQueen
-4602 - HiRanger
-
-Shields
-
-0103 - Solid Shell
-0203 - Solid Guard
-0303 - Astral Shell
-0403 - Astral Guard
-0503 - Bari Shell
-0603 - Bari Guard
-0703 - Soul Shell
-0803 - Ranger Shell
-0903 - Riot Guard
-0A03 - Buckler
-0B03 - Protector
-0C03 - ChobhamPlate
-0D03 - Solid Ring
-0E03 - Solid Loop
-0F03 - Astral Ring
-1003 - Astral Loop
-1103 - Bari Ring
-1203 - Bari Loop
-1303 - Soul Ring
-1403 - Amulet
-1503 - Talisman
-1603 - Silver Arc
-1703 - Gold Arc
-1803 - Platinum Arc
-1903 - Solid Ribbon
-1A03 - Solid Bangle
-1B03 - Astra Ribbon
-1C03 - Astra Bangle
-1D03 - Bari Ribbon
-1E03 - Bari Bangle
-1F03 - Soul Ribbon
-2003 - TriCharger
-2103 - Hymnal
-2203 - Bangle
-2303 - Brooch
-2403 - Lightwave
-2503 - Ranger Guard
-
-Misc. Items
-
-0104 - BioCorp ID
-0204 - IndZone ID
-0304 - IndZone2 ID
-0404 - M-Key
-0504 - D-Key
-0604 - C-Key
-0704 - H-Key
-0804 - J-Key
-0904 - V-Key
-
-Shield & Weapon Skills
-
-0105 - Slice
-0205 - Side Slash
-0305 - Thrust
-0405 - Kick
-0505 - Third Eye
-0605 - Ogre Slice
-0705 - Dent Weapon
-0805 - Rust Armor
-0905 - Brainquake
-0A05 - Act Delay
-0B05 - Cutspace
-0D05 - Vert Slash
-0E05 - Fang
-0F05 - Hyper Kick
-1005 - Hazecut
-1105 - Hex
-1205 - Spiritcharge
-1305 - Bladesmack
-1405 - Wild Swing
-1505 - Discharge
-1605 - Crimson Raid
-1705 - Reversal
-1805 - Skullsplit
-1905 - Roundsaber
-1A05 - Deathcleaver
-1B05 - Terabreak
-1C05 - Crossviper
-1D05 - Circle Stage
-1E05 - Deathbringer
-1F05 - Violet Death
-2105 - Great Smash
-2505 - Chop!
-2605 - Blunt
-2705 - Weaken
-2805 - Enfeeble
-2905 - Slow
-2A05 - Divine
-2B05 - Flare
-2C05 - Frost
-2D05 - Jolt
-2E05 - G-Flare
-2F05 - Joltball
-3105 - Fireblast
-3205 - Fireball
-3305 - Iceblast
-3405 - Fragball
-3505 - Lightning
-3605 - Teleport
-3705 - Transfer
-3805 - Mirage Bomb
-3905 - G-Iceblast
-3D05 - Inferno
-3E05 - G-Inferno
-3F05 - Blizzard
-4005 - Valhalla
-4105 - Lag Valhalla
-4205 - Kyrie
-4305 - Death
-4405 - Shazam
-4505 - Ragnarok
-4605 - Mirage Blast
-// patch=1,EE,01F90280,extended,00000012
 
 
 [Page 5\J-Key: Put In Pack 10 - Slot 1]
@@ -11608,32 +11303,11 @@ description=
 // patch=1,EE,107658E2,extended,00001A02
 
 
-[Page 5\Light Clothes: Put In Pack 10 - Slot 2]
-author=MadCatz
-description=
-// patch=1,EE,007658E4,extended,00000009
-// patch=1,EE,107658E2,extended,00001A02
-
-
 [Page 5\Light Clothes: Put In Pack 10 - Slot 3]
 author=MadCatz
 description=
 // patch=1,EE,007658E8,extended,00000009
 // patch=1,EE,107658E6,extended,00001A02
-
-
-[Page 5\Light Clothes: Put In Pack 10 - Slot 3]
-author=MadCatz
-description=
-// patch=1,EE,007658E8,extended,00000009
-// patch=1,EE,107658E6,extended,00001A02
-
-
-[Page 5\Light Clothes: Put In Pack 10 - Slot 4]
-author=MadCatz
-description=
-// patch=1,EE,007658EC,extended,00000009
-// patch=1,EE,107658EA,extended,00001A02
 
 
 [Page 5\Light Clothes: Put In Pack 10 - Slot 4]
@@ -11650,20 +11324,6 @@ description=
 // patch=1,EE,107658EE,extended,00001A02
 
 
-[Page 5\Light Clothes: Put In Pack 10 - Slot 5]
-author=MadCatz
-description=
-// patch=1,EE,007658F0,extended,00000009
-// patch=1,EE,107658EE,extended,00001A02
-
-
-[Page 5\Light Clothes: Put In Pack 11 - Slot 1]
-author=MadCatz
-description=
-// patch=1,EE,007658F4,extended,00000009
-// patch=1,EE,107658F2,extended,00001A02
-
-
 [Page 5\Light Clothes: Put In Pack 11 - Slot 1]
 author=MadCatz
 description=
@@ -11678,32 +11338,11 @@ description=
 // patch=1,EE,107658F6,extended,00001A02
 
 
-[Page 5\Light Clothes: Put In Pack 11 - Slot 2]
-author=MadCatz
-description=
-// patch=1,EE,007658F8,extended,00000009
-// patch=1,EE,107658F6,extended,00001A02
-
-
 [Page 5\Light Clothes: Put In Pack 11 - Slot 3]
 author=MadCatz
 description=
 // patch=1,EE,007658FC,extended,00000009
 // patch=1,EE,107658FA,extended,00001A02
-
-
-[Page 5\Light Clothes: Put In Pack 11 - Slot 3]
-author=MadCatz
-description=
-// patch=1,EE,007658FC,extended,00000009
-// patch=1,EE,107658FA,extended,00001A02
-
-
-[Page 5\Light Clothes: Put In Pack 11 - Slot 4]
-author=MadCatz
-description=
-// patch=1,EE,00765900,extended,00000009
-// patch=1,EE,107658FE,extended,00001A02
 
 
 [Page 5\Light Clothes: Put In Pack 11 - Slot 4]
@@ -12756,7 +12395,7 @@ description=
 // patch=1,EE,10765902,extended,00000801
 
 
-[Page 11\Max AP]
+[Page 11\Max AP / Ryu: Max AP]
 author=MadCatz
 description=
 // patch=1,EE,107653AA,extended,0000270F
@@ -12792,7 +12431,7 @@ description=
 // patch=1,EE,107653AA,extended,00000063
 
 
-[Page 11\Max ATK]
+[Page 11\Max ATK / Max Overall ATK / Ryu: Max ATK]
 author=MadCatz
 description=
 // patch=1,EE,107653AC,extended,000003E7
@@ -12836,70 +12475,58 @@ description=
 // patch=1,EE,1076573C,extended,000003E7
 
 
-[Page 11\Max Current AP]
+[Page 11\Max Current AP / Ryu: Max Current AP]
 author=MadCatz
 description=
 // patch=1,EE,1076535C,extended,0000270F
 
 
-[Page 11\Max Current DEF]
+[Page 11\Max Current DEF / Max DEF / Ryu: Max Current DEF]
 author=MadCatz
 description=
 // patch=1,EE,107653F6,extended,000003E7
 
 
-[Page 11\Max Current HP]
+[Page 11\Max Current HP / Max HP / Ryu: Max Current HP]
 author=MadCatz
 description=
 // patch=1,EE,10765358,extended,000003E7
 
 
-[Main Codes\Max Current MAG]
+[Main Codes\Max Current MAG / Max MAG / Ryu: Max Current MAG]
 author=MadCatz
 description=
 // patch=1,EE,107653FA,extended,000003E7
 
 
-[Main Codes\Max Current MOV]
+[Main Codes\Max Current MOV / Max MOV / Ryu: Max Current MOV]
 author=MadCatz
 description=
 // patch=1,EE,107653FC,extended,000003E7
 
 
-[Main Codes\Max Current SPD]
+[Main Codes\Max Current SPD / Max SPD / Ryu: Max Current SPD]
 author=MadCatz
 description=
 // patch=1,EE,107653F8,extended,000003E7
 
 
-[Page 11\Max DEF]
+[Page 11\Max DEF / Max Overall DEF / Ryu: Max DEF]
 author=MadCatz
 description=
 // patch=1,EE,107653AE,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max DEF]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max DEF / Rin: Max Current DEF]
 author=Code Master
 description=
 // patch=1,EE,10765626,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max DEF]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max DEF / Nina: Max Current DEF]
 author=Code Master
 description=
 // patch=1,EE,1076550E,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max DEF]
-author=Code Master
-description=
-// patch=1,EE,1076573E,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max DEF]
-author=Code Master
-description=
-// patch=1,EE,107653F6,extended,000003E7
 
 
 [Ryu Codes\Max DEF]
@@ -12914,12 +12541,6 @@ author=Codejunkies
 description=
 // patch=1,EE,107656F6,extended,000003E7
 // patch=1,EE,1076573E,extended,000003E7
-
-
-[Page 11\Max HP]
-author=MadCatz
-description=
-// patch=1,EE,107653A4,extended,000003E7
 
 
 [Weapon 3 Skill Lv. 3 Modifier Codes\Max HP]
@@ -12946,19 +12567,7 @@ description=
 // patch=1,EE,207653A4,extended,000003E7
 
 
-[Ryu Codes\Max HP]
-author=Codejunkies
-description=
-// patch=1,EE,10765358,extended,000003E7
-
-
-[Bosch Codes\Max HP]
-author=Codejunkies
-description=
-// patch=1,EE,107656EC,extended,000003E7
-
-
-[Page 11\Max Level]
+[Page 11\Max Level / Ryu: Max Current Level]
 author=MadCatz
 description=
 // patch=1,EE,1076535E,extended,000003E7
@@ -12978,34 +12587,22 @@ description=
 // patch=1,EE,207656A8,extended,002EBE96
 
 
-[Main Codes\Max MAG]
+[Main Codes\Max MAG / Max Overall MAG / Ryu: Max MAG]
 author=MadCatz
 description=
 // patch=1,EE,107653B2,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MAG]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max MAG / Rin: Max Current MAG]
 author=Code Master
 description=
 // patch=1,EE,1076562A,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MAG]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max MAG / Nina: Max Current MAG]
 author=Code Master
 description=
 // patch=1,EE,10765512,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MAG]
-author=Code Master
-description=
-// patch=1,EE,10765742,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MAG]
-author=Code Master
-description=
-// patch=1,EE,107653FA,extended,000003E7
 
 
 [Ryu Codes\Max MAG]
@@ -13022,34 +12619,22 @@ description=
 // patch=1,EE,10765742,extended,000003E7
 
 
-[Main Codes\Max MOV]
+[Main Codes\Max MOV / Max Overall MOV / Ryu: Max MOV]
 author=MadCatz
 description=
 // patch=1,EE,107653B4,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MOV]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max MOV / Rin: Max Current MOV]
 author=Code Master
 description=
 // patch=1,EE,1076562C,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MOV]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max MOV / Nina: Max Current MOV]
 author=Code Master
 description=
 // patch=1,EE,10765514,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MOV]
-author=Code Master
-description=
-// patch=1,EE,10765744,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max MOV]
-author=Code Master
-description=
-// patch=1,EE,107653FC,extended,000003E7
 
 
 [Ryu Codes\Max MOV]
@@ -13066,160 +12651,82 @@ description=
 // patch=1,EE,10765744,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall ATK]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall ATK / Rin: Max ATK]
 author=Code Master
 description=
 // patch=1,EE,107655DC,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall ATK]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall ATK / Nina: Max ATK]
 author=Code Master
 description=
 // patch=1,EE,107654C4,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall ATK]
-author=Code Master
-description=
-// patch=1,EE,107656F4,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall ATK]
-author=Code Master
-description=
-// patch=1,EE,107653AC,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall DEF]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall DEF / Rin: Max DEF]
 author=Code Master
 description=
 // patch=1,EE,107655DE,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall DEF]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall DEF / Nina: Max DEF]
 author=Code Master
 description=
 // patch=1,EE,107654C6,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall DEF]
-author=Code Master
-description=
-// patch=1,EE,107656F6,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall DEF]
-author=Code Master
-description=
-// patch=1,EE,107653AE,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MAG]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MAG / Rin: Max MAG]
 author=Code Master
 description=
 // patch=1,EE,107655E2,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MAG]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MAG / Nina: Max MAG]
 author=Code Master
 description=
 // patch=1,EE,107654CA,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MAG]
-author=Code Master
-description=
-// patch=1,EE,107656FA,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MAG]
-author=Code Master
-description=
-// patch=1,EE,107653B2,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MOV]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MOV / Rin: Max MOV]
 author=Code Master
 description=
 // patch=1,EE,107655E4,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MOV]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MOV / Nina: Max MOV]
 author=Code Master
 description=
 // patch=1,EE,107654CC,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MOV]
-author=Code Master
-description=
-// patch=1,EE,107656FC,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall MOV]
-author=Code Master
-description=
-// patch=1,EE,107653B4,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall SPD]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall SPD / Rin: Max SPD]
 author=Code Master
 description=
 // patch=1,EE,107655E0,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall SPD]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall SPD / Nina: Max SPD]
 author=Code Master
 description=
 // patch=1,EE,107654C8,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall SPD]
-author=Code Master
-description=
-// patch=1,EE,107656F8,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall SPD]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max Overall SPD / Max SPD / Ryu: Max SPD]
 author=Code Master
 description=
 // patch=1,EE,107653B0,extended,000003E7
 
 
-[Miscellaneous Codes\Max Party XP]
-author=Code Master
-description=
-// patch=1,EE,207657B0,extended,0098967F
-
-
-[Main Codes\Max SPD]
-author=MadCatz
-description=
-// patch=1,EE,107653B0,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max SPD]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max SPD / Rin: Max Current SPD]
 author=Code Master
 description=
 // patch=1,EE,10765628,extended,000003E7
 
 
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max SPD]
+[Weapon 3 Skill Lv. 3 Modifier Codes\Max SPD / Nina: Max Current SPD]
 author=Code Master
 description=
 // patch=1,EE,10765510,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max SPD]
-author=Code Master
-description=
-// patch=1,EE,10765740,extended,000003E7
-
-
-[Weapon 3 Skill Lv. 3 Modifier Codes\Max SPD]
-author=Code Master
-description=
-// patch=1,EE,107653F8,extended,000003E7
 
 
 [Ryu Codes\Max SPD]
@@ -13234,12 +12741,6 @@ author=Codejunkies
 description=
 // patch=1,EE,107656F8,extended,000003E7
 // patch=1,EE,10765740,extended,000003E7
-
-
-[Miscellaneous Codes\Max Zenny]
-author=Code Master
-description=
-// patch=1,EE,207657A8,extended,0098967F
 
 
 [Page 6\Med Kit: Put In Pack 10 - Slot 1]
@@ -13773,12 +13274,6 @@ description=
 // patch=1,EE,107654C2,extended,0000270F
 
 
-[Main Codes\Nina: Max ATK]
-author=MadCatz
-description=
-// patch=1,EE,107654C4,extended,000003E7
-
-
 [Main Codes\Nina: Max Current AP]
 author=MadCatz
 description=
@@ -13791,40 +13286,10 @@ description=
 // patch=1,EE,10765508,extended,000003E7
 
 
-[Main Codes\Nina: Max Current DEF]
-author=MadCatz
-description=
-// patch=1,EE,1076550E,extended,000003E7
-
-
 [Main Codes\Nina: Max Current HP]
 author=MadCatz
 description=
 // patch=1,EE,10765470,extended,000003E7
-
-
-[Main Codes\Nina: Max Current MAG]
-author=MadCatz
-description=
-// patch=1,EE,10765512,extended,000003E7
-
-
-[Main Codes\Nina: Max Current MOV]
-author=MadCatz
-description=
-// patch=1,EE,10765514,extended,000003E7
-
-
-[Main Codes\Nina: Max Current SPD]
-author=MadCatz
-description=
-// patch=1,EE,10765510,extended,000003E7
-
-
-[Main Codes\Nina: Max DEF]
-author=MadCatz
-description=
-// patch=1,EE,107654C6,extended,000003E7
 
 
 [Main Codes\Nina: Max HP]
@@ -13837,24 +13302,6 @@ description=
 author=MadCatz
 description=
 // patch=1,EE,10765476,extended,000003E7
-
-
-[Main Codes\Nina: Max MAG]
-author=MadCatz
-description=
-// patch=1,EE,107654CA,extended,000003E7
-
-
-[Main Codes\Nina: Max MOV]
-author=MadCatz
-description=
-// patch=1,EE,107654CC,extended,000003E7
-
-
-[Main Codes\Nina: Max SPD]
-author=MadCatz
-description=
-// patch=1,EE,107654C8,extended,000003E7
 
 
 [Page 6\Ogre Slice: Put In Pack 10 - Slot 1]
@@ -16460,12 +15907,6 @@ description=
 // patch=1,EE,107655DA,extended,0000270F
 
 
-[Main Codes\Rin: Max ATK]
-author=MadCatz
-description=
-// patch=1,EE,107655DC,extended,000003E7
-
-
 [Main Codes\Rin: Max Current AP]
 author=MadCatz
 description=
@@ -16478,40 +15919,10 @@ description=
 // patch=1,EE,10765620,extended,000003E7
 
 
-[Main Codes\Rin: Max Current DEF]
-author=MadCatz
-description=
-// patch=1,EE,10765626,extended,000003E7
-
-
 [Main Codes\Rin: Max Current HP]
 author=MadCatz
 description=
 // patch=1,EE,10765588,extended,000003E7
-
-
-[Main Codes\Rin: Max Current MAG]
-author=MadCatz
-description=
-// patch=1,EE,1076562A,extended,000003E7
-
-
-[Main Codes\Rin: Max Current MOV]
-author=MadCatz
-description=
-// patch=1,EE,1076562C,extended,000003E7
-
-
-[Main Codes\Rin: Max Current SPD]
-author=MadCatz
-description=
-// patch=1,EE,10765628,extended,000003E7
-
-
-[Main Codes\Rin: Max DEF]
-author=MadCatz
-description=
-// patch=1,EE,107655DE,extended,000003E7
 
 
 [Main Codes\Rin: Max HP]
@@ -16524,24 +15935,6 @@ description=
 author=MadCatz
 description=
 // patch=1,EE,1076558E,extended,000003E7
-
-
-[Main Codes\Rin: Max MAG]
-author=MadCatz
-description=
-// patch=1,EE,107655E2,extended,000003E7
-
-
-[Main Codes\Rin: Max MOV]
-author=MadCatz
-description=
-// patch=1,EE,107655E4,extended,000003E7
-
-
-[Main Codes\Rin: Max SPD]
-author=MadCatz
-description=
-// patch=1,EE,107655E0,extended,000003E7
 
 
 [Page 7\Riot Guard: Put In Pack 10 - Slot 1]
@@ -16894,94 +16287,10 @@ description=
 // patch=1,EE,10765902,extended,00000805
 
 
-[Main Codes\Ryu: Max AP]
-author=MadCatz
-description=
-// patch=1,EE,107653AA,extended,0000270F
-
-
-[Main Codes\Ryu: Max ATK]
-author=MadCatz
-description=
-// patch=1,EE,107653AC,extended,000003E7
-
-
-[Main Codes\Ryu: Max Current AP]
-author=MadCatz
-description=
-// patch=1,EE,1076535C,extended,0000270F
-
-
 [Main Codes\Ryu: Max Current ATK]
 author=MadCatz
 description=
 // patch=1,EE,107653F0,extended,000003E7
-
-
-[Main Codes\Ryu: Max Current DEF]
-author=MadCatz
-description=
-// patch=1,EE,107653F6,extended,000003E7
-
-
-[Main Codes\Ryu: Max Current HP]
-author=MadCatz
-description=
-// patch=1,EE,10765358,extended,000003E7
-
-
-[Main Codes\Ryu: Max Current Level]
-author=MadCatz
-description=
-// patch=1,EE,1076535E,extended,000003E7
-
-
-[Main Codes\Ryu: Max Current MAG]
-author=MadCatz
-description=
-// patch=1,EE,107653FA,extended,000003E7
-
-
-[Main Codes\Ryu: Max Current MOV]
-author=MadCatz
-description=
-// patch=1,EE,107653FC,extended,000003E7
-
-
-[Main Codes\Ryu: Max Current SPD]
-author=MadCatz
-description=
-// patch=1,EE,107653F8,extended,000003E7
-
-
-[Main Codes\Ryu: Max DEF]
-author=MadCatz
-description=
-// patch=1,EE,107653AE,extended,000003E7
-
-
-[Main Codes\Ryu: Max HP]
-author=MadCatz
-description=
-// patch=1,EE,107653A4,extended,000003E7
-
-
-[Main Codes\Ryu: Max MAG]
-author=MadCatz
-description=
-// patch=1,EE,107653B2,extended,000003E7
-
-
-[Main Codes\Ryu: Max MOV]
-author=MadCatz
-description=
-// patch=1,EE,107653B4,extended,000003E7
-
-
-[Main Codes\Ryu: Max SPD]
-author=MadCatz
-description=
-// patch=1,EE,107653B0,extended,000003E7
 
 
 [Infinite Item Codes\Safety Lock]
@@ -17362,73 +16671,6 @@ description=
 // patch=1,EE,10765902,extended,00004405
 
 
-[Quantity Digits\Shield & Weapon Skill Modifier Quantity Digits]
-author=NA
-description=00 - Nothing
-01 - Slice
-02 - Side Slash
-03 - Thrust
-04 - Kick
-05 - Third Eye
-06 - Ogre Slice
-07 - Dent Weapon
-08 - Rust Armor
-09 - Brainquake
-0A - Act Delay
-0B - Cutspace
-0D - Vert Slash
-0E - Fang
-0F - Hyper Kick
-10 - Hazecut
-11 - Hex
-12 - Spiritcharge
-13 - Bladesmack
-14 - Wild Swing
-15 - Discharge
-16 - Crimson Raid
-17 - Reversal
-18 - Skullsplit
-19 - Roundsaber
-1A - Deathcleaver
-1B - Terabreak
-1C - Crossviper
-1D - Circle Stage
-1E - Deathbringer
-1F - Violet Death
-21 - Great Smash
-25 - Chop!
-26 - Blunt
-27 - Weaken
-28 - Enfeeble
-29 - Slow
-2A - Divine
-2B - Flare
-2C - Frost
-2D - Jolt
-2E - G-Flare
-2F - Joltball
-31 - Fireblast
-32 - Fireball
-33 - Iceblast
-34 - Fragball
-35 - Lightning
-36 - Teleport
-37 - Transfer
-38 - Mirage Bomb
-39 - G-Iceblast
-3D - Inferno
-3E - G-Inferno
-3F - Blizzard
-40 - Valhalla
-41 - Lag Valhalla
-42 - Kyrie
-43 - Death
-44 - Shazam
-45 - Ragnarok
-46 - Mirage Blast
-// patch=1,EE,01F90280,extended,00000012
-
-
 [Weapon 3 Skill Lv. 3 Modifier Codes\Shield 1 Modifier]
 author=Code Master
 description=
@@ -17641,49 +16883,6 @@ author=MadCatz
 description=
 // patch=1,EE,00765904,extended,00000000
 // patch=1,EE,10765902,extended,00008205
-
-
-[Quantity Digits\Shield Modifier Quantity Digits]
-author=NA
-description=00 - Nothing
-01 - Solid Shell
-02 - Solid Guard
-03 - Astral Shell
-04 - Astral Guard
-05 - Bari Shell
-06 - Bari Guard
-07 - Soul Shell
-08 - Ranger Shell
-09 - Riot Guard
-0A - Buckler
-0B - Protector
-0C - ChobhamPlate
-0D - Solid Ring
-0E - Solid Loop
-0F - Astral Ring
-10 - Astral Loop
-11 - Bari Ring
-12 - Bari Loop
-13 - Soul Ring
-14 - Amulet
-15 - Talisman
-16 - Silver Arc
-17 - Gold Arc
-18 - Platinum Arc
-19 - Solid Ribbon
-1A - Solid Bangle
-1B - Astra Ribbon
-1C - Astra Bangle
-1D - Bari Ribbon
-1E - Bari Bangle
-1F - Soul Ribbon
-20 - TriCharger
-21 - Hymnal
-22 - Bangle
-23 - Brooch
-24 - Lightwave
-25 - Ranger Guard
-// patch=1,EE,01F90280,extended,00000012
 
 
 [Page 8\Side Slash: Put In Pack 10 - Slot 1]
@@ -22445,22 +21644,6 @@ description=
 // patch=1,EE,10765902,extended,00003705
 
 
-[Quantity Digits\Trap Modifier Quantity Digits]
-author=NA
-description=01 - Confushroom
-02 - Fresh Meat
-03 - Rotten Meat
-04 - Sleepyshroom
-05 - Poisonshroom
-06 - Bomb
-07 - Dynamite
-08 - Bind Bomb
-09 - Firebomb
-0A - Prox Bomb
-0B - Heal Kit
-// patch=1,EE,01F90280,extended,00000012
-
-
 [Have Infinite Item Codes\Trauma Kit]
 author=Codejunkies
 description=
@@ -22907,12 +22090,6 @@ author=Codejunkies
 description=
 // patch=1,EE,0076585F,extended,00000014
 // patch=1,EE,00765860,extended,00000063
-
-
-[Zenny Codes\Unlock 9 Item Pages]
-author=Codejunkies
-description=
-// patch=1,EE,107657B8,extended,0000002D
 
 
 [Page 11\Unlock: Put In Pack 10 - Slot 1]
@@ -24159,46 +23336,6 @@ description=
 // patch=1,EE,10765902,extended,00008105
 
 
-[Quantity Digits\Weapon Modifier Quantity Digits]
-author=NA
-description=00 - Nothing
-01 - Ranger Edge
-02 - Buster Sword
-03 - Strong Sword
-04 - Celtis
-05 - Ruby Master
-06 - Sapph. Maser
-07 - Plasma Maser
-08 - Mandau Blade
-09 - Dragon Blade
-0A - Legend Blade
-0B - Violet Blade
-0D - Pyromania
-0E - Glacier
-0F - Thor Hammer
-10 - Magic Wand
-11 - Wizard Wand
-12 - Holy Heart
-13 - Demonscythe
-14 - Antenna
-15 - DeluxAntenna
-16 - Slapper
-17 - Buki
-19 - Victorious
-1A - AutoRifle
-1B - Handgun
-1C - SniperScope
-1D - Stinger
-1E - Grenade
-1F - FlameBlaster
-20 - IceCannon
-21 - ThunderRifle
-22 - Pistol
-23 - Cleaner
-25 - Beast Blade
-// patch=1,EE,01F90280,extended,00000012
-
-
 [Page 11\White Robe: Put In Pack 10 - Slot 1]
 author=MadCatz
 description=
@@ -24687,4 +23824,3 @@ author=MadCatz
 description=
 // patch=1,EE,00765904,extended,00000000
 // patch=1,EE,10765902,extended,00008E05
-

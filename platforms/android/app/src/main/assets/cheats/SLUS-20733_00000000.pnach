@@ -34,7 +34,7 @@ description=
 // patch=1,EE,000000FF,extended,00000000
 
 
-[All Skills Learned]
+[All Skills Learned / Have All Skills]
 author=Codejunkies
 description=
 // patch=1,EE,20B64AA4,extended,FFFFFFFF
@@ -46,7 +46,7 @@ description=
 // patch=1,EE,20B64AF4,extended,00000000
 
 
-[Always Low Time]
+[Always Low Time / Infinite Time During Normal Game Play / Low Time]
 author=Code Master
 description=
 // patch=1,EE,20B35C24,extended,00000000
@@ -873,12 +873,6 @@ description=
 
 
 [Have All Skills]
-author=Code Master
-description=
-// patch=1,EE,20B64AA4,extended,FFFFFFFF
-
-
-[Have All Skills]
 author=Ramdemann
 description=
 // patch=1,EE,20B64AA4,extended,0000FFFF
@@ -1062,7 +1056,7 @@ description=
 // patch=1,EE,10B64820,extended,0000FFFF
 
 
-[Infinite Gold]
+[Infinite Gold / Max Gold]
 author=Ramdemann
 description=
 // patch=1,EE,20B64820,extended,0098967F
@@ -1124,12 +1118,6 @@ description=
 author=Ramdemann
 description=
 // patch=1,EE,20B3609C,extended,00000000
-
-
-[Infinite Time During Normal Game Play]
-author=Ramdemann
-description=
-// patch=1,EE,20B35C24,extended,00000000
 
 
 [Infinite: Hearts]
@@ -1229,12 +1217,6 @@ description=
 author=Codejunkies
 description=
 // patch=1,EE,20B7B654,extended,00000033
-
-
-[Low Time]
-author=Codejunkies
-description=
-// patch=1,EE,20B35C24,extended,00000000
 
 
 [Relic Codes\Lucifer's Sword-Slot 8]
@@ -1640,12 +1622,6 @@ description=
 
 
 [Max Gold]
-author=Code Master
-description=
-// patch=1,EE,20B64820,extended,0098967F
-
-
-[Max Gold]
 author=Codejunkies
 description=
 // patch=1,EE,20B64820,extended,05F5E0FF
@@ -2015,42 +1991,6 @@ description=
 author=Codejunkies
 description=
 // patch=1,EE,20B7B178,extended,05F5E0FF
-
-
-[Max: ATK]
-author=MadCatz
-description=
-// patch=1,EE,20B64B80,extended,4479C000
-
-
-[Max: CON]
-author=MadCatz
-description=
-// patch=1,EE,20B64B8C,extended,4479C000
-
-
-[Max: DEF]
-author=MadCatz
-description=
-// patch=1,EE,20B64BA0,extended,4479C000
-
-
-[Max: Gold]
-author=MadCatz
-description=
-// patch=1,EE,20B64820,extended,05F5E0FF
-
-
-[Max: INT]
-author=MadCatz
-description=
-// patch=1,EE,20B64B84,extended,4479C000
-
-
-[Max: LCK]
-author=MadCatz
-description=
-// patch=1,EE,20B64B90,extended,4479C000
 
 
 [Relic Codes\Meditative Incense-Slot 3]
@@ -3980,4 +3920,3 @@ description=
 author=Codejunkies
 description=
 // patch=1,EE,20B7B174,extended,00000033
-

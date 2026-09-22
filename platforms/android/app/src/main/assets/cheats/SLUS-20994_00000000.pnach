@@ -48,32 +48,14 @@ description=
 // patch=1,EE,202CD994,extended,00010039
 
 
-[Have Accessory Codes\Alchemic Crystal-Slot 33]
-author=Code Master
-description=
-// patch=1,EE,202CD994,extended,00010039
-
-
 [Have Accessories Codes\Alchemy Armor]
 author=MadCatz
 description=
 // patch=1,EE,202CD990,extended,00010036
 
 
-[Have Accessory Codes\Alchemy Armor-Slot 32]
-author=Code Master
-description=
-// patch=1,EE,202CD990,extended,00010036
-
-
 [Have Accessories Codes\Alchemy Guide]
 author=MadCatz
-description=
-// patch=1,EE,202CD9D0,extended,0001004E
-
-
-[Have Accessory Codes\Alchemy Guide-Slot 48]
-author=Code Master
 description=
 // patch=1,EE,202CD9D0,extended,0001004E
 
@@ -98,20 +80,8 @@ description=
 // patch=1,EE,202CD9C0,extended,00010048
 
 
-[Have Accessory Codes\Amulet-Slot 44]
-author=Code Master
-description=
-// patch=1,EE,202CD9C0,extended,00010048
-
-
 [Have Accessories Codes\Armlet of Absorption]
 author=MadCatz
-description=
-// patch=1,EE,202CD97C,extended,0001002F
-
-
-[Have Accessory Codes\Armlet Of Absorption-Slot 27]
-author=Code Master
 description=
 // patch=1,EE,202CD97C,extended,0001002F
 
@@ -122,20 +92,8 @@ description=
 // patch=1,EE,202CD96C,extended,0001002B
 
 
-[Have Accessory Codes\Armlet Of Accuracy-Slot 23]
-author=Code Master
-description=
-// patch=1,EE,202CD96C,extended,0001002B
-
-
 [Have Accessories Codes\Armlet of Consecution]
 author=MadCatz
-description=
-// patch=1,EE,202CD980,extended,00010030
-
-
-[Have Accessory Codes\Armlet Of Consecution-Slot 28]
-author=Code Master
 description=
 // patch=1,EE,202CD980,extended,00010030
 
@@ -146,20 +104,8 @@ description=
 // patch=1,EE,202CD984,extended,00010031
 
 
-[Have Accessory Codes\Armlet Of Debilitation-Slot 29]
-author=Code Master
-description=
-// patch=1,EE,202CD984,extended,00010031
-
-
 [Have Accessories Codes\Armlet of Penetration]
 author=MadCatz
-description=
-// patch=1,EE,202CD978,extended,0001002E
-
-
-[Have Accessory Codes\Armlet Of Penetration-Slot 26]
-author=Code Master
 description=
 // patch=1,EE,202CD978,extended,0001002E
 
@@ -170,20 +116,8 @@ description=
 // patch=1,EE,202CD974,extended,0001002D
 
 
-[Have Accessory Codes\Armlet Of Prowess-Slot 25]
-author=Code Master
-description=
-// patch=1,EE,202CD974,extended,0001002D
-
-
 [Have Accessories Codes\Armlet of Strength]
 author=MadCatz
-description=
-// patch=1,EE,202CD970,extended,0001002C
-
-
-[Have Accessory Codes\Armlet Of Strength-Slot 24]
-author=Code Master
 description=
 // patch=1,EE,202CD970,extended,0001002C
 
@@ -207,20 +141,8 @@ description=
 // patch=1,EE,202CD9B4,extended,00010045
 
 
-[Have Accessory Codes\Bond Of Brotherhood-Slot 41]
-author=Code Master
-description=
-// patch=1,EE,202CD9B4,extended,00010045
-
-
 [Have Accessories Codes\Brawling Guide]
 author=MadCatz
-description=
-// patch=1,EE,202CD9CC,extended,0001004D
-
-
-[Have Accessory Codes\Brawling Guide-Slot 47]
-author=Code Master
 description=
 // patch=1,EE,202CD9CC,extended,0001004D
 
@@ -237,20 +159,8 @@ description=
 // patch=1,EE,202CD9BC,extended,00010047
 
 
-[Have Accessory Codes\Cloak-Slot 43]
-author=Code Master
-description=
-// patch=1,EE,202CD9BC,extended,00010047
-
-
 [Have Accessories Codes\Cologne]
 author=MadCatz
-description=
-// patch=1,EE,202CD9B8,extended,00010046
-
-
-[Have Accessory Codes\Cologne-Slot 42]
-author=Code Master
 description=
 // patch=1,EE,202CD9B8,extended,00010046
 
@@ -282,12 +192,6 @@ description=
 
 [Have Accessories Codes\Demon Fist]
 author=MadCatz
-description=
-// patch=1,EE,202CD9A4,extended,0001003F
-
-
-[Have Accessory Codes\Demon Fist-Slot 37]
-author=Code Master
 description=
 // patch=1,EE,202CD9A4,extended,0001003F
 
@@ -363,20 +267,8 @@ description=
 // patch=1,EE,202CD95C,extended,00010023
 
 
-[Have Accessory Codes\Double-Edged Armor-Slot 19]
-author=Code Master
-description=
-// patch=1,EE,202CD95C,extended,00010023
-
-
 [Have Accessories Codes\Double-Edged Bangle]
 author=MadCatz
-description=
-// patch=1,EE,202CD958,extended,00010022
-
-
-[Have Accessory Codes\Double-Edged Bangle-Slot 18]
-author=Code Master
 description=
 // patch=1,EE,202CD958,extended,00010022
 
@@ -387,20 +279,8 @@ description=
 // patch=1,EE,202CD960,extended,00010024
 
 
-[Have Accessory Codes\Double-Edged Earrings-Slot 20]
-author=Code Master
-description=
-// patch=1,EE,202CD960,extended,00010024
-
-
 [Have Accessories Codes\Double-Edged Ring]
 author=MadCatz
-description=
-// patch=1,EE,202CD954,extended,00010021
-
-
-[Have Accessory Codes\Double-Edged Ring-Slot 17]
-author=Code Master
 description=
 // patch=1,EE,202CD954,extended,00010021
 
@@ -495,12 +375,6 @@ description=
 // patch=1,EE,202CD9DC,extended,00010051
 
 
-[Have Accessory Codes\Flurry Guide-Slot 51]
-author=Code Master
-description=
-// patch=1,EE,202CD9DC,extended,00010051
-
-
 [Have Item Codes\Frenzy Potion]
 author=MadCatz
 description=
@@ -538,12 +412,6 @@ description=
 // patch=1,EE,202CD940,extended,00010018
 
 
-[Have Accessory Codes\Fullmetal Plate-Slot 12]
-author=Code Master
-description=
-// patch=1,EE,202CD940,extended,00010018
-
-
 [Have Accessories Codes\Fullmetal Ring]
 author=MadCatz
 description=
@@ -562,20 +430,8 @@ description=
 // patch=1,EE,202CD99C,extended,0001003B
 
 
-[Have Accessory Codes\Glass Samurai-Slot 35]
-author=Code Master
-description=
-// patch=1,EE,202CD99C,extended,0001003B
-
-
 [Have Accessories Codes\Gold Bangle]
 author=MadCatz
-description=
-// patch=1,EE,202CD92C,extended,00010011
-
-
-[Have Accessory Codes\Gold Bangle-Slot 7]
-author=Code Master
 description=
 // patch=1,EE,202CD92C,extended,00010011
 
@@ -586,20 +442,8 @@ description=
 // patch=1,EE,202CD94C,extended,0001001D
 
 
-[Have Accessory Codes\Gold Earrings-Slot 15]
-author=Code Master
-description=
-// patch=1,EE,202CD94C,extended,0001001D
-
-
 [Have Accessories Codes\Gold Plate]
 author=MadCatz
-description=
-// patch=1,EE,202CD93C,extended,00010017
-
-
-[Have Accessory Codes\Gold Plate-Slot 11]
-author=Code Master
 description=
 // patch=1,EE,202CD93C,extended,00010017
 
@@ -610,20 +454,8 @@ description=
 // patch=1,EE,202CD91C,extended,0001000B
 
 
-[Have Accessory Codes\Gold Ring-Slot 3]
-author=Code Master
-description=
-// patch=1,EE,202CD91C,extended,0001000B
-
-
 [Have Accessories Codes\Grindstone]
 author=MadCatz
-description=
-// patch=1,EE,202CD9A0,extended,0001003E
-
-
-[Have Accessory Codes\Grindstone-Slot 36]
-author=Code Master
 description=
 // patch=1,EE,202CD9A0,extended,0001003E
 
@@ -971,12 +803,6 @@ description=
 // patch=1,EE,201F3A9C,extended,00000000
 
 
-[This Game Requires A PS2 Code Breaker V7.0 Or Higher!\Infinite Ammo]
-author=Code Master
-description=
-// patch=1,EE,201F3A9C,extended,00000000
-
-
 [Character 4 Codes\Infinite Bonus Points]
 author=Code Master
 description=
@@ -1043,20 +869,8 @@ description=
 // patch=1,EE,102CDC6E,extended,000003E7
 
 
-[Edward Elric Codes\Infinite Bonus Points]
-author=Codejunkies
-description=
-// patch=1,EE,102CD876,extended,000003E7
-
-
 [This Game Requires A PS2 Code Breaker V7.0 Or Higher!\Infinite Frenzy Gauge]
 author=Code Master
-description=
-// patch=1,EE,102CEE40,extended,00000064
-
-
-[Infinite Frenzy Gauge]
-author=Codejunkies
 description=
 // patch=1,EE,102CEE40,extended,00000064
 
@@ -1109,22 +923,10 @@ description=
 // patch=1,EE,102CE64E,extended,000003E7
 
 
-[Edward Elric Codes\Infinite HP]
-author=Code Master
-description=
-// patch=1,EE,102CD86A,extended,000003E7
-
-
 [Character 9 Codes\Infinite HP]
 author=Code Master
 description=
 // patch=1,EE,C0C8ADD1,extended,86AED440
-
-
-[Alphonse Elric Codes\Infinite HP]
-author=Code Master
-description=
-// patch=1,EE,102CDA66,extended,000003E7
 
 
 [Character 10 Codes\Infinite HP]
@@ -1143,18 +945,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,102CDC62,extended,000003E7
-
-
-[Edward Elric Codes\Infinite HP]
-author=Codejunkies
-description=
-// patch=1,EE,102CD86A,extended,000003E7
-
-
-[Alphonse Elric Codes\Infinite HP]
-author=Codejunkies
-description=
-// patch=1,EE,102CDA66,extended,000003E7
 
 
 [This Game Requires A PS2 Code Breaker V7.0 Or Higher!\Infinite HP (In-Battle)]
@@ -1178,32 +968,14 @@ description=
 // patch=1,EE,202CD924,extended,0001000F
 
 
-[Have Accessory Codes\Lead Bangle-Slot 5]
+[Have Accessory Codes\Lead Earrings-Slot 13 / Lead Errings]
 author=Code Master
-description=
-// patch=1,EE,202CD924,extended,0001000F
-
-
-[Have Accessory Codes\Lead Earrings-Slot 13]
-author=Code Master
-description=
-// patch=1,EE,202CD944,extended,0001001B
-
-
-[Have Accessories Codes\Lead Errings]
-author=MadCatz
 description=
 // patch=1,EE,202CD944,extended,0001001B
 
 
 [Have Accessories Codes\Lead Plate]
 author=MadCatz
-description=
-// patch=1,EE,202CD934,extended,00010015
-
-
-[Have Accessory Codes\Lead Plate-Slot 9]
-author=Code Master
 description=
 // patch=1,EE,202CD934,extended,00010015
 
@@ -1244,7 +1016,7 @@ description=
 // patch=1,EE,102CE64C,extended,00000063
 
 
-[Edward Elric Codes\Level 99]
+[Edward Elric Codes\Level 99 / Max Lv]
 author=Code Master
 description=
 // patch=1,EE,102CD868,extended,00000063
@@ -1256,7 +1028,7 @@ description=
 // patch=1,EE,102CE848,extended,00000063
 
 
-[Alphonse Elric Codes\Level 99]
+[Alphonse Elric Codes\Level 99 / Max Lv]
 author=Code Master
 description=
 // patch=1,EE,102CDA64,extended,00000063
@@ -1311,12 +1083,6 @@ description=
 // patch=1,EE,202CD9C4,extended,00010049
 
 
-[Have Accessory Codes\Lucky Bag-Slot 45]
-author=Code Master
-description=
-// patch=1,EE,202CD9C4,extended,00010049
-
-
 [Have Item Codes\Magic-Caps]
 author=MadCatz
 description=
@@ -1366,12 +1132,6 @@ description=
 // patch=1,EE,102CE656,extended,000003E7
 
 
-[Edward Elric Codes\Max ALC]
-author=Code Master
-description=
-// patch=1,EE,102CD872,extended,000003E7
-
-
 [Character 9 Codes\Max ALC]
 author=Code Master
 description=
@@ -1400,12 +1160,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,102CDC6A,extended,000003E7
-
-
-[Edward Elric Codes\Max Alc]
-author=Codejunkies
-description=
-// patch=1,EE,102CD872,extended,000003E7
 
 
 [Edward Elric Codes\Max ATK]
@@ -1450,22 +1204,10 @@ description=
 // patch=1,EE,102CE652,extended,000003E7
 
 
-[Edward Elric Codes\Max ATK]
-author=Code Master
-description=
-// patch=1,EE,102CD86E,extended,000003E7
-
-
 [Character 9 Codes\Max ATK]
 author=Code Master
 description=
 // patch=1,EE,102CE84E,extended,000003E7
-
-
-[Alphonse Elric Codes\Max ATK]
-author=Code Master
-description=
-// patch=1,EE,102CDA6A,extended,000003E7
 
 
 [Character 10 Codes\Max ATK]
@@ -1484,18 +1226,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,102CDC66,extended,000003E7
-
-
-[Edward Elric Codes\Max Atk]
-author=Codejunkies
-description=
-// patch=1,EE,102CD86E,extended,000003E7
-
-
-[Alphonse Elric Codes\Max Atk]
-author=Codejunkies
-description=
-// patch=1,EE,102CDA6A,extended,000003E7
 
 
 [Edward Elric Codes\Max Bonus Points]
@@ -1570,12 +1300,6 @@ description=
 // patch=1,EE,102CDC70,extended,000003E7
 
 
-[Edward Elric Codes\Max Bonus Points]
-author=Codejunkies
-description=
-// patch=1,EE,102CD878,extended,000003E7
-
-
 [Edward Elric Codes\Max DEF]
 author=MadCatz
 description=
@@ -1618,22 +1342,10 @@ description=
 // patch=1,EE,102CE654,extended,000003E7
 
 
-[Edward Elric Codes\Max DEF]
-author=Code Master
-description=
-// patch=1,EE,102CD870,extended,000003E7
-
-
 [Character 9 Codes\Max DEF]
 author=Code Master
 description=
 // patch=1,EE,102CE850,extended,000003E7
-
-
-[Alphonse Elric Codes\Max DEF]
-author=Code Master
-description=
-// patch=1,EE,102CDA6C,extended,000003E7
 
 
 [Character 10 Codes\Max DEF]
@@ -1654,25 +1366,13 @@ description=
 // patch=1,EE,102CDC68,extended,000003E7
 
 
-[Edward Elric Codes\Max Def]
-author=Codejunkies
-description=
-// patch=1,EE,102CD870,extended,000003E7
-
-
-[Alphonse Elric Codes\Max Def]
-author=Codejunkies
-description=
-// patch=1,EE,102CDA6C,extended,000003E7
-
-
-[Edward Elric Codes\Max EXP]
+[Edward Elric Codes\Max EXP / Max Experience]
 author=MadCatz
 description=
 // patch=1,EE,202CD87C,extended,000F423F
 
 
-[Alphonse Elric Codes\Max EXP]
+[Alphonse Elric Codes\Max EXP / Max Experience]
 author=MadCatz
 description=
 // patch=1,EE,202CDA78,extended,000F423F
@@ -1708,22 +1408,10 @@ description=
 // patch=1,EE,202CE660,extended,000F423F
 
 
-[Edward Elric Codes\Max EXP]
-author=Code Master
-description=
-// patch=1,EE,202CD87C,extended,000F423F
-
-
 [Character 9 Codes\Max EXP]
 author=Code Master
 description=
 // patch=1,EE,202CE85C,extended,000F423F
-
-
-[Alphonse Elric Codes\Max EXP]
-author=Code Master
-description=
-// patch=1,EE,202CDA78,extended,000F423F
 
 
 [Character 10 Codes\Max EXP]
@@ -1742,18 +1430,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,202CDC74,extended,000F423F
-
-
-[Edward Elric Codes\Max Experience]
-author=Codejunkies
-description=
-// patch=1,EE,202CD87C,extended,000F423F
-
-
-[Alphonse Elric Codes\Max Experience]
-author=Codejunkies
-description=
-// patch=1,EE,202CDA78,extended,000F423F
 
 
 [Edward Elric Codes\Max HP]
@@ -1798,22 +1474,10 @@ description=
 // patch=1,EE,102CE650,extended,000003E7
 
 
-[Edward Elric Codes\Max HP]
-author=Code Master
-description=
-// patch=1,EE,102CD86C,extended,000003E7
-
-
 [Character 9 Codes\Max HP]
 author=Code Master
 description=
 // patch=1,EE,102CE84C,extended,000003E7
-
-
-[Alphonse Elric Codes\Max HP]
-author=Code Master
-description=
-// patch=1,EE,102CDA68,extended,000003E7
 
 
 [Character 10 Codes\Max HP]
@@ -1834,34 +1498,10 @@ description=
 // patch=1,EE,102CDC64,extended,000003E7
 
 
-[Edward Elric Codes\Max HP]
-author=Codejunkies
-description=
-// patch=1,EE,102CD86C,extended,000003E7
-
-
-[Alphonse Elric Codes\Max HP]
-author=Codejunkies
-description=
-// patch=1,EE,102CDA68,extended,000003E7
-
-
 [This Game Requires A PS2 Code Breaker V7.0 Or Higher!\Max Infinite Ammo]
 author=Code Master
 description=
 // patch=1,EE,201F3A98,extended,240503E7
-
-
-[Edward Elric Codes\Max Lv]
-author=MadCatz
-description=
-// patch=1,EE,102CD868,extended,00000063
-
-
-[Alphonse Elric Codes\Max Lv]
-author=MadCatz
-description=
-// patch=1,EE,102CDA64,extended,00000063
 
 
 [Have Accessories Codes\Moon Medal]
@@ -1870,20 +1510,8 @@ description=
 // patch=1,EE,202CD964,extended,00010027
 
 
-[Have Accessory Codes\Moon Medal-Slot 21]
-author=Code Master
-description=
-// patch=1,EE,202CD964,extended,00010027
-
-
 [Have Accessories Codes\Red Loincloth]
 author=MadCatz
-description=
-// patch=1,EE,202CD9A8,extended,00010040
-
-
-[Have Accessory Codes\Red Loincloth-Slot 38]
-author=Code Master
 description=
 // patch=1,EE,202CD9A8,extended,00010040
 
@@ -1933,20 +1561,8 @@ description=
 // patch=1,EE,202CD9B0,extended,00010042
 
 
-[Have Accessory Codes\Ripped Loincloth-Slot 40]
-author=Code Master
-description=
-// patch=1,EE,202CD9B0,extended,00010042
-
-
 [Have Accessories Codes\Silver Bangle]
 author=MadCatz
-description=
-// patch=1,EE,202CD928,extended,00010010
-
-
-[Have Accessory Codes\Silver Bangle-Slot 6]
-author=Code Master
 description=
 // patch=1,EE,202CD928,extended,00010010
 
@@ -1969,20 +1585,8 @@ description=
 // patch=1,EE,202CD938,extended,00010016
 
 
-[Have Accessory Codes\Silver Plate-Slot 10]
-author=Code Master
-description=
-// patch=1,EE,202CD938,extended,00010016
-
-
 [Have Accessories Codes\Silver Ring]
 author=MadCatz
-description=
-// patch=1,EE,202CD918,extended,0001000A
-
-
-[Have Accessory Codes\Silver Ring-Slot 2]
-author=Code Master
 description=
 // patch=1,EE,202CD918,extended,0001000A
 
@@ -2246,20 +1850,8 @@ description=
 // patch=1,EE,202CD988,extended,00010034
 
 
-[Have Accessory Codes\Steel Armor-Slot 30]
-author=Code Master
-description=
-// patch=1,EE,202CD988,extended,00010034
-
-
 [Have Accessories Codes\Sun Medal]
 author=MadCatz
-description=
-// patch=1,EE,202CD968,extended,00010028
-
-
-[Have Accessory Codes\Sun Medal-Slot 22]
-author=Code Master
 description=
 // patch=1,EE,202CD968,extended,00010028
 
@@ -2270,32 +1862,14 @@ description=
 // patch=1,EE,202CD998,extended,0001003A
 
 
-[Have Accessory Codes\Tall Boots-Slot 34]
-author=Code Master
-description=
-// patch=1,EE,202CD998,extended,0001003A
-
-
 [Have Accessories Codes\Training Manual]
 author=MadCatz
 description=
 // patch=1,EE,202CD9C8,extended,0001004A
 
 
-[Have Accessory Codes\Training Manual-Slot 46]
-author=Code Master
-description=
-// patch=1,EE,202CD9C8,extended,0001004A
-
-
 [Have Accessories Codes\Ultra Combo Guide]
 author=MadCatz
-description=
-// patch=1,EE,202CD9D8,extended,00010050
-
-
-[Have Accessory Codes\Ultra Combo Guide-Slot 50]
-author=Code Master
 description=
 // patch=1,EE,202CD9D8,extended,00010050
 
@@ -2319,12 +1893,6 @@ description=
 // patch=1,EE,202CD9AC,extended,00010041
 
 
-[Have Accessory Codes\White Loincloth-Slot 39]
-author=Code Master
-description=
-// patch=1,EE,202CD9AC,extended,00010041
-
-
 [Have Item Codes\Wind Element]
 author=MadCatz
 description=
@@ -2336,4 +1904,3 @@ description=
 author=Code Master
 description=
 // patch=1,EE,002CD8E0,extended,00000021
-

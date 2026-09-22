@@ -97,7 +97,7 @@
 [Cheats/Stage 8]
 // patch=1,EE,201DB89C,extended,00000001
 
-[Cheats/Stage 9]
+[Cheats/Stage 9 / Stage 13]
 // patch=1,EE,201DB8A0,extended,00000001
 
 [Cheats/Stage 10]
@@ -108,9 +108,6 @@
 
 [Cheats/Stage 12]
 // patch=1,EE,201DB8AC,extended,00000001
-
-[Cheats/Stage 13]
-// patch=1,EE,201DB8A0,extended,00000001
 
 [Cheats/Stage 14]
 // patch=1,EE,201DB8B4,extended,00000001

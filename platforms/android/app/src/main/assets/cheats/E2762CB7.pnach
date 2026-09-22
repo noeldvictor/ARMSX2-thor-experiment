@@ -8,14 +8,11 @@
 [Cheats/Max Doops]
 // patch=1,EE,20350900,extended,000003E7
 
-[Cheats/No Doops To Left To Find]
+[Cheats/No Doops To Left To Find / No Doops Left To Find]
 // patch=1,EE,20350904,extended,00000000
 
 [Cheats/No Doops Dead]
 // patch=1,EE,20350908,extended,00000000
-
-[Cheats/No Doops Left To Find]
-// patch=1,EE,20350904,extended,00000000
 
 [Cheats/Max Gromps]
 // patch=1,EE,2035090C,extended,000003E7

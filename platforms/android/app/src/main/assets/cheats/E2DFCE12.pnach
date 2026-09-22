@@ -35,10 +35,7 @@
 [Cheats/Easy Swinging Always Off]
 // patch=1,EE,21A331A8,extended,00000000
 
-[Cheats/Map Always On]
-// patch=1,EE,21A331AC,extended,00000001
-
-[Cheats/Map Always Off]
+[Cheats/Map Always On / Map Always Off]
 // patch=1,EE,21A331AC,extended,00000001
 
 [Cheats/Max Hero Points]

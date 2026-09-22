@@ -221,14 +221,11 @@
 [Cheats/Electric Final-Lums]
 // patch=1,EE,20DCE170,extended,00000002
 
-[Cheats/Spooky Tower-Lum Spring]
+[Cheats/Spooky Tower-Lum Spring / Spooky Tower-Capture The Fly]
 // patch=1,EE,20DCE02C,extended,00000002
 
 [Cheats/Spooky Tower-Lum Fight]
 // patch=1,EE,20DCE068,extended,00000002
-
-[Cheats/Spooky Tower-Capture The Fly]
-// patch=1,EE,20DCE02C,extended,00000002
 
 [Cheats/Future-Training]
 // patch=1,EE,20DCE0E0,extended,00000002

@@ -1319,7 +1319,7 @@
 // patch=1,EE,2070A304,extended,0000270F
 // patch=1,EE,2070A500,extended,0000270F
 
-[Cheats/No Overall Trade]
+[Cheats/No Overall Trade / No Overall Farms]
 // patch=1,EE,207045C0,extended,00000000
 // patch=1,EE,207047BC,extended,00000000
 // patch=1,EE,207049B8,extended,00000000
@@ -1420,54 +1420,3 @@
 // patch=1,EE,2070A10C,extended,0000270F
 // patch=1,EE,2070A308,extended,0000270F
 // patch=1,EE,2070A504,extended,0000270F
-
-[Cheats/No Overall Farms]
-// patch=1,EE,207045C0,extended,00000000
-// patch=1,EE,207047BC,extended,00000000
-// patch=1,EE,207049B8,extended,00000000
-// patch=1,EE,20704BB4,extended,00000000
-// patch=1,EE,20704DB0,extended,00000000
-// patch=1,EE,20704FAC,extended,00000000
-// patch=1,EE,207051A8,extended,00000000
-// patch=1,EE,207053A4,extended,00000000
-// patch=1,EE,207055A0,extended,00000000
-// patch=1,EE,2070579C,extended,00000000
-// patch=1,EE,20705998,extended,00000000
-// patch=1,EE,20705B94,extended,00000000
-// patch=1,EE,20705D90,extended,00000000
-// patch=1,EE,20705F8C,extended,00000000
-// patch=1,EE,20706188,extended,00000000
-// patch=1,EE,20706384,extended,00000000
-// patch=1,EE,20706580,extended,00000000
-// patch=1,EE,2070677C,extended,00000000
-// patch=1,EE,20706978,extended,00000000
-// patch=1,EE,20706B74,extended,00000000
-// patch=1,EE,20706D70,extended,00000000
-// patch=1,EE,20706F6C,extended,00000000
-// patch=1,EE,20707168,extended,00000000
-// patch=1,EE,20707364,extended,00000000
-// patch=1,EE,20707560,extended,00000000
-// patch=1,EE,2070775C,extended,00000000
-// patch=1,EE,20707958,extended,00000000
-// patch=1,EE,20707B54,extended,00000000
-// patch=1,EE,20707D50,extended,00000000
-// patch=1,EE,20707F4C,extended,00000000
-// patch=1,EE,20708148,extended,00000000
-// patch=1,EE,20708344,extended,00000000
-// patch=1,EE,20708540,extended,00000000
-// patch=1,EE,2070873C,extended,00000000
-// patch=1,EE,20708938,extended,00000000
-// patch=1,EE,20708B34,extended,00000000
-// patch=1,EE,20708D30,extended,00000000
-// patch=1,EE,20708F2C,extended,00000000
-// patch=1,EE,20709128,extended,00000000
-// patch=1,EE,20709324,extended,00000000
-// patch=1,EE,20709520,extended,00000000
-// patch=1,EE,2070971C,extended,00000000
-// patch=1,EE,20709918,extended,00000000
-// patch=1,EE,20709B14,extended,00000000
-// patch=1,EE,20709D10,extended,00000000
-// patch=1,EE,20709F0C,extended,00000000
-// patch=1,EE,2070A108,extended,00000000
-// patch=1,EE,2070A304,extended,00000000
-// patch=1,EE,2070A500,extended,00000000

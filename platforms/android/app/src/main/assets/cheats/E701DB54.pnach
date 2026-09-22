@@ -88,25 +88,13 @@
 // patch=1,EE,209158C4,extended,00000000
 // patch=1,EE,20915CCC,extended,00000000
 
-[Cheats/Max Hands Won]
+[Cheats/Max Hands Won / Max Showdowns Won]
 // patch=1,EE,209150C0,extended,0098967F
 // patch=1,EE,209154C8,extended,0098967F
 // patch=1,EE,209158D0,extended,0098967F
 // patch=1,EE,20915CD8,extended,0098967F
 
-[Cheats/No Hands Won]
-// patch=1,EE,209150C0,extended,00000000
-// patch=1,EE,209154C8,extended,00000000
-// patch=1,EE,209158D0,extended,00000000
-// patch=1,EE,20915CD8,extended,00000000
-
-[Cheats/Max Showdowns Won]
-// patch=1,EE,209150C0,extended,0098967F
-// patch=1,EE,209154C8,extended,0098967F
-// patch=1,EE,209158D0,extended,0098967F
-// patch=1,EE,20915CD8,extended,0098967F
-
-[Cheats/No Showdowns Won]
+[Cheats/No Hands Won / No Showdowns Won]
 // patch=1,EE,209150C0,extended,00000000
 // patch=1,EE,209154C8,extended,00000000
 // patch=1,EE,209158D0,extended,00000000

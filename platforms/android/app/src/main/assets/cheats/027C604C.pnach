@@ -604,7 +604,7 @@
 // patch=1,EE,70504159,extended,00000006
 // patch=1,EE,70504159,extended,002000F6
 
-[Cheats/Maxi-Soryuju 2]
+[Cheats/Maxi-Soryuju 2 / Maxi-The Ancient]
 // patch=1,EE,70504159,extended,00000060
 // patch=1,EE,70504159,extended,0020006F
 
@@ -627,10 +627,6 @@
 [Cheats/Maxi-Termite Snack]
 // patch=1,EE,7050415C,extended,00000006
 // patch=1,EE,7050415C,extended,002000F6
-
-[Cheats/Maxi-The Ancient]
-// patch=1,EE,70504159,extended,00000060
-// patch=1,EE,70504159,extended,0020006F
 
 [Cheats/Voldo-Manas & Ayus]
 // patch=1,EE,7050415D,extended,00000006

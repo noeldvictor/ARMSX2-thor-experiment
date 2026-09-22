@@ -20,80 +20,50 @@ description=
 // patch=1,EE,002A8584,extended,00000000
 
 
-[Customize Codes\All Experiencelode Off]
+[Customize Codes\All Experiencelode Off / All Explode]
 author=Codejunkies
 description=
 // patch=1,EE,002A857C,extended,00000000
 
 
-[Customize Codes\All Experiencelode On]
+[Customize Codes\All Experiencelode On / All Explode]
 author=Codejunkies
 description=
 // patch=1,EE,002A857C,extended,00000001
 
 
-[Unlock Customize Codes\All Explode]
-author=Code Master
-description=
-// patch=1,EE,002A857C,extended,00000000
-
-
-[Activate Customize Codes\All Explode]
-author=Code Master
-description=
-// patch=1,EE,002A857C,extended,00000001
-
-
-[Unlock Customize Codes\Alternate Characters]
+[Unlock Customize Codes\Alternate Characters / Alternate Characters Off]
 author=Code Master
 description=
 // patch=1,EE,002A857E,extended,00000000
 
 
-[Activate Customize Codes\Alternate Characters]
+[Activate Customize Codes\Alternate Characters / Alternate Characters On]
 author=Code Master
 description=
 // patch=1,EE,002A857E,extended,00000001
 
 
-[Customize Codes\Alternate Characters Off]
-author=Codejunkies
-description=
-// patch=1,EE,002A857E,extended,00000000
-
-
-[Customize Codes\Alternate Characters On]
-author=Codejunkies
-description=
-// patch=1,EE,002A857E,extended,00000001
-
-
-[Have Demolition Shot-Max Level Codes\Always Low Time]
+[Have Demolition Shot-Max Level Codes\Always Low Time / Clear Time 00:00:00]
 author=Code Master
 description=
 // patch=1,EE,203B23C4,extended,00000000
 
 
-[Unlock Extras Codes\Boss Rush]
+[Unlock Extras Codes\Boss Rush / Enable Enemy Rush]
 author=Code Master
 description=
 // patch=1,EE,002A8581,extended,00000000
 
 
-[Enable Demo Shot Codes\Bullet Dance Lvl 3]
+[Enable Demo Shot Codes\Bullet Dance Lvl 3 / Surrounding Attack]
 author=Codejunkies
 description=
 // patch=1,EE,103B23D6,extended,00000003
 
 
-[Unlock Customize Codes\Camera Angle]
+[Unlock Customize Codes\Camera Angle / Camera Angle Far]
 author=Code Master
-description=
-// patch=1,EE,002A857D,extended,00000000
-
-
-[Customize Codes\Camera Angle Far]
-author=Codejunkies
 description=
 // patch=1,EE,002A857D,extended,00000000
 
@@ -102,18 +72,6 @@ description=
 author=Codejunkies
 description=
 // patch=1,EE,002A857D,extended,00000001
-
-
-[Activate Customize Codes\Camera Angle-Near]
-author=Code Master
-description=
-// patch=1,EE,002A857D,extended,00000001
-
-
-[Stage Results Codes\Clear Time 00:00:00]
-author=Codejunkies
-description=
-// patch=1,EE,203B23C4,extended,00000000
 
 
 [Grave Codes\Clear Time 00:00:00]
@@ -140,7 +98,7 @@ description=
 // patch=1,EE,002A8575,extended,00000000
 
 
-[Unlock Customize Codes\Close Range Level 1-4]
+[Unlock Customize Codes\Close Range Level 1-4 / Shot Level 1-4]
 author=Code Master
 description=
 // patch=1,EE,002A8577,extended,00000003
@@ -164,19 +122,19 @@ description=
 // patch=1,EE,002A8575,extended,00000003
 
 
-[Enable Demo Shot Codes\Day Of The Grave Lvl 3]
+[Enable Demo Shot Codes\Day Of The Grave Lvl 3 / Slow Time Attack]
 author=Codejunkies
 description=
 // patch=1,EE,103B23D8,extended,00000003
 
 
-[Enable Demo Shot Codes\Death Blow Lvl 3]
+[Enable Demo Shot Codes\Death Blow Lvl 3 / Forward Attack]
 author=Codejunkies
 description=
 // patch=1,EE,103B23D4,extended,00000003
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Disable FMV]
+[Disable FMV]
 author=Code Master
 description=
 // patch=1,EE,2028A318,extended,24020001
@@ -194,19 +152,13 @@ description=
 // patch=1,EE,002A8583,extended,00000000
 
 
-[Extras\Enable Enemy Rush]
-author=Codejunkies
-description=
-// patch=1,EE,002A8581,extended,00000000
-
-
-[Extras\Enable Movie Player]
+[Extras\Enable Movie Player / Play Movies]
 author=Codejunkies
 description=
 // patch=1,EE,002A8582,extended,00000000
 
 
-[Extras\Enable Sound Effect Player]
+[Extras\Enable Sound Effect Player / Play Conversations / Play Sound Effects]
 author=Codejunkies
 description=
 // patch=1,EE,002A8584,extended,00000000
@@ -216,12 +168,6 @@ description=
 author=Codejunkies
 description=
 // patch=1,EE,002A857F,extended,00000000
-
-
-[Unlock Extras Codes\Enemy Rush]
-author=Code Master
-description=
-// patch=1,EE,002A8581,extended,00000000
 
 
 [Unlockable Features\Extra Characters]
@@ -242,12 +188,6 @@ description=
 // patch=1,EE,103B23D4,extended,00000002
 
 
-[Have Demolition Shot-Max Level Codes\Forward Attack]
-author=Code Master
-description=
-// patch=1,EE,103B23D4,extended,00000003
-
-
 [Have All Demolition Weapons/Selection]
 author=MadCatz
 description=
@@ -259,38 +199,20 @@ description=
 // patch=1,EE,103B23DE,extended,00000003
 
 
-[Unlock Customize Codes\High Speed]
+[Unlock Customize Codes\High Speed / High Speed Off]
 author=Code Master
 description=
 // patch=1,EE,002A857B,extended,00000000
 
 
-[Activate Customize Codes\High Speed]
+[Activate Customize Codes\High Speed / High Speed On]
 author=Code Master
 description=
 // patch=1,EE,002A857B,extended,00000001
 
 
-[Customize Codes\High Speed Off]
+[Infinite Demo Shots / Infinite Demolition Shots / Max Demolition Shots]
 author=Codejunkies
-description=
-// patch=1,EE,002A857B,extended,00000000
-
-
-[Customize Codes\High Speed On]
-author=Codejunkies
-description=
-// patch=1,EE,002A857B,extended,00000001
-
-
-[Infinite Demo Shots]
-author=Codejunkies
-description=
-// patch=1,EE,203B23B4,extended,00000004
-
-
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Demolition Shots]
-author=Code Master
 description=
 // patch=1,EE,203B23B4,extended,00000004
 
@@ -301,7 +223,7 @@ description=
 // patch=1,EE,203B1BF8,extended,4479C200
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Health]
+[Infinite Health]
 author=Code Master
 description=
 // patch=1,EE,203B1BFC,extended,447A0000
@@ -319,7 +241,7 @@ description=
 // patch=1,EE,203B1C08,extended,4479C200
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Shield]
+[Infinite Shield]
 author=Code Master
 description=
 // patch=1,EE,203B1C08,extended,447A0000
@@ -331,43 +253,31 @@ description=
 // patch=1,EE,203B1C08,extended,43960000
 
 
-[Unlock Customize Codes\Invincible]
+[Unlock Customize Codes\Invincible / Invincible Off]
 author=Code Master
 description=
 // patch=1,EE,002A8578,extended,00000000
 
 
-[Customize Codes\Invincible Off]
-author=Codejunkies
-description=
-// patch=1,EE,002A8578,extended,00000000
-
-
-[Customize Codes\Invincible On]
+[Customize Codes\Invincible On / Invinicible]
 author=Codejunkies
 description=
 // patch=1,EE,002A8578,extended,00000001
 
 
-[Activate Customize Codes\Invinicible]
-author=Code Master
-description=
-// patch=1,EE,002A8578,extended,00000001
-
-
-[Data-Grave Codes\Life Remaining 100%]
+[Data-Grave Codes\Life Remaining 100% / Max Life]
 author=Code Master
 description=
 // patch=1,EE,202A82CC,extended,00000064
 
 
-[Data-Kabane Codes\Life Remaining 100%]
+[Data-Kabane Codes\Life Remaining 100% / Max Life]
 author=Code Master
 description=
 // patch=1,EE,202A82EC,extended,00000064
 
 
-[Data-Billy Codes\Life Remaining 100%]
+[Data-Billy Codes\Life Remaining 100% / Max Life]
 author=Code Master
 description=
 // patch=1,EE,202A830C,extended,00000064
@@ -375,18 +285,6 @@ description=
 
 [Max Art]
 author=MadCatz
-description=
-// patch=1,EE,203B1C30,extended,000003E7
-
-
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Art]
-author=Code Master
-description=
-// patch=1,EE,203B1C30,extended,000003E7
-
-
-[Max Art]
-author=Codejunkies
 description=
 // patch=1,EE,203B1C30,extended,000003E7
 
@@ -409,37 +307,13 @@ description=
 // patch=1,EE,202A8318,extended,05F5E0FF
 
 
-[Grave Codes\Max Art Points]
-author=Codejunkies
-description=
-// patch=1,EE,202A82D8,extended,05F5E0FF
-
-
-[Kabane Codes\Max Art Points]
-author=Codejunkies
-description=
-// patch=1,EE,202A82F8,extended,05F5E0FF
-
-
-[Billy Codes\Max Art Points]
-author=Codejunkies
-description=
-// patch=1,EE,202A8318,extended,05F5E0FF
-
-
 [Stage Results Codes\Max Artistic Points]
 author=Code Master
 description=
 // patch=1,EE,203B23C8,extended,0000270F
 
 
-[Stage Results Codes\Max Artistic Points]
-author=Codejunkies
-description=
-// patch=1,EE,203B23C8,extended,0000270F
-
-
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Beat]
+[Max Beat / Max Beat Count / Max Beats]
 author=Code Master
 description=
 // patch=1,EE,203B1C14,extended,000003E7
@@ -469,42 +343,6 @@ description=
 // patch=1,EE,202A8308,extended,05F5E0FF
 
 
-[Max Beat Count]
-author=Codejunkies
-description=
-// patch=1,EE,203B1C14,extended,000003E7
-
-
-[Stage Results Codes\Max Beat Count]
-author=Codejunkies
-description=
-// patch=1,EE,203B23B8,extended,0000270F
-
-
-[Grave Codes\Max Beat Count]
-author=Codejunkies
-description=
-// patch=1,EE,202A82C8,extended,05F5E0FF
-
-
-[Kabane Codes\Max Beat Count]
-author=Codejunkies
-description=
-// patch=1,EE,202A82E8,extended,05F5E0FF
-
-
-[Billy Codes\Max Beat Count]
-author=Codejunkies
-description=
-// patch=1,EE,202A8308,extended,05F5E0FF
-
-
-[Max Beats]
-author=MadCatz
-description=
-// patch=1,EE,203B1C14,extended,000003E7
-
-
 [Data-Grave Codes\Max Bullets]
 author=Code Master
 description=
@@ -523,34 +361,10 @@ description=
 // patch=1,EE,202A831C,extended,05F5E0FF
 
 
-[Grave Codes\Max Bullets]
-author=Codejunkies
-description=
-// patch=1,EE,202A82DC,extended,05F5E0FF
-
-
-[Kabane Codes\Max Bullets]
-author=Codejunkies
-description=
-// patch=1,EE,202A82FC,extended,05F5E0FF
-
-
-[Billy Codes\Max Bullets]
-author=Codejunkies
-description=
-// patch=1,EE,202A831C,extended,05F5E0FF
-
-
 [Max Demolition Gauge]
 author=MadCatz
 description=
 // patch=1,EE,203B23B0,extended,44FA0000
-
-
-[Max Demolition Shots]
-author=MadCatz
-description=
-// patch=1,EE,203B23B4,extended,00000004
 
 
 [Max Health]
@@ -559,25 +373,25 @@ description=
 // patch=1,EE,203B1BFC,extended,4479C200
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Health]
+[Max Health]
 author=Code Master
 description=
 // patch=1,EE,203B1BF8,extended,447A0000
 
 
-[Data-Grave Codes\Max Jackpot]
+[Data-Grave Codes\Max Jackpot / Max Jackpots]
 author=Code Master
 description=
 // patch=1,EE,202A8330,extended,05F5E0FF
 
 
-[Data-Kabane Codes\Max Jackpot]
+[Data-Kabane Codes\Max Jackpot / Max Jackpots]
 author=Code Master
 description=
 // patch=1,EE,202A8344,extended,05F5E0FF
 
 
-[Data-Billy Codes\Max Jackpot]
+[Data-Billy Codes\Max Jackpot / Max Jackpots]
 author=Code Master
 description=
 // patch=1,EE,202A8358,extended,05F5E0FF
@@ -587,30 +401,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,203B23CC,extended,0000270F
-
-
-[Stage Results Codes\Max Jackpots]
-author=Codejunkies
-description=
-// patch=1,EE,203B23CC,extended,0000270F
-
-
-[Grave Codes\Max Jackpots]
-author=Codejunkies
-description=
-// patch=1,EE,202A8330,extended,05F5E0FF
-
-
-[Kabane Codes\Max Jackpots]
-author=Codejunkies
-description=
-// patch=1,EE,202A8344,extended,05F5E0FF
-
-
-[Billy Codes\Max Jackpots]
-author=Codejunkies
-description=
-// patch=1,EE,202A8358,extended,05F5E0FF
 
 
 [Stage Results Codes\Max Kills]
@@ -637,56 +427,14 @@ description=
 // patch=1,EE,201C7A74,extended,A079C64A
 
 
-[Stage Results Codes\Max Kills]
-author=Codejunkies
-description=
-// patch=1,EE,203B23BC,extended,0000270F
-
-
-[Grave Codes\Max Kills]
-author=Codejunkies
-description=
-// patch=1,EE,202A82D0,extended,05F5E0FF
-
-
-[Kabane Codes\Max Kills]
-author=Codejunkies
-description=
-// patch=1,EE,202A82F0,extended,05F5E0FF
-
-
 [Billy Codes\Max Kills]
 author=Codejunkies
 description=
 // patch=1,EE,202A8310,extended,05F5E0FF
 
 
-[Grave Codes\Max Life]
-author=Codejunkies
-description=
-// patch=1,EE,202A82CC,extended,00000064
-
-
-[Kabane Codes\Max Life]
-author=Codejunkies
-description=
-// patch=1,EE,202A82EC,extended,00000064
-
-
-[Billy Codes\Max Life]
-author=Codejunkies
-description=
-// patch=1,EE,202A830C,extended,00000064
-
-
 [Max Score]
 author=MadCatz
-description=
-// patch=1,EE,203B23A8,extended,05F5E0FF
-
-
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Score]
-author=Code Master
 description=
 // patch=1,EE,203B23A8,extended,05F5E0FF
 
@@ -709,58 +457,16 @@ description=
 // patch=1,EE,202A8304,extended,05F5E0FF
 
 
-[Max Score]
-author=Codejunkies
-description=
-// patch=1,EE,203B23A8,extended,05F5E0FF
-
-
-[Grave Codes\Max Score]
-author=Codejunkies
-description=
-// patch=1,EE,202A82C4,extended,05F5E0FF
-
-
-[Kabane Codes\Max Score]
-author=Codejunkies
-description=
-// patch=1,EE,202A82E4,extended,05F5E0FF
-
-
-[Billy Codes\Max Score]
-author=Codejunkies
-description=
-// patch=1,EE,202A8304,extended,05F5E0FF
-
-
 [Max Shield]
 author=MadCatz
 description=
 // patch=1,EE,203B1C04,extended,4479C200
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Shield]
+[Max Shield]
 author=Code Master
 description=
 // patch=1,EE,203B1C04,extended,447A0000
-
-
-[Unlock Extras Codes\Play Conversations]
-author=Code Master
-description=
-// patch=1,EE,002A8584,extended,00000000
-
-
-[Unlock Extras Codes\Play Movies]
-author=Code Master
-description=
-// patch=1,EE,002A8582,extended,00000000
-
-
-[Unlock Extras Codes\Play Sound Effects]
-author=Code Master
-description=
-// patch=1,EE,002A8584,extended,00000000
 
 
 [Press L3 For Debug Menu]
@@ -771,39 +477,27 @@ description=
 // patch=1,EE,2042FF4C,extended,0000001A
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Quick Demolition Shot Gain]
+[Quick Demolition Shot Gain]
 author=Code Master
 description=
 // patch=1,EE,D03B23B3,extended,002044E0
 // patch=1,EE,203B23B0,extended,44E10000
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Quick Score Gain]
+[Quick Score Gain]
 author=Code Master
 description=
 // patch=1,EE,103B23A8,extended,0000FFFF
 
 
-[Unlock Customize Codes\Secret Character]
+[Unlock Customize Codes\Secret Character / Secret Character Off]
 author=Code Master
 description=
 // patch=1,EE,002A857A,extended,00000000
 
 
-[Activate Customize Codes\Secret Character]
+[Activate Customize Codes\Secret Character / Secret Character On]
 author=Code Master
-description=
-// patch=1,EE,002A857A,extended,00000001
-
-
-[Customize Codes\Secret Character Off]
-author=Codejunkies
-description=
-// patch=1,EE,002A857A,extended,00000000
-
-
-[Customize Codes\Secret Character On]
-author=Codejunkies
 description=
 // patch=1,EE,002A857A,extended,00000001
 
@@ -812,12 +506,6 @@ description=
 author=Codejunkies
 description=
 // patch=1,EE,002A8574,extended,00000000
-
-
-[Unlock Customize Codes\Shot Level 1-4]
-author=Code Master
-description=
-// patch=1,EE,002A8577,extended,00000003
 
 
 [Customize Codes\Shot Level 2]
@@ -850,18 +538,6 @@ description=
 // patch=1,EE,103B23D8,extended,00000002
 
 
-[Have Demolition Shot-Max Level Codes\Slow Time Attack]
-author=Code Master
-description=
-// patch=1,EE,103B23D8,extended,00000003
-
-
-[Unlock Extras Codes\Stage Select]
-author=Code Master
-description=
-// patch=1,EE,002A857F,extended,00000000
-
-
 [Have Demolition Shot-Level 1 Codes\Surrounding Attack]
 author=Code Master
 description=
@@ -874,32 +550,14 @@ description=
 // patch=1,EE,103B23D6,extended,00000002
 
 
-[Have Demolition Shot-Max Level Codes\Surrounding Attack]
-author=Code Master
-description=
-// patch=1,EE,103B23D6,extended,00000003
-
-
-[Unlock Customize Codes\Unlimited Demolition]
+[Unlock Customize Codes\Unlimited Demolition / Unlimited Demolition Off]
 author=Code Master
 description=
 // patch=1,EE,002A8579,extended,00000000
 
 
-[Activate Customize Codes\Unlimited Demolition]
+[Activate Customize Codes\Unlimited Demolition / Unlimited Demolition On]
 author=Code Master
-description=
-// patch=1,EE,002A8579,extended,00000001
-
-
-[Customize Codes\Unlimited Demolition Off]
-author=Codejunkies
-description=
-// patch=1,EE,002A8579,extended,00000000
-
-
-[Customize Codes\Unlimited Demolition On]
-author=Codejunkies
 description=
 // patch=1,EE,002A8579,extended,00000001
 
@@ -908,4 +566,3 @@ description=
 author=Codejunkies
 description=
 // patch=1,EE,102A8296,extended,00000101
-

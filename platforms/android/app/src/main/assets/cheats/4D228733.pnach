@@ -57,17 +57,13 @@
 [Cheats/Infinite Health P1-Character 1]
 // patch=1,EE,104F24E4,extended,00000090
 
-[Cheats/75% Health P1-Character 1]
+[Cheats/75% Health P1-Character 1 / 25% Health P1-Character 1]
 // patch=1,EE,D04F24E4,extended,00000090
 // patch=1,EE,204F24E4,extended,0000006C
 
 [Cheats/50% Health P1-Character 1]
 // patch=1,EE,D04F24E4,extended,00000090
 // patch=1,EE,204F24E4,extended,00000048
-
-[Cheats/25% Health P1-Character 1]
-// patch=1,EE,D04F24E4,extended,00000090
-// patch=1,EE,204F24E4,extended,0000006C
 
 [Cheats/1-Hit Death P1-Character 1]
 // patch=1,EE,D04F24E4,extended,00000090
@@ -82,17 +78,13 @@
 [Cheats/Infinite Health P1-Character 2]
 // patch=1,EE,104F3054,extended,00000090
 
-[Cheats/75% Health P1-Character 2]
+[Cheats/75% Health P1-Character 2 / 25% Health P1-Character 2]
 // patch=1,EE,D04F3054,extended,00000090
 // patch=1,EE,204F3054,extended,0000006C
 
 [Cheats/50% Health P1-Character 2]
 // patch=1,EE,D04F3054,extended,00000090
 // patch=1,EE,204F3054,extended,00000048
-
-[Cheats/25% Health P1-Character 2]
-// patch=1,EE,D04F3054,extended,00000090
-// patch=1,EE,204F3054,extended,0000006C
 
 [Cheats/1-Hit Death P1-Character 2]
 // patch=1,EE,D04F3054,extended,00000090
@@ -107,17 +99,13 @@
 [Cheats/Infinite Health P1-Character 3]
 // patch=1,EE,104F3BC4,extended,00000090
 
-[Cheats/75% Health P1-Character 3]
+[Cheats/75% Health P1-Character 3 / 25% Health P1-Character 3]
 // patch=1,EE,D04F3BC4,extended,00000090
 // patch=1,EE,204F3BC4,extended,0000006C
 
 [Cheats/50% Health P1-Character 3]
 // patch=1,EE,D04F3BC4,extended,00000090
 // patch=1,EE,204F3BC4,extended,00000048
-
-[Cheats/25% Health P1-Character 3]
-// patch=1,EE,D04F3BC4,extended,00000090
-// patch=1,EE,204F3BC4,extended,0000006C
 
 [Cheats/1-Hit Death P1-Character 3]
 // patch=1,EE,D04F3BC4,extended,00000090
@@ -162,17 +150,13 @@
 [Cheats/Infinite Health P2-Character 1]
 // patch=1,EE,104F2A9C,extended,00000090
 
-[Cheats/75% Health P2-Character 1]
+[Cheats/75% Health P2-Character 1 / 25% Health P2-Character 1]
 // patch=1,EE,D04F2A9C,extended,00000090
 // patch=1,EE,204F2A9C,extended,0000006C
 
 [Cheats/50% Health P2-Character 1]
 // patch=1,EE,D04F2A9C,extended,00000090
 // patch=1,EE,204F2A9C,extended,00000048
-
-[Cheats/25% Health P2-Character 1]
-// patch=1,EE,D04F2A9C,extended,00000090
-// patch=1,EE,204F2A9C,extended,0000006C
 
 [Cheats/1-Hit Death P2-Character 1]
 // patch=1,EE,D04F2A9C,extended,00000090
@@ -187,17 +171,13 @@
 [Cheats/Infinite Health P2-Character 2]
 // patch=1,EE,104F360C,extended,00000090
 
-[Cheats/75% Health P2-Character 2]
+[Cheats/75% Health P2-Character 2 / 25% Health P2-Character 2]
 // patch=1,EE,D04F360C,extended,00000090
 // patch=1,EE,204F360C,extended,0000006C
 
 [Cheats/50% Health P2-Character 2]
 // patch=1,EE,D04F360C,extended,00000090
 // patch=1,EE,204F360C,extended,00000048
-
-[Cheats/25% Health P2-Character 2]
-// patch=1,EE,D04F360C,extended,00000090
-// patch=1,EE,204F360C,extended,0000006C
 
 [Cheats/1-Hit Death P2-Character 2]
 // patch=1,EE,D04F360C,extended,00000090
@@ -212,17 +192,13 @@
 [Cheats/Infinite Health P2-Character 3]
 // patch=1,EE,104F417C,extended,00000090
 
-[Cheats/75% Health P2-Character 3]
+[Cheats/75% Health P2-Character 3 / 25% Health P2-Character 3]
 // patch=1,EE,D04F417C,extended,00000090
 // patch=1,EE,204F417C,extended,0000006C
 
 [Cheats/50% Health P2-Character 3]
 // patch=1,EE,D04F417C,extended,00000090
 // patch=1,EE,204F417C,extended,00000048
-
-[Cheats/25% Health P2-Character 3]
-// patch=1,EE,D04F417C,extended,00000090
-// patch=1,EE,204F417C,extended,0000006C
 
 [Cheats/1-Hit Death P2-Character 3]
 // patch=1,EE,D04F417C,extended,00000090

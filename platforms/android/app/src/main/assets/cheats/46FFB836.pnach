@@ -5,14 +5,11 @@
 [Cheats/Super Bullet Gun]
 // patch=1,EE,F0100008,extended,0011C31F
 
-[Cheats/Quick Money Gain]
+[Cheats/Quick Money Gain / Quick Salary Gain]
 // patch=1,EE,101C5540,extended,0000FFFF
 
 [Cheats/Max Money]
 // patch=1,EE,201C5540,extended,05F5E0FF
-
-[Cheats/Quick Salary Gain]
-// patch=1,EE,101C5540,extended,0000FFFF
 
 [Cheats/Max Salary]
 // patch=1,EE,201C5544,extended,05F5E0FF

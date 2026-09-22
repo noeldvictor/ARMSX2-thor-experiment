@@ -235,25 +235,25 @@
 [Cheats/Unlock All Dante Must Die Missions]
 // patch=1,EE,00574195,extended,00000012
 
-[Cheats/Max Handguns Level]
+[Cheats/Max Handguns Level / Max Throwing Daggers Level]
 // patch=1,EE,0056FD76,extended,00000002
 
-[Cheats/Max Submachine Guns Level]
+[Cheats/Max Submachine Guns Level / Max Darts Guns Level]
 // patch=1,EE,0056FD77,extended,00000002
 
-[Cheats/Max Shotgun Level]
+[Cheats/Max Shotgun Level / Max Cranky Bomb Level]
 // patch=1,EE,0056FD78,extended,00000002
 
-[Cheats/Max Missile Launcher Level]
+[Cheats/Max Missile Launcher Level / Max Bow Gun Level]
 // patch=1,EE,0056FD79,extended,00000002
 
-[Cheats/Max Rebellion/Cutlaseer Level]
+[Cheats/Max Rebellion/Cutlaseer Level / Max Cutlaseer Level]
 // patch=1,EE,0056FD7A,extended,00000004
 
-[Cheats/Max Merciles Level]
+[Cheats/Max Merciles Level / Max Klyamoor Level]
 // patch=1,EE,0056FD7B,extended,00000004
 
-[Cheats/Max Vendetta Level]
+[Cheats/Max Vendetta Level / Max Zambak Level]
 // patch=1,EE,0056FD7C,extended,00000004
 
 [Cheats/Have Merciless]
@@ -273,27 +273,6 @@
 
 [Cheats/Unlock All Lucia Must Die Missions]
 // patch=1,EE,00574195,extended,0000000D
-
-[Cheats/Max Throwing Daggers Level]
-// patch=1,EE,0056FD76,extended,00000002
-
-[Cheats/Max Darts Guns Level]
-// patch=1,EE,0056FD77,extended,00000002
-
-[Cheats/Max Cranky Bomb Level]
-// patch=1,EE,0056FD78,extended,00000002
-
-[Cheats/Max Bow Gun Level]
-// patch=1,EE,0056FD79,extended,00000002
-
-[Cheats/Max Cutlaseer Level]
-// patch=1,EE,0056FD7A,extended,00000004
-
-[Cheats/Max Klyamoor Level]
-// patch=1,EE,0056FD7B,extended,00000004
-
-[Cheats/Max Zambak Level]
-// patch=1,EE,0056FD7C,extended,00000004
 
 [Cheats/Klyamoor]
 // patch=1,EE,00570BCB,extended,00000001

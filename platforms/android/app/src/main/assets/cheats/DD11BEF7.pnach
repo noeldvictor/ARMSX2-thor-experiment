@@ -1,4 +1,4 @@
-[Cheats/Max Money]
+[Cheats/Max Money / Infinite Money]
 // patch=1,EE,204896C0,extended,05F5E0FF
 
 [Cheats/Hero Always Alive]
@@ -7,9 +7,6 @@
 [Cheats/Hero Infinite HP]
 // patch=1,EE,104871C4,extended,000003E7
 // patch=1,EE,104871C0,extended,000003E7
-
-[Cheats/Infinite Money]
-// patch=1,EE,204896C0,extended,05F5E0FF
 
 [Cheats/Character Creation 30 Bonus Points counter bugged, move up or down at classes to fix]
 // patch=1,EE,305C37C0,extended,0000001E

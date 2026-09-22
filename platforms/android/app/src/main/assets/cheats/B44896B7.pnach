@@ -25,7 +25,7 @@
 [Cheats/Max Gear Shop Rings]
 // patch=1,EE,2095D528,extended,000F423F
 
-[Cheats/D. Eggman]
+[Cheats/D. Eggman / Gear 9]
 // patch=1,EE,0095D1E9,extended,00000001
 
 [Cheats/Shadow The Hedgehog]
@@ -90,9 +90,6 @@
 
 [Cheats/Gear 8]
 // patch=1,EE,0095D1E8,extended,00000001
-
-[Cheats/Gear 9]
-// patch=1,EE,0095D1E9,extended,00000001
 
 [Cheats/Gear 10]
 // patch=1,EE,0095D189,extended,00000001

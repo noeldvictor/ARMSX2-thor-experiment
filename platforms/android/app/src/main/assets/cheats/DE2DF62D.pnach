@@ -8,52 +8,28 @@
 [Cheats/Infinite Time]
 // patch=1,EE,203EA578,extended,00000000
 
-[Cheats/Infinite Health P1]
+[Cheats/Infinite Health P1 / Infinite Health P2]
 // patch=1,EE,D05B2E70,extended,00000000
 // patch=1,EE,205B1A1C,extended,000000FA
 // patch=1,EE,D05B2E70,extended,0000FFFF
 // patch=1,EE,205B1A54,extended,000000FA
 
-[Cheats/No Health P1]
+[Cheats/No Health P1 / No Health P2]
 // patch=1,EE,D05B2E70,extended,00000000
 // patch=1,EE,205B1A1C,extended,00000000
 // patch=1,EE,D05B2E70,extended,0000FFFF
 // patch=1,EE,205B1A54,extended,00000000
 
-[Cheats/Infinite Ultimate Gauge P1]
+[Cheats/Infinite Ultimate Gauge P1 / Infinite Ultimate Gauge P2]
 // patch=1,EE,D05B2E70,extended,00000000
 // patch=1,EE,205B1A2C,extended,000000FA
 // patch=1,EE,D05B2E70,extended,0000FFFF
 // patch=1,EE,205B1A64,extended,000000FA
 
-[Cheats/No Ultimate Gauge P1]
+[Cheats/No Ultimate Gauge P1 / No Ultimate Gauge P2]
 // patch=1,EE,D05B2E70,extended,00000000
 // patch=1,EE,205B1A2C,extended,00000000
 // patch=1,EE,D05B2E70,extended,0000FFFF
-// patch=1,EE,205B1A64,extended,00000000
-
-[Cheats/Infinite Health P2]
-// patch=1,EE,D05B2E70,extended,0000FFFF
-// patch=1,EE,205B1A1C,extended,000000FA
-// patch=1,EE,D05B2E70,extended,00000000
-// patch=1,EE,205B1A54,extended,000000FA
-
-[Cheats/No Health P2]
-// patch=1,EE,D05B2E70,extended,0000FFFF
-// patch=1,EE,205B1A1C,extended,00000000
-// patch=1,EE,D05B2E70,extended,00000000
-// patch=1,EE,205B1A54,extended,00000000
-
-[Cheats/Infinite Ultimate Gauge P2]
-// patch=1,EE,D05B2E70,extended,0000FFFF
-// patch=1,EE,205B1A2C,extended,000000FA
-// patch=1,EE,D05B2E70,extended,00000000
-// patch=1,EE,205B1A64,extended,000000FA
-
-[Cheats/No Ultimate Gauge P2]
-// patch=1,EE,D05B2E70,extended,0000FFFF
-// patch=1,EE,205B1A2C,extended,00000000
-// patch=1,EE,D05B2E70,extended,00000000
 // patch=1,EE,205B1A64,extended,00000000
 
 [Cheats/Unlock All Characters]

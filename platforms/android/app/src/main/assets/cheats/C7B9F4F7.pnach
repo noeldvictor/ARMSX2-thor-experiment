@@ -99,7 +99,7 @@
 [Cheats/Unknown 7? (Japanese)]
 // patch=1,EE,0021E83E,extended,00000001
 
-[Cheats/Unknown 8? (Japanese)]
+[Cheats/Unknown 8? (Japanese) / Ring Of Magic]
 // patch=1,EE,0021E83F,extended,00000001
 
 [Cheats/All Weapons]
@@ -503,9 +503,6 @@
 
 [Cheats/Unknown3? (Japanese)]
 // patch=1,EE,0021E827,extended,00000001
-
-[Cheats/Ring Of Magic]
-// patch=1,EE,0021E83F,extended,00000001
 
 [Cheats/All Rings]
 // patch=1,EE,4021E7C0,extended,001A0001

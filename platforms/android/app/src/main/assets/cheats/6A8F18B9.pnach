@@ -145,16 +145,16 @@
 // patch=1,EE,0013D4D9,extended,00000001
 // patch=1,EE,0013E539,extended,00000001
 
-[Cheats/Swingshot]
+[Cheats/Swingshot / Planet Kerwan-Buy Swingshot From Trainer]
 // patch=1,EE,0013D4CC,extended,00000001
 
-[Cheats/Hydrodisplacer]
+[Cheats/Hydrodisplacer / Planet Nebula G34-Journey Outside The Airlock]
 // patch=1,EE,0013D4D6,extended,00000001
 
 [Cheats/Trespasser]
 // patch=1,EE,0013D4DA,extended,00000001
 
-[Cheats/Metal Detector]
+[Cheats/Metal Detector / Planet Batalia-Destroy The Bombers]
 // patch=1,EE,0013D4DB,extended,00000001
 
 [Cheats/Hologuise]
@@ -163,31 +163,31 @@
 [Cheats/Gadgetron PDA]
 // patch=1,EE,0013D4E0,extended,00000001
 
-[Cheats/Heli-Pack]
+[Cheats/Heli-Pack / Planet Kerwan-Buy Heli-Pack From Al]
 // patch=1,EE,0013D4C2,extended,00000001
 
-[Cheats/Thruster-Pack]
+[Cheats/Thruster-Pack / Planet Pokitaru-Buy Thrusterpack From Bob]
 // patch=1,EE,0013D4C3,extended,00000001
 
 [Cheats/Hydro-Pack]
 // patch=1,EE,0013D4C4,extended,00000001
 
-[Cheats/Sonic Summoner]
+[Cheats/Sonic Summoner / Planet Aridia-Bring Prize To Agent]
 // patch=1,EE,0013D4C5,extended,00000001
 
-[Cheats/O2 Mask]
+[Cheats/O2 Mask / Planet Pokitaru-Destroy The Blarg Ships]
 // patch=1,EE,0013D4C6,extended,00000001
 
-[Cheats/Pilot's Helmet]
+[Cheats/Pilot's Helmet / Planet Gaspar-Find THe Pilot's Helment]
 // patch=1,EE,0013D4C7,extended,00000001
 
-[Cheats/Magneboots]
+[Cheats/Magneboots / Planet Orxon-Search The Laboratories]
 // patch=1,EE,0013D4DC,extended,00000001
 
-[Cheats/Grindboots]
+[Cheats/Grindboots / Planet Nebula G34-Buy Grindboots]
 // patch=1,EE,0013D4DD,extended,00000001
 
-[Cheats/Hoverboard]
+[Cheats/Hoverboard / Planet Aridia-Help Skid Get To His Ship]
 // patch=1,EE,0013D4DE,extended,00000001
 
 [Cheats/Map-O-Matic]
@@ -196,7 +196,7 @@
 [Cheats/Bold Grabber]
 // patch=1,EE,0013D4E2,extended,00000001
 
-[Cheats/Persuader]
+[Cheats/Persuader / Planet Pokitaru-Bring Raritanium To Inventor]
 // patch=1,EE,0013D4E3,extended,00000001
 
 [Cheats/Premium Nanotech]
@@ -290,14 +290,8 @@
 [Cheats/Planet Aridia-Locate Skid McMarx]
 // patch=1,EE,0013D6BC,extended,00000001
 
-[Cheats/Planet Aridia-Help Skid Get To His Ship]
-// patch=1,EE,0013D4DE,extended,00000001
-
 [Cheats/Planet Aridia-Find Skid's Agent]
 // patch=1,EE,0013D6CC,extended,00000001
-
-[Cheats/Planet Aridia-Bring Prize To Agent]
-// patch=1,EE,0013D4C5,extended,00000001
 
 [Cheats/Planet Aridia-Use Your Swingshot]
 // patch=1,EE,0013D39C,extended,00000001
@@ -305,9 +299,6 @@
 
 [Cheats/Planet Kerwan-Visit Al's Roboshack]
 // patch=1,EE,0013D6FC,extended,00000001
-
-[Cheats/Planet Kerwan-Buy Heli-Pack From Al]
-// patch=1,EE,0013D4C2,extended,00000001
 
 [Cheats/Planet Kerwan-Explore The Rest Of The City]
 // patch=1,EE,0013DD5B,extended,00000001
@@ -319,9 +310,6 @@
 [Cheats/Planet Kerwan-Complete Fitness Course]
 // patch=1,EE,0013D73C,extended,00000001
 // patch=1,EE,0013D70C,extended,00000001
-
-[Cheats/Planet Kerwan-Buy Swingshot From Trainer]
-// patch=1,EE,0013D4CC,extended,00000001
 
 [Cheats/Planet Eudora-Confront Robot Lieutenant]
 // patch=1,EE,0013DD46,extended,00000001
@@ -345,17 +333,11 @@
 // patch=1,EE,1013D3A8,extended,00000101
 // patch=1,EE,0013D8AC,extended,00000001
 
-[Cheats/Planet Nebula G34-Buy Grindboots]
-// patch=1,EE,0013D4DD,extended,00000001
-
 [Cheats/Planet Nebula G34-Explore The Blarg Warship]
 // patch=1,EE,0013D3AA,extended,00000001
 
 [Cheats/Planet Nebula G34-Destroy The Warship]
 // patch=1,EE,0013D3AC,extended,00000001
-
-[Cheats/Planet Nebula G34-Journey Outside The Airlock]
-// patch=1,EE,0013D4D6,extended,00000001
 
 [Cheats/Planet Umbris-Survive Qwark's Gauntlet]
 // patch=1,EE,0013D3B1,extended,00000001
@@ -384,15 +366,6 @@
 [Cheats/Planet Batalia-Explore The Walled City]
 // patch=1,EE,0013D94C,extended,00000001
 
-[Cheats/Planet Batalia-Destroy The Bombers]
-// patch=1,EE,0013D4DB,extended,00000001
-
-[Cheats/Planet Gaspar-Find THe Pilot's Helment]
-// patch=1,EE,0013D4C7,extended,00000001
-
-[Cheats/Planet Orxon-Search The Laboratories]
-// patch=1,EE,0013D4DC,extended,00000001
-
 [Cheats/Planet Orxon-Traverse The Wilderness]
 // patch=1,EE,0013DD4B,extended,00000001
 
@@ -413,17 +386,8 @@
 [Cheats/Planet Pokitaru-Help The Resort Owner]
 // patch=1,EE,0013D9DC,extended,00000002
 
-[Cheats/Planet Pokitaru-Buy Thrusterpack From Bob]
-// patch=1,EE,0013D4C3,extended,00000001
-
-[Cheats/Planet Pokitaru-Destroy The Blarg Ships]
-// patch=1,EE,0013D4C6,extended,00000001
-
 [Cheats/Planet Pokitaru-Navigate The Sewers]
 // patch=1,EE,0013D9FC,extended,00000001
-
-[Cheats/Planet Pokitaru-Bring Raritanium To Inventor]
-// patch=1,EE,0013D4E3,extended,00000001
 
 [Cheats/Planet Hoven-Destroy The Planetbuster]
 // patch=1,EE,0013DD4D,extended,00000001

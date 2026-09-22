@@ -51,7 +51,7 @@ description=
 // patch=1,EE,205212C4,extended,000003E7
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Coins & Health Activation Code]
+[Coins & Health Activation Code]
 author=Code Master
 description=This code must be on for the Coin & Health codes below.
 // patch=1,EE,200C0220,extended,24020001
@@ -97,25 +97,25 @@ description=
 // patch=1,EE,201421F8,extended,000528C0
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Coins Worth 100 (All Players)]
+[Coins Worth 100 (All Players)]
 author=Code Master
 description=
 // patch=1,EE,201421F8,extended,24050064
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Coins Worth 2 (All Players)]
+[Coins Worth 2 (All Players)]
 author=Code Master
 description=
 // patch=1,EE,201421F8,extended,2405000A
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Coins Worth 200 (All Players)]
+[Coins Worth 200 (All Players)]
 author=Code Master
 description=
 // patch=1,EE,201421F8,extended,240500C8
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Coins Worth 50 (All Players)]
+[Coins Worth 50 (All Players)]
 author=Code Master
 description=
 // patch=1,EE,201421F8,extended,24050032
@@ -151,7 +151,7 @@ description=
 // patch=1,EE,20142200,extended,25EF0032
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Extra Missiles (All Players)]
+[Extra Missiles (All Players)]
 author=Code Master
 description=
 // patch=1,EE,102B767C,extended,00000001
@@ -181,35 +181,35 @@ description=
 // patch=1,EE,000C000C,extended,00000001
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Health P1]
+[Infinite Health P1]
 author=Code Master
 description=
 // patch=1,EE,200C0230,extended,24010064
 // patch=1,EE,200C0234,extended,ACA10290
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Health P2]
+[Infinite Health P2]
 author=Code Master
 description=
 // patch=1,EE,200C0248,extended,24010064
 // patch=1,EE,200C024C,extended,ACA10290
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Health P3]
+[Infinite Health P3]
 author=Code Master
 description=
 // patch=1,EE,200C0260,extended,24010064
 // patch=1,EE,200C0264,extended,ACA10290
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Health P4]
+[Infinite Health P4]
 author=Code Master
 description=
 // patch=1,EE,200C0278,extended,24010064
 // patch=1,EE,200C027C,extended,ACA10290
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Infinite Missiles (All Players)]
+[Infinite Missiles (All Players)]
 author=Code Master
 description=
 // patch=1,EE,202B7684,extended,00000000
@@ -269,28 +269,28 @@ description=
 // patch=1,EE,000C000E,extended,00000001
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Coins P1]
+[Max Coins P1]
 author=Code Master
 description=
 // patch=1,EE,200C0228,extended,240103E7
 // patch=1,EE,200C022C,extended,ACA10114
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Coins P2]
+[Max Coins P2]
 author=Code Master
 description=
 // patch=1,EE,200C0240,extended,240103E7
 // patch=1,EE,200C0244,extended,ACA10114
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Coins P3]
+[Max Coins P3]
 author=Code Master
 description=
 // patch=1,EE,200C0258,extended,240103E7
 // patch=1,EE,200C025C,extended,ACA10114
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Max Coins P4]
+[Max Coins P4]
 author=Code Master
 description=
 // patch=1,EE,200C0270,extended,240103E7
@@ -321,28 +321,28 @@ description=
 // patch=1,EE,000C000E,extended,000000FF
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Coins P1]
+[No Coins P1]
 author=Code Master
 description=
 // patch=1,EE,200C0228,extended,24010000
 // patch=1,EE,200C022C,extended,ACA10114
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Coins P2]
+[No Coins P2]
 author=Code Master
 description=
 // patch=1,EE,200C0240,extended,24010000
 // patch=1,EE,200C0244,extended,ACA10114
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Coins P3]
+[No Coins P3]
 author=Code Master
 description=
 // patch=1,EE,200C0258,extended,24010000
 // patch=1,EE,200C025C,extended,ACA10114
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Coins P4]
+[No Coins P4]
 author=Code Master
 description=
 // patch=1,EE,200C0270,extended,24010000
@@ -373,28 +373,28 @@ description=
 // patch=1,EE,000C000C,extended,000000FF
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Health P1]
+[No Health P1]
 author=Code Master
 description=
 // patch=1,EE,200C0230,extended,24010000
 // patch=1,EE,200C0234,extended,ACA10290
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Health P2]
+[No Health P2]
 author=Code Master
 description=
 // patch=1,EE,200C0248,extended,24010000
 // patch=1,EE,200C024C,extended,ACA10290
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Health P3]
+[No Health P3]
 author=Code Master
 description=
 // patch=1,EE,200C0260,extended,24010000
 // patch=1,EE,200C0264,extended,ACA10290
 
 
-[This Game Requires A Code Breaker PS2 V7.0 Or Higher!\No Health P4]
+[No Health P4]
 author=Code Master
 description=
 // patch=1,EE,200C0278,extended,24010000
@@ -423,5 +423,3 @@ description=
 author=MadCatz
 description=
 // patch=1,EE,000C000D,extended,000000FF
-
-

@@ -20,10 +20,7 @@
 [Cheats/All Shots Worth 0]
 // patch=1,EE,00269EC4,extended,00000000
 
-[Cheats/Infinite Putting Line Previews P1]
-// patch=1,EE,006A0FD2,extended,00000000
-
-[Cheats/No Putting Line Previews P1]
+[Cheats/Infinite Putting Line Previews P1 / No Putting Line Previews P1]
 // patch=1,EE,006A0FD2,extended,00000000
 
 [Cheats/Always On Fire P1]
@@ -38,10 +35,7 @@
 [Cheats/No Beating Tokens P1]
 // patch=1,EE,006A0FFF,extended,00000000
 
-[Cheats/Infinite Putting Line Previews P2]
-// patch=1,EE,006A12D6,extended,00000000
-
-[Cheats/No Putting Line Previews P2]
+[Cheats/Infinite Putting Line Previews P2 / No Putting Line Previews P2]
 // patch=1,EE,006A12D6,extended,00000000
 
 [Cheats/Always On Fire P2]
@@ -56,10 +50,7 @@
 [Cheats/No Beating Tokens P2]
 // patch=1,EE,006A1303,extended,00000000
 
-[Cheats/Infinite Putting Line Previews P3]
-// patch=1,EE,006A15DA,extended,00000000
-
-[Cheats/No Putting Line Previews P3]
+[Cheats/Infinite Putting Line Previews P3 / No Putting Line Previews P3]
 // patch=1,EE,006A15DA,extended,00000000
 
 [Cheats/Always On Fire P3]
@@ -74,10 +65,7 @@
 [Cheats/No Beating Tokens P3]
 // patch=1,EE,006A1607,extended,00000000
 
-[Cheats/Infinite Putting Line Previews P4]
-// patch=1,EE,006A18DE,extended,00000000
-
-[Cheats/No Putting Line Previews P4]
+[Cheats/Infinite Putting Line Previews P4 / No Putting Line Previews P4]
 // patch=1,EE,006A18DE,extended,00000000
 
 [Cheats/Always On Fire P4]

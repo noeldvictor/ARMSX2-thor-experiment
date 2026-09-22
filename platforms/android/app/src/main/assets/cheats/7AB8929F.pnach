@@ -101,7 +101,7 @@
 [Cheats/Max Technique]
 // patch=1,EE,20905F70,extended,00000064
 
-[Cheats/Max All Stats]
+[Cheats/Max All Stats / Super Max All Stats]
 // patch=1,EE,40905F64,extended,00040001
 // patch=1,EE,00000064,extended,00000000
 
@@ -116,10 +116,6 @@
 
 [Cheats/Super Max Technique]
 // patch=1,EE,20905F70,extended,000003E8
-
-[Cheats/Super Max All Stats]
-// patch=1,EE,40905F64,extended,00040001
-// patch=1,EE,00000064,extended,00000000
 
 [Cheats/Tyler]
 // patch=1,EE,2046E3D4,extended,00000001

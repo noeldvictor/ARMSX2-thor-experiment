@@ -1,10 +1,6 @@
 // Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
 // Imported default-off for NetherSX2 Cheat Helper OSD toggles.
 
-[Cheats/(M) Must Be On]
-// patch=1,EE,DEADFACE,extended,04030209
-// patch=1,EE,F01B7AF6,extended,58B5CB6B
-
 [Cheats/Health Codes\Infinite Health]
 // patch=1,EE,001D0ECA,extended,00000009
 // patch=1,EE,001D0F0E,extended,00000009

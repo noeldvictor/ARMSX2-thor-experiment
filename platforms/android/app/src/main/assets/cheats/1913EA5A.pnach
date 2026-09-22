@@ -40,34 +40,22 @@
 [Cheats/No Gate Faults]
 // patch=1,EE,2041F68C,extended,00000000
 
-[Cheats/Winner]
+[Cheats/Winner / Precision]
 // patch=1,EE,7040D888,extended,00000001
 
-[Cheats/Legend]
+[Cheats/Legend / Style]
 // patch=1,EE,7040D888,extended,00000002
 
-[Cheats/Ace]
+[Cheats/Ace / Froce]
 // patch=1,EE,7040D888,extended,00000004
 
-[Cheats/Rhythm]
+[Cheats/Rhythm / Alpine Speed]
 // patch=1,EE,7040D888,extended,00000008
 
-[Cheats/Precision]
-// patch=1,EE,7040D888,extended,00000001
-
-[Cheats/Style]
-// patch=1,EE,7040D888,extended,00000002
-
-[Cheats/Froce]
-// patch=1,EE,7040D888,extended,00000004
-
-[Cheats/Alpine Speed]
-// patch=1,EE,7040D888,extended,00000008
-
-[Cheats/Ski Jumping Distance]
+[Cheats/Ski Jumping Distance / Bobsleigh Speed]
 // patch=1,EE,7040D889,extended,00000001
 
-[Cheats/Skating Speed]
+[Cheats/Skating Speed / Luge Speed]
 // patch=1,EE,7040D889,extended,00000002
 
 [Cheats/Cross Country Speed]
@@ -75,12 +63,6 @@
 
 [Cheats/Biathion Speed]
 // patch=1,EE,7040D889,extended,00000008
-
-[Cheats/Bobsleigh Speed]
-// patch=1,EE,7040D889,extended,00000001
-
-[Cheats/Luge Speed]
-// patch=1,EE,7040D889,extended,00000002
 
 [Cheats/All Challenges]
 // patch=1,EE,7040D888,extended,00103FFF

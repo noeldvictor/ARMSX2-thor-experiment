@@ -24,12 +24,6 @@
 // patch=1,EE,403E3245,extended,00470001
 // patch=1,EE,00000003,extended,00000000
 
-[Cheats/This Game Requires A Code Breaker PS2 V7.0 Or Higher!\Enable Code (Must Be On)]
-// patch=1,EE,F0129B51,extended,800813BF
-// patch=1,EE,000FFFFE,extended,00000017
-// patch=1,EE,000FFFFF,extended,00000017
-// patch=1,EE,902EABC9,extended,00832021
-
 [Cheats/Everything Unlocked-Time/Free Race]
 // patch=1,EE,403B5688,extended,00FF0001
 // patch=1,EE,00000000,extended,00000000

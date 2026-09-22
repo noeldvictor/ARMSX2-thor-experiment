@@ -79,10 +79,10 @@
 // patch=1,EE,201B0290,extended,03E00008
 // patch=1,EE,201B0294,extended,00000000
 
-[Cheats/Infinite FIFA 2005 Store Points]
+[Cheats/Infinite FIFA 2005 Store Points / Infinite FIFA 2005 Points]
 // patch=1,EE,1061ED60,extended,0000FFFF
 
-[Cheats/Max FIFA 2005 Store Points]
+[Cheats/Max FIFA 2005 Store Points / Max FIFA 2005 Points]
 // patch=1,EE,2061ED60,extended,05F5E0FF
 
 [Cheats/Max Staff Upgrade Points]
@@ -151,12 +151,6 @@
 [Cheats/P8 Press {L1}+{L2} For More Time]
 // patch=1,EE,D0709242,extended,0000FAFF
 // patch=1,EE,106559C0,extended,00000000
-
-[Cheats/Infinite FIFA 2005 Points]
-// patch=1,EE,1061ED60,extended,0000FFFF
-
-[Cheats/Max FIFA 2005 Points]
-// patch=1,EE,2061ED60,extended,05F5E0FF
 
 [Cheats/Max Total Shots]
 // patch=1,EE,20654EEC,extended,00000063

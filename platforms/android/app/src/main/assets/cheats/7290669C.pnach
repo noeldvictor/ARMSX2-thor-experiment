@@ -44,7 +44,7 @@
 [Cheats/Max Score P1]
 // patch=1,EE,219A6698,extended,05F5E0FF
 
-[Cheats/Infinite Life P1]
+[Cheats/Infinite Life P1 / Infinite Life P2]
 // patch=1,EE,219A669C,extended,00000009
 
 [Cheats/Handgun]
@@ -78,9 +78,6 @@
 
 [Cheats/Max Score P2]
 // patch=1,EE,219A66EC,extended,05F5E0FF
-
-[Cheats/Infinite Life P2]
-// patch=1,EE,219A669C,extended,00000009
 
 [Cheats/Infinite Grenades P2]
 // patch=1,EE,219A6840,extended,000003E7

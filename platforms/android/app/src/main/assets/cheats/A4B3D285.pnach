@@ -2,9 +2,6 @@
 // Source gametitle: Sims, The [SLUS-20573] [A4B3D285]
 // Imported default-off for NetherSX2 Cheat Helper OSD toggles.
 
-[Cheats/Enable COde (Must Be On)]
-// patch=1,EE,901F44DC,extended,0C0B1CBE
-
 [Cheats/Disable Censor Bars (Parental Advisory-17+)]
 // patch=1,EE,201C6650,extended,03E00008
 // patch=1,EE,201C6654,extended,00000000

@@ -202,7 +202,7 @@
 [Cheats/Giga Crash]
 // patch=1,EE,104EC756,extended,00000064
 
-[Cheats/Z-Saber]
+[Cheats/Z-Saber / Zankourin]
 // patch=1,EE,104ED182,extended,00000064
 
 [Cheats/Bakuenjin]
@@ -225,9 +225,6 @@
 
 [Cheats/Hieijin]
 // patch=1,EE,104ED190,extended,00000064
-
-[Cheats/Zankourin]
-// patch=1,EE,104ED182,extended,00000064
 
 [Cheats/Infinite Hover Ability]
 // patch=1,EE,10E43BE4,extended,000001FF

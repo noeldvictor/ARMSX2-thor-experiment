@@ -115,18 +115,6 @@
 [Cheats/Buying Items From Shop Doesnt Decrease Gold]
 // patch=1,EE,202432E0,extended,00000000
 
-[Cheats/Quick Exp Gain]
-// patch=1,EE,1044D290,extended,0000FFFF
-
-[Cheats/Max Exp]
-// patch=1,EE,2044D290,extended,05F5E0FF
-
-[Cheats/Infinite Gold]
-// patch=1,EE,1044D474,extended,0000FFFF
-
-[Cheats/Max Gold]
-// patch=1,EE,20444D74,extended,05F5E0FF
-
 [Cheats/Unlock All Raphael Weapons]
 // patch=1,EE,203FE778,extended,02020202
 // patch=1,EE,203FE77C,extended,02020202

@@ -125,13 +125,13 @@ description=
 // patch=1,EE,004AB854,extended,000000FF
 
 
-[Have Spell Codes\Gaisenken-Level 1]
+[Have Spell Codes\Gaisenken-Level 1 / Tekkuken-Level 1]
 author=Code Master
 description=
 // patch=1,EE,005C6FF7,extended,00000001
 
 
-[Have Magic Items Codes\Golden Sphere]
+[Have Magic Items Codes\Golden Sphere / Turtle Key]
 author=Code Master
 description=
 // patch=1,EE,005C7560,extended,00000001
@@ -178,13 +178,13 @@ description=
 // patch=1,EE,2021A38C,extended,00000000
 
 
-[Unlock Special Options Codes\High Scores]
+[Unlock Special Options Codes\High Scores / Stage Select]
 author=Code Master
 description=
 // patch=1,EE,005C645B,extended,00000001
 
 
-[This Game Requires A CodeBreaker PS2 V7.0 Or Higher!\Infinite Defense Gauge]
+[Infinite Defense Gauge]
 author=Code Master
 description=
 // patch=1,EE,2013B430,extended,8C826E14
@@ -197,7 +197,7 @@ description=
 // patch=1,EE,20141D48,extended,E4336E00
 
 
-[This Game Requires A CodeBreaker PS2 V7.0 Or Higher!\Infinite Health Gauge]
+[Infinite Health Gauge]
 author=Code Master
 description=
 // patch=1,EE,20141D40,extended,C4A26E04
@@ -210,7 +210,7 @@ description=
 // patch=1,EE,2024CA44,extended,AC836E08
 
 
-[This Game Requires A CodeBreaker PS2 V7.0 Or Higher!\Infinite Spell Gauge]
+[Infinite Spell Gauge]
 author=Code Master
 description=
 // patch=1,EE,2013B4A4,extended,8CA26E0C
@@ -223,7 +223,7 @@ description=
 // patch=1,EE,2024C9B0,extended,AC836E10
 
 
-[Have Spell Codes\Jinbuken-Level 2]
+[Have Spell Codes\Jinbuken-Level 2 / Tenseiken-Level 3]
 author=Code Master
 description=
 // patch=1,EE,005C6FF1,extended,00000001
@@ -235,13 +235,13 @@ description=
 // patch=1,EE,005C6459,extended,00000001
 
 
-[Have Magic Items Codes\Mantis Key]
+[Have Magic Items Codes\Mantis Key / Scorpion Key]
 author=Code Master
 description=
 // patch=1,EE,005C755D,extended,00000001
 
 
-[This Game Requires A CodeBreaker PS2 V7.0 Or Higher!\Max Defense Gauge]
+[Max Defense Gauge]
 author=Code Master
 description=
 // patch=1,EE,2024C9B0,extended,2403000A
@@ -261,7 +261,7 @@ description=
 // patch=1,EE,200C200C,extended,AC336E04
 
 
-[This Game Requires A CodeBreaker PS2 V7.0 Or Higher!\Max Health Gauge]
+[Max Health Gauge]
 author=Code Master
 description=
 // patch=1,EE,20141D58,extended,3C01007D
@@ -280,12 +280,6 @@ description=
 // patch=1,EE,205C6FE8,extended,000F423F
 
 
-[View Status For Max Level Stats Codes\Max Orbs]
-author=Code Master
-description=
-// patch=1,EE,205C6FE8,extended,000F423F
-
-
 [Max Ryuugatou Level]
 author=MadCatz
 description=
@@ -298,7 +292,7 @@ description=
 // patch=1,EE,200C2010,extended,AC336E0C
 
 
-[This Game Requires A CodeBreaker PS2 V7.0 Or Higher!\Max Spell Gauge]
+[Max Spell Gauge]
 author=Code Master
 description=
 // patch=1,EE,2013B5D0,extended,3C01007D
@@ -323,7 +317,7 @@ description=
 // patch=1,EE,200C201C,extended,A4336E48
 
 
-[Unlock Special Options Codes\Movie Viewer-Gackt Interview]
+[Unlock Special Options Codes\Movie Viewer-Gackt Interview / Movie Viewer-Press Conference]
 author=Code Master
 description=
 // patch=1,EE,005C644B,extended,00000001
@@ -357,12 +351,6 @@ description=
 author=Code Master
 description=
 // patch=1,EE,005C644E,extended,00000001
-
-
-[Unlock Special Options Codes\Movie Viewer-Press Conference]
-author=Code Master
-description=
-// patch=1,EE,005C644B,extended,00000001
 
 
 [Unlock Special Options Codes\Movie Viewer-TGS Trailer]
@@ -403,19 +391,7 @@ description=Only 3 items are shown in the list. If you reach an event, you shoul
 // patch=1,EE,005C755B,extended,00000001
 
 
-[Have Magic Items Codes\Scorpion Key]
-author=Code Master
-description=
-// patch=1,EE,005C755D,extended,00000001
-
-
-[Have Spell Codes\Senranken-Level 1]
-author=Code Master
-description=
-// patch=1,EE,005C6FF4,extended,00000001
-
-
-[Have Spell Codes\Senranken-Level 2]
+[Have Spell Codes\Senranken-Level 1 / Senranken-Level 2]
 author=Code Master
 description=
 // patch=1,EE,005C6FF4,extended,00000001
@@ -447,36 +423,12 @@ description=
 // patch=1,EE,2021A3DC,extended,00000000
 
 
-[Unlock Special Options Codes\Stage Select]
-author=Code Master
-description=
-// patch=1,EE,005C645B,extended,00000001
-
-
-[Have Spell Codes\Tekkuken-Level 1]
-author=Code Master
-description=
-// patch=1,EE,005C6FF7,extended,00000001
-
-
 [View Status For Max Level Stats Codes\Tenreiken Level]
 author=Code Master
 description=
 // patch=1,EE,2021A334,extended,24010BB8
 // patch=1,EE,2021A338,extended,A4416E48
 // patch=1,EE,2021A33C,extended,00000000
-
-
-[Have Spell Codes\Tenseiken-Level 3]
-author=Code Master
-description=
-// patch=1,EE,005C6FF1,extended,00000001
-
-
-[Have Magic Items Codes\Turtle Key]
-author=Code Master
-description=
-// patch=1,EE,005C7560,extended,00000001
 
 
 [Unlock Character Viewer]
@@ -517,4 +469,3 @@ description=
 author=MadCatz
 description=
 // patch=1,EE,005C645A,extended,000000FF
-
