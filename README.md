@@ -51,6 +51,9 @@ Screenshots are from a personal AYN Thor test device.
 - **RAISR-HD**: learned upscaling kernels fit on the HD texture packs, bundled in the APK and on by default, so a game with no pack still gets a sharper, edge-aware 2x on the fly. Not a neural net; a few hundred operations per pixel on the existing worker thread. On held-out pack textures it beats Lanczos by +0.1 to +3.6 dB depending on the art. `tools/raisr_train.py` fits the kernels from any pack.
 - A **Reload textures** button in the pause menu and a matching hotkey re-run every visible texture through the current filter, so switching filters mid-game is instantly visible.
 - An on-device **MCP dev server** (github flavor only, off by default, localhost over `adb forward`) can boot games, read and write settings, save and load states, capture screenshots and read upscaler counters, so the filters can be compared by a script rather than by hand.
+- **Multi-disc games are one card.** Discs are linked by the "[Disc N of M]" tag in the GameDB title (filename patterns as the fallback), never across regions. The card carries an "N DISCS" badge, the other discs are rows in its long-press menu, and the pause menu offers "Insert Disc N" for the running game without a file picker.
+- **No in-app updater.** Upstream's checks ARMSX2/ARMSX2 releases and would replace this fork with an official build; the github flavor ships the same no-op stub as Play. Sideload builds yourself.
+- The Fast Forward (toggle) hotkey defaults to Select + R1; everything else stays unbound until you bind it.
 - On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
 ## Hotkeys
