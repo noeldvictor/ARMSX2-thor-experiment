@@ -69,4 +69,38 @@ namespace GSAlphaBitLogicOp
 
 		return (fba.FBA || color_min.a >= 0x80) ? SetBit : ClearBit;
 	}
+
+	// The DATE draw between a mark and a clear is the other half of the cost. Stencil DATE copies
+	// the test result into the stencil buffer before the draw, reading the target in a pass of its
+	// own - so each strip still breaks the render pass once. That copy stays true across draws as
+	// long as every draw that writes the target's alpha keeps it true, and the flag draws can: they
+	// know which bit they leave behind, so the same pipeline also writes the stencil (REPLACE,
+	// where the depth test passes, exactly where the logic op writes). The Vulkan backend therefore
+	// builds the copy once over the whole target and keeps it for the rest of the render pass;
+	// any other alpha write, any stencil clear and the end of the pass drop it.
+	//
+	// DepthStencilSelector::alpha_bit_stencil is what a flag draw writes into the copy.
+	enum : u8
+	{
+		StencilKeep = 0,
+		StencilWriteZero = 1, ///< VK_STENCIL_OP_REPLACE with reference 0: the DATE test now fails here.
+		StencilWriteOne = 2, ///< VK_STENCIL_OP_REPLACE with reference 1: the DATE test now passes here.
+	};
+
+	// The copy holds 1 where the test passes: alpha bit 7 == DATM.
+	constexpr u8 StencilWriteFor(u8 logic_op, bool datm)
+	{
+		return ((logic_op == SetBit) == datm) ? StencilWriteOne : StencilWriteZero;
+	}
+
+	// Whether a DATE draw leaves every pixel it writes passing, so the copy is as true after it as
+	// before. It only writes where the test passed, so it is enough that the alpha it writes keeps
+	// bit 7 at DATM: no alpha write, or an alpha range (after FBA / fixed coverage alpha) wholly on
+	// the passing side. Okage's shadow draw writes alpha 0 under DATM 0.
+	constexpr bool KeepsDATEResult(bool datm, bool alpha_write, int alpha_min, int alpha_max, bool alpha_forced_one)
+	{
+		if (!alpha_write)
+			return true;
+		return datm ? (alpha_forced_one || alpha_min >= 0x80) : (!alpha_forced_one && alpha_max < 0x80);
+	}
 } // namespace GSAlphaBitLogicOp

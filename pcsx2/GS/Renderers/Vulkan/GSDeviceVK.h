@@ -572,6 +572,20 @@ private:
 
 	VkRenderPass m_tfx_render_pass[2][2][2][3][2][2][3][3] = {}; // [rt][ds][colclip][date][fbl][dsp][rt_op][ds_op]
 
+	// The stencil copy of the DATE result that the alpha-bit flag draws keep current (GSAlphaBitLogicOp.h).
+	// Lives only inside the render pass that built it: the TFX passes do not store stencil, so
+	// EndRenderPass drops it, as does any draw in the pass that writes alpha without updating it.
+	struct AlphaBitStencil
+	{
+		GSTextureVK* rt = nullptr;
+		GSTextureVK* ds = nullptr;
+		GSVector4i area = GSVector4i::zero(); ///< Where the copy was taken; outside it the stencil is stale.
+		SetDATM datm = SetDATM::DATM0;
+		bool valid = false;
+		bool flag_draw_in_pass = false; ///< A flag draw ran in the current pass: the pattern is in use.
+	};
+	AlphaBitStencil m_alpha_bit_stencil;
+
 	VkDescriptorSetLayout m_cas_ds_layout = VK_NULL_HANDLE;
 	VkPipelineLayout m_cas_pipeline_layout = VK_NULL_HANDLE;
 	std::array<VkPipeline, NUM_CAS_PIPELINES> m_cas_pipelines = {};
@@ -688,7 +702,9 @@ public:
 	/// Returns true if Vulkan is suitable as a default for the devices in the system.
 	static bool IsSuitableDefaultRenderer();
 
-	__fi VkRenderPass GetTFXRenderPass(bool rt, bool ds, bool colclip, bool stencil, bool fbl, bool dsp,
+	/// stencil: 0 not used, 1 loaded (stencil DATE), 2 loaded and stored - the pass carries the stencil
+	/// copy of the DATE result (GSAlphaBitLogicOp.h), which has to survive a restart of the pass.
+	__fi VkRenderPass GetTFXRenderPass(bool rt, bool ds, bool colclip, u32 stencil, bool fbl, bool dsp,
 		VkAttachmentLoadOp rt_op, VkAttachmentLoadOp ds_op) const
 	{
 		return m_tfx_render_pass[rt][ds][colclip][stencil][fbl][dsp][rt_op][ds_op];

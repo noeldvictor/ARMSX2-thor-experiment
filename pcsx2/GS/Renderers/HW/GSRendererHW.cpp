@@ -6627,6 +6627,16 @@ void GSRendererHW::EmulateDATESelectMethod(DATEOptions& date_options, GSTextureC
 			GL_PERF("DATE: Fast with alpha %d-%d", GetAlphaMinMax().min, GetAlphaMinMax().max);
 			date_options.stencil_one = true;
 		}
+		else if (features.alpha_bit_logic_op && features.stencil_buffer && !IsCoverageAlpha() &&
+				 GSAlphaBitLogicOp::KeepsDATEResult(m_cached_ctx.TEST.DATM, true, GetAlphaMinMax().min,
+					 GetAlphaMinMax().max, false))
+		{
+			// The alpha written keeps every passing pixel passing, so the test taken before the draw
+			// is exact: plain stencil DATE, which the Vulkan backend can carry across draws
+			// (GSAlphaBitLogicOp.h) where primitive-ID tracking needs a pass break per draw.
+			// FBA and fixed coverage alpha were taken by the branch above.
+			GL_PERF("DATE: Exact stencil with alpha %d-%d", GetAlphaMinMax().min, GetAlphaMinMax().max);
+		}
 		else if (features.texture_barrier && ((m_vt.m_primclass == GS_SPRITE_CLASS && ComputeDrawlistGetSize(rt->m_scale) < 10) || (m_index->tail < 30)))
 		{
 			// texture barrier will split the draw call into n draw call. It is very efficient for
@@ -10744,6 +10754,17 @@ __ri void GSRendererHW::DrawPrims(GSTextureCache::Target* rt, GSTextureCache::Ta
 	{
 		GL_INS("HW: Aborting draw %s due to alpha test config.", s_n);
 		return;
+	}
+
+	// Whether a stencil copy of the DATE result survives this draw (GSAlphaBitLogicOp.h). After the
+	// second-pass setup, which may write alpha again.
+	if (m_conf.destination_alpha == GSHWDrawConfig::DestinationAlphaMode::Stencil &&
+		g_gs_device->Features().alpha_bit_logic_op)
+	{
+		m_conf.date_result_kept = !m_conf.alpha_second_pass.enable && !m_conf.blend_multi_pass.enable &&
+			(!IsCoverageAlpha() || IsCoverageAlphaFixedOne()) && // per-pixel coverage is not in the alpha range
+			GSAlphaBitLogicOp::KeepsDATEResult(m_cached_ctx.TEST.DATM, m_conf.colormask.wa, GetAlphaMinMax().min,
+				GetAlphaMinMax().max, m_context->FBA.FBA || IsCoverageAlphaFixedOne());
 	}
 
 	// rs

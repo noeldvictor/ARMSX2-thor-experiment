@@ -5525,6 +5525,10 @@ void GSDeviceVK::OMSetRenderTargets(
 
 			if (num_ca > 0)
 			{
+				// A colour clear rewrites alpha under the stencil copy of the DATE result.
+				if (cas[0].aspectMask == VK_IMAGE_ASPECT_COLOR_BIT)
+					m_alpha_bit_stencil.valid = false;
+
 				const GSVector2i size = vkRt ? vkRt->GetSize() : vkDs->GetSize();
 				const VkClearRect cr = {{{0, 0}, {static_cast<u32>(size.x), static_cast<u32>(size.y)}}, 0u, 1u};
 				vkCmdClearAttachments(GetCurrentCommandBuffer(), num_ca, cas.data(), 1, &cr);
@@ -6003,7 +6007,7 @@ bool GSDeviceVK::CreateRenderPasses()
 		{
 			for (u32 colclip = 0; colclip < 2; colclip++)
 			{
-				for (u32 stencil = 0; stencil < 2; stencil++)
+				for (u32 stencil = 0; stencil < 3; stencil++)
 				{
 					for (u32 fbl = 0; fbl < 2; fbl++)
 					{
@@ -6019,6 +6023,21 @@ bool GSDeviceVK::CreateRenderPasses()
 									const VkAttachmentLoadOp opc = (!stencil || !m_features.stencil_buffer) ?
 									                                   VK_ATTACHMENT_LOAD_OP_DONT_CARE :
 									                                   VK_ATTACHMENT_LOAD_OP_LOAD;
+									if (stencil == 2)
+									{
+										// Carries the stencil copy of the DATE result, so it stores stencil.
+										if (!m_features.stencil_buffer || ds == 0)
+											continue;
+										VkRenderPass& dest = m_tfx_render_pass[rt][ds][colclip][stencil][fbl][dsp][opa][opb];
+										dest = GetRenderPass(rp_rt_format, rp_depth_format,
+											(rt != 0) ? static_cast<VkAttachmentLoadOp>(opa) : VK_ATTACHMENT_LOAD_OP_DONT_CARE,
+											(rt != 0) ? VK_ATTACHMENT_STORE_OP_STORE : VK_ATTACHMENT_STORE_OP_DONT_CARE,
+											static_cast<VkAttachmentLoadOp>(opb), VK_ATTACHMENT_STORE_OP_STORE,
+											VK_ATTACHMENT_LOAD_OP_LOAD, VK_ATTACHMENT_STORE_OP_STORE, (fbl != 0), (dsp != 0));
+										if (dest == VK_NULL_HANDLE)
+											return false;
+										continue;
+									}
 									GET(m_tfx_render_pass[rt][ds][colclip][stencil][fbl][dsp][opa][opb], rp_rt_format,
 										rp_depth_format, (fbl != 0), (dsp != 0), static_cast<VkAttachmentLoadOp>(opa),
 										static_cast<VkAttachmentLoadOp>(opb), static_cast<VkAttachmentLoadOp>(opc));
@@ -7389,7 +7408,7 @@ VkPipeline GSDeviceVK::CreateTFXPipeline(const PipelineSelector& p)
 	else
 	{
 		gpb.SetRenderPass(
-			GetTFXRenderPass(p.rt, p.ds, p.ps.colclip_hw, p.dss.date,
+			GetTFXRenderPass(p.rt, p.ds, p.ps.colclip_hw, p.dss.date || p.dss.alpha_bit_stencil,
 				p.IsRTFeedbackLoop(), p.IsTestingAndSamplingDepth(),
 				p.rt ? VK_ATTACHMENT_LOAD_OP_LOAD : VK_ATTACHMENT_LOAD_OP_DONT_CARE,
 				p.ds ? VK_ATTACHMENT_LOAD_OP_LOAD : VK_ATTACHMENT_LOAD_OP_DONT_CARE),
@@ -7448,6 +7467,14 @@ VkPipeline GSDeviceVK::CreateTFXPipeline(const PipelineSelector& p)
 	{
 		const VkStencilOpState sos{VK_STENCIL_OP_KEEP, p.dss.date_one ? VK_STENCIL_OP_ZERO : VK_STENCIL_OP_KEEP,
 			VK_STENCIL_OP_KEEP, VK_COMPARE_OP_EQUAL, 1u, 1u, 1u};
+		gpb.SetStencilState(true, sos, sos);
+	}
+	else if (p.dss.alpha_bit_stencil != GSAlphaBitLogicOp::StencilKeep)
+	{
+		// The alpha-bit flag draw's update of the stencil copy of the DATE result.
+		const u32 ref = (p.dss.alpha_bit_stencil == GSAlphaBitLogicOp::StencilWriteOne) ? 1u : 0u;
+		const VkStencilOpState sos{VK_STENCIL_OP_KEEP, VK_STENCIL_OP_REPLACE, VK_STENCIL_OP_KEEP,
+			VK_COMPARE_OP_ALWAYS, 0u, 1u, ref};
 		gpb.SetStencilState(true, sos, sos);
 	}
 
@@ -7589,6 +7616,7 @@ void GSDeviceVK::InitializeState()
 {
 	m_current_framebuffer = VK_NULL_HANDLE;
 	m_current_render_pass = VK_NULL_HANDLE;
+	m_alpha_bit_stencil = {};
 
 	for (u32 i = 0; i < NUM_TFX_TEXTURES; i++)
 		m_tfx_textures[i] = m_null_texture.get();
@@ -7674,6 +7702,7 @@ void GSDeviceVK::ExecuteCommandBufferAndRestartRenderPass(bool wait_for_completi
 	GSTexture* const current_rt = m_current_render_target;
 	GSTexture* const current_ds = m_current_depth_target;
 	const FeedbackLoopFlag current_feedback_loop = m_current_framebuffer_feedback_loop;
+	const AlphaBitStencil alpha_bit_stencil = m_alpha_bit_stencil;
 
 	EndRenderPass();
 	ExecuteCommandBuffer(GetWaitType(wait_for_completion, GSConfig.HWSpinCPUForReadbacks));
@@ -7685,6 +7714,9 @@ void GSDeviceVK::ExecuteCommandBufferAndRestartRenderPass(bool wait_for_completi
 
 		// restart render pass
 		BeginRenderPass(GetRenderPassForRestarting(render_pass), render_pass_area);
+
+		// The copy is only ever taken in a pass that stores stencil, and the restart loads it back.
+		m_alpha_bit_stencil = alpha_bit_stencil;
 	}
 
 	// Push constants are command-buffer state. Utility draws often upload them before reserving their
@@ -8078,6 +8110,11 @@ void GSDeviceVK::EndRenderPass()
 
 	m_current_render_pass = VK_NULL_HANDLE;
 	g_perfmon.Put(GSPerfMon::RenderPasses, 1);
+
+	// The stencil copy of the DATE result lives in one pass: whatever runs between passes may change
+	// the target's alpha or the stencil. ExecuteCommandBufferAndRestartRenderPass carries it over.
+	m_alpha_bit_stencil.valid = false;
+	m_alpha_bit_stencil.flag_draw_in_pass = false;
 	m_render_passes_since_submit++;
 
 	vkCmdEndRenderPass(GetCurrentCommandBuffer());
@@ -8670,6 +8707,17 @@ void GSDeviceVK::DoRenderHW(GSHWDrawConfig& config)
 		}
 	}
 
+	// A stencil DATE draw that keeps its result may use, or build, the stencil copy of the DATE
+	// result that the alpha-bit flag draws keep current (GSAlphaBitLogicOp.h). Its setup moves below
+	// OMSetRenderTargets, where it is known whether the copy is still alive in the open render pass.
+	// Nothing between here and there may end the pass for it: no colour clip, no target read.
+	const bool alpha_bit_stencil_candidate =
+		config.destination_alpha == GSHWDrawConfig::DestinationAlphaMode::Stencil && config.date_result_kept &&
+		m_features.alpha_bit_logic_op && m_features.stencil_buffer && draw_rt && draw_ds && !colclip_rt &&
+		!pipe.ps.colclip_hw && !config.IsFeedbackLoopRT(config.ps) && !config.IsFeedbackLoopDepth(config.ps) &&
+		!config.require_one_barrier && !config.require_full_barrier &&
+		(config.datm == SetDATM::DATM0 || config.datm == SetDATM::DATM1);
+
 	// Destination Alpha Setup
 	const bool need_barrier = config.require_one_barrier || (config.require_full_barrier && m_features.texture_barrier);
 	switch (config.destination_alpha)
@@ -8690,7 +8738,8 @@ void GSDeviceVK::DoRenderHW(GSHWDrawConfig& config)
 		break;
 
 		case GSHWDrawConfig::DestinationAlphaMode::Stencil:
-			SetupDATE(draw_rt, config.ds, config.datm, config.drawarea);
+			if (!alpha_bit_stencil_candidate)
+				SetupDATE(draw_rt, config.ds, config.datm, config.drawarea);
 			break;
 	}
 
@@ -8923,6 +8972,33 @@ void GSDeviceVK::DoRenderHW(GSHWDrawConfig& config)
 
 	OMSetRenderTargets(draw_rt, draw_ds, config.scissor, static_cast<FeedbackLoopFlag>(pipe.feedback_loop_flags), rtsize);
 
+	// The stencil copy of the DATE result (GSAlphaBitLogicOp.h). kept: this draw leaves it valid.
+	bool alpha_bit_stencil_kept = false;
+	bool alpha_bit_stencil_built = false;
+	GSVector4i alpha_bit_stencil_area;
+	if (alpha_bit_stencil_candidate)
+	{
+		const AlphaBitStencil& abs = m_alpha_bit_stencil;
+		if (abs.valid && abs.rt == draw_rt && abs.ds == draw_ds && abs.datm == config.datm &&
+			abs.area.rintersect(config.drawarea).eq(config.drawarea))
+		{
+			GL_INS("VK: DATE from the kept stencil copy");
+			alpha_bit_stencil_kept = true;
+		}
+		else
+		{
+			// A flag draw earlier in this pass means the mark / DATE / clear pattern is running: take
+			// the copy over the whole target once, so the following DATE draws need no setup. Asked
+			// before SetupDATE, which ends the pass. SetupDATE maps the target through the depth
+			// buffer's size, so only where the two match.
+			const GSVector2i ds_size = draw_ds->GetSize();
+			alpha_bit_stencil_built = abs.flag_draw_in_pass && ds_size.x == rtsize.x && ds_size.y == rtsize.y;
+			alpha_bit_stencil_area = alpha_bit_stencil_built ? GSVector4i::loadh(rtsize) : config.drawarea;
+			SetupDATE(draw_rt, draw_ds, config.datm, alpha_bit_stencil_area);
+			OMSetRenderTargets(draw_rt, draw_ds, config.scissor, static_cast<FeedbackLoopFlag>(pipe.feedback_loop_flags), rtsize);
+		}
+	}
+
 	// Begin render pass if new target or out of the area.
 	if (!InRenderPass())
 	{
@@ -8935,8 +9011,9 @@ void GSDeviceVK::DoRenderHW(GSHWDrawConfig& config)
 			rt_op = VK_ATTACHMENT_LOAD_OP_LOAD;
 		if (pipe.IsDepthFeedbackLoop() && ds_op == VK_ATTACHMENT_LOAD_OP_DONT_CARE)
 			ds_op = VK_ATTACHMENT_LOAD_OP_LOAD;
-		const VkRenderPass rp = GetTFXRenderPass(pipe.rt, pipe.ds, pipe.ps.colclip_hw,
-			config.destination_alpha == GSHWDrawConfig::DestinationAlphaMode::Stencil, pipe.IsRTFeedbackLoop(),
+		const u32 stencil = alpha_bit_stencil_built ? 2 :
+			(config.destination_alpha == GSHWDrawConfig::DestinationAlphaMode::Stencil) ? 1 : 0;
+		const VkRenderPass rp = GetTFXRenderPass(pipe.rt, pipe.ds, pipe.ps.colclip_hw, stencil, pipe.IsRTFeedbackLoop(),
 			pipe.IsTestingAndSamplingDepth(), rt_op, ds_op);
 		const bool is_clearing_rt = (rt_op == VK_ATTACHMENT_LOAD_OP_CLEAR || ds_op == VK_ATTACHMENT_LOAD_OP_CLEAR);
 
@@ -8969,6 +9046,31 @@ void GSDeviceVK::DoRenderHW(GSHWDrawConfig& config)
 		else
 		{
 			BeginRenderPass(rp, render_area);
+		}
+	}
+
+	if (alpha_bit_stencil_built)
+	{
+		GL_INS("VK: stencil copy of the DATE result taken for {%d,%d} %dx%d", alpha_bit_stencil_area.left,
+			alpha_bit_stencil_area.top, alpha_bit_stencil_area.width(), alpha_bit_stencil_area.height());
+		m_alpha_bit_stencil.rt = draw_rt;
+		m_alpha_bit_stencil.ds = draw_ds;
+		m_alpha_bit_stencil.area = alpha_bit_stencil_area;
+		m_alpha_bit_stencil.datm = config.datm;
+		m_alpha_bit_stencil.valid = true;
+		alpha_bit_stencil_kept = true;
+	}
+	if (pipe.cms.logic_op != GSAlphaBitLogicOp::None)
+	{
+		// A flag draw: the pipeline also writes the bit it leaves behind into the copy, where the
+		// depth test passes, which is exactly where the logic op writes.
+		AlphaBitStencil& abs = m_alpha_bit_stencil;
+		abs.flag_draw_in_pass = true;
+		if (abs.valid && abs.rt == draw_rt && abs.ds == draw_ds)
+		{
+			pipe.dss.alpha_bit_stencil =
+				GSAlphaBitLogicOp::StencilWriteFor(pipe.cms.logic_op, abs.datm == SetDATM::DATM1);
+			alpha_bit_stencil_kept = true;
 		}
 	}
 
@@ -9043,6 +9145,14 @@ void GSDeviceVK::DoRenderHW(GSHWDrawConfig& config)
 			SendHWDraw(config, pipe.IsRTFeedbackLoop() ? draw_rt : nullptr, pipe.IsDepthFeedbackLoop() ? draw_ds : nullptr,
 				config.alpha_second_pass.require_one_barrier, config.alpha_second_pass.require_full_barrier);
 		}
+	}
+
+	// Any other alpha write, or a stencil write of StencilOne DATE, leaves the copy stale.
+	if (m_alpha_bit_stencil.valid && !alpha_bit_stencil_kept &&
+		(config.colormask.wa || (config.alpha_second_pass.enable && config.alpha_second_pass.colormask.wa) ||
+			config.depth.date_one))
+	{
+		m_alpha_bit_stencil.valid = false;
 	}
 
 	if (draw_rt_clone)
