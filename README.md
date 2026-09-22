@@ -54,11 +54,12 @@ Screenshots are from a personal AYN Thor test device.
 - **Multi-disc games are one card.** Discs are linked by the "[Disc N of M]" tag in the GameDB title (filename patterns as the fallback), never across regions. The card carries an "N DISCS" badge, the other discs are rows in its long-press menu, and the pause menu offers "Insert Disc N" for the running game without a file picker.
 - **No in-app updater.** Upstream's checks ARMSX2/ARMSX2 releases and would replace this fork with an official build; the github flavor ships the same no-op stub as Play. Sideload builds yourself.
 - The Fast Forward (toggle) hotkey defaults to Select + R1; everything else stays unbound until you bind it.
+- **Per-game speed fixes in the fork's GameDB, on by default.** Okage: Shadow King drops auto-flush and skips its depth-of-field pass: 144 -> 5 render passes a frame outdoors, which is what made it stutter on a tiled mobile GPU. Details in [docs/games/okage.md](docs/games/okage.md).
 - On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
 ## Hotkeys
 
-**On the Thor (ARMSX2).** System hotkeys are unbound by default. Bind them in Settings ->
+**On the Thor (ARMSX2).** Fast Forward (toggle) defaults to **Select + R1** (hold Select, press R1); it needs a build from 2026-09-22 or later, and a binding you already set or cleared in the hotkey tab wins over the default (Reset to defaults brings it back). Every other system hotkey is unbound by default. Bind them in Settings ->
 Controller -> System hotkeys, as a single button or a two-button combo (hold the first,
 press the second). The actions: Menu / Pause, Quick Save State, Quick Load State, Cycle
 Save Slot, Screenshot, Fast Forward (hold), Fast Forward (toggle), Slow Down (toggle),
