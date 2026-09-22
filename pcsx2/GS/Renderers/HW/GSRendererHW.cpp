@@ -7690,6 +7690,17 @@ void GSRendererHW::EmulateBlending(int rt_alpha_min, int rt_alpha_max, DATEOptio
 	const bool alpha_c1_high_max_one = (m_conf.ps.blend_c == 1 && rt_alpha_max > 128);
 	const bool alpha_c1_eq_less_max_one = (m_conf.ps.blend_c == 1 && rt_alpha_max <= 128);
 	bool alpha_c1_high_no_rta_correct = m_conf.ps.blend_c == 1 && !(new_rt_alpha_scale || can_scale_rt_alpha);
+	// A stencil DATE draw with DATM 0, on a device whose backend doubles the destination alpha under
+	// the stencil before the blend (GSAlphaBitLogicOp.h), reads Ad double-scaled the way an
+	// RTA-corrected target would, overlapping triangles included. So it needs neither the
+	// no-overlap multi-pass forms below (Cd*(1 - Ad) as halve-subtract-double) nor a software
+	// blend's frame read: one hardware blend is right. Okage's shadow strips took both roads before,
+	// by overlap, and neither kept the stencil copy alive.
+	const bool ad_doubled_under_date = m_conf.ps.blend_c == 1 && !new_rt_alpha_scale &&
+		features.alpha_bit_logic_op && features.stencil_buffer && date_options.enabled && !date_options.barrier &&
+		!date_options.primid && !date_options.stencil_one && !m_cached_ctx.TEST.DATM &&
+		m_conf.ps.dst_fmt == GSLocalMemory::PSM_FMT_32;
+	alpha_c1_high_no_rta_correct &= !ad_doubled_under_date;
 	const bool alpha_c2_eq_zero = (m_conf.ps.blend_c == 2 && AFIX == 0u);
 	const bool alpha_c2_eq_one = (m_conf.ps.blend_c == 2 && AFIX == 128u);
 	const bool alpha_c2_eq_less_one = (m_conf.ps.blend_c == 2 && AFIX <= 128u);
@@ -7876,7 +7887,7 @@ void GSRendererHW::EmulateBlending(int rt_alpha_min, int rt_alpha_max, DATEOptio
 		// Blending with alpha > 1 will be wrong, except BLEND_HW2.
 		|| (!(blend_flag & BLEND_HW2) && !blend_multipass_group && (alpha_c2_high_one || alpha_c0_high_max_one) && no_prim_overlap)
 		// Ad blends are completely wrong without sw blend (Ad is 0.5 not 1 for 128). We can spare a barrier for it.
-		|| (blend_ad && !blend_multipass_group && no_prim_overlap && !new_rt_alpha_scale));
+		|| (blend_ad && !blend_multipass_group && no_prim_overlap && !new_rt_alpha_scale && !ad_doubled_under_date));
 
 	// NOTE: an old Mali "clamp blending accuracy up to Full" band-aid used to live here. The real
 	// cause of Mali needing Full/Maximum by hand was missing hardware dual-source blending, now
