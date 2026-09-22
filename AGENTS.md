@@ -36,6 +36,7 @@
   - `AGENTS.md` - keep this fork's file. Upstream ships its own PCSX2 desktop-oriented `AGENTS.md`; discard that side.
   - `README.md` - keep the fork identity text. Upstream's "Current status" feature checklist does not belong here.
   - `platforms/android/app/src/main/java/com/armsx2/ui/patches/PatchManagerViewModel.kt` - take upstream's `refresh()` body (serial/CRC scoping, no `syncAllEnableLists`) and keep the fork's leading `CheatPresenceIndex.invalidate()` call.
+  - `platforms/android/app/src/github/java/com/armsx2/update/UpdaterEntry.kt` - keep the fork's no-op stub. Upstream's updater follows ARMSX2/ARMSX2 releases and would replace the fork with an official build. Also keep `IN_APP_UPDATER = false` for the github flavor in `build.gradle.kts` and no `REQUEST_INSTALL_PACKAGES` / update FileProvider in `src/github/AndroidManifest.xml`. After a refresh, grep for `ARMSX2/ARMSX2/releases` - only `News.kt` (release notes, text only) may reference it.
 - After resolving, run `.\gradlew.bat :app:compileGithubDebugKotlin` from `platforms/android` before pushing.
 - Also run `.\gradlew.bat :app:testGithubDebugUnitTest --tests com.armsx2.SettingsSizeTest`. `Settings`' constructor must stay at 245 parameters or fewer or the APK crashes at launch (dex range-invoke limit; see "Settings constructor limit (dex)" under Current Thinking below). Never add fork fields to that constructor; use a side store like `TextureUpscaleSettings`.
 

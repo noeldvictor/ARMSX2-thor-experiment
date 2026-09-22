@@ -248,10 +248,10 @@ android {
         create("github") {
             dimension = "store"
             buildConfigField("boolean", "STORAGE_ALL_FILES", "true")
-            // In-app GitHub-release updater. Github flavor only — Play forbids self-updating,
-            // so the real updater + REQUEST_INSTALL_PACKAGES live in src/github and this stays
-            // false for play (which uses the src/play no-op stub).
-            buildConfigField("boolean", "IN_APP_UPDATER", "true")
+            // Upstream's in-app updater is OFF in this fork: it follows ARMSX2/ARMSX2 releases and
+            // would replace the fork with an official build. src/github ships the same no-op stub
+            // as play; the fork has no release feed of its own (README: no APK download section).
+            buildConfigField("boolean", "IN_APP_UPDATER", "false")
             // LSFG frame generation. Github flavor only, for two independent reasons: the
             // upstream project's consumer app is licensed "No Play Store", and the feature
             // only works when the user supplies their own Lossless.dll, which is not a shape

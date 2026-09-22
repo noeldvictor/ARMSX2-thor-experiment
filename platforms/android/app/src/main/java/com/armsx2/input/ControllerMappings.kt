@@ -936,7 +936,14 @@ object ControllerMappings {
     // Physical buttons bound to app actions, NOT forwarded to the PS2. Handled in
     // MainActivityRuntime.dispatchKeyEvent (so they can catch KEYCODE_BACK / back-paddle keys the
     // back dispatcher would otherwise swallow). KEYCODE_UNKNOWN = unbound.
-    enum class SysHotkey(val prefKey: String, val label: String) {
+    // [defaultKey]/[defaultMod] apply when nothing is stored for the hotkey (fresh install, or
+    // after "Reset to defaults"); an explicit Clear stores KEYCODE_UNKNOWN and wins over them.
+    enum class SysHotkey(
+        val prefKey: String,
+        val label: String,
+        val defaultKey: Int = KeyEvent.KEYCODE_UNKNOWN,
+        val defaultMod: Int = KeyEvent.KEYCODE_UNKNOWN,
+    ) {
         MENU("pad.menu.keycode", "Menu / Pause"),
         SAVE_STATE("pad.savestate.keycode", "Quick Save State"),
         LOAD_STATE("pad.loadstate.keycode", "Quick Load State"),
@@ -949,7 +956,12 @@ object ControllerMappings {
         // the same path as the on-screen OSD button, so the two stay in sync.
         TOGGLE_OSD("pad.toggleosd.keycode", "Cycle Perf Stats (OSD)"),
         FAST_FORWARD("pad.fastforward.keycode", "Fast Forward (hold)"),
-        FAST_FORWARD_TOGGLE("pad.fastforwardtoggle.keycode", "Fast Forward (toggle)"),
+        // Default Select + R1: the Thor has physical buttons, so a combo out of the box beats
+        // digging through the hotkey tab to find out why nothing fast-forwards.
+        FAST_FORWARD_TOGGLE(
+            "pad.fastforwardtoggle.keycode", "Fast Forward (toggle)",
+            defaultKey = KeyEvent.KEYCODE_BUTTON_R1, defaultMod = KeyEvent.KEYCODE_BUTTON_SELECT,
+        ),
         // Slow motion toggle (50% speed, native LimiterModeType::Slomo). DISABLED
         // while RetroAchievements hardcore is active — slowdown is a banned
         // advantage in hardcore, matching desktop PCSX2 (the handler shows an OSD
@@ -1145,11 +1157,11 @@ object ControllerMappings {
     }
 
     fun hotkeyCode(h: SysHotkey): Int =
-        MainActivityRuntime.prefs.getInt(h.prefKey, KeyEvent.KEYCODE_UNKNOWN)
+        MainActivityRuntime.prefs.getInt(h.prefKey, h.defaultKey)
 
     /** Modifier button that must be held with [hotkeyCode], or UNKNOWN for none. */
     fun hotkeyModCode(h: SysHotkey): Int =
-        MainActivityRuntime.prefs.getInt(h.prefKey + MOD_SUFFIX, KeyEvent.KEYCODE_UNKNOWN)
+        MainActivityRuntime.prefs.getInt(h.prefKey + MOD_SUFFIX, h.defaultMod)
 
     /** Bind a single-button hotkey (clears any modifier). */
     fun bindHotkey(h: SysHotkey, physicalKeyCode: Int) {
@@ -1181,9 +1193,9 @@ object ControllerMappings {
      *  hotkeyBindTick so the Hotkeys tab recomposes. */
     fun clearAllHotkeys() {
         MainActivityRuntime.prefs.edit {
+            // remove(), not putInt(UNKNOWN): a reset must bring the built-in defaults back.
             SysHotkey.values().forEach {
-                putInt(it.prefKey, KeyEvent.KEYCODE_UNKNOWN)
-                    .putInt(it.prefKey + MOD_SUFFIX, KeyEvent.KEYCODE_UNKNOWN)
+                remove(it.prefKey).remove(it.prefKey + MOD_SUFFIX)
             }
         }
         invalidateRuntimeCaches()
