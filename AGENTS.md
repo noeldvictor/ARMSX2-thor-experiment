@@ -218,6 +218,11 @@ aisr-data\`.
   picker.
 ### On-device MCP server
 
+Registered in `.mcp.json` as `armsx2-thor` (HTTP, `127.0.0.1:27183/mcp`), next to the desktop
+`pcsx2` server. It needs `adb forward tcp:27183 tcp:27183` (wireless adb works:
+`adb connect <thor-ip>:<port>`) and the dev server running on the device (App settings
+toggle, or `am start -n com.armsx2/.Main --ez devserver true` against a running game).
+
 **Implemented** (`platforms/android/app/src/github/java/com/armsx2/devtools/`). Full notes:
 [docs/mcp-server.md](docs/mcp-server.md). It exists to make the upscaling work measurable,
 and it paid for itself on day one: it is how the mipmap guard finding above was made.
