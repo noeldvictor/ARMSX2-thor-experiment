@@ -312,7 +312,9 @@ skill (`.claude/skills/ps2-cheat/SKILL.md`) driving the `pcsx2` MCP server
   **The user asked that gamehacking not be hammered**: ~10 s between requests, three
   requests per game, one pass, no retries. Its exports still contain un-decrypted GameShark
   v1 lines (`91F68566`-style addresses); `gamehacking_export.py` drops those sections.
-  Result of the 2026-09-22 sweep is `docs/games-without-cheats.txt`.
+  Result of the 2026-09-22 sweep is `docs/games-without-cheats.txt`
+  (`tools/cheat_finder/write_report.py` merges the two checks); the exported files sit in
+  `F:\Projects\pcsx2-desktop\gamehacking\` until the user installs them on the Thor.
 - The library's serial resolution misses translation patches and undubs; their serials come
   from `GameIndex.yaml` `name-en:` (do not guess: SLUS-20952 is Tak 2, not Shadow Hearts).
 
