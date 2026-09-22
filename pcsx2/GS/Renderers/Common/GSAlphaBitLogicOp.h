@@ -87,6 +87,26 @@ namespace GSAlphaBitLogicOp
 		StencilWriteOne = 2, ///< VK_STENCIL_OP_REPLACE with reference 1: the DATE test now passes here.
 	};
 
+	// The DATE draw's blend. Okage's shadow is (Cs - Cd) * Ad + Cd with black Cs, i.e. Cd * (1 - Ad),
+	// where the PS2 reads Ad on its 0..2 scale (0x80 is one). The mark draws leave the target's alpha
+	// unscaled (they need its raw bit 7), so the blend unit's DST_ALPHA is Ad / 255 and the shadow
+	// comes out at half strength - upstream only gets it right with a software blend, i.e. a frame
+	// read per strip. Without reading: the draw runs twice under the stencil copy. The first pass
+	// writes alpha only, Ad * 1 + Ad (shader alpha forced to one), so the pixels the draw is about
+	// to blend hold their alpha double-scaled - the same representation RTA correction uses - and
+	// moves their stencil from 1 to 2, so an overlapping triangle cannot double it again. The draw
+	// itself then tests stencil 2, blends with the right factor, writes its own alpha, and puts
+	// the stencil back to 1. DATM 0 only: there the passing pixels have bit 7 clear, so the doubled
+	// value still fits in eight bits.
+	//
+	// With DepthStencilSelector::date set, alpha_bit_stencil names those two passes instead of a
+	// flag write.
+	enum : u8
+	{
+		DATEStencilDoubleAlpha = 1, ///< EQUAL 1, INCREMENT: the pass that doubles alpha where the test passes.
+		DATEStencilDoubled = 2, ///< EQUAL 2, DECREMENT: the draw itself, over exactly those pixels.
+	};
+
 	// The copy holds 1 where the test passes: alpha bit 7 == DATM.
 	constexpr u8 StencilWriteFor(u8 logic_op, bool datm)
 	{

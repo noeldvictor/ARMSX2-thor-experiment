@@ -1027,8 +1027,10 @@ struct alignas(16) GSHWDrawConfig
 				u8 date_one : 1;
 
 				// GSAlphaBitLogicOp: a flag draw also writes the stencil copy of the DATE result.
-				// 0 keep, 1 replace with 0, 2 replace with 1. Set by the Vulkan backend on its own
-				// pipeline selector only, never in GSHWDrawConfig::depth.
+				// 0 keep, 1 replace with 0, 2 replace with 1. With `date` set it names the two passes
+				// of a DATE draw whose Ad blend reads the target's alpha doubled (1 doubling, 2 the
+				// draw). Set by the Vulkan backend on its own pipeline selector only, never in
+				// GSHWDrawConfig::depth.
 				u8 alpha_bit_stencil : 2;
 				u8 _free : 1;
 			};
@@ -1330,6 +1332,10 @@ struct alignas(16) GSHWDrawConfig
 	/// Stencil DATE only: the alpha this draw writes keeps every pixel it writes passing the test, so a
 	/// stencil copy of the test result is as true after the draw as before (GSAlphaBitLogicOp.h).
 	bool date_result_kept;
+	/// Stencil DATE with DATM 0 whose hardware blend reads Ad from a target holding its alpha unscaled:
+	/// the backend doubles that alpha under the stencil first, so the blend sees Ad on the PS2's scale
+	/// without a frame read (GSAlphaBitLogicOp.h).
+	bool date_double_dst_alpha;
 	bool line_expand;
 
 	struct AlphaPass

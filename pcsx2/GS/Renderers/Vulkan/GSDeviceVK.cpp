@@ -7463,7 +7463,21 @@ VkPipeline GSDeviceVK::CreateTFXPipeline(const PipelineSelector& p)
 	static const VkCompareOp ztst[] = {
 		VK_COMPARE_OP_NEVER, VK_COMPARE_OP_ALWAYS, VK_COMPARE_OP_GREATER_OR_EQUAL, VK_COMPARE_OP_GREATER};
 	gpb.SetDepthState((p.dss.ztst != ZTST_ALWAYS || p.dss.zwe), p.dss.zwe, ztst[p.dss.ztst]);
-	if (p.dss.date)
+	if (p.dss.date && p.dss.alpha_bit_stencil == GSAlphaBitLogicOp::DATEStencilDoubleAlpha)
+	{
+		// Where the test passes (1), double the alpha and step to 2 so no later triangle doubles it again.
+		const VkStencilOpState sos{VK_STENCIL_OP_KEEP, VK_STENCIL_OP_INCREMENT_AND_CLAMP, VK_STENCIL_OP_KEEP,
+			VK_COMPARE_OP_EQUAL, 3u, 3u, 1u};
+		gpb.SetStencilState(true, sos, sos);
+	}
+	else if (p.dss.date && p.dss.alpha_bit_stencil == GSAlphaBitLogicOp::DATEStencilDoubled)
+	{
+		// The draw over exactly the doubled pixels (2), which then pass the test again (1).
+		const VkStencilOpState sos{VK_STENCIL_OP_KEEP, VK_STENCIL_OP_DECREMENT_AND_CLAMP, VK_STENCIL_OP_KEEP,
+			VK_COMPARE_OP_EQUAL, 3u, 3u, 2u};
+		gpb.SetStencilState(true, sos, sos);
+	}
+	else if (p.dss.date)
 	{
 		const VkStencilOpState sos{VK_STENCIL_OP_KEEP, p.dss.date_one ? VK_STENCIL_OP_ZERO : VK_STENCIL_OP_KEEP,
 			VK_STENCIL_OP_KEEP, VK_COMPARE_OP_EQUAL, 1u, 1u, 1u};
@@ -9103,6 +9117,25 @@ void GSDeviceVK::DoRenderHW(GSHWDrawConfig& config)
 	// VB/IB upload, if we did DATE setup and it's not colclip hw this has already been done
 	if (!date_image || colclip_rt)
 		UploadHWDrawVerticesAndIndices(config);
+
+	// An Ad blend on a target holding its alpha unscaled: double that alpha first, under the stencil,
+	// on exactly the pixels the draw will blend, then draw over those (GSAlphaBitLogicOp.h).
+	if (config.date_double_dst_alpha && config.destination_alpha == GSHWDrawConfig::DestinationAlphaMode::Stencil &&
+		pipe.dss.date && !pipe.dss.date_one && draw_ds && !pipe.ps.colclip_hw && m_features.stencil_buffer)
+	{
+		PipelineSelector doubling = pipe;
+		doubling.ps.fixed_one_a = 1; // with rta_correction, the shader writes alpha 1.0
+		doubling.ps.rta_correction = 1;
+		doubling.cms.key = 0;
+		doubling.cms.wa = 1;
+		// Colour factors (0, 1) keep RGB even where a driver ignores the write mask.
+		doubling.bs = GSHWDrawConfig::BlendState(true, GSDevice::CONST_ZERO, GSDevice::CONST_ONE, GSDevice::OP_ADD,
+			GSDevice::DST_ALPHA, GSDevice::CONST_ONE, false, 0);
+		doubling.dss.alpha_bit_stencil = GSAlphaBitLogicOp::DATEStencilDoubleAlpha;
+		if (BindDrawPipeline(doubling))
+			SendHWDraw(config, nullptr, nullptr, false, false);
+		pipe.dss.alpha_bit_stencil = GSAlphaBitLogicOp::DATEStencilDoubled;
+	}
 
 	// now we can do the actual draw
 	if (BindDrawPipeline(pipe))

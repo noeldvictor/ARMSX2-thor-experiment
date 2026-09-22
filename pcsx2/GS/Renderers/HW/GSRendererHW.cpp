@@ -10765,6 +10765,21 @@ __ri void GSRendererHW::DrawPrims(GSTextureCache::Target* rt, GSTextureCache::Ta
 			(!IsCoverageAlpha() || IsCoverageAlphaFixedOne()) && // per-pixel coverage is not in the alpha range
 			GSAlphaBitLogicOp::KeepsDATEResult(m_cached_ctx.TEST.DATM, m_conf.colormask.wa, GetAlphaMinMax().min,
 				GetAlphaMinMax().max, m_context->FBA.FBA || IsCoverageAlphaFixedOne());
+
+		// And whether its Ad blend needs the target's alpha doubled first (GSAlphaBitLogicOp.h): a
+		// fixed-function blend reading DST_ALPHA from an unscaled target, with no frame read and
+		// nothing else in the shader that depends on the alpha scale, and no depth or alpha test
+		// that could let the doubling pass and the draw cover different pixels. The draw must write
+		// alpha itself, or the doubled value would stay behind.
+		const GSHWDrawConfig::BlendState& blend = m_conf.blend;
+		const auto is_dst_alpha = [](u8 f) { return f == GSDevice::DST_ALPHA || f == GSDevice::INV_DST_ALPHA; };
+		m_conf.date_double_dst_alpha = m_conf.date_result_kept && !m_cached_ctx.TEST.DATM && m_conf.colormask.wa && blend.enable &&
+			(is_dst_alpha(blend.src_factor) || is_dst_alpha(blend.dst_factor)) &&
+			blend.src_factor_alpha == GSDevice::CONST_ONE && blend.dst_factor_alpha == GSDevice::CONST_ZERO &&
+			m_conf.ps.dst_fmt == GSLocalMemory::PSM_FMT_32 && !m_conf.ps.rta_correction && !m_conf.ps.blend_hw &&
+			!m_conf.ps.blend_mix && !m_conf.ps.pabe && !m_conf.ps.colclip && !m_conf.ps.colclip_hw &&
+			!m_conf.ps.IsFeedbackLoopRT() && m_conf.ps.atst == PS_ATST::NONE && !m_conf.depth.zwe &&
+			!m_conf.ps.HasColorROV() && !m_conf.ps.HasDepthROV();
 	}
 
 	// rs
