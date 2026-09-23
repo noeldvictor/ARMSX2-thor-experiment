@@ -116,3 +116,19 @@ search interface designed first.
 2. Record CRC provenance while importing, so unverified entries stay identifiable.
 3. Only then consider the authoring tool, and look at driving it through MCP before
    building an on-device search UI.
+
+## Desktop PCSX2 lab: keys
+
+`tools/pcsx2_mcp/setup.py` writes this ini for the portable desktop PCSX2 used for authoring
+(`F:\Projects\pcsx2-desktop\pcsx2`); the `pcsx2` MCP server presses these by name.
+
+| Key | Action | | Key | PS2 pad |
+| --- | --- | --- | --- | --- |
+| Tab | Turbo (fast forward) toggle | | Arrows | D-pad |
+| F8 | Screenshot to `snaps/` | | W A S D | Left stick |
+| F9 | Single-frame GS dump to `snaps/` (replay it on the Thor with `pcsx2-gsrunner`) | | T F G H | Right stick |
+| F1 / F3 | Save / load state slot | | K L J I | Cross, Circle, Square, Triangle |
+| F2 / Shift+F2 | Next / previous slot | | Enter / Backspace | Start / Select |
+| Space | Pause | | Q E / 1 3 / 2 4 | L1 R1 / L2 R2 / L3 R3 |
+| Esc | Pause menu | | | |
+| Alt+Enter | Fullscreen | | | |
