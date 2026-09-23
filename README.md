@@ -55,6 +55,7 @@ Screenshots are from a personal AYN Thor test device.
 - **No in-app updater.** Upstream's checks ARMSX2/ARMSX2 releases and would replace this fork with an official build; the github flavor ships the same no-op stub as Play. Sideload builds yourself.
 - The Fast Forward (toggle) hotkey defaults to Select + R1; everything else stays unbound until you bind it.
 - **Per-game speed fixes in the fork's GameDB, on by default.** Okage: Shadow King drops auto-flush and skips its depth-of-field pass: 144 -> 5 render passes a frame outdoors, which is what made it stutter on a tiled mobile GPU. Details in [docs/games/okage.md](docs/games/okage.md).
+- **Destination-alpha stencil tricks without frame reads (Vulkan, Thor's Qualcomm driver).** Some games use bit 7 of the frame's alpha as a one-bit stencil: mark, test with DATE, clear. The Thor's driver cannot read the frame in-pass, so every such draw was an end-pass + copy + restart. Now the mark and clear run as GPU logic ops, the test uses a stencil copy those draws keep current inside the render pass, and the test's `Ad` blend gets the target's alpha doubled under the stencil first instead of a software blend. Okage's character shadows went from ~700 render-pass breaks a frame to 9-12, and from a pale smear to the correct Shadow King silhouette (they were wrong on the Thor in every earlier build). In game, 2x fast-forward now holds 119.9 fps (was 45-49 with fast-forward on). Code in `GSAlphaBitLogicOp.h`; each step verified against the software renderer by replaying GS dumps on the Thor.
 - On-screen touch controls default to off, and the top-right pause glyph goes with them. The Thor has physical sticks and buttons, so the overlay was covering the game to duplicate controls already under your thumbs. That corner stays tappable either way.
 
 ## Hotkeys
@@ -74,6 +75,7 @@ also `quick_save`, `quick_load`, `reload_textures`, `texture_dump`).
 | --- | --- | --- | --- | --- |
 | Tab | Turbo (fast forward) toggle | | Arrows | D-pad |
 | F8 | Screenshot to `snaps/` | | W A S D | Left stick |
+| F9 | Single-frame GS dump to `snaps/` (replay it on the Thor with `pcsx2-gsrunner`) | | | |
 | F1 / F3 | Save / load state slot | | T F G H | Right stick |
 | F2 / Shift+F2 | Next / previous slot | | K L J I | Cross, Circle, Square, Triangle |
 | Space | Pause | | Enter / Backspace | Start / Select |
@@ -92,7 +94,7 @@ Notes on what I am poking at. The texture filters are built and running; most of
 - [Games without cheats](docs/games-without-cheats.txt) — the missing list with what exists online for each: the serial-keyed GitHub DB, then gamehacking.org's PCSX2 export (`tools/cheat_finder/`, the `find-ps2-cheats` skill), fetched slowly and cleaned of un-decrypted codes.
 - [RAISR kernel trainer](tools/raisr_train.py) — fits the RAISR-HD kernels from HD packs and reports PSNR/SSIM against Lanczos on held-out textures. Kernels are general, not per game.
 - [Texture pack getter](docs/texture-pack-getter.md) — written before upstream shipped its own catalogue and one-tap installer, which this fork now inherits. Kept for the reasoning; the fork's part is the cover badge.
-- [Game notes](docs/games/) — per-game measurements and fixes; [Okage](docs/games/okage.md) first: why it drops frames (144 render passes a frame from a depth-of-field read-back under auto-flush), what shipped, and the "HD pack in advance" idea.
+- [Game notes](docs/games/) — per-game measurements and fixes; [Okage](docs/games/okage.md) first: why it dropped frames (a depth-of-field read-back under auto-flush on desktop; on the Thor, 350 shadow strips a frame each forcing frame reads), how the renderer now draws the shadows without reads, why the shadow shape was wrong on the Thor, and the "HD pack in advance" idea. No released Okage HD pack exists yet.
 - [On-device MCP server](docs/mcp-server.md) — now built: a localhost control surface over `adb forward`, so comparing twenty upscalers is a loop instead of an afternoon of menu-poking.
 
 ## What This Is Not
