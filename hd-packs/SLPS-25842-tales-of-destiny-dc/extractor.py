@@ -12,7 +12,9 @@ Worked out 2026-09-23 on the English fan-translated disc (v1.6); the translation
 - Decoded files are packs: a u32 count and offsets, or model data (`MGLK`), holding more
   Tales-compressed sub-files at any byte offset; `disc_codecs.find_tales_blobs` finds those.
 - Textures are TIM2 files (`tim2.py`), many written by Namco's own tool with the picture count,
-  header size and width left 0 - the reader is lenient about that. 256-colour CLUTs are stored
+  header size, CLUT size, width - or width and height both - left 0; the reader is lenient about
+  that (both 0: the power-of-two square that fits, which is where the 1024x1024 map atlases come
+  from). 256-colour CLUTs are stored
   CSM1-swizzled. Map textures are 256x256 8-bit; character sprites small 8/4-bit frames.
 
 - Character sprites are `anp3` files (magic `anp3`; u32 at 12 = the CLUT's offset). Their frames
@@ -30,10 +32,9 @@ Worked out 2026-09-23 on the English fan-translated disc (v1.6); the translation
   alpha 0x40/0x7C, then greys up to white fill. The offsets are for the English v1.6 executable
   (the recipe's ISO SHA-1 pins it).
 
-Not covered yet:
-- The title art is uploaded as PSMCT32 data (512x128) and drawn as 512x512 PSMT8 from the same
-  memory, a common PS2 upload trick; turning that into indices needs the GS's swizzle, which the
-  tools do not emulate yet.
+- The title art is two true-colour (PSMCT32) TIM2 pictures, drawn as PSMCT32 (a GS dump's
+  upload/draw timeline settled it; it first looked like 8-bit data uploaded as 32-bit). The title
+  text is a 4-bit picture whose 48-colour CLUT the game uploads 16 wide: 8x2 patches (`tim2.py`).
 """
 
 from __future__ import annotations

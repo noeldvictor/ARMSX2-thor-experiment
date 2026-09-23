@@ -11,7 +11,7 @@ it, and a disc pack fills in everything else.
 | Coverage | Whatever the player reached | Every palette, 24-bit and 32-bit texture on the disc |
 | Files in the pack | One PNG per texture, named by its hash | The whole upscaled disc images + one index file |
 | Works in stock PCSX2 | Yes | No, this fork only |
-| Games | Any | Only games someone has written a recipe for: [hd-packs/](../hd-packs/README.md) |
+| Games | Any | Only games someone has written a recipe for: [the games list](../hd-packs/GAMES.md) |
 
 Both go in the same folder: `<DataRoot>/textures/<SERIAL>/replacements/`.
 

@@ -8,12 +8,12 @@ pack yourself, on your own PC, from your own disc.
 What a disc pack is and how the emulator matches it: [docs/hd-texture-packs.md](../docs/hd-texture-packs.md).
 Disc packs only work in this fork.
 
-## Games with a recipe
+## Games
 
-| Game | Folder | Covers | Not yet | RTX 3060 time | Pack |
-| --- | --- | --- | --- | --- | --- |
-| Okage: Shadow King (NTSC-U) | [SCUS-97129-okage](SCUS-97129-okage/) | World, characters, menus, portraits, fonts, night art, the World Library's books, faces - all 2,800 disc textures | - (the IQ24 font and the one 32-bit texture are not yet seen on screen) | ~16 min | 334 MB zip |
-| Tales of Destiny: Director's Cut (English patch v1.6) - **work in progress** | [SLPS-25842-tales-of-destiny-dc](SLPS-25842-tales-of-destiny-dc/) | Maps, sprites, font, title screen: exact on the two scenes tested (ship 47/47, title 16/17) | The 4x pack is not judged yet; towns, battles and menus not dumped yet | not measured cleanly yet | ~13.6 GB (estimate) |
+**[GAMES.md](GAMES.md)** lists every game with a recipe - status, before/after, pack size, build
+time, coverage - plus the wishlist and the games checked and dropped. Each game's own README has
+the screenshots, the measured build, and notes on how that game stores its textures. Today:
+Okage: Shadow King (finished) and Tales of Destiny: Director's Cut (in progress).
 
 A new game needs someone to work out how that game stores its textures on the disc (see
 [Adding a game](#adding-a-game) below). That work is the slow part, and it is not automatic.
@@ -95,8 +95,9 @@ at the repo root and ask, for example, *"make an HD pack recipe for <game>, my d
 3. **Prove it exact.** Build a pack from the native PNGs (no upscale) and replay a GS dump of
    the game with it and with an *empty* pack (an index with no images). The frames must be
    bit-identical. Then upscale.
-4. **Add `game.json`, a README with measured times, known gaps and before/after shots** (copy
-   Okage's folder), and fill in the reference checksums from your run.
+4. **Add `game.json` and a README from [TEMPLATE.md](TEMPLATE.md)** - before/after shots,
+   measured times, coverage and gaps, format notes - fill in the reference checksums from your
+   run, and add a row to [GAMES.md](GAMES.md).
 
 Supported: palette textures (8 and 4 bit), fonts the game colours at runtime, 24-bit and
 32-bit true-colour textures, and textures the game assembles in VRAM out of disc images (sprite
@@ -110,6 +111,6 @@ a recipe can cover them.
 | --- | --- |
 | `game.json` | Serial, title, extractor file, upscale model + its SHA-256 and licence, scale, the disc ISO's SHA-1, reference index checksum |
 | `extractor.py` | Everything game-specific: where the textures are on the disc and how they are stored |
-| `README.md` | The steps, measured timings, what the pack covers and what it doesn't, before/after shots |
+| `README.md` | From [TEMPLATE.md](TEMPLATE.md): before/after shots, the command and measured timings, coverage and gaps, how the disc stores its textures, checksums |
 | `media/` | Before/after screenshots from the device |
 | `work/` | Created by `make_pack.py` and ignored by git: the ISO, PNGs and the pack |

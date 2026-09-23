@@ -126,8 +126,10 @@ Do one clean `make_pack.py` run into a fresh `--work` folder and put its numbers
 the per-step times from `timings.json` with the PC's CPU/RAM/GPU, sizes of each output, the
 ISO SHA-1, model SHA-256 and index SHA-256 (also in `game.json` `disc.iso_sha1` and
 `reference.index_sha256`). Before/after shots at 3x go in `media/`. List what the pack covers
-and, honestly, what it doesn't. Add the game to the table in `hd-packs/README.md`. Never commit
-textures or packs.
+and, honestly, what it doesn't. The README follows `hd-packs/TEMPLATE.md` (before/after, build
+estimate, coverage and gaps, format notes, checksums). Add the game to `hd-packs/GAMES.md` (status,
+thumbnail, pack size, time, coverage) - and a game checked and dropped goes in its last table,
+with why. Never commit textures or packs.
 
 ## 5. Install and verify on the Thor
 

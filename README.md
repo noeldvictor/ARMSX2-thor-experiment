@@ -98,7 +98,7 @@ The desktop PCSX2 lab's keys are in [docs/cheat-tooling.md](docs/cheat-tooling.m
 ## Docs
 
 - **Performance:** [Okage game notes](docs/games/okage.md) (why it was slow and wrong on the Thor, and what fixed it) · [ARM64 optimization review](docs/arm64-optimization-review.md)
-- **HD packs:** [Recipes and how to add a game](hd-packs/README.md) · [How disc packs work, testing, sharing](docs/hd-texture-packs.md)
+- **HD packs:** [Games with disc HD packs](hd-packs/GAMES.md) · [Recipes and how to add a game](hd-packs/README.md) · [How disc packs work, testing, sharing](docs/hd-texture-packs.md)
 - **Textures:** [Texture upscaling research](docs/texture-upscaling-research.md) · [Neural models](docs/neural-models.md) · [Third-party ports and licences](docs/third-party.md) · [RAISR kernel trainer](tools/raisr_train.py)
 - **Cheats:** [Cheat tooling](docs/cheat-tooling.md) · [Games without cheats](docs/games-without-cheats.txt)
 - **Tooling:** [On-device MCP server](docs/mcp-server.md)
@@ -140,7 +140,8 @@ game stores its textures its own way, so each new game means working out its dis
 writing a small extractor. That is reverse-engineering work. We did it for Okage with
 [Claude Code](https://claude.com/claude-code), and you will probably want an AI agent for it
 too. So far there is **one finished recipe, Okage: Shadow King**, and one in progress, Tales of
-Destiny: Director's Cut. Packs are as big as the game's art: Okage's is 334 MB zipped, Tales of
+Destiny: Director's Cut - **[the games list](hd-packs/GAMES.md)** has both, with screenshots, pack
+sizes and build times. Packs are as big as the game's art: Okage's is 334 MB zipped, Tales of
 Destiny's will be about 14 GB.
 
 ![Status menu portraits and fonts, original vs Okage's disc HD pack](hd-packs/SCUS-97129-okage/media/menu-fonts.jpg)

@@ -109,8 +109,9 @@ user-facing version.
      line). A guessed grey ramp upscales into the wrong indices.
   5. Finish the recipe: one clean `make_pack.py` run into a fresh `--work`, then per-step times
      with the PC's CPU/GPU, output sizes, ISO SHA-1, model SHA-256 and index SHA-256 in the
-     README and `game.json`, 3x before/after shots in `media/`, and what it does *not* cover.
-     Add a row to `hd-packs/README.md`.
+     README (from `hd-packs/TEMPLATE.md`: before/after, build estimate, coverage and gaps, format
+     notes) and `game.json`, 3x before/after shots in `media/`, and what it does *not* cover.
+     Add a row to `hd-packs/GAMES.md` - the games list the main README links to.
 - **Verify on the device, not on the desktop.** gsrunner replays of a GS dump
   (`/data/local/tmp/gsr`, pack under `cfg/ARMSX2/textures/<SERIAL>/replacements`) for exact
   comparisons, then the app via the dev server: `hd_test` for A/B, `texture_stats` for
