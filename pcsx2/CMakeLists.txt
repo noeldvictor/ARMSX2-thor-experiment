@@ -550,6 +550,7 @@ set(pcsx2GSSources
 	GS/Renderers/HW/GSRendererHW.cpp
 	GS/Renderers/HW/GSTextureCache.cpp
 	GS/Renderers/HW/GSTextureReplacementLoaders.cpp
+	GS/Renderers/HW/GSDiscAtlas.cpp
 	GS/Renderers/HW/GSTextureReplacements.cpp
 	GS/Renderers/HW/GSTextureUpscaler.cpp
 	GS/Renderers/HW/GSTextureUpscalerNN.cpp
@@ -620,6 +621,7 @@ set(pcsx2GSHeaders
 	GS/Renderers/HW/GSRendererHW.h
 	GS/Renderers/HW/GSSpriteEdgeSnap.h
 	GS/Renderers/HW/GSTextureCache.h
+	GS/Renderers/HW/GSDiscAtlas.h
 	GS/Renderers/HW/GSTextureReplacements.h
 	GS/Renderers/HW/GSTextureUpscaler.h
 	GS/Renderers/HW/GSTextureUpscalerNN.h

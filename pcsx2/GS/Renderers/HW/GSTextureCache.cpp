@@ -7276,6 +7276,43 @@ static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& 
 	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, texture_class, mipmap, alpha_minmax);
 }
 
+// The disc atlas probe (GSDiscAtlas.h): XXH3 of the top-left 16x16 palette indices of the texture,
+// expanded the way HashTextureLevel() expands them. Only where that function hashes expanded indices
+// rather than raw GS blocks - otherwise the key could never equal a crop hashed off the disc.
+static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region, u64* probe)
+{
+	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
+	if (psm.pal == 0)
+		return false;
+
+	const GSVector2i& bs = psm.bs;
+	const int tw = region.HasX() ? region.GetWidth() : (1 << TEX0.TW);
+	const int th = region.HasY() ? region.GetHeight() : (1 << TEX0.TH);
+	if (tw < 16 || th < 16)
+		return false;
+	if (!(tw < bs.x || th < bs.y || psm.fmsk != 0xFFFFFFFFu || region.GetMaxX() > 0 || region.GetMinY() > 0))
+		return false;
+
+	const GSVector4i rect(region.GetRect(tw, th));
+	const GSVector4i probe_rect(rect.left, rect.top, rect.left + 16, rect.top + 16);
+	const GSVector4i block_rect(probe_rect.ralign<Align_Outside>(bs));
+	const u32 pitch = VectorAlign(static_cast<u32>(block_rect.width()));
+	alignas(32) u8 buffer[128 * 64];
+	if (pitch * static_cast<u32>(block_rect.height()) > sizeof(buffer))
+		return false;
+
+	GSLocalMemory& mem = g_gs_renderer->m_mem;
+	psm.rtxP(mem, mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM), block_rect, buffer, pitch, TEXA);
+
+	XXH3_state_t st;
+	XXH3_64bits_reset(&st);
+	const u8* row = buffer + pitch * static_cast<u32>(rect.top - block_rect.top) + static_cast<u32>(rect.left - block_rect.left);
+	for (int y = 0; y < 16; y++, row += pitch)
+		GSXXH3_64bits_update(&st, row, 16);
+	*probe = GSXXH3_64bits_digest(&st);
+	return true;
+}
+
 GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, bool& paltex, const u32* clut, const GSVector2i* lod, SourceRegion region)
 {
 	// don't bother hashing if we're not dumping or replacing.
@@ -7342,6 +7379,17 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		std::pair<u8, u8> alpha_minmax;
 		GSTexture* replacement_tex = GSTextureReplacements::LookupReplacementTexture(key, lod != nullptr,
 			&replacement_texture_pending, &alpha_minmax);
+
+		// No file of its own: it may be a crop of an upscaled disc image (GSDiscAtlas.h). A match
+		// registers the crop under this key, so the second lookup loads it like any replacement.
+		// Mipmapped draws qualify when they sample one level: the key then covers only the base.
+		u64 probe;
+		if (!replacement_tex && !replacement_texture_pending && (!lod || lod->x == lod->y) && clut && GSTextureReplacements::HasDiscAtlas() &&
+			ComputeDiscAtlasProbe(TEX0, TEXA, region, &probe) && GSTextureReplacements::LookupDiscAtlas(key, probe))
+		{
+			replacement_tex = GSTextureReplacements::LookupReplacementTexture(key, lod != nullptr, &replacement_texture_pending, &alpha_minmax);
+		}
+
 		if (replacement_tex)
 		{
 			// found a replacement texture! insert it into the hash cache, and clear paltex (since it's not indexed)

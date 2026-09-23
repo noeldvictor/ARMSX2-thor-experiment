@@ -38,6 +38,12 @@ namespace GSTextureReplacements
 	u32 CalcMipmapLevelsForReplacement(u32 width, u32 height);
 
 	bool HasAnyReplacementTextures();
+	/// A disc atlas (GSDiscAtlas.h) is loaded for the running game.
+	bool HasDiscAtlas();
+	/// Asks the disc atlas for a crop with this key; `probe` is the XXH3 of the texture's top-left
+	/// 16x16 palette indices. On a match the crop is registered under the key's name, so
+	/// LookupReplacementTexture() finds it like any other replacement.
+	bool LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe);
 	bool HasReplacementTextureWithOtherPalette(const GSTextureCache::HashCacheKey& hash);
 	GSTexture* LookupReplacementTexture(const GSTextureCache::HashCacheKey& hash, bool mipmap, bool* pending, std::pair<u8, u8>* alpha_minmax);
 	GSTexture* CreateReplacementTexture(const ReplacementTexture& rtex, bool mipmap);

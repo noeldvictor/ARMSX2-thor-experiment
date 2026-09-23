@@ -16,6 +16,7 @@
 #include "IconsFontAwesome.h"
 #include "GS/GSExtra.h"
 #include "GS/GSLocalMemory.h"
+#include "GS/Renderers/HW/GSDiscAtlas.h"
 #include "GS/Renderers/HW/GSTextureReplacements.h"
 #include "VMManager.h"
 
@@ -141,6 +142,9 @@ namespace GSTextureReplacements
 
 	/// Lookup map of texture names without CLUT hash, to know when we need to disable paltex.
 	static std::unordered_set<TextureName> s_replacement_textures_without_clut_hash;
+
+	/// Texture names the disc atlas was asked about and had no crop for (GSDiscAtlas.h).
+	static std::unordered_set<TextureName> s_disc_atlas_misses;
 
 	/// Lookup map of texture names to replacement data which has been cached.
 	static std::unordered_map<TextureName, ReplacementTexture> s_replacement_texture_cache;
@@ -526,6 +530,8 @@ void GSTextureReplacements::ReloadReplacementMap()
 	{
 		s_replacement_texture_filenames.clear();
 		s_replacement_textures_without_clut_hash.clear();
+		s_disc_atlas_misses.clear();
+		GSDiscAtlas::Clear();
 
 		std::unique_lock<std::mutex> lock(s_replacement_texture_cache_mutex);
 		ResetReplacementCacheLocked();
@@ -587,6 +593,9 @@ void GSTextureReplacements::ReloadReplacementMap()
 		name->CLUTHash = 0;
 		s_replacement_textures_without_clut_hash.insert(name.value());
 	}
+
+	// Crops of whole disc images, matched by content when a texture has no file of its own.
+	GSDiscAtlas::Load(replacement_dir);
 
 	// "indexed", not "loaded": this count only proves filename discovery + name parsing.
 	// It says nothing about whether any texture was looked up, decoded, or uploaded — those
@@ -676,9 +685,41 @@ u32 GSTextureReplacements::CalcMipmapLevelsForReplacement(u32 width, u32 height)
 	return static_cast<u32>(std::log2(std::max(width, height))) + 1u;
 }
 
+bool GSTextureReplacements::HasDiscAtlas()
+{
+	return GSDiscAtlas::IsLoaded();
+}
+
+bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe)
+{
+	const TextureName name(CreateTextureName(hash, 0));
+	if (s_replacement_texture_filenames.find(name) != s_replacement_texture_filenames.end())
+		return true;
+	if (!name.HasPalette() || s_disc_atlas_misses.find(name) != s_disc_atlas_misses.end())
+		return false;
+
+	std::string crop = GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe);
+	if (crop.empty())
+	{
+		s_disc_atlas_misses.insert(name);
+		return false;
+	}
+
+	// The first few in full, then a running count: enough to see it working without flooding a
+	// scene load, which can match hundreds.
+	static u32 s_matches = 0;
+	if (++s_matches <= 8 || (s_matches % 100) == 0)
+	{
+		Console.WriteLnFmt("Disc atlas: match #{} {}x{} {:x}-{:x} -> {}", s_matches, name.Width(), name.Height(),
+			name.TEX0Hash, name.CLUTHash, crop);
+	}
+	s_replacement_texture_filenames.emplace(name, std::move(crop));
+	return true;
+}
+
 bool GSTextureReplacements::HasAnyReplacementTextures()
 {
-	return !s_replacement_texture_filenames.empty();
+	return !s_replacement_texture_filenames.empty() || GSDiscAtlas::IsLoaded();
 }
 
 bool GSTextureReplacements::HasReplacementTextureWithOtherPalette(const GSTextureCache::HashCacheKey& hash)
@@ -832,15 +873,27 @@ void GSTextureReplacements::SetReplacementTextureAlphaMinMax(ReplacementTexture&
 
 std::optional<GSTextureReplacements::ReplacementTexture> GSTextureReplacements::LoadReplacementTexture(const TextureName& name, const std::string& filename, bool only_base_image)
 {
-	ReplacementTextureLoader loader = GetLoader(filename);
-	if (!loader)
-		return std::nullopt;
-
 	ReplacementTexture rtex;
-	if (!loader(filename.c_str(), &rtex, only_base_image))
+	if (GSDiscAtlas::IsCropFilename(filename))
 	{
-		Console.Warning("Failed to load replacement texture %s", filename.c_str());
-		return std::nullopt;
+		// Not a file: a crop of an upscaled disc image, matched in LookupDiscAtlas().
+		if (!GSDiscAtlas::LoadCrop(filename, &rtex))
+		{
+			Console.Warning("Failed to cut disc atlas crop %s", filename.c_str());
+			return std::nullopt;
+		}
+	}
+	else
+	{
+		ReplacementTextureLoader loader = GetLoader(filename);
+		if (!loader)
+			return std::nullopt;
+
+		if (!loader(filename.c_str(), &rtex, only_base_image))
+		{
+			Console.Warning("Failed to load replacement texture %s", filename.c_str());
+			return std::nullopt;
+		}
 	}
 
 	SetReplacementTextureAlphaMinMax(rtex);
