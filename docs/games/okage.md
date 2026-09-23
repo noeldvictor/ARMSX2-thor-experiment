@@ -176,6 +176,12 @@ on, desktop save states copied to the Thor - same save-state version `0x9A59`):
 
 Before: 45-49 fps with fast-forward on, GS 99%.
 
+After the shadow-shape fix and `c7a60a6972` (the strips without self-overlap no longer take
+the multi-pass blend, so they stop rebuilding the stencil copy): **2x holds 119.9 fps in both
+scenes** - Tenel EE 88% GS 47% GPU 25%; World Library EE 96-99% GS 99-100% GPU 85% (at the
+edge there, but at speed). Replays: render passes a frame house 161 -> 9, Tenel 180 -> 9,
+World Library 324 -> 12; GS 5.1 / 2.0 / 7.5 ms.
+
 ### The shadow's shape was wrong on the Thor all along (fixed 2026-09-22)
 
 Seen in game after the speed fix: Ari's shadow was a pale smear with jagged dark pieces, where

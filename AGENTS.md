@@ -439,10 +439,11 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   it to 1 barrier. **Fixed in the renderer with the shadows kept** (Vulkan, no-texture-barrier
   devices only): mark/clear via logic ops (`GSAlphaBitLogicOp.h`), the DATE draw from a stencil
   copy of the test that the mark/clear pipelines keep current inside the render pass. Thor
-  replay: GS 18.8 -> 5.9 ms a frame, 708 -> 161 render passes, frames bit-identical. In game:
-  2x fast-forward holds 119.9 fps outdoors (113-116 in the World Library, GS-bound). The
+  replay: GS 18.8 -> 5.9 ms a frame, 708 -> 161 render passes, frames bit-identical. The
   shadow's *shape* was also wrong on the Thor in every build (half-strength Ad blend, fixed by
-  an alpha-doubling pass under the stencil). Full notes in `docs/games/okage.md`.
+  an alpha-doubling pass under the stencil, which also let every strip keep the stencil copy:
+  9-12 render passes a frame). In game: 2x fast-forward holds 119.9 fps in Tenel and the World
+  Library. Full notes in `docs/games/okage.md`.
 - GS dumps parse fine in Python (zstd; header, state, 0x2000-byte priv regs, then packets
   0 = transfer / 1 = vsync / 2 = readfifo / 3 = regs); rewriting A+D register values in a dump
   and replaying it on desktop is the fastest way to test "what if the game did X" before
