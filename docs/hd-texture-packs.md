@@ -80,8 +80,15 @@ texture is the HD images laid out the same way, so every texel shown is either a
 native, and a composite is as exact as a crop - a 1x pack still renders bit-identical frames.
 Tales of Destiny DC's ship scene: sprite batches of 2-4 frames (143x31, 63x31, 87x87) match, and
 the deck map, which differs from its disc image in 11 texels the game parks in the texture's
-memory, is a one-image composite (`11 texels native`). Palette textures only;
+memory, is a one-image composite (`11 texels native`). A composite is kept when its pieces carry
+half the texture's non-zero texels, or at least a 32x32 sprite's worth: a batch of sprite draws is
+hashed as the bounding box of its UVs, which can span data the draws never sample (the ship's
+95x175 party sprites: seven frames, 35% of the box). Palette textures only;
 `Disc atlas: composite #...` in the log.
+
+The index (`disc-atlas.a2at`) is memory-mapped, not read: a big game's index passes a gigabyte
+(Tales of Destiny: 1.1 GB, 12 million blocks - the texels of every disc image, for the exact
+check). Mapped, it costs the app about 40 MB resident on the Thor; pages load on demand.
 
 ## True-colour images
 
