@@ -709,6 +709,14 @@ bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& 
 	if (crop.empty())
 	{
 		s_disc_atlas_misses.insert(name);
+		// A texture the atlas has no crop for: the first few name what a pack author has to look
+		// at (a crop rule, or data the extractor does not read yet).
+		static u32 s_logged_misses = 0;
+		if (++s_logged_misses <= 16)
+		{
+			Console.WriteLnFmt("Disc atlas: miss {}x{} psm {:#x} {:x}-{:x} probe at {},{}", name.Width(), name.Height(),
+				static_cast<u32>(name.TEX0_PSM), name.TEX0Hash, name.CLUTHash, probe_x, probe_y);
+		}
 		return false;
 	}
 

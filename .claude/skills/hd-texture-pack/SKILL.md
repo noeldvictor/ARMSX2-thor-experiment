@@ -54,6 +54,10 @@ Things that look like dead ends but are not:
 - A 4-bit image with a 256-entry CLUT uses 16-colour palettes that are 8x2 patches of the stored
   16-wide CLUT = 16 consecutive entries after CSM1 unswizzle.
 - Fonts, text strips and fades have palettes built at runtime: palette-free images (step 1).
+- Composites: a game that assembles one texture in VRAM out of several uploads (Tales of Destiny's
+  512x512 map sheets, multi-part sprites) draws regions that are no single disc image, so the
+  disc atlas cannot match them. That needs upload-time replacement in the emulator, not an
+  extractor fix - check `Disc atlas: miss` sizes against the uploads in a GS dump to tell.
 
 ## 1. Extract
 
@@ -93,8 +97,16 @@ The 1x pack is the test: replay a GS dump of the game on the Thor with `pcsx2-gs
 `-set EmuCore/GS/LoadTextureReplacements=true -set EmuCore/GS/LoadTextureReplacementsAsync=false`)
 with it and with an *empty* pack (`struct.pack("<4sIIIIIQII", b"A2AT", 4, 0, 0, 16, 8, 40, 0, 0)` as
 `disc-atlas.a2at`). Frames must be bit-identical. Not against no pack: a loaded atlas narrows menu
-sprites to their UV rect, which moves bilinear sprite edges by a pixel. Then the 4x pack must
-change them.
+sprites to their UV rect, which moves bilinear sprite edges by a pixel. Add
+`-set EmuCore/GS/hw_mipmap=false` when the game mipmaps (Tales of Destiny's floors): the
+replacement's generated mip levels differ slightly from the native texture's, a filtering
+difference, not a wrong match. Then the 4x pack must change them. The log lists the first 16
+misses (`Disc atlas: miss WxH psm ...`): the list of what the extractor or the matcher lacks.
+
+Never change the extractor or `tim2.py` between the extract and build steps of one pack: the HD
+files are named by key and palette number, so a changed palette order paints HD images with the
+wrong palette (Tales of Destiny's first 4x pack had orange UI corners from exactly this). Rebuild
+from `--from extract`.
 
 ## 4. Finish the recipe folder
 

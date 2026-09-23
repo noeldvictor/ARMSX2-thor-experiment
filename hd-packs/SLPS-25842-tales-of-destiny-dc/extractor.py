@@ -15,6 +15,12 @@ Worked out 2026-09-23 on the English fan-translated disc (v1.6); the translation
   header size and width left 0 - the reader is lenient about that. 256-colour CLUTs are stored
   CSM1-swizzled. Map textures are 256x256 8-bit; character sprites small 8/4-bit frames.
 
+- Character sprites are `anp3` files (magic `anp3`; u32 at 12 = the CLUT's offset). Their frames
+  sit back to back before the CLUT, each behind a 16-byte record (u8 width, u8 height, u8 flags,
+  u8 palette?, 12 zero bytes), all at the file's one bit depth (8 or 4). The frame chain is found by
+  walking from each plausible record to exactly the CLUT offset. The CLUT is 256 CSM1 entries for
+  8-bit files; for 4-bit files a 16-wide CLUT image whose 8x2 patches are the palettes.
+
 Not covered yet:
 - The title art is uploaded as PSMCT32 data (512x128) and drawn as 512x512 PSMT8 from the same
   memory, a common PS2 upload trick; turning that into indices needs the GS's swizzle, which the
@@ -34,7 +40,62 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools" / "disc_textures"))
 from disc_codecs import find_tales_blobs, tales_lzss  # noqa: E402
-from tim2 import tim2_images  # noqa: E402
+from tim2 import csm1_unswizzle, tim2_images  # noqa: E402
+
+
+def anp3_frames(buf: bytes):
+    """(key, indices, palettes) for every frame of an anp3 sprite file, or nothing."""
+    import hashlib
+
+    if buf[:4] != b"anp3" or len(buf) < 32:
+        return
+    clut_off = struct.unpack_from("<I", buf, 12)[0]
+    if not 32 <= clut_off < len(buf):
+        return
+
+    def chain(p: int, bpp: int):
+        frames = []
+        while p < clut_off:
+            w, h = buf[p], buf[p + 1]
+            if w == 0 or h == 0 or buf[p + 4 : p + 16] != bytes(12):
+                return None
+            frames.append((p + 16, w, h))
+            p += 16 + (w * h * bpp + 7) // 8
+        return frames if p == clut_off else None
+
+    found = None
+    for p in range(16, clut_off - 16):
+        if buf[p] and buf[p + 1] and buf[p + 4 : p + 16] == bytes(12):
+            for bpp in (8, 4):
+                frames = chain(p, bpp)
+                if frames:
+                    found = (bpp, frames)
+                    break
+        if found:
+            break
+    if not found:
+        return
+    bpp, frames = found
+    entries = np.frombuffer(buf, np.uint8, (len(buf) - clut_off) // 4 * 4, clut_off).reshape(-1, 4)
+    if bpp == 8:
+        if len(entries) < 256:
+            return
+        palettes = [csm1_unswizzle(entries[:256]).tobytes()]
+    else:
+        rows = entries[: len(entries) // 16 * 16].reshape(-1, 16, 4)
+        palettes = [np.concatenate([rows[y, x : x + 8], rows[y + 1, x : x + 8]]).tobytes()
+                    for y in range(0, len(rows) - 1, 2) for x in (0, 8)]
+    clut = buf[clut_off:]
+    for off, w, h in frames:
+        raw = np.frombuffer(buf, np.uint8, (w * h * bpp + 7) // 8, off)
+        if bpp == 8:
+            idx = raw.reshape(h, w)
+        else:
+            idx = np.empty(w * h, np.uint8)
+            idx[0::2] = raw & 0x0F
+            idx[1::2] = raw >> 4
+            idx = idx.reshape(h, w)
+        yield hashlib.sha1(raw.tobytes() + clut).hexdigest()[:12], idx, palettes
 
 
 def dat_files(iso_path: Path):
@@ -85,6 +146,10 @@ def disc_images(iso_path: Path):
 
     def pictures(buf: bytes, where: str, depth: int):
         for key, texels, palettes, _info in tim2_images(buf, where):
+            if key not in seen:
+                seen.add(key)
+                yield key, texels, palettes
+        for key, texels, palettes in anp3_frames(buf):
             if key not in seen:
                 seen.add(key)
                 yield key, texels, palettes
