@@ -139,6 +139,7 @@ namespace
 			u32 image;
 			int x; // the image's origin in texture coordinates (may be outside the texture)
 			int y;
+			std::vector<u32> native; // texels (y << 16 | x) where the texture differs from the image
 		};
 		u32 width;
 		u32 height;
@@ -515,10 +516,14 @@ std::string GSDiscAtlas::MatchComposite(const u8* indices, u32 width, u32 height
 		order.emplace_back(v, k);
 	std::sort(order.begin(), order.end(), std::greater<>());
 
-	// Accept placements whose every covered texel equals the texture.
+	// Accept placements whose covered texels equal the texture, allowing up to 1/256 of them to
+	// differ: those keep their native colour. Games park a few bytes inside a texture's memory
+	// (Tales of Destiny's deck maps differ from the disc in 5-22 texels), and one stray texel must
+	// not cost the whole image. Every texel shown is still either an exact match or native.
 	std::vector<u8> covered(static_cast<size_t>(width) * height, 0);
 	auto comp = std::make_shared<Composite>();
 	u32 checked = 0;
+	size_t patched = 0;
 	for (const auto& [n, k] : order)
 	{
 		if (++checked > 256)
@@ -532,17 +537,31 @@ std::string GSDiscAtlas::MatchComposite(const u8* indices, u32 width, u32 height
 		const int y1 = std::min(oy + static_cast<int>(img.height), static_cast<int>(height));
 		if (x1 - x0 < static_cast<int>(TILE) || y1 - y0 < static_cast<int>(TILE))
 			continue;
+		const size_t allowed = static_cast<size_t>(x1 - x0) * (y1 - y0) / 256;
+		std::vector<u32> native;
 		bool equal = true;
 		for (int y = y0; y < y1 && equal; y++)
 		{
 			const u8* disc = s_state.index_data.data() + img.index_offset + static_cast<size_t>(y - oy) * img.width + (x0 - ox);
-			equal = std::memcmp(disc, &indices[static_cast<size_t>(y) * width + x0], x1 - x0) == 0;
+			const u8* tex = &indices[static_cast<size_t>(y) * width + x0];
+			if (std::memcmp(disc, tex, x1 - x0) == 0)
+				continue;
+			for (int x = 0; x < x1 - x0 && equal; x++)
+			{
+				if (disc[x] == tex[x])
+					continue;
+				equal = native.size() < allowed;
+				native.push_back((static_cast<u32>(y) << 16) | static_cast<u32>(x0 + x));
+			}
 		}
 		if (!equal)
 			continue;
-		comp->pieces.push_back({image, ox, oy});
 		for (int y = y0; y < y1; y++)
 			std::memset(&covered[static_cast<size_t>(y) * width + x0], 1, x1 - x0);
+		for (u32 t : native)
+			covered[static_cast<size_t>(t >> 16) * width + (t & 0xFFFF)] = 0;
+		patched += native.size();
+		comp->pieces.push_back({image, ox, oy, std::move(native)});
 	}
 	if (comp->pieces.empty())
 		return {};
@@ -574,8 +593,8 @@ std::string GSDiscAtlas::MatchComposite(const u8* indices, u32 width, u32 height
 	s_misses--; // Match() counted this texture as a miss first
 	if (++s_composite_matches <= 8)
 	{
-		Console.WriteLnFmt("Disc atlas: composite #{} {}x{} from {} disc images, {}% of drawn texels", s_composite_matches,
-			width, height, s_composites[id]->pieces.size(), drawn_covered * 100 / drawn);
+		Console.WriteLnFmt("Disc atlas: composite #{} {}x{} from {} disc images, {}% of drawn texels, {} texels native",
+			s_composite_matches, width, height, s_composites[id]->pieces.size(), drawn_covered * 100 / drawn, patched);
 	}
 	return fmt::format("{}{}{}", CROP_PREFIX, COMPOSITE_TAG, id);
 }
@@ -708,6 +727,12 @@ static bool LoadComposite(u32 id, GSTextureReplacements::ReplacementTexture* tex
 			CopyASTCBlocks(*full, x0 - piece.x, y0 - piece.y, x1 - x0, y1 - y0,
 				tex->data.data() + static_cast<size_t>(y0) * tex->pitch + static_cast<size_t>(x0) * ASTC_BLOCK_BYTES,
 				tex->pitch);
+			for (u32 t : piece.native)
+			{
+				const u32 x = t & 0xFFFF, y = t >> 16;
+				ConstantASTCBlock(tex->data.data() + static_cast<size_t>(y) * tex->pitch + x * ASTC_BLOCK_BYTES,
+					colour(comp->indices[static_cast<size_t>(y) * comp->width + x]));
+			}
 		}
 		return true;
 	}
@@ -764,6 +789,16 @@ static bool LoadComposite(u32 id, GSTextureReplacements::ReplacementTexture* tex
 			{
 				const u32 c = colour(src[i * 4]);
 				std::memcpy(dst + i * 4, &c, 4);
+			}
+		}
+		for (u32 t : piece.native)
+		{
+			const u32 x = t & 0xFFFF, y = t >> 16;
+			const u32 c = colour(comp->indices[static_cast<size_t>(y) * comp->width + x]);
+			for (u32 sy = 0; sy < scale; sy++)
+			{
+				u32* dst = reinterpret_cast<u32*>(tex->data.data() + static_cast<size_t>(y * scale + sy) * tex->pitch) + x * scale;
+				std::fill(dst, dst + scale, c);
 			}
 		}
 	}

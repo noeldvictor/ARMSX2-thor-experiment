@@ -30,12 +30,14 @@ writer (Tales of Destiny DC) leaves the picture count, header size, width or CLU
 its total size sometimes leaves out the image: a count of 0 is read as 1, a header size of 0 as 48,
 a CLUT size of 0 as whatever the total leaves after header and image, a picture is as long as
 header + image + CLUT when the total is short, and a missing width comes from the image size and
-height.
+height (and a missing height from the width). With both missing, a power-of-two square that fits
+the image size is assumed.
 """
 
 from __future__ import annotations
 
 import hashlib
+import math
 import struct
 from typing import Iterator
 
@@ -77,6 +79,12 @@ def parse_tim2(buf: bytes | memoryview, pos: int = 0) -> tuple[list[dict], int] 
             w = image_size * 8 // bpp // h
         if bpp and w and not h:
             h = image_size * 8 // bpp // w
+        if bpp and not w and not h:
+            # Neither: a power-of-two square if the size allows it (Tales of Destiny's 128x128
+            # ship textures), else unreadable.
+            side = math.isqrt(image_size * 8 // bpp)
+            if side * side * bpp == image_size * 8 and side & (side - 1) == 0:
+                w = h = side
         if (header_size < PICTURE_HEADER or p + total > len(buf) or not bpp
                 or not 0 < w <= 2048 or not 0 < h <= 2048 or image_size < (w * h * bpp + 7) // 8):
             return None
