@@ -516,9 +516,10 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   are block copies, uncovered texels constant blocks; palette-free index maps stay PNG; `--format
   png` for the 1x exactness test and 2x packs. Okage ASTC vs PNG: same matches, 47-55 dB frames.
 - Composites: a texture no crop matches is split into disc images by block votes
-  (`GSDiscAtlas::MatchComposite`); a placement counts only where every texel equals the texture,
-  the rest keeps its native colour. That covers sprite sheets and text built from glyphs in any
-  game, with no hook in the upload path. Palette textures only.
+  (`GSDiscAtlas::MatchComposite`); a placement counts where its texels equal the texture - up to
+  1/256 may differ and stay native (bytes a game parks inside a texture: Tales of Destiny's deck
+  map, 11 texels) - and the rest keeps its native colour. That covers sprite sheets and text built
+  from glyphs in any game, with no hook in the upload path. Palette textures only.
 - **Never change PCSX2's texture hashing (`HashCacheKey`).** It is the name every standard pack
   and dump uses. Where the stock key cannot be reproduced from disc data (raw-block keys of
   full-size textures), the atlas's own content hash does the checking instead.

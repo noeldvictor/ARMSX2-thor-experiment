@@ -74,11 +74,14 @@ Many games do not draw a disc image as it is: they upload several - sprite frame
 glyphs into a line of text - and a single draw samples a region spanning several of them. No crop
 of any one disc image equals that region. When a texture misses, the emulator splits it instead:
 every 16x16 block of the texture that some disc image holds votes for that image at one position,
-and a placement is accepted only if every texel it covers equals the texture. Texels no accepted
-image covers keep their native colour. The HD texture is the HD images laid out the same way, so a
-composite is exactly as exact as a crop - a 1x pack still renders bit-identical frames. Tales of
-Destiny DC's ship scene: sprite batches of 2-4 frames (143x31, 63x31, 87x87) match. Palette
-textures only; `Disc atlas: composite #...` in the log.
+and a placement is accepted if the texels it covers equal the texture, with up to 1/256 of them
+allowed to differ. Those, and texels no accepted image covers, keep their native colour. The HD
+texture is the HD images laid out the same way, so every texel shown is either an exact match or
+native, and a composite is as exact as a crop - a 1x pack still renders bit-identical frames.
+Tales of Destiny DC's ship scene: sprite batches of 2-4 frames (143x31, 63x31, 87x87) match, and
+the deck map, which differs from its disc image in 11 texels the game parks in the texture's
+memory, is a one-image composite (`11 texels native`). Palette textures only;
+`Disc atlas: composite #...` in the log.
 
 ## True-colour images
 
