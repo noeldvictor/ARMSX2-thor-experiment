@@ -54,10 +54,12 @@ Things that look like dead ends but are not:
 - A 4-bit image with a 256-entry CLUT uses 16-colour palettes that are 8x2 patches of the stored
   16-wide CLUT = 16 consecutive entries after CSM1 unswizzle.
 - Fonts, text strips and fades have palettes built at runtime: palette-free images (step 1).
-- Composites: a game that assembles one texture in VRAM out of several uploads (Tales of Destiny's
-  512x512 map sheets, multi-part sprites) draws regions that are no single disc image, so the
-  disc atlas cannot match them. That needs upload-time replacement in the emulator, not an
-  extractor fix - check `Disc atlas: miss` sizes against the uploads in a GS dump to tell.
+- Composites: a game that assembles one texture in VRAM out of several uploads (sprite batches,
+  text from glyphs) draws regions that are no single disc image. The emulator splits those into
+  disc images itself (`Disc atlas: composite #...`), so the extractor only has to yield the
+  pieces. Before calling something a composite, check it: Tales of Destiny's 512x512 maps looked
+  like one and were single TIM2s the reader had skipped (`gsmem` + the dump's VRAM: search each
+  quadrant's rows on the disc).
 
 ## 1. Extract
 

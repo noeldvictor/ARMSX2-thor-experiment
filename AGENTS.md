@@ -510,6 +510,10 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   miss: probe block -> candidates -> the crop whose hash equals the texture's *content hash* (the
   atlas's own XXH3 of the texels as the GS reads them, computed lazily on the first candidate), so a
   match is exact. It registers the crop under the stock name; the normal async loader does the rest.
+- Composites: a texture no crop matches is split into disc images by block votes
+  (`GSDiscAtlas::MatchComposite`); a placement counts only where every texel equals the texture,
+  the rest keeps its native colour. That covers sprite sheets and text built from glyphs in any
+  game, with no hook in the upload path. Palette textures only.
 - **Never change PCSX2's texture hashing (`HashCacheKey`).** It is the name every standard pack
   and dump uses. Where the stock key cannot be reproduced from disc data (raw-block keys of
   full-size textures), the atlas's own content hash does the checking instead.

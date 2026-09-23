@@ -56,6 +56,18 @@ not with no pack: while any disc pack is loaded, menu sprites are narrowed to th
 so bilinear filtering at a sprite's edge clamps instead of reading the next texel of the sheet -
 a one-pixel difference at sprite edges that has nothing to do with the replacements.
 
+## Composites (textures a game assembles in VRAM)
+
+Many games do not draw a disc image as it is: they upload several - sprite frames into one sheet,
+glyphs into a line of text - and a single draw samples a region spanning several of them. No crop
+of any one disc image equals that region. When a texture misses, the emulator splits it instead:
+every 16x16 block of the texture that some disc image holds votes for that image at one position,
+and a placement is accepted only if every texel it covers equals the texture. Texels no accepted
+image covers keep their native colour. The HD texture is the HD images laid out the same way, so a
+composite is exactly as exact as a crop - a 1x pack still renders bit-identical frames. Tales of
+Destiny DC's ship scene: sprite batches of 2-4 frames (143x31, 63x31, 87x87) match. Palette
+textures only; `Disc atlas: composite #...` in the log.
+
 ## True-colour images
 
 24-bit (PSMCT24) textures have no palette; PCSX2 hashes them expanded to 32 bits, the RGB plus

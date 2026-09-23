@@ -71,7 +71,7 @@ arguments as the JSON body; `adb forward tcp:27183 tcp:27183`). Code:
 | `screenshot` | Next rendered frame to a PNG on the device; returns once the PNG is complete (IEND) |
 | `settings_get`, `settings_set` | Read / patch settings (global, per game, or live); `textureUpscale` object for the texture upscaler |
 | `hotkey` | `fast_forward`, `reload_textures`, `texture_dump`, `quick_save`, `quick_load` |
-| `texture_stats` | Texture upscaler counters, plus `discAtlasLoaded/Images/Matches/Misses/PaletteFreeMatches/TrueColourMatches` for disc packs |
+| `texture_stats` | Texture upscaler counters, plus `discAtlasLoaded/Images/Matches/Misses/PaletteFreeMatches/TrueColourMatches/CompositeMatches` for disc packs |
 | `texture_dump` | Texture dumping on/off (to `textures/<serial>/dumps`) |
 | `gs_dump` | Capture a GS dump of the next `frames` frames to `snaps/` for `pcsx2-gsrunner` |
 | `hd_test` | HD pack A/B: `pack` (load replacements) and `filters` (texture upscaler + bilinear; false = off and nearest), applied live, then textures reload |

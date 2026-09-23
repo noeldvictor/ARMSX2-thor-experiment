@@ -16,11 +16,10 @@ usable pack yet. What is known, verified on the Thor with gsrunner replays of de
 
 Not working yet:
 
-- **Composite textures.** The game builds its 512x512 map sheets and multi-part sprites in VRAM
-  out of several uploads, and draws regions that are no single disc image. In the first scene
-  that is most of the misses. The disc pack cannot match these; it needs upload-time replacement
-  in the emulator.
-- **Text lines** are glyphs pasted into a strip in VRAM - the same composite problem.
+- **Composites** now match: the emulator splits a sprite batch or a text line into the disc
+  images it is made of (ship's deck: 143x31 from 4 frames, 87x87 from 3). Still bit-identical at 1x.
+- A few textures on the deck still miss (the streaming 512x512 map slot, a 128x128 texture,
+  small icons) - to be checked against the full pack.
 - **Title art** is uploaded as 32-bit data and drawn as 8-bit (`gsmem.py` can reproduce that; the
   extractor does not do it yet).
 - The first 4x pack (3.1 GB, 47 min on the RTX 3060) had wrongly coloured UI corners because the
