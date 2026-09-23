@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0+
 
 #include "GSTextureCache.h"
+#include "GSDiscAtlas.h"
 #include "GSTextureReplacements.h"
 #include "GSTextureUpscaler.h"
 #include "GSTextureUpscalerNN.h"
@@ -7276,10 +7277,12 @@ static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& 
 	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, texture_class, mipmap, alpha_minmax);
 }
 
-// The disc atlas probe (GSDiscAtlas.h): XXH3 of the top-left 16x16 palette indices of the texture,
-// expanded the way HashTextureLevel() expands them. Only where that function hashes expanded indices
-// rather than raw GS blocks - otherwise the key could never equal a crop hashed off the disc.
-static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region, u64* probe)
+// The disc atlas probe (GSDiscAtlas.h): XXH3 of 16x16 palette indices of the texture, expanded the
+// way HashTextureLevel() expands them, taken at the first position on the index's block grid inside
+// the region (a tight UV region can start anywhere). Only where that function hashes expanded
+// indices rather than raw GS blocks - otherwise the key could never equal a crop hashed off the disc.
+static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region,
+	u64* probe, u32* probe_x, u32* probe_y)
 {
 	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
 	if (psm.pal == 0)
@@ -7294,7 +7297,14 @@ static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA
 		return false;
 
 	const GSVector4i rect(region.GetRect(tw, th));
-	const GSVector4i probe_rect(rect.left, rect.top, rect.left + 16, rect.top + 16);
+	const int step = static_cast<int>(GSDiscAtlas::GetTileStep());
+	const int px = (rect.left + step - 1) / step * step;
+	const int py = (rect.top + step - 1) / step * step;
+	if (px + 16 > rect.right || py + 16 > rect.bottom)
+		return false;
+	*probe_x = static_cast<u32>(px - rect.left);
+	*probe_y = static_cast<u32>(py - rect.top);
+	const GSVector4i probe_rect(px, py, px + 16, py + 16);
 	const GSVector4i block_rect(probe_rect.ralign<Align_Outside>(bs));
 	const u32 pitch = VectorAlign(static_cast<u32>(block_rect.width()));
 	alignas(32) u8 buffer[128 * 64];
@@ -7306,7 +7316,7 @@ static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA
 
 	XXH3_state_t st;
 	XXH3_64bits_reset(&st);
-	const u8* row = buffer + pitch * static_cast<u32>(rect.top - block_rect.top) + static_cast<u32>(rect.left - block_rect.left);
+	const u8* row = buffer + pitch * static_cast<u32>(py - block_rect.top) + static_cast<u32>(px - block_rect.left);
 	for (int y = 0; y < 16; y++, row += pitch)
 		GSXXH3_64bits_update(&st, row, 16);
 	*probe = GSXXH3_64bits_digest(&st);
@@ -7384,8 +7394,10 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		// registers the crop under this key, so the second lookup loads it like any replacement.
 		// Mipmapped draws qualify when they sample one level: the key then covers only the base.
 		u64 probe;
+		u32 probe_x, probe_y;
 		if (!replacement_tex && !replacement_texture_pending && (!lod || lod->x == lod->y) && clut && GSTextureReplacements::HasDiscAtlas() &&
-			ComputeDiscAtlasProbe(TEX0, TEXA, region, &probe) && GSTextureReplacements::LookupDiscAtlas(key, probe))
+			ComputeDiscAtlasProbe(TEX0, TEXA, region, &probe, &probe_x, &probe_y) &&
+			GSTextureReplacements::LookupDiscAtlas(key, probe, probe_x, probe_y))
 		{
 			replacement_tex = GSTextureReplacements::LookupReplacementTexture(key, lod != nullptr, &replacement_texture_pending, &alpha_minmax);
 		}

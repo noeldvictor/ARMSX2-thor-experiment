@@ -29,11 +29,26 @@ namespace GSTextureReplacements
 // the region's indices) is the texture. So a match is exact, never a guess, and the replacement is
 // that crop of the upscaled disc image.
 //
-// Limits: palette textures (PSMT8/PSMT4) whose key hashes expanded indices, which is every region
-// texture and every texture below a block; no mipmapped keys; regions at least 16x16.
+// Menus and fonts are different: the game declares one 1024x1024 texture over most of GS memory
+// and picks each sprite by UV, so the stock key hashes the whole sheet, junk included. With a disc
+// atlas loaded, GSRendererHW narrows such draws to the sprite's own UV rectangle (a tight region),
+// which can start anywhere. The index therefore holds blocks every `tile_step` pixels (8 in version
+// 2: the 8x8 block grid of PSMT8H/PSMT4HL sheets), and the probe is the first block of the region
+// on that grid, with its offset from the region's corner.
+//
+// Limits: palette textures (PSMT8/PSMT4 and their H variants) whose key hashes expanded indices,
+// which is every region texture and every texture below a block; single-level keys; regions that
+// hold a whole 16x16 block on the probe grid.
 namespace GSDiscAtlas
 {
 	static constexpr u32 TILE = 16;
+
+	struct Stats
+	{
+		u32 images;
+		u32 matches;
+		u32 misses;
+	};
 
 	/// Loads `disc-atlas.a2at` from the replacement directory, if there is one. Returns whether
 	/// an index is now loaded.
@@ -41,11 +56,14 @@ namespace GSDiscAtlas
 	void Clear();
 	bool IsLoaded();
 	u32 GetImageCount();
+	/// Grid the probe block has to sit on (16 in version 1 indexes, 8 in version 2).
+	u32 GetTileStep();
+	Stats GetStats();
 
 	/// Finds the disc image and position whose crop has this key. `probe` is the XXH3 of the
-	/// region's top-left 16x16 palette indices, row by row. Returns a pseudo filename for
-	/// LoadCrop(), or an empty string.
-	std::string Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe);
+	/// 16x16 palette indices, row by row, of the block that starts (probe_x, probe_y) into the
+	/// region. Returns a pseudo filename for LoadCrop(), or an empty string.
+	std::string Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y);
 
 	bool IsCropFilename(std::string_view filename);
 

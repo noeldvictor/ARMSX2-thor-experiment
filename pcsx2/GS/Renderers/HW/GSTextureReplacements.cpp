@@ -690,7 +690,7 @@ bool GSTextureReplacements::HasDiscAtlas()
 	return GSDiscAtlas::IsLoaded();
 }
 
-bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe)
+bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe, u32 probe_x, u32 probe_y)
 {
 	const TextureName name(CreateTextureName(hash, 0));
 	if (s_replacement_texture_filenames.find(name) != s_replacement_texture_filenames.end())
@@ -698,7 +698,7 @@ bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& 
 	if (!name.HasPalette() || s_disc_atlas_misses.find(name) != s_disc_atlas_misses.end())
 		return false;
 
-	std::string crop = GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe);
+	std::string crop = GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y);
 	if (crop.empty())
 	{
 		s_disc_atlas_misses.insert(name);

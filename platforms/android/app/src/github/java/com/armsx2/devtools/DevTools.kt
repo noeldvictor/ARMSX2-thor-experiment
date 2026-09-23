@@ -59,6 +59,15 @@ class DevTools(private val context: Context) {
         Tool("texture_stats", "Texture-upscaler counters and the active configuration.", schema()) { textureStats() },
         Tool("texture_dump", "Texture dumping on/off (`on`: boolean; omit to toggle). Dumps land in textures/<serial>/dumps.",
             schema("on" to "boolean"), ::textureDump),
+        Tool("gs_dump", "Capture a GS dump of the next `frames` frames (default 1) to snaps/ - replay it with pcsx2-gsrunner. The game must be running, not paused.",
+            schema("frames" to "integer")) { a ->
+            requireGame()?.let { return@Tool it }
+            val frames = a.optInt("frames", 1).coerceIn(1, 600)
+            NativeApp.captureGsDump(frames)
+            JSONObject().put("queued", true).put("frames", frames).put("dir", "snaps")
+        },
+        Tool("hd_test", "A/B switch for HD texture packs, applied live and followed by a texture reload. `pack` (bool): load texture replacements. `filters` (bool): the texture upscaler (world + UI) and bilinear texture filtering; false = off and nearest, so only the pack changes the picture. Omitted keys stay as they are. Returns the settings changed plus the disc atlas counters.",
+            schema("pack" to "boolean", "filters" to "boolean"), ::hdTest),
         Tool("log", "Tail the emulator log (emulog.txt). `lines` (default 200), optional `filter` substring.",
             schema("lines" to "integer", "filter" to "string"), ::log),
         Tool("logcat", "Tail this process's logcat. `lines` (default 200), optional `filter` substring.",
@@ -265,6 +274,21 @@ class DevTools(private val context: Context) {
             else -> return JSONObject().put("error", "unknown hotkey $name")
         }
         return JSONObject().put("ok", true).put("hotkey", name)
+    }
+
+    private fun hdTest(args: JSONObject): JSONObject {
+        requireGame()?.let { return it }
+        val patch = JSONObject()
+        if (args.has("pack")) patch.put("loadTextureReplacements", args.optBoolean("pack"))
+        if (args.has("filters")) {
+            val on = args.optBoolean("filters")
+            // 2 = bilinear as the PS2 asks for it (the default), 0 = nearest everywhere.
+            patch.put("textureFiltering", if (on) 2 else 0)
+            patch.put("textureUpscale", JSONObject().put("worldEnabled", on).put("uiEnabled", on))
+        }
+        val result = settingsSet(JSONObject().put("patch", patch))
+        onMain { MainActivityRuntime.instance?.reloadTextures() }
+        return result.put("stats", textureStats())
     }
 
     private fun textureStats(): JSONObject {

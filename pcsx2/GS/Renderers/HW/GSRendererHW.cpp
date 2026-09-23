@@ -3982,6 +3982,39 @@ void GSRendererHW::Draw()
 			GL_CACHE("HW: Estimated texture region: %u,%u -> %u,%u", MIP_CLAMP.MINU, MIP_CLAMP.MINV, MIP_CLAMP.MAXU + 1,
 				MIP_CLAMP.MAXV + 1);
 		}
+		// Disc atlas packs (GSDiscAtlas.h): a UV-selected sprite of a big palette sheet - menus,
+		// portraits, fonts - is hashed over the whole declared sheet, whatever else sits in memory
+		// there, so no disc image can ever match it. Narrow it to the sprite's own texels instead:
+		// its key then covers exactly the pixels the draw uses, which is a crop of a disc image the
+		// atlas can find. The last texel is ceil(max - 0.5) - 1: right for point sampling (edge at
+		// 64.0 -> texel 63) and for bilinear sprites whose UVs sit on texel centres (64.5 -> 63). The
+		// estimate above keeps one or two more columns, which step a whole-image sprite past the edge
+		// of its disc image (Okage's 256-wide menu sheet came out 257). Only while a disc atlas is
+		// loaded, and only where the draw cannot see past the rectangle (UV or clamped ST).
+		else if (GSConfig.LoadTextureReplacements && GSTextureReplacements::HasDiscAtlas() &&
+				 (PRIM->FST || (MIP_CLAMP.WMS == CLAMP_CLAMP && MIP_CLAMP.WMT == CLAMP_CLAMP)) &&
+				 TEX0.TW >= 9 && TEX0.TH >= 9 &&
+				 MIP_CLAMP.WMS < CLAMP_REGION_CLAMP && MIP_CLAMP.WMT < CLAMP_REGION_CLAMP &&
+				 GSLocalMemory::m_psm[TEX0.PSM].pal > 0)
+		{
+			const GSVector4 tmin = m_vt.m_min.t.floor().max(GSVector4::zero());
+			const GSVector4 tmax = ((m_vt.m_max.t - GSVector4(0.5f)).ceil() - GSVector4(1.0f)).max(tmin);
+			const GSVector4i imin(tmin);
+			const GSVector4i imax(tmax);
+			const int wmax = (1 << TEX0.TW) - 1;
+			const int hmax = (1 << TEX0.TH) - 1;
+			if (imin.x <= wmax && imin.y <= hmax)
+			{
+				MIP_CLAMP.WMS = CLAMP_REGION_CLAMP;
+				MIP_CLAMP.WMT = CLAMP_REGION_CLAMP;
+				MIP_CLAMP.MINU = static_cast<u32>(imin.x) >> m_lod.x;
+				MIP_CLAMP.MAXU = static_cast<u32>(std::min(imax.x, wmax)) >> m_lod.x;
+				MIP_CLAMP.MINV = static_cast<u32>(imin.y) >> m_lod.x;
+				MIP_CLAMP.MAXV = static_cast<u32>(std::min(imax.y, hmax)) >> m_lod.x;
+				GL_CACHE("HW: Disc atlas sprite region: %u,%u -> %u,%u", MIP_CLAMP.MINU, MIP_CLAMP.MINV,
+					MIP_CLAMP.MAXU + 1, MIP_CLAMP.MAXV + 1);
+			}
+		}
 
 		GIFRegTEX0 FRAME_TEX0;
 		bool shuffle_target = false;

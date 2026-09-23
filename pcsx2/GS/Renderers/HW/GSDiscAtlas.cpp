@@ -30,11 +30,11 @@ namespace
 	struct Header
 	{
 		char magic[4]; // "A2AT"
-		u32 version; // 1
+		u32 version; // 1: blocks every 16 pixels; 2: every tile_step pixels
 		u32 image_count;
 		u32 tile_count;
 		u32 tile_size; // 16
-		u32 reserved;
+		u32 tile_step; // version 2 (8); zero in version 1, meaning 16
 		u64 index_data_offset;
 	};
 	static_assert(sizeof(Header) == 32);
@@ -70,6 +70,9 @@ namespace
 
 	State s_state;
 	bool s_loaded = false;
+	u32 s_tile_step = 16;
+	u32 s_matches = 0;
+	u32 s_misses = 0;
 
 	// Decoded upscaled disc images, shared by every crop cut from them. Worker-thread side.
 	std::mutex s_image_mutex;
@@ -104,10 +107,12 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 	std::memcpy(&hdr, data->data(), sizeof(hdr));
 	const u64 images_end = sizeof(Header) + static_cast<u64>(hdr.image_count) * sizeof(Image);
 	const u64 tiles_end = images_end + static_cast<u64>(hdr.tile_count) * sizeof(Tile);
-	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version != 1 || hdr.tile_size != TILE ||
+	const u32 step = (hdr.version >= 2) ? hdr.tile_step : TILE;
+	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 2 || hdr.tile_size != TILE ||
+		step == 0 || (TILE % step) != 0 ||
 		tiles_end > data->size() || hdr.index_data_offset > data->size())
 	{
-		Console.Error(fmt::format("Disc atlas: {} is not a version 1 index", path));
+		Console.Error(fmt::format("Disc atlas: {} is not a version 1 or 2 index", path));
 		return false;
 	}
 
@@ -130,8 +135,9 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 
 	s_state = std::move(st);
 	s_loaded = true;
-	Console.WriteLnFmt("Disc atlas: {} disc images, {} index blocks ({})", s_state.images.size(),
-		s_state.tiles.size(), path);
+	s_tile_step = step;
+	Console.WriteLnFmt("Disc atlas: {} disc images, {} index blocks every {} px ({})", s_state.images.size(),
+		s_state.tiles.size(), step, path);
 	return true;
 }
 
@@ -139,6 +145,9 @@ void GSDiscAtlas::Clear()
 {
 	s_loaded = false;
 	s_state = {};
+	s_tile_step = 16;
+	s_matches = 0;
+	s_misses = 0;
 
 	std::unique_lock lock(s_image_mutex);
 	s_image_cache.clear();
@@ -156,9 +165,19 @@ u32 GSDiscAtlas::GetImageCount()
 	return static_cast<u32>(s_state.images.size());
 }
 
-std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe)
+u32 GSDiscAtlas::GetTileStep()
 {
-	if (!s_loaded || width < TILE || height < TILE)
+	return s_tile_step;
+}
+
+GSDiscAtlas::Stats GSDiscAtlas::GetStats()
+{
+	return {static_cast<u32>(s_state.images.size()), s_matches, s_misses};
+}
+
+std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y)
+{
+	if (!s_loaded || probe_x + TILE > width || probe_y + TILE > height)
 		return {};
 
 	const auto key_less = [](const Tile& t, const std::pair<u64, u64>& k) {
@@ -170,8 +189,14 @@ std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 heig
 	u32 checked = 0;
 	for (; it != s_state.tiles.end() && it->clut_hash == clut_hash && it->tile_hash == probe; ++it)
 	{
+		// The candidate block is (probe_x, probe_y) into the region, so the crop starts that far
+		// before it.
 		const Image& img = s_state.images[it->image];
-		if (it->x + width > img.width || it->y + height > img.height)
+		if (it->x < probe_x || it->y < probe_y)
+			continue;
+		const u32 x = it->x - probe_x;
+		const u32 y = it->y - probe_y;
+		if (x + width > img.width || y + height > img.height)
 			continue;
 		if (++checked > MAX_CANDIDATES)
 			break;
@@ -180,14 +205,16 @@ std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 heig
 		// row by row - the same bytes as this crop of the disc image.
 		XXH3_state_t st;
 		XXH3_64bits_reset(&st);
-		const u8* row = s_state.index_data.data() + img.index_offset + static_cast<size_t>(it->y) * img.width + it->x;
+		const u8* row = s_state.index_data.data() + img.index_offset + static_cast<size_t>(y) * img.width + x;
 		for (u32 y = 0; y < height; y++, row += img.width)
 			GSXXH3_64bits_update(&st, row, width);
 		if (GSXXH3_64bits_digest(&st) != tex0_hash)
 			continue;
 
-		return fmt::format("{}{}:{}:{}:{}:{}", CROP_PREFIX, it->image, it->x, it->y, width, height);
+		s_matches++;
+		return fmt::format("{}{}:{}:{}:{}:{}", CROP_PREFIX, it->image, x, y, width, height);
 	}
+	s_misses++;
 	return {};
 }
 

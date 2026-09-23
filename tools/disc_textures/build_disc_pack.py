@@ -10,7 +10,9 @@ output is a replacements folder for `<DataRoot>/textures/SCUS-97129/replacements
   opaque), which is what replacement textures use;
 - `disc-atlas.a2at` - the index the emulator matches against (pcsx2/GS/Renderers/HW/GSDiscAtlas.*):
   per disc texture its palette hash (XXH3 of the 256/16 RGBA entries, as the texture cache keys
-  the CLUT), size and palette indices, plus the XXH3 of every 16x16 block at 16-pixel positions.
+  the CLUT), size and palette indices, plus the XXH3 of every 16x16 block at 8-pixel positions.
+  Blocks every 8 px (index version 2) let a menu sprite, whose tight UV region can start anywhere,
+  find its disc image too.
 
 Why crops: what a draw samples is a rectangle of a disc image at a 16-pixel-aligned position
 (Okage mostly draws pieces of 256x256 atlases), and PCSX2 keys a region texture by XXH3 over that
@@ -37,6 +39,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import okage_xim  # noqa: E402
 
 TILE = 16
+STEP = 8  # block positions: every 8 px covers the 8x8 block grid of PSMT8H/PSMT4HL sheets (index v2)
 
 
 def disc_images(iso_path: Path):
@@ -106,7 +109,7 @@ def main() -> None:
         offset = len(index_data)
         index_data += indices.tobytes()
         block_hashes = [(x, y, xxhash.xxh3_64_intdigest(np.ascontiguousarray(indices[y : y + TILE, x : x + TILE]).tobytes()))
-                        for y in range(0, h - TILE + 1, TILE) for x in range(0, w - TILE + 1, TILE)]
+                        for y in range(0, h - TILE + 1, STEP) for x in range(0, w - TILE + 1, STEP)]
         for p, pal in enumerate(pals):
             name = f"{key}.png" if len(pals) == 1 else f"{key}_p{p}.png"
             src = a.hd / name
@@ -132,7 +135,7 @@ def main() -> None:
     header_size = 32
     index_data_offset = header_size + 64 * len(images) + 24 * len(tiles)
     with open(a.out / "disc-atlas.a2at", "wb") as f:
-        f.write(struct.pack("<4sIIIIIQ", b"A2AT", 1, len(images), len(tiles), TILE, 0, index_data_offset))
+        f.write(struct.pack("<4sIIIIIQ", b"A2AT", 2, len(images), len(tiles), TILE, STEP, index_data_offset))
         for clut_hash, w, h, off, file in images:
             f.write(struct.pack("<QIIQ40s", clut_hash, w, h, off, file.encode("ascii")))
         for clut_hash, th, image_id, x, y in tiles:
