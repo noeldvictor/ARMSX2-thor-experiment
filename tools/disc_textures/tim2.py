@@ -26,10 +26,11 @@ disc does not say.
 Only the base level of a mipmapped picture is used, and 16-bit images are skipped.
 
 Real files bend the format, so the reader is lenient where the data is unambiguous. Namco's
-writer (Tales of Destiny DC) leaves the picture count, header size and width at 0 and puts
-header + CLUT, without the image, in the total size: a count of 0 is read as 1, a header size of
-0 as 48, a picture is as long as header + image + CLUT when the total is short, and a missing
-width comes from the image size and height.
+writer (Tales of Destiny DC) leaves the picture count, header size, width or CLUT size at 0, and
+its total size sometimes leaves out the image: a count of 0 is read as 1, a header size of 0 as 48,
+a CLUT size of 0 as whatever the total leaves after header and image, a picture is as long as
+header + image + CLUT when the total is short, and a missing width comes from the image size and
+height.
 """
 
 from __future__ import annotations
@@ -67,6 +68,8 @@ def parse_tim2(buf: bytes | memoryview, pos: int = 0) -> tuple[list[dict], int] 
         (total, clut_size, image_size, header_size, clut_colours, fmt, mips, clut_type, image_type,
          w, h, tex0, _tex1, _texa, _texclut) = struct.unpack_from("<IIIHHBBBBHHQQII", buf, p)
         header_size = header_size or PICTURE_HEADER
+        if clut_size == 0 and image_type in (4, 5) and total > header_size + image_size:
+            clut_size = total - header_size - image_size  # Namco: CLUT size 0, but counted in the total
         total = max(total, header_size + image_size + clut_size)
         bpp = {1: 16, 2: 24, 3: 32, 4: 4, 5: 8}.get(image_type)
         if bpp and h and not w:
