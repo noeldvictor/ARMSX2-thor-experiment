@@ -63,14 +63,20 @@ def anp3_frames(buf: bytes):
             p += 16 + (w * h * bpp + 7) // 8
         return frames if p == clut_off else None
 
+    # The chain starts just after the offset at 8 (16120 -> 16128, 5980 -> 6000 in the files
+    # looked at); look there first, the whole file only if that fails.
+    near = struct.unpack_from("<I", buf, 8)[0]
     found = None
-    for p in range(16, clut_off - 16):
-        if buf[p] and buf[p + 1] and buf[p + 4 : p + 16] == bytes(12):
-            for bpp in (8, 4):
-                frames = chain(p, bpp)
-                if frames:
-                    found = (bpp, frames)
-                    break
+    for start, stop in ((near, min(near + 64, clut_off - 16)), (16, clut_off - 16)):
+        for p in range(max(start, 16), stop):
+            if buf[p] and buf[p + 1] and buf[p + 4 : p + 16] == bytes(12):
+                for bpp in (8, 4):
+                    frames = chain(p, bpp)
+                    if frames:
+                        found = (bpp, frames)
+                        break
+            if found:
+                break
         if found:
             break
     if not found:
