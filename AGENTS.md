@@ -422,9 +422,11 @@ the render target, restart the pass* - GS thread 99% (21 ms) and GPU 81% on the 
   through `onNewIntent` without restarting it).
 - Get the frame itself: pause menu > Capture GS Dump writes `snaps/*.gs.zst`; desktop PCSX2
   replays it with the OSD counters (`pcsx2-qt.exe -- dump.gs.zst`), and
-  `pcsx2-gsrunner` (NDK executable, built from the Android tree with
-  `ninja <build>/intermediates/cxx/Debug/<hash>/obj/arm64-v8a/pcsx2-gsrunner`) replays it on
-  the Thor's own GPU with `-perf -stats-json`.
+  `pcsx2-gsrunner` (NDK executable: `<Sdk>/cmake/3.22.1/bin/ninja.exe pcsx2-gsrunner` run in
+  `platforms/android/app/.cxx/Debug/<hash>/arm64-v8a`) replays it on the Thor's own GPU with
+  `-perf -stats-json`. Use that ninja - the one Gradle runs - and no other: the winget ninja
+  1.13 on PATH and CMake 3.31's 1.12 write `.ninja_log` in their own format, and the next build
+  by a different ninja throws the log away and recompiles the whole native tree.
 - For correctness, compare with the software renderer, not with the previous build: Okage's
   shadow was wrong on the Thor in every build, so "bit-identical to before" proved nothing
   about it. Desktop PCSX2 makes the dump from any save state (`tools/pcsx2_mcp` hotkey
