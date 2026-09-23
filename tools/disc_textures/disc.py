@@ -56,8 +56,7 @@ def run_quiet(cmd: list[str]) -> None:
     """Run a tool, showing its output only if it fails (chdman prints a progress line per percent)."""
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
-        raise SystemExit(f"{cmd[0]} failed:
-{r.stdout[-2000:]}{r.stderr[-2000:]}")
+        raise SystemExit(f"{cmd[0]} failed:\n{r.stdout[-2000:]}{r.stderr[-2000:]}")
 
 
 def to_iso(disc: Path, out: Path, chdman: str | None = None) -> Path:
