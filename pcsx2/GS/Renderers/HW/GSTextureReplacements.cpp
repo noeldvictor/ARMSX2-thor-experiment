@@ -20,6 +20,7 @@
 #include "GS/Renderers/HW/GSTextureReplacements.h"
 #include "VMManager.h"
 
+#include <algorithm>
 #include <cinttypes>
 #include <condition_variable>
 #include <cstring>
@@ -690,7 +691,8 @@ bool GSTextureReplacements::HasDiscAtlas()
 	return GSDiscAtlas::IsLoaded();
 }
 
-bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe, u32 probe_x, u32 probe_y)
+bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe, u32 probe_x, u32 probe_y,
+	const u32* clut, u32 clut_entries)
 {
 	const TextureName name(CreateTextureName(hash, 0));
 	if (s_replacement_texture_filenames.find(name) != s_replacement_texture_filenames.end())
@@ -698,7 +700,8 @@ bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& 
 	if (!name.HasPalette() || s_disc_atlas_misses.find(name) != s_disc_atlas_misses.end())
 		return false;
 
-	std::string crop = GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y);
+	std::string crop = GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y,
+		clut, clut_entries);
 	if (crop.empty())
 	{
 		s_disc_atlas_misses.insert(name);
@@ -712,6 +715,16 @@ bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& 
 	{
 		Console.WriteLnFmt("Disc atlas: match #{} {}x{} {:x}-{:x} -> {}", s_matches, name.Width(), name.Height(),
 			name.TEX0Hash, name.CLUTHash, crop);
+		// A palette-free image is painted with the game's palette. Log each 16-entry one once: the
+		// pack author needs it to choose the palette the image is upscaled through.
+		static std::unordered_set<u64> s_logged_palettes;
+		if (std::count(crop.begin(), crop.end(), ':') == 6 && clut_entries == 16 && s_logged_palettes.insert(name.CLUTHash).second)
+		{
+			std::string pal;
+			for (u32 i = 0; i < clut_entries; i++)
+				pal += fmt::format(" {:08x}", clut[i]);
+			Console.WriteLnFmt("Disc atlas: palette {:x}:{}", name.CLUTHash, pal);
+		}
 	}
 	s_replacement_texture_filenames.emplace(name, std::move(crop));
 	return true;

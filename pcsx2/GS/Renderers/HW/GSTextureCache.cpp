@@ -7397,7 +7397,7 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		u32 probe_x, probe_y;
 		if (!replacement_tex && !replacement_texture_pending && (!lod || lod->x == lod->y) && clut && GSTextureReplacements::HasDiscAtlas() &&
 			ComputeDiscAtlasProbe(TEX0, TEXA, region, &probe, &probe_x, &probe_y) &&
-			GSTextureReplacements::LookupDiscAtlas(key, probe, probe_x, probe_y))
+			GSTextureReplacements::LookupDiscAtlas(key, probe, probe_x, probe_y, clut, GSLocalMemory::m_psm[TEX0.PSM].pal))
 		{
 			replacement_tex = GSTextureReplacements::LookupReplacementTexture(key, lod != nullptr, &replacement_texture_pending, &alpha_minmax);
 		}

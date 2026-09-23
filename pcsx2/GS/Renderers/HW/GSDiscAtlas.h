@@ -36,6 +36,12 @@ namespace GSTextureReplacements
 // 2: the 8x8 block grid of PSMT8H/PSMT4HL sheets), and the probe is the first block of the region
 // on that grid, with its offset from the region's corner.
 //
+// Some images have no palette of their own: the game colours them at runtime (Okage's fonts, sheets
+// it uploads from .FNT files and paints with palettes it makes on the fly). Version 3 indexes carry
+// those as palette-free images: their HD file is an HD *index map*, and their blocks sit in a second
+// table keyed by the block alone. The key's TEX0 hash covers only indices, so the match is as exact
+// as ever; the texture's palette at match time is kept, and the loader paints the map with it.
+//
 // Limits: palette textures (PSMT8/PSMT4 and their H variants) whose key hashes expanded indices,
 // which is every region texture and every texture below a block; single-level keys; regions that
 // hold a whole 16x16 block on the probe grid.
@@ -48,6 +54,7 @@ namespace GSDiscAtlas
 		u32 images;
 		u32 matches;
 		u32 misses;
+		u32 palette_free_matches;
 	};
 
 	/// Loads `disc-atlas.a2at` from the replacement directory, if there is one. Returns whether
@@ -62,8 +69,10 @@ namespace GSDiscAtlas
 
 	/// Finds the disc image and position whose crop has this key. `probe` is the XXH3 of the
 	/// 16x16 palette indices, row by row, of the block that starts (probe_x, probe_y) into the
-	/// region. Returns a pseudo filename for LoadCrop(), or an empty string.
-	std::string Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y);
+	/// region. `clut` / `clut_entries` are the texture's palette, used when the match is a
+	/// palette-free image. Returns a pseudo filename for LoadCrop(), or an empty string.
+	std::string Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
+		const u32* clut, u32 clut_entries);
 
 	bool IsCropFilename(std::string_view filename);
 

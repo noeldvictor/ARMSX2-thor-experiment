@@ -1,0 +1,23 @@
+{
+ "serial": "SCUS-97129",
+ "title": "Okage: Shadow King",
+ "region": "NTSC-U",
+ "crc": "E0426FC6",
+ "extractor": "extractor.py",
+ "disc": {
+  "format": "CD (MODE2)",
+  "iso_sha1": "e25313668c682df863f0dde7c21bef0a3d8b79fa"
+ },
+ "upscale": {
+  "model": "4x-UltraSharp",
+  "model_url": "https://huggingface.co/Kim2091/UltraSharp",
+  "model_sha256": "36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc",
+  "model_licence": "CC BY-NC-SA 4.0 (non-commercial)",
+  "scale": 4
+ },
+ "reference": {
+  "index_sha256": "7c32e6b1f09352a3db6f4f78238a39bca05d811048f872cc5a8f3775c5d88811",
+  "textures": 2638,
+  "palette_free": 3
+ }
+}

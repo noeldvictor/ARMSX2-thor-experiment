@@ -1,4 +1,4 @@
-"""Upscale textures extracted by okage_xim.py with an ESRGAN-family model, on a desktop GPU.
+"""Upscale the textures extract_native.py wrote with an ESRGAN-family model, on a desktop GPU.
 
     python upscale.py IN_DIR OUT_DIR --model PATH [--scale 4|2] [--tile N] [--limit N]
                       [--only a.png,b.png] [--force]
@@ -6,7 +6,8 @@
 Reads every `*.png` in IN_DIR (RGBA, alpha already on the 0..255 scale) and writes the upscaled
 texture to OUT_DIR under the same name. `manifest.json`, when IN_DIR has one, is copied through
 with an `upscale` record (scale, model, model SHA-256). Files already in OUT_DIR are skipped
-unless `--force`, so an interrupted run resumes where it stopped.
+unless `--force`, so an interrupted run resumes where it stopped - unless their size is not the
+input's times the scale (the input changed, e.g. an extractor fix), which redoes them.
 
 Requirements (not in the repo; install into a venv):
 
@@ -231,6 +232,15 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def up_to_date(src: Path, dst: Path, scale: int) -> bool:
+    """An existing output is kept only if it is the input's size times the scale."""
+    try:
+        with Image.open(src) as a, Image.open(dst) as b:
+            return b.size == (a.width * scale, a.height * scale)
+    except OSError:
+        return False
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("inp", type=Path, metavar="IN_DIR")
@@ -273,7 +283,7 @@ def main() -> None:
     failures: list[tuple[str, str]] = []
     for i, src in enumerate(files, 1):
         dst = a.out / src.name
-        if dst.exists() and not a.force:
+        if dst.exists() and not a.force and up_to_date(src, dst, a.scale):
             skipped += 1
         else:
             try:

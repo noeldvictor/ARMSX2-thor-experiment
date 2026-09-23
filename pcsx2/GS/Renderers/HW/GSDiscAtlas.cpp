@@ -20,9 +20,10 @@
 #include <vector>
 
 // disc-atlas.a2at, little-endian:
-//   Header
-//   Image[image_count]   64 bytes each
+//   Header               32 bytes (v1, v2) / 40 (v3: + free_tile_count)
+//   Image[image_count]   64 bytes each (v1, v2) / 72 (v3: + flags)
 //   Tile[tile_count]     24 bytes each, sorted by (clut_hash, tile_hash)
+//   FreeTile[free_tile_count]  16 bytes each, sorted by tile_hash (v3: palette-free images)
 //   index data           each image's palette indices, one byte per texel (PSMT4 expanded), row-major
 namespace
 {
@@ -39,7 +40,14 @@ namespace
 	};
 	static_assert(sizeof(Header) == 32);
 
-	struct Image
+	struct HeaderV3Tail
+	{
+		u32 free_tile_count;
+		u32 reserved;
+	};
+	static_assert(sizeof(HeaderV3Tail) == 8);
+
+	struct ImageV2
 	{
 		u64 clut_hash; // XXH3 of the palette as the texture cache keys it
 		u32 width;
@@ -47,7 +55,40 @@ namespace
 		u64 index_offset; // from Header::index_data_offset
 		char file[40]; // upscaled image, relative to the replacement directory
 	};
-	static_assert(sizeof(Image) == 64);
+	static_assert(sizeof(ImageV2) == 64);
+
+	struct ImageV3
+	{
+		u64 clut_hash;
+		u32 width;
+		u32 height;
+		u64 index_offset;
+		u32 flags; // FLAG_PALETTE_FREE
+		u32 reserved;
+		char file[40];
+	};
+	static_assert(sizeof(ImageV3) == 72);
+
+	constexpr u32 FLAG_PALETTE_FREE = 1;
+
+	struct Image
+	{
+		u64 clut_hash;
+		u32 width;
+		u32 height;
+		u64 index_offset;
+		u32 flags;
+		char file[40];
+	};
+
+	struct FreeTile
+	{
+		u64 tile_hash;
+		u32 image;
+		u16 x;
+		u16 y;
+	};
+	static_assert(sizeof(FreeTile) == 16);
 
 	struct Tile
 	{
@@ -65,6 +106,7 @@ namespace
 		std::string dir;
 		std::vector<Image> images;
 		std::vector<Tile> tiles;
+		std::vector<FreeTile> free_tiles;
 		std::vector<u8> index_data;
 	};
 
@@ -73,6 +115,11 @@ namespace
 	u32 s_tile_step = 16;
 	u32 s_matches = 0;
 	u32 s_misses = 0;
+	u32 s_palette_free_matches = 0;
+
+	// Palettes a palette-free match was made under, by their hash, for LoadCrop on the worker.
+	std::mutex s_palette_mutex;
+	std::unordered_map<u64, std::vector<u32>> s_palettes;
 
 	// Decoded upscaled disc images, shared by every crop cut from them. Worker-thread side.
 	std::mutex s_image_mutex;
@@ -105,23 +152,50 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 
 	Header hdr;
 	std::memcpy(&hdr, data->data(), sizeof(hdr));
-	const u64 images_end = sizeof(Header) + static_cast<u64>(hdr.image_count) * sizeof(Image);
+	HeaderV3Tail tail{};
+	const bool v3 = hdr.version >= 3;
+	if (v3 && data->size() >= sizeof(Header) + sizeof(HeaderV3Tail))
+		std::memcpy(&tail, data->data() + sizeof(Header), sizeof(tail));
+	const u64 header_size = sizeof(Header) + (v3 ? sizeof(HeaderV3Tail) : 0);
+	const u64 image_size = v3 ? sizeof(ImageV3) : sizeof(ImageV2);
+	const u64 images_end = header_size + static_cast<u64>(hdr.image_count) * image_size;
 	const u64 tiles_end = images_end + static_cast<u64>(hdr.tile_count) * sizeof(Tile);
+	const u64 free_end = tiles_end + static_cast<u64>(tail.free_tile_count) * sizeof(FreeTile);
 	const u32 step = (hdr.version >= 2) ? hdr.tile_step : TILE;
-	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 2 || hdr.tile_size != TILE ||
+	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 3 || hdr.tile_size != TILE ||
 		step == 0 || (TILE % step) != 0 ||
-		tiles_end > data->size() || hdr.index_data_offset > data->size())
+		free_end > data->size() || hdr.index_data_offset > data->size())
 	{
-		Console.Error(fmt::format("Disc atlas: {} is not a version 1 or 2 index", path));
+		Console.Error(fmt::format("Disc atlas: {} is not a version 1-3 index", path));
 		return false;
 	}
 
 	State st;
 	st.dir = replacement_dir;
 	st.images.resize(hdr.image_count);
-	std::memcpy(st.images.data(), data->data() + sizeof(Header), hdr.image_count * sizeof(Image));
+	for (u32 i = 0; i < hdr.image_count; i++)
+	{
+		const u8* rec = data->data() + header_size + i * image_size;
+		Image& img = st.images[i];
+		if (v3)
+		{
+			ImageV3 r;
+			std::memcpy(&r, rec, sizeof(r));
+			img = {r.clut_hash, r.width, r.height, r.index_offset, r.flags, {}};
+			std::memcpy(img.file, r.file, sizeof(img.file));
+		}
+		else
+		{
+			ImageV2 r;
+			std::memcpy(&r, rec, sizeof(r));
+			img = {r.clut_hash, r.width, r.height, r.index_offset, 0, {}};
+			std::memcpy(img.file, r.file, sizeof(img.file));
+		}
+	}
 	st.tiles.resize(hdr.tile_count);
 	std::memcpy(st.tiles.data(), data->data() + images_end, hdr.tile_count * sizeof(Tile));
+	st.free_tiles.resize(tail.free_tile_count);
+	std::memcpy(st.free_tiles.data(), data->data() + tiles_end, tail.free_tile_count * sizeof(FreeTile));
 	st.index_data.assign(data->data() + hdr.index_data_offset, data->data() + data->size());
 
 	for (const Image& img : st.images)
@@ -136,8 +210,8 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 	s_state = std::move(st);
 	s_loaded = true;
 	s_tile_step = step;
-	Console.WriteLnFmt("Disc atlas: {} disc images, {} index blocks every {} px ({})", s_state.images.size(),
-		s_state.tiles.size(), step, path);
+	Console.WriteLnFmt("Disc atlas: {} disc images, {} index blocks every {} px, {} palette-free ({})",
+		s_state.images.size(), s_state.tiles.size(), step, s_state.free_tiles.size(), path);
 	return true;
 }
 
@@ -148,6 +222,11 @@ void GSDiscAtlas::Clear()
 	s_tile_step = 16;
 	s_matches = 0;
 	s_misses = 0;
+	s_palette_free_matches = 0;
+	{
+		std::unique_lock lock(s_palette_mutex);
+		s_palettes.clear();
+	}
 
 	std::unique_lock lock(s_image_mutex);
 	s_image_cache.clear();
@@ -172,10 +251,22 @@ u32 GSDiscAtlas::GetTileStep()
 
 GSDiscAtlas::Stats GSDiscAtlas::GetStats()
 {
-	return {static_cast<u32>(s_state.images.size()), s_matches, s_misses};
+	return {static_cast<u32>(s_state.images.size()), s_matches, s_misses, s_palette_free_matches};
 }
 
-std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y)
+// The crop of image `img` at (x, y) with this size hashes like the texture cache hashes a region.
+static bool CropHashes(const Image& img, u32 x, u32 y, u32 width, u32 height, u64 tex0_hash)
+{
+	XXH3_state_t st;
+	XXH3_64bits_reset(&st);
+	const u8* row = s_state.index_data.data() + img.index_offset + static_cast<size_t>(y) * img.width + x;
+	for (u32 r = 0; r < height; r++, row += img.width)
+		GSXXH3_64bits_update(&st, row, width);
+	return GSXXH3_64bits_digest(&st) == tex0_hash;
+}
+
+std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
+	const u32* clut, u32 clut_entries)
 {
 	if (!s_loaded || probe_x + TILE > width || probe_y + TILE > height)
 		return {};
@@ -203,17 +294,44 @@ std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 heig
 
 		// The texture cache's TEX0 hash of a region texture is XXH3 over its expanded indices,
 		// row by row - the same bytes as this crop of the disc image.
-		XXH3_state_t st;
-		XXH3_64bits_reset(&st);
-		const u8* row = s_state.index_data.data() + img.index_offset + static_cast<size_t>(y) * img.width + x;
-		for (u32 y = 0; y < height; y++, row += img.width)
-			GSXXH3_64bits_update(&st, row, width);
-		if (GSXXH3_64bits_digest(&st) != tex0_hash)
+		if (!CropHashes(img, x, y, width, height, tex0_hash))
 			continue;
 
 		s_matches++;
 		return fmt::format("{}{}:{}:{}:{}:{}", CROP_PREFIX, it->image, x, y, width, height);
 	}
+
+	// No image with this palette: a palette-free image (one the game colours at runtime) whose
+	// indices hash the same. Keep the palette for the loader, which paints the HD index map with it.
+	if (clut && clut_entries > 0)
+	{
+		auto fit = std::lower_bound(s_state.free_tiles.begin(), s_state.free_tiles.end(), probe,
+			[](const FreeTile& t, u64 h) { return t.tile_hash < h; });
+		u32 free_checked = 0;
+		for (; fit != s_state.free_tiles.end() && fit->tile_hash == probe; ++fit)
+		{
+			const Image& img = s_state.images[fit->image];
+			if (fit->x < probe_x || fit->y < probe_y)
+				continue;
+			const u32 x = fit->x - probe_x;
+			const u32 y = fit->y - probe_y;
+			if (x + width > img.width || y + height > img.height)
+				continue;
+			if (++free_checked > MAX_CANDIDATES)
+				break;
+			if (!CropHashes(img, x, y, width, height, tex0_hash))
+				continue;
+
+			{
+				std::unique_lock lock(s_palette_mutex);
+				s_palettes.try_emplace(clut_hash, clut, clut + clut_entries);
+			}
+			s_matches++;
+			s_palette_free_matches++;
+			return fmt::format("{}{}:{}:{}:{}:{}:{:016x}", CROP_PREFIX, fit->image, x, y, width, height, clut_hash);
+		}
+	}
+
 	s_misses++;
 	return {};
 }
@@ -226,12 +344,26 @@ bool GSDiscAtlas::IsCropFilename(std::string_view filename)
 bool GSDiscAtlas::LoadCrop(const std::string& filename, GSTextureReplacements::ReplacementTexture* tex)
 {
 	u32 image = 0, x = 0, y = 0, w = 0, h = 0;
-	if (std::sscanf(filename.c_str() + CROP_PREFIX.size(), "%u:%u:%u:%u:%u", &image, &x, &y, &w, &h) != 5 ||
-		image >= s_state.images.size())
-	{
+	unsigned long long palette_hash = 0;
+	const int fields = std::sscanf(filename.c_str() + CROP_PREFIX.size(), "%u:%u:%u:%u:%u:%llx", &image, &x, &y, &w,
+		&h, &palette_hash);
+	if (fields < 5 || image >= s_state.images.size())
 		return false;
-	}
 	const Image& info = s_state.images[image];
+
+	// A palette-free image's file is an HD index map (index in R): paint it with the palette the
+	// match was made under.
+	std::vector<u32> palette;
+	if (info.flags & FLAG_PALETTE_FREE)
+	{
+		if (fields < 6)
+			return false;
+		std::unique_lock lock(s_palette_mutex);
+		const auto pit = s_palettes.find(palette_hash);
+		if (pit == s_palettes.end())
+			return false;
+		palette = pit->second;
+	}
 
 	std::unique_lock lock(s_image_mutex);
 	auto cached = s_image_cache.find(image);
@@ -282,6 +414,20 @@ bool GSDiscAtlas::LoadCrop(const std::string& filename, GSTextureReplacements::R
 	tex->mips.clear();
 	const u8* src = full.data.data() + static_cast<size_t>(y * scale) * full.pitch + static_cast<size_t>(x * scale) * 4;
 	for (u32 row = 0; row < tex->height; row++)
-		std::memcpy(tex->data.data() + static_cast<size_t>(row) * tex->pitch, src + static_cast<size_t>(row) * full.pitch, tex->pitch);
+	{
+		u8* dst = tex->data.data() + static_cast<size_t>(row) * tex->pitch;
+		const u8* srow = src + static_cast<size_t>(row) * full.pitch;
+		if (palette.empty())
+		{
+			std::memcpy(dst, srow, tex->pitch);
+			continue;
+		}
+		for (u32 col = 0; col < tex->width; col++)
+		{
+			const u32 index = srow[col * 4];
+			const u32 color = (index < palette.size()) ? palette[index] : 0u;
+			std::memcpy(dst + col * 4, &color, 4);
+		}
+	}
 	return true;
 }

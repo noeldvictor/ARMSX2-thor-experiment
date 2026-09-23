@@ -77,6 +77,46 @@ made, and implementation status per item. Update this file rather than adding an
 - Prefer Vulkan compute over the Hexagon NPU for texture work: the data is already in GPU memory, QNN/SNPE is a per-SoC packaging burden, and NNAPI is deprecated as of Android 15.
 - Design notes live in `docs/texture-upscaling-research.md`. Update that file rather than restating its conclusions in code comments.
 
+## HD Texture Packs (How-To For AI Agents)
+When asked for HD textures for a game, this is the job, in this order. The `hd-texture-pack`
+skill (`.claude/skills/hd-texture-pack/SKILL.md`) has the detail; `hd-packs/README.md` is the
+user-facing version.
+- **Know the three options before starting.** A standard PCSX2 pack (the online catalogue in the
+  Texture Packs screen) wins if one exists. RAISR-HD already sharpens every game on the device with
+  no pack. A **disc pack** is this fork's own: every texture read off the disc, upscaled on the
+  desktop GPU, matched exactly by hash. Build a disc pack only when there is no pack worth using.
+- **A game with a recipe** (`hd-packs/<SERIAL>-<name>/`): run
+  `python tools/disc_textures/make_pack.py hd-packs/<folder> --disc <chd|iso> --model <model>`
+  (Python venv `F:\Projects\pcsx2-desktop\.venv`, models in `F:\Projects\pcsx2-desktop\models\`,
+  `chdman` in `F:\Tools\MAME`). It resumes; `--from STEP` redoes a step. Check the index SHA-256
+  against `game.json`.
+- **A new game is reverse engineering, not a button.** Steps, and do not skip the first:
+  1. Prove it is a candidate: dump one scene's textures in desktop PCSX2 and check each dumped
+     texture is an exact crop of a disc file and its name's hashes come from disc data
+     (`xxh3_64` of the crop's indices, row by row; `xxh3_64` of the palette). If not, stop and say so.
+  2. Write `hd-packs/<SERIAL>-<name>/extractor.py`: disc-format code only, the
+     `disc_images()` contract in `tools/disc_textures/extract_native.py`. Copy Okage's folder.
+  3. A 1x pack (built from the native PNGs) must replay **bit-identical** to no pack in gsrunner
+     on the Thor. That is the proof the matching is exact; only then upscale.
+  4. Images the game colours at runtime (fonts) are palette-free: upscale them through the
+     game's real palette (`palette_free_palette()`, read from the `Disc atlas: palette` log
+     line). A guessed grey ramp upscales into the wrong indices.
+  5. Finish the recipe: one clean `make_pack.py` run into a fresh `--work`, then per-step times
+     with the PC's CPU/GPU, output sizes, ISO SHA-1, model SHA-256 and index SHA-256 in the
+     README and `game.json`, 3x before/after shots in `media/`, and what it does *not* cover.
+     Add a row to `hd-packs/README.md`.
+- **Verify on the device, not on the desktop.** gsrunner replays of a GS dump
+  (`/data/local/tmp/gsr`, pack under `cfg/ARMSX2/textures/<SERIAL>/replacements`) for exact
+  comparisons, then the app via the dev server: `hd_test` for A/B, `texture_stats` for
+  `discAtlasMatches`/`Misses`. Judge at 3x internal resolution, the resolution the user plays at.
+- **Never commit textures, packs, zips or models.** The art is the publisher's and 4x-UltraSharp is
+  CC BY-NC-SA. Recipes (code + checksums + small screenshots) are what goes in the repo.
+- **Describe it honestly.** Per game, needs format work (usually AI-assisted), only palette
+  textures today. Never write it up as a generic or one-click tool.
+- Emulator side: `pcsx2/GS/Renderers/HW/GSDiscAtlas.*`, the probe in `GSTextureCache.cpp`, the
+  tight sprite region in `GSRendererHW.cpp`. Keep the 1x bit-identical proof passing after any
+  change there.
+
 ## Shared Test Device
 - The AYN Thor is SHARED. Several Claude sessions do emulator work against it at once, so another session's app stealing foreground focus is normal, not a fault to debug.
 - Never fight for the device. If `adb` taps land in another app, focus jumps, or a different emulator is in the foreground, stop driving it and do code work instead - the device being busy is never a reason to stop working or to end a turn.
@@ -453,23 +493,33 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
 ### Disc HD texture packs
 
 **Implemented and verified on the Thor (2026-09-22).** HD packs built from the game disc with no
-gameplay; the `hd-texture-pack` skill is the procedure, `docs/hd-texture-packs.md` the user guide.
+gameplay. One recipe folder per game in `hd-packs/<SERIAL>-<name>/` (`game.json`, `extractor.py`,
+README with measured RTX 3060 timings, gaps, before/after shots, reference checksums);
+`hd-packs/README.md` is the user guide, `docs/hd-texture-packs.md` how it works, the
+`hd-texture-pack` skill the procedure for adding a game.
 
 - What makes it possible: a drawn texture is a rectangle of a disc image, and PCSX2 keys a region
   texture by XXH3 over the rectangle's palette indices plus XXH3 of the palette - computable
   offline. Okage: 35/35 dumped keys reproduced from disc data.
-- Pack = whole upscaled disc images (`atlas/`) + `disc-atlas.a2at` (v2: palette hash, size and
-  indices per image, hash of every 16x16 block every 8 px). `GSDiscAtlas` matches on a stock-name
+- Pack = whole upscaled disc images (`atlas/`) + `disc-atlas.a2at` (v3: palette hash, size and
+  indices per image, hash of every 16x16 block every 8 px, plus a palette-free block table). `GSDiscAtlas` matches on a stock-name
   miss: probe block -> candidates -> the crop whose hash equals the key's TEX0 hash, so a match is
   exact. It registers the crop under the stock name; the normal async loader does the rest.
 - Menus: a UV-selected sprite of a big palette sheet is narrowed to its own texels
   (`GSRendererHW`, only while a disc atlas is loaded; last texel `ceil(max - 0.5) - 1`).
 - Proof standard: a 1x pack built from the native disc images renders bit-identical frames to no
   pack (gsrunner on the Thor). Keep it that way when changing any of this.
-- Not covered yet: palettes the game builds at runtime (Okage's menu font), true-colour disc
-  images, mipmapped keys with more than one level. Upscale edge bleed between atlas neighbours.
-- Tools: `tools/disc_textures/` (`okage_xim.py` extractor with the `disc_images()` contract,
-  `upscale.py`, `build_disc_pack.py --extractor`). A new game needs only an extractor.
+- Palette-free images (fonts coloured at runtime): matched by TEX0 alone, shipped as an HD index
+  map painted with the game's palette at load. Upscale them through the game's *real* palette
+  (`palette_free_palette()` in the extractor; the emulator logs it as `Disc atlas: palette`) - a
+  grey ramp made Okage's index-1 ink hollow.
+- Not covered yet: true-colour disc images, mipmapped keys with more than one level. Upscale
+  edge bleed between atlas neighbours. Okage's IQ24 font is in the pack but unverified on screen.
+- Tools: `tools/disc_textures/` - `make_pack.py` (one command: disc -> extract -> upscale ->
+  build -> zip, timings, checksum), `disc.py`, `extract_native.py` (the extractor contract),
+  `upscale.py`, `build_disc_pack.py`. A new game needs only `hd-packs/<game>/extractor.py`.
+- README honesty rule: disc packs are per game and need reverse engineering (usually AI-assisted)
+  for each new game. Never describe them as a generic or one-click tool. No packs in the repo.
 - Found on the way: a texture reload while the upscaler worker ran used freed RAISR kernels
   (crash); sets/models are shared_ptr now.
 

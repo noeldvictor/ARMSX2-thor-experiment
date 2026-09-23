@@ -1262,14 +1262,15 @@ Java_kr_co_iefriends_pcsx2_NativeApp_getTextureUpscaleStats(JNIEnv *env, jclass 
         "\"upscaled\":{},\"evicted\":{},\"held\":{},\"memoryUsage\":{},\"skippedGuard\":{},"
         "\"declinedClassDisabled\":{},\"declinedUnimplemented\":{},\"declinedRateLimit\":{},"
         "\"declinedBudget\":{},\"declinedNoModel\":{},"
-        "\"discAtlasLoaded\":{},\"discAtlasImages\":{},\"discAtlasMatches\":{},\"discAtlasMisses\":{}}}",
+        "\"discAtlasLoaded\":{},\"discAtlasImages\":{},\"discAtlasMatches\":{},\"discAtlasMisses\":{},"
+        "\"discAtlasPaletteFreeMatches\":{}}}",
         EmuConfig.GS.TextureUpscaleWorldEnabled, EmuConfig.GS.TextureUpscaleUiEnabled,
         static_cast<int>(EmuConfig.GS.TextureUpscaleWorldAlgorithm), static_cast<int>(EmuConfig.GS.TextureUpscaleUiAlgorithm),
         static_cast<int>(EmuConfig.GS.TextureUpscaleWorldScale), static_cast<int>(EmuConfig.GS.TextureUpscaleUiScale),
         EmuConfig.GS.TextureUpscaleDeposterize, static_cast<int>(EmuConfig.GS.TextureUpscaleVramBudgetMB),
         s.upscaled, s.evicted, s.held, s.memory_usage, s.skipped_guard, s.declined_class_disabled,
         s.declined_unimplemented, s.declined_rate_limit, s.declined_budget, s.declined_no_model,
-        GSDiscAtlas::IsLoaded(), da.images, da.matches, da.misses);
+        GSDiscAtlas::IsLoaded(), da.images, da.matches, da.misses, da.palette_free_matches);
     return env->NewStringUTF(json.c_str());
 }
 

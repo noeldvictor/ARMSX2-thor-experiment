@@ -173,3 +173,6 @@ platforms/android/app/src/main/cpp/3rdparty/discord/include/
 # docs/reference/arm/README.md says where to get it. The per-core optimization guides
 # next to it are small enough to track.
 docs/reference/arm/arm-architecture-reference-manual-a-profile.pdf
+
+# Disc HD texture pack work folders (make_pack.py): disc images, textures, packs
+hd-packs/*/work/

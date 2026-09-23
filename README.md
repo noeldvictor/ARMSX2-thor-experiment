@@ -20,29 +20,6 @@ Please do not open issues expecting support or a roadmap. This is not a product 
 
 Bring your own legally dumped PS2 BIOS and games. Use this only for personal experimentation.
 
-## **HD Textures Straight From The Game Disc**
-
-**This fork builds HD texture packs from the game disc itself - no playing through the game to dump textures.** Every texture is read off the disc image, upscaled whole on a desktop GPU, and matched by the emulator to what the game draws, exactly. Okage: Shadow King got a complete 4x pack (2,807 textures) in under 15 minutes of GPU time, menus and portraits included.
-
-![Okage: Shadow King on the AYN Thor at 3x internal resolution with the HD pack built from its disc](docs/media/okage-hd-pack-thor.jpg)
-
-| | |
-| --- | --- |
-| ![Inn door and Ari, original vs HD pack](docs/media/okage-hd-compare-inn.jpg) | ![Thatched roof, original vs HD pack](docs/media/okage-hd-compare-roof.jpg) |
-
-![Status menu portraits, original vs HD pack](docs/media/okage-hd-compare-menu.jpg)
-
-**Two ways to get HD textures, and they work together:**
-
-| | Standard packs (PCSX2 / ARMSX2) | **Disc packs (this fork)** |
-| --- | --- | --- |
-| Textures come from | Dumps made while someone plays | **The game disc, directly** |
-| Coverage | What the player reached | **Every texture on the disc** |
-| Making one | Play everything with dumping on | **Run three tools** |
-| Works in stock PCSX2 | Yes | No, this fork |
-
-A texture with its own standard file uses it; a disc pack covers the rest. **Want to make one for your game? Start with [docs/hd-texture-packs.md](docs/hd-texture-packs.md)** - the Okage tools are in `tools/disc_textures/`, and only the disc-format reader is per game.
-
 ## What This Fork Adds Over ARMSX2
 
 The app is upstream [ARMSX2](https://github.com/ARMSX2/ARMSX2) — its Kotlin/Compose frontend and PCSX2-derived core — plus the changes below. Everything in this section is fork work; anything not listed behaves like upstream.
@@ -63,7 +40,7 @@ The Thor's Qualcomm Vulkan driver cannot read the frame it is drawing, so every 
 
 ### Texture upscaling in the emulator
 
-- **Disc packs (above):** HD packs made from the game disc with no playing, matched exactly to what the game draws, menus and portraits included. Guide: [docs/hd-texture-packs.md](docs/hd-texture-packs.md).
+- **Disc HD texture packs**, experimental and per game: see [the section at the bottom](#hd-texture-packs-from-the-game-disc-experimental).
 
 Screen upscalers (FSR, shader chains) work on the finished frame. The fork also upscales **each texture as the game uploads it**, so the game renders from sharper art.
 
@@ -80,6 +57,7 @@ Screen upscalers (FSR, shader chains) work on the finished frame. The fork also 
 
 ### Library, controls and defaults
 
+- **Its own launcher icon** (an amber hammer, with a themed-icon layer), so the fork is easy to tell from official ARMSX2 on the home screen. It still uses ARMSX2's package id, so the two cannot be installed side by side yet.
 - Cover-first game list with xlenore PS2 covers by default.
 - An `HD` badge on covers: solid when a texture pack is installed, hollow when the online catalogue has one. Tap it to open Texture Packs for that game.
 - **Multi-disc games are one card**, with an "N DISCS" badge, the other discs in the long-press menu, and "Insert Disc N" in the pause menu.
@@ -120,7 +98,7 @@ The desktop PCSX2 lab's keys are in [docs/cheat-tooling.md](docs/cheat-tooling.m
 ## Docs
 
 - **Performance:** [Okage game notes](docs/games/okage.md) (why it was slow and wrong on the Thor, and what fixed it) · [ARM64 optimization review](docs/arm64-optimization-review.md)
-- **HD packs:** [HD texture packs - standard vs disc packs, making one, sharing](docs/hd-texture-packs.md)
+- **HD packs:** [Recipes and how to add a game](hd-packs/README.md) · [How disc packs work, testing, sharing](docs/hd-texture-packs.md)
 - **Textures:** [Texture upscaling research](docs/texture-upscaling-research.md) · [Neural models](docs/neural-models.md) · [Third-party ports and licences](docs/third-party.md) · [RAISR kernel trainer](tools/raisr_train.py)
 - **Cheats:** [Cheat tooling](docs/cheat-tooling.md) · [Games without cheats](docs/games-without-cheats.txt)
 - **Tooling:** [On-device MCP server](docs/mcp-server.md)
@@ -149,6 +127,56 @@ For a quicker Kotlin/Compose check:
 Set-Location platforms\android
 .\gradlew.bat :app:compileGithubDebugKotlin
 ```
+
+## HD Texture Packs From The Game Disc (Experimental)
+
+The fork can build an HD texture pack from the game disc itself instead of from textures dumped
+while someone plays. It reads every texture off the disc image, upscales them on a desktop GPU,
+and the emulator matches each texture the game draws to its HD version by hash, exactly. When it
+works, you get every texture in the game, menus and portraits included, without playing through it.
+
+**It is not a one-click tool, and it only works for games someone has made a recipe for.** Every
+game stores its textures its own way, so each new game means working out its disc format and
+writing a small extractor. That is reverse-engineering work. We did it for Okage with
+[Claude Code](https://claude.com/claude-code), and you will probably want an AI agent for it
+too. So far there is **one recipe: Okage: Shadow King**.
+
+![Status menu portraits and fonts, original vs Okage's disc HD pack](hd-packs/SCUS-97129-okage/media/menu-fonts.jpg)
+
+| | |
+| --- | --- |
+| ![Inn door and Ari, original vs HD pack](hd-packs/SCUS-97129-okage/media/inn.jpg) | ![Thatched roof, original vs HD pack](hd-packs/SCUS-97129-okage/media/roof.jpg) |
+
+**If the game has a recipe** in [`hd-packs/`](hd-packs/README.md): you need your own disc image,
+a PC with an NVIDIA GPU, Python and MAME's `chdman`. One command then extracts, upscales and
+zips the pack. Okage takes about 15 minutes on an RTX 3060. Unzip the result into
+`<DataRoot>/textures/` on the device.
+
+**If it doesn't:** open Claude Code in this repo and ask it to make a recipe for your game.
+The [`hd-texture-pack` skill](.claude/skills/hd-texture-pack/SKILL.md) gives it the procedure:
+
+1. Prove the game is a candidate by dumping one scene in desktop PCSX2.
+2. Find and decode the texture format.
+3. Check a 1x pack renders bit-identical to no pack.
+4. Upscale.
+
+Expect hours of back-and-forth, not minutes. Some games won't work: true-colour textures,
+textures built at runtime, and formats nobody can decode are not covered yet.
+
+Packs are never in this repository. The art is the publisher's, and the default upscale model is
+licensed for non-commercial use only. Share recipes. A pack works only in this fork.
+
+| | Standard packs (PCSX2 / ARMSX2) | Disc packs (this fork) |
+| --- | --- | --- |
+| Textures come from | Dumps made while someone plays | The game disc |
+| Per-game work | Play everything with dumping on | Decode the disc format once (AI-assisted), then one command |
+| Coverage | What the player reached | Every palette texture on the disc |
+| Works in stock PCSX2 | Yes | No, this fork only |
+
+Both kinds sit in the same folder and work together: a texture with its own standard file uses
+it, and a disc pack covers the rest. Details: [hd-packs/README.md](hd-packs/README.md) (recipes,
+requirements, adding a game) and [docs/hd-texture-packs.md](docs/hd-texture-packs.md) (how the
+matching works, testing, sharing).
 
 ## Credits
 

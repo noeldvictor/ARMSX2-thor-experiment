@@ -272,9 +272,10 @@ at internal resolution 1x the gain is hard to see - raise the internal resolutio
 ### Every texture straight off the disc (2026-09-22)
 
 The plan: make an HD pack without playing - pull the textures from the disc, upscale them on a
-desktop GPU, and link them to what the emulator sees. The disc side is done:
-`tools/disc_textures/okage_xim.py` writes all **2,807 unique textures** (9,634 references,
-40 MB of PNG) with **no failures**, in about 15 seconds.
+desktop GPU, and link them to what the emulator sees. The disc side: the extractor (now
+[hd-packs/SCUS-97129-okage/extractor.py](../../hd-packs/SCUS-97129-okage/extractor.py)) reads all
+**2,807 unique textures** (9,634 references, 40 MB of PNG) with **no failures**, in about 15
+seconds; 2,633 of them are palette images, which is what the pack covers.
 
 - The disc is a CD (`MODE2_RAW`); `chdman extractcd` then strip each 2352-byte sector to its
   2048 user bytes (offset 24) for an ISO that `pycdlib` reads.
@@ -286,12 +287,21 @@ desktop GPU, and link them to what the emulator sees. The disc side is done:
 - Most textures are small (64x32, 64x64, 32x32 lead); the whole set is 32 MB native, so a desktop
   GPU upscales it in minutes.
 
-The link to the emulator is the open part. The stock replacement key hashes GS memory the way
-the draw reads it (raw swizzled blocks for most PSMT8 textures, TW x TH rounded up to a power of
-two, so junk past the image edge is in it) plus the palette, size and region. A fork-only key
-computed from what the disc already gives - the decoded RGBA at the uploaded image size - would
-let the offline tool name each PNG exactly; the emulator side needs to know the uploaded image
-size, which it can record from the transfer (BITBLTBUF/TRXREG) that filled the texture's memory.
+The link to the emulator was solved the same day without a new key: the stock region key is
+XXH3 over the rectangle's palette indices, which the disc gives, so the emulator content-matches
+a drawn texture to a crop of a disc image (`GSDiscAtlas`, see
+[docs/hd-texture-packs.md](../hd-texture-packs.md)). Status, all verified on the Thor:
+
+- World, characters, the status menu sheet and portraits: matched exactly (a 1x pack renders
+  bit-identical frames to no pack).
+- Fonts `BM.FNT`, `BMUI.FNT`, `IQ24.FNT`: header with first/last character code (the glyph
+  count is last - first + 1, not byte 5 alone - that misread made IQ24 look compressed), 20-byte
+  glyph entries, u16 row count, then a 256-wide 4bpp sheet. The game colours them at runtime (index 0 transparent, index k white at alpha 0x80 - 8(k-1)), so
+  they are palette-free images in index v3. Upscaled through a grey ramp the ink (index 1) went
+  hollow; upscaled through that real palette they are right.
+- IQ24 is in the pack but was not on the replayed status menu; check it on a screen that draws it.
+- Not covered: the 174 true-colour `.XIM` images.
+- The recipe, timings and checksums: [hd-packs/SCUS-97129-okage](../../hd-packs/SCUS-97129-okage/README.md).
 
 ## Cheats
 
