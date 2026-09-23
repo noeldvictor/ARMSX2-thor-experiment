@@ -56,6 +56,18 @@ not with no pack: while any disc pack is loaded, menu sprites are narrowed to th
 so bilinear filtering at a sprite's edge clamps instead of reading the next texel of the sheet -
 a one-pixel difference at sprite edges that has nothing to do with the replacements.
 
+## ASTC
+
+A 4x pack stores its HD images as ASTC 4x4 (`atlas/*.astc`, index version 5): 8 bits a pixel, a
+quarter of RGBA8, sampled natively by the Thor's GPU (every Android GPU has ASTC LDR). The
+emulator never decodes them - at 4x one native texel is exactly one 4x4 block, so a crop is a copy
+of whole blocks, and a composite copies each piece's blocks and fills every uncovered texel with a
+constant ("void-extent") block of its native colour. Palette-free index maps stay PNG (the
+emulator paints them per pixel). Okage: 470 MB instead of 632 MB on disk, a quarter of the GPU
+memory, the same matches in every test scene, frames at 47-55 dB PSNR against the PNG pack.
+`--format png` builds a lossless pack - for the 1x exactness test and for 2x packs, where crops do
+not land on the block grid. Encoding is Arm's `astcenc`, many images per call (`astc.py`).
+
 ## Composites (textures a game assembles in VRAM)
 
 Many games do not draw a disc image as it is: they upload several - sprite frames into one sheet,

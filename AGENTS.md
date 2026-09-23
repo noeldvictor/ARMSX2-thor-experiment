@@ -510,6 +510,9 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   miss: probe block -> candidates -> the crop whose hash equals the texture's *content hash* (the
   atlas's own XXH3 of the texels as the GS reads them, computed lazily on the first candidate), so a
   match is exact. It registers the crop under the stock name; the normal async loader does the rest.
+- 4x packs store HD images as ASTC 4x4 (index v5, `astc.py` batches astcenc): crops and composites
+  are block copies, uncovered texels constant blocks; palette-free index maps stay PNG; `--format
+  png` for the 1x exactness test and 2x packs. Okage ASTC vs PNG: same matches, 47-55 dB frames.
 - Composites: a texture no crop matches is split into disc images by block votes
   (`GSDiscAtlas::MatchComposite`); a placement counts only where every texel equals the texture,
   the rest keeps its native colour. That covers sprite sheets and text built from glyphs in any

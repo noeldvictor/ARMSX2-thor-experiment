@@ -73,6 +73,8 @@ def main() -> None:
     ap.add_argument("--scale", type=int, choices=(2, 4), help="override game.json's scale")
     ap.add_argument("--from", dest="start", choices=STEPS, help="redo this step and the ones after it")
     ap.add_argument("--until", choices=STEPS, help="stop after this step")
+    ap.add_argument("--format", choices=("astc", "png"), default="astc", help="HD image format in the pack")
+    ap.add_argument("--astcenc", help="path to Arm's astcenc, if it is not on PATH or in ASTCENC")
     a = ap.parse_args()
 
     game = json.loads((a.recipe / "game.json").read_text())
@@ -119,7 +121,8 @@ def main() -> None:
                                 + (["--force"] if a.start == "upscale" else [])))
 
     replacements = pack / "replacements"
-    step("build", lambda: run([py, str(HERE / "build_disc_pack.py"), str(extractor), str(iso), str(hd), str(replacements)]))
+    step("build", lambda: run([py, str(HERE / "build_disc_pack.py"), str(extractor), str(iso), str(hd), str(replacements),
+                               "--format", a.format] + (["--astcenc", a.astcenc] if a.astcenc else [])))
 
     def make_zip() -> None:
         print(f"\nwriting {zip_path}", flush=True)

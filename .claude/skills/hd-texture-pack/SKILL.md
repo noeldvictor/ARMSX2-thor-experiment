@@ -90,6 +90,11 @@ Okage on the RTX 3060: ~3.5 textures/s at 4x.
 
 ## 3. Pack, then prove it exact
 
+Packs are ASTC by default (`astcenc` from Arm's astc-encoder: on PATH, `ASTCENC`, or `--astcenc`;
+the PC copy is `F:\Projects\armsx2-thor\raisr-data\tools\bin\astcenc-avx2.exe`). ASTC is lossy,
+so the 1x exactness pack is built with `--format png`; check the ASTC pack against the PNG one
+(same match counts, frames ~50 dB PSNR).
+
 ```
 python tools/disc_textures/build_disc_pack.py hd-packs/<game>/extractor.py <iso> native/ pack_1x/
 python tools/disc_textures/make_pack.py hd-packs/<game> --disc <chd> --model <model>   # the 4x pack

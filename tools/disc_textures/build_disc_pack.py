@@ -6,8 +6,11 @@ HD_DIR holds the upscaled textures under the names extract_native.py gave them; 
 work too, as a 1x pack that must render exactly like no pack. The output is a replacements folder
 for `<DataRoot>/textures/<SERIAL>/replacements/`:
 
-- `atlas/<key>.png` - each whole upscaled disc texture, alpha back on the PS2 scale (0x80 =
-  opaque), which is what replacement textures use;
+- `atlas/<key>.astc` - each whole upscaled disc texture as ASTC 4x4 (see astc.py), alpha back on
+  the PS2 scale (0x80 = opaque), which is what replacement textures use. `--format png` writes
+  PNG instead: lossless, for the 1x exactness test and for 2x packs (ASTC needs every crop on the
+  4x4 block grid, which only a 4x pack guarantees). Palette-free index maps are always PNG. A pack
+  with ASTC images has index version 5, so an emulator that cannot crop them refuses the pack;
 - `disc-atlas.a2at` - the index the emulator matches against (pcsx2/GS/Renderers/HW/GSDiscAtlas.*):
   per disc texture its palette hash (XXH3 of the 256/16 RGBA entries, as the texture cache keys
   the CLUT), size and palette indices, plus the XXH3 of every 16x16 block at 8-pixel positions.
@@ -30,7 +33,7 @@ images holding that block, and takes the one whose crop hashes to the texture's 
 Another game needs only its own extractor (the contract is in extract_native.py); everything
 here is game-independent.
 
-Needs pycdlib, numpy, pillow, xxhash. Palette textures only (PSMT8/PSMT4) for now.
+Needs pycdlib, numpy, pillow, xxhash, and Arm's astcenc for ASTC.
 """
 
 from __future__ import annotations
@@ -45,6 +48,7 @@ import xxhash
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from astc import AstcBatch, find_astcenc  # noqa: E402
 from extract_native import load_extractor, raw_alpha, representative_palette, rgba32_raw_alpha  # noqa: E402
 
 TILE = 16
@@ -75,9 +79,26 @@ def main() -> None:
     ap.add_argument("iso", type=Path)
     ap.add_argument("hd", type=Path)
     ap.add_argument("out", type=Path)
+    ap.add_argument("--format", choices=("astc", "png"), default="astc",
+                    help="HD image format (default astc; png for 1x test packs and 2x packs)")
+    ap.add_argument("--astcenc", help="path to Arm's astcenc (else ASTCENC or PATH)")
     a = ap.parse_args()
     extractor = load_extractor(a.extractor)
     (a.out / "atlas").mkdir(parents=True, exist_ok=True)
+    batch = None
+    if a.format == "astc":
+        exe = find_astcenc(a.astcenc)
+        if not exe:
+            raise SystemExit("astcenc not found: install Arm's astc-encoder, or pass --format png")
+        batch = AstcBatch(exe)
+
+    def save(rgba: np.ndarray, stem: str, scale: int) -> str:
+        """Write an HD image (RGBA, PS2 alpha) as ASTC when the pack is 4x, else PNG; its file name."""
+        if batch is not None and scale % 4 == 0:
+            batch.add(a.out / "atlas" / f"{stem}.astc", rgba)
+            return f"{stem}.astc"
+        Image.fromarray(rgba, "RGBA").save(a.out / "atlas" / f"{stem}.png")
+        return f"{stem}.png"
 
     images = []  # (clut_hash, w, h, index_offset, flags, file)
     tiles = []  # (clut_hash, tile_hash, image, x, y)
@@ -112,9 +133,9 @@ def main() -> None:
             rgba = np.asarray(hd).copy()
             if not (rgba32 and rgba32_raw_alpha(indices)):
                 rgba[..., 3] = (rgba[..., 3].astype(np.uint16) + 1) // 2  # 255 -> 128, the PS2 scale
-            Image.fromarray(rgba, "RGBA").save(a.out / "atlas" / name)
+            file = save(rgba, key, scale)
             image_id = len(images)
-            images.append((0, w, h, offset, FLAG_RGBA32 if rgba32 else FLAG_TRUE_COLOUR, f"atlas/{name}"))
+            images.append((0, w, h, offset, FLAG_RGBA32 if rgba32 else FLAG_TRUE_COLOUR, f"atlas/{file}"))
             free_tiles += [(th, image_id, x, y) for x, y, th in block_hashes]
             continue
         if not pals:
@@ -152,22 +173,27 @@ def main() -> None:
             rgba = np.asarray(hd).copy()
             if not raw_alpha(indices, pal):  # otherwise the image already holds PS2 alpha, up to 0xFF
                 rgba[..., 3] = (rgba[..., 3].astype(np.uint16) + 1) // 2  # 255 -> 128, the PS2 scale
-            Image.fromarray(rgba, "RGBA").save(a.out / "atlas" / name)
+            file = save(rgba, name[:-4], scale)
 
             clut_hash = xxhash.xxh3_64_intdigest(pal)
             image_id = len(images)
-            images.append((clut_hash, w, h, offset, 0, f"atlas/{name}"))
+            images.append((clut_hash, w, h, offset, 0, f"atlas/{file}"))
             tiles += [(clut_hash, th, image_id, x, y) for x, y, th in block_hashes]
 
+    if batch is not None:
+        batch.close()
+    astc_images = sum(1 for i in images if i[5].endswith(".astc"))
     tiles.sort(key=lambda t: (t[0], t[1]))
     free_tiles.sort(key=lambda t: t[0])
     # Version 3: header 40 bytes, images 72 bytes (flags added), then bound tiles (24 bytes),
     # then palette-free tiles (16 bytes), then the index data. Version 4: the same layout, and
-    # images may be true colour (FLAG_TRUE_COLOUR, RGB index data, RGB block hashes).
+    # images may be true colour (FLAG_TRUE_COLOUR, RGB index data, RGB block hashes). Version 5:
+    # the same layout, and images may be ASTC files (cropped block by block).
     header_size = 40
     index_data_offset = header_size + 72 * len(images) + 24 * len(tiles) + 16 * len(free_tiles)
     with open(a.out / "disc-atlas.a2at", "wb") as f:
-        f.write(struct.pack("<4sIIIIIQII", b"A2AT", 4, len(images), len(tiles), TILE, STEP, index_data_offset,
+        f.write(struct.pack("<4sIIIIIQII", b"A2AT", 5 if astc_images else 4, len(images), len(tiles), TILE, STEP,
+                            index_data_offset,
                             len(free_tiles), 0))
         for clut_hash, w, h, off, flags, file in images:
             f.write(struct.pack("<QIIQII40s", clut_hash, w, h, off, flags, 0, file.encode("ascii")))
@@ -180,7 +206,7 @@ def main() -> None:
     size = (a.out / "disc-atlas.a2at").stat().st_size
     print(f"{len(images)} disc textures ({sum(1 for i in images if i[4] & FLAG_PALETTE_FREE)} palette-free, "
           f"{sum(1 for i in images if i[4] & (FLAG_TRUE_COLOUR | FLAG_RGBA32))} true-colour), {len(tiles) + len(free_tiles)} blocks, "
-          f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, "
+          f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, {astc_images} ASTC, "
           f"{missing} without an HD image")
 
 

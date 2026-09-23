@@ -29,6 +29,7 @@
 //                        v4: also true-colour images, whose blocks hash 16x16 RGB texels)
 //   index data           each image's palette indices, one byte per texel (PSMT4 expanded), row-major;
 //                        a PSMCT24 image's RGB, three bytes per texel; a PSMCT32 image's RGBA, four
+// Version 5: the same layout; images may be ASTC 4x4 files (a 4x pack), cropped block by block.
 namespace
 {
 #pragma pack(push, 1)
@@ -194,11 +195,11 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 	const u64 tiles_end = images_end + static_cast<u64>(hdr.tile_count) * sizeof(Tile);
 	const u64 free_end = tiles_end + static_cast<u64>(tail.free_tile_count) * sizeof(FreeTile);
 	const u32 step = (hdr.version >= 2) ? hdr.tile_step : TILE;
-	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 4 || hdr.tile_size != TILE ||
+	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 5 || hdr.tile_size != TILE ||
 		step == 0 || (TILE % step) != 0 ||
 		free_end > data->size() || hdr.index_data_offset > data->size())
 	{
-		Console.Error(fmt::format("Disc atlas: {} is not a version 1-4 index", path));
+		Console.Error(fmt::format("Disc atlas: {} is not a version 1-5 index", path));
 		return false;
 	}
 
@@ -579,7 +580,8 @@ std::string GSDiscAtlas::MatchComposite(const u8* indices, u32 width, u32 height
 	return fmt::format("{}{}{}", CROP_PREFIX, COMPOSITE_TAG, id);
 }
 
-// An upscaled disc image from the cache, loading it if needed. Call with s_image_mutex held.
+// An upscaled disc image from the cache, loading it if needed: RGBA8 (PNG) or ASTC 4x4 (as the
+// GPU will sample it - the loader refuses it on a device without ASTC). Call with s_image_mutex held.
 static const GSTextureReplacements::ReplacementTexture* CachedImage(u32 image)
 {
 	auto cached = s_image_cache.find(image);
@@ -593,9 +595,10 @@ static const GSTextureReplacements::ReplacementTexture* CachedImage(u32 image)
 	const std::string path = Path::Combine(s_state.dir, std::string_view(info.file, strnlen(info.file, sizeof(info.file))));
 	const GSTextureReplacements::ReplacementTextureLoader loader = GSTextureReplacements::GetLoader(path);
 	GSTextureReplacements::ReplacementTexture full;
-	if (!loader || !loader(path, &full, true) || full.format != GSTexture::Format::Color)
+	if (!loader || !loader(path, &full, true) ||
+		(full.format != GSTexture::Format::Color && full.format != GSTexture::Format::ASTC4x4))
 	{
-		Console.Warning(fmt::format("Disc atlas: cannot load {} as RGBA8", path));
+		Console.Warning(fmt::format("Disc atlas: cannot load {} as RGBA8 or ASTC 4x4", path));
 		return nullptr;
 	}
 	const size_t bytes = full.data.size();
@@ -611,6 +614,39 @@ static const GSTextureReplacements::ReplacementTexture* CachedImage(u32 image)
 	return &s_image_cache.emplace(image, std::move(full)).first->second;
 }
 
+// The scale of an upscaled disc image, or 0 if it is not a whole multiple of the native size.
+static u32 ImageScale(const Image& info, const GSTextureReplacements::ReplacementTexture& full)
+{
+	const u32 scale = full.width / info.width;
+	return (scale && full.width == info.width * scale && full.height == info.height * scale) ? scale : 0;
+}
+
+static constexpr u32 ASTC_BLOCK = 4;
+static constexpr u32 ASTC_BLOCK_BYTES = 16;
+
+// An ASTC "void-extent" block: one exact colour for all 16 texels (8-bit channels as UNORM16).
+static void ConstantASTCBlock(u8* dst, u32 rgba)
+{
+	const u64 lo = 0xFFFFFFFFFFFFFDFCull; // void-extent marker, LDR, no extent coordinates
+	u64 hi = 0;
+	for (u32 c = 0; c < 4; c++)
+		hi |= static_cast<u64>(((rgba >> (c * 8)) & 0xFF) * 257) << (c * 16);
+	std::memcpy(dst, &lo, 8);
+	std::memcpy(dst + 8, &hi, 8);
+}
+
+// Copies a rectangle of 4x4 blocks: (bx, by, bw, bh) in block units of `full` into `dst`.
+static void CopyASTCBlocks(const GSTextureReplacements::ReplacementTexture& full, u32 bx, u32 by, u32 bw, u32 bh,
+	u8* dst, u32 dst_pitch)
+{
+	for (u32 row = 0; row < bh; row++)
+	{
+		std::memcpy(dst + static_cast<size_t>(row) * dst_pitch,
+			full.data.data() + static_cast<size_t>(by + row) * full.pitch + static_cast<size_t>(bx) * ASTC_BLOCK_BYTES,
+			static_cast<size_t>(bw) * ASTC_BLOCK_BYTES);
+	}
+}
+
 static bool LoadComposite(u32 id, GSTextureReplacements::ReplacementTexture* tex)
 {
 	std::shared_ptr<const Composite> comp;
@@ -620,15 +656,73 @@ static bool LoadComposite(u32 id, GSTextureReplacements::ReplacementTexture* tex
 			return false;
 		comp = s_composites[id];
 	}
+	const auto colour = [&](u8 index) { return index < comp->clut.size() ? comp->clut[index] : 0u; };
 
 	std::unique_lock lock(s_image_mutex);
-	const GSTextureReplacements::ReplacementTexture* first = CachedImage(comp->pieces[0].image);
-	if (!first)
-		return false;
-	const u32 scale = first->width / s_state.images[comp->pieces[0].image].width;
+
+	// ASTC when any piece is ASTC at 4x: one native texel is one 4x4 block, so the composite is
+	// assembled block by block - each piece's blocks copied, every other texel a constant block of
+	// its native colour. Palette-free pieces (index maps) cannot be ASTC and stay native here.
+	bool astc = false;
+	u32 scale = 0;
+	for (const Composite::Piece& piece : comp->pieces)
+	{
+		if (s_state.images[piece.image].flags & FLAG_PALETTE_FREE)
+			continue;
+		const GSTextureReplacements::ReplacementTexture* full = CachedImage(piece.image);
+		if (!full)
+			return false;
+		astc = full->format == GSTexture::Format::ASTC4x4;
+		scale = ImageScale(s_state.images[piece.image], *full);
+		break;
+	}
+	if (astc)
+	{
+		if (scale != ASTC_BLOCK)
+			return false;
+		tex->width = comp->width * ASTC_BLOCK;
+		tex->height = comp->height * ASTC_BLOCK;
+		tex->format = GSTexture::Format::ASTC4x4;
+		tex->pitch = comp->width * ASTC_BLOCK_BYTES;
+		tex->data.resize(static_cast<size_t>(tex->pitch) * comp->height);
+		tex->mips.clear();
+		for (u32 y = 0; y < comp->height; y++)
+		{
+			for (u32 x = 0; x < comp->width; x++)
+			{
+				ConstantASTCBlock(tex->data.data() + static_cast<size_t>(y) * tex->pitch + x * ASTC_BLOCK_BYTES,
+					colour(comp->indices[static_cast<size_t>(y) * comp->width + x]));
+			}
+		}
+		for (const Composite::Piece& piece : comp->pieces)
+		{
+			const Image& info = s_state.images[piece.image];
+			if (info.flags & FLAG_PALETTE_FREE)
+				continue;
+			const GSTextureReplacements::ReplacementTexture* full = CachedImage(piece.image);
+			if (!full || full->format != GSTexture::Format::ASTC4x4 || ImageScale(info, *full) != ASTC_BLOCK)
+				return false;
+			const int x0 = std::max(piece.x, 0), y0 = std::max(piece.y, 0);
+			const int x1 = std::min(piece.x + static_cast<int>(info.width), static_cast<int>(comp->width));
+			const int y1 = std::min(piece.y + static_cast<int>(info.height), static_cast<int>(comp->height));
+			CopyASTCBlocks(*full, x0 - piece.x, y0 - piece.y, x1 - x0, y1 - y0,
+				tex->data.data() + static_cast<size_t>(y0) * tex->pitch + static_cast<size_t>(x0) * ASTC_BLOCK_BYTES,
+				tex->pitch);
+		}
+		return true;
+	}
+
+	// RGBA8: PNG pieces (a PNG pack, or a composite of palette-free images only).
+	for (const Composite::Piece& piece : comp->pieces)
+	{
+		const GSTextureReplacements::ReplacementTexture* full = CachedImage(piece.image);
+		if (!full || full->format != GSTexture::Format::Color)
+			return false;
+		scale = ImageScale(s_state.images[piece.image], *full);
+		break;
+	}
 	if (scale == 0)
 		return false;
-
 	tex->width = comp->width * scale;
 	tex->height = comp->height * scale;
 	tex->format = GSTexture::Format::Color;
@@ -637,7 +731,6 @@ static bool LoadComposite(u32 id, GSTextureReplacements::ReplacementTexture* tex
 	tex->mips.clear();
 
 	// What no piece covers keeps its native colour, scaled up.
-	const auto colour = [&](u8 index) { return index < comp->clut.size() ? comp->clut[index] : 0u; };
 	for (u32 y = 0; y < tex->height; y++)
 	{
 		u32* dst = reinterpret_cast<u32*>(tex->data.data() + static_cast<size_t>(y) * tex->pitch);
@@ -650,8 +743,8 @@ static bool LoadComposite(u32 id, GSTextureReplacements::ReplacementTexture* tex
 	{
 		const Image& info = s_state.images[piece.image];
 		const GSTextureReplacements::ReplacementTexture* full = CachedImage(piece.image);
-		if (!full || full->width != info.width * scale || full->height != info.height * scale)
-			return false; // mixed scales: leave the texture native rather than half-built
+		if (!full || full->format != GSTexture::Format::Color || ImageScale(info, *full) != scale)
+			return false; // mixed scales or formats: leave the texture native rather than half-built
 		const bool index_map = (info.flags & FLAG_PALETTE_FREE) != 0;
 		const int x0 = std::max(piece.x, 0), y0 = std::max(piece.y, 0);
 		const int x1 = std::min(piece.x + static_cast<int>(info.width), static_cast<int>(comp->width));
@@ -727,44 +820,37 @@ bool GSDiscAtlas::LoadCrop(const std::string& filename, GSTextureReplacements::R
 	}
 
 	std::unique_lock lock(s_image_mutex);
-	auto cached = s_image_cache.find(image);
-	if (cached == s_image_cache.end())
+	const GSTextureReplacements::ReplacementTexture* full = CachedImage(image);
+	if (!full)
+		return false;
+	const u32 scale = ImageScale(info, *full);
+	if (scale == 0)
 	{
-		const std::string path = Path::Combine(s_state.dir, std::string_view(info.file, strnlen(info.file, sizeof(info.file))));
-		const GSTextureReplacements::ReplacementTextureLoader loader = GSTextureReplacements::GetLoader(path);
-		GSTextureReplacements::ReplacementTexture full;
-		if (!loader || !loader(path, &full, true) || full.format != GSTexture::Format::Color)
+		Console.Warning(fmt::format("Disc atlas: {}x{} is not a whole multiple of {}x{}", full->width,
+			full->height, info.width, info.height));
+		return false;
+	}
+
+	if (full->format == GSTexture::Format::ASTC4x4)
+	{
+		// Cut by blocks. The pack only stores ASTC at 4x, where every crop edge is on the block
+		// grid. A true-colour crop needs its alpha rebuilt from TEXA unless the stored alpha is
+		// already it (AEM with TA0 0x80, what the pack assumed) - ASTC cannot be edited, so any
+		// other TEXA leaves the texture native.
+		if ((x * scale) % ASTC_BLOCK || (y * scale) % ASTC_BLOCK || (w * scale) % ASTC_BLOCK ||
+			(h * scale) % ASTC_BLOCK || (info.flags & FLAG_PALETTE_FREE) || (ta0 >= 0 && !(aem && ta0 == 0x80)))
 		{
-			Console.Warning(fmt::format("Disc atlas: cannot load {} as RGBA8", path));
 			return false;
 		}
-
-		// Evict whole images, least recently used first, to stay under the budget.
-		const size_t bytes = full.data.size();
-		while (s_image_cache_bytes + bytes > IMAGE_CACHE_BUDGET && !s_image_lru.empty())
-		{
-			auto victim = s_image_cache.find(s_image_lru.front());
-			s_image_cache_bytes -= victim->second.data.size();
-			s_image_cache.erase(victim);
-			s_image_lru.pop_front();
-		}
-		cached = s_image_cache.emplace(image, std::move(full)).first;
-		s_image_cache_bytes += bytes;
-		s_image_lru.push_back(image);
-	}
-	else
-	{
-		s_image_lru.remove(image);
-		s_image_lru.push_back(image);
-	}
-
-	const GSTextureReplacements::ReplacementTexture& full = cached->second;
-	const u32 scale = full.width / info.width;
-	if (scale == 0 || full.width != info.width * scale || full.height != info.height * scale)
-	{
-		Console.Warning(fmt::format("Disc atlas: {}x{} is not a whole multiple of {}x{}", full.width,
-			full.height, info.width, info.height));
-		return false;
+		tex->width = w * scale;
+		tex->height = h * scale;
+		tex->format = GSTexture::Format::ASTC4x4;
+		tex->pitch = (tex->width / ASTC_BLOCK) * ASTC_BLOCK_BYTES;
+		tex->data.resize(static_cast<size_t>(tex->pitch) * (tex->height / ASTC_BLOCK));
+		tex->mips.clear();
+		CopyASTCBlocks(*full, x * scale / ASTC_BLOCK, y * scale / ASTC_BLOCK, tex->width / ASTC_BLOCK,
+			tex->height / ASTC_BLOCK, tex->data.data(), tex->pitch);
+		return true;
 	}
 
 	tex->width = w * scale;
@@ -773,11 +859,11 @@ bool GSDiscAtlas::LoadCrop(const std::string& filename, GSTextureReplacements::R
 	tex->pitch = tex->width * 4;
 	tex->data.resize(static_cast<size_t>(tex->pitch) * tex->height);
 	tex->mips.clear();
-	const u8* src = full.data.data() + static_cast<size_t>(y * scale) * full.pitch + static_cast<size_t>(x * scale) * 4;
+	const u8* src = full->data.data() + static_cast<size_t>(y * scale) * full->pitch + static_cast<size_t>(x * scale) * 4;
 	for (u32 row = 0; row < tex->height; row++)
 	{
 		u8* dst = tex->data.data() + static_cast<size_t>(row) * tex->pitch;
-		const u8* srow = src + static_cast<size_t>(row) * full.pitch;
+		const u8* srow = src + static_cast<size_t>(row) * full->pitch;
 		if (ta0 >= 0)
 		{
 			// The pack keeps the upscaled image's alpha on the PS2 scale: 0 where black was

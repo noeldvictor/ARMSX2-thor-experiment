@@ -29,6 +29,9 @@ You need:
   PyTorch (`pip install torch --index-url https://download.pytorch.org/whl/cu130`, or the one
   <https://pytorch.org> gives for your driver).
 - **MAME's `chdman`** on PATH if your image is a `.chd` (it comes with MAME).
+- **Arm's `astcenc`** ([astc-encoder releases](https://github.com/ARM-software/astc-encoder/releases))
+  on PATH, in `ASTCENC`, or passed with `--astcenc`: packs are stored as ASTC, the format the
+  Thor's GPU reads directly.
 - **The upscale model** the recipe names, downloaded yourself. It is not in the repo because of
   its licence. For Okage that is [4x-UltraSharp](https://huggingface.co/Kim2091/UltraSharp)
   (`4x-UltraSharp.safetensors`, CC BY-NC-SA 4.0).

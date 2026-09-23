@@ -108,16 +108,9 @@ def anp3_frames(buf: bytes):
             idx[0::2] = raw & 0x0F
             idx[1::2] = raw >> 4
             idx = idx.reshape(h, w)
-        key = hashlib.sha1(raw.tobytes() + clut).hexdigest()[:12]
-        if len(palettes) > 1:
-            # One HD index map instead of an upscale per palette: the emulator paints it with
-            # whichever palette the game draws the frame with (palette swaps not on the disc too).
-            rep = _distinct_palette(idx, palettes)
-            if rep is not None:
-                SPRITE_PALETTES[key] = rep
-                yield key, idx, []
-                continue
-        yield key, idx, palettes
+        # Every palette gets its own HD image (not a palette-free index map): the pack stores
+        # palette images as ASTC, and a sprite batch is assembled from ASTC pieces block by block.
+        yield hashlib.sha1(raw.tobytes() + clut).hexdigest()[:12], idx, palettes
 
 
 FONT_TABLE = (0xE18E0, 0x17A100)  # in SLPS_258.42, English v1.6
@@ -127,27 +120,9 @@ FONT_PALETTE = struct.pack("<16I", 0x00000000, 0x40010101, 0x7C020202, 0x8012121
                            0x80D2D2D2, 0x80E5E5E5, 0x80F1F1F1, 0x80FDFDFD)
 
 
-# Palette-free sprite frames: key -> the palette they are upscaled through (see anp3_frames).
-SPRITE_PALETTES: dict[str, bytes] = {}
-
-
 def palette_free_palette(key: str) -> bytes:
-    """The palette a palette-free image is upscaled through: the font's runtime palette, or for a
-    multi-palette sprite frame the palette it was chosen with."""
-    return SPRITE_PALETTES.get(key, FONT_PALETTE)
-
-
-def _distinct_palette(idx: np.ndarray, palettes: list[bytes]) -> bytes | None:
-    """A palette in which every index the frame uses has its own colour (premultiplied RGBA), so an
-    upscaled image maps back to indices exactly; None if there is none."""
-    used = np.unique(idx)
-    for pal in palettes:
-        e = np.frombuffer(pal, np.uint8).reshape(-1, 4).astype(np.int32)[used]
-        a = np.minimum(e[:, 3:4] * 2, 255)
-        pre = np.concatenate([e[:, :3] * a // 255, a], axis=1)
-        if len({tuple(v) for v in pre}) == len(used):
-            return pal
-    return None
+    """The palette a palette-free image (a font glyph) is upscaled through: the font's runtime one."""
+    return FONT_PALETTE
 
 
 def font_glyphs(iso_path: Path):
