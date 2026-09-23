@@ -57,7 +57,7 @@ Screen upscalers (FSR, shader chains) work on the finished frame. The fork also 
 
 ### Library, controls and defaults
 
-- **Its own launcher icon** (an amber hammer, with a themed-icon layer), so the fork is easy to tell from official ARMSX2 on the home screen. It still uses ARMSX2's package id, so the two cannot be installed side by side yet.
+- **Installs next to official ARMSX2**, not over it: its own package id (`com.armsx2.thor`) and its own launcher icon (an amber hammer, with a themed-icon layer). Give each app its own data folder in the setup wizard.
 - Cover-first game list with xlenore PS2 covers by default.
 - An `HD` badge on covers: solid when a texture pack is installed, hollow when the online catalogue has one. Tap it to open Texture Packs for that game.
 - **Multi-disc games are one card**, with an "N DISCS" badge, the other discs in the long-press menu, and "Insert Disc N" in the pause menu.

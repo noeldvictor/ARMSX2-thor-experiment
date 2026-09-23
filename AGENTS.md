@@ -49,6 +49,7 @@ made, and implementation status per item. Update this file rather than adding an
 - Keep the README explicit: vibe-coded with AI, personal use, unsupported, no stability guarantee, no issue/request queue, and fork-it-yourself friendly.
 - Do not add an APK download/release section to `README.md` unless the user reverses that preference.
 - Keep app-facing repository links pointed at `noeldvictor/ARMSX2-thor-experiment`; retain upstream and PCSX2 links only where attribution is clear.
+- The fork installs as **`com.armsx2.thor`** (`armsx2.applicationId` in `platforms/android/gradle.properties`), next to official ARMSX2 (`com.armsx2`), with its own launcher icon (github flavor res). Only the applicationId differs: the Kotlin namespace is still `com.armsx2`, so adb component names are `com.armsx2.thor/com.armsx2.Main`, not `com.armsx2.thor/.Main`. `com.armsx2` on a device is official ARMSX2 (or an old fork build) - never force-stop, uninstall or push into it for fork work. Each app keeps its own data folder.
 
 ## Android UI And Cheats
 - Follow the existing Compose components and controller-focus patterns.
@@ -121,7 +122,7 @@ user-facing version.
 - The AYN Thor is SHARED. Several Claude sessions do emulator work against it at once, so another session's app stealing foreground focus is normal, not a fault to debug.
 - Never fight for the device. If `adb` taps land in another app, focus jumps, or a different emulator is in the foreground, stop driving it and do code work instead - the device being busy is never a reason to stop working or to end a turn.
 - Do not force-stop other apps to take focus. That is someone else's session in the middle of something.
-- Always `adb shell am force-stop com.armsx2` when finished with a device run, so the next session gets a clean device.
+- Always `adb shell am force-stop com.armsx2.thor` when finished with a device run, so the next session gets a clean device.
 - Device verification is therefore best-effort and opportunistic. Build, compile checks and code review do not need the device; schedule those first and take the device only for the step that genuinely requires it.
 
 ## Dev Automation
@@ -262,14 +263,14 @@ aisr-data\`.
 Registered in `.mcp.json` as `armsx2-thor` (HTTP, `127.0.0.1:27183/mcp`), next to the desktop
 `pcsx2` server. It needs `adb forward tcp:27183 tcp:27183` (wireless adb works:
 `adb connect <thor-ip>:<port>`) and the dev server running on the device (App settings
-toggle, or `am start -n com.armsx2/.Main --ez devserver true` against a running game).
+toggle, or `am start -n com.armsx2.thor/com.armsx2.Main --ez devserver true` against a running game).
 
 **Implemented** (`platforms/android/app/src/github/java/com/armsx2/devtools/`). Full notes:
 [docs/mcp-server.md](docs/mcp-server.md). It exists to make the upscaling work measurable,
 and it paid for itself on day one: it is how the mipmap guard finding above was made.
 
 - Start: `adb forward tcp:27183 tcp:27183` then
-  `adb shell am start -n com.armsx2/.BootSplashActivity --ez devserver true`, or the
+  `adb shell am start -n com.armsx2.thor/com.armsx2.BootSplashActivity --ez devserver true`, or the
   App-settings toggle "Dev server (MCP)". An `MCP :27183` chip shows on the library bar and
   the pause menu while it runs. 127.0.0.1 only. `play` gets a no-op stub (`DEV_SERVER`
   build flag is false there).
@@ -415,7 +416,7 @@ the render target, restart the pass* - GS thread 99% (21 ms) and GPU 81% on the 
   copy on the Thor. Render passes alone understated the cost by two orders of magnitude.
 - Measure on the device, not by analogy: the emulator's `PerfLog` line in `emulog.txt`
   (30 s averages of fps, EE, GS, VU, GPU) over wireless adb, settings flipped live through
-  the dev server (`am start -n com.armsx2/.Main --ez devserver true` reaches a running game
+  the dev server (`am start -n com.armsx2.thor/com.armsx2.Main --ez devserver true` reaches a running game
   through `onNewIntent` without restarting it).
 - Get the frame itself: pause menu > Capture GS Dump writes `snaps/*.gs.zst`; desktop PCSX2
   replays it with the OSD counters (`pcsx2-qt.exe -- dump.gs.zst`), and
@@ -560,5 +561,5 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
 - **Never stop because the Thor is busy.** There is always code work available - filters,
   tooling, docs, review. Device time is opportunistic; take it for the one step that needs
   it and give it back.
-- **Close the emulator when done**: `adb shell am force-stop com.armsx2`.
+- **Close the emulator when done**: `adb shell am force-stop com.armsx2.thor`.
 - Do not force-stop other apps to grab focus.
