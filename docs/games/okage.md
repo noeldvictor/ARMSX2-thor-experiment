@@ -306,7 +306,8 @@ a drawn texture to a crop of a disc image (`GSDiscAtlas`, see
   World Library reproduce from disc RGB exactly; the lectern book is the visible win.
 - 16 palettes use PS2 alpha above 0x80 (the pot's steam in a house); the tools now carry that
   raw instead of clipping it, which is what made that scene's 1x pack exact.
-- Not covered: the one PSMCT32 image.
+- The one PSMCT32 image (`svi_009a`, starting village) is in the pack since the atlas checks with
+  its own content hash rather than the stock key (2026-09-23); not yet seen in a captured scene.
 - The recipe, timings and checksums: [hd-packs/SCUS-97129-okage](../../hd-packs/SCUS-97129-okage/README.md).
 
 ## Cheats

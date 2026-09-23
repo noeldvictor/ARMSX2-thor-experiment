@@ -13,6 +13,7 @@
 #include "fmt/format.h"
 
 #include <algorithm>
+#include <optional>
 #include <cstring>
 #include <list>
 #include <mutex>
@@ -26,7 +27,7 @@
 //   FreeTile[free_tile_count]  16 bytes each, sorted by tile_hash (v3: palette-free images;
 //                        v4: also true-colour images, whose blocks hash 16x16 RGB texels)
 //   index data           each image's palette indices, one byte per texel (PSMT4 expanded), row-major;
-//                        a true-colour image's RGB, three bytes per texel
+//                        a PSMCT24 image's RGB, three bytes per texel; a PSMCT32 image's RGBA, four
 namespace
 {
 #pragma pack(push, 1)
@@ -65,18 +66,19 @@ namespace
 		u32 width;
 		u32 height;
 		u64 index_offset;
-		u32 flags; // FLAG_PALETTE_FREE, FLAG_TRUE_COLOUR
+		u32 flags; // FLAG_PALETTE_FREE, FLAG_TRUE_COLOUR, FLAG_RGBA32
 		u32 reserved;
 		char file[40];
 	};
 	static_assert(sizeof(ImageV3) == 72);
 
 	constexpr u32 FLAG_PALETTE_FREE = 1;
-	constexpr u32 FLAG_TRUE_COLOUR = 2;
+	constexpr u32 FLAG_TRUE_COLOUR = 2; // PSMCT24: RGB
+	constexpr u32 FLAG_RGBA32 = 4; // PSMCT32: RGBA
 
 	u32 BytesPerTexel(u32 flags)
 	{
-		return (flags & FLAG_TRUE_COLOUR) ? 3 : 1;
+		return (flags & FLAG_RGBA32) ? 4 : (flags & FLAG_TRUE_COLOUR) ? 3 : 1;
 	}
 
 	struct Image
@@ -280,11 +282,18 @@ static bool CropHashes(const Image& img, u32 x, u32 y, u32 width, u32 height, u6
 	return GSXXH3_64bits_digest(&st) == tex0_hash;
 }
 
-std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
-	const u32* clut, u32 clut_entries)
+std::string GSDiscAtlas::Match(const ContentHash& content_hash, u64 clut_hash, u32 width, u32 height, u64 probe,
+	u32 probe_x, u32 probe_y, const u32* clut, u32 clut_entries)
 {
 	if (!s_loaded || probe_x + TILE > width || probe_y + TILE > height)
 		return {};
+
+	std::optional<u64> content;
+	const auto tex0_hash = [&]() {
+		if (!content.has_value())
+			content = content_hash();
+		return *content;
+	};
 
 	const auto key_less = [](const Tile& t, const std::pair<u64, u64>& k) {
 		return t.clut_hash < k.first || (t.clut_hash == k.first && t.tile_hash < k.second);
@@ -307,9 +316,9 @@ std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 heig
 		if (++checked > MAX_CANDIDATES)
 			break;
 
-		// The texture cache's TEX0 hash of a region texture is XXH3 over its expanded indices,
-		// row by row - the same bytes as this crop of the disc image.
-		if (!CropHashes(img, x, y, width, height, tex0_hash))
+		// The content hash is XXH3 over the texture's indices, row by row - the same bytes as this
+		// crop of the disc image.
+		if (!CropHashes(img, x, y, width, height, tex0_hash()))
 			continue;
 
 		s_matches++;
@@ -326,7 +335,7 @@ std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 heig
 		for (; fit != s_state.free_tiles.end() && fit->tile_hash == probe; ++fit)
 		{
 			const Image& img = s_state.images[fit->image];
-			if ((img.flags & FLAG_TRUE_COLOUR) || fit->x < probe_x || fit->y < probe_y)
+			if ((img.flags & (FLAG_TRUE_COLOUR | FLAG_RGBA32)) || fit->x < probe_x || fit->y < probe_y)
 				continue;
 			const u32 x = fit->x - probe_x;
 			const u32 y = fit->y - probe_y;
@@ -334,7 +343,7 @@ std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 heig
 				continue;
 			if (++free_checked > MAX_CANDIDATES)
 				break;
-			if (!CropHashes(img, x, y, width, height, tex0_hash))
+			if (!CropHashes(img, x, y, width, height, tex0_hash()))
 				continue;
 
 			{
@@ -351,7 +360,7 @@ std::string GSDiscAtlas::Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 heig
 	return {};
 }
 
-// A PSMCT24 region texture's TEX0 hash is XXH3 over its texels expanded to 32 bits the way
+// A PSMCT24 texture's content hash is XXH3 over its texels expanded to 32 bits the way
 // ReadTexture24 does it: the RGB, and alpha TA0 - or 0 for black when TEXA.AEM is set.
 static bool CropHashesTrueColour(const Image& img, u32 x, u32 y, u32 width, u32 height, u64 tex0_hash, u8 ta0, bool aem)
 {
@@ -374,11 +383,30 @@ static bool CropHashesTrueColour(const Image& img, u32 x, u32 y, u32 width, u32 
 	return GSXXH3_64bits_digest(&st) == tex0_hash;
 }
 
-std::string GSDiscAtlas::MatchTrueColour(u64 tex0_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
-	u8 ta0, bool aem)
+// A PSMCT32 texture's is XXH3 over its RGBA, as stored.
+static bool CropHashesRGBA32(const Image& img, u32 x, u32 y, u32 width, u32 height, u64 tex0_hash)
+{
+	XXH3_state_t st;
+	XXH3_64bits_reset(&st);
+	const u8* row = s_state.index_data.data() + img.index_offset + (static_cast<size_t>(y) * img.width + x) * 4;
+	for (u32 r = 0; r < height; r++, row += static_cast<size_t>(img.width) * 4)
+		GSXXH3_64bits_update(&st, row, static_cast<size_t>(width) * 4);
+	return GSXXH3_64bits_digest(&st) == tex0_hash;
+}
+
+std::string GSDiscAtlas::MatchTrueColour(const ContentHash& content_hash, u32 width, u32 height, u64 probe,
+	u32 probe_x, u32 probe_y, u8 ta0, bool aem, bool rgba32)
 {
 	if (!s_loaded || probe_x + TILE > width || probe_y + TILE > height)
 		return {};
+
+	std::optional<u64> content;
+	const auto tex0_hash = [&]() {
+		if (!content.has_value())
+			content = content_hash();
+		return *content;
+	};
+	const u32 flag = rgba32 ? FLAG_RGBA32 : FLAG_TRUE_COLOUR;
 
 	auto fit = std::lower_bound(s_state.free_tiles.begin(), s_state.free_tiles.end(), probe,
 		[](const FreeTile& t, u64 h) { return t.tile_hash < h; });
@@ -386,7 +414,7 @@ std::string GSDiscAtlas::MatchTrueColour(u64 tex0_hash, u32 width, u32 height, u
 	for (; fit != s_state.free_tiles.end() && fit->tile_hash == probe; ++fit)
 	{
 		const Image& img = s_state.images[fit->image];
-		if (!(img.flags & FLAG_TRUE_COLOUR) || fit->x < probe_x || fit->y < probe_y)
+		if (!(img.flags & flag) || fit->x < probe_x || fit->y < probe_y)
 			continue;
 		const u32 x = fit->x - probe_x;
 		const u32 y = fit->y - probe_y;
@@ -394,11 +422,14 @@ std::string GSDiscAtlas::MatchTrueColour(u64 tex0_hash, u32 width, u32 height, u
 			continue;
 		if (++checked > MAX_CANDIDATES)
 			break;
-		if (!CropHashesTrueColour(img, x, y, width, height, tex0_hash, ta0, aem))
+		if (rgba32 ? !CropHashesRGBA32(img, x, y, width, height, tex0_hash()) :
+		             !CropHashesTrueColour(img, x, y, width, height, tex0_hash(), ta0, aem))
 			continue;
 
 		s_matches++;
 		s_true_colour_matches++;
+		if (rgba32)
+			return fmt::format("{}{}:{}:{}:{}:{}", CROP_PREFIX, fit->image, x, y, width, height);
 		// TEXA rides along: the loader sets alpha the way the GS expands PSMCT24.
 		return fmt::format("{}{}:{}:{}:{}:{}:t{:02x}{}", CROP_PREFIX, fit->image, x, y, width, height, ta0, aem ? 1 : 0);
 	}

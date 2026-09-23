@@ -162,8 +162,8 @@ The [`hd-texture-pack` skill](.claude/skills/hd-texture-pack/SKILL.md) gives it 
 3. Check a 1x pack renders bit-identical to an empty pack.
 4. Upscale.
 
-Expect hours of back-and-forth, not minutes. Some games won't work: 32-bit and 16-bit textures,
-textures built at runtime, and formats nobody can decode are not covered yet.
+Expect hours of back-and-forth, not minutes. Some games won't work: 16-bit textures, textures
+built at runtime, and formats nobody can decode are not covered yet.
 
 Packs are never in this repository. The art is the publisher's, and the default upscale model is
 licensed for non-commercial use only. Share recipes. A pack works only in this fork.
@@ -172,11 +172,13 @@ licensed for non-commercial use only. Share recipes. A pack works only in this f
 | --- | --- | --- |
 | Textures come from | Dumps made while someone plays | The game disc |
 | Per-game work | Play everything with dumping on | Decode the disc format once (AI-assisted), then one command |
-| Coverage | What the player reached | Every palette and 24-bit texture on the disc |
+| Coverage | What the player reached | Every palette, 24-bit and 32-bit texture on the disc |
 | Works in stock PCSX2 | Yes | No, this fork only |
 
 Both kinds sit in the same folder and work together: a texture with its own standard file uses
-it, and a disc pack covers the rest. Details: [hd-packs/README.md](hd-packs/README.md) (recipes,
+it, and a disc pack covers the rest. The fork keeps PCSX2's texture names exactly as they are, so
+standard packs and texture dumps behave as in PCSX2; a disc pack checks its matches with its own
+hash of the texture's pixels, and only for textures that have no standard file. Details: [hd-packs/README.md](hd-packs/README.md) (recipes,
 requirements, adding a game) and [docs/hd-texture-packs.md](docs/hd-texture-packs.md) (how the
 matching works, testing, sharing).
 

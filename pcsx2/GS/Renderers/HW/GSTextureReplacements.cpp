@@ -692,19 +692,19 @@ bool GSTextureReplacements::HasDiscAtlas()
 }
 
 bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe, u32 probe_x, u32 probe_y,
-	const u32* clut, u32 clut_entries)
+	const u32* clut, u32 clut_entries, const std::function<u64()>& content_hash)
 {
 	const TextureName name(CreateTextureName(hash, 0));
 	if (s_replacement_texture_filenames.find(name) != s_replacement_texture_filenames.end())
 		return true;
-	const bool true_colour = (name.TEX0_PSM == PSMCT24);
+	const bool true_colour = (name.TEX0_PSM == PSMCT24 || name.TEX0_PSM == PSMCT32);
 	if ((!name.HasPalette() && !true_colour) || s_disc_atlas_misses.find(name) != s_disc_atlas_misses.end())
 		return false;
 
 	std::string crop = true_colour ?
-		GSDiscAtlas::MatchTrueColour(hash.TEX0Hash, name.Width(), name.Height(), probe, probe_x, probe_y,
-			static_cast<u8>(name.TEXA_TA0), name.TEXA_AEM != 0) :
-		GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y,
+		GSDiscAtlas::MatchTrueColour(content_hash, name.Width(), name.Height(), probe, probe_x, probe_y,
+			static_cast<u8>(name.TEXA_TA0), name.TEXA_AEM != 0, name.TEX0_PSM == PSMCT32) :
+		GSDiscAtlas::Match(content_hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y,
 			clut, clut_entries);
 	if (crop.empty())
 	{

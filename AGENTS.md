@@ -507,8 +507,12 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
 - Pack = whole upscaled disc images (`atlas/`) + `disc-atlas.a2at` (v4: palette hash, size and
   indices per image, hash of every 16x16 block every 8 px, plus a table for palette-free and
   true-colour blocks). `GSDiscAtlas` matches on a stock-name
-  miss: probe block -> candidates -> the crop whose hash equals the key's TEX0 hash, so a match is
-  exact. It registers the crop under the stock name; the normal async loader does the rest.
+  miss: probe block -> candidates -> the crop whose hash equals the texture's *content hash* (the
+  atlas's own XXH3 of the texels as the GS reads them, computed lazily on the first candidate), so a
+  match is exact. It registers the crop under the stock name; the normal async loader does the rest.
+- **Never change PCSX2's texture hashing (`HashCacheKey`).** It is the name every standard pack
+  and dump uses. Where the stock key cannot be reproduced from disc data (raw-block keys of
+  full-size textures), the atlas's own content hash does the checking instead.
 - Menus: a UV-selected sprite of a big palette sheet is narrowed to its own texels
   (`GSRendererHW`, only while a disc atlas is loaded; last texel `ceil(max - 0.5) - 1`).
 - Proof standard: a 1x pack built from the native disc images renders bit-identical frames to an
@@ -522,8 +526,10 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   map painted with the game's palette at load. Upscale them through the game's *real* palette
   (`palette_free_palette()` in the extractor; the emulator logs it as `Disc atlas: palette`) - a
   grey ramp made Okage's index-1 ink hollow.
-- Not covered yet: PSMCT32/16 disc images, mipmapped keys with more than one level. Upscale
-  edge bleed between atlas neighbours. Okage's IQ24 font is in the pack but unverified on screen.
+- PSMCT32 images keep RGBA (a third flag, four bytes a texel), blocks indexed by RGB.
+- Not covered yet: PSMCT16 disc images, mipmapped keys with more than one level. Upscale edge
+  bleed between atlas neighbours. Okage's IQ24 font and its one PSMCT32 texture are in the pack
+  but not yet seen on screen.
 - Tools: `tools/disc_textures/` - `make_pack.py` (one command: disc -> extract -> upscale ->
   build -> zip, timings, checksum), `disc.py`, `extract_native.py` (the extractor contract),
   `upscale.py`, `build_disc_pack.py`. A new game needs only `hd-packs/<game>/extractor.py`.

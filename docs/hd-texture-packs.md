@@ -8,7 +8,7 @@ it, and a disc pack fills in everything else.
 | Where the textures come from | Dumped by the emulator while someone plays | Read straight off the game disc |
 | Per-game work | Play through every area with dumping on | Work out the game's disc format and write an extractor (reverse engineering, usually with an AI agent) - once per game |
 | After that | Upscale and clean up the dumps | One command per pack: [a recipe](../hd-packs/README.md) |
-| Coverage | Whatever the player reached | Every palette and 24-bit texture on the disc |
+| Coverage | Whatever the player reached | Every palette, 24-bit and 32-bit texture on the disc |
 | Files in the pack | One PNG per texture, named by its hash | The whole upscaled disc images + one index file |
 | Works in stock PCSX2 | Yes | No, this fork only |
 | Games | Any | Only games someone has written a recipe for: [hd-packs/](../hd-packs/README.md) |
@@ -37,8 +37,15 @@ computed from the disc.
 A disc pack ships each upscaled disc image whole, plus `disc-atlas.a2at`: every image's palette
 hash, size and palette indices, and the hash of every 16x16 block every 8 pixels. When a texture
 has no file of its own, the emulator hashes one 16x16 block of it, looks up the disc images
-holding that block under the same palette, and takes the one whose crop hashes to the texture's
-own name. **A match is exact, never a guess.** The HD texture is that crop of the upscaled image.
+holding that block under the same palette, and takes the one whose crop hashes the same as the
+texture's own pixels. **A match is exact, never a guess.**
+
+That last check uses the pack's own hash - XXH3 over the texture's texels as the GS reads them
+(palette indices, or RGBA as expanded) - not PCSX2's texture name. PCSX2's name is the same bytes
+for a region texture but raw GS memory blocks for some full-size ones, which the disc cannot
+reproduce; the pack's own hash does not care which. PCSX2's names are never changed: a match is
+registered under the texture's normal name, standard packs and dumps are untouched, and the extra
+hash is only computed for a texture with no file of its own once a probe block has a candidate. The HD texture is that crop of the upscaled image.
 For menu sprites the emulator narrows the texture to the sprite's own UV rectangle first, so it
 can be found too. Code: `pcsx2/GS/Renderers/HW/GSDiscAtlas.*`.
 
@@ -60,8 +67,9 @@ rebuilds the alpha from the key's TEXA, and the loader applies it to the HD imag
 flags `TRUE_COLOUR_AEM` when the game uses AEM, so black is transparent before the upscale and
 the model does not smear it into the edges.
 
-32-bit (PSMCT32) textures are hashed as raw GS blocks unless the draw uses a region, and 16-bit
-ones are not handled yet.
+32-bit (PSMCT32) images keep their RGBA in the index and carry their own alpha. PCSX2 names a
+full-size PSMCT32 texture by its raw GS blocks, which is why the check uses the pack's own hash.
+16-bit textures are not handled yet.
 
 ## Alpha above 0x80
 
@@ -106,8 +114,8 @@ The dev server (`docs/mcp-server.md`) has what you need:
   a repeating floor can show a faint seam. The fix is to upscale known pieces separately.
 - ESRGAN-type models invent detail on tiny or soft art (Okage's 24-pixel portraits). Pick the
   model per kind of art if it matters.
-- Palette textures (PSMT8/PSMT4 and their H variants), palette-free fonts and PSMCT24 are
-  matched. PSMCT32/16, mipmapped textures and anything the game builds in memory at runtime are
+- Palette textures (PSMT8/PSMT4 and their H variants), palette-free fonts, PSMCT24 and PSMCT32
+  are matched. PSMCT16, mipmapped textures and anything the game builds in memory at runtime are
   not.
 
 ## Sharing a pack

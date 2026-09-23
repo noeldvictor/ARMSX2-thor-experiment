@@ -36,10 +36,10 @@ The disc's formats (worked out 2026-09-22):
   solid ink and higher indices fade out.
 
 True-colour images: 173 PSMCT24 XIMs (night versions of town art, some field maps, the World
-Library's bookshelves, character faces) plus one PSMCT32. The PSMCT24 ones go in the pack as
-true-colour images; Okage draws them with TEXA.AEM set and TA0 0x80 (every PSMCT24 dump is named
-`...-80c02a81`), so black texels are transparent. The PSMCT32 one is left out: the GS hashes a
-full-size PSMCT32 texture as raw swizzled blocks, which the disc data does not give.
+Library's bookshelves, character faces) plus one PSMCT32 (`svi_009a`, 192x64, in the starting
+village's maps). Both go in the pack as true-colour images. Okage draws the PSMCT24 ones with
+TEXA.AEM set and TA0 0x80 (every PSMCT24 dump is named `...-80c02a81`), so black texels are
+transparent; the PSMCT32 one carries its own alpha.
 
 Keys: `<sha1 of the decoded XIM, 12 hex>` for images (the HD file is `<key>.png`, or
 `<key>_p<N>.png` for an XIM with several palettes), `fnt_<NAME>` for font sheets.
@@ -170,11 +170,13 @@ def disc_images(iso_path: Path):
                 d = lz_decode(blob) if compressed else blob
                 psm = (struct.unpack_from("<I", d, 0)[0] >> 20) & 0x3F
                 key = hashlib.sha1(d).hexdigest()[:12]
-                if psm == 0x01:
-                    # PSMCT24: no palette block; packed RGB right after the image block header.
+                if psm in (0x00, 0x01):
+                    # PSMCT32 / PSMCT24: no palette block; packed RGBA / RGB right after the image
+                    # block header.
                     _, _, h, w = struct.unpack_from("<IIII", d, 0x10)
-                    rgb = np.frombuffer(d, np.uint8, w * h * 3, 0x20).reshape(h, w, 3)
-                    yield key, rgb, []
+                    channels = 4 if psm == 0x00 else 3
+                    texels = np.frombuffer(d, np.uint8, w * h * channels, 0x20).reshape(h, w, channels)
+                    yield key, texels, []
                     continue
                 if psm not in (0x13, 0x14):
                     continue

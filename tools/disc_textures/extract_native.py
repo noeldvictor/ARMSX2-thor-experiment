@@ -15,8 +15,9 @@ that knows the game's disc formats and provides
     16 or 256 entries) exactly as the GS receives them. An empty list marks a *palette-free*
     image, one the game colours at runtime (fonts): the pack stores an HD index map for it and
     the emulator paints it with whatever palette the game is using.
-  - A *true-colour* (PSMCT24) image instead yields an HxWx3 uint8 RGB array as `indices`, exactly
-    the bytes the game uploads, and an empty palette list.
+  - A *true-colour* image instead yields its texels as `indices`, exactly the bytes the game
+    uploads, and an empty palette list: HxWx3 uint8 RGB for PSMCT24, HxWx4 RGBA (PS2 alpha) for
+    PSMCT32.
 - `TRUE_COLOUR_AEM` (optional, default False) - True when the game draws its true-colour textures
   with TEXA.AEM set, so the GS makes black texels transparent. Those texels are then written
   transparent for the upscale, so the model does not smear black into the edges. Read it off a
@@ -84,12 +85,23 @@ def paint(indices: np.ndarray, pal: bytes) -> np.ndarray:
     return rgba.astype(np.uint8)
 
 
-def true_colour_rgba(extractor, rgb: np.ndarray) -> np.ndarray:
-    """RGBA 0..255 for a true-colour image: opaque, or transparent where black under AEM."""
-    alpha = np.full(rgb.shape[:2], 255, np.uint8)
+def rgba32_raw_alpha(rgba: np.ndarray) -> bool:
+    """raw_alpha() for a PSMCT32 image: its own alpha goes above 0x80."""
+    return bool(rgba[..., 3].max() > 0x80)
+
+
+def true_colour_rgba(extractor, texels: np.ndarray) -> np.ndarray:
+    """RGBA 0..255 for a true-colour image. PSMCT24: opaque, or transparent where black under AEM.
+    PSMCT32: its own alpha, doubled unless rgba32_raw_alpha()."""
+    if texels.shape[2] == 4:
+        rgba = texels.astype(np.uint16)
+        if not rgba32_raw_alpha(texels):
+            rgba[..., 3] = np.minimum(rgba[..., 3] * 2, 255)
+        return rgba.astype(np.uint8)
+    alpha = np.full(texels.shape[:2], 255, np.uint8)
     if getattr(extractor, "TRUE_COLOUR_AEM", False):
-        alpha[(rgb == 0).all(axis=2)] = 0
-    return np.dstack([rgb, alpha])
+        alpha[(texels == 0).all(axis=2)] = 0
+    return np.dstack([texels, alpha])
 
 
 def main() -> None:
@@ -108,7 +120,8 @@ def main() -> None:
         h, w = indices.shape[:2]
         if indices.ndim == 3:
             Image.fromarray(true_colour_rgba(extractor, indices), "RGBA").save(a.out / f"{key}.png")
-            manifest[f"{key}.png"] = {"width": w, "height": h, "palettes": 0, "palette_free": False, "true_colour": True}
+            manifest[f"{key}.png"] = {"width": w, "height": h, "palettes": 0, "palette_free": False, "true_colour": True,
+                                      "rgba32": indices.shape[2] == 4}
             continue
         if not pals:
             Image.fromarray(paint(indices, representative_palette(extractor, key, indices)), "RGBA").save(a.out / f"{key}.png")

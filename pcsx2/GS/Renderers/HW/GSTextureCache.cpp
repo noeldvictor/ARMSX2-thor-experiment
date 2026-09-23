@@ -35,6 +35,7 @@
 std::unique_ptr<GSTextureCache> g_texture_cache;
 
 static u8* s_unswizzle_buffer;
+static constexpr size_t UNSWIZZLE_BUFFER_SIZE = 9 * 1024 * 1024;
 
 /// List of candidates for purging when the hash cache gets too large.
 static std::vector<std::pair<GSTextureCache::HashCacheMap::iterator, s32>> s_hash_cache_purge_list;
@@ -58,7 +59,7 @@ GSTextureCache::GSTextureCache()
 	// In theory 4MB is enough but 9MB is safer for overflow (8MB
 	// isn't enough in custom resolution)
 	// Test: onimusha 3 PAL 60Hz
-	s_unswizzle_buffer = (u8*)_aligned_malloc(9 * 1024 * 1024, VECTOR_ALIGNMENT);
+	s_unswizzle_buffer = (u8*)_aligned_malloc(UNSWIZZLE_BUFFER_SIZE, VECTOR_ALIGNMENT);
 	pxAssertRel(s_unswizzle_buffer, "Failed to allocate unswizzle buffer");
 
 	m_surface_offset_cache.reserve(S_SURFACE_OFFSET_CACHE_MAX_SIZE);
@@ -7277,17 +7278,16 @@ static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& 
 	GSTextureUpscaler::QueueUpscale(key, ptr, tw, th, src_pitch, algorithm, scale, texture_class, mipmap, alpha_minmax);
 }
 
-// The disc atlas probe (GSDiscAtlas.h): XXH3 of 16x16 palette indices of the texture, expanded the
-// way HashTextureLevel() expands them, taken at the first position on the index's block grid inside
-// the region (a tight UV region can start anywhere). Only where that function hashes expanded
-// indices rather than raw GS blocks - otherwise the key could never equal a crop hashed off the disc.
-// PSMCT24 is expanded too; its probe is the block's RGB, three bytes a texel, so it does not depend
-// on the TEXA alpha the key was hashed with.
+// The disc atlas probe (GSDiscAtlas.h): XXH3 of 16x16 palette indices of the texture, taken at the
+// first position on the index's block grid inside the region (a tight UV region can start
+// anywhere). PSMCT24/32 probe the block's RGB, three bytes a texel, so it does not depend on the TEXA
+// alpha. Read expanded whatever way the key's own hash was made: the atlas checks a match with its
+// own content hash (below).
 static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region,
 	u64* probe, u32* probe_x, u32* probe_y)
 {
 	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
-	const bool true_colour = (TEX0.PSM == PSMCT24);
+	const bool true_colour = (TEX0.PSM == PSMCT24 || TEX0.PSM == PSMCT32);
 	if (psm.pal == 0 && !true_colour)
 		return false;
 
@@ -7295,8 +7295,6 @@ static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA
 	const int tw = region.HasX() ? region.GetWidth() : (1 << TEX0.TW);
 	const int th = region.HasY() ? region.GetHeight() : (1 << TEX0.TH);
 	if (tw < 16 || th < 16)
-		return false;
-	if (!(tw < bs.x || th < bs.y || psm.fmsk != 0xFFFFFFFFu || region.GetMaxX() > 0 || region.GetMinY() > 0))
 		return false;
 
 	const GSVector4i rect(region.GetRect(tw, th));
@@ -7336,6 +7334,36 @@ static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA
 	}
 	*probe = GSXXH3_64bits_digest(&st);
 	return true;
+}
+
+// The disc atlas's content hash (GSDiscAtlas.h): XXH3 of the texture's texels as the GS reads them,
+// row by row - palette indices, or RGBA8 expanded with TEXA for PSMCT24/32. The replacement key's
+// hash is the same bytes for a region texture but raw GS blocks for some full-size ones; this one
+// does not depend on which, so every texture can be checked against the disc.
+static u64 ComputeDiscAtlasContentHash(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region)
+{
+	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
+	const bool palette = (psm.pal > 0);
+	const u32 texel_bytes = palette ? 1 : 4;
+	const int tw = region.HasX() ? region.GetWidth() : (1 << TEX0.TW);
+	const int th = region.HasY() ? region.GetHeight() : (1 << TEX0.TH);
+	const GSVector4i rect(region.GetRect(tw, th));
+	const GSVector4i block_rect(rect.ralign<Align_Outside>(psm.bs));
+	const u32 pitch = VectorAlign(static_cast<u32>(block_rect.width()) * texel_bytes);
+	if (static_cast<size_t>(pitch) * static_cast<u32>(block_rect.height()) > UNSWIZZLE_BUFFER_SIZE)
+		return 0;
+
+	GSLocalMemory& mem = g_gs_renderer->m_mem;
+	const GSLocalMemory::readTexture rtx = palette ? psm.rtxP : psm.rtx;
+	rtx(mem, mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM), block_rect, s_unswizzle_buffer, pitch, TEXA);
+
+	XXH3_state_t st;
+	XXH3_64bits_reset(&st);
+	const u8* row = s_unswizzle_buffer + pitch * static_cast<u32>(rect.top - block_rect.top) +
+	                static_cast<u32>(rect.left - block_rect.left) * texel_bytes;
+	for (int y = 0; y < th; y++, row += pitch)
+		GSXXH3_64bits_update(&st, row, static_cast<size_t>(tw) * texel_bytes);
+	return GSXXH3_64bits_digest(&st);
 }
 
 GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, bool& paltex, const u32* clut, const GSVector2i* lod, SourceRegion region)
@@ -7410,10 +7438,11 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		// Mipmapped draws qualify when they sample one level: the key then covers only the base.
 		u64 probe;
 		u32 probe_x, probe_y;
-		if (!replacement_tex && !replacement_texture_pending && (!lod || lod->x == lod->y) && (clut || TEX0.PSM == PSMCT24) &&
-			GSTextureReplacements::HasDiscAtlas() &&
+		if (!replacement_tex && !replacement_texture_pending && (!lod || lod->x == lod->y) &&
+			(clut || TEX0.PSM == PSMCT24 || TEX0.PSM == PSMCT32) && GSTextureReplacements::HasDiscAtlas() &&
 			ComputeDiscAtlasProbe(TEX0, TEXA, region, &probe, &probe_x, &probe_y) &&
-			GSTextureReplacements::LookupDiscAtlas(key, probe, probe_x, probe_y, clut, GSLocalMemory::m_psm[TEX0.PSM].pal))
+			GSTextureReplacements::LookupDiscAtlas(key, probe, probe_x, probe_y, clut, GSLocalMemory::m_psm[TEX0.PSM].pal,
+				[&]() { return ComputeDiscAtlasContentHash(TEX0, TEXA, region); }))
 		{
 			replacement_tex = GSTextureReplacements::LookupReplacementTexture(key, lod != nullptr, &replacement_texture_pending, &alpha_minmax);
 		}

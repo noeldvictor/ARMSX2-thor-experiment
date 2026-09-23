@@ -12,7 +12,7 @@ Disc packs only work in this fork.
 
 | Game | Folder | Covers | Not yet | RTX 3060 time | Pack |
 | --- | --- | --- | --- | --- | --- |
-| Okage: Shadow King (NTSC-U) | [SCUS-97129-okage](SCUS-97129-okage/) | World, characters, menus, portraits, fonts, night art, the World Library's books, faces | 1 PSMCT32 image (of 2,807) | ~16 min | 639 MB zip |
+| Okage: Shadow King (NTSC-U) | [SCUS-97129-okage](SCUS-97129-okage/) | World, characters, menus, portraits, fonts, night art, the World Library's books, faces - all 2,807 disc textures | - (the IQ24 font and the one 32-bit texture are not yet seen on screen) | ~16 min | 639 MB zip |
 
 A new game needs someone to work out how that game stores its textures on the disc (see
 [Adding a game](#adding-a-game) below). That work is the slow part, and it is not automatic.
@@ -88,9 +88,9 @@ at the repo root and ask, for example, *"make an HD pack recipe for <game>, my d
 4. **Add `game.json`, a README with measured times, known gaps and before/after shots** (copy
    Okage's folder), and fill in the reference checksums from your run.
 
-Supported: palette textures (8 and 4 bit), fonts the game colours at runtime, and 24-bit
-true-colour textures. Not yet: 32-bit and 16-bit true-colour textures, mipmapped textures, and
-anything the game draws into memory at runtime rather than loading from the disc. Some games will need
+Supported: palette textures (8 and 4 bit), fonts the game colours at runtime, and 24-bit and
+32-bit true-colour textures. Not yet: 16-bit textures, mipmapped textures, and anything the game
+draws into memory at runtime rather than loading from the disc. Some games will need
 emulator work before a recipe can cover them.
 
 ## A recipe folder

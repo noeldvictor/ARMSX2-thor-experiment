@@ -5,6 +5,7 @@
 
 #include "GS/Renderers/HW/GSTextureCache.h"
 
+#include <functional>
 #include <utility>
 
 namespace GSTextureReplacements
@@ -41,10 +42,11 @@ namespace GSTextureReplacements
 	/// A disc atlas (GSDiscAtlas.h) is loaded for the running game.
 	bool HasDiscAtlas();
 	/// Asks the disc atlas for a crop with this key; `probe` is the XXH3 of the 16x16 palette
-	/// indices starting (probe_x, probe_y) into the texture. On a match the crop is registered under
+	/// indices (RGB for PSMCT24/32) starting (probe_x, probe_y) into the texture, `content_hash`
+	/// the atlas's own hash of the texture (GSDiscAtlas.h). On a match the crop is registered under
 	/// the key's name, so LookupReplacementTexture() finds it like any other replacement.
 	bool LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe, u32 probe_x, u32 probe_y,
-		const u32* clut, u32 clut_entries);
+		const u32* clut, u32 clut_entries, const std::function<u64()>& content_hash);
 	bool HasReplacementTextureWithOtherPalette(const GSTextureCache::HashCacheKey& hash);
 	GSTexture* LookupReplacementTexture(const GSTextureCache::HashCacheKey& hash, bool mipmap, bool* pending, std::pair<u8, u8>* alpha_minmax);
 	GSTexture* CreateReplacementTexture(const ReplacementTexture& rtex, bool mipmap);

@@ -18,9 +18,9 @@ for `<DataRoot>/textures/<SERIAL>/replacements/`:
   (premultiplied RGBA) of the palette it was painted with for upscaling, stored as RGBA with the
   index in R. Their blocks go in a second table keyed by the block hash alone, and the emulator
   paints the map with the palette the game is using (index version 3).
-- True-colour (PSMCT24) images keep their RGB in the index (three bytes a texel), their blocks are
-  hashed over RGB in the same second table, and the HD image keeps the upscaled alpha (index
-  version 4). The emulator rebuilds the GS's TEXA alpha for the exact check.
+- True-colour images keep their texels in the index - RGB for PSMCT24, RGBA for PSMCT32 - with
+  their blocks hashed over RGB in the same second table, and the HD image keeps the upscaled
+  alpha (index version 4). The emulator rebuilds the GS's TEXA alpha for a PSMCT24 check.
 
 Why crops: what a draw samples is a rectangle of a disc image at a 16-pixel-aligned position
 (Okage mostly draws pieces of 256x256 atlases), and PCSX2 keys a region texture by XXH3 over that
@@ -45,12 +45,13 @@ import xxhash
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from extract_native import load_extractor, raw_alpha, representative_palette  # noqa: E402
+from extract_native import load_extractor, raw_alpha, representative_palette, rgba32_raw_alpha  # noqa: E402
 
 TILE = 16
 STEP = 8  # block positions: every 8 px covers the 8x8 block grid of PSMT8H/PSMT4HL sheets (index v2)
 FLAG_PALETTE_FREE = 1
-FLAG_TRUE_COLOUR = 2
+FLAG_TRUE_COLOUR = 2  # PSMCT24: RGB in the index
+FLAG_RGBA32 = 4  # PSMCT32: RGBA in the index
 
 
 def nearest_index(hd: np.ndarray, pal: bytes) -> np.ndarray:
@@ -89,7 +90,10 @@ def main() -> None:
         h, w = indices.shape[:2]
         offset = len(index_data)
         index_data += np.ascontiguousarray(indices).tobytes()
-        block_hashes = [(x, y, xxhash.xxh3_64_intdigest(np.ascontiguousarray(indices[y : y + TILE, x : x + TILE]).tobytes()))
+        # True-colour blocks are keyed by RGB only (a PSMCT32 image's alpha is left out, as the
+        # emulator's probe leaves it out), so the probe is the same whatever the alpha.
+        keyed = indices[..., :3] if indices.ndim == 3 else indices
+        block_hashes = [(x, y, xxhash.xxh3_64_intdigest(np.ascontiguousarray(keyed[y : y + TILE, x : x + TILE]).tobytes()))
                         for y in range(0, h - TILE + 1, STEP) for x in range(0, w - TILE + 1, STEP)]
         if indices.ndim == 3:
             # True colour: blocks keyed by their RGB alone, the HD image with its upscaled alpha.
@@ -104,11 +108,13 @@ def main() -> None:
                 print(f"skip {name}: {hd.width}x{hd.height} is not a multiple of {w}x{h}")
                 continue
             scales.add(scale)
+            rgba32 = indices.shape[2] == 4
             rgba = np.asarray(hd).copy()
-            rgba[..., 3] = (rgba[..., 3].astype(np.uint16) + 1) // 2  # 255 -> 128, the PS2 scale
+            if not (rgba32 and rgba32_raw_alpha(indices)):
+                rgba[..., 3] = (rgba[..., 3].astype(np.uint16) + 1) // 2  # 255 -> 128, the PS2 scale
             Image.fromarray(rgba, "RGBA").save(a.out / "atlas" / name)
             image_id = len(images)
-            images.append((0, w, h, offset, FLAG_TRUE_COLOUR, f"atlas/{name}"))
+            images.append((0, w, h, offset, FLAG_RGBA32 if rgba32 else FLAG_TRUE_COLOUR, f"atlas/{name}"))
             free_tiles += [(th, image_id, x, y) for x, y, th in block_hashes]
             continue
         if not pals:
@@ -173,7 +179,7 @@ def main() -> None:
 
     size = (a.out / "disc-atlas.a2at").stat().st_size
     print(f"{len(images)} disc textures ({sum(1 for i in images if i[4] & FLAG_PALETTE_FREE)} palette-free, "
-          f"{sum(1 for i in images if i[4] & FLAG_TRUE_COLOUR)} true-colour), {len(tiles) + len(free_tiles)} blocks, "
+          f"{sum(1 for i in images if i[4] & (FLAG_TRUE_COLOUR | FLAG_RGBA32))} true-colour), {len(tiles) + len(free_tiles)} blocks, "
           f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, "
           f"{missing} without an HD image")
 

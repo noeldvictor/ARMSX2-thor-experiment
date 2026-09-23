@@ -5,6 +5,7 @@
 
 #include "common/Pcsx2Types.h"
 
+#include <functional>
 #include <string>
 #include <string_view>
 
@@ -47,10 +48,20 @@ namespace GSTextureReplacements
 // so the probe is the same whatever TEXA the game uses; the crop check rebuilds the alpha from the
 // key's TEXA, and the loader applies it to the HD image.
 //
-// Limits: palette textures (PSMT8/PSMT4 and their H variants) and PSMCT24, whose keys hash expanded
-// texels, which is every region texture and every texture below a block; single-level keys; regions
-// that hold a whole 16x16 block on the probe grid. PSMCT32 keys hash raw GS blocks unless regioned,
-// and are not matched.
+// The check is the atlas's own. The replacement key's TEX0 hash is expanded texels for region
+// textures, but raw swizzled GS blocks for a full-size texture of a 32-bit format (and some palette
+// formats), which disc data cannot reproduce. So the crop is checked against the atlas's own
+// *content hash* of the texture: XXH3 of its texels as the GS reads them, row by row - palette
+// indices for palette formats, RGBA8 as expanded with TEXA for PSMCT24/32 - computed only once a
+// probe block has a candidate. It is as exact as the key's hash (every texel compared), and the key
+// stays PCSX2's, so standard packs and dumps are untouched: a texture with its own file never gets
+// here.
+//
+// PSMCT32 images (index version 4, a third flag) keep RGBA, four bytes a texel; their blocks are
+// indexed by RGB like PSMCT24's.
+//
+// Limits: palette textures (PSMT8/PSMT4 and their H variants), PSMCT24 and PSMCT32; single-level
+// keys; textures that hold a whole 16x16 block on the probe grid.
 namespace GSDiscAtlas
 {
 	static constexpr u32 TILE = 16;
@@ -74,17 +85,21 @@ namespace GSDiscAtlas
 	u32 GetTileStep();
 	Stats GetStats();
 
-	/// Finds the disc image and position whose crop has this key. `probe` is the XXH3 of the
+	/// The texture's content hash (see above); called at most once, and only if a candidate turns up.
+	using ContentHash = std::function<u64()>;
+
+	/// Finds the disc image and position whose crop is this texture. `probe` is the XXH3 of the
 	/// 16x16 palette indices, row by row, of the block that starts (probe_x, probe_y) into the
 	/// region. `clut` / `clut_entries` are the texture's palette, used when the match is a
 	/// palette-free image. Returns a pseudo filename for LoadCrop(), or an empty string.
-	std::string Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
-		const u32* clut, u32 clut_entries);
+	std::string Match(const ContentHash& content_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x,
+		u32 probe_y, const u32* clut, u32 clut_entries);
 
-	/// The same for a PSMCT24 texture: `probe` is the XXH3 of the probe block's RGB, three bytes a
-	/// texel, row by row; `ta0` / `aem` are the key's TEXA, which the key's hash was made with.
-	std::string MatchTrueColour(u64 tex0_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
-		u8 ta0, bool aem);
+	/// The same for a PSMCT24 or PSMCT32 (`rgba32`) texture: `probe` is the XXH3 of the probe
+	/// block's RGB, three bytes a texel, row by row; `ta0` / `aem` are the TEXA a PSMCT24 texture
+	/// is expanded with.
+	std::string MatchTrueColour(const ContentHash& content_hash, u32 width, u32 height, u64 probe, u32 probe_x,
+		u32 probe_y, u8 ta0, bool aem, bool rgba32);
 
 	bool IsCropFilename(std::string_view filename);
 

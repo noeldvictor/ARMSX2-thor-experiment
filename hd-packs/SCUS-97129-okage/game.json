@@ -16,9 +16,9 @@
   "scale": 4
  },
  "reference": {
-  "index_sha256": "6154a3d0506b71cedf1c316ee424eba156ea0733c0b0808ea25eb82c94d3b663",
-  "textures": 2811,
+  "index_sha256": "6adb00f1c7ebdfd8c21712d6c2f24dc4d6e06c174b141f5e6d0751a7a6161018",
+  "textures": 2812,
   "palette_free": 3,
-  "true_colour": 173
+  "true_colour": 174
  }
 }

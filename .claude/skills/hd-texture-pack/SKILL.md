@@ -97,8 +97,11 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
 4. Palette hash not on disc: the game builds that palette at runtime (Okage's menu font). Yield
    that image palette-free (see step 1); it then matches by TEX0 alone.
 5. `lod` present: only single-level keys are matched.
-6. True-colour images: PSMCT24 is supported (yield an HxWx3 RGB array; set `TRUE_COLOUR_AEM` from
-   a dump name - bit 23 of the last field). PSMCT32/16 are not.
+6. True-colour images: PSMCT24 (yield an HxWx3 RGB array; set `TRUE_COLOUR_AEM` from a dump
+   name - bit 23 of the last field) and PSMCT32 (HxWx4 RGBA, PS2 alpha) are supported. PSMCT16
+   is not.
+7. Never "fix" a miss by changing PCSX2's texture hash: standard packs and dumps depend on it. The
+   atlas checks matches with its own content hash, so raw-block keys are already covered.
 
 ## Pitfalls already paid for
 
