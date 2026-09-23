@@ -49,6 +49,12 @@ Decisions (worked out 2026-09-22 on Okage: Shadow King, 2,807 textures):
 - 2x. `--scale 2` with a 4x model runs the model at 4x and downscales with Lanczos (in float,
   per channel, before the margin is cropped so tiling textures stay seamless). UltraSharp has
   no 2x version, and the downscale averages away much of the grain the model adds at 4x.
+- Batching. The model's per-call cost dominates for small textures (Tales of Destiny's 59k sprite
+  frames, mostly 32x32, ran at ~4 textures/s one by one). Textures up to BATCH_MAX a side,
+  margin included, are laid out side by side on BATCH_CANVAS canvases and upscaled together; each
+  keeps its own seam margin, so its neighbours sit beyond the margin. `--no-batch` turns it off.
+  The model's cost is per pixel, so the margin matters as much: textures with transparency
+  (sprites, cutouts - never tiled) get `--pad-transparent` (8), opaque ones keep 16 for seams.
 - Precision. fp16 on CUDA when the model supports it, with an fp32 retry if the output has any
   NaN or infinity. cuDNN autotuning is off and deterministic algorithms are requested; a rerun
   writes byte-identical files.
@@ -180,39 +186,36 @@ def resize_float(chan: np.ndarray, size: tuple[int, int], resample) -> np.ndarra
     return np.asarray(Image.fromarray(chan.astype(np.float32), "F").resize(size, resample))
 
 
-def upscale_texture(rgba: np.ndarray, up: Upscaler, scale: int, pad: int, alpha_mode: str) -> np.ndarray:
+def prepare(rgba: np.ndarray, pad: int, pad_transparent: int | None = None) -> dict:
+    """The model's input for one texture: colour and alpha with the seam margin, 0..1 floats."""
     h, w, _ = rgba.shape
     rgb = rgba[..., :3].astype(np.float32)
     alpha = rgba[..., 3]
     opaque = bool(alpha.min() == 255)
+    if not opaque and pad_transparent is not None:
+        pad = pad_transparent  # cutouts and sprites never tile: the margin is only context
     binary_alpha = not opaque and bool(np.isin(alpha, (0, 255)).all())
     if not opaque:
         rgb = fill_transparent(rgb, alpha)
-
     # Margin per axis: --pad, or more to reach MIN_SIZE.
     my = max(pad, -(-(MIN_SIZE - h) // 2))
     mx = max(pad, -(-(MIN_SIZE - w) // 2))
     widths = ((my, my), (mx, mx))
     mode = "wrap" if opaque else "edge"
     prgb = np.pad(rgb, widths + ((0, 0),), mode=mode) / 255.0
-    ph, pw = prgb.shape[:2]
+    pa = None if opaque else np.pad(alpha.astype(np.float32), widths, mode=mode) / 255.0
+    return dict(h=h, w=w, my=my, mx=mx, rgb=prgb, alpha=pa, binary=binary_alpha)
 
-    s = up.scale
-    out_rgb = up.run(prgb)  # (ph*s, pw*s, 3), 0..1
-    out_a = None
-    if not opaque:
-        pa = np.pad(alpha.astype(np.float32), widths, mode=mode) / 255.0
-        if alpha_mode == "model":
-            out_a = up.run(np.repeat(pa[..., None], 3, axis=2)).mean(axis=2)
-        else:
-            out_a = np.clip(resize_float(pa, (pw * s, ph * s), Image.BICUBIC), 0, 1)
 
-    if scale != s:  # e.g. 4x model, 2x output: Lanczos down, still with the margin attached
+def finish(prep: dict, out_rgb: np.ndarray, out_a: np.ndarray | None, model_scale: int, scale: int) -> np.ndarray:
+    """RGBA 0..255 output from the model's output for one prepared texture (margin included)."""
+    h, w, my, mx = prep["h"], prep["w"], prep["my"], prep["mx"]
+    ph, pw = prep["rgb"].shape[:2]
+    if scale != model_scale:  # e.g. 4x model, 2x output: Lanczos down, still with the margin attached
         size = (pw * scale, ph * scale)
         out_rgb = np.stack([resize_float(out_rgb[..., c], size, Image.LANCZOS) for c in range(3)], axis=2)
         if out_a is not None:
             out_a = resize_float(out_a, size, Image.LANCZOS)
-
     cy, cx = my * scale, mx * scale
     out_rgb = out_rgb[cy : cy + h * scale, cx : cx + w * scale]
     result = np.empty((h * scale, w * scale, 4), np.uint8)
@@ -221,8 +224,63 @@ def upscale_texture(rgba: np.ndarray, up: Upscaler, scale: int, pad: int, alpha_
         result[..., 3] = 255
     else:
         out_a = np.clip(out_a[cy : cy + h * scale, cx : cx + w * scale], 0, 1)
-        result[..., 3] = np.where(out_a >= 0.5, 255, 0) if binary_alpha else np.rint(out_a * 255)
+        result[..., 3] = np.where(out_a >= 0.5, 255, 0) if prep["binary"] else np.rint(out_a * 255)
     return result
+
+
+def upscale_alpha(pa: np.ndarray, up: Upscaler, alpha_mode: str) -> np.ndarray:
+    s = up.scale
+    if alpha_mode == "model":
+        return up.run(np.repeat(pa[..., None], 3, axis=2)).mean(axis=2)
+    ph, pw = pa.shape
+    return np.clip(resize_float(pa, (pw * s, ph * s), Image.BICUBIC), 0, 1)
+
+
+def upscale_texture(rgba: np.ndarray, up: Upscaler, scale: int, pad: int, alpha_mode: str) -> np.ndarray:
+    prep = prepare(rgba, pad)
+    out_rgb = up.run(prep["rgb"])  # (ph*s, pw*s, 3), 0..1
+    out_a = None if prep["alpha"] is None else upscale_alpha(prep["alpha"], up, alpha_mode)
+    return finish(prep, out_rgb, out_a, up.scale, scale)
+
+
+BATCH_CANVAS = 512  # native pixels a side: one model call per canvas of small textures
+BATCH_MAX = 224  # a prepared texture (margin included) up to this size a side is batched
+
+
+def upscale_batch(preps: list[dict], up: Upscaler, scale: int, alpha_mode: str) -> list[np.ndarray]:
+    """Small textures laid out side by side on one canvas, each with its own seam margin, so the
+    model runs once for all of them (and once more for their alpha) instead of once each - the
+    per-call cost dominates for sprites. Rows of the tallest item; items never touch the canvas
+    edge's padding. Returns each texture's RGBA like upscale_texture()."""
+    places = []
+    x = y = row_h = 0
+    for p in preps:
+        ph, pw = p["rgb"].shape[:2]
+        if x + pw > BATCH_CANVAS:
+            x, y, row_h = 0, y + row_h, 0
+        places.append((x, y))
+        x += pw
+        row_h = max(row_h, ph)
+    height = y + row_h
+    rgb = np.zeros((height, BATCH_CANVAS, 3), np.float32)
+    alpha = np.ones((height, BATCH_CANVAS), np.float32)
+    any_alpha = False
+    for p, (px, py) in zip(preps, places):
+        ph, pw = p["rgb"].shape[:2]
+        rgb[py : py + ph, px : px + pw] = p["rgb"]
+        if p["alpha"] is not None:
+            alpha[py : py + ph, px : px + pw] = p["alpha"]
+            any_alpha = True
+    s = up.scale
+    out_rgb = up.run(rgb)
+    out_a = upscale_alpha(alpha, up, alpha_mode) if any_alpha else None
+    results = []
+    for p, (px, py) in zip(preps, places):
+        ph, pw = p["rgb"].shape[:2]
+        o_rgb = out_rgb[py * s : (py + ph) * s, px * s : (px + pw) * s]
+        o_a = None if p["alpha"] is None else out_a[py * s : (py + ph) * s, px * s : (px + pw) * s]
+        results.append(finish(p, o_rgb, o_a, s, scale))
+    return results
 
 
 def sha256(path: Path) -> str:
@@ -253,11 +311,15 @@ def main() -> None:
     ap.add_argument("--scale", type=int, default=4, choices=(2, 4), help="output scale (default 4)")
     ap.add_argument("--tile", type=int, default=512, help="tile size in native pixels, 0 = never tile")
     ap.add_argument("--pad", type=int, default=16, help="seam margin in native pixels (default 16)")
+    ap.add_argument("--pad-transparent", type=int, default=8,
+                    help="margin for textures with transparency, which never tile (default 8)")
     ap.add_argument("--alpha", choices=("model", "resize"), default="model", help="how alpha is upscaled")
     ap.add_argument("--limit", type=int, default=0, help="process at most N files")
     ap.add_argument("--only", default="", help="comma-separated file names to process")
     ap.add_argument("--force", action="store_true", help="overwrite files already in OUT_DIR")
     ap.add_argument("--fp32", action="store_true", help="never use fp16")
+    ap.add_argument("--no-batch", dest="batch", action="store_false",
+                    help="run the model once per texture (slower for small ones; see upscale_batch)")
     a = ap.parse_args()
 
     files = sorted(p for p in a.inp.glob("*.png"))
@@ -287,6 +349,29 @@ def main() -> None:
     failures: list[tuple[str, str]] = []
     inputs_path = a.out / "upscale-inputs.json"
     inputs = json.loads(inputs_path.read_text()) if inputs_path.exists() else {}
+    def write(dst: Path, result: np.ndarray, name: str, digest: str) -> None:
+        nonlocal done
+        tmp = dst.with_name(dst.name + ".tmp")  # a killed run never leaves half a PNG
+        Image.fromarray(result, "RGBA").save(tmp, format="PNG")
+        os.replace(tmp, dst)
+        inputs[name] = digest
+        done += 1
+
+    batch: list[tuple[Path, str, dict]] = []
+    batch_area = 0
+
+    def flush() -> None:
+        nonlocal batch, batch_area
+        if not batch:
+            return
+        try:
+            results = upscale_batch([p for _, _, p in batch], up, a.scale, a.alpha)
+            for (src, digest, _), result in zip(batch, results):
+                write(a.out / src.name, result, src.name, digest)
+        except Exception as e:  # keep going; report at the end
+            failures.extend((src.name, f"{type(e).__name__}: {e}") for src, _, _ in batch)
+        batch, batch_area = [], 0
+
     for i, src in enumerate(files, 1):
         dst = a.out / src.name
         digest = hashlib.sha1(src.read_bytes()).hexdigest()
@@ -296,14 +381,22 @@ def main() -> None:
         else:
             try:
                 rgba = np.asarray(Image.open(src).convert("RGBA"))
-                result = upscale_texture(rgba, up, a.scale, a.pad, a.alpha)
-                tmp = dst.with_name(dst.name + ".tmp")  # a killed run never leaves half a PNG
-                Image.fromarray(result, "RGBA").save(tmp, format="PNG")
-                os.replace(tmp, dst)
-                inputs[src.name] = digest
-                done += 1
+                prep = prepare(rgba, a.pad, a.pad_transparent)
+                ph, pw = prep["rgb"].shape[:2]
+                if a.batch and ph <= BATCH_MAX and pw <= BATCH_MAX:
+                    # Canvas nearly full (rows waste some width): run what is queued first.
+                    if batch_area + ph * pw > BATCH_CANVAS * BATCH_CANVAS * 3 // 4:
+                        flush()
+                    batch.append((src, digest, prep))
+                    batch_area += ph * pw
+                else:
+                    out_rgb = up.run(prep["rgb"])
+                    out_a = None if prep["alpha"] is None else upscale_alpha(prep["alpha"], up, a.alpha)
+                    write(dst, finish(prep, out_rgb, out_a, up.scale, a.scale), src.name, digest)
             except Exception as e:  # keep going; report at the end
                 failures.append((src.name, f"{type(e).__name__}: {e}"))
+        if i == len(files):
+            flush()
         now = time.perf_counter()
         if now - last >= 10 or i == len(files):
             inputs_path.write_text(json.dumps(inputs, indent=0, sort_keys=True))

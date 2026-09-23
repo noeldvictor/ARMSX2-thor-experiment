@@ -72,6 +72,7 @@ def main() -> None:
     ap.add_argument("--chdman", help="path to MAME's chdman, if it is not on PATH")
     ap.add_argument("--scale", type=int, choices=(2, 4), help="override game.json's scale")
     ap.add_argument("--from", dest="start", choices=STEPS, help="redo this step and the ones after it")
+    ap.add_argument("--until", choices=STEPS, help="stop after this step")
     a = ap.parse_args()
 
     game = json.loads((a.recipe / "game.json").read_text())
@@ -89,6 +90,8 @@ def main() -> None:
     timings["gpu"] = gpu_name()
 
     def step(name: str, fn) -> None:
+        if a.until and STEPS.index(name) > STEPS.index(a.until):
+            return
         t0 = time.perf_counter()
         fn()
         timings[name] = round(time.perf_counter() - t0, 1)
@@ -135,6 +138,9 @@ def main() -> None:
 
     step("zip", make_zip)
 
+    if a.until and STEPS.index(a.until) < STEPS.index("build"):
+        print(f"\nstopped after {a.until}")
+        return
     index_sha = sha256(replacements / "disc-atlas.a2at")
     ref = game.get("reference", {}).get("index_sha256")
     total = sum(v for k, v in timings.items() if k in STEPS)
