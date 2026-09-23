@@ -1,8 +1,8 @@
 # Tales of Destiny: Director's Cut (SLPS-25842) - disc HD texture pack recipe
 
-**Status:** in progress. The English fan-translated disc (v1.6). The extraction and the matching
-are proven exact on two scenes; the 4x pack is being built and has not been judged on the Thor
-yet.
+**Status:** in progress. The English fan-translated disc (v1.6). The 4x pack is built and runs
+on the Thor; it is proven on two scenes (the ship's deck and the title screen), and the rest of
+the game has not been looked at yet.
 
 A 4x HD pack for Tales of Destiny: Director's Cut, built from your own disc. No gameplay dumping:
 every texture is read off the disc, upscaled with 4x-UltraSharp and matched exactly by the
@@ -10,7 +10,14 @@ emulator. How that works: [docs/hd-texture-packs.md](../../docs/hd-texture-packs
 
 ## Before / after
 
-Not yet: screenshots come once the 4x pack has been judged at 3x on the Thor.
+![Ship's deck: the Captain, his dialogue and the font, original vs HD pack](media/ship-dialogue.jpg)
+
+![Title logo, original vs HD pack](media/title-logo.jpg)
+
+![Title menu text, original vs HD pack](media/title-menu.jpg)
+
+Screenshots: `gsrunner` replays of GS dumps on the AYN Thor at 3x internal resolution, 1:1 crops,
+original on the left. 4x-UltraSharp adds some grain to the logo's silver rim.
 
 ## Make it
 
@@ -45,14 +52,18 @@ plus the disc image.
 
 ## Coverage
 
-A full 1x pack (every disc image at native size) against an empty pack, `gsrunner` replays of
-desktop GS dumps on the Thor at 3x, 2026-09-23 (with `hw_mipmap=false`: the deck floor is
-mipmapped):
+`gsrunner` replays of desktop GS dumps on the Thor at 3x, 2026-09-23. The 1x pack (every disc
+image at native size, with `hw_mipmap=false`: the deck floor is mipmapped) against an empty pack
+proves the matches exact; the 4x pack is the one you install:
 
-| Scene | Textures matched | 1x vs empty pack |
-| --- | --- | --- |
-| Ship's deck | 47 of 47 | bit-identical |
-| Title screen | 16 of 17 (the miss is a 1024x1024 32-bit texture, most likely one the game renders; not checked) | bit-identical |
+| Scene | Textures matched | 1x vs empty pack | 4x pack |
+| --- | --- | --- | --- |
+| Ship's deck | 47 of 47 | bit-identical | 47 matched, no load errors, every frame changed |
+| Title screen | 16 of 17 (the miss is a 1024x1024 32-bit texture, most likely one the game renders; not checked) | bit-identical | 16 matched, no load errors, every frame changed |
+
+In the app (the save state from the same scene, 3x, RAISR-HD on): every texture of the ship's
+deck matched, and the boot's three 640x480 logo screens too. The intro movie's frames count as
+misses (2,700+ of them) - they are video, not disc textures.
 
 What that covers: map textures and the field/town map atlases, character sprites (single frames
 and the batches the game assembles in VRAM), the font (2,013 glyphs from the executable), the
@@ -60,8 +71,9 @@ title art (true colour) and the title menu text.
 
 ## Not yet
 
-- **The 4x pack**: built, not judged on the Thor yet; no screenshots, no clean timings.
-- **Only two scenes are proven.** Towns, battles, menus and cut-ins have not been dumped yet.
+- **Only two scenes are proven.** Towns, battles, menus and cut-ins have not been dumped or
+  played yet. That is what stands between this recipe and "finished".
+- **No clean timings**: the build shared the PC with Android builds and ran in two parts.
 - **Size**: 14.8 GB installed, 8.5 GB zipped. The index alone is 1.1 GB; the emulator memory-maps it (about
   40 MB resident on the Thor), but it is still download and disk.
 - The first 4x pack (3.1 GB, PNG, before most of the fixes below) had wrongly coloured UI corners
@@ -101,5 +113,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 
 ## Playing with it
 
-Not judged yet. The target is the same as Okage's: 3x internal resolution on the Thor, RAISR-HD
-left on, 2x fast-forward.
+On the Thor (8 Gen 2) at 3x internal resolution with RAISR-HD left on, the ship's deck with the
+pack runs at 59.9 fps with the GS thread at 11% and the GPU at 11% (the emulator's 30-second
+PerfLog), so 2x fast-forward has room. The pack's 1.1 GB index is memory-mapped; loading it at
+boot takes a moment.
