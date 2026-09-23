@@ -147,6 +147,8 @@ too. So far there is **one recipe: Okage: Shadow King**.
 | --- | --- |
 | ![Inn door and Ari, original vs HD pack](hd-packs/SCUS-97129-okage/media/inn.jpg) | ![Thatched roof, original vs HD pack](hd-packs/SCUS-97129-okage/media/roof.jpg) |
 
+![The World Library's lectern book, original vs HD pack](hd-packs/SCUS-97129-okage/media/library-book.jpg)
+
 **If the game has a recipe** in [`hd-packs/`](hd-packs/README.md): you need your own disc image,
 a PC with an NVIDIA GPU, Python and MAME's `chdman`. One command then extracts, upscales and
 zips the pack. Okage takes about 15 minutes on an RTX 3060. Unzip the result into
@@ -157,10 +159,10 @@ The [`hd-texture-pack` skill](.claude/skills/hd-texture-pack/SKILL.md) gives it 
 
 1. Prove the game is a candidate by dumping one scene in desktop PCSX2.
 2. Find and decode the texture format.
-3. Check a 1x pack renders bit-identical to no pack.
+3. Check a 1x pack renders bit-identical to an empty pack.
 4. Upscale.
 
-Expect hours of back-and-forth, not minutes. Some games won't work: true-colour textures,
+Expect hours of back-and-forth, not minutes. Some games won't work: 32-bit and 16-bit textures,
 textures built at runtime, and formats nobody can decode are not covered yet.
 
 Packs are never in this repository. The art is the publisher's, and the default upscale model is
@@ -170,7 +172,7 @@ licensed for non-commercial use only. Share recipes. A pack works only in this f
 | --- | --- | --- |
 | Textures come from | Dumps made while someone plays | The game disc |
 | Per-game work | Play everything with dumping on | Decode the disc format once (AI-assisted), then one command |
-| Coverage | What the player reached | Every palette texture on the disc |
+| Coverage | What the player reached | Every palette and 24-bit texture on the disc |
 | Works in stock PCSX2 | Yes | No, this fork only |
 
 Both kinds sit in the same folder and work together: a texture with its own standard file uses

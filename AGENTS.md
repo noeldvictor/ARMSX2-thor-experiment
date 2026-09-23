@@ -97,8 +97,10 @@ user-facing version.
      (`xxh3_64` of the crop's indices, row by row; `xxh3_64` of the palette). If not, stop and say so.
   2. Write `hd-packs/<SERIAL>-<name>/extractor.py`: disc-format code only, the
      `disc_images()` contract in `tools/disc_textures/extract_native.py`. Copy Okage's folder.
-  3. A 1x pack (built from the native PNGs) must replay **bit-identical** to no pack in gsrunner
-     on the Thor. That is the proof the matching is exact; only then upscale.
+  3. A 1x pack (built from the native PNGs) must replay **bit-identical** to an *empty* pack (an
+     index with no images) in gsrunner on the Thor. That is the proof the matching is exact; only
+     then upscale. Not against no pack: with any disc pack loaded, menu sprites are narrowed to
+     their UV rect, which changes bilinear sprite edges by a pixel.
   4. Images the game colours at runtime (fonts) are palette-free: upscale them through the
      game's real palette (`palette_free_palette()`, read from the `Disc atlas: palette` log
      line). A guessed grey ramp upscales into the wrong indices.
@@ -502,19 +504,25 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
 - What makes it possible: a drawn texture is a rectangle of a disc image, and PCSX2 keys a region
   texture by XXH3 over the rectangle's palette indices plus XXH3 of the palette - computable
   offline. Okage: 35/35 dumped keys reproduced from disc data.
-- Pack = whole upscaled disc images (`atlas/`) + `disc-atlas.a2at` (v3: palette hash, size and
-  indices per image, hash of every 16x16 block every 8 px, plus a palette-free block table). `GSDiscAtlas` matches on a stock-name
+- Pack = whole upscaled disc images (`atlas/`) + `disc-atlas.a2at` (v4: palette hash, size and
+  indices per image, hash of every 16x16 block every 8 px, plus a table for palette-free and
+  true-colour blocks). `GSDiscAtlas` matches on a stock-name
   miss: probe block -> candidates -> the crop whose hash equals the key's TEX0 hash, so a match is
   exact. It registers the crop under the stock name; the normal async loader does the rest.
 - Menus: a UV-selected sprite of a big palette sheet is narrowed to its own texels
   (`GSRendererHW`, only while a disc atlas is loaded; last texel `ceil(max - 0.5) - 1`).
-- Proof standard: a 1x pack built from the native disc images renders bit-identical frames to no
-  pack (gsrunner on the Thor). Keep it that way when changing any of this.
+- Proof standard: a 1x pack built from the native disc images renders bit-identical frames to an
+  empty pack (gsrunner on the Thor; Okage: Library, Tenel, house and menu dumps, 2026-09-23). Keep
+  it that way when changing any of this.
+- True colour (PSMCT24): the key hashes RGB + TEXA alpha (TA0, or 0 for black under AEM), so it
+  is computable; blocks are indexed by RGB, the crop check and the loader use the key's TEXA.
+  Okage uses AEM with TA0 0x80 (`...-80c02a81` names). PS2 alpha above 0x80 (16 Okage palettes)
+  is carried raw through the upscale, never doubled and clipped (`raw_alpha()`).
 - Palette-free images (fonts coloured at runtime): matched by TEX0 alone, shipped as an HD index
   map painted with the game's palette at load. Upscale them through the game's *real* palette
   (`palette_free_palette()` in the extractor; the emulator logs it as `Disc atlas: palette`) - a
   grey ramp made Okage's index-1 ink hollow.
-- Not covered yet: true-colour disc images, mipmapped keys with more than one level. Upscale
+- Not covered yet: PSMCT32/16 disc images, mipmapped keys with more than one level. Upscale
   edge bleed between atlas neighbours. Okage's IQ24 font is in the pack but unverified on screen.
 - Tools: `tools/disc_textures/` - `make_pack.py` (one command: disc -> extract -> upscale ->
   build -> zip, timings, checksum), `disc.py`, `extract_native.py` (the extractor contract),

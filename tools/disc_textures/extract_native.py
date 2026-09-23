@@ -15,6 +15,12 @@ that knows the game's disc formats and provides
     16 or 256 entries) exactly as the GS receives them. An empty list marks a *palette-free*
     image, one the game colours at runtime (fonts): the pack stores an HD index map for it and
     the emulator paints it with whatever palette the game is using.
+  - A *true-colour* (PSMCT24) image instead yields an HxWx3 uint8 RGB array as `indices`, exactly
+    the bytes the game uploads, and an empty palette list.
+- `TRUE_COLOUR_AEM` (optional, default False) - True when the game draws its true-colour textures
+  with TEXA.AEM set, so the GS makes black texels transparent. Those texels are then written
+  transparent for the upscale, so the model does not smear black into the edges. Read it off a
+  texture dump: bit 23 of a PSMCT24 name's last field (`...-80c02a81` has AEM set, TA0 0x80).
 - `palette_free_palette(key)` (optional) - the palette a palette-free image is painted with for
   upscaling, in the same format. Use the real runtime palette: build a pack once, then read it
   from the emulator log (`Disc atlas: palette <hash>: ...`, one u32 per entry, 0xAABBGGRR).
@@ -23,7 +29,7 @@ that knows the game's disc formats and provides
   function a grey ramp (grey = index * 17, opaque) is used.
 
 Output: `<key>[_p<N>].png` (RGBA, alpha scaled to 0..255) and `manifest.json` (per file: width,
-height, palette count, whether it is palette-free). Needs numpy and pillow, plus whatever the
+height, palette count, whether it is palette-free or true-colour). Needs numpy and pillow, plus whatever the
 extractor imports (pycdlib for ISO 9660 discs).
 """
 
@@ -59,12 +65,31 @@ def representative_palette(extractor, key: str, indices: np.ndarray) -> bytes:
     return pal if pal else grey_ramp(16 if int(indices.max()) < 16 else 256)
 
 
+def raw_alpha(indices: np.ndarray, pal: bytes) -> bool:
+    """Whether an image's alpha goes through unscaled. PS2 alpha is 0..0x80 for 0..1 but can go
+    up to 0xFF (more than opaque, for blending); doubling those to fit 0..255 would clip them, so
+    an image whose texels use such entries keeps the raw PS2 value. Only the entries it uses
+    count: an unused one must not cost an opaque texture its opaque (seam-free) upscale.
+    build_disc_pack.py decides the same way."""
+    alpha = np.frombuffer(pal, np.uint8).reshape(-1, 4)[:, 3]
+    return bool(alpha[np.unique(indices)].max() > 0x80)
+
+
 def paint(indices: np.ndarray, pal: bytes) -> np.ndarray:
-    """RGBA 0..255 image of `indices` in palette `pal` (PS2 alpha)."""
+    """RGBA 0..255 image of `indices` in palette `pal` (PS2 alpha, doubled unless raw_alpha())."""
     p = np.frombuffer(pal, np.uint8).reshape(-1, 4).astype(np.uint16)
     rgba = p[indices]
-    rgba[..., 3] = np.minimum(rgba[..., 3] * 2, 255)  # PS2 0x80 is opaque
+    if not raw_alpha(indices, pal):
+        rgba[..., 3] = np.minimum(rgba[..., 3] * 2, 255)  # PS2 0x80 is opaque
     return rgba.astype(np.uint8)
+
+
+def true_colour_rgba(extractor, rgb: np.ndarray) -> np.ndarray:
+    """RGBA 0..255 for a true-colour image: opaque, or transparent where black under AEM."""
+    alpha = np.full(rgb.shape[:2], 255, np.uint8)
+    if getattr(extractor, "TRUE_COLOUR_AEM", False):
+        alpha[(rgb == 0).all(axis=2)] = 0
+    return np.dstack([rgb, alpha])
 
 
 def main() -> None:
@@ -80,7 +105,11 @@ def main() -> None:
 
     manifest: dict[str, dict] = {}
     for key, indices, pals in extractor.disc_images(a.iso):
-        h, w = indices.shape
+        h, w = indices.shape[:2]
+        if indices.ndim == 3:
+            Image.fromarray(true_colour_rgba(extractor, indices), "RGBA").save(a.out / f"{key}.png")
+            manifest[f"{key}.png"] = {"width": w, "height": h, "palettes": 0, "palette_free": False, "true_colour": True}
+            continue
         if not pals:
             Image.fromarray(paint(indices, representative_palette(extractor, key, indices)), "RGBA").save(a.out / f"{key}.png")
             manifest[f"{key}.png"] = {"width": w, "height": h, "palettes": 0, "palette_free": True}
@@ -92,7 +121,8 @@ def main() -> None:
 
     (a.out / "manifest.json").write_text(json.dumps({"textures": manifest}, indent=1))
     free = sum(1 for m in manifest.values() if m["palette_free"])
-    print(f"{len(manifest)} textures written to {a.out} ({free} palette-free)")
+    tc = sum(1 for m in manifest.values() if m.get("true_colour"))
+    print(f"{len(manifest)} textures written to {a.out} ({free} palette-free, {tc} true-colour)")
 
 
 if __name__ == "__main__":

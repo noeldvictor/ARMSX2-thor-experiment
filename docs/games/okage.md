@@ -293,14 +293,20 @@ a drawn texture to a crop of a disc image (`GSDiscAtlas`, see
 [docs/hd-texture-packs.md](../hd-texture-packs.md)). Status, all verified on the Thor:
 
 - World, characters, the status menu sheet and portraits: matched exactly (a 1x pack renders
-  bit-identical frames to no pack).
+  bit-identical frames to an empty pack).
 - Fonts `BM.FNT`, `BMUI.FNT`, `IQ24.FNT`: header with first/last character code (the glyph
   count is last - first + 1, not byte 5 alone - that misread made IQ24 look compressed), 20-byte
   glyph entries, u16 row count, then a 256-wide 4bpp sheet. The game colours them at runtime (index 0 transparent, index k white at alpha 0x80 - 8(k-1)), so
   they are palette-free images in index v3. Upscaled through a grey ramp the ink (index 1) went
   hollow; upscaled through that real palette they are right.
 - IQ24 is in the pack but was not on the replayed status menu; check it on a screen that draws it.
-- Not covered: the 174 true-colour `.XIM` images.
+- True colour (2026-09-23): the 173 PSMCT24 `.XIM` images (night town art, field maps, a village
+  room, the World Library's books, faces) are in the pack. Every PSMCT24 texture the game draws
+  is named `...-80c02a81`: TA0 0x80 with AEM on, so black is transparent. The 8 dumped from the
+  World Library reproduce from disc RGB exactly; the lectern book is the visible win.
+- 16 palettes use PS2 alpha above 0x80 (the pot's steam in a house); the tools now carry that
+  raw instead of clipping it, which is what made that scene's 1x pack exact.
+- Not covered: the one PSMCT32 image.
 - The recipe, timings and checksums: [hd-packs/SCUS-97129-okage](../../hd-packs/SCUS-97129-okage/README.md).
 
 ## Cheats

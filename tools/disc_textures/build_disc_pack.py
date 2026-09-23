@@ -18,6 +18,9 @@ for `<DataRoot>/textures/<SERIAL>/replacements/`:
   (premultiplied RGBA) of the palette it was painted with for upscaling, stored as RGBA with the
   index in R. Their blocks go in a second table keyed by the block hash alone, and the emulator
   paints the map with the palette the game is using (index version 3).
+- True-colour (PSMCT24) images keep their RGB in the index (three bytes a texel), their blocks are
+  hashed over RGB in the same second table, and the HD image keeps the upscaled alpha (index
+  version 4). The emulator rebuilds the GS's TEXA alpha for the exact check.
 
 Why crops: what a draw samples is a rectangle of a disc image at a 16-pixel-aligned position
 (Okage mostly draws pieces of 256x256 atlases), and PCSX2 keys a region texture by XXH3 over that
@@ -42,11 +45,12 @@ import xxhash
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from extract_native import load_extractor, representative_palette  # noqa: E402
+from extract_native import load_extractor, raw_alpha, representative_palette  # noqa: E402
 
 TILE = 16
 STEP = 8  # block positions: every 8 px covers the 8x8 block grid of PSMT8H/PSMT4HL sheets (index v2)
 FLAG_PALETTE_FREE = 1
+FLAG_TRUE_COLOUR = 2
 
 
 def nearest_index(hd: np.ndarray, pal: bytes) -> np.ndarray:
@@ -82,11 +86,31 @@ def main() -> None:
     scales = set()
 
     for key, indices, pals in extractor.disc_images(a.iso):
-        h, w = indices.shape
+        h, w = indices.shape[:2]
         offset = len(index_data)
-        index_data += indices.tobytes()
+        index_data += np.ascontiguousarray(indices).tobytes()
         block_hashes = [(x, y, xxhash.xxh3_64_intdigest(np.ascontiguousarray(indices[y : y + TILE, x : x + TILE]).tobytes()))
                         for y in range(0, h - TILE + 1, STEP) for x in range(0, w - TILE + 1, STEP)]
+        if indices.ndim == 3:
+            # True colour: blocks keyed by their RGB alone, the HD image with its upscaled alpha.
+            name = f"{key}.png"
+            src = a.hd / name
+            if not src.exists():
+                missing += 1
+                continue
+            hd = Image.open(src).convert("RGBA")
+            scale = hd.width // w
+            if scale < 1 or hd.width != w * scale or hd.height != h * scale:
+                print(f"skip {name}: {hd.width}x{hd.height} is not a multiple of {w}x{h}")
+                continue
+            scales.add(scale)
+            rgba = np.asarray(hd).copy()
+            rgba[..., 3] = (rgba[..., 3].astype(np.uint16) + 1) // 2  # 255 -> 128, the PS2 scale
+            Image.fromarray(rgba, "RGBA").save(a.out / "atlas" / name)
+            image_id = len(images)
+            images.append((0, w, h, offset, FLAG_TRUE_COLOUR, f"atlas/{name}"))
+            free_tiles += [(th, image_id, x, y) for x, y, th in block_hashes]
+            continue
         if not pals:
             # Palette-free: the HD file was painted with a stand-in palette; store an HD index map.
             name = f"{key}.png"
@@ -120,7 +144,8 @@ def main() -> None:
                 continue
             scales.add(scale)
             rgba = np.asarray(hd).copy()
-            rgba[..., 3] = (rgba[..., 3].astype(np.uint16) + 1) // 2  # 255 -> 128, the PS2 scale
+            if not raw_alpha(indices, pal):  # otherwise the image already holds PS2 alpha, up to 0xFF
+                rgba[..., 3] = (rgba[..., 3].astype(np.uint16) + 1) // 2  # 255 -> 128, the PS2 scale
             Image.fromarray(rgba, "RGBA").save(a.out / "atlas" / name)
 
             clut_hash = xxhash.xxh3_64_intdigest(pal)
@@ -131,11 +156,12 @@ def main() -> None:
     tiles.sort(key=lambda t: (t[0], t[1]))
     free_tiles.sort(key=lambda t: t[0])
     # Version 3: header 40 bytes, images 72 bytes (flags added), then bound tiles (24 bytes),
-    # then palette-free tiles (16 bytes), then the index data.
+    # then palette-free tiles (16 bytes), then the index data. Version 4: the same layout, and
+    # images may be true colour (FLAG_TRUE_COLOUR, RGB index data, RGB block hashes).
     header_size = 40
     index_data_offset = header_size + 72 * len(images) + 24 * len(tiles) + 16 * len(free_tiles)
     with open(a.out / "disc-atlas.a2at", "wb") as f:
-        f.write(struct.pack("<4sIIIIIQII", b"A2AT", 3, len(images), len(tiles), TILE, STEP, index_data_offset,
+        f.write(struct.pack("<4sIIIIIQII", b"A2AT", 4, len(images), len(tiles), TILE, STEP, index_data_offset,
                             len(free_tiles), 0))
         for clut_hash, w, h, off, flags, file in images:
             f.write(struct.pack("<QIIQII40s", clut_hash, w, h, off, flags, 0, file.encode("ascii")))
@@ -146,7 +172,8 @@ def main() -> None:
         f.write(index_data)
 
     size = (a.out / "disc-atlas.a2at").stat().st_size
-    print(f"{len(images)} disc textures ({sum(1 for i in images if i[4])} palette-free), {len(tiles) + len(free_tiles)} blocks, "
+    print(f"{len(images)} disc textures ({sum(1 for i in images if i[4] & FLAG_PALETTE_FREE)} palette-free, "
+          f"{sum(1 for i in images if i[4] & FLAG_TRUE_COLOUR)} true-colour), {len(tiles) + len(free_tiles)} blocks, "
           f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, "
           f"{missing} without an HD image")
 

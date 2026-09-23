@@ -8,7 +8,7 @@ it, and a disc pack fills in everything else.
 | Where the textures come from | Dumped by the emulator while someone plays | Read straight off the game disc |
 | Per-game work | Play through every area with dumping on | Work out the game's disc format and write an extractor (reverse engineering, usually with an AI agent) - once per game |
 | After that | Upscale and clean up the dumps | One command per pack: [a recipe](../hd-packs/README.md) |
-| Coverage | Whatever the player reached | Every palette texture on the disc |
+| Coverage | Whatever the player reached | Every palette and 24-bit texture on the disc |
 | Files in the pack | One PNG per texture, named by its hash | The whole upscaled disc images + one index file |
 | Works in stock PCSX2 | Yes | No, this fork only |
 | Games | Any | Only games someone has written a recipe for: [hd-packs/](../hd-packs/README.md) |
@@ -43,8 +43,32 @@ For menu sprites the emulator narrows the texture to the sprite's own UV rectang
 can be found too. Code: `pcsx2/GS/Renderers/HW/GSDiscAtlas.*`.
 
 Verified on the Thor: a pack built from the *original* disc images renders frames bit-identical to
-no pack at all, so every crop is exact; and all 35 textures desktop PCSX2 dumped in an Okage scene
-have their names reproduced from disc data.
+an empty pack (an index with no images), so every crop is exact; and all 35 textures desktop PCSX2
+dumped in an Okage scene have their names reproduced from disc data. Compare with an empty pack,
+not with no pack: while any disc pack is loaded, menu sprites are narrowed to their UV rectangle,
+so bilinear filtering at a sprite's edge clamps instead of reading the next texel of the sheet -
+a one-pixel difference at sprite edges that has nothing to do with the replacements.
+
+## True-colour images
+
+24-bit (PSMCT24) textures have no palette; PCSX2 hashes them expanded to 32 bits, the RGB plus
+an alpha the GS makes from TEXA: TA0, or 0 for black when AEM is set. That is computable from
+the disc too - all 8 PSMCT24 textures dumped from Okage's World Library have their names
+reproduced from disc RGB with TA0 0x80 and AEM on. The pack stores their RGB (index version 4)
+and indexes their blocks by RGB alone, so the probe does not depend on TEXA; the exact check
+rebuilds the alpha from the key's TEXA, and the loader applies it to the HD image. An extractor
+flags `TRUE_COLOUR_AEM` when the game uses AEM, so black is transparent before the upscale and
+the model does not smear it into the edges.
+
+32-bit (PSMCT32) textures are hashed as raw GS blocks unless the draw uses a region, and 16-bit
+ones are not handled yet.
+
+## Alpha above 0x80
+
+PS2 alpha is 0..0x80 for 0..1 and can go up to 0xFF. The upscaler wants 0..255, so the tools
+double it - which would clip anything above 0x80. Images whose texels use such alpha (16 of
+Okage's palettes; the steam from the pot in a house is one) keep the raw PS2 value through the
+upscale instead; `raw_alpha()` in `extract_native.py` decides, the same way on both sides.
 
 ## Making a pack
 
@@ -82,8 +106,9 @@ The dev server (`docs/mcp-server.md`) has what you need:
   a repeating floor can show a faint seam. The fix is to upscale known pieces separately.
 - ESRGAN-type models invent detail on tiny or soft art (Okage's 24-pixel portraits). Pick the
   model per kind of art if it matters.
-- Only palette textures (PSMT8/PSMT4 and their H variants) are matched. True-colour images,
-  mipmapped textures and anything the game builds in memory at runtime are not.
+- Palette textures (PSMT8/PSMT4 and their H variants), palette-free fonts and PSMCT24 are
+  matched. PSMCT32/16, mipmapped textures and anything the game builds in memory at runtime are
+  not.
 
 ## Sharing a pack
 

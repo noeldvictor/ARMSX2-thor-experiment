@@ -42,9 +42,15 @@ namespace GSTextureReplacements
 // table keyed by the block alone. The key's TEX0 hash covers only indices, so the match is as exact
 // as ever; the texture's palette at match time is kept, and the loader paints the map with it.
 //
-// Limits: palette textures (PSMT8/PSMT4 and their H variants) whose key hashes expanded indices,
-// which is every region texture and every texture below a block; single-level keys; regions that
-// hold a whole 16x16 block on the probe grid.
+// True-colour images (version 4): PSMCT24 textures are hashed expanded too - RGB plus an alpha
+// the GS makes from TEXA (TA0, or 0 for black under AEM). Their blocks are indexed by RGB alone,
+// so the probe is the same whatever TEXA the game uses; the crop check rebuilds the alpha from the
+// key's TEXA, and the loader applies it to the HD image.
+//
+// Limits: palette textures (PSMT8/PSMT4 and their H variants) and PSMCT24, whose keys hash expanded
+// texels, which is every region texture and every texture below a block; single-level keys; regions
+// that hold a whole 16x16 block on the probe grid. PSMCT32 keys hash raw GS blocks unless regioned,
+// and are not matched.
 namespace GSDiscAtlas
 {
 	static constexpr u32 TILE = 16;
@@ -55,6 +61,7 @@ namespace GSDiscAtlas
 		u32 matches;
 		u32 misses;
 		u32 palette_free_matches;
+		u32 true_colour_matches;
 	};
 
 	/// Loads `disc-atlas.a2at` from the replacement directory, if there is one. Returns whether
@@ -73,6 +80,11 @@ namespace GSDiscAtlas
 	/// palette-free image. Returns a pseudo filename for LoadCrop(), or an empty string.
 	std::string Match(u64 tex0_hash, u64 clut_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
 		const u32* clut, u32 clut_entries);
+
+	/// The same for a PSMCT24 texture: `probe` is the XXH3 of the probe block's RGB, three bytes a
+	/// texel, row by row; `ta0` / `aem` are the key's TEXA, which the key's hash was made with.
+	std::string MatchTrueColour(u64 tex0_hash, u32 width, u32 height, u64 probe, u32 probe_x, u32 probe_y,
+		u8 ta0, bool aem);
 
 	bool IsCropFilename(std::string_view filename);
 

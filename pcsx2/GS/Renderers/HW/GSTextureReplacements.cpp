@@ -697,11 +697,15 @@ bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& 
 	const TextureName name(CreateTextureName(hash, 0));
 	if (s_replacement_texture_filenames.find(name) != s_replacement_texture_filenames.end())
 		return true;
-	if (!name.HasPalette() || s_disc_atlas_misses.find(name) != s_disc_atlas_misses.end())
+	const bool true_colour = (name.TEX0_PSM == PSMCT24);
+	if ((!name.HasPalette() && !true_colour) || s_disc_atlas_misses.find(name) != s_disc_atlas_misses.end())
 		return false;
 
-	std::string crop = GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y,
-		clut, clut_entries);
+	std::string crop = true_colour ?
+		GSDiscAtlas::MatchTrueColour(hash.TEX0Hash, name.Width(), name.Height(), probe, probe_x, probe_y,
+			static_cast<u8>(name.TEXA_TA0), name.TEXA_AEM != 0) :
+		GSDiscAtlas::Match(hash.TEX0Hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y,
+			clut, clut_entries);
 	if (crop.empty())
 	{
 		s_disc_atlas_misses.insert(name);
@@ -987,6 +991,8 @@ void GSTextureReplacements::ClearReplacementTextures()
 {
 	s_replacement_texture_filenames.clear();
 	s_replacement_textures_without_clut_hash.clear();
+	s_disc_atlas_misses.clear();
+	GSDiscAtlas::Clear();
 
 	std::unique_lock<std::mutex> lock(s_replacement_texture_cache_mutex);
 	ResetReplacementCacheLocked();

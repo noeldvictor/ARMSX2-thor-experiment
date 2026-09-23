@@ -6,8 +6,9 @@
 Reads every `*.png` in IN_DIR (RGBA, alpha already on the 0..255 scale) and writes the upscaled
 texture to OUT_DIR under the same name. `manifest.json`, when IN_DIR has one, is copied through
 with an `upscale` record (scale, model, model SHA-256). Files already in OUT_DIR are skipped
-unless `--force`, so an interrupted run resumes where it stopped - unless their size is not the
-input's times the scale (the input changed, e.g. an extractor fix), which redoes them.
+unless `--force`, so an interrupted run resumes where it stopped - unless the input changed since
+(an extractor fix): `upscale-inputs.json` in OUT_DIR records each input's SHA-1, and an output
+whose input no longer matches, or whose size is not the input's times the scale, is redone.
 
 Requirements (not in the repo; install into a venv):
 
@@ -232,8 +233,11 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def up_to_date(src: Path, dst: Path, scale: int) -> bool:
-    """An existing output is kept only if it is the input's size times the scale."""
+def up_to_date(src: Path, dst: Path, scale: int, recorded: str | None, digest: str) -> bool:
+    """An existing output is kept only if it was made from this input (when that was recorded)
+    and is the input's size times the scale."""
+    if recorded is not None and recorded != digest:
+        return False
     try:
         with Image.open(src) as a, Image.open(dst) as b:
             return b.size == (a.width * scale, a.height * scale)
@@ -281,9 +285,13 @@ def main() -> None:
     last = t0
     done = skipped = 0
     failures: list[tuple[str, str]] = []
+    inputs_path = a.out / "upscale-inputs.json"
+    inputs = json.loads(inputs_path.read_text()) if inputs_path.exists() else {}
     for i, src in enumerate(files, 1):
         dst = a.out / src.name
-        if dst.exists() and not a.force and up_to_date(src, dst, a.scale):
+        digest = hashlib.sha1(src.read_bytes()).hexdigest()
+        if dst.exists() and not a.force and up_to_date(src, dst, a.scale, inputs.get(src.name), digest):
+            inputs[src.name] = digest
             skipped += 1
         else:
             try:
@@ -292,11 +300,13 @@ def main() -> None:
                 tmp = dst.with_name(dst.name + ".tmp")  # a killed run never leaves half a PNG
                 Image.fromarray(result, "RGBA").save(tmp, format="PNG")
                 os.replace(tmp, dst)
+                inputs[src.name] = digest
                 done += 1
             except Exception as e:  # keep going; report at the end
                 failures.append((src.name, f"{type(e).__name__}: {e}"))
         now = time.perf_counter()
         if now - last >= 10 or i == len(files):
+            inputs_path.write_text(json.dumps(inputs, indent=0, sort_keys=True))
             rate = done / (now - t0) if done else 0.0
             eta = (len(files) - i) / rate if rate else 0.0
             print(f"[{i}/{len(files)}] {done} written, {skipped} skipped, {len(failures)} failed, "

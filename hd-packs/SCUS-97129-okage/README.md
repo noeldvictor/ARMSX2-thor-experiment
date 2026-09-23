@@ -7,6 +7,8 @@ emulator. How that works: [docs/hd-texture-packs.md](../../docs/hd-texture-packs
 
 ![Status menu: portraits and menu fonts, original vs HD pack](media/menu-fonts.jpg)
 
+![The World Library's lectern book (a true-colour texture), original vs HD pack](media/library-book.jpg)
+
 | | |
 | --- | --- |
 | ![Inn door and Ari, original vs HD pack](media/inn.jpg) | ![Thatched roof, original vs HD pack](media/roof.jpg) |
@@ -43,14 +45,15 @@ A clean run from the `.chd`, 2026-09-22 (Core i7-11700, 32 GB RAM, RTX 3060 12 G
 | Step | Time | Output |
 | --- | --- | --- |
 | disc (chdman + sector strip) | 23 s | `disc.iso`, 436 MB |
-| extract | 28 s | `native/`: 2,636 PNGs, 37 MB (3 of them palette-free font sheets) |
-| upscale 4x | 12 min 7 s (3.6 textures/s) | `hd4x/`: 571 MB |
-| build | 1 min 47 s | `pack_hd4x/replacements/`: 604 MB (2,638 images + a 35.7 MB index) |
-| zip | 13 s | `SCUS-97129-disc-hd4x.zip`, 610 MB |
-| **total** | **about 15 min** | |
+| extract | 15-28 s | `native/`: 2,809 PNGs, 39 MB (3 palette-free font sheets, 173 true-colour) |
+| upscale 4x | 12 min 41 s (3.7 textures/s) | `hd4x/`: 597 MB |
+| build | 1.5-2 min | `pack_hd4x/replacements/`: 632 MB (2,811 images + a 38.7 MB index) |
+| zip | 15 s-1 min | `SCUS-97129-disc-hd4x.zip`, 639 MB |
+| **total** | **about 16 min** | |
 
-Build and zip were timed in a second run: in the first they overlapped an Android build and
-took 5 and 2 minutes. Plan for about 2.5 GB of free disk for the work folder, plus the disc image. `--scale 2` makes a 2x pack (the model
+The upscale is the clean run's 727 s for the palette images plus 34 s for the 173 true-colour
+images, which were added afterwards and timed on their own. Build and zip vary with the disk
+cache; in the first clean run they overlapped an Android build and took 5 and 2 minutes. Plan for about 2.5 GB of free disk for the work folder, plus the disc image. `--scale 2` makes a 2x pack (the model
 still runs at 4x and the result is downscaled, so the time is the same; the pack is about a
 quarter of the size).
 
@@ -60,7 +63,7 @@ quarter of the size).
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `e25313668c682df863f0dde7c21bef0a3d8b79fa` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 | `7c32e6b1f09352a3db6f4f78238a39bca05d811048f872cc5a8f3775c5d88811` |
+| Index `disc-atlas.a2at` SHA-256 | `6154a3d0506b71cedf1c316ee424eba156ea0733c0b0808ea25eb82c94d3b663` |
 
 `make_pack.py` checks all three. The index is determined by the disc and `extractor.py`; the HD
 images can differ slightly between GPUs.
@@ -69,6 +72,10 @@ images can differ slightly between GPUs.
 
 - **World and characters**: every palette texture in the game's `.XIM` images, loose or inside
   `.XPF` archives (2,633 images).
+- **True-colour images** (173 PSMCT24 `.XIM` files): the night versions of town and field art,
+  some outdoor maps and a village room, the World Library's books and bookshelves, and several
+  characters' faces. Okage draws them with TEXA.AEM on, so black is transparent; the pack keeps
+  that in the upscaled alpha.
 - **Menus and portraits**: the status menu sheet, character portraits, the 640x480 backgrounds.
 - **Fonts**: `BM.FNT`, `BMUI.FNT` and the bold 24 px `IQ24.FNT`. The game colours these at
   runtime, so the pack stores an HD index map and the emulator paints it with the game's
@@ -78,8 +85,8 @@ images can differ slightly between GPUs.
 
 ## Not yet
 
-- **True-colour images** (174 `.XIM` files are PSMCT24/32) are not in the pack. The
-  matching only handles palette textures so far.
+- **One PSMCT32 image** is left out: a full-size PSMCT32 texture is hashed as raw GS blocks,
+  which the disc does not give.
 - **Small or soft art** (the 24-pixel field portraits) is where ESRGAN models invent detail;
   some of it looks painted rather than sharpened.
 - **Neighbouring atlas pieces** can bleed a pixel into each other's edges, because whole

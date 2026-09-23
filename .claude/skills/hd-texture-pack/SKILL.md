@@ -65,7 +65,10 @@ python tools/disc_textures/make_pack.py hd-packs/<game> --disc <chd> --model <mo
 The 1x pack is the test: replay a GS dump of the game on the Thor with `pcsx2-gsrunner`
 (`/data/local/tmp/gsr`, data root `cfg/ARMSX2`, pack under `cfg/ARMSX2/textures/<SERIAL>/replacements`,
 `-set EmuCore/GS/LoadTextureReplacements=true -set EmuCore/GS/LoadTextureReplacementsAsync=false`)
-with and without it. Frames must be bit-identical. Then the 4x pack must change them.
+with it and with an *empty* pack (`struct.pack("<4sIIIIIQII", b"A2AT", 4, 0, 0, 16, 8, 40, 0, 0)` as
+`disc-atlas.a2at`). Frames must be bit-identical. Not against no pack: a loaded atlas narrows menu
+sprites to their UV rect, which moves bilinear sprite edges by a pixel. Then the 4x pack must
+change them.
 
 ## 4. Finish the recipe folder
 
@@ -94,7 +97,8 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
 4. Palette hash not on disc: the game builds that palette at runtime (Okage's menu font). Yield
    that image palette-free (see step 1); it then matches by TEX0 alone.
 5. `lod` present: only single-level keys are matched.
-6. True-colour images: not supported yet.
+6. True-colour images: PSMCT24 is supported (yield an HxWx3 RGB array; set `TRUE_COLOUR_AEM` from
+   a dump name - bit 23 of the last field). PSMCT32/16 are not.
 
 ## Pitfalls already paid for
 

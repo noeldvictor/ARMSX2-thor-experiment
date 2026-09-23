@@ -35,6 +35,12 @@ The disc's formats (worked out 2026-09-22):
   menu: index 0 transparent, index k white at PS2 alpha 0x80 - 8 (k - 1) - index 1 is the
   solid ink and higher indices fade out.
 
+True-colour images: 173 PSMCT24 XIMs (night versions of town art, some field maps, the World
+Library's bookshelves, character faces) plus one PSMCT32. The PSMCT24 ones go in the pack as
+true-colour images; Okage draws them with TEXA.AEM set and TA0 0x80 (every PSMCT24 dump is named
+`...-80c02a81`), so black texels are transparent. The PSMCT32 one is left out: the GS hashes a
+full-size PSMCT32 texture as raw swizzled blocks, which the disc data does not give.
+
 Keys: `<sha1 of the decoded XIM, 12 hex>` for images (the HD file is `<key>.png`, or
 `<key>_p<N>.png` for an XIM with several palettes), `fnt_<NAME>` for font sheets.
 """
@@ -118,6 +124,10 @@ def fnt_sheet(d: bytes):
 FONT_PALETTE = bytes([0, 0, 0, 0]) + b"".join(bytes([0xFF, 0xFF, 0xFF, 0x80 - 8 * k]) for k in range(15))
 
 
+# Okage draws its PSMCT24 textures with TEXA.AEM set: black texels are transparent.
+TRUE_COLOUR_AEM = True
+
+
 def palette_free_palette(key: str) -> bytes:
     """The palette a palette-free image is upscaled through (see extract_native.py)."""
     return FONT_PALETTE
@@ -159,9 +169,15 @@ def disc_images(iso_path: Path):
                 seen.add(digest)
                 d = lz_decode(blob) if compressed else blob
                 psm = (struct.unpack_from("<I", d, 0)[0] >> 20) & 0x3F
+                key = hashlib.sha1(d).hexdigest()[:12]
+                if psm == 0x01:
+                    # PSMCT24: no palette block; packed RGB right after the image block header.
+                    _, _, h, w = struct.unpack_from("<IIII", d, 0x10)
+                    rgb = np.frombuffer(d, np.uint8, w * h * 3, 0x20).reshape(h, w, 3)
+                    yield key, rgb, []
+                    continue
                 if psm not in (0x13, 0x14):
                     continue
-                key = hashlib.sha1(d).hexdigest()[:12]
                 pal_size, _, pal_count, entries = struct.unpack_from("<IIII", d, 0x10)
                 img_off = 0x10 + pal_size
                 _, _, h, w = struct.unpack_from("<IIII", d, img_off)

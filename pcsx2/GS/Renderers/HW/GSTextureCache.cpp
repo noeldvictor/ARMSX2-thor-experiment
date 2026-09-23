@@ -7281,11 +7281,14 @@ static void QueueUpscaleForHashCacheTexture(const GSTextureCache::HashCacheKey& 
 // way HashTextureLevel() expands them, taken at the first position on the index's block grid inside
 // the region (a tight UV region can start anywhere). Only where that function hashes expanded
 // indices rather than raw GS blocks - otherwise the key could never equal a crop hashed off the disc.
+// PSMCT24 is expanded too; its probe is the block's RGB, three bytes a texel, so it does not depend
+// on the TEXA alpha the key was hashed with.
 static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region,
 	u64* probe, u32* probe_x, u32* probe_y)
 {
 	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
-	if (psm.pal == 0)
+	const bool true_colour = (TEX0.PSM == PSMCT24);
+	if (psm.pal == 0 && !true_colour)
 		return false;
 
 	const GSVector2i& bs = psm.bs;
@@ -7306,19 +7309,31 @@ static bool ComputeDiscAtlasProbe(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA
 	*probe_y = static_cast<u32>(py - rect.top);
 	const GSVector4i probe_rect(px, py, px + 16, py + 16);
 	const GSVector4i block_rect(probe_rect.ralign<Align_Outside>(bs));
-	const u32 pitch = VectorAlign(static_cast<u32>(block_rect.width()));
+	const u32 texel_bytes = true_colour ? 4 : 1;
+	const u32 pitch = VectorAlign(static_cast<u32>(block_rect.width()) * texel_bytes);
 	alignas(32) u8 buffer[128 * 64];
 	if (pitch * static_cast<u32>(block_rect.height()) > sizeof(buffer))
 		return false;
 
 	GSLocalMemory& mem = g_gs_renderer->m_mem;
-	psm.rtxP(mem, mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM), block_rect, buffer, pitch, TEXA);
+	const GSLocalMemory::readTexture rtx = true_colour ? psm.rtx : psm.rtxP;
+	rtx(mem, mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM), block_rect, buffer, pitch, TEXA);
 
 	XXH3_state_t st;
 	XXH3_64bits_reset(&st);
-	const u8* row = buffer + pitch * static_cast<u32>(py - block_rect.top) + static_cast<u32>(px - block_rect.left);
+	const u8* row = buffer + pitch * static_cast<u32>(py - block_rect.top) + static_cast<u32>(px - block_rect.left) * texel_bytes;
 	for (int y = 0; y < 16; y++, row += pitch)
-		GSXXH3_64bits_update(&st, row, 16);
+	{
+		if (!true_colour)
+		{
+			GSXXH3_64bits_update(&st, row, 16);
+			continue;
+		}
+		u8 rgb[16 * 3];
+		for (int x = 0; x < 16; x++)
+			std::memcpy(&rgb[x * 3], &row[x * 4], 3);
+		GSXXH3_64bits_update(&st, rgb, sizeof(rgb));
+	}
 	*probe = GSXXH3_64bits_digest(&st);
 	return true;
 }
@@ -7395,7 +7410,8 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 		// Mipmapped draws qualify when they sample one level: the key then covers only the base.
 		u64 probe;
 		u32 probe_x, probe_y;
-		if (!replacement_tex && !replacement_texture_pending && (!lod || lod->x == lod->y) && clut && GSTextureReplacements::HasDiscAtlas() &&
+		if (!replacement_tex && !replacement_texture_pending && (!lod || lod->x == lod->y) && (clut || TEX0.PSM == PSMCT24) &&
+			GSTextureReplacements::HasDiscAtlas() &&
 			ComputeDiscAtlasProbe(TEX0, TEXA, region, &probe, &probe_x, &probe_y) &&
 			GSTextureReplacements::LookupDiscAtlas(key, probe, probe_x, probe_y, clut, GSLocalMemory::m_psm[TEX0.PSM].pal))
 		{
