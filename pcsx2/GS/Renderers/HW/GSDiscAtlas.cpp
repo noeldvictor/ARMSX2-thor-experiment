@@ -606,7 +606,11 @@ std::string GSDiscAtlas::MatchComposite(const u8* indices, u32 width, u32 height
 	if (comp->pieces.empty())
 		return {};
 
-	// Worth it only if the pieces carry most of what is drawn (index 0 is usually background).
+	// Worth it if the pieces carry most of what is drawn (index 0 is usually background), or a
+	// sprite's worth of it: a batch of sprite draws is hashed as the bounding box of their UVs,
+	// which can span other data the draws never sample (Tales of Destiny's 95x175 party sprites:
+	// five frames exact, 26% of the box). A few accidental 16x16 matches stay under both.
+	constexpr size_t SPRITE_TEXELS = 32 * 32;
 	size_t drawn = 0, drawn_covered = 0;
 	for (size_t i = 0; i < covered.size(); i++)
 	{
@@ -616,7 +620,7 @@ std::string GSDiscAtlas::MatchComposite(const u8* indices, u32 width, u32 height
 			drawn_covered += covered[i];
 		}
 	}
-	if (drawn == 0 || drawn_covered * 2 < drawn)
+	if (drawn == 0 || (drawn_covered * 2 < drawn && drawn_covered < SPRITE_TEXELS))
 		return {};
 
 	comp->width = width;
