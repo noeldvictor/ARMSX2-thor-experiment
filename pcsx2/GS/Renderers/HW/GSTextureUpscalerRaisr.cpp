@@ -12,6 +12,7 @@
 #include <cmath>
 #include <cstring>
 #include <map>
+#include <memory>
 #include <mutex>
 #include <optional>
 #include <string>
@@ -50,7 +51,9 @@ namespace GSTextureUpscalerRaisr
 		};
 
 		std::mutex s_mutex;
-		std::map<std::string, KernelSet> s_sets;
+		// shared_ptr, not values: a job on the upscaler worker holds the set it is applying, and
+		// Reset() (every texture reload) can clear this map while that job runs.
+		std::map<std::string, std::shared_ptr<const KernelSet>> s_sets;
 		bool s_self_test_done = false;
 
 		u32 ReadU32(const u8* p)
@@ -158,16 +161,16 @@ namespace GSTextureUpscalerRaisr
 		}
 
 		/// Returns nullptr when there is no usable kernel set. Caller must hold s_mutex.
-		const KernelSet* GetSetLocked(GSTextureUpscaler::TextureClass texture_class, u8 scale)
+		std::shared_ptr<const KernelSet> GetSetLocked(GSTextureUpscaler::TextureClass texture_class, u8 scale)
 		{
 			const std::string key = std::string(ClassName(texture_class)) + "_x" + std::to_string(static_cast<int>(scale));
-			const auto it = s_sets.find(key);
-			if (it != s_sets.end())
-				return it->second.valid ? &it->second : nullptr;
-
-			const std::string path = Path::Combine(Path::Combine(EmuFolders::Resources, "upscale"), key + ".a2rk");
-			const KernelSet& stored = (s_sets[key] = LoadKernelSet(path, scale));
-			return stored.valid ? &stored : nullptr;
+			auto it = s_sets.find(key);
+			if (it == s_sets.end())
+			{
+				const std::string path = Path::Combine(Path::Combine(EmuFolders::Resources, "upscale"), key + ".a2rk");
+				it = s_sets.emplace(key, std::make_shared<const KernelSet>(LoadKernelSet(path, scale))).first;
+			}
+			return it->second->valid ? it->second : nullptr;
 		}
 
 		inline float Chan(u32 pixel, int channel)
@@ -370,10 +373,11 @@ namespace GSTextureUpscalerRaisr
 		if (sw <= 0 || sh <= 0 || (scale != 2 && scale != 4))
 			return false;
 
-		// The set is immutable once loaded and the map only grows, so the pointer stays valid
-		// after the lock is released; Reset() is the only eraser and it is never called while
-		// the worker has a job in flight (the cache flush that triggers it drains the queue).
-		const KernelSet* set;
+		// The set is immutable once loaded. Reset() can drop it from the map while this runs - the
+		// texture cache flush that calls it clears the queue but not the job already on the worker
+		// (it used to hand out a raw pointer here, and a texture reload mid-upscale crashed in
+		// Apply) - so hold a reference for the duration.
+		std::shared_ptr<const KernelSet> set;
 		{
 			std::lock_guard<std::mutex> lock(s_mutex);
 			set = GetSetLocked(texture_class, scale);

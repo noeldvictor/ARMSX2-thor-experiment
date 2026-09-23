@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cstring>
 #include <mutex>
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -67,7 +68,9 @@ namespace GSTextureUpscalerNN
 		};
 
 		std::mutex s_mutex;
-		std::unordered_map<std::string, Model> s_models;
+		// shared_ptr for the same reason as the RAISR kernel sets: Reset() can clear this while a
+		// worker job is running inference on one of them.
+		std::unordered_map<std::string, std::shared_ptr<const Model>> s_models;
 
 		const char* AlgorithmBaseName(GSTextureUpscaleAlgorithm algorithm)
 		{
@@ -203,21 +206,21 @@ namespace GSTextureUpscalerNN
 		}
 
 		/// Returns nullptr when there is no usable model. Caller must hold s_mutex.
-		const Model* GetModelLocked(GSTextureUpscaleAlgorithm algorithm, u8 scale)
+		std::shared_ptr<const Model> GetModelLocked(GSTextureUpscaleAlgorithm algorithm, u8 scale)
 		{
 			const char* base = AlgorithmBaseName(algorithm);
 			if (!base)
 				return nullptr;
 
 			const std::string key = std::string(base) + "_x" + std::to_string(static_cast<int>(scale));
-			const auto it = s_models.find(key);
-			if (it != s_models.end())
-				return it->second.valid ? &it->second : nullptr;
-
-			const std::string path =
-				Path::Combine(Path::Combine(EmuFolders::Textures, "models"), key + ".a2nn");
-			const Model& stored = (s_models[key] = LoadModel(path, scale));
-			return stored.valid ? &stored : nullptr;
+			auto it = s_models.find(key);
+			if (it == s_models.end())
+			{
+				const std::string path =
+					Path::Combine(Path::Combine(EmuFolders::Textures, "models"), key + ".a2nn");
+				it = s_models.emplace(key, std::make_shared<const Model>(LoadModel(path, scale))).first;
+			}
+			return it->second->valid ? it->second : nullptr;
 		}
 
 		inline float Srgb8ToFloat(u32 pixel, int channel)
@@ -282,8 +285,9 @@ namespace GSTextureUpscalerNN
 			return false;
 
 		// The model is only touched under the lock for lookup; inference reads it afterwards
-		// without holding it, which is safe because a loaded model is never mutated.
-		const Model* model = nullptr;
+		// without holding it, which is safe because a loaded model is never mutated - and the
+		// reference keeps it alive if Reset() clears the map meanwhile.
+		std::shared_ptr<const Model> model;
 		{
 			std::unique_lock<std::mutex> lock(s_mutex);
 			model = GetModelLocked(algorithm, scale);
