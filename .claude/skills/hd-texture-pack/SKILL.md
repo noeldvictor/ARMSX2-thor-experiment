@@ -22,7 +22,7 @@ Shared tools in `tools/disc_textures/`, all game-independent:
 | `disc.py` | CHD/CUE/ISO -> ISO (DVDs stored as a CD CHD with one MODE1/2048 track too) |
 | `disc_codecs.py` | Decompressors, numba-compiled when numba is installed (`pip install numba`; pure Python is ~100x slower). `tales_lzss` + `find_tales_blobs` (Namco Tales games, nested blobs at any offset) |
 | `tim2.py` | Finds and reads TIM2 anywhere in a buffer; lenient about writers that leave fields 0 (Namco) |
-| `gsdump.py` | Lists every texture upload in a PCSX2 GS dump; `--locate DIR` finds each upload's bytes in unpacked disc files |
+| `gsdump.py` | Lists every texture upload in a PCSX2 GS dump; `--locate DIR` finds each upload's bytes in unpacked disc files (or in a `corpus.bin` + `corpus.json` made from them); `--timeline [--tbp A-B]` lists uploads and textured draws in order |
 | `gsmem.py` | GS memory swizzle (write/read any rect in CT32/16/T8/T4/H formats) and VRAM out of a GS dump's state |
 | `verify_dumps.py` | The candidate test: an extractor vs a folder of PCSX2 texture dumps -> exact / pixels / palette only / no palette |
 
@@ -50,9 +50,12 @@ Things that look like dead ends but are not:
   window start off by one and garbles everything after the first run; check structure (a pack's
   own offset table pointing at valid TIM2 headers), not just size.
 - Data uploaded as PSMCT32 and drawn as PSMT8/4 (fewer, bigger transfers): the disc holds the
-  32-bit view. `gsmem.py` writes it as the upload did and reads it as the draw does.
-- A 4-bit image with a 256-entry CLUT uses 16-colour palettes that are 8x2 patches of the stored
-  16-wide CLUT = 16 consecutive entries after CSM1 unswizzle.
+  32-bit view. `gsmem.py` writes it as the upload did and reads it as the draw does. Check with
+  `gsdump.py --timeline` before assuming it: Tales of Destiny's 32-bit title uploads looked like
+  that and were plain true-colour pictures, drawn as PSMCT32.
+- A 4-bit image with several palettes (any CLUT of 32+ entries) uses 16-colour palettes that are
+  8x2 patches of the stored 16-wide CLUT = 16 consecutive entries after CSM1 unswizzle. Tales of
+  Destiny's title text (48 colours) missed every palette until small CLUTs got the same rule.
 - Fonts, text strips and fades have palettes built at runtime: palette-free images (step 1).
 - Composites: a game that assembles one texture in VRAM out of several uploads (sprite batches,
   text from glyphs) draws regions that are no single disc image. The emulator splits those into
