@@ -523,6 +523,12 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   1/256 may differ and stay native (bytes a game parks inside a texture: Tales of Destiny's deck
   map, 11 texels) - and the rest keeps its native colour. That covers sprite sheets and text built
   from glyphs in any game, with no hook in the upload path. Palette textures only.
+- The index is memory-mapped (Tales of Destiny's is 1.1 GB: ~40 MB resident on the Thor). The
+  builder leaves out exact duplicates and blank images. A 4x pack is 16 bytes per native texel:
+  Okage 467 MB, Tales of Destiny ~13.6 GB (real map art, audited); `make_pack.py` prints the
+  estimate before the upscale.
+- Tales of Destiny DC (`hd-packs/SLPS-25842-tales-of-destiny-dc/`) is the second recipe, in
+  progress: ship 47/47 and title 16/17 textures matched, bit-identical at 1x; 4x not judged yet.
 - **Never change PCSX2's texture hashing (`HashCacheKey`).** It is the name every standard pack
   and dump uses. Where the stock key cannot be reproduced from disc data (raw-block keys of
   full-size textures), the atlas's own content hash does the checking instead.

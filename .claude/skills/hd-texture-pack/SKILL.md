@@ -89,7 +89,9 @@ picks, then keep only that one.
 for a 2x set). Defaults already handle seams (wrap padding for opaque), transparent-pixel fill and
 binary alpha. Look at a sheet before shipping: ESRGAN invents detail on tiny/soft art (Okage's
 24 px portraits); swap the model for those if it looks wrong. UltraSharp is CC BY-NC-SA.
-Okage on the RTX 3060: ~3.5 textures/s at 4x.
+Okage on the RTX 3060: ~3.5 textures/s at 4x; small textures are batched per model call, so
+Tales of Destiny's sprites run at ~11/s. Read the size estimate `make_pack.py` prints after the
+extract step before starting a long upscale: 16 bytes per native texel at 4x.
 
 ## 3. Pack, then prove it exact
 
@@ -152,6 +154,18 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
    atlas checks matches with its own content hash, so raw-block keys are already covered.
 
 ## Pitfalls already paid for
+
+- Namco's TIM2 writer leaves width and height 0 - both, in Tales of Destiny's 128x128 skies and
+  1024x1024 map atlases (12,868 pictures). `tim2.py` assumes the power-of-two square that fits the
+  image size; before that, the whole field art was missing and nothing said so. Compare the
+  extract's image count and sizes with what the scenes draw.
+- A big index (1 GB+) is fine: the emulator maps it. The size to watch is the 4x pack.
+- Build gsrunner only with Gradle's ninja (`<Sdk>/cmake/3.22.1/bin/ninja.exe`); another ninja
+  version resets `.ninja_log` and the next build recompiles everything. In Git Bash set
+  `MSYS_NO_PATHCONV=1` before adb commands with device paths, or pushes land nowhere.
+- A composite piece may differ from the texture in 1/256 of its texels (they stay native), and a
+  composite is kept at half coverage or a 32x32 sprite's worth: UV bounding boxes of sprite
+  batches span data the draws never sample.
 
 - A tool module named `codecs.py` shadows Python's stdlib `codecs` and silently imports the wrong
   one. Compile-check every script after an edit

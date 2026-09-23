@@ -63,7 +63,7 @@ quarter of RGBA8, sampled natively by the Thor's GPU (every Android GPU has ASTC
 emulator never decodes them - at 4x one native texel is exactly one 4x4 block, so a crop is a copy
 of whole blocks, and a composite copies each piece's blocks and fills every uncovered texel with a
 constant ("void-extent") block of its native colour. Palette-free index maps stay PNG (the
-emulator paints them per pixel). Okage: 470 MB instead of 632 MB on disk, a quarter of the GPU
+emulator paints them per pixel). Okage: 467 MB instead of 632 MB on disk, a quarter of the GPU
 memory, the same matches in every test scene, frames at 47-55 dB PSNR against the PNG pack.
 `--format png` builds a lossless pack - for the 1x exactness test and for 2x packs, where crops do
 not land on the block grid. Encoding is Arm's `astcenc`, many images per call (`astc.py`).
@@ -89,6 +89,22 @@ hashed as the bounding box of its UVs, which can span data the draws never sampl
 The index (`disc-atlas.a2at`) is memory-mapped, not read: a big game's index passes a gigabyte
 (Tales of Destiny: 1.1 GB, 12 million blocks - the texels of every disc image, for the exact
 check). Mapped, it costs the app about 40 MB resident on the Thor; pages load on demand.
+
+## How big a pack gets
+
+At 4x an HD image is 16 ASTC bytes per native texel, so a pack is as big as the game's art:
+
+| Game | Disc images | Native texels | 4x ASTC pack |
+| --- | --- | --- | --- |
+| Okage: Shadow King | 2,800 | 28 M | 467 MB (334 MB zipped) |
+| Tales of Destiny DC | ~101,000 | 862 M | ~13.6 GB (estimate) |
+
+Tales of Destiny is big because it is: 328 field and town map atlases of 1024x1024 are 5.5 GB of
+it, 256x256 and 512x512 textures another 3.8 GB. An audit of its 1x index found little waste -
+0.19 GB of exact duplicates (same texels, same palette, another key) and 0.01 GB of blank images,
+which the builder now leaves out - and 38 of the atlases are close variants of another (0.59 GB),
+which an exact match cannot merge. `make_pack.py` prints the estimate after the extract step,
+before the upscale, so the size is known before the GPU hours.
 
 ## True-colour images
 
@@ -149,8 +165,10 @@ The dev server (`docs/mcp-server.md`) has what you need:
 - ESRGAN-type models invent detail on tiny or soft art (Okage's 24-pixel portraits). Pick the
   model per kind of art if it matters.
 - Palette textures (PSMT8/PSMT4 and their H variants), palette-free fonts, PSMCT24 and PSMCT32
-  are matched. PSMCT16, mipmapped textures and anything the game builds in memory at runtime are
-  not.
+  are matched, and so are textures the game assembles in VRAM out of disc images (composites).
+  PSMCT16, mipmapped textures with more than one level, and anything the game renders or computes
+  at runtime are not.
+- A whole game at 4x is big (see above); the index alone can pass a gigabyte.
 
 ## Sharing a pack
 

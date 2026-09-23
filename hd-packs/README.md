@@ -12,7 +12,8 @@ Disc packs only work in this fork.
 
 | Game | Folder | Covers | Not yet | RTX 3060 time | Pack |
 | --- | --- | --- | --- | --- | --- |
-| Okage: Shadow King (NTSC-U) | [SCUS-97129-okage](SCUS-97129-okage/) | World, characters, menus, portraits, fonts, night art, the World Library's books, faces - all 2,807 disc textures | - (the IQ24 font and the one 32-bit texture are not yet seen on screen) | ~16 min | 335 MB zip |
+| Okage: Shadow King (NTSC-U) | [SCUS-97129-okage](SCUS-97129-okage/) | World, characters, menus, portraits, fonts, night art, the World Library's books, faces - all 2,800 disc textures | - (the IQ24 font and the one 32-bit texture are not yet seen on screen) | ~16 min | 334 MB zip |
+| Tales of Destiny: Director's Cut (English patch v1.6) - **work in progress** | [SLPS-25842-tales-of-destiny-dc](SLPS-25842-tales-of-destiny-dc/) | Maps, sprites, font, title screen: exact on the two scenes tested (ship 47/47, title 16/17) | The 4x pack is not judged yet; towns, battles and menus not dumped yet | not measured cleanly yet | ~13.6 GB (estimate) |
 
 A new game needs someone to work out how that game stores its textures on the disc (see
 [Adding a game](#adding-a-game) below). That work is the slow part, and it is not automatic.
@@ -35,7 +36,9 @@ You need:
 - **The upscale model** the recipe names, downloaded yourself. It is not in the repo because of
   its licence. For Okage that is [4x-UltraSharp](https://huggingface.co/Kim2091/UltraSharp)
   (`4x-UltraSharp.safetensors`, CC BY-NC-SA 4.0).
-- **Free disk** for the work folder: about 2.5 GB for Okage. Each recipe's README gives its figures.
+- **Free disk** for the work folder: about 2.5 GB for Okage, tens of GB for a big game. Each
+  recipe's README gives its figures, and `make_pack.py` prints the pack's size estimate after the
+  extract step, before the long upscale.
 
 Then, from the repository root:
 
@@ -80,8 +83,9 @@ at the repo root and ask, for example, *"make an HD pack recipe for <game>, my d
    can be computed from the disc data. If they can't (textures built at runtime, formats nobody
    can decode), stop here. A disc pack will not work for that game.
    The tools do much of the detective work: `gsdump.py` lists what the game uploads in a GS
-   dump and finds those bytes on the disc, `gsmem.py` reproduces the GS's memory layout, and
-   `verify_dumps.py` scores an extractor against PCSX2's texture dumps (see the skill).
+   dump and finds those bytes on the disc (`--timeline` shows what each upload is drawn as),
+   `gsmem.py` reproduces the GS's memory layout, and `verify_dumps.py` scores an extractor
+   against PCSX2's texture dumps (see the skill).
 2. **Write `hd-packs/<SERIAL>-<name>/extractor.py`.** The contract is in
    [`tools/disc_textures/extract_native.py`](../tools/disc_textures/extract_native.py): yield each
    image's indices and palettes. Okage's
@@ -94,10 +98,11 @@ at the repo root and ask, for example, *"make an HD pack recipe for <game>, my d
 4. **Add `game.json`, a README with measured times, known gaps and before/after shots** (copy
    Okage's folder), and fill in the reference checksums from your run.
 
-Supported: palette textures (8 and 4 bit), fonts the game colours at runtime, and 24-bit and
-32-bit true-colour textures. Not yet: 16-bit textures, mipmapped textures, and anything the game
-draws into memory at runtime rather than loading from the disc. Some games will need
-emulator work before a recipe can cover them.
+Supported: palette textures (8 and 4 bit), fonts the game colours at runtime, 24-bit and
+32-bit true-colour textures, and textures the game assembles in VRAM out of disc images (sprite
+batches, lines of text). Not yet: 16-bit textures, mipmapped textures, and anything the game
+renders at runtime rather than loading from the disc. Some games will need emulator work before
+a recipe can cover them.
 
 ## A recipe folder
 

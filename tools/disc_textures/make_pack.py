@@ -113,6 +113,14 @@ def main() -> None:
     if "extract" in redo or not (native / "manifest.json").exists():
         step("extract", lambda: run([py, str(HERE / "extract_native.py"), str(extractor), str(iso), str(native)]))
 
+    # The size, before the GPU hours: an HD image costs scale^2 bytes a native texel as ASTC 4x4
+    # (a whole game at 4x is 16 bytes a texel - Tales of Destiny's 0.86 billion come to ~14 GB).
+    manifest = json.loads((native / "manifest.json").read_text())["textures"]
+    texels = sum(t["width"] * t["height"] for t in manifest.values())
+    print(f"\n{len(manifest)} disc images, {texels / 1e6:.0f} M texels: the {scale}x pack will be about "
+          f"{texels * scale * scale / 1e9:.1f} GB as ASTC (less the duplicates and blanks the build leaves out)",
+          flush=True)
+
     up = game["upscale"]
     model_sha = up.get("model_sha256")
     if model_sha and sha256(a.model) != model_sha:

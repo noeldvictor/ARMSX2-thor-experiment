@@ -139,7 +139,9 @@ works, you get every texture in the game, menus and portraits included, without 
 game stores its textures its own way, so each new game means working out its disc format and
 writing a small extractor. That is reverse-engineering work. We did it for Okage with
 [Claude Code](https://claude.com/claude-code), and you will probably want an AI agent for it
-too. So far there is **one recipe: Okage: Shadow King**.
+too. So far there is **one finished recipe, Okage: Shadow King**, and one in progress, Tales of
+Destiny: Director's Cut. Packs are as big as the game's art: Okage's is 334 MB zipped, Tales of
+Destiny's will be about 14 GB.
 
 ![Status menu portraits and fonts, original vs Okage's disc HD pack](hd-packs/SCUS-97129-okage/media/menu-fonts.jpg)
 
@@ -150,8 +152,8 @@ too. So far there is **one recipe: Okage: Shadow King**.
 ![The World Library's lectern book, original vs HD pack](hd-packs/SCUS-97129-okage/media/library-book.jpg)
 
 **If the game has a recipe** in [`hd-packs/`](hd-packs/README.md): you need your own disc image,
-a PC with an NVIDIA GPU, Python and MAME's `chdman`. One command then extracts, upscales and
-zips the pack. Okage takes about 15 minutes on an RTX 3060. Unzip the result into
+a PC with an NVIDIA GPU, Python, MAME's `chdman` and Arm's `astcenc`. One command then
+extracts, upscales and zips the pack. Okage takes about 15 minutes on an RTX 3060. Unzip the result into
 `<DataRoot>/textures/` on the device.
 
 **If it doesn't:** open Claude Code in this repo and ask it to make a recipe for your game.
