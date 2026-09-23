@@ -182,16 +182,30 @@ class DevTools(private val context: Context) {
         val wasPaused = MainActivityRuntime.eState.value == EmuState.PAUSED
         if (wasPaused) onMain { MainActivityRuntime.resume() }
         NativeApp.saveScreenshot(path)
-        val deadline = System.currentTimeMillis() + 5000
-        var lastSize = -1L
+        // Done means the PNG's IEND chunk is on disk. A size that stops growing for a poll or two
+        // is not enough: the writer pauses while compressing, and callers that pulled the file at
+        // that point got a truncated image.
+        val deadline = System.currentTimeMillis() + 8000
         while (System.currentTimeMillis() < deadline) {
             Thread.sleep(100)
-            if (file.isFile && file.length() > 0 && file.length() == lastSize) break
-            lastSize = if (file.isFile) file.length() else -1L
+            if (pngComplete(file)) break
         }
         if (wasPaused) onMain { MainActivityRuntime.pause() }
-        if (!file.isFile || file.length() == 0L) return JSONObject().put("error", "screenshot did not appear at $path")
+        if (!pngComplete(file)) return JSONObject().put("error", "screenshot did not complete at $path")
         return JSONObject().put("path", path).put("bytes", file.length())
+    }
+
+    /** A PNG ends with the 12-byte IEND chunk: length 0, "IEND", CRC AE 42 60 82. */
+    private fun pngComplete(file: File): Boolean {
+        if (!file.isFile || file.length() < 12) return false
+        return runCatching {
+            java.io.RandomAccessFile(file, "r").use { raf ->
+                val tail = ByteArray(8)
+                raf.seek(file.length() - 8)
+                raf.readFully(tail)
+                tail.contentEquals(byteArrayOf(0x49, 0x45, 0x4E, 0x44, 0xAE.toByte(), 0x42, 0x60, 0x82.toByte()))
+            }
+        }.getOrDefault(false)
     }
 
     private fun scopeOf(args: JSONObject): Pair<SettingsScope, String?> {

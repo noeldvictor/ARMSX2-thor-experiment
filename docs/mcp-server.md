@@ -58,11 +58,31 @@ explicit toggle if wireless iteration becomes annoying — but not first.
 - **Never a hard dependency.** The emulator must build, boot, and run identically
   with the server compiled out.
 
+## Tools (implemented)
+
+HTTP on `127.0.0.1:27183` (MCP Streamable HTTP at `POST /mcp`, or `POST /tool/<name>` with the
+arguments as the JSON body; `adb forward tcp:27183 tcp:27183`). Code:
+`platforms/android/app/src/github/java/com/armsx2/devtools/`.
+
+| Tool | What it does |
+| --- | --- |
+| `status`, `library`, `boot`, `close`, `pause`, `resume` | Emulator state and game control |
+| `save_state`, `load_state` | Slots 1-10; the checkpoint primitive for any A/B test |
+| `screenshot` | Next rendered frame to a PNG on the device; returns once the PNG is complete (IEND) |
+| `settings_get`, `settings_set` | Read / patch settings (global, per game, or live); `textureUpscale` object for the texture upscaler |
+| `hotkey` | `fast_forward`, `reload_textures`, `texture_dump`, `quick_save`, `quick_load` |
+| `texture_stats` | Texture upscaler counters, plus `discAtlasLoaded/Images/Matches/Misses` for disc packs |
+| `texture_dump` | Texture dumping on/off (to `textures/<serial>/dumps`) |
+| `gs_dump` | Capture a GS dump of the next `frames` frames to `snaps/` for `pcsx2-gsrunner` |
+| `hd_test` | HD pack A/B: `pack` (load replacements) and `filters` (texture upscaler + bilinear; false = off and nearest), applied live, then textures reload |
+| `log`, `logcat` | Tail `emulog.txt` / the process logcat, with a substring filter |
+
+A typical HD-pack check: `load_state` -> `screenshot` with `hd_test {"pack":true}`, then again
+with `{"pack":false}` after reloading the same state; `texture_stats` for the match counts.
+
 ## Open Questions
 
-- Transport: stdio is the MCP norm but awkward for an Android service; an HTTP or
-  WebSocket transport over the forwarded port is more natural. Not yet decided.
-- Whether capture returns a framebuffer blob or writes a PNG to a path the agent
-  reads back. The second is simpler and avoids large payloads over the transport.
+- (Decided) Transport: HTTP over the forwarded port, MCP Streamable HTTP plus plain `/tool/<name>`.
+- (Decided) Capture writes a PNG on the device and returns its path; `GET /screenshot` streams it.
 - How much of `GSConfig` to expose. Everything is tempting and probably wrong;
   start with what the upscaling work actually needs.

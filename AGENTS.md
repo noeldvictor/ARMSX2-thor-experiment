@@ -239,8 +239,8 @@ and it paid for itself on day one: it is how the mipmap guard finding above was 
 - Tools: `status`, `library`, `boot`, `close`, `pause`, `resume`, `save_state`,
   `load_state`, `screenshot`, `settings_get`, `settings_set` (patch of Settings fields;
   texture upscaling under a `textureUpscale` object), `hotkey`, `texture_stats`,
-  `texture_dump`, `log`, `logcat`. `texture_stats` comes from a new JNI
-  `getTextureUpscaleStats()`.
+  `texture_dump`, `gs_dump`, `hd_test`, `log`, `logcat`. `texture_stats` comes from the JNI
+  `getTextureUpscaleStats()` and includes the disc-pack counters. Table in `docs/mcp-server.md`.
 - `boot` must hand the core a plain path for `file:` URIs (`HomeViewModel.launch` does the
   same); the raw `file:///...%20...` string fails VM init. A `file:` VIEW intent from adb
   hits Android's app chooser because three activities accept it; use the server instead.
@@ -444,14 +444,34 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   an alpha-doubling pass under the stencil, which also let every strip keep the stencil copy:
   9-12 render passes a frame). In game: 2x fast-forward holds 119.9 fps in Tenel and the World
   Library. Full notes in `docs/games/okage.md`.
-- **Offline texture extraction** (HD pack without playing): `tools/disc_textures/okage_xim.py`
-  reads every Okage texture off the disc image (2,807 unique, 0 failures). Next: a fork-only
-  replacement key computable from the disc data (decoded RGBA at the uploaded size), the 3060
-  upscale script, pack packaging. Notes in `docs/games/okage.md`, "HD textures".
+- **Disc HD packs are the fork's HD texture system** - see "Disc HD texture packs" below.
 - GS dumps parse fine in Python (zstd; header, state, 0x2000-byte priv regs, then packets
   0 = transfer / 1 = vsync / 2 = readfifo / 3 = regs); rewriting A+D register values in a dump
   and replaying it on desktop is the fastest way to test "what if the game did X" before
   looking for the code.
+
+### Disc HD texture packs
+
+**Implemented and verified on the Thor (2026-09-22).** HD packs built from the game disc with no
+gameplay; the `hd-texture-pack` skill is the procedure, `docs/hd-texture-packs.md` the user guide.
+
+- What makes it possible: a drawn texture is a rectangle of a disc image, and PCSX2 keys a region
+  texture by XXH3 over the rectangle's palette indices plus XXH3 of the palette - computable
+  offline. Okage: 35/35 dumped keys reproduced from disc data.
+- Pack = whole upscaled disc images (`atlas/`) + `disc-atlas.a2at` (v2: palette hash, size and
+  indices per image, hash of every 16x16 block every 8 px). `GSDiscAtlas` matches on a stock-name
+  miss: probe block -> candidates -> the crop whose hash equals the key's TEX0 hash, so a match is
+  exact. It registers the crop under the stock name; the normal async loader does the rest.
+- Menus: a UV-selected sprite of a big palette sheet is narrowed to its own texels
+  (`GSRendererHW`, only while a disc atlas is loaded; last texel `ceil(max - 0.5) - 1`).
+- Proof standard: a 1x pack built from the native disc images renders bit-identical frames to no
+  pack (gsrunner on the Thor). Keep it that way when changing any of this.
+- Not covered yet: palettes the game builds at runtime (Okage's menu font), true-colour disc
+  images, mipmapped keys with more than one level. Upscale edge bleed between atlas neighbours.
+- Tools: `tools/disc_textures/` (`okage_xim.py` extractor with the `disc_images()` contract,
+  `upscale.py`, `build_disc_pack.py --extractor`). A new game needs only an extractor.
+- Found on the way: a texture reload while the upscaler worker ran used freed RAISR kernels
+  (crash); sets/models are shared_ptr now.
 
 ### Settings constructor limit (dex)
 

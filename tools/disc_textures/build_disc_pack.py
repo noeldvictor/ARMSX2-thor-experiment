@@ -1,6 +1,6 @@
 """Build a disc-atlas texture pack for Okage: Shadow King from the disc image and upscaled textures.
 
-    python build_disc_pack.py okage.iso HD_DIR PACK_DIR
+    python build_disc_pack.py okage.iso HD_DIR PACK_DIR [--extractor okage_xim]
 
 HD_DIR holds the upscaled textures named like okage_xim.py names them (`<12 hex>.png`); the
 native PNGs from okage_xim.py work too, as a 1x pack that must render exactly like no pack. The
@@ -19,14 +19,17 @@ Why crops: what a draw samples is a rectangle of a disc image at a 16-pixel-alig
 rectangle's indices. The emulator hashes the drawn texture's top-left block, looks up the disc
 images holding that block, and takes the one whose crop hashes to the texture's own key - exact.
 
+Another game needs only its own extractor: a module in this folder with a
+`disc_images(iso_path)` generator (see okage_xim.disc_images for the contract), picked with
+`--extractor`. Everything else here is game-independent.
+
 Needs pycdlib, numpy, pillow, xxhash. Palette textures only (PSMT8/PSMT4) for now.
 """
 
 from __future__ import annotations
 
 import argparse
-import hashlib
-import io
+import importlib
 import struct
 import sys
 from pathlib import Path
@@ -36,58 +39,9 @@ import xxhash
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import okage_xim  # noqa: E402
 
 TILE = 16
 STEP = 8  # block positions: every 8 px covers the 8x8 block grid of PSMT8H/PSMT4HL sheets (index v2)
-
-
-def disc_images(iso_path: Path):
-    """Yield (key, indices HxW uint8, [palette bytes per palette]) for each unique palette XIM."""
-    import pycdlib
-
-    iso = pycdlib.PyCdlib()
-    iso.open(str(iso_path))
-
-    def read(path: str) -> bytes:
-        b = io.BytesIO()
-        iso.get_file_from_iso_fp(b, iso_path=path)
-        return b.getvalue()
-
-    seen: set[bytes] = set()
-    for root, _dirs, files in iso.walk(iso_path="/"):
-        for f in files:
-            path = root.rstrip("/") + "/" + f
-            upper = f.upper()
-            if ".XIM" in upper:
-                blobs = [(read(path), False)]
-            elif ".XPF" in upper:
-                blobs = [(b, True) for n, b in okage_xim.xpf_entries(read(path)) if n.lower().endswith(".xim")]
-            else:
-                continue
-            for blob, compressed in blobs:
-                digest = hashlib.sha1(blob).digest()
-                if digest in seen:
-                    continue
-                seen.add(digest)
-                d = okage_xim.lz_decode(blob) if compressed else blob
-                psm = (struct.unpack_from("<I", d, 0)[0] >> 20) & 0x3F
-                if psm not in (0x13, 0x14):
-                    continue
-                key = hashlib.sha1(d).hexdigest()[:12]
-                pal_size, _, pal_count, entries = struct.unpack_from("<IIII", d, 0x10)
-                img_off = 0x10 + pal_size
-                _, _, h, w = struct.unpack_from("<IIII", d, img_off)
-                px = np.frombuffer(d, np.uint8, len(d) - img_off - 0x10, img_off + 0x10)
-                if psm == 0x14:
-                    e = np.empty(px.size * 2, np.uint8)
-                    e[0::2] = px & 0x0F
-                    e[1::2] = px >> 4
-                    px = e
-                indices = px[: w * h].reshape(h, w)
-                pals = [d[0x20 + p * entries * 4 : 0x20 + (p + 1) * entries * 4] for p in range(max(pal_count, 1))]
-                yield key, indices, pals
-    iso.close()
 
 
 def main() -> None:
@@ -95,7 +49,9 @@ def main() -> None:
     ap.add_argument("iso", type=Path)
     ap.add_argument("hd", type=Path)
     ap.add_argument("out", type=Path)
+    ap.add_argument("--extractor", default="okage_xim", help="module in tools/disc_textures with disc_images()")
     a = ap.parse_args()
+    disc_images = importlib.import_module(a.extractor).disc_images
     (a.out / "atlas").mkdir(parents=True, exist_ok=True)
 
     images = []  # (clut_hash, w, h, index_offset, file)

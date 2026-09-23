@@ -20,6 +20,29 @@ Please do not open issues expecting support or a roadmap. This is not a product 
 
 Bring your own legally dumped PS2 BIOS and games. Use this only for personal experimentation.
 
+## **HD Textures Straight From The Game Disc**
+
+**This fork builds HD texture packs from the game disc itself - no playing through the game to dump textures.** Every texture is read off the disc image, upscaled whole on a desktop GPU, and matched by the emulator to what the game draws, exactly. Okage: Shadow King got a complete 4x pack (2,807 textures) in under 15 minutes of GPU time, menus and portraits included.
+
+![Okage: Shadow King on the AYN Thor at 3x internal resolution with the HD pack built from its disc](docs/media/okage-hd-pack-thor.jpg)
+
+| | |
+| --- | --- |
+| ![Inn door and Ari, original vs HD pack](docs/media/okage-hd-compare-inn.jpg) | ![Thatched roof, original vs HD pack](docs/media/okage-hd-compare-roof.jpg) |
+
+![Status menu portraits, original vs HD pack](docs/media/okage-hd-compare-menu.jpg)
+
+**Two ways to get HD textures, and they work together:**
+
+| | Standard packs (PCSX2 / ARMSX2) | **Disc packs (this fork)** |
+| --- | --- | --- |
+| Textures come from | Dumps made while someone plays | **The game disc, directly** |
+| Coverage | What the player reached | **Every texture on the disc** |
+| Making one | Play everything with dumping on | **Run three tools** |
+| Works in stock PCSX2 | Yes | No, this fork |
+
+A texture with its own standard file uses it; a disc pack covers the rest. **Want to make one for your game? Start with [docs/hd-texture-packs.md](docs/hd-texture-packs.md)** - the Okage tools are in `tools/disc_textures/`, and only the disc-format reader is per game.
+
 ## What This Fork Adds Over ARMSX2
 
 The app is upstream [ARMSX2](https://github.com/ARMSX2/ARMSX2) — its Kotlin/Compose frontend and PCSX2-derived core — plus the changes below. Everything in this section is fork work; anything not listed behaves like upstream.
@@ -40,6 +63,8 @@ The Thor's Qualcomm Vulkan driver cannot read the frame it is drawing, so every 
 
 ### Texture upscaling in the emulator
 
+- **Disc packs (above):** HD packs made from the game disc with no playing, matched exactly to what the game draws, menus and portraits included. Guide: [docs/hd-texture-packs.md](docs/hd-texture-packs.md).
+
 Screen upscalers (FSR, shader chains) work on the finished frame. The fork also upscales **each texture as the game uploads it**, so the game renders from sharper art.
 
 - **RAISR-HD**, on by default: learned kernels fitted on community HD texture packs, bundled in the APK. Gives any game a sharper, edge-aware 2x without a pack. Not a neural net: a few hundred operations per pixel on a worker thread. It beat Lanczos on every held-out pack it was tested on.
@@ -58,6 +83,7 @@ Screen upscalers (FSR, shader chains) work on the finished frame. The fork also 
 - Cover-first game list with xlenore PS2 covers by default.
 - An `HD` badge on covers: solid when a texture pack is installed, hollow when the online catalogue has one. Tap it to open Texture Packs for that game.
 - **Multi-disc games are one card**, with an "N DISCS" badge, the other discs in the long-press menu, and "Insert Disc N" in the pause menu.
+- **Sharp on the Thor's 1080p screen by default:** internal resolution 3x on Snapdragon 8 Gen 2 (the first multiple past 1080 lines), 2x on the 865 Thor, and texture packs on.
 - Fast Forward (toggle) is on **Select + R1** by default.
 - On-screen touch controls are off by default, because the Thor has physical controls.
 - The pause menu has shortcuts for renderer changes, fast forward, save states, disc changes, imports and individual cheat toggles.
@@ -79,9 +105,9 @@ Screenshots are from a personal AYN Thor test device.
 | --- | --- |
 | ![ARMSX2 Thor game selector with cover art and cheat badges](docs/media/armsx2-library-device.png) | ![Texture upscaling section in the in-game menu, showing the world-texture toggle, the Bilinear/Scale2x/Eagle algorithm picker and the 2x/4x scale selector](docs/media/armsx2-texture-upscaling-device.png) |
 
-| Running, no touch overlay |
+| Okage: Shadow King in HD, 3x resolution with a disc pack |
 | --- |
-| ![7 Blades running on the Thor with no on-screen controls drawn over the game](docs/media/armsx2-ingame-device.png) |
+| ![Okage: Shadow King running on the Thor at 3x resolution with its disc HD texture pack](docs/media/okage-hd-pack-thor.jpg) |
 
 ## Hotkeys On The Thor
 
@@ -94,6 +120,7 @@ The desktop PCSX2 lab's keys are in [docs/cheat-tooling.md](docs/cheat-tooling.m
 ## Docs
 
 - **Performance:** [Okage game notes](docs/games/okage.md) (why it was slow and wrong on the Thor, and what fixed it) · [ARM64 optimization review](docs/arm64-optimization-review.md)
+- **HD packs:** [HD texture packs - standard vs disc packs, making one, sharing](docs/hd-texture-packs.md)
 - **Textures:** [Texture upscaling research](docs/texture-upscaling-research.md) · [Neural models](docs/neural-models.md) · [Third-party ports and licences](docs/third-party.md) · [RAISR kernel trainer](tools/raisr_train.py)
 - **Cheats:** [Cheat tooling](docs/cheat-tooling.md) · [Games without cheats](docs/games-without-cheats.txt)
 - **Tooling:** [On-device MCP server](docs/mcp-server.md)

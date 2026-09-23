@@ -39,6 +39,8 @@ import json
 import struct
 from pathlib import Path
 
+import numpy as np
+
 
 def lz_decode(src: bytes) -> bytes:
     size = int.from_bytes(src[1:4], "big")
@@ -138,6 +140,58 @@ def decode_xim(d: bytes):
                 "ps2_alpha_min": int(alpha.min()), "ps2_alpha_max": int(alpha.max())}
         rgba[..., 3] = np.minimum(alpha * 2, 255)  # PS2 0x80 is opaque
         yield p, rgba.astype(np.uint8), info
+
+
+def disc_images(iso_path: Path):
+    """The extractor interface build_disc_pack.py uses: yield (key, indices, palettes) for each
+    unique palette image on the disc - key a stable name (the HD file is `<key>.png`, or
+    `<key>_p<N>.png` for an image with several palettes), indices an HxW uint8 array of palette
+    indices (4-bit expanded low nibble first), palettes a list of the raw palette bytes (RGBA,
+    PS2 alpha, index order) exactly as the GS receives them."""
+    import pycdlib
+
+    iso = pycdlib.PyCdlib()
+    iso.open(str(iso_path))
+
+    def read(path: str) -> bytes:
+        b = io.BytesIO()
+        iso.get_file_from_iso_fp(b, iso_path=path)
+        return b.getvalue()
+
+    seen: set[bytes] = set()
+    for root, _dirs, files in iso.walk(iso_path="/"):
+        for f in files:
+            path = root.rstrip("/") + "/" + f
+            upper = f.upper()
+            if ".XIM" in upper:
+                blobs = [(read(path), False)]
+            elif ".XPF" in upper:
+                blobs = [(b, True) for n, b in xpf_entries(read(path)) if n.lower().endswith(".xim")]
+            else:
+                continue
+            for blob, compressed in blobs:
+                digest = hashlib.sha1(blob).digest()
+                if digest in seen:
+                    continue
+                seen.add(digest)
+                d = lz_decode(blob) if compressed else blob
+                psm = (struct.unpack_from("<I", d, 0)[0] >> 20) & 0x3F
+                if psm not in (0x13, 0x14):
+                    continue
+                key = hashlib.sha1(d).hexdigest()[:12]
+                pal_size, _, pal_count, entries = struct.unpack_from("<IIII", d, 0x10)
+                img_off = 0x10 + pal_size
+                _, _, h, w = struct.unpack_from("<IIII", d, img_off)
+                px = np.frombuffer(d, np.uint8, len(d) - img_off - 0x10, img_off + 0x10)
+                if psm == 0x14:
+                    e = np.empty(px.size * 2, np.uint8)
+                    e[0::2] = px & 0x0F
+                    e[1::2] = px >> 4
+                    px = e
+                indices = px[: w * h].reshape(h, w)
+                pals = [d[0x20 + p * entries * 4 : 0x20 + (p + 1) * entries * 4] for p in range(max(pal_count, 1))]
+                yield key, indices, pals
+    iso.close()
 
 
 def main() -> None:
