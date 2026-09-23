@@ -1,0 +1,21 @@
+{
+ "serial": "SLPS-25842",
+ "title": "Tales of Destiny: Director's Cut (English patch v1.6)",
+ "region": "NTSC-J",
+ "crc": "2E49AF5A",
+ "extractor": "extractor.py",
+ "disc": {
+  "format": "DVD in a CD CHD (one MODE1/2048 track)",
+  "iso_sha1": "de934800cd81835a5f5335a0eab58299a16371eb"
+ },
+ "upscale": {
+  "model": "4x-UltraSharp",
+  "model_url": "https://huggingface.co/Kim2091/UltraSharp",
+  "model_sha256": "36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc",
+  "model_licence": "CC BY-NC-SA 4.0 (non-commercial)",
+  "scale": 4
+ },
+ "reference": {
+  "index_sha256": null
+ }
+}

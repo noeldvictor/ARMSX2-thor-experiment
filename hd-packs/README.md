@@ -76,6 +76,9 @@ at the repo root and ask, for example, *"make an HD pack recipe for <game>, my d
    from, and check that each dumped texture is an exact crop of a disc image and that its hashes
    can be computed from the disc data. If they can't (textures built at runtime, formats nobody
    can decode), stop here. A disc pack will not work for that game.
+   The tools do much of the detective work: `gsdump.py` lists what the game uploads in a GS
+   dump and finds those bytes on the disc, `gsmem.py` reproduces the GS's memory layout, and
+   `verify_dumps.py` scores an extractor against PCSX2's texture dumps (see the skill).
 2. **Write `hd-packs/<SERIAL>-<name>/extractor.py`.** The contract is in
    [`tools/disc_textures/extract_native.py`](../tools/disc_textures/extract_native.py): yield each
    image's indices and palettes. Okage's

@@ -532,7 +532,10 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   but not yet seen on screen.
 - Tools: `tools/disc_textures/` - `make_pack.py` (one command: disc -> extract -> upscale ->
   build -> zip, timings, checksum), `disc.py`, `extract_native.py` (the extractor contract),
-  `upscale.py`, `build_disc_pack.py`. A new game needs only `hd-packs/<game>/extractor.py`.
+  `upscale.py`, `build_disc_pack.py`; for discovering a new game's formats `disc_codecs.py`
+  (decompressors, numba), `tim2.py` (lenient TIM2), `gsdump.py` (uploads in a GS dump, `--locate`
+  them on disc), `gsmem.py` (GS swizzle, VRAM from a dump) and `verify_dumps.py` (extractor vs
+  PCSX2 texture dumps). A new game needs only `hd-packs/<game>/extractor.py`.
 - README honesty rule: disc packs are per game and need reverse engineering (usually AI-assisted)
   for each new game. Never describe them as a generic or one-click tool. No packs in the repo.
 - Found on the way: a texture reload while the upscaler worker ran used freed RAISR kernels

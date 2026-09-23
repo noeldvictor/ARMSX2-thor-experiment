@@ -162,19 +162,43 @@ def main() -> None:
     header, _, _ = parse(a.dump)
     print(f"{a.dump.name}: {header['serial']} CRC {header['crc']:08X}")
     ups = [u for u in uploads(a.dump) if len(u.data) >= a.min]
-    blobs = []
-    if a.locate:
-        files = sorted(a.locate.rglob("*")) if a.locate.is_dir() else [a.locate]
-        blobs = [(f, f.read_bytes()) for f in files if f.is_file()]
+    # The same texture is often uploaded every frame: report each distinct payload once.
+    distinct: dict[bytes, tuple[Upload, int]] = {}
     for u in ups:
+        first, n = distinct.get(u.data, (u, 0))
+        distinct[u.data] = (first, n + 1)
+    corpus = starts = names = None
+    if a.locate:
+        import bisect
+        files = sorted(a.locate.rglob("*")) if a.locate.is_dir() else [a.locate]
+        parts, starts, names, pos = [], [], [], 0
+        for f in files:
+            if f.is_file():
+                b = f.read_bytes()
+                parts.append(b)
+                starts.append(pos)
+                names.append(f.name)
+                pos += len(b)
+        corpus = b"".join(parts)
+    for data, (u, n) in distinct.items():
         where = ""
-        if blobs:
-            probe = u.data[:64]
-            hits = [(f.name, b.find(probe)) for f, b in blobs if probe in b]
-            where = f"  found in {hits[:3]}" if hits else "  not found"
-        print(f"frame {u.frame} {u.psm_name:5} dbp {u.dbp:#06x} bw {u.dbw:2} {u.w}x{u.h} at {u.x},{u.y} "
-              f"{len(u.data)} bytes{where}")
-    print(f"{len(ups)} uploads of {a.min}+ bytes")
+        if corpus is not None:
+            # Probe with a stretch that is not all one byte, so a run of zeros does not "match".
+            probe = data[:64]
+            for k in range(0, len(data) - 64, 64):
+                if len(set(data[k: k + 64])) > 4:
+                    probe = data[k: k + 64]
+                    break
+            hits = []
+            at = corpus.find(probe)
+            while at >= 0 and len(hits) < 3:
+                i = bisect.bisect_right(starts, at) - 1
+                hits.append((names[i], at - starts[i] - data.find(probe)))
+                at = corpus.find(probe, at + 1)
+            where = f"  found in {hits}" if hits else "  not found"
+        print(f"x{n:<3} {u.psm_name:5} dbp {u.dbp:#06x} bw {u.dbw:2} {u.w}x{u.h} at {u.x},{u.y} "
+              f"{len(data)} bytes{where}")
+    print(f"{len(ups)} uploads of {a.min}+ bytes, {len(distinct)} distinct")
 
 
 if __name__ == "__main__":

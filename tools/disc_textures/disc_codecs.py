@@ -96,6 +96,44 @@ def _tales_lzss(src, version, out_size):
     return out[:o], o
 
 
+@njit(cache=True)
+def _tales_candidates(buf, max_out):
+    """Offsets whose 9 bytes look like a Tales header: version 1/3, sizes that fit the buffer."""
+    n = buf.shape[0]
+    found = []
+    for o in range(n - 9):
+        v = buf[o]
+        if v != 1 and v != 3:
+            continue
+        comp = buf[o + 1] | (buf[o + 2] << 8) | (buf[o + 3] << 16) | (np.int64(buf[o + 4]) << 24)
+        dec = buf[o + 5] | (buf[o + 6] << 8) | (buf[o + 7] << 16) | (np.int64(buf[o + 8]) << 24)
+        if comp < 8 or o + 9 + comp > n or dec < comp or dec > max_out or dec > comp * 1024:
+            continue
+        found.append(o)
+    return found
+
+
+def find_tales_blobs(buf: bytes, max_out: int = 16 << 20):
+    """Every Tales-compressed blob inside `buf` - an archive's sub-files, wherever they start:
+    [(offset, compressed length incl. header, decoded bytes)]. A candidate header only counts if
+    it decodes to exactly its declared size using exactly its declared input, so random bytes that
+    happen to look like a header are dropped. Blobs inside a blob that was found are skipped."""
+    arr = np.frombuffer(buf, np.uint8)
+    out = []
+    end = -1
+    for o in _tales_candidates(arr, max_out):
+        if o < end:
+            continue
+        version = int(arr[o])
+        comp, dec = struct.unpack_from("<II", buf, o + 1)
+        data, n = _tales_lzss(arr[o + 9 : o + 9 + comp], version, dec)
+        if n != dec:
+            continue
+        out.append((o, 9 + comp, data.tobytes()))
+        end = o + 9 + comp
+    return out
+
+
 def tales_header(blob: bytes):
     """(version, compressed size, decompressed size) of a Tales-compressed blob, or None."""
     if len(blob) < 9 or blob[0] not in (0, 1, 3):

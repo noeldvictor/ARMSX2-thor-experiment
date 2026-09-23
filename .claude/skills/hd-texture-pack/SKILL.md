@@ -13,21 +13,47 @@ User guide: `hd-packs/README.md` (recipes, requirements, adding a game); how it 
 numpy, pillow, xxhash, zstandard, torch cu130, spandrel). Models live in
 `F:\Projects\pcsx2-desktop\models\` (never in the repo). `chdman` is at `F:\Tools\MAME`.
 
-## 0. Is the game a candidate? (30 minutes, before any tooling)
+## 0. Discover how the game stores its textures (the tools do most of it)
 
-1. Disc image -> ISO. CHD: `chdman info` first; a CD (`MODE2_RAW`) needs `extractcd` and cutting
-   each 2352-byte sector to bytes 24..2072; a DVD CHD uses `extractdvd`. List files with pycdlib.
-2. Find the texture container. Grep for `TIM2`; look at the biggest file families and their magic
-   bytes. Okage: `.XPF` archives (`XPFX`, 32-byte entries, bit-flag LZ, see `hd-packs/SCUS-97129-okage/extractor.py`) holding
-   `.XIM` images (u32 GS TEX0 word -> PSM, 256-entry RGBA palette in index order with PS2 alpha,
-   then height, width, linear indices). The PSM in a header word is a strong hint the file is
-   GS-ready.
-3. Prove it before building anything: in desktop PCSX2 (`tools/pcsx2_mcp`, F9 = single-frame GS
-   dump, or Texture Replacement -> Dump Textures) dump one scene's textures. For each dumped
-   `TEX0HASH-CLUTHASH[-rWxH]-bits.png`, check that the image is an exact crop of a disc image and
-   that `xxh3_64(crop indices, row by row)` == TEX0HASH and `xxh3_64(palette bytes)` == CLUTHASH.
-   Okage: 35/35. `bits` 0x2a93 = PSM 0x13, TW=TH=10: the game declares 1024x1024 and uses a clamp
-   region (`-rWxH`) or UVs - that is normal, not a bug.
+Shared tools in `tools/disc_textures/`, all game-independent:
+
+| Tool | What it does |
+| --- | --- |
+| `disc.py` | CHD/CUE/ISO -> ISO (DVDs stored as a CD CHD with one MODE1/2048 track too) |
+| `disc_codecs.py` | Decompressors, numba-compiled when numba is installed (`pip install numba`; pure Python is ~100x slower). `tales_lzss` + `find_tales_blobs` (Namco Tales games, nested blobs at any offset) |
+| `tim2.py` | Finds and reads TIM2 anywhere in a buffer; lenient about writers that leave fields 0 (Namco) |
+| `gsdump.py` | Lists every texture upload in a PCSX2 GS dump; `--locate DIR` finds each upload's bytes in unpacked disc files |
+| `gsmem.py` | GS memory swizzle (write/read any rect in CT32/16/T8/T4/H formats) and VRAM out of a GS dump's state |
+| `verify_dumps.py` | The candidate test: an extractor vs a folder of PCSX2 texture dumps -> exact / pixels / palette only / no palette |
+
+The loop, on desktop PCSX2 (`tools/pcsx2_mcp`, see `docs/cheat-tooling.md` for the lab):
+1. Set `[EmuCore/GS] DumpReplaceableTextures/DumpDirectTextures/DumpPaletteTextures = true` in
+   the desktop ini (back it up; restore after). Boot the game (`cli launch <iso>`), get to a few
+   different scenes (title, field, battle, menu), and `press gs_dump` (F9) in each. Save a state.
+2. Disc -> ISO, list the files (pycdlib), look at the biggest file families and magic bytes.
+   Decode the archives: a known codec from `disc_codecs.py` first; the fan-translation community
+   has usually documented a game's archive (Tales: comptoe). Unpack everything decoded (and
+   every nested compressed blob) into a folder.
+3. `gsdump.py DUMP --locate UNPACKED_DIR` - where each uploaded texture's bytes live. That names
+   the container format far faster than reading files cold. Games re-upload textures every frame
+   more often than not, so a single-frame dump holds most of a scene.
+4. Palettes that stay resident are not in the frame's uploads: read them out of the dump's VRAM
+   (`GSMemory.from_dump(state).read(PSMCT32, TEX0.CBP, 1, 0, 0, 16, 16)` -> unswizzle CSM1) and
+   search for those bytes. Confirm the VRAM read first: hash the palettes the draws use and
+   compare with the CLUT hashes in the texture dump names (Tales of Destiny: 17/22).
+5. Write the extractor, then `verify_dumps.py extractor.py GAME.iso DUMPS_DIR`. A candidate game
+   lands most dumps in `exact` + `pixels`. Okage: 35/35 exact. Work down the `no palette` list -
+   it names what the extractor is missing.
+
+Things that look like dead ends but are not:
+- Size-correct decompression can still be wrong. Tales LZSS decodes to the exact size with the
+  window start off by one and garbles everything after the first run; check structure (a pack's
+  own offset table pointing at valid TIM2 headers), not just size.
+- Data uploaded as PSMCT32 and drawn as PSMT8/4 (fewer, bigger transfers): the disc holds the
+  32-bit view. `gsmem.py` writes it as the upload did and reads it as the draw does.
+- A 4-bit image with a 256-entry CLUT uses 16-colour palettes that are 8x2 patches of the stored
+  16-wide CLUT = 16 consecutive entries after CSM1 unswizzle.
+- Fonts, text strips and fades have palettes built at runtime: palette-free images (step 1).
 
 ## 1. Extract
 
@@ -104,6 +130,13 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
    atlas checks matches with its own content hash, so raw-block keys are already covered.
 
 ## Pitfalls already paid for
+
+- A tool module named `codecs.py` shadows Python's stdlib `codecs` and silently imports the wrong
+  one. Compile-check every script after an edit
+  (`for f in tools/disc_textures/*.py hd-packs/*/extractor.py; do python -m py_compile "$f"; done`) -
+  a broken `disc.py` was pushed once.
+- Searching 100k+ small files one by one is slow on Windows; concatenate them once (gsdump.py
+  --locate does) and search the blob.
 
 - `codex exec -i a.png b.png "prompt"` eats the prompt as an image; pipe the prompt on stdin.
 - Pull device screenshots only after the dev server returns (it now waits for IEND); older builds

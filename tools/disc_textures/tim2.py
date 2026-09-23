@@ -18,11 +18,18 @@ the CLUT.
 
 CLUT order: a 256-colour CLUT is stored the way it is uploaded for CSM1, with entries 8-15 and
 16-23 of every 32 swapped; the GS reads it back in index order, which is what PCSX2 hashes. Bit 7
-of the CLUT type marks a CLUT that is already in index order (a "linear" TIM2). 16-colour CLUTs are
-never swapped. 16-bit CLUTs (5551) are not handled yet: the GS expands them with TEXA, which the
+of the CLUT type marks a CLUT that is already in index order (a "linear" TIM2). A lone 16-colour
+CLUT is not swapped; a 4-bit image with a CLUT of 256+ entries uses 16-colour palettes out of it,
+each the 8x2 patch of the stored 16-wide CLUT - 16 consecutive entries once unswizzled. 16-bit CLUTs (5551) are not handled yet: the GS expands them with TEXA, which the
 disc does not say.
 
 Only the base level of a mipmapped picture is used, and 16-bit images are skipped.
+
+Real files bend the format, so the reader is lenient where the data is unambiguous. Namco's
+writer (Tales of Destiny DC) leaves the picture count, header size and width at 0 and puts
+header + CLUT, without the image, in the total size: a count of 0 is read as 1, a header size of
+0 as 48, a picture is as long as header + image + CLUT when the total is short, and a missing
+width comes from the image size and height.
 """
 
 from __future__ import annotations
@@ -49,8 +56,9 @@ def parse_tim2(buf: bytes | memoryview, pos: int = 0) -> tuple[list[dict], int] 
     if buf[pos : pos + 4] != b"TIM2" or pos + HEADER > len(buf):
         return None
     version, align, count = struct.unpack_from("<BBH", buf, pos + 4)
-    if version not in (3, 4) or align > 1 or not 0 < count < 1024:
+    if version not in (3, 4) or align > 1 or count >= 1024:
         return None
+    count = count or 1  # Namco leaves it 0
     p = pos + (128 if align else HEADER)
     pictures = []
     for _ in range(count):
@@ -58,9 +66,15 @@ def parse_tim2(buf: bytes | memoryview, pos: int = 0) -> tuple[list[dict], int] 
             return None
         (total, clut_size, image_size, header_size, clut_colours, fmt, mips, clut_type, image_type,
          w, h, tex0, _tex1, _texa, _texclut) = struct.unpack_from("<IIIHHBBBBHHQQII", buf, p)
-        if (total < header_size or header_size < PICTURE_HEADER or p + total > len(buf)
-                or not 0 < w <= 2048 or not 0 < h <= 2048 or image_type > 5
-                or header_size + image_size + clut_size > total):
+        header_size = header_size or PICTURE_HEADER
+        total = max(total, header_size + image_size + clut_size)
+        bpp = {1: 16, 2: 24, 3: 32, 4: 4, 5: 8}.get(image_type)
+        if bpp and h and not w:
+            w = image_size * 8 // bpp // h
+        if bpp and w and not h:
+            h = image_size * 8 // bpp // w
+        if (header_size < PICTURE_HEADER or p + total > len(buf) or not bpp
+                or not 0 < w <= 2048 or not 0 < h <= 2048 or image_size < (w * h * bpp + 7) // 8):
             return None
         image = p + header_size
         clut = image + image_size
@@ -107,12 +121,15 @@ def picture_texels(pic: dict):
     size = 256 if t == 5 else 16
     if len(entries) < size:
         return None
-    palettes = []
-    for k in range(len(entries) // size):
-        pal = entries[k * size : (k + 1) * size]
-        if size == 256 and not pic["clut_type"] & 0x80:
-            pal = csm1_unswizzle(pal)
-        palettes.append(np.ascontiguousarray(pal).tobytes())
+    if len(entries) >= 256 and not pic["clut_type"] & 0x80:
+        # Stored for CSM1. A 4-bit image with a big CLUT picks 16-colour palettes out of it (by
+        # CBP/CSA); unswizzled, each is 16 consecutive entries - the 8x2 patches of the stored
+        # 16-wide CLUT image.
+        whole = len(entries) // 256 * 256
+        entries = np.concatenate([csm1_unswizzle(entries[k : k + 256]) for k in range(0, whole, 256)]
+                                 + [entries[whole:]])
+    palettes = [np.ascontiguousarray(entries[k * size : (k + 1) * size]).tobytes()
+                for k in range(len(entries) // size)]
     return idx, palettes
 
 
