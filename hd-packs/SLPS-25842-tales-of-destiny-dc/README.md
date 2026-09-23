@@ -20,7 +20,11 @@ Not working yet:
   images it is made of (ship's deck: 143x31 from 4 frames, 87x87 from 3). Still bit-identical at 1x.
 - A few textures on the deck still miss (the streaming 512x512 map slot, a 128x128 texture,
   small icons) - to be checked against the full pack.
-- **Title art** is uploaded as 32-bit data and drawn as 8-bit (`gsmem.py` can reproduce that; the
-  extractor does not do it yet).
+- **Title screen**: the art is two true-colour (PSMCT32) TIM2 pictures, drawn as such - not 8-bit
+  data in disguise, as first thought; the upload/draw timeline of a GS dump settled it. The menu
+  text lines are a 4-bit picture with a 48-colour CLUT the game uploads 16 wide, so each palette
+  is an 8x2 patch (entries 0-7 + 16-23, 8-15 + 24-31). `tim2.py` sliced CLUTs under 256 entries
+  as consecutive 16s and missed all three text palettes; fixed. Lines wider than 512 texels read
+  past the buffer width into the picture's last rows - composites of one picture.
 - The first 4x pack (3.1 GB, 47 min on the RTX 3060) had wrongly coloured UI corners because the
   palette slicing changed between its extract and build steps; a clean rebuild fixes that.

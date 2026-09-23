@@ -19,7 +19,7 @@ the CLUT.
 CLUT order: a 256-colour CLUT is stored the way it is uploaded for CSM1, with entries 8-15 and
 16-23 of every 32 swapped; the GS reads it back in index order, which is what PCSX2 hashes. Bit 7
 of the CLUT type marks a CLUT that is already in index order (a "linear" TIM2). A lone 16-colour
-CLUT is not swapped; a 4-bit image with a CLUT of 256+ entries uses 16-colour palettes out of it,
+CLUT is not swapped; a 4-bit image with a CLUT of 32+ entries uses 16-colour palettes out of it,
 each the 8x2 patch of the stored 16-wide CLUT - 16 consecutive entries once unswizzled. 16-bit CLUTs (5551) are not handled yet: the GS expands them with TEXA, which the
 disc does not say.
 
@@ -46,8 +46,9 @@ PICTURE_HEADER = 48
 
 
 def csm1_unswizzle(pal: np.ndarray) -> np.ndarray:
-    """256 RGBA entries as stored for CSM1 -> index order (swap 8..15 with 16..23 in every 32)."""
-    p = pal.reshape(8, 4, 8, 4).copy()
+    """RGBA entries (a multiple of 32) as stored for CSM1 -> index order (swap 8..15 with 16..23
+    in every 32)."""
+    p = pal.reshape(-1, 4, 8, 4).copy()
     p[:, [1, 2]] = p[:, [2, 1]]
     return p.reshape(-1, 4)
 
@@ -124,13 +125,13 @@ def picture_texels(pic: dict):
     size = 256 if t == 5 else 16
     if len(entries) < size:
         return None
-    if len(entries) >= 256 and not pic["clut_type"] & 0x80:
-        # Stored for CSM1. A 4-bit image with a big CLUT picks 16-colour palettes out of it (by
-        # CBP/CSA); unswizzled, each is 16 consecutive entries - the 8x2 patches of the stored
-        # 16-wide CLUT image.
-        whole = len(entries) // 256 * 256
-        entries = np.concatenate([csm1_unswizzle(entries[k : k + 256]) for k in range(0, whole, 256)]
-                                 + [entries[whole:]])
+    if (len(entries) >= 256 or (t == 4 and len(entries) >= 32)) and not pic["clut_type"] & 0x80:
+        # Stored for CSM1. A 4-bit image with several palettes picks 16-colour ones out of its
+        # CLUT (by CBP/CSA); unswizzled, each is 16 consecutive entries - the 8x2 patches of the
+        # stored 16-wide CLUT image. True of small CLUTs too: Tales of Destiny's title text has
+        # 48 colours, uploaded 16x2, drawn with entries 0-7 + 16-23 and 8-15 + 24-31.
+        whole = len(entries) // 32 * 32
+        entries = np.concatenate([csm1_unswizzle(entries[:whole]), entries[whole:]])
     palettes = [np.ascontiguousarray(entries[k * size : (k + 1) * size]).tobytes()
                 for k in range(len(entries) // size)]
     return idx, palettes
