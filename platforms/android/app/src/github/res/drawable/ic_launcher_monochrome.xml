@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One continuous silhouette; Android supplies the themed foreground color. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:pivotX="54" android:pivotY="54" android:rotation="45">
+        <path
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M34,34 L74,34 L81,41 L81,55 L74,62 L61,62 L61,82 L57,86 L51,86 L47,82 L47,62 L34,62 L27,55 L27,41 Z M51,40 L57,40 L57,45 L62,45 L62,51 L57,51 L57,56 L51,56 L51,51 L46,51 L46,45 L51,45 Z" />
+    </group>
+</vector>
