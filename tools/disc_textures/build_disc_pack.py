@@ -203,11 +203,18 @@ def main() -> None:
             f.write(struct.pack("<QIHH", th, image_id, x, y))
         f.write(index_data)
 
+    # Images a previous build left behind (a PNG pack rebuilt as ASTC, a key the extractor no
+    # longer yields) would otherwise ride along into the zip.
+    used = {i[5] for i in images}
+    stale = [p for p in (a.out / "atlas").iterdir()
+             if p.suffix in (".png", ".astc") and f"atlas/{p.name}" not in used]
+    for p in stale:
+        p.unlink()
     size = (a.out / "disc-atlas.a2at").stat().st_size
     print(f"{len(images)} disc textures ({sum(1 for i in images if i[4] & FLAG_PALETTE_FREE)} palette-free, "
           f"{sum(1 for i in images if i[4] & (FLAG_TRUE_COLOUR | FLAG_RGBA32))} true-colour), {len(tiles) + len(free_tiles)} blocks, "
           f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, {astc_images} ASTC, "
-          f"{missing} without an HD image")
+          f"{missing} without an HD image, {len(stale)} stale images removed")
 
 
 if __name__ == "__main__":

@@ -145,7 +145,8 @@ def main() -> None:
         print(f"\nstopped after {a.until}")
         return
     index_sha = sha256(replacements / "disc-atlas.a2at")
-    ref = game.get("reference", {}).get("index_sha256")
+    # The index names each image's file, so an ASTC and a PNG pack have different checksums.
+    ref = game.get("reference", {}).get("index_sha256_png" if a.format == "png" else "index_sha256")
     total = sum(v for k, v in timings.items() if k in STEPS)
     print(f"\nGPU {timings['gpu']}; steps: " + ", ".join(f"{k} {timings[k]:.0f} s" for k in STEPS if k in timings)
           + f"; total {total / 60:.1f} min")

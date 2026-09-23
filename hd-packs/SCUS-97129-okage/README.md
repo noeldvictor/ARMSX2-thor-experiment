@@ -47,12 +47,15 @@ A clean run from the `.chd`, 2026-09-22 (Core i7-11700, 32 GB RAM, RTX 3060 12 G
 | disc (chdman + sector strip) | 23 s | `disc.iso`, 436 MB |
 | extract | 15-28 s | `native/`: 2,810 PNGs, 39 MB (3 palette-free font sheets, 174 true-colour) |
 | upscale 4x | about 12 min 45 s (3.7 textures/s) | `hd4x/`: 597 MB |
-| build | 1.5-2 min | `pack_hd4x/replacements/`: 632 MB (2,812 images + a 38.8 MB index) |
-| zip | 15 s-1 min | `SCUS-97129-disc-hd4x.zip`, 639 MB |
+| build | 1.5-2 min | `pack_hd4x/replacements/`: 470 MB (2,809 ASTC images, 3 palette-free PNGs, a 38.8 MB index) |
+| zip | 15-30 s | `SCUS-97129-disc-hd4x.zip`, 335 MB |
 | **total** | **about 16 min** | |
 
 The upscale is the clean run's 727 s for the palette images plus 34 s for the 173 PSMCT24 and a
-few seconds for the one PSMCT32 image, which were added afterwards and timed on their own. Build and zip vary with the disk
+few seconds for the one PSMCT32 image, which were added afterwards and timed on their own. It was
+measured before `upscale.py` batched small textures, so it is an upper bound. The build is the ASTC
+pack (2026-09-23, 85 s including astcenc); `--format png` makes the lossless PNG pack instead,
+632 MB and a 639 MB zip. Build and zip vary with the disk
 cache; in the first clean run they overlapped an Android build and took 5 and 2 minutes. Plan for about 2.5 GB of free disk for the work folder, plus the disc image. `--scale 2` makes a 2x pack (the model
 still runs at 4x and the result is downscaled, so the time is the same; the pack is about a
 quarter of the size).
@@ -63,7 +66,8 @@ quarter of the size).
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `e25313668c682df863f0dde7c21bef0a3d8b79fa` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 | `6adb00f1c7ebdfd8c21712d6c2f24dc4d6e06c174b141f5e6d0751a7a6161018` |
+| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `8be63de44996a52fce77567be4ef7b21697f928848e508a6eae2ce2674056aaf` |
+| Index SHA-256 with `--format png` | `6adb00f1c7ebdfd8c21712d6c2f24dc4d6e06c174b141f5e6d0751a7a6161018` |
 
 `make_pack.py` checks all three. The index is determined by the disc and `extractor.py`; the HD
 images can differ slightly between GPUs.
