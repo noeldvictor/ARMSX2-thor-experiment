@@ -26,6 +26,9 @@ made, and implementation status per item. Update this file rather than adding an
 - PowerShell may not accept Unix-style `&&`; run commands separately.
 - Network access and SSH Git remotes are expected. `origin` is `git@github.com:noeldvictor/ARMSX2-thor-experiment.git` and canonical `upstream` is `https://github.com/ARMSX2/ARMSX2.git`.
 - Use `adb devices` before deployment and install the newest `github/debug` APK with `adb install -r`.
+- In Git Bash, `export MSYS_NO_PATHCONV=1` before `adb push`/`adb shell` with device paths: MSYS
+  rewrites `/data/local/tmp/...` into `C:/Program Files/Git/data/...` and the push fails or lands
+  nowhere while a stale file on the device gets used.
 
 ## Git Workflow
 - Use only the default/mainline branch. In this clone, user references to `main` mean `master`.
