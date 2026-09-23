@@ -269,6 +269,30 @@ No released pack (checked 2026-09-22): not in ARMSX2's B2 catalogue (517 packs) 
 a release. On the Thor the on-device upscaler is already on for it (RAISR-HD 2x, world and UI);
 at internal resolution 1x the gain is hard to see - raise the internal resolution to judge it.
 
+### Every texture straight off the disc (2026-09-22)
+
+The plan: make an HD pack without playing - pull the textures from the disc, upscale them on a
+desktop GPU, and link them to what the emulator sees. The disc side is done:
+`tools/disc_textures/okage_xim.py` writes all **2,807 unique textures** (9,634 references,
+40 MB of PNG) with **no failures**, in about 15 seconds.
+
+- The disc is a CD (`MODE2_RAW`); `chdman extractcd` then strip each 2352-byte sector to its
+  2048 user bytes (offset 24) for an ISO that `pycdlib` reads.
+- 741 `.XPF` archives (maps, battles, characters) plus 50 standalone `.XIM` images. XPF entries
+  are compressed with a small bit-flag LZ (format documented by simontime/xpftool; our decoder is
+  an independent implementation). XIM: a GS `TEX0` word giving the PSM (2,530 PSMT8, 103 PSMT4,
+  173 PSMCT24, 1 PSMCT32), a 256-entry RGBA palette in index order (not CSM1-swizzled) with PS2
+  alpha, then height, width and linear pixels. Full layout in the tool's docstring.
+- Most textures are small (64x32, 64x64, 32x32 lead); the whole set is 32 MB native, so a desktop
+  GPU upscales it in minutes.
+
+The link to the emulator is the open part. The stock replacement key hashes GS memory the way
+the draw reads it (raw swizzled blocks for most PSMT8 textures, TW x TH rounded up to a power of
+two, so junk past the image edge is in it) plus the palette, size and region. A fork-only key
+computed from what the disc already gives - the decoded RGBA at the uploaded image size - would
+let the offline tool name each PNG exactly; the emulator side needs to know the uploaded image
+size, which it can record from the transfer (BITBLTBUF/TRXREG) that filled the texture's memory.
+
 ## Cheats
 
 `assets/cheats/E0426FC6.pnach`: "No Enemy Encounters (Ghosts Pass Through)" -

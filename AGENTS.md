@@ -444,6 +444,10 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   an alpha-doubling pass under the stencil, which also let every strip keep the stencil copy:
   9-12 render passes a frame). In game: 2x fast-forward holds 119.9 fps in Tenel and the World
   Library. Full notes in `docs/games/okage.md`.
+- **Offline texture extraction** (HD pack without playing): `tools/disc_textures/okage_xim.py`
+  reads every Okage texture off the disc image (2,807 unique, 0 failures). Next: a fork-only
+  replacement key computable from the disc data (decoded RGBA at the uploaded size), the 3060
+  upscale script, pack packaging. Notes in `docs/games/okage.md`, "HD textures".
 - GS dumps parse fine in Python (zstd; header, state, 0x2000-byte priv regs, then packets
   0 = transfer / 1 = vsync / 2 = readfifo / 3 = regs); rewriting A+D register values in a dump
   and replaying it on desktop is the fastest way to test "what if the game did X" before
