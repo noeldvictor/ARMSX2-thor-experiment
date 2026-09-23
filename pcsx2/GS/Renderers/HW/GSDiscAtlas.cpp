@@ -15,10 +15,12 @@
 #include <algorithm>
 #include <memory>
 #include <optional>
+#include <span>
 #include <cstring>
 #include <list>
 #include <mutex>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 // disc-atlas.a2at, little-endian:
@@ -113,13 +115,41 @@ namespace
 	static_assert(sizeof(Tile) == 24);
 #pragma pack(pop)
 
+	// The index file, memory-mapped: a big game's index is over a gigabyte (Tales of Destiny: 1.1 GB,
+	// 12 million blocks), and mapped pages load on demand and can be dropped under memory pressure
+	// instead of counting against the app. Unmapped when the atlas is cleared.
+	struct MappedFile
+	{
+		std::span<const u8> span;
+		MappedFile() = default;
+		MappedFile(MappedFile&& other) noexcept : span(std::exchange(other.span, {})) {}
+		MappedFile& operator=(MappedFile&& other) noexcept
+		{
+			if (this != &other)
+			{
+				Reset();
+				span = std::exchange(other.span, {});
+			}
+			return *this;
+		}
+		~MappedFile() { Reset(); }
+		void Reset()
+		{
+			if (!span.empty())
+				FileSystem::UnmapFile(span);
+			span = {};
+		}
+	};
+
 	struct State
 	{
 		std::string dir;
 		std::vector<Image> images;
-		std::vector<Tile> tiles;
-		std::vector<FreeTile> free_tiles;
-		std::vector<u8> index_data;
+		std::span<const Tile> tiles; // these three point into `mapped` (or `owned`)
+		std::span<const FreeTile> free_tiles;
+		std::span<const u8> index_data;
+		MappedFile mapped;
+		std::vector<u8> owned; // the whole file, where it cannot be mapped
 	};
 
 	State s_state;
@@ -177,19 +207,31 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 	if (!FileSystem::FileExists(path.c_str()))
 		return false;
 
-	std::optional<std::vector<u8>> data = FileSystem::ReadBinaryFile(path.c_str());
-	if (!data.has_value() || data->size() < sizeof(Header))
+	State st;
+	st.dir = replacement_dir;
+	st.mapped.span = FileSystem::MapBinaryFileForRead(path.c_str());
+	std::span<const u8> file = st.mapped.span;
+	if (file.empty())
+	{
+		std::optional<std::vector<u8>> read = FileSystem::ReadBinaryFile(path.c_str());
+		if (read.has_value())
+		{
+			st.owned = std::move(*read);
+			file = st.owned;
+		}
+	}
+	if (file.size() < sizeof(Header))
 	{
 		Console.Error(fmt::format("Disc atlas: cannot read {}", path));
 		return false;
 	}
 
 	Header hdr;
-	std::memcpy(&hdr, data->data(), sizeof(hdr));
+	std::memcpy(&hdr, file.data(), sizeof(hdr));
 	HeaderV3Tail tail{};
 	const bool v3 = hdr.version >= 3;
-	if (v3 && data->size() >= sizeof(Header) + sizeof(HeaderV3Tail))
-		std::memcpy(&tail, data->data() + sizeof(Header), sizeof(tail));
+	if (v3 && file.size() >= sizeof(Header) + sizeof(HeaderV3Tail))
+		std::memcpy(&tail, file.data() + sizeof(Header), sizeof(tail));
 	const u64 header_size = sizeof(Header) + (v3 ? sizeof(HeaderV3Tail) : 0);
 	const u64 image_size = v3 ? sizeof(ImageV3) : sizeof(ImageV2);
 	const u64 images_end = header_size + static_cast<u64>(hdr.image_count) * image_size;
@@ -198,18 +240,16 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 	const u32 step = (hdr.version >= 2) ? hdr.tile_step : TILE;
 	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 5 || hdr.tile_size != TILE ||
 		step == 0 || (TILE % step) != 0 ||
-		free_end > data->size() || hdr.index_data_offset > data->size())
+		free_end > file.size() || hdr.index_data_offset > file.size())
 	{
 		Console.Error(fmt::format("Disc atlas: {} is not a version 1-5 index", path));
 		return false;
 	}
 
-	State st;
-	st.dir = replacement_dir;
 	st.images.resize(hdr.image_count);
 	for (u32 i = 0; i < hdr.image_count; i++)
 	{
-		const u8* rec = data->data() + header_size + i * image_size;
+		const u8* rec = file.data() + header_size + i * image_size;
 		Image& img = st.images[i];
 		if (v3)
 		{
@@ -226,11 +266,10 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 			std::memcpy(img.file, r.file, sizeof(img.file));
 		}
 	}
-	st.tiles.resize(hdr.tile_count);
-	std::memcpy(st.tiles.data(), data->data() + images_end, hdr.tile_count * sizeof(Tile));
-	st.free_tiles.resize(tail.free_tile_count);
-	std::memcpy(st.free_tiles.data(), data->data() + tiles_end, tail.free_tile_count * sizeof(FreeTile));
-	st.index_data.assign(data->data() + hdr.index_data_offset, data->data() + data->size());
+	// Packed structs (alignment 1), so the file's bytes are used where they are.
+	st.tiles = {reinterpret_cast<const Tile*>(file.data() + images_end), hdr.tile_count};
+	st.free_tiles = {reinterpret_cast<const FreeTile*>(file.data() + tiles_end), tail.free_tile_count};
+	st.index_data = file.subspan(hdr.index_data_offset);
 
 	for (const Image& img : st.images)
 	{
@@ -244,8 +283,9 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 	s_state = std::move(st);
 	s_loaded = true;
 	s_tile_step = step;
-	Console.WriteLnFmt("Disc atlas: {} disc images, {} index blocks every {} px, {} palette-free/true-colour ({})",
-		s_state.images.size(), s_state.tiles.size(), step, s_state.free_tiles.size(), path);
+	Console.WriteLnFmt("Disc atlas: {} disc images, {} index blocks every {} px, {} palette-free/true-colour, {} MB {} ({})",
+		s_state.images.size(), s_state.tiles.size(), step, s_state.free_tiles.size(), file.size() >> 20,
+		s_state.mapped.span.empty() ? "read" : "mapped", path);
 	return true;
 }
 
