@@ -5,7 +5,8 @@
 - `.iso`: used as it is.
 - `.chd`: MAME's `chdman` extracts it - `extractdvd` for a DVD CHD (most PS2 games; already
   2048-byte sectors), `extractcd` for a CD CHD (the `CHT2` metadata tag), which then goes through
-  the `.cue` step.
+  the `.cue` step. Some DVD games are stored as a CD CHD with one MODE1/2048 track (Tales of
+  Destiny DC's 4.5 GB image is); the `.cue` step then just copies it.
 - `.cue` / `.bin`: raw 2352-byte sectors cut to their 2048 user bytes (offset 24 in MODE2, 16 in
   MODE1). Only the first track is read; PS2 CDs keep their data there.
 
@@ -51,6 +52,14 @@ def cue_to_iso(cue: Path, iso: Path) -> Path:
     return iso
 
 
+def run_quiet(cmd: list[str]) -> None:
+    """Run a tool, showing its output only if it fails (chdman prints a progress line per percent)."""
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SystemExit(f"{cmd[0]} failed:
+{r.stdout[-2000:]}{r.stderr[-2000:]}")
+
+
 def to_iso(disc: Path, out: Path, chdman: str | None = None) -> Path:
     out.mkdir(parents=True, exist_ok=True)
     suffix = disc.suffix.lower()
@@ -65,12 +74,12 @@ def to_iso(disc: Path, out: Path, chdman: str | None = None) -> Path:
     info = subprocess.run([tool, "info", "-i", str(disc)], capture_output=True, text=True).stdout
     if "CHT2" in info or "CHTR" in info or "CHCD" in info:
         cue = out / "disc.cue"
-        subprocess.run([tool, "extractcd", "-f", "-i", str(disc), "-o", str(cue), "-ob", str(out / "disc.bin")], check=True)
+        run_quiet([tool, "extractcd", "-f", "-i", str(disc), "-o", str(cue), "-ob", str(out / "disc.bin")])
         cue_to_iso(cue, iso)
         (out / "disc.bin").unlink()
         cue.unlink()
     else:
-        subprocess.run([tool, "extractdvd", "-f", "-i", str(disc), "-o", str(iso)], check=True)
+        run_quiet([tool, "extractdvd", "-f", "-i", str(disc), "-o", str(iso)])
     return iso
 
 
