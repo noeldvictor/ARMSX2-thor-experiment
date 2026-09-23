@@ -60,6 +60,14 @@ namespace GSTextureReplacements
 // PSMCT32 images (index version 4, a third flag) keep RGBA, four bytes a texel; their blocks are
 // indexed by RGB like PSMCT24's.
 //
+// Composites: many games assemble a texture in VRAM out of several disc images - a sprite sheet
+// that frames are uploaded into, a line of text pasted together from glyphs - and draw a region
+// that spans several of them, which no single crop matches. MatchComposite() takes the texture's
+// indices, finds the disc images whose 16x16 blocks appear in it (each hit votes for one image at
+// one position), and accepts a placement only if every texel it covers equals the texture. Texels
+// no accepted image covers keep their native colour. So a composite is as exact as a crop, and the
+// replacement is the HD images laid out the same way. Palette textures only.
+//
 // Limits: palette textures (PSMT8/PSMT4 and their H variants), PSMCT24 and PSMCT32; single-level
 // keys; textures that hold a whole 16x16 block on the probe grid.
 namespace GSDiscAtlas
@@ -73,6 +81,7 @@ namespace GSDiscAtlas
 		u32 misses;
 		u32 palette_free_matches;
 		u32 true_colour_matches;
+		u32 composite_matches;
 	};
 
 	/// Loads `disc-atlas.a2at` from the replacement directory, if there is one. Returns whether
@@ -100,6 +109,11 @@ namespace GSDiscAtlas
 	/// is expanded with.
 	std::string MatchTrueColour(const ContentHash& content_hash, u32 width, u32 height, u64 probe, u32 probe_x,
 		u32 probe_y, u8 ta0, bool aem, bool rgba32);
+
+	/// The texture as several disc images side by side (see above). `indices` are its width x
+	/// height palette indices as the GS reads them; `clut` / `clut_entries` its palette.
+	std::string MatchComposite(const u8* indices, u32 width, u32 height, u64 clut_hash, const u32* clut,
+		u32 clut_entries);
 
 	bool IsCropFilename(std::string_view filename);
 

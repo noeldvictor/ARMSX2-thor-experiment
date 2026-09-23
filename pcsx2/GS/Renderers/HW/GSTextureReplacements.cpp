@@ -692,7 +692,8 @@ bool GSTextureReplacements::HasDiscAtlas()
 }
 
 bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe, u32 probe_x, u32 probe_y,
-	const u32* clut, u32 clut_entries, const std::function<u64()>& content_hash)
+	const u32* clut, u32 clut_entries, const std::function<u64()>& content_hash,
+	const std::function<bool(std::vector<u8>&)>& read_indices)
 {
 	const TextureName name(CreateTextureName(hash, 0));
 	if (s_replacement_texture_filenames.find(name) != s_replacement_texture_filenames.end())
@@ -706,6 +707,14 @@ bool GSTextureReplacements::LookupDiscAtlas(const GSTextureCache::HashCacheKey& 
 			static_cast<u8>(name.TEXA_TA0), name.TEXA_AEM != 0, name.TEX0_PSM == PSMCT32) :
 		GSDiscAtlas::Match(content_hash, hash.CLUTHash, name.Width(), name.Height(), probe, probe_x, probe_y,
 			clut, clut_entries);
+
+	// Not one disc image: maybe several, as the game laid them out in VRAM (GSDiscAtlas.h).
+	std::vector<u8> texture_indices;
+	if (crop.empty() && !true_colour && clut && read_indices(texture_indices))
+	{
+		crop = GSDiscAtlas::MatchComposite(texture_indices.data(), name.Width(), name.Height(), hash.CLUTHash, clut,
+			clut_entries);
+	}
 	if (crop.empty())
 	{
 		s_disc_atlas_misses.insert(name);

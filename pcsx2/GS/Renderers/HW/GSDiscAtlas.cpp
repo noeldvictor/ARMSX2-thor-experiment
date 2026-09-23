@@ -13,6 +13,7 @@
 #include "fmt/format.h"
 
 #include <algorithm>
+#include <memory>
 #include <optional>
 #include <cstring>
 #include <list>
@@ -127,6 +128,26 @@ namespace
 	u32 s_misses = 0;
 	u32 s_palette_free_matches = 0;
 	u32 s_true_colour_matches = 0;
+	u32 s_composite_matches = 0;
+
+	// Composites matched on the GS thread, loaded on the worker (MatchComposite, LoadComposite).
+	struct Composite
+	{
+		struct Piece
+		{
+			u32 image;
+			int x; // the image's origin in texture coordinates (may be outside the texture)
+			int y;
+		};
+		u32 width;
+		u32 height;
+		std::vector<u8> indices; // the texture's own indices: what no piece covers keeps them
+		std::vector<u32> clut;
+		std::vector<Piece> pieces;
+	};
+	std::mutex s_composite_mutex;
+	std::vector<std::shared_ptr<const Composite>> s_composites;
+	constexpr std::string_view COMPOSITE_TAG = "c:";
 
 	// Palettes a palette-free match was made under, by their hash, for LoadCrop on the worker.
 	std::mutex s_palette_mutex;
@@ -230,8 +251,8 @@ void GSDiscAtlas::Clear()
 {
 	if (s_loaded && (s_matches || s_misses))
 	{
-		Console.WriteLnFmt("Disc atlas: {} matches ({} palette-free, {} true-colour), {} misses", s_matches,
-			s_palette_free_matches, s_true_colour_matches, s_misses);
+		Console.WriteLnFmt("Disc atlas: {} matches ({} palette-free, {} true-colour, {} composites), {} misses", s_matches,
+			s_palette_free_matches, s_true_colour_matches, s_composite_matches, s_misses);
 	}
 	s_loaded = false;
 	s_state = {};
@@ -240,9 +261,14 @@ void GSDiscAtlas::Clear()
 	s_misses = 0;
 	s_palette_free_matches = 0;
 	s_true_colour_matches = 0;
+	s_composite_matches = 0;
 	{
 		std::unique_lock lock(s_palette_mutex);
 		s_palettes.clear();
+	}
+	{
+		std::unique_lock lock(s_composite_mutex);
+		s_composites.clear();
 	}
 
 	std::unique_lock lock(s_image_mutex);
@@ -268,7 +294,8 @@ u32 GSDiscAtlas::GetTileStep()
 
 GSDiscAtlas::Stats GSDiscAtlas::GetStats()
 {
-	return {static_cast<u32>(s_state.images.size()), s_matches, s_misses, s_palette_free_matches, s_true_colour_matches};
+	return {static_cast<u32>(s_state.images.size()), s_matches, s_misses, s_palette_free_matches, s_true_colour_matches,
+		s_composite_matches};
 }
 
 // The crop of image `img` at (x, y) with this size hashes like the texture cache hashes a region.
@@ -438,6 +465,218 @@ std::string GSDiscAtlas::MatchTrueColour(const ContentHash& content_hash, u32 wi
 	return {};
 }
 
+std::string GSDiscAtlas::MatchComposite(const u8* indices, u32 width, u32 height, u64 clut_hash, const u32* clut,
+	u32 clut_entries)
+{
+	if (!s_loaded || width < TILE || height < TILE || !clut || clut_entries == 0)
+		return {};
+
+	// Vote: every block of the texture on the probe grid that some disc image holds suggests that
+	// image at one position. Blocks of one flat value are everywhere and prove nothing.
+	std::unordered_map<u64, u32> votes;
+	const auto vote = [&](u32 image, int ox, int oy) {
+		votes[(static_cast<u64>(image) << 32) | (static_cast<u64>(static_cast<u16>(ox + 0x8000)) << 16) |
+			  static_cast<u16>(oy + 0x8000)]++;
+	};
+	const u32 step = s_tile_step;
+	u8 block[TILE * TILE];
+	for (u32 by = 0; by + TILE <= height; by += step)
+	{
+		for (u32 bx = 0; bx + TILE <= width; bx += step)
+		{
+			for (u32 r = 0; r < TILE; r++)
+				std::memcpy(&block[r * TILE], &indices[(by + r) * width + bx], TILE);
+			if (std::all_of(block, block + sizeof(block), [&](u8 v) { return v == block[0]; }))
+				continue;
+			const u64 h = GSXXH3_64bits(block, sizeof(block));
+			const std::pair<u64, u64> key{clut_hash, h};
+			auto it = std::lower_bound(s_state.tiles.begin(), s_state.tiles.end(), key,
+				[](const Tile& t, const std::pair<u64, u64>& k) {
+					return t.clut_hash < k.first || (t.clut_hash == k.first && t.tile_hash < k.second);
+				});
+			for (u32 n = 0; it != s_state.tiles.end() && it->clut_hash == clut_hash && it->tile_hash == h && n < 64; ++it, n++)
+				vote(it->image, static_cast<int>(bx) - it->x, static_cast<int>(by) - it->y);
+			auto fit = std::lower_bound(s_state.free_tiles.begin(), s_state.free_tiles.end(), h,
+				[](const FreeTile& t, u64 v) { return t.tile_hash < v; });
+			for (u32 n = 0; fit != s_state.free_tiles.end() && fit->tile_hash == h && n < 64; ++fit, n++)
+			{
+				if (!(s_state.images[fit->image].flags & (FLAG_TRUE_COLOUR | FLAG_RGBA32)))
+					vote(fit->image, static_cast<int>(bx) - fit->x, static_cast<int>(by) - fit->y);
+			}
+		}
+	}
+	if (votes.empty())
+		return {};
+
+	std::vector<std::pair<u32, u64>> order;
+	order.reserve(votes.size());
+	for (const auto& [k, v] : votes)
+		order.emplace_back(v, k);
+	std::sort(order.begin(), order.end(), std::greater<>());
+
+	// Accept placements whose every covered texel equals the texture.
+	std::vector<u8> covered(static_cast<size_t>(width) * height, 0);
+	auto comp = std::make_shared<Composite>();
+	u32 checked = 0;
+	for (const auto& [n, k] : order)
+	{
+		if (++checked > 256)
+			break;
+		const u32 image = static_cast<u32>(k >> 32);
+		const int ox = static_cast<int>((k >> 16) & 0xFFFF) - 0x8000;
+		const int oy = static_cast<int>(k & 0xFFFF) - 0x8000;
+		const Image& img = s_state.images[image];
+		const int x0 = std::max(ox, 0), y0 = std::max(oy, 0);
+		const int x1 = std::min(ox + static_cast<int>(img.width), static_cast<int>(width));
+		const int y1 = std::min(oy + static_cast<int>(img.height), static_cast<int>(height));
+		if (x1 - x0 < static_cast<int>(TILE) || y1 - y0 < static_cast<int>(TILE))
+			continue;
+		bool equal = true;
+		for (int y = y0; y < y1 && equal; y++)
+		{
+			const u8* disc = s_state.index_data.data() + img.index_offset + static_cast<size_t>(y - oy) * img.width + (x0 - ox);
+			equal = std::memcmp(disc, &indices[static_cast<size_t>(y) * width + x0], x1 - x0) == 0;
+		}
+		if (!equal)
+			continue;
+		comp->pieces.push_back({image, ox, oy});
+		for (int y = y0; y < y1; y++)
+			std::memset(&covered[static_cast<size_t>(y) * width + x0], 1, x1 - x0);
+	}
+	if (comp->pieces.empty())
+		return {};
+
+	// Worth it only if the pieces carry most of what is drawn (index 0 is usually background).
+	size_t drawn = 0, drawn_covered = 0;
+	for (size_t i = 0; i < covered.size(); i++)
+	{
+		if (indices[i] != 0)
+		{
+			drawn++;
+			drawn_covered += covered[i];
+		}
+	}
+	if (drawn == 0 || drawn_covered * 2 < drawn)
+		return {};
+
+	comp->width = width;
+	comp->height = height;
+	comp->indices.assign(indices, indices + static_cast<size_t>(width) * height);
+	comp->clut.assign(clut, clut + clut_entries);
+	u32 id;
+	{
+		std::unique_lock lock(s_composite_mutex);
+		id = static_cast<u32>(s_composites.size());
+		s_composites.push_back(std::move(comp));
+	}
+	s_matches++;
+	s_misses--; // Match() counted this texture as a miss first
+	if (++s_composite_matches <= 8)
+	{
+		Console.WriteLnFmt("Disc atlas: composite #{} {}x{} from {} disc images, {}% of drawn texels", s_composite_matches,
+			width, height, s_composites[id]->pieces.size(), drawn_covered * 100 / drawn);
+	}
+	return fmt::format("{}{}{}", CROP_PREFIX, COMPOSITE_TAG, id);
+}
+
+// An upscaled disc image from the cache, loading it if needed. Call with s_image_mutex held.
+static const GSTextureReplacements::ReplacementTexture* CachedImage(u32 image)
+{
+	auto cached = s_image_cache.find(image);
+	if (cached != s_image_cache.end())
+	{
+		s_image_lru.remove(image);
+		s_image_lru.push_back(image);
+		return &cached->second;
+	}
+	const Image& info = s_state.images[image];
+	const std::string path = Path::Combine(s_state.dir, std::string_view(info.file, strnlen(info.file, sizeof(info.file))));
+	const GSTextureReplacements::ReplacementTextureLoader loader = GSTextureReplacements::GetLoader(path);
+	GSTextureReplacements::ReplacementTexture full;
+	if (!loader || !loader(path, &full, true) || full.format != GSTexture::Format::Color)
+	{
+		Console.Warning(fmt::format("Disc atlas: cannot load {} as RGBA8", path));
+		return nullptr;
+	}
+	const size_t bytes = full.data.size();
+	while (s_image_cache_bytes + bytes > IMAGE_CACHE_BUDGET && !s_image_lru.empty())
+	{
+		auto victim = s_image_cache.find(s_image_lru.front());
+		s_image_cache_bytes -= victim->second.data.size();
+		s_image_cache.erase(victim);
+		s_image_lru.pop_front();
+	}
+	s_image_cache_bytes += bytes;
+	s_image_lru.push_back(image);
+	return &s_image_cache.emplace(image, std::move(full)).first->second;
+}
+
+static bool LoadComposite(u32 id, GSTextureReplacements::ReplacementTexture* tex)
+{
+	std::shared_ptr<const Composite> comp;
+	{
+		std::unique_lock lock(s_composite_mutex);
+		if (id >= s_composites.size())
+			return false;
+		comp = s_composites[id];
+	}
+
+	std::unique_lock lock(s_image_mutex);
+	const GSTextureReplacements::ReplacementTexture* first = CachedImage(comp->pieces[0].image);
+	if (!first)
+		return false;
+	const u32 scale = first->width / s_state.images[comp->pieces[0].image].width;
+	if (scale == 0)
+		return false;
+
+	tex->width = comp->width * scale;
+	tex->height = comp->height * scale;
+	tex->format = GSTexture::Format::Color;
+	tex->pitch = tex->width * 4;
+	tex->data.resize(static_cast<size_t>(tex->pitch) * tex->height);
+	tex->mips.clear();
+
+	// What no piece covers keeps its native colour, scaled up.
+	const auto colour = [&](u8 index) { return index < comp->clut.size() ? comp->clut[index] : 0u; };
+	for (u32 y = 0; y < tex->height; y++)
+	{
+		u32* dst = reinterpret_cast<u32*>(tex->data.data() + static_cast<size_t>(y) * tex->pitch);
+		const u8* src = &comp->indices[static_cast<size_t>(y / scale) * comp->width];
+		for (u32 x = 0; x < tex->width; x++)
+			dst[x] = colour(src[x / scale]);
+	}
+
+	for (const Composite::Piece& piece : comp->pieces)
+	{
+		const Image& info = s_state.images[piece.image];
+		const GSTextureReplacements::ReplacementTexture* full = CachedImage(piece.image);
+		if (!full || full->width != info.width * scale || full->height != info.height * scale)
+			return false; // mixed scales: leave the texture native rather than half-built
+		const bool index_map = (info.flags & FLAG_PALETTE_FREE) != 0;
+		const int x0 = std::max(piece.x, 0), y0 = std::max(piece.y, 0);
+		const int x1 = std::min(piece.x + static_cast<int>(info.width), static_cast<int>(comp->width));
+		const int y1 = std::min(piece.y + static_cast<int>(info.height), static_cast<int>(comp->height));
+		for (int y = y0 * static_cast<int>(scale); y < y1 * static_cast<int>(scale); y++)
+		{
+			u8* dst = tex->data.data() + static_cast<size_t>(y) * tex->pitch + static_cast<size_t>(x0) * scale * 4;
+			const u8* src = full->data.data() + static_cast<size_t>(y - piece.y * static_cast<int>(scale)) * full->pitch +
+			                static_cast<size_t>(x0 - piece.x) * scale * 4;
+			const size_t n = static_cast<size_t>(x1 - x0) * scale;
+			if (!index_map)
+			{
+				std::memcpy(dst, src, n * 4);
+				continue;
+			}
+			for (size_t i = 0; i < n; i++)
+			{
+				const u32 c = colour(src[i * 4]);
+				std::memcpy(dst + i * 4, &c, 4);
+			}
+		}
+	}
+	return true;
+}
+
 bool GSDiscAtlas::IsCropFilename(std::string_view filename)
 {
 	return filename.starts_with(CROP_PREFIX);
@@ -445,6 +684,13 @@ bool GSDiscAtlas::IsCropFilename(std::string_view filename)
 
 bool GSDiscAtlas::LoadCrop(const std::string& filename, GSTextureReplacements::ReplacementTexture* tex)
 {
+	if (std::string_view(filename).substr(CROP_PREFIX.size()).starts_with(COMPOSITE_TAG))
+	{
+		u32 id = 0;
+		return std::sscanf(filename.c_str() + CROP_PREFIX.size() + COMPOSITE_TAG.size(), "%u", &id) == 1 &&
+		       LoadComposite(id, tex);
+	}
+
 	u32 image = 0, x = 0, y = 0, w = 0, h = 0;
 	unsigned long long palette_hash = 0;
 	const int fields = std::sscanf(filename.c_str() + CROP_PREFIX.size(), "%u:%u:%u:%u:%u:%llx", &image, &x, &y, &w,

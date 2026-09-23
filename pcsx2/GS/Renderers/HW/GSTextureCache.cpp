@@ -7366,6 +7366,31 @@ static u64 ComputeDiscAtlasContentHash(const GIFRegTEX0& TEX0, const GIFRegTEXA&
 	return GSXXH3_64bits_digest(&st);
 }
 
+// A palette texture's indices, width x height, as the GS reads them: what the disc atlas splits
+// into disc images when no single one matches (GSDiscAtlas::MatchComposite).
+static bool ReadDiscAtlasIndices(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, GSTextureCache::SourceRegion region,
+	std::vector<u8>& out)
+{
+	const GSLocalMemory::psm_t& psm = GSLocalMemory::m_psm[TEX0.PSM];
+	if (psm.pal == 0)
+		return false;
+	const int tw = region.HasX() ? region.GetWidth() : (1 << TEX0.TW);
+	const int th = region.HasY() ? region.GetHeight() : (1 << TEX0.TH);
+	const GSVector4i rect(region.GetRect(tw, th));
+	const GSVector4i block_rect(rect.ralign<Align_Outside>(psm.bs));
+	const u32 pitch = VectorAlign(static_cast<u32>(block_rect.width()));
+	if (static_cast<size_t>(pitch) * static_cast<u32>(block_rect.height()) > UNSWIZZLE_BUFFER_SIZE)
+		return false;
+	GSLocalMemory& mem = g_gs_renderer->m_mem;
+	psm.rtxP(mem, mem.GetOffset(TEX0.TBP0, TEX0.TBW, TEX0.PSM), block_rect, s_unswizzle_buffer, pitch, TEXA);
+	out.resize(static_cast<size_t>(tw) * th);
+	const u8* row = s_unswizzle_buffer + pitch * static_cast<u32>(rect.top - block_rect.top) +
+	                static_cast<u32>(rect.left - block_rect.left);
+	for (int y = 0; y < th; y++, row += pitch)
+		std::memcpy(&out[static_cast<size_t>(y) * tw], row, tw);
+	return true;
+}
+
 GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0& TEX0, const GIFRegTEXA& TEXA, bool& paltex, const u32* clut, const GSVector2i* lod, SourceRegion region)
 {
 	// don't bother hashing if we're not dumping or replacing.
@@ -7442,7 +7467,8 @@ GSTextureCache::HashCacheEntry* GSTextureCache::LookupHashCache(const GIFRegTEX0
 			(clut || TEX0.PSM == PSMCT24 || TEX0.PSM == PSMCT32) && GSTextureReplacements::HasDiscAtlas() &&
 			ComputeDiscAtlasProbe(TEX0, TEXA, region, &probe, &probe_x, &probe_y) &&
 			GSTextureReplacements::LookupDiscAtlas(key, probe, probe_x, probe_y, clut, GSLocalMemory::m_psm[TEX0.PSM].pal,
-				[&]() { return ComputeDiscAtlasContentHash(TEX0, TEXA, region); }))
+				[&]() { return ComputeDiscAtlasContentHash(TEX0, TEXA, region); },
+				[&](std::vector<u8>& out) { return ReadDiscAtlasIndices(TEX0, TEXA, region, out); }))
 		{
 			replacement_tex = GSTextureReplacements::LookupReplacementTexture(key, lod != nullptr, &replacement_texture_pending, &alpha_minmax);
 		}

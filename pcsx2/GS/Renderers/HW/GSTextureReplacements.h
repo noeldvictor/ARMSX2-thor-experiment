@@ -46,7 +46,8 @@ namespace GSTextureReplacements
 	/// the atlas's own hash of the texture (GSDiscAtlas.h). On a match the crop is registered under
 	/// the key's name, so LookupReplacementTexture() finds it like any other replacement.
 	bool LookupDiscAtlas(const GSTextureCache::HashCacheKey& hash, u64 probe, u32 probe_x, u32 probe_y,
-		const u32* clut, u32 clut_entries, const std::function<u64()>& content_hash);
+		const u32* clut, u32 clut_entries, const std::function<u64()>& content_hash,
+		const std::function<bool(std::vector<u8>&)>& read_indices);
 	bool HasReplacementTextureWithOtherPalette(const GSTextureCache::HashCacheKey& hash);
 	GSTexture* LookupReplacementTexture(const GSTextureCache::HashCacheKey& hash, bool mipmap, bool* pending, std::pair<u8, u8>* alpha_minmax);
 	GSTexture* CreateReplacementTexture(const ReplacementTexture& rtex, bool mipmap);
