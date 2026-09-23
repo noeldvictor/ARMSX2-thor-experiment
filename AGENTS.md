@@ -478,6 +478,10 @@ counters).** The game is not GPU-heavy; it is *render-pass* heavy under the Game
   physical-controls-device setting.
 - A stored preference always wins over a default, so changing a default does nothing for
   an existing install. Worth remembering before concluding a default change "did not work".
+- **HD defaults for the Thor's 1080p panel** (2026-09-22): internal resolution defaults to
+  `DeviceTier.hdUpscaleDefault()` - 3x on Snapdragon 8 Gen 2 and newer (SM8550+), 2x otherwise
+  (the 865 Thor) - instead of 1x, and `loadTextureReplacements` defaults on. Existing saves on the
+  exact old values are moved once (`config.migrated.thorHdDefaults`).
 
 ### Working with the shared Thor
 

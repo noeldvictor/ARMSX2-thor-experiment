@@ -1,5 +1,6 @@
 package com.armsx2.config
 
+import com.armsx2.DeviceTier
 import com.armsx2.ShaderParams
 import com.armsx2.config.Settings.Companion.emitSink
 import com.armsx2.config.Settings.Companion.merge
@@ -408,7 +409,7 @@ data class Settings(
     /** Internal resolution multiplier (0.25..5.0; 1.0 = native). Applied live via
      *  the GS upscale helper; per-game so each title keeps its own. Seeded from the
      *  legacy global "upscaleFloat" pref on first load. */
-    val upscaleFloat: Float = 1.0f,
+    val upscaleFloat: Float = DeviceTier.hdUpscaleDefault(),
     /** Installed custom Vulkan GPU driver id to pin (e.g. a Turnip build). "" = system
      *  driver. Applied at (re)launch via CustomDriver.applyToNative in
      *  MainActivityRuntime.applyRendererPrefs; per-game so a title can pin the driver it
@@ -667,8 +668,9 @@ data class Settings(
      *  Deliberately NOT shared with fsrSharpness: FSR1's is natively 0..100, so one field would
      *  either redefine existing FSR configurations or force FSR's range to change meaning. */
     val sgsrSharpness: Int = 100,
-    /** EmuCore/GS/LoadTextureReplacements. */
-    val loadTextureReplacements: Boolean = false,
+    /** EmuCore/GS/LoadTextureReplacements. On by default: a pack is only there because someone
+     *  installed it (Texture Packs screen, or a disc-atlas pack from tools/disc_textures). */
+    val loadTextureReplacements: Boolean = true,
     /** EmuCore/GS/LoadTextureReplacementsAsync. */
     val loadTextureReplacementsAsync: Boolean = true,
     /** EmuCore/GS/PrecacheTextureReplacements. */

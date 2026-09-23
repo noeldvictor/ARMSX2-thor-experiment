@@ -73,6 +73,19 @@ object DeviceTier {
         false
     }
 
+    /** Default internal resolution for a fresh install: the Thor's panel is 1080p, and 1x
+     *  (640x448) upscaled onto it is what made everything look soft. Snapdragon 8 Gen 2 and
+     *  newer (SM8550, SM8650, SM8750 - the Thor's larger model) get 3x, 1920x1344 supersampled
+     *  down to the panel; everything else, including the Thor's Snapdragon 865, gets 2x
+     *  (1280x896, just under the panel). Users can always change it. */
+    fun hdUpscaleDefault(): Float = hdUpscale
+
+    private val hdUpscale: Float by lazy {
+        val soc = socModel().uppercase()
+        val gen = Regex("SM(\\d{4})").find(soc)?.groupValues?.get(1)?.toIntOrNull() ?: 0
+        if (gen >= 8550) 3.0f else 2.0f
+    }
+
     /** Human-readable SoC/hardware id for logging/diagnostics. Uses
      *  Build.SOC_MODEL on API 31+, else Build.HARDWARE. */
     fun socModel(): String = try {

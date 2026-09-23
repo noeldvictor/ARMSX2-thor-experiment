@@ -1,5 +1,6 @@
 package com.armsx2.config
 
+import com.armsx2.DeviceTier
 import com.armsx2.runtime.MainActivityRuntime
 import org.json.JSONObject
 import androidx.core.content.edit
@@ -54,6 +55,7 @@ object ConfigStore {
     // One-time flip of existing all-on OSD saves to the new default-off.
     private const val KEY_OSD_OFF_MIGRATED = "config.migrated.osdDefaultOff"
     private const val KEY_OSD_SCALE_MIGRATED = "config.migrated.osdScale65"
+    private const val KEY_HD_DEFAULTS_MIGRATED = "config.migrated.thorHdDefaults"
     // One-time reconcile for the fresh-install + reused-data-folder case (people who
     // can't update in place and re-point setup at their old folder). See reconcileReusedFolder.
     private const val KEY_FOLDER_RECONCILE = "config.migrated.folderReconcile"
@@ -170,6 +172,24 @@ object ConfigStore {
         }
         if (!MainActivityRuntime.prefs.getBoolean(KEY_OSD_SCALE_MIGRATED, false)) {
             MainActivityRuntime.prefs.edit { putBoolean(KEY_OSD_SCALE_MIGRATED, true) }
+        }
+
+        // HD defaults for the Thor's 1080p panel: internal resolution from DeviceTier (3x on 8 Gen 2
+        // and newer, 2x otherwise) instead of 1x, and texture packs on. Saves still sitting on the
+        // exact old defaults are moved once; a resolution someone picked, or packs turned off after
+        // this ran, are left alone.
+        if (raw != null && !MainActivityRuntime.prefs.getBoolean(KEY_HD_DEFAULTS_MIGRATED, false)) {
+            if (parsed.upscaleFloat == 1.0f) {
+                parsed = parsed.copy(upscaleFloat = DeviceTier.hdUpscaleDefault())
+                dirty = true
+            }
+            if (!parsed.loadTextureReplacements) {
+                parsed = parsed.copy(loadTextureReplacements = true)
+                dirty = true
+            }
+        }
+        if (!MainActivityRuntime.prefs.getBoolean(KEY_HD_DEFAULTS_MIGRATED, false)) {
+            MainActivityRuntime.prefs.edit { putBoolean(KEY_HD_DEFAULTS_MIGRATED, true) }
         }
 
         if (dirty) saveGlobal(parsed)
