@@ -142,7 +142,7 @@ writing a small extractor. That is reverse-engineering work. We did it for Okage
 too. So far there is **one finished recipe, Okage: Shadow King**, and one in progress, Tales of
 Destiny: Director's Cut - **[the games list](hd-packs/GAMES.md)** has both, with screenshots, pack
 sizes and build times. Packs are as big as the game's art: Okage's is 334 MB zipped, Tales of
-Destiny's will be about 14 GB.
+Destiny's is 8.5 GB zipped, 14.8 GB installed.
 
 ![Status menu portraits and fonts, original vs Okage's disc HD pack](hd-packs/SCUS-97129-okage/media/menu-fonts.jpg)
 

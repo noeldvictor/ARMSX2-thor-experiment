@@ -14,7 +14,7 @@ Build times are for the upscale PC used so far: Core i7-11700, 32 GB RAM, RTX 30
 | | Game | Status | Pack | Build time | Coverage |
 | --- | --- | --- | --- | --- | --- |
 | [<img src="SCUS-97129-okage/media/menu-fonts.jpg" width="220" alt="Okage status menu, original vs HD pack">](SCUS-97129-okage/README.md) | [Okage: Shadow King](SCUS-97129-okage/README.md)<br>SCUS-97129, NTSC-U | **Finished** | 334 MB zip<br>467 MB installed | ~16 min | All 2,800 disc textures: world, characters, menus, portraits, fonts, true-colour night art. Not yet seen on screen: the IQ24 font, one 32-bit texture. |
-| *screenshots once the 4x pack is judged* | [Tales of Destiny: Director's Cut](SLPS-25842-tales-of-destiny-dc/README.md)<br>SLPS-25842, English patch v1.6 | **In progress** | ~13.6 GB installed (estimate) | ~3.5 h (not yet a clean run) | Maps, map atlases, sprites, font, title screen - exact on the two scenes tested (ship 47/47, title 16/17). Towns, battles and menus not tested yet. |
+| *screenshots once the 4x pack is judged* | [Tales of Destiny: Director's Cut](SLPS-25842-tales-of-destiny-dc/README.md)<br>SLPS-25842, English patch v1.6 | **In progress** | 8.5 GB zip<br>14.8 GB installed | ~5 h 10 min (not a clean run) | Maps, map atlases, sprites, font, title screen - exact on the two scenes tested (ship 47/47, title 16/17). Towns, battles and menus not tested yet. |
 
 **Status**: *Finished* - the pack is built, judged on the Thor at 3x, and the README has
 measured times and checksums. *In progress* - the extractor works, but the pack is not judged

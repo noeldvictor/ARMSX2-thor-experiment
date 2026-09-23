@@ -97,7 +97,7 @@ At 4x an HD image is 16 ASTC bytes per native texel, so a pack is as big as the 
 | Game | Disc images | Native texels | 4x ASTC pack |
 | --- | --- | --- | --- |
 | Okage: Shadow King | 2,800 | 28 M | 467 MB (334 MB zipped) |
-| Tales of Destiny DC | ~101,000 | 862 M | ~13.6 GB (estimate) |
+| Tales of Destiny DC | 97,844 | 862 M | 14.8 GB (8.5 GB zipped) |
 
 Tales of Destiny is big because it is: 328 field and town map atlases of 1024x1024 are 5.5 GB of
 it, 256x256 and 512x512 textures another 3.8 GB. An audit of its 1x index found little waste -

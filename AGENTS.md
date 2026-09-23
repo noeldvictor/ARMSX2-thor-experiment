@@ -526,7 +526,7 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   from glyphs in any game, with no hook in the upload path. Palette textures only.
 - The index is memory-mapped (Tales of Destiny's is 1.1 GB: ~40 MB resident on the Thor). The
   builder leaves out exact duplicates and blank images. A 4x pack is 16 bytes per native texel:
-  Okage 467 MB, Tales of Destiny ~13.6 GB (real map art, audited); `make_pack.py` prints the
+  Okage 467 MB, Tales of Destiny 14.8 GB (8.5 GB zipped; real map art, audited); `make_pack.py` prints the
   estimate before the upscale.
 - Tales of Destiny DC (`hd-packs/SLPS-25842-tales-of-destiny-dc/`) is the second recipe, in
   progress: ship 47/47 and title 16/17 textures matched, bit-identical at 1x; 4x not judged yet.

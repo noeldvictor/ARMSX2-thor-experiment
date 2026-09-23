@@ -24,21 +24,24 @@ python tools/disc_textures/make_pack.py hd-packs/SLPS-25842-tales-of-destiny-dc 
 
 Install: unzip `work/SLPS-25842-disc-hd4x.zip` into `<DataRoot>/textures/`.
 
-### Measured so far (not a clean run)
+### Measured (not a clean run)
 
-On the Core i7-11700 / 32 GB / RTX 3060 12 GB, 2026-09-23, with Android builds running on the same
-PC part of the time, so these are upper bounds:
+On the Core i7-11700 / 32 GB / RTX 3060 12 GB, 2026-09-23. The upscale ran in two parts (the map
+atlases were found after the first) and Android builds shared the PC part of the time, so read
+these as upper bounds:
 
 | Step | Time | Output |
 | --- | --- | --- |
-| extract | 2-3 min | `native/`: 101,328 PNGs (862 M texels) |
-| upscale 4x | 2 h 15 min for the first 99,606 images (small textures batched, ~11 a second), then ~18 s for each of the 328 1024x1024 map atlases (~1 h 40 min) | `hd4x/` |
-| build, zip | not measured yet | ~13.6 GB installed (estimate: 16 bytes per native texel) |
+| extract | 2 min 9 s | `native/`: 101,328 PNGs, 862 M texels |
+| upscale 4x | 2 h 15 min for 99,606 images (small textures batched, ~11 a second) + 2 h for the other 1,810, mostly the 328 1024x1024 map atlases at ~18 s each | `hd4x/` |
+| build | 36 min | `pack_hd4x/replacements/`: 14.8 GB - 97,844 images (95,831 ASTC, 2,013 palette-free font maps), a 1,066 MB index; 3,384 duplicate and 54 blank disc images left out |
+| zip | 16 min | `SLPS-25842-disc-hd4x.zip`, 8.5 GB |
+| **total** | **about 5 h 10 min** | |
 
 It is a big pack because the game has a lot of art: 328 field and town map atlases of 1024x1024
-are 5.5 GB of it, 256x256 and 512x512 textures another 3.8 GB. An audit found 0.2 GB of
-duplicates and blank images, which the build leaves out; the rest is distinct art. Plan for
-tens of GB of free disk for the work folder.
+are 5.5 GB of it, 256x256 and 512x512 textures another 3.8 GB; the duplicates and blanks the build
+leaves out were 0.2 GB. Free disk for the work folder: about 40 GB (HD PNGs 14.8 GB, the pack 14.8 GB, the zip 8.5 GB),
+plus the disc image.
 
 ## Coverage
 
@@ -57,9 +60,9 @@ title art (true colour) and the title menu text.
 
 ## Not yet
 
-- **The 4x pack**: not judged on the Thor, no screenshots, no clean timings.
+- **The 4x pack**: built, not judged on the Thor yet; no screenshots, no clean timings.
 - **Only two scenes are proven.** Towns, battles, menus and cut-ins have not been dumped yet.
-- **Size**: ~13.6 GB installed. The index alone is 1.1 GB; the emulator memory-maps it (about
+- **Size**: 14.8 GB installed, 8.5 GB zipped. The index alone is 1.1 GB; the emulator memory-maps it (about
   40 MB resident on the Thor), but it is still download and disk.
 - The first 4x pack (3.1 GB, PNG, before most of the fixes below) had wrongly coloured UI corners
   because the palette slicing changed between its extract and build steps.
@@ -94,7 +97,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `de934800cd81835a5f5335a0eab58299a16371eb` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | not recorded yet |
+| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `093691b4264eabde55405a315685fc51d366437584e8ccc3d0cd7f327ab486d0` |
 
 ## Playing with it
 
