@@ -21,12 +21,19 @@ Worked out 2026-09-23 on the English fan-translated disc (v1.6); the translation
   walking from each plausible record to exactly the CLUT offset. The CLUT is 256 CSM1 entries for
   8-bit files; for 4-bit files a 16-wide CLUT image whose 8x2 patches are the palettes.
 
+- The font is in the executable, `SLPS_258.42`: one table of 24x24 4-bit glyphs, 288 bytes each,
+  rows of 12 bytes, low nibble first, from 0xE18E0 to 0x17A100 (2169 cells in several weights -
+  ASCII, kana, Latin extras, kanji; a few cells at the ends are not glyphs and never match). The
+  game uploads one glyph at a time as PSMT4HL and colours it with a palette it makes at runtime,
+  so glyphs are palette-free images. That palette, read from a GS dump's VRAM (CBP 0x3FFF; its
+  hash 1f20317c5df98afd is the one in the texture dump names): 0 transparent, a dark outline at
+  alpha 0x40/0x7C, then greys up to white fill. The offsets are for the English v1.6 executable
+  (the recipe's ISO SHA-1 pins it).
+
 Not covered yet:
 - The title art is uploaded as PSMCT32 data (512x128) and drawn as 512x512 PSMT8 from the same
   memory, a common PS2 upload trick; turning that into indices needs the GS's swizzle, which the
   tools do not emulate yet.
-- The menu font is drawn from PSMT4HL glyphs with a palette made at runtime (palette-free, like
-  Okage's fonts); its source file is not decoded yet.
 """
 
 from __future__ import annotations
@@ -101,7 +108,70 @@ def anp3_frames(buf: bytes):
             idx[0::2] = raw & 0x0F
             idx[1::2] = raw >> 4
             idx = idx.reshape(h, w)
-        yield hashlib.sha1(raw.tobytes() + clut).hexdigest()[:12], idx, palettes
+        key = hashlib.sha1(raw.tobytes() + clut).hexdigest()[:12]
+        if len(palettes) > 1:
+            # One HD index map instead of an upscale per palette: the emulator paints it with
+            # whichever palette the game draws the frame with (palette swaps not on the disc too).
+            rep = _distinct_palette(idx, palettes)
+            if rep is not None:
+                SPRITE_PALETTES[key] = rep
+                yield key, idx, []
+                continue
+        yield key, idx, palettes
+
+
+FONT_TABLE = (0xE18E0, 0x17A100)  # in SLPS_258.42, English v1.6
+# 16 entries as the GS holds them (u32 0xAABBGGRR), read from a dump's VRAM; XXH3 1f20317c5df98afd.
+FONT_PALETTE = struct.pack("<16I", 0x00000000, 0x40010101, 0x7C020202, 0x80121212, 0x80353535, 0x804B4B4B,
+                           0x80666666, 0x80767676, 0x80858585, 0x80969696, 0x80ABABAB, 0x80BCBCBC,
+                           0x80D2D2D2, 0x80E5E5E5, 0x80F1F1F1, 0x80FDFDFD)
+
+
+# Palette-free sprite frames: key -> the palette they are upscaled through (see anp3_frames).
+SPRITE_PALETTES: dict[str, bytes] = {}
+
+
+def palette_free_palette(key: str) -> bytes:
+    """The palette a palette-free image is upscaled through: the font's runtime palette, or for a
+    multi-palette sprite frame the palette it was chosen with."""
+    return SPRITE_PALETTES.get(key, FONT_PALETTE)
+
+
+def _distinct_palette(idx: np.ndarray, palettes: list[bytes]) -> bytes | None:
+    """A palette in which every index the frame uses has its own colour (premultiplied RGBA), so an
+    upscaled image maps back to indices exactly; None if there is none."""
+    used = np.unique(idx)
+    for pal in palettes:
+        e = np.frombuffer(pal, np.uint8).reshape(-1, 4).astype(np.int32)[used]
+        a = np.minimum(e[:, 3:4] * 2, 255)
+        pre = np.concatenate([e[:, :3] * a // 255, a], axis=1)
+        if len({tuple(v) for v in pre}) == len(used):
+            return pal
+    return None
+
+
+def font_glyphs(iso_path: Path):
+    """(key, indices, []) for every glyph cell of the executable's font table (palette-free)."""
+    import pycdlib
+
+    iso = pycdlib.PyCdlib()
+    iso.open(str(iso_path))
+    b = io.BytesIO()
+    iso.get_file_from_iso_fp(b, iso_path="/SLPS_258.42;1")
+    iso.close()
+    elf = b.getvalue()
+    seen: set[bytes] = set()
+    lo, hi = FONT_TABLE
+    for off in range(lo, min(hi, len(elf) - 287), 288):
+        raw = elf[off : off + 288]
+        if raw in seen or not any(raw):
+            continue
+        seen.add(raw)
+        packed = np.frombuffer(raw, np.uint8).reshape(24, 12)
+        idx = np.empty((24, 24), np.uint8)
+        idx[:, 0::2] = packed & 0x0F
+        idx[:, 1::2] = packed >> 4
+        yield f"font_{(off - lo) // 288:04d}", idx, []
 
 
 def dat_files(iso_path: Path):
@@ -163,5 +233,6 @@ def disc_images(iso_path: Path):
             for off, _length, sub in find_tales_blobs(buf):
                 yield from pictures(sub, f"{where}/{off:x}", depth + 1)
 
+    yield from font_glyphs(iso_path)
     for i, data in dat_files(iso_path):
         yield from pictures(data, str(i), 1)
