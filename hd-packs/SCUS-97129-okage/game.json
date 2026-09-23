@@ -16,9 +16,9 @@
   "scale": 4
  },
  "reference": {
-  "index_sha256": "8be63de44996a52fce77567be4ef7b21697f928848e508a6eae2ce2674056aaf",
-  "index_sha256_png": "6adb00f1c7ebdfd8c21712d6c2f24dc4d6e06c174b141f5e6d0751a7a6161018",
-  "textures": 2812,
+  "index_sha256": "b8def8a4c5636944b697b617184e37da686efd67120a73244c925eecb29a14b4",
+  "index_sha256_png": "6d58e7f6fc4e0aeea2b2c6523148368530e4206111e134aabe506076dfa4369f",
+  "textures": 2800,
   "palette_free": 3,
   "true_colour": 174
  }

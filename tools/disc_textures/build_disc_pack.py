@@ -107,10 +107,34 @@ def main() -> None:
     missing = 0
     scales = set()
 
+    # What a disc repeats: the same texels under another key (the same picture stored with a
+    # different CLUT blob) share one copy of index data, and the same texels with the same
+    # palette are one image. Blank images (one value everywhere) are left out: upscaled they are
+    # still blank, so matching them buys nothing. Tales of Destiny: 4,700 duplicates, 100 blanks.
+    offsets: dict[bytes, int] = {}
+    seen: set[tuple[bytes, bytes]] = set()
+    duplicates = blanks = 0
+
     for key, indices, pals in extractor.disc_images(a.iso):
         h, w = indices.shape[:2]
-        offset = len(index_data)
-        index_data += np.ascontiguousarray(indices).tobytes()
+        texels = np.ascontiguousarray(indices).tobytes()
+        flat = indices.reshape(h * w, -1)
+        if (flat == flat[0]).all():
+            blanks += 1
+            continue
+        digest = xxhash.xxh3_128_digest(texels) + struct.pack("<II", w, h)
+        fresh = [(p, pal) for p, pal in enumerate(pals) if (digest, pal) not in seen] if pals else []
+        if pals and not fresh or not pals and (digest, b"") in seen:
+            duplicates += len(pals) or 1
+            continue
+        duplicates += len(pals) - len(fresh)
+        seen.update((digest, pal) for _, pal in fresh)
+        if not pals:
+            seen.add((digest, b""))
+        offset = offsets.get(digest)
+        if offset is None:
+            offset = offsets[digest] = len(index_data)
+            index_data += texels
         # True-colour blocks are keyed by RGB only (a PSMCT32 image's alpha is left out, as the
         # emulator's probe leaves it out), so the probe is the same whatever the alpha.
         keyed = indices[..., :3] if indices.ndim == 3 else indices
@@ -158,7 +182,7 @@ def main() -> None:
             images.append((0, w, h, offset, FLAG_PALETTE_FREE, f"atlas/{name}"))
             free_tiles += [(th, image_id, x, y) for x, y, th in block_hashes]
             continue
-        for p, pal in enumerate(pals):
+        for p, pal in fresh:  # p keeps its place in the extractor's list: the HD files are named by it
             name = f"{key}.png" if len(pals) == 1 else f"{key}_p{p}.png"
             src = a.hd / name
             if not src.exists():
@@ -214,7 +238,8 @@ def main() -> None:
     print(f"{len(images)} disc textures ({sum(1 for i in images if i[4] & FLAG_PALETTE_FREE)} palette-free, "
           f"{sum(1 for i in images if i[4] & (FLAG_TRUE_COLOUR | FLAG_RGBA32))} true-colour), {len(tiles) + len(free_tiles)} blocks, "
           f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, {astc_images} ASTC, "
-          f"{missing} without an HD image, {len(stale)} stale images removed")
+          f"{missing} without an HD image, {duplicates} duplicates and {blanks} blank images left out, "
+          f"{len(stale)} stale images removed")
 
 
 if __name__ == "__main__":
