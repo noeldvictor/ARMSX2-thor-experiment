@@ -1,0 +1,21 @@
+{
+ "serial": "SLPS-25450",
+ "title": "Tales of Rebirth (English patch v1.0)",
+ "region": "NTSC-J",
+ "crc": "DB7FFC4B",
+ "extractor": "extractor.py",
+ "disc": {
+  "format": "DVD (CHD)",
+  "iso_sha1": "75d36646266334e7091268e24fe2fc4abd4a3331"
+ },
+ "upscale": {
+  "model": "4x-UltraSharp",
+  "model_url": "https://huggingface.co/Kim2091/UltraSharp",
+  "model_sha256": "36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc",
+  "model_licence": "CC BY-NC-SA 4.0 (non-commercial)",
+  "scale": 4
+ },
+ "reference": {
+  "index_sha256": null
+ }
+}

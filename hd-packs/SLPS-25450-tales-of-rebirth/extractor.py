@@ -1,6 +1,6 @@
 """Tales of Rebirth (SLPS-25450) disc extractor for tools/disc_textures.
 
-Worked out 2026-09-24 on the English fan-translated disc; the translation keeps the serial. The
+Worked out 2026-09-24 on the English fan translation v1.0; the translation keeps the serial. The
 ISO's UDF bridge is stale after patching, so the disc is read through isofs.py (ISO 9660 only).
 
 - Three big files: `DAT.BIN` (1.9 GB, everything but movies and fields), `MOV.BIN` (movies) and
@@ -123,6 +123,37 @@ def pack_members(buf: bytes):
         yield buf[pairs[2 * k] : pairs[2 * k] + pairs[2 * k + 1]]
 
 
+def sprite_frames(buf: bytes):
+    """anp3 frames. Most files keep the CLUT at the header's offset; the bigger ones run their
+    frames on past it (in 64 KB steps) to a CLUT of 128 or 256 bytes at the very end."""
+    if buf[:4] != b"anp3" or len(buf) < 32:
+        return
+    tail = len(buf) - struct.unpack_from("<I", buf, 12)[0]
+    if 0 < tail <= 1024:
+        yield from anp3_frames(buf)
+        return
+    for size in range(64, 1024 + 1, 64):
+        frames = list(anp3_frames(buf, len(buf) - size))
+        if frames:
+            yield from frames
+            return
+
+
+def colourful(texels: np.ndarray, palettes: list[bytes]) -> list[bytes]:
+    """The palettes that paint the image in more than one colour. A TIM2 map sheet often carries
+    silhouette palettes (every visible entry the same colour - shadows, fades); an upscale gains
+    nothing there and they would double the pack, so those draws stay native."""
+    used = np.unique(texels)
+    keep = []
+    for pal in palettes:
+        entries = np.frombuffer(pal, np.uint8).reshape(-1, 4)
+        visible = entries[used[used < len(entries)]]
+        visible = visible[visible[:, 3] > 0]
+        if len(visible) and (visible[:, :3] != visible[0, :3]).any():
+            keep.append(pal)
+    return keep
+
+
 def disc_images(iso_path: Path):
     """Every unique texture on the disc - the extractor contract (extract_native.py)."""
     seen: set[str] = set()
@@ -131,11 +162,15 @@ def disc_images(iso_path: Path):
         for key, texels, palettes, _info in tim2_images(buf, ""):
             if key not in seen:
                 seen.add(key)
-                yield key, texels, palettes
-        for key, texels, palettes in anp3_frames(buf):
+                palettes = colourful(texels, palettes) if palettes else palettes
+                if palettes or texels.ndim == 3:
+                    yield key, texels, palettes
+        for key, texels, palettes in sprite_frames(buf):
             if key not in seen:
                 seen.add(key)
-                yield key, texels, palettes
+                palettes = colourful(texels, palettes)
+                if palettes:
+                    yield key, texels, palettes
         if depth < 3:
             for member in pack_members(buf):
                 if member[:4] == b"anp3":

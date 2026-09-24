@@ -1,6 +1,7 @@
 """Formats shared by Namco's Tales games (Tales of Destiny DC, Tales of Rebirth) for disc extractors.
 
-- `anp3_frames(buf)`: character sprite files (magic `anp3`; u32 at 12 = the CLUT's offset). The
+- `anp3_frames(buf)`: character sprite files (magic `anp3`; u32 at 12 = the CLUT's offset, in
+  Tales of Destiny and in most Tales of Rebirth files - see the `clut_off` argument). The
   frames sit back to back before the CLUT, each behind a 16-byte record (u8 width, u8 height, two
   bytes the games use differently - Rebirth keeps the frame's byte count there - and 12 zero
   bytes), all at the file's one bit depth (8 or 4). The frame chain is found by walking from each
@@ -17,13 +18,17 @@ import numpy as np
 from tim2 import csm1_unswizzle
 
 
-def anp3_frames(buf: bytes):
-    """(key, indices, palettes) for every frame of an anp3 sprite file, or nothing."""
+def anp3_frames(buf: bytes, clut_off: int | None = None):
+    """(key, indices, palettes) for every frame of an anp3 sprite file, or nothing.
+
+    `clut_off` overrides the header's CLUT offset, for files where it is something else (Tales of
+    Rebirth's bigger sprite files: the frames run on past it to a CLUT at the very end)."""
     import hashlib
 
     if buf[:4] != b"anp3" or len(buf) < 32:
         return
-    clut_off = struct.unpack_from("<I", buf, 12)[0]
+    if clut_off is None:
+        clut_off = struct.unpack_from("<I", buf, 12)[0]
     if not 32 <= clut_off < len(buf):
         return
 
@@ -71,10 +76,10 @@ def anp3_frames(buf: bytes):
         if bpp == 8:
             idx = raw.reshape(h, w)
         else:
-            idx = np.empty(w * h, np.uint8)
+            idx = np.empty(2 * len(raw), np.uint8)  # an odd w*h leaves one spare nibble
             idx[0::2] = raw & 0x0F
             idx[1::2] = raw >> 4
-            idx = idx.reshape(h, w)
+            idx = idx[: w * h].reshape(h, w)
         # Every palette gets its own HD image (not a palette-free index map): the pack stores
         # palette images as ASTC, and a sprite batch is assembled from ASTC pieces block by block.
         yield hashlib.sha1(raw.tobytes() + clut).hexdigest()[:12], idx, palettes
