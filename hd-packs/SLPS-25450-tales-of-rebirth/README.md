@@ -3,7 +3,7 @@
 **Status:** in progress. Japanese disc with the English fan translation v1.0 (the translation keeps
 the serial). The extractor reads every map sheet, sprite, UI sheet and the font, and a 1x pack is
 proven exact on the Thor in four scenes; no 4x pack has been built yet, because a straight 4x pack
-would be about 39 GB (see *Size* below).
+would be about 39 GB; splitting the map sheets per palette brings it to about 23 GB (see *Size*).
 
 A 4x HD pack for Tales of Rebirth, built from your own disc. No gameplay dumping: every texture is
 read off the disc, upscaled with 4x-UltraSharp and matched exactly by the emulator. How that
@@ -52,6 +52,28 @@ HD image is mostly art that palette never draws, but there is no way to know whi
 disc alone. Tried and dropped: one HD index map per sheet (upscale once, map back to indices, paint
 with any palette) - 40 dB against a real upscale where it works, but a block given the wrong
 palette turns into a garbage square, and the palettes are not variants enough to make that safe.
+
+**Sparse sheets (in the extractor now).** The fields are tile maps: each map cell draws a 32x32 cell
+of a sheet with one palette (the map sits next to the sheet in the same file, a `MAP` chunk after
+the TIM2 and a `PANI` chunk; not decoded yet). In the first field one palette draws 18% of its sheet,
+another 3%, the third 0.3%. Art looks smooth under the palette it is drawn with and like noise under
+an unrelated one, so per tile a palette is kept where the art is within 1.5x of its smoothest look,
+and each palette's tiles become rectangles, each its own image. A drawn sheet is then matched as a
+composite of those rectangles; a tile guessed wrong stays native. Checked against the cells the
+first field really draws (from its GS dump), and in `gsrunner` on the Thor:
+
+| Tile, cutoff | Field cells kept | 4x pack (before duplicates) |
+| --- | --- | --- |
+| 64 px, 1.5 (the extractor's setting) | 222 of 226 (98.2%) | ~23 GB |
+| 64 px, 1.25 | 96.9% | ~19.5 GB |
+| 32 px, 1.5 | 98.2% | ~21 GB |
+| 32 px, 1.25 | 96.5% | ~18.4 GB |
+| 32 px, 1.1 | 93.8% | ~16 GB |
+
+With the 64 px setting the 1x pack is still bit-identical to an empty pack in all four scenes, and
+the field sheet matches as a composite of 15 and 29 pieces. 32 px tiles make up to 119 pieces per
+palette (the composite matcher checks 256 placements) and are not tested on the Thor yet. Decoding
+the `MAP` chunks would give each palette's cells exactly (about 16 GB, no guessing).
 
 ## Coverage
 

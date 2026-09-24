@@ -154,6 +154,83 @@ def colourful(texels: np.ndarray, palettes: list[bytes]) -> list[bytes]:
     return keep
 
 
+SHEET_TILE = 64  # map cells are 32x32; a tile of four keeps rectangles few
+SHEET_RATIO = 1.5  # a palette keeps a tile where the art is within this of its smoothest look
+
+
+def _roughness(rgb: np.ndarray, visible: np.ndarray) -> float | None:
+    """Mean |difference| between visible neighbours over the colour spread of the visible texels."""
+    dx = np.abs(np.diff(rgb, axis=1)).sum(-1)[visible[:, 1:] & visible[:, :-1]]
+    dy = np.abs(np.diff(rgb, axis=0)).sum(-1)[visible[1:] & visible[:-1]]
+    d = np.concatenate([dx, dy])
+    if not len(d):
+        return None
+    return float(d.mean() / (rgb[visible].std(0).sum() + 8.0))
+
+
+def _rectangles(tiles: set[tuple[int, int]]) -> list[tuple[int, int, int, int]]:
+    """Tiles merged into rectangles (x0, y0, x1, y1 in tiles): runs along rows, then equal runs down."""
+    rows: dict[int, list[int]] = {}
+    for tx, ty in sorted(tiles, key=lambda t: (t[1], t[0])):
+        rows.setdefault(ty, []).append(tx)
+    done, open_ = [], {}
+    for ty in sorted(rows):
+        runs, xs = [], rows[ty]
+        start = prev = xs[0]
+        for x in xs[1:] + [None]:
+            if x is not None and x == prev + 1:
+                prev = x
+                continue
+            runs.append((start, prev + 1))
+            if x is not None:
+                start = prev = x
+        still = {}
+        for run in runs:
+            r = open_.pop(run, None)
+            still[run] = (r[0], r[1], r[2], ty + 1) if r and r[3] == ty else (run[0], ty, run[1], ty + 1)
+            if r and r[3] != ty:
+                done.append(r)
+        done += open_.values()
+        open_ = still
+    return done + list(open_.values())
+
+
+def sheet_pieces(key: str, texels: np.ndarray, palettes: list[bytes]):
+    """A map sheet with several palettes, split per palette into the parts that palette draws.
+
+    Rebirth's fields are tile maps: each map cell draws a 32x32 cell of a 1024x1024 sheet with one
+    of the sheet's palettes, and different parts of a sheet use different palettes (the first field:
+    18% of its sheet with one, 3% with another). An HD image per palette of the whole sheet is
+    mostly art that palette never draws - 39 GB for the game. Art looks smooth under the palette it
+    is drawn with and like noise under an unrelated one, so per 64x64 tile a palette is kept where
+    the tile is within SHEET_RATIO of its smoothest look (in the first field this kept 57 of the 59
+    tiles really drawn with the main palette and all of the others'). Each palette's tiles become
+    rectangles, each its own image; a drawn region spanning several is matched as a composite, and
+    a tile guessed wrong stays native."""
+    h, w = texels.shape
+    P = [np.frombuffer(p, np.uint8).reshape(-1, 4) for p in palettes]
+    keep: list[set[tuple[int, int]]] = [set() for _ in P]
+    for ty in range(0, h // SHEET_TILE):
+        for tx in range(0, w // SHEET_TILE):
+            idx = texels[ty * SHEET_TILE : (ty + 1) * SHEET_TILE, tx * SHEET_TILE : (tx + 1) * SHEET_TILE]
+            scores = []
+            for p in P:
+                c = p[idx]
+                visible = c[..., 3] > 0
+                scores.append(_roughness(c[..., :3].astype(np.float32), visible) if visible.any() else None)
+            valid = [s for s in scores if s is not None]
+            if not valid:
+                continue
+            best = min(valid)
+            for i, s in enumerate(scores):
+                if s is not None and s <= best * SHEET_RATIO + 1e-9:
+                    keep[i].add((tx, ty))
+    for i, tiles in enumerate(keep):
+        for x0, y0, x1, y1 in _rectangles(tiles) if tiles else []:
+            crop = np.ascontiguousarray(texels[y0 * SHEET_TILE : y1 * SHEET_TILE, x0 * SHEET_TILE : x1 * SHEET_TILE])
+            yield f"{key}_{i}_{x0:02d}{y0:02d}{x1:02d}{y1:02d}", crop, [palettes[i]]
+
+
 def disc_images(iso_path: Path):
     """Every unique texture on the disc - the extractor contract (extract_native.py)."""
     seen: set[str] = set()
@@ -163,7 +240,9 @@ def disc_images(iso_path: Path):
             if key not in seen:
                 seen.add(key)
                 palettes = colourful(texels, palettes) if palettes else palettes
-                if palettes or texels.ndim == 3:
+                if texels.ndim == 2 and len(palettes) > 1 and texels.size >= 512 * 512:
+                    yield from sheet_pieces(key, texels, palettes)
+                elif palettes or texels.ndim == 3:
                     yield key, texels, palettes
         for key, texels, palettes in sprite_frames(buf):
             if key not in seen:
