@@ -34,10 +34,15 @@ PSM_BY_ID = {0x00: gsmem.PSMCT32, 0x01: gsmem.PSMCT24, 0x02: gsmem.PSMCT16, 0x13
 
 def events(buf: bytes):
     """Uploads and TEX0 writes in `buf`, in file order."""
-    n = len(buf) - 16
+    # Only qwords whose address half is one of the registers matter; numpy finds those, so a
+    # 240 MB file (Tales of Rebirth's FLD.BIN) is not walked qword by qword in Python.
+    qwords = np.frombuffer(buf, "<u8", len(buf) // 16 * 2).reshape(-1, 2)
+    hits = np.nonzero(np.isin(qwords[:, 1], (BITBLTBUF, TRXPOS, TRXREG, TRXDIR, TEX0_1, TEX0_2)))[0]
     bitblt = trxpos = trxreg = None
-    q = 0
-    while q <= n:
+    resume = 0
+    for q in (int(i) * 16 for i in hits):
+        if q < resume:
+            continue  # inside an image just read
         value, addr = struct.unpack_from("<QQ", buf, q)
         reg = addr & 0xFF
         if addr >> 8 == 0 and reg in (BITBLTBUF, TRXPOS, TRXREG):
@@ -64,12 +69,11 @@ def events(buf: bytes):
                         yield ("upload", t + 16, Upload(dbp=(bitblt >> 32) & 0x3FFF, dbw=(bitblt >> 48) & 0x3F,
                                                         dpsm=dpsm, x=(pos >> 32) & 0x7FF, y=(pos >> 48) & 0x7FF,
                                                         w=w, h=h, data=data, frame=0))
-                        q = t + 16 + ((need + 15) // 16) * 16 - 16
+                        resume = t + 16 + ((need + 15) // 16) * 16
                     break
             bitblt = trxpos = trxreg = None
         elif addr in (TEX0_1, TEX0_2) and ((value >> 20) & 0x3F) in PSM_BY_ID:
             yield ("tex0", q, value)
-        q += 16
 
 
 @dataclass
