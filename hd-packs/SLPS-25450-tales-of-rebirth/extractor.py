@@ -4,7 +4,7 @@ Worked out 2026-09-24 on the English fan translation v1.0; the translation keeps
 ISO's UDF bridge is stale after patching, so the disc is read through isofs.py (ISO 9660 only).
 
 - Three big files: `DAT.BIN` (1.9 GB, everything but movies and fields), `MOV.BIN` (movies) and
-  `FLD.BIN` (0.8 GB, nine field files). There is no table file on the disc: the tables are in the
+  `FLD.BIN` (0.8 GB, nine files of geometry, no textures). There is no table file on the disc: the tables are in the
   executable, `SLPS_254.50`, one after another - DAT.BIN's at 0xD76B0 (14,981 files + its end),
   then MOV.BIN's, then FLD.BIN's. Each is u32 entries in Tales of Destiny's DAT.TBL format: the
   file's start with the padding after the file in the low 6 bits; the last entry is the file size.
