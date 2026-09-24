@@ -55,21 +55,21 @@ palette turns into a garbage square, and the palettes are not variants enough to
 
 ## Coverage
 
-A 1x pack (from the extractor before the anp3 fixes - 291,017 images, a 1.7 GB index) against an
-empty pack, `gsrunner` replays of desktop GS dumps on the Thor at 3x, 2026-09-24:
+A 1x pack (116,220 images, a 1.6 GB index) against an empty pack, `gsrunner` replays of desktop
+GS dumps on the Thor at 3x, 2026-09-24:
 
 | Scene | Matched | Misses | 1x vs empty pack |
 | --- | --- | --- | --- |
 | Title | 41 (35 font glyphs, 1 true-colour) | 1 glyph | 3/3 frames identical |
-| Attract-mode battle | 31 (27 sprite composites) | 70 | 3/3 identical with nearest filtering; 1 frame differs with PS2 bilinear (below) |
-| First field | 55 (26 glyphs, 7 composites) | 3 sprites | 3/3 identical |
-| Field after the first battle | 59 (26 glyphs, 5 composites) | 4 sprites | 3/3 identical |
+| Attract-mode battle | 31 (27 sprite composites) | 70 | 3/3 identical |
+| First field | 54 (26 glyphs, 6 composites) | 4 sprites | 3/3 identical |
+| Field after the first battle | 60 (26 glyphs, 6 composites) | 3 sprites | 3/3 identical |
 
-So every match is exact. The battle frame that differs under bilinear filtering differs only on the
-floor, by 2 levels on average: the floor is a minified 256x256 8-bit texture, and the emulator
-samples a replacement there differently from the native palette texture; with filtering forced to
-nearest the frames are identical. Sprites are drawn as composites - several frames placed in one
-buffer - and match at 55-99% of their drawn texels (the rest stays native).
+So every match is exact. Sprites are drawn as composites - several frames placed in one buffer -
+and match at 55-99% of their drawn texels (the rest stays native). An earlier pack, built before
+the anp3 fixes, changed one battle frame on the floor (2 levels on average, identical with
+filtering forced to nearest); with the fixed extractor it is identical, and the cause was not
+pinned down.
 
 Against the desktop texture dumps (same scenes plus the first real battle), before the anp3 fixes:
 in normal play 3,044 sprite regions have their palette on the disc and 639 do not. The title demo
