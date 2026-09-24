@@ -59,7 +59,7 @@ proves the matches exact; the 4x pack is the one you install:
 | Scene | Textures matched | 1x vs empty pack | 4x pack |
 | --- | --- | --- | --- |
 | Ship's deck | 47 of 47 | bit-identical | 47 matched, no load errors, every frame changed |
-| Title screen | 16 of 17 (the miss is a 1024x1024 32-bit texture, most likely one the game renders; not checked) | bit-identical | 16 matched, no load errors, every frame changed |
+| Title screen | 16 of 16 disc textures (the 17th lookup is the game's own frame buffer - the previous frame drawn back as one full-screen sprite, a fade - not disc art) | bit-identical | 16 matched, no load errors, every frame changed |
 
 In the app (the save state from the same scene, 3x, RAISR-HD on): every texture of the ship's
 deck matched, and the boot's three 640x480 logo screens too. The intro movie's frames count as
