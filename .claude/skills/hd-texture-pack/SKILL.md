@@ -168,6 +168,18 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
   image size; before that, the whole field art was missing and nothing said so. Compare the
   extract's image count and sizes with what the scenes draw.
 - A big index (1 GB+) is fine: the emulator maps it. The size to watch is the 4x pack.
+- Count palettes before upscaling. An image yields one HD image per palette, and map sheets with
+  several palettes multiply the pack: Tales of Rebirth's 604 sheets carry 3.4 palettes each (39 GB
+  at 4x). Check what the palettes are first - junk from a misread CLUT extent (Rebirth's bigger
+  `anp3` files: up to 2,050 "palettes" per frame), flat silhouettes (drop them), or real region
+  palettes. One HD index map shared by all palettes only works when they are lighting variants of
+  one another; region palettes make a wrongly guessed block a garbage square.
+- A font that uploads variable-height glyphs may upload more rows than the glyph has, or fewer
+  than it stores: Legendia stores rows rounded up to even and bytes to 16 and uploads the even
+  rows. Build the texture the way the upload does, and compare against dumps by colour with a
+  palette rebuilt from the dumps, not by alpha mask (index-with-alpha-0 texels hide in masks).
+- Numbers that look like register writes can be float data: Rebirth's `FLD.BIN` had 1,879
+  "BITBLTBUF" qwords, all vertex floats. Look at the qwords around a hit before chasing it.
 - Build gsrunner only with Gradle's ninja (`<Sdk>/cmake/3.22.1/bin/ninja.exe`); another ninja
   version resets `.ninja_log` and the next build recompiles everything. In Git Bash set
   `MSYS_NO_PATHCONV=1` before adb commands with device paths, or pushes land nowhere.
