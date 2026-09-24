@@ -149,6 +149,8 @@ The clamp modes are also numerically based.
 
 * moveHandler                {`MV` with suffix }  {None unless specific game GSC}         Default: Automatic (No value, looks up GameDB) with valid variable name (ex. MV_Ico)
 
+* disableSafeFeatures        [`0` or `1`]    {Off, On}    Default: Off (`0`) - the Disable Safe Features hardware fix (no memory-clear detection, no point/line unscaling); fork addition
+
 * afterDraw                 {`OO` with suffix }  {None unless specific game GSC}         Default: Automatic (No value, looks up GameDB) with valid variable name
 * conservativeFramebuffer   [`0` or `1`]               {Off or On}                             Default: On (`1`)
 * texturePreloading         [`0` or `1` or `2`]        {None, Partial or Full Hash Cache}     Default: None (`0`)

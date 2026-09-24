@@ -69,6 +69,10 @@ made, and implementation status per item. Update this file rather than adding an
 - Treat shared `pcsx2`, `common`, `3rdparty`, and `platforms/android/app/src/main/cpp` changes as high blast radius.
 - Prefer existing bridges in `NativeApp.java` and `native-lib.cpp` before adding JNI surface area.
 - Preserve upstream behavior when the refreshed Compose patch manager already covers a fork feature.
+- The fork's GameDB (`bin/resources/GameIndex.yaml`) has one key upstream lacks: `gsHWFixes:
+  disableSafeFeatures` (the Disable Safe Features hardware fix; `GSHWFixId` appended, schema in
+  `pcsx2/Docs/gamedb-schema.json`). Tales of Rebirth (SLPS-25450) uses it with
+  `forceEvenSpritePosition`, as the English v1.0 patch's notes ask. Keep both on an upstream refresh.
 
 ## Rendering And Upscaling
 - Present-time enhancement already exists: `GSUpscaler` (FSR1), the librashader `.slangp` chain, and LSFG frame generation. Check `pcsx2/Config.h` before adding a new present-time path; the odds are it is already there.

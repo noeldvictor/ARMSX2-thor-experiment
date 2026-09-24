@@ -60221,6 +60221,8 @@ SLPS-25450:
     mvuFlag: 0 # Fixes graphical corruptions.
   gsHWFixes:
     estimateTextureRegion: 1 # Improves performance and reduces hash cache size.
+    disableSafeFeatures: 1 # Fixes glitchy skyboxes (the English v1.0 patch's PCSX2 notes).
+    forceEvenSpritePosition: 1 # Fixes sprite placement when upscaled (same notes).
 SLPS-25451:
   name: "花と太陽と雨と Super Best Collection"
   name-sort: "はなとたいようとあめと Super Best Collection"

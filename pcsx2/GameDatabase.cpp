@@ -447,6 +447,7 @@ static const char* s_gs_hw_fix_names[] = {
 	"getSkipCount",
 	"beforeDraw",
 	"moveHandler",
+	"disableSafeFeatures",
 };
 static_assert(std::size(s_gs_hw_fix_names) == static_cast<u32>(GameDatabaseSchema::GSHWFixId::Count), "HW fix name lookup is correct size");
 
@@ -777,6 +778,9 @@ bool GameDatabaseSchema::GameEntry::configMatchesHWFix(const Pcsx2Config::GSOpti
 		case GSHWFixId::CoalesceRenderPasses:
 			return (static_cast<int>(config.CoalesceRenderPasses) == value);
 
+		case GSHWFixId::DisableSafeFeatures:
+			return (static_cast<int>(config.UserHacks_DisableSafeFeatures) == value);
+
 		case GSHWFixId::Mipmap:
 			return (static_cast<int>(config.HWMipmap) == value);
 
@@ -995,6 +999,12 @@ void GameDatabaseSchema::GameEntry::applyGSHardwareFixes(
 
 			case GSHWFixId::CoalesceRenderPasses:
 				config.CoalesceRenderPasses = (value > 0);
+				break;
+
+			case GSHWFixId::DisableSafeFeatures:
+				// The memory-clear detection and point/line unscaling (GSRendererHW). Set after
+				// MaskUserHacks() has cleared it, so the database is the only thing that turns it on.
+				config.UserHacks_DisableSafeFeatures = (value > 0);
 				break;
 
 			case GSHWFixId::Mipmap:

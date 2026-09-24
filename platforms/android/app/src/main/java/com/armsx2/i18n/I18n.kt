@@ -1205,6 +1205,7 @@ private val BASE_EN: Map<String, String> = mapOf(
     "gamedb.name.fpuMul" to "FPU Multiply",
     "gamedb.name.vifFifo" to "VIF FIFO",
     "gamedb.name.forceEvenSpritePosition" to "Force Even Sprite Position",
+    "gamedb.name.disableSafeFeatures" to "Disable Safe Features",
     "gamedb.name.rewriteLargeST" to "Rewrite Large ST",
     "gamedb.name.minBlending" to "Blending Accuracy (at least)",
     "gamedb.name.maxBlending" to "Blending Accuracy (at most)",

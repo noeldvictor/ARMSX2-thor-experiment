@@ -92,6 +92,9 @@ namespace GameDatabaseSchema
 		BeforeDraw,
 		MoveHandler,
 
+		// Appended, not slotted into the boolean block above: the name table indexes by value.
+		DisableSafeFeatures,
+
 		Count
 	};
 
