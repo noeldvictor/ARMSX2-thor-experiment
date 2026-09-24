@@ -36,6 +36,10 @@ made, and implementation status per item. Update this file rather than adding an
 - Commit and push completed work unless the user explicitly asks not to.
 - Keep commit messages short and specific.
 - Never run ultra review (`/code-review ultra` or the `/ultrareview` alias). Verify with the build steps above instead.
+- **No builds on GitHub.** The fork has no GitHub Actions workflows (removed 2026-09-24; upstream's
+  `build-all.yml` ran ~2 h of CI on every push). Never add or restore a `.github/workflows/*.yml`.
+  On an upstream refresh, delete any workflow file the merge brings back (resolve modify/delete
+  conflicts by deleting). The helper scripts under `.github/workflows/scripts/` can stay.
 
 ## Upstream Refresh
 - "Get the latest ARMSX2 updates" means `git fetch upstream`, then merge `upstream/master` into `master` as a real merge commit. Do not rebase or squash; the history is a series of merge commits titled `Refresh Thor fork from upstream ARMSX2`.
