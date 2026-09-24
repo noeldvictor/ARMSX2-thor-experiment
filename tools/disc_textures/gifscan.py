@@ -99,12 +99,25 @@ def textures(buf: bytes, clut_lookback: int = 4):
     """Each texture a draw in `buf` reads, as it reads it. See the module docstring."""
     evs = list(events(buf))
     uploads = [(i, e[2]) for i, e in enumerate(evs) if e[0] == "upload"]
+    # PSMCT32 draws by (TBP, TBW, TW, TH): a 32-bit upload with a 32-bit draw of exactly its slot,
+    # buffer width and size is a true-colour picture, wherever in the file that draw is set up
+    # (Legendia's title file sets up all eight draws first, then uploads the pictures in order).
+    direct = {}
+    for j, e in enumerate(evs):
+        if e[0] == "tex0" and (e[2] >> 20) & 0x3F == 0:
+            v = e[2]
+            direct.setdefault((v & 0x3FFF, (v >> 14) & 0x3F, (v >> 26) & 0xF, (v >> 30) & 0xF), j)
     for k, (i, u) in enumerate(uploads):
         if u.dpsm != 0 or u.w * u.h <= 16 * 16 and k + 1 < len(uploads) and uploads[k + 1][1].dbp == u.dbp + 0x10:
             continue  # a CLUT (the texture follows at the next block) - taken with its texture below
-        # The TEX0 that draws it: normally after the upload; a file that sets up the draw first
-        # (Legendia's skit portraits) has it before.
-        at = next((j for j in range(i + 1, len(evs)) if evs[j][0] == "tex0" and (evs[j][2] & 0x3FFF) == u.dbp), None)
+        # The TEX0 that draws it: a 32-bit draw of exactly this upload; else normally the first one
+        # after the upload; a file that sets up the draw first (Legendia's skit portraits) has it
+        # before.
+        at = None
+        if u.x == 0 and u.y == 0:
+            at = direct.get((u.dbp, u.dbw, (u.w - 1).bit_length(), (u.h - 1).bit_length()))
+        if at is None:
+            at = next((j for j in range(i + 1, len(evs)) if evs[j][0] == "tex0" and (evs[j][2] & 0x3FFF) == u.dbp), None)
         if at is None:
             at = next((j for j in range(i - 1, -1, -1) if evs[j][0] == "tex0" and (evs[j][2] & 0x3FFF) == u.dbp), None)
         if at is None:

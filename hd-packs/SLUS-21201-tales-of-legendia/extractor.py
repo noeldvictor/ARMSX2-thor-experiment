@@ -15,6 +15,12 @@ Worked out 2026-09-24 on the NTSC-U disc (the ReUndub v1.4 build: audio only, te
   and the TEX0 that draws it, and reads it back through the GS swizzle as the draw does.
 - PCSX2 names the big ones by region (a 512x512 PSMT8 drawn from a 1024x1024 TEX0 is
   `...-r512x512-...`), so those names reproduce from disc data; small ones are full size.
+- The dialogue font is in SYS_REG.AFS entry 0 (`system_regident.mcd`): one chain of 199 glyphs
+  from offset 0x81BB0 of the unpacked file, two faces. Each glyph is a 16-byte record - six u16
+  metrics, u8 height, u8 advance, u8 width class (0: 24 pixels, 1: 32), u8 0 - then its rows,
+  4-bit, low nibble first, the height rounded up to even and the bytes to 16. The game clears a
+  48x48 corner of a 64x64 PSMT4 texture, uploads the glyph's rows (the even height) at (4,1) and
+  draws it with a white alpha-ramp palette it uploads each frame: a palette-free image, 64x64.
 
 Checked against the boat scene's dump: every 512/256/128-texel texture's name reproduces.
 """
@@ -26,12 +32,24 @@ import struct
 import sys
 from pathlib import Path
 
+import numpy as np
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools" / "disc_textures"))
 import isofs  # noqa: E402
 from disc_codecs import tales_lzss  # noqa: E402
 from gifscan import textures  # noqa: E402
 
 ARCHIVES = ("/AFS/SYS_REG.AFS", "/AFS/FIELD.AFS", "/AFS/MAP.AFS", "/AFS/BATTLE.AFS")
+FONT_CHAIN = 0x81BB0  # first glyph record in SYS_REG.AFS entry 0, unpacked
+# The font's palette as the GS holds it (u32 0xAABBGGRR): white, alpha 0..0x7F. Rebuilt from the
+# texture dumps' colours; its XXH3 ad3632fee165f017 is the one in the dump names.
+FONT_PALETTE = struct.pack("<16I", *(a << 24 | 0xFFFFFF for a in (0x00, 0x08, 0x11, 0x19, 0x22, 0x2A, 0x33, 0x3B,
+                                                                    0x44, 0x4C, 0x55, 0x5D, 0x66, 0x6E, 0x77, 0x7F)))
+
+
+def palette_free_palette(key: str) -> bytes:
+    """The palette a palette-free image (a font glyph) is upscaled through: the font's runtime one."""
+    return FONT_PALETTE
 
 
 def afs_entries(data: bytes):
@@ -53,9 +71,28 @@ def cps_unpack(blob: bytes) -> bytes | None:
         return None
 
 
+def font_glyphs(iso_path: Path):
+    """(key, indices, []) for every glyph of the dialogue font, as the 64x64 texture it is drawn from."""
+    sysreg = isofs.read(iso_path, ARCHIVES[0])
+    font = cps_unpack(next(blob for i, blob in afs_entries(sysreg) if i == 0))
+    p, n = FONT_CHAIN, 0
+    # The chain ends where a record stops making sense (199 glyphs on the NTSC-U disc).
+    while (p + 16 <= len(font) and font[p + 14] <= 1 and not font[p + 15] and 1 <= font[p + 12] <= 32
+           and 1 <= font[p + 13] <= 32):
+        rows, width = (font[p + 12] + 1) // 2 * 2, 32 if font[p + 14] else 24
+        packed = np.frombuffer(font, np.uint8, rows * width // 2, p + 16).reshape(rows, width // 2)
+        idx = np.zeros((64, 64), np.uint8)
+        idx[1 : 1 + rows, 4 : 4 + width : 2] = packed & 0x0F
+        idx[1 : 1 + rows, 5 : 5 + width : 2] = packed >> 4
+        yield f"font_{n:03d}", idx, []
+        p += 16 + (rows * width // 2 + 15) // 16 * 16
+        n += 1
+
+
 def disc_images(iso_path: Path):
     """Every texture the disc's GS packets upload - the extractor contract (extract_native.py)."""
     seen: set[str] = set()
+    yield from font_glyphs(iso_path)
     for archive in ARCHIVES:
         data = isofs.read(iso_path, archive)
         for _, blob in afs_entries(data):
