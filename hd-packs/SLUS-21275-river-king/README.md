@@ -1,7 +1,7 @@
 # River King: A Wonderful Journey (SLUS-21275) - disc HD texture pack recipe
 
-**Status:** in progress. NTSC-U disc (Natsume / Marvelous, 2006). The extraction and the matching
-are proven exact on five scenes; the 4x pack is being built.
+**Status:** in progress. NTSC-U disc (Natsume / Marvelous, 2006). The 4x pack is built and runs
+on the Thor; the opening scenes are checked, the fishing and the rest of the game are not yet.
 
 A 4x HD pack for River King: A Wonderful Journey, built from your own disc. No gameplay dumping:
 every texture is read off the disc, upscaled with 4x-UltraSharp and matched exactly by the
@@ -9,7 +9,14 @@ emulator. How that works: [docs/hd-texture-packs.md](../../docs/hd-texture-packs
 
 ## Before / after
 
-Not yet: screenshots come once the 4x pack has been judged at 3x on the Thor.
+![The house: floor, furniture, Mom and the dialogue portrait, original vs HD pack](media/house.jpg)
+
+![Character selection, original vs HD pack](media/character-select.jpg)
+
+![Title logo, original vs HD pack](media/title.jpg)
+
+Screenshots: `gsrunner` replays of GS dumps on the AYN Thor at 3x internal resolution, 1:1 crops,
+original on the left.
 
 ## Make it
 
@@ -23,36 +30,50 @@ python tools/disc_textures/make_pack.py hd-packs/SLUS-21275-river-king \
 
 Install: unzip `work/SLUS-21275-disc-hd4x.zip` into `<DataRoot>/textures/`.
 
-### Measured
+### Measured on an RTX 3060 12 GB
 
-Not yet. The extract takes about a minute and a half (8,034 images, 125 M texels); the 4x pack
-will be about 2 GB (`make_pack.py`'s estimate).
+A clean run from the `.chd` into a fresh work folder, 2026-09-23/24 (Core i7-11700, 32 GB RAM,
+RTX 3060 12 GB, CUDA fp16, nothing else running):
+
+| Step | Time | Output |
+| --- | --- | --- |
+| disc (chdman) | 34 s | `disc.iso`, 1.25 GB |
+| extract | 22 s | `native/`: 8,034 PNGs, 117 MB (1,586 font glyphs), 125 M texels |
+| upscale 4x | 33 min | `hd4x/`: 3.3 GB |
+| build | 6.6 min | `pack_hd4x/replacements/`: 2.7 GB - 8,017 images (4,516 ASTC, 1,916 kept as PNG because ASTC could not keep their alpha exact, 1,585 font index maps), a 169 MB index |
+| zip | 2.2 min | `SLUS-21275-disc-hd4x.zip`, 2.4 GB |
+| **total** | **about 43 min** | |
+
+Free disk for the work folder: about 8 GB, plus the disc image. The build step is the one with
+the exact-alpha ASTC check (see below); the first build, before it, took 6 min and made a 1.5 GB
+zip that speckled on the Thor.
 
 ## Coverage
 
-`gsrunner` replays of desktop GS dumps on the Thor at 3x, 2026-09-23, a 1x pack (every disc image
-at native size) against an empty pack:
+`gsrunner` replays of desktop GS dumps on the Thor at 3x, 2026-09-23. The 1x pack (every disc
+image at native size, `hw_mipmap=false`) against an empty pack proves the matches exact; the 4x
+pack is the one you install:
 
-| Scene | Textures matched | 1x vs empty pack |
-| --- | --- | --- |
-| Title screen | 44 of 44 | bit-identical |
-| Character selection | 36 of 36 | bit-identical |
-| Name entry | 37 of 37 | bit-identical |
-| First dialogue | 36 of 36 | bit-identical |
-| The house (3D, intro) | 30 of 30 | bit-identical |
+| Scene | Textures matched | 1x vs empty pack | 4x pack |
+| --- | --- | --- | --- |
+| Title screen | 44 of 44 | bit-identical | 44 matched, no load errors |
+| Character selection | 36 of 36 | bit-identical | 36 matched |
+| Name entry | 37 of 37 | bit-identical | 37 matched |
+| First dialogue | 36 of 36 | bit-identical | 36 matched |
+| The house (3D, intro) | 30 of 30 | bit-identical | 30 matched |
 
-The text is matched too: the game draws each line into a glyph cache, and the emulator builds
-those caches out of the font's glyphs (the name-entry sheet is one texture of 86 glyphs).
-Against the 259 textures desktop PCSX2 dumped in those scenes, the extractor reproduces 230 from
-disc data; the other 29 are the glyph caches, matched on the device as composites.
+In the app (the house save state, 3x, RAISR-HD on): 34 textures matched from boot to the house, 0
+misses. The text is matched too: the game draws each line into a glyph cache, and the emulator
+builds those caches out of the font's glyphs (the name-entry sheet is one texture of 86 glyphs).
 
 ## Not yet
 
-- The 4x pack: not built, not judged, no timings.
 - Only the opening is checked - no fishing, river, town or menu scenes yet.
 - 831 textures have 16-bit palettes; the GS turns those into 32-bit ones with TEXA, which no
   checked scene showed, so the extractor guesses the usual values (see `extractor.py`). If those
   textures never match, that guess is why.
+- 30% of the images are PNG rather than ASTC (exact alpha, below), so the pack is 2.4 GB zipped
+  where a pure ASTC one would be 1.5 GB.
 
 ## How the disc stores its textures
 
@@ -72,6 +93,10 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 - The dialogue font is not in the AFS: it is a 1-bit 24x24 table of 1,586 glyphs in the
   executable. The `.uf` fonts in the AFS (2-bit, antialiased) are another font the checked scenes
   do not use.
+- The game alpha-tests almost every draw with `EQUAL 0x80`, so HD textures must keep alpha exact.
+  ASTC did not: the first 4x pack speckled on the Thor (41% of an opaque texture's texels at
+  0x7F/0x81, failing the test and skipping their depth write) while the 1x PNG proof was exact.
+  `astc.py` now weights alpha heavily, verifies every image and keeps a PNG where ASTC cannot.
 - A dead end worth knowing: `verify_dumps.py` first showed a third of the dumps as "palette only".
   They were full-size textures PCSX2 names by raw GS blocks, which a crop hash never reproduces;
   their colours were identical. The tool now falls back to comparing colours.
@@ -82,8 +107,10 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `eb95fbc2654099fc66567fd0e57458c41681d374` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | not recorded yet |
+| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `0a8d95893933a0029710547c91f61aef0d1e7585dd1acf31446d8ff95a45ae38` |
 
 ## Playing with it
 
-Not judged yet. The target: 3x internal resolution on the Thor, RAISR-HD left on, 2x fast-forward.
+On the Thor (8 Gen 2) at 3x internal resolution with RAISR-HD on, the house with the pack runs at
+59.5 fps with the EE at 25%, the GS thread at 5% and the GPU at 5% (the emulator's 30-second
+PerfLog), so there is plenty of room for 2x fast-forward.

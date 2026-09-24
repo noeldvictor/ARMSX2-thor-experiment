@@ -16,6 +16,9 @@
   "scale": 4
  },
  "reference": {
-  "index_sha256": null
+  "index_sha256": "0a8d95893933a0029710547c91f61aef0d1e7585dd1acf31446d8ff95a45ae38",
+  "textures": 8017,
+  "palette_free": 1585,
+  "true_colour": 0
  }
 }
