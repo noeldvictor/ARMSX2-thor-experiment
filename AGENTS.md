@@ -116,6 +116,10 @@ user-facing version.
      README (from `hd-packs/TEMPLATE.md`: before/after, build estimate, coverage and gaps, format
      notes) and `game.json`, 3x before/after shots in `media/`, and what it does *not* cover.
      Add a row to `hd-packs/GAMES.md` - the games list the main README links to.
+- **Read the size estimate before upscaling** (`make_pack.py` prints it after extract: 16 bytes a
+  native texel at 4x). Every palette of an image is its own HD image, so a game whose map sheets
+  carry several palettes multiplies: Tales of Rebirth came to ~39 GB. When a pack would be much
+  bigger than its unique art, stop and ask the user which cut to make; do not build it silently.
 - **Verify on the device, not on the desktop.** gsrunner replays of a GS dump
   (`/data/local/tmp/gsr`, pack under `cfg/ARMSX2/textures/<SERIAL>/replacements`) for exact
   comparisons, then the app via the dev server: `hd_test` for A/B, `texture_stats` for
