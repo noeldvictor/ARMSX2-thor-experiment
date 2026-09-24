@@ -204,8 +204,14 @@ def main() -> None:
             images.append((clut_hash, w, h, offset, 0, f"atlas/{file}"))
             tiles += [(clut_hash, th, image_id, x, y) for x, y, th in block_hashes]
 
+    kept_png = 0
     if batch is not None:
         batch.close()
+        # Images whose alpha ASTC could not keep exact were written as PNG (astc.py): point the
+        # index at those files.
+        fell_back = {f"atlas/{p.name}" for p in batch.fallbacks}
+        kept_png = len(fell_back)
+        images = [(c, w, h, o, fl, f[:-5] + ".png" if f in fell_back else f) for c, w, h, o, fl, f in images]
     astc_images = sum(1 for i in images if i[5].endswith(".astc"))
     tiles.sort(key=lambda t: (t[0], t[1]))
     free_tiles.sort(key=lambda t: t[0])
@@ -237,7 +243,8 @@ def main() -> None:
     size = (a.out / "disc-atlas.a2at").stat().st_size
     print(f"{len(images)} disc textures ({sum(1 for i in images if i[4] & FLAG_PALETTE_FREE)} palette-free, "
           f"{sum(1 for i in images if i[4] & (FLAG_TRUE_COLOUR | FLAG_RGBA32))} true-colour), {len(tiles) + len(free_tiles)} blocks, "
-          f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, {astc_images} ASTC, "
+          f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, {astc_images} ASTC "
+          f"({kept_png} kept as PNG: alpha not exact in ASTC), "
           f"{missing} without an HD image, {duplicates} duplicates and {blanks} blank images left out, "
           f"{len(stale)} stale images removed")
 

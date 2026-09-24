@@ -68,6 +68,16 @@ memory, the same matches in every test scene, frames at 47-55 dB PSNR against th
 `--format png` builds a lossless pack - for the 1x exactness test and for 2x packs, where crops do
 not land on the block grid. Encoding is Arm's `astcenc`, many images per call (`astc.py`).
 
+Alpha has to survive ASTC exactly, because games alpha-test against exact values. River King draws
+almost everything with `ATST EQUAL, AREF 0x80`; with astcenc's default weights 41% of an opaque
+texture's texels came back at 0x7F or 0x81, failed the test, skipped their depth write, and the
+surface behind showed through as speckle - while the 1x proof was bit-identical, because a PNG
+keeps alpha exact. The encoder now weights alpha 1000:1 (`-thorough -cw 1 1 1 1000`), decodes every
+canvas again, and writes any image whose opaque texels (0x80) do not all come back as 0x80 - or
+whose other texels become 0x80 - as a lossless PNG instead. In River King that is 30% of the images
+(the rest miss by a handful of texels on cutout edges), and the pack grows from 1.5 to 2.4 GB
+zipped: correct beats small. Okage's and Tales of Destiny's packs predate the check.
+
 ## Composites (textures a game assembles in VRAM)
 
 Many games do not draw a disc image as it is: they upload several - sprite frames into one sheet,

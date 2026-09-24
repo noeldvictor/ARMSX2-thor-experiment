@@ -157,6 +157,12 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
 
 ## Pitfalls already paid for
 
+- A 4x pack can be wrong where the 1x proof is right: ASTC is lossy in alpha, and River King
+  alpha-tests `EQUAL 0x80` on almost every draw - 41% of opaque texels decoded to 0x7F/0x81 and the
+  scene speckled. `astc.py` now verifies alpha per image and falls back to PNG. After building a
+  4x pack, replay it on the Thor and look at the frames, not just the match counts; and check a
+  new game's alpha tests (`TEST` register in a GS dump) before trusting a lossy format.
+
 - Namco's TIM2 writer leaves width and height 0 - both, in Tales of Destiny's 128x128 skies and
   1024x1024 map atlases (12,868 pictures). `tim2.py` assumes the power-of-two square that fits the
   image size; before that, the whole field art was missing and nothing said so. Compare the
