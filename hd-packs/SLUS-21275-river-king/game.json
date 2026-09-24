@@ -1,0 +1,21 @@
+{
+ "serial": "SLUS-21275",
+ "title": "River King: A Wonderful Journey",
+ "region": "NTSC-U",
+ "crc": "D926BF85",
+ "extractor": "extractor.py",
+ "disc": {
+  "format": "DVD (CHD)",
+  "iso_sha1": "eb95fbc2654099fc66567fd0e57458c41681d374"
+ },
+ "upscale": {
+  "model": "4x-UltraSharp",
+  "model_url": "https://huggingface.co/Kim2091/UltraSharp",
+  "model_sha256": "36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc",
+  "model_licence": "CC BY-NC-SA 4.0 (non-commercial)",
+  "scale": 4
+ },
+ "reference": {
+  "index_sha256": null
+ }
+}

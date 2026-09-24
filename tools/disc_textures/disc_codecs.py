@@ -14,6 +14,8 @@ by the caller against the size the file declares - a codec that is almost right 
   4078 for version 1 and 4079 for version 3 - getting that one byte wrong still gives the exact
   output size, but garbles every reference after the first run, so the size check alone proves
   nothing. Verified on Tales of Destiny DC by the TIM2 offset tables inside the decoded packs.
+- `clz_unpack(blob)` - `CLZ` files (River King: A Wonderful Journey). An LZSS whose references
+  are distances back in the output, not window positions; see the function.
 """
 
 from __future__ import annotations
@@ -164,3 +166,51 @@ def tales_unpack(blob: bytes) -> bytes | None:
         return tales_lzss(blob[9 : 9 + comp], version, dec)
     except ValueError:
         return None
+
+
+@njit(cache=True)
+def _clz_lzss(src, pos, out_size):
+    out = np.zeros(out_size, np.uint8)
+    o = 0
+    n = src.shape[0]
+    while o < out_size and pos < n:
+        flags = src[pos]
+        pos += 1
+        for bit in range(8):
+            if o >= out_size or pos >= n:
+                break
+            if (flags >> bit) & 1 == 0:
+                out[o] = src[pos]
+                o += 1
+                pos += 1
+            else:
+                if pos + 1 >= n:
+                    return out, o, pos
+                b1 = np.int64(src[pos])
+                b2 = np.int64(src[pos + 1])
+                pos += 2
+                dist = 0x1000 - (b1 | ((b2 & 0xF0) << 4))
+                for _ in range((b2 & 0x0F) + 3):
+                    if o >= out_size:
+                        break
+                    out[o] = out[o - dist] if dist <= o else 0
+                    o += 1
+    return out, o, pos
+
+
+def clz_unpack(blob: bytes) -> bytes | None:
+    """A `CLZ` file decoded (River King: A Wonderful Journey's `.clz` archives), or None.
+
+    Header: `CLZ` and a zero byte, u32 big-endian decompressed size, u32 0, the size again. Then an LZSS: flag
+    bytes read LSB first, 0 = literal byte, 1 = a reference of two bytes b1 b2 copying
+    `(b2 & 15) + 3` bytes from `0x1000 - (b1 | (b2 & 0xF0) << 4)` back in the output (before the
+    start reads as zeros). Found by stepping through the stream against the U8 archive header it
+    must produce; a ring-buffer reading of the same bits decodes to the right size and garbage.
+    """
+    if len(blob) < 16 or blob[:4] != b"CLZ\0":
+        return None
+    size = struct.unpack_from(">I", blob, 4)[0]
+    out, n, used = _clz_lzss(np.frombuffer(blob, np.uint8), 16, size)
+    if n != size:
+        raise ValueError(f"clz_unpack: got {n} bytes, expected {size}")
+    return out.tobytes()

@@ -90,14 +90,16 @@ def main() -> None:
             verdict = "no palette"
         else:
             rw, rh = region or (tw, th)
+            rw, rh = rw or tw, rh or th  # r0x224: only one axis clamped, the other is the full size
             verdict = "palette only"
             for key, idx, pal in cands:
                 h, w = idx.shape
-                if region or tw * th <= 64 * 64:
-                    if rw <= w and rh <= h and find_crop(idx, rw, rh, tex0) is not None:
-                        verdict = "exact"
-                        break
-                else:
+                if (region or tw * th <= 64 * 64) and rw <= w and rh <= h and find_crop(idx, rw, rh, tex0) is not None:
+                    verdict = "exact"
+                    break
+                if not region:
+                    # A full-size texture may be named by raw GS blocks, which the crop hash never
+                    # reproduces (River King's 64x64 model textures): compare the colours instead.
                     dump = np.asarray(Image.open(f).convert("RGBA"))
                     ph, pw = min(h, dump.shape[0]), min(w, dump.shape[1])
                     colours = np.frombuffer(pal, np.uint8).reshape(-1, 4)[idx[:ph, :pw]][..., :3]
