@@ -1,8 +1,9 @@
 # Tales of Rebirth (SLPS-25450) - disc HD texture pack recipe
 
 **Status:** in progress. Japanese disc with the English fan translation v1.0 (the translation keeps
-the serial). The extractor reads every map sheet, sprite, UI sheet and the font; no 4x pack has
-been built yet, because a straight 4x pack would be about 39 GB (see *Size* below).
+the serial). The extractor reads every map sheet, sprite, UI sheet and the font, and a 1x pack is
+proven exact on the Thor in four scenes; no 4x pack has been built yet, because a straight 4x pack
+would be about 39 GB (see *Size* below).
 
 A 4x HD pack for Tales of Rebirth, built from your own disc. No gameplay dumping: every texture is
 read off the disc, upscaled with 4x-UltraSharp and matched exactly by the emulator. How that
@@ -54,11 +55,26 @@ palette turns into a garbage square, and the palettes are not variants enough to
 
 ## Coverage
 
-Not measured on the Thor yet. Against the texture dumps of four scenes (title, the attract-mode
-battle, the first field, the first battle), before the anp3 fixes: in normal play 3,044 sprite
-regions have their palette on the disc (sprites are drawn as composites - several frames placed in
-one buffer - which `verify_dumps.py` cannot check but the emulator matches), 639 do not. The title
-demo adds ~6,300 dumps with faded palettes made at runtime.
+A 1x pack (from the extractor before the anp3 fixes - 291,017 images, a 1.7 GB index) against an
+empty pack, `gsrunner` replays of desktop GS dumps on the Thor at 3x, 2026-09-24:
+
+| Scene | Matched | Misses | 1x vs empty pack |
+| --- | --- | --- | --- |
+| Title | 41 (35 font glyphs, 1 true-colour) | 1 glyph | 3/3 frames identical |
+| Attract-mode battle | 31 (27 sprite composites) | 70 | 3/3 identical with nearest filtering; 1 frame differs with PS2 bilinear (below) |
+| First field | 55 (26 glyphs, 7 composites) | 3 sprites | 3/3 identical |
+| Field after the first battle | 59 (26 glyphs, 5 composites) | 4 sprites | 3/3 identical |
+
+So every match is exact. The battle frame that differs under bilinear filtering differs only on the
+floor, by 2 levels on average: the floor is a minified 256x256 8-bit texture, and the emulator
+samples a replacement there differently from the native palette texture; with filtering forced to
+nearest the frames are identical. Sprites are drawn as composites - several frames placed in one
+buffer - and match at 55-99% of their drawn texels (the rest stays native).
+
+Against the desktop texture dumps (same scenes plus the first real battle), before the anp3 fixes:
+in normal play 3,044 sprite regions have their palette on the disc and 639 do not. The title demo
+adds ~6,300 dumps with faded palettes made at runtime; the battle's 70 misses are mostly its
+256x1024 UI sheet under such palettes.
 
 ## Not yet
 
