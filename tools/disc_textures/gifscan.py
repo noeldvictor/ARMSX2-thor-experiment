@@ -99,29 +99,42 @@ def textures(buf: bytes, clut_lookback: int = 4):
     """Each texture a draw in `buf` reads, as it reads it. See the module docstring."""
     evs = list(events(buf))
     uploads = [(i, e[2]) for i, e in enumerate(evs) if e[0] == "upload"]
-    # PSMCT32 draws by (TBP, TBW, TW, TH): a 32-bit upload with a 32-bit draw of exactly its slot,
-    # buffer width and size is a true-colour picture, wherever in the file that draw is set up
-    # (Legendia's title file sets up all eight draws first, then uploads the pictures in order).
-    direct = {}
-    for j, e in enumerate(evs):
-        if e[0] == "tex0" and (e[2] >> 20) & 0x3F == 0:
-            v = e[2]
-            direct.setdefault((v & 0x3FFF, (v >> 14) & 0x3F, (v >> 26) & 0xF, (v >> 30) & 0xF), j)
+
+    def draws(j: int, u: Upload) -> bool:
+        return evs[j][0] == "tex0" and (evs[j][2] & 0x3FFF) == u.dbp
+
+    def draws_exactly(j: int, u: Upload) -> bool:
+        """A 32-bit draw of exactly this upload's slot, buffer width and (power-of-two) size."""
+        v = evs[j][2]
+        return (draws(j, u) and (v >> 20) & 0x3F == 0 and (v >> 14) & 0x3F == u.dbw
+                and (v >> 26) & 0xF == (u.w - 1).bit_length() and (v >> 30) & 0xF == (u.h - 1).bit_length())
+
     for k, (i, u) in enumerate(uploads):
         if u.dpsm != 0 or u.w * u.h <= 16 * 16 and k + 1 < len(uploads) and uploads[k + 1][1].dbp == u.dbp + 0x10:
             continue  # a CLUT (the texture follows at the next block) - taken with its texture below
-        # The TEX0 that draws it: a 32-bit draw of exactly this upload; else normally the first one
-        # after the upload; a file that sets up the draw first (Legendia's skit portraits) has it
-        # before.
-        at = None
-        if u.x == 0 and u.y == 0:
-            at = direct.get((u.dbp, u.dbw, (u.w - 1).bit_length(), (u.h - 1).bit_length()))
+        # The TEX0 that draws it: normally the first one after the upload; a file that sets up the
+        # draw first (Legendia's skit portraits) has it before. File order is not the order the GS
+        # runs the packets in (display lists call them), so this is a guess the exact match checks.
+        at = next((j for j in range(i + 1, len(evs)) if draws(j, u)), None)
         if at is None:
-            at = next((j for j in range(i + 1, len(evs)) if evs[j][0] == "tex0" and (evs[j][2] & 0x3FFF) == u.dbp), None)
-        if at is None:
-            at = next((j for j in range(i - 1, -1, -1) if evs[j][0] == "tex0" and (evs[j][2] & 0x3FFF) == u.dbp), None)
-        if at is None:
-            continue
+            at = next((j for j in range(i - 1, -1, -1) if draws(j, u)), None)
+        candidates = [] if at is None else [at]
+        # A 32-bit upload that the file also draws as exactly itself - a 32-bit draw of its slot,
+        # width and size - is read as a true-colour picture too. Legendia's title file sets up eight
+        # such draws first and then uploads the pictures, so the guess above pairs them with the
+        # next file's 4-bit draw.
+        # Only where the bytes look like colour: PS2 alpha runs 0..0x80, and 8/4-bit index data read
+        # as colour mostly does not (Legendia's model files hold 4,800 such readings otherwise).
+        if u.x == 0 and u.y == 0 and max(u.data[3::4]) <= 0x80:
+            exact = next((j for j in range(len(evs)) if draws_exactly(j, u)), None)
+            if exact is not None and (at is None or (evs[at][2] >> 20) & 0x3F != 0):
+                candidates.append(exact)
+        yield from _read(u, k, i, candidates, evs, uploads, clut_lookback)
+
+
+def _read(u: Upload, k: int, i: int, candidates: list[int], evs: list, uploads: list, clut_lookback: int):
+    """The texture(s) upload `u` (event i, upload k) makes under each candidate TEX0 (event index)."""
+    for at in candidates:
         tex0 = evs[at][2]
         psm_id = (tex0 >> 20) & 0x3F
         tbw = (tex0 >> 14) & 0x3F
