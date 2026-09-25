@@ -1,8 +1,8 @@
 # Tales of Destiny: Director's Cut (SLPS-25842) - disc HD texture pack recipe
 
-**Status:** in progress. The English fan-translated disc (v1.6). The 4x pack is built and runs
-on the Thor; it is proven on two scenes (the ship's deck and the title screen), and the rest of
-the game has not been looked at yet.
+**Status:** completed. The English fan-translated disc (v1.6). The 4x pack is built and runs
+on the Thor; it was checked in two scenes (the ship's deck and the title screen), not in the rest
+of the game.
 
 A 4x HD pack for Tales of Destiny: Director's Cut, built from your own disc. No gameplay dumping:
 every texture is read off the disc, upscaled with 4x-UltraSharp and matched exactly by the

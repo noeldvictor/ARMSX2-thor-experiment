@@ -1,9 +1,9 @@
 # Tales of Legendia (SLUS-21201) - disc HD texture pack recipe
 
-**Status:** in progress. NTSC-U disc (the ReUndub v1.4 build - undubbing changes audio, not
+**Status:** completed. NTSC-U disc (the ReUndub v1.4 build - undubbing changes audio, not
 textures). The 4x pack runs on the Thor at 3x in four scenes (title, main menu, the boat, a portrait
 conversation) with every texture matched except render-target reads and two small UI pieces; the
-rest of the game is not checked yet.
+rest of the game is not checked.
 
 A 4x HD pack for Tales of Legendia, built from your own disc. No gameplay dumping: every texture
 is read off the disc, upscaled with 4x-UltraSharp and matched exactly by the emulator. How that

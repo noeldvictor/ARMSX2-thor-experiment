@@ -12,8 +12,9 @@ Disc packs only work in this fork.
 
 **[GAMES.md](GAMES.md)** lists every game with a recipe - status, before/after, pack size, build
 time, coverage - plus the wishlist and the games checked and dropped. Each game's own README has
-the screenshots, the measured build, and notes on how that game stores its textures. Today:
-Okage: Shadow King (finished) and Tales of Destiny: Director's Cut (in progress).
+the screenshots, the measured build, and notes on how that game stores its textures. Today, five
+completed: Okage: Shadow King, Tales of Destiny: Director's Cut, River King: A Wonderful Journey,
+Tales of Legendia and Tales of Rebirth.
 
 A new game needs someone to work out how that game stores its textures on the disc (see
 [Adding a game](#adding-a-game) below). That work is the slow part, and it is not automatic.

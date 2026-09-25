@@ -1,7 +1,7 @@
 # River King: A Wonderful Journey (SLUS-21275) - disc HD texture pack recipe
 
-**Status:** in progress. NTSC-U disc (Natsume / Marvelous, 2006). The 4x pack is built and runs
-on the Thor; the opening scenes are checked, the fishing and the rest of the game are not yet.
+**Status:** completed. NTSC-U disc (Natsume / Marvelous, 2006). The 4x pack is built and runs
+on the Thor; it was checked in the opening scenes, not in the fishing or the rest of the game.
 
 A 4x HD pack for River King: A Wonderful Journey, built from your own disc. No gameplay dumping:
 every texture is read off the disc, upscaled with 4x-UltraSharp and matched exactly by the

@@ -1,6 +1,6 @@
 # Okage: Shadow King (SCUS-97129) - disc HD texture pack recipe
 
-**Status:** finished. NTSC-U disc; every texture on it, at 4x.
+**Status:** completed. NTSC-U disc; every texture on it, at 4x.
 
 A 4x HD pack for Okage: Shadow King (NTSC-U), built from your own disc. No gameplay dumping:
 every texture is read off the disc, upscaled with 4x-UltraSharp and matched exactly by the

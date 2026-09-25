@@ -1,6 +1,6 @@
 # Tales of Rebirth (SLPS-25450) - disc HD texture pack recipe
 
-**Status:** in progress. Japanese disc with the English fan translation v1.0 (the translation keeps
+**Status:** completed. Japanese disc with the English fan translation v1.0 (the translation keeps
 the serial). The 4x pack runs on the Thor at 3x in four scenes (title, the attract-mode battle, two
 field scenes) at 59.9 fps; it is 24.8 GB installed, so it was removed from the Thor after the test.
 The rest of the game is not checked.

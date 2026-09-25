@@ -546,10 +546,12 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   builder leaves out exact duplicates and blank images. A 4x pack is 16 bytes per native texel:
   Okage 467 MB, Tales of Destiny 14.8 GB (8.5 GB zipped; real map art, audited); `make_pack.py` prints the
   estimate before the upscale.
-- Tales of Destiny DC (`hd-packs/SLPS-25842-tales-of-destiny-dc/`) is the second recipe, in
-  progress: ship 47/47 and title 16/16 disc textures matched, bit-identical at 1x; the 4x pack is on the
-  Thor (`/sdcard/armsxdata/textures/SLPS-25842/`) and runs in the app at 59.9 fps at 3x. Only those
-  two scenes are checked.
+- Five completed recipes (2026-09-25): Okage, Tales of Destiny DC, River King, Tales of Legendia,
+  Tales of Rebirth - each built, run on the Thor at 3x, and checked in the scenes its README lists.
+- **Packs are not kept on the Thor** (the user's rule, 2026-09-25): install one for a test, then
+  delete it from `/sdcard/armsxdata/textures/<SERIAL>/` and the gsrunner copies. The packs live on
+  the PC in `F:\Projects\pcsx2-desktop\<game>_recipe_run\` (`<SERIAL>-disc-hd4x.zip` and
+  `pack_hd4x\`), git-ignored, until the user uploads them somewhere.
 - **Never change PCSX2's texture hashing (`HashCacheKey`).** It is the name every standard pack
   and dump uses. Where the stock key cannot be reproduced from disc data (raw-block keys of
   full-size textures), the atlas's own content hash does the checking instead.
