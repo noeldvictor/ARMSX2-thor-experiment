@@ -4,6 +4,7 @@
  "region": "NTSC-J",
  "crc": "DB7FFC4B",
  "extractor": "extractor.py",
+ "astc_alpha": "threshold",
  "disc": {
   "format": "DVD (CHD)",
   "iso_sha1": "75d36646266334e7091268e24fe2fc4abd4a3331"

@@ -172,8 +172,9 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
   exact-alpha check kept some images as PNG - fails to load and the whole texture stays native
   (`Failed to cut disc atlas crop a2at:c:N` in the replay log; the match counters still look
   fine). Tales of Rebirth kept 65% as PNG and draws its split map sheets and sprites as
-  composites, so the field stayed native at 4x; it is built with `--format png` (about the same
-  size). Count `Failed to cut` lines in every 4x replay, and check a game's alpha tests first
+  composites, so the field stayed native at 4x. The fix is in `astc.py` now: failing blocks are
+  re-encoded with 8-bit endpoints (0x80 is only exact there) instead of dropping the image to
+  PNG. Count `Failed to cut` lines in every 4x replay anyway, and check a game's alpha tests
   (`TEST` in a GS dump: Rebirth uses `GEQUAL 0x80`, River King `EQUAL 0x80` - both need exact alpha).
 - Count palettes before upscaling. An image yields one HD image per palette, and map sheets with
   several palettes multiply the pack: Tales of Rebirth's 604 sheets carry 3.4 palettes each (39 GB

@@ -19,7 +19,9 @@
 #include <cinttypes>
 #include <csetjmp>
 #include <cstring>
+#include <optional>
 #include <png.h>
+#include <zstd.h>
 
 struct LoaderDefinition
 {
@@ -31,12 +33,14 @@ static bool PNGLoader(const std::string& filename, GSTextureReplacements::Replac
 static bool DDSLoader(const std::string& filename, GSTextureReplacements::ReplacementTexture* tex, bool only_base_image);
 static bool ASTCLoader(const std::string& filename, GSTextureReplacements::ReplacementTexture* tex, bool only_base_image);
 static bool KTXLoader(const std::string& filename, GSTextureReplacements::ReplacementTexture* tex, bool only_base_image);
+static bool ZstdLoader(const std::string& filename, GSTextureReplacements::ReplacementTexture* tex, bool only_base_image);
 
 static constexpr LoaderDefinition s_loaders[] = {
 	{"png", PNGLoader},
 	{"dds", DDSLoader},
 	{"astc", ASTCLoader},
 	{"ktx", KTXLoader},
+	{"zst", ZstdLoader},
 };
 
 
@@ -795,6 +799,64 @@ static bool ASTCLoader(const std::string& filename, GSTextureReplacements::Repla
 		return false;
 	}
 
+	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// zstd-compressed containers
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// `<name>.astc.zst`: an .astc file compressed losslessly with zstd, as disc packs store them (index
+// version 6). ASTC blocks shrink to about half, and unpacking in memory costs far less than reading
+// the bytes it saves. Only ASTC is wrapped: PNG is compressed already.
+static bool ZstdLoader(const std::string& filename, GSTextureReplacements::ReplacementTexture* tex, bool only_base_image)
+{
+	const std::string_view inner = Path::GetExtension(Path::StripExtension(filename));
+	if (inner.size() != 4 || StringUtil::Strncasecmp(inner.data(), "astc", 4) != 0)
+	{
+		Console.Warning("Skipping %s: only .astc.zst is supported.", filename.c_str());
+		return false;
+	}
+	if (!SupportsASTCReplacement(filename))
+		return false;
+
+	const std::optional<std::vector<u8>> packed = FileSystem::ReadBinaryFile(filename.c_str());
+	if (!packed.has_value())
+	{
+		Console.Warning("Failed to read %s", filename.c_str());
+		return false;
+	}
+	const unsigned long long size = ZSTD_getFrameContentSize(packed->data(), packed->size());
+	if (size == ZSTD_CONTENTSIZE_ERROR || size == ZSTD_CONTENTSIZE_UNKNOWN || size < ASTC::HEADER_SIZE ||
+		size > (1ull << 30))
+	{
+		Console.Warning("Rejecting %s: not a zstd frame with a known size.", filename.c_str());
+		return false;
+	}
+	std::vector<u8> raw(static_cast<size_t>(size));
+	const size_t got = ZSTD_decompress(raw.data(), raw.size(), packed->data(), packed->size());
+	if (ZSTD_isError(got) || got != raw.size())
+	{
+		Console.Warning("Rejecting %s: zstd data is corrupt.", filename.c_str());
+		return false;
+	}
+
+	ASTC::HeaderInfo info;
+	u32 pitch = 0;
+	u32 payload_size = 0;
+	if (ASTC::ParseHeader(raw.data(), raw.size(), &info, g_gs_device->GetMaxTextureSize()) != ASTC::ParseResult::Ok ||
+		!ASTC::CalculatePayloadSize(info, &pitch, &payload_size) ||
+		!ASTC::ValidateFileSize(info, static_cast<s64>(raw.size())))
+	{
+		Console.Warning("Rejecting %s: the unpacked data is not a valid .astc file.", filename.c_str());
+		return false;
+	}
+
+	tex->width = info.width;
+	tex->height = info.height;
+	tex->format = info.format;
+	tex->pitch = pitch;
+	tex->data.assign(raw.begin() + ASTC::HEADER_SIZE, raw.end());
 	return true;
 }
 

@@ -32,6 +32,8 @@
 //   index data           each image's palette indices, one byte per texel (PSMT4 expanded), row-major;
 //                        a PSMCT24 image's RGB, three bytes per texel; a PSMCT32 image's RGBA, four
 // Version 5: the same layout; images may be ASTC 4x4 files (a 4x pack), cropped block by block.
+// Version 6: the same layout; ASTC images may be zstd-compressed (`.astc.zst`, about half the size
+// on disk; GSTextureReplacementLoaders unpacks them in memory).
 namespace
 {
 #pragma pack(push, 1)
@@ -238,11 +240,11 @@ bool GSDiscAtlas::Load(const std::string& replacement_dir)
 	const u64 tiles_end = images_end + static_cast<u64>(hdr.tile_count) * sizeof(Tile);
 	const u64 free_end = tiles_end + static_cast<u64>(tail.free_tile_count) * sizeof(FreeTile);
 	const u32 step = (hdr.version >= 2) ? hdr.tile_step : TILE;
-	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 5 || hdr.tile_size != TILE ||
+	if (std::memcmp(hdr.magic, "A2AT", 4) != 0 || hdr.version < 1 || hdr.version > 6 || hdr.tile_size != TILE ||
 		step == 0 || (TILE % step) != 0 ||
 		free_end > file.size() || hdr.index_data_offset > file.size())
 	{
-		Console.Error(fmt::format("Disc atlas: {} is not a version 1-5 index", path));
+		Console.Error(fmt::format("Disc atlas: {} is not a version 1-6 index", path));
 		return false;
 	}
 

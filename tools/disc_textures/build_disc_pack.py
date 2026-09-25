@@ -10,7 +10,10 @@ for `<DataRoot>/textures/<SERIAL>/replacements/`:
   the PS2 scale (0x80 = opaque), which is what replacement textures use. `--format png` writes
   PNG instead: lossless, for the 1x exactness test and for 2x packs (ASTC needs every crop on the
   4x4 block grid, which only a 4x pack guarantees). Palette-free index maps are always PNG. A pack
-  with ASTC images has index version 5, so an emulator that cannot crop them refuses the pack;
+  with ASTC images has index version 5, so an emulator that cannot crop them refuses the pack.
+  ASTC files are then compressed losslessly with zstd (`atlas/<key>.astc.zst`, `--zstd LEVEL`,
+  default 19, 0 for plain `.astc`): ASTC blocks shrink to about half, the emulator unpacks them in
+  memory at load, and the index is version 6;
 - `disc-atlas.a2at` - the index the emulator matches against (pcsx2/GS/Renderers/HW/GSDiscAtlas.*):
   per disc texture its palette hash (XXH3 of the 256/16 RGBA entries, as the texture cache keys
   the CLUT), size and palette indices, plus the XXH3 of every 16x16 block at 8-pixel positions.
@@ -39,8 +42,10 @@ Needs pycdlib, numpy, pillow, xxhash, and Arm's astcenc for ASTC.
 from __future__ import annotations
 
 import argparse
+import os
 import struct
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import numpy as np
@@ -82,6 +87,11 @@ def main() -> None:
     ap.add_argument("--format", choices=("astc", "png"), default="astc",
                     help="HD image format (default astc; png for 1x test packs and 2x packs)")
     ap.add_argument("--astcenc", help="path to Arm's astcenc (else ASTCENC or PATH)")
+    ap.add_argument("--alpha-rule", choices=("exact", "threshold"), default="exact",
+                    help="what ASTC must keep of the alpha (astc.py): exact 0x80 for EQUAL 0x80 alpha tests "
+                         "(default), or each texel's side of 0x80 for GEQUAL/LESS 0x80 (game.json astc_alpha)")
+    ap.add_argument("--zstd", type=int, default=19, metavar="LEVEL",
+                    help="compress ASTC files with zstd at this level (default 19; 0 = plain .astc)")
     a = ap.parse_args()
     extractor = load_extractor(a.extractor)
     (a.out / "atlas").mkdir(parents=True, exist_ok=True)
@@ -90,7 +100,7 @@ def main() -> None:
         exe = find_astcenc(a.astcenc)
         if not exe:
             raise SystemExit("astcenc not found: install Arm's astc-encoder, or pass --format png")
-        batch = AstcBatch(exe)
+        batch = AstcBatch(exe, rule=a.alpha_rule)
 
     def save(rgba: np.ndarray, stem: str, scale: int) -> str:
         """Write an HD image (RGBA, PS2 alpha) as ASTC when the pack is 4x, else PNG; its file name."""
@@ -213,16 +223,39 @@ def main() -> None:
         kept_png = len(fell_back)
         images = [(c, w, h, o, fl, f[:-5] + ".png" if f in fell_back else f) for c, w, h, o, fl, f in images]
     astc_images = sum(1 for i in images if i[5].endswith(".astc"))
+    zstd_note = ""
+    if astc_images and a.zstd > 0:
+        import zstandard
+
+        def pack(name: str) -> tuple[int, int]:
+            src = a.out / name
+            data = src.read_bytes()
+            packed = zstandard.ZstdCompressor(level=a.zstd).compress(data)
+            (a.out / f"{name}.zst").write_bytes(packed)
+            src.unlink()
+            return len(data), len(packed)
+
+        names = sorted({i[5] for i in images if i[5].endswith(".astc")})
+        with ThreadPoolExecutor(os.cpu_count() or 4) as pool:
+            sizes = list(pool.map(pack, names))
+        before, after = sum(b for b, _ in sizes), sum(z for _, z in sizes)
+        zstd_note = f", zstd level {a.zstd}: {before / 1e9:.2f} -> {after / 1e9:.2f} GB"
+        images = [(c, w, h, o, fl, f + ".zst" if f.endswith(".astc") else f) for c, w, h, o, fl, f in images]
+    too_long = [i[5] for i in images if len(i[5]) > 40]
+    if too_long:
+        raise SystemExit(f"image file names longer than the index's 40 bytes: {too_long[:3]}")
     tiles.sort(key=lambda t: (t[0], t[1]))
     free_tiles.sort(key=lambda t: t[0])
     # Version 3: header 40 bytes, images 72 bytes (flags added), then bound tiles (24 bytes),
     # then palette-free tiles (16 bytes), then the index data. Version 4: the same layout, and
     # images may be true colour (FLAG_TRUE_COLOUR, RGB index data, RGB block hashes). Version 5:
-    # the same layout, and images may be ASTC files (cropped block by block).
+    # the same layout, and images may be ASTC files (cropped block by block). Version 6: the same
+    # layout, and ASTC files may be zstd-compressed (.astc.zst).
     header_size = 40
     index_data_offset = header_size + 72 * len(images) + 24 * len(tiles) + 16 * len(free_tiles)
     with open(a.out / "disc-atlas.a2at", "wb") as f:
-        f.write(struct.pack("<4sIIIIIQII", b"A2AT", 5 if astc_images else 4, len(images), len(tiles), TILE, STEP,
+        version = 6 if any(i[5].endswith(".zst") for i in images) else 5 if astc_images else 4
+        f.write(struct.pack("<4sIIIIIQII", b"A2AT", version, len(images), len(tiles), TILE, STEP,
                             index_data_offset,
                             len(free_tiles), 0))
         for clut_hash, w, h, off, flags, file in images:
@@ -237,14 +270,14 @@ def main() -> None:
     # longer yields) would otherwise ride along into the zip.
     used = {i[5] for i in images}
     stale = [p for p in (a.out / "atlas").iterdir()
-             if p.suffix in (".png", ".astc") and f"atlas/{p.name}" not in used]
+             if p.suffix in (".png", ".astc", ".zst") and f"atlas/{p.name}" not in used]
     for p in stale:
         p.unlink()
     size = (a.out / "disc-atlas.a2at").stat().st_size
     print(f"{len(images)} disc textures ({sum(1 for i in images if i[4] & FLAG_PALETTE_FREE)} palette-free, "
           f"{sum(1 for i in images if i[4] & (FLAG_TRUE_COLOUR | FLAG_RGBA32))} true-colour), {len(tiles) + len(free_tiles)} blocks, "
           f"index {size / 1e6:.1f} MB, scales {sorted(scales)}, {astc_images} ASTC "
-          f"({kept_png} kept as PNG: alpha not exact in ASTC), "
+          f"({kept_png} kept as PNG: alpha not exact in ASTC; {batch.repaired_blocks if batch else 0} blocks repaired{zstd_note}), "
           f"{missing} without an HD image, {duplicates} duplicates and {blanks} blank images left out, "
           f"{len(stale)} stale images removed")
 

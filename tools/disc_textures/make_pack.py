@@ -130,7 +130,8 @@ def main() -> None:
 
     replacements = pack / "replacements"
     step("build", lambda: run([py, str(HERE / "build_disc_pack.py"), str(extractor), str(iso), str(hd), str(replacements),
-                               "--format", a.format] + (["--astcenc", a.astcenc] if a.astcenc else [])))
+                               "--format", a.format] + (["--astcenc", a.astcenc] if a.astcenc else [])
+                              + (["--alpha-rule", game["astc_alpha"]] if game.get("astc_alpha") else [])))
 
     def make_zip() -> None:
         print(f"\nwriting {zip_path}", flush=True)
@@ -144,7 +145,7 @@ def main() -> None:
             for f in sorted(replacements.rglob("*")):
                 if f.is_file():
                     # PNGs are already compressed; the index is not.
-                    kind = zipfile.ZIP_STORED if f.suffix == ".png" else zipfile.ZIP_DEFLATED
+                    kind = zipfile.ZIP_STORED if f.suffix in (".png", ".zst") else zipfile.ZIP_DEFLATED
                     z.write(f, f"{serial}/replacements/{f.relative_to(replacements).as_posix()}", compress_type=kind)
 
     step("zip", make_zip)

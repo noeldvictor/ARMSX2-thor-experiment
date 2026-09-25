@@ -531,12 +531,19 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
 - 4x packs store HD images as ASTC 4x4 (index v5, `astc.py` batches astcenc): crops and composites
   are block copies, uncovered texels constant blocks; palette-free index maps stay PNG; `--format
   png` for the 1x exactness test and 2x packs. Okage ASTC vs PNG: same matches, 47-55 dB frames.
-  Alpha must come back exact (games alpha-test `EQUAL 0x80`; River King speckled): astcenc weights
-  alpha 1000:1 and an image whose opaque texels do not all decode to 0x80 is kept as PNG.
+  Alpha must come back exact (games alpha-test `EQUAL 0x80`, River King, or `GEQUAL 0x80`, Tales of
+  Rebirth; either speckles on 0x7F). ASTC endpoints only hold 0x80 at 8-bit precision, which astcenc
+  rarely picks, so `astc.py` re-encodes each failing block by hand in a layout with 8-bit endpoints
+  (alpha on its own plane for mixed blocks) and checks the canvas again with astcenc's decoder:
+  about 0.6% of Rebirth's blocks, at about astcenc's own colour error; 153,131 of its 154,598
+  images stay ASTC. The rule follows the game's alpha test (`game.json` `astc_alpha`): "exact" for
+  EQUAL 0x80, "threshold" (each texel on its side of 0x80) for GEQUAL 0x80 - which also repairs
+  art with alpha above 0x80. Keep the decode check; never hand-write block layouts without it. Packs store ASTC as `.astc.zst` (index v6,
+  `--zstd`, default level 19): about half the size on disk, unpacked in memory by
+  `ZstdLoader` in `GSTextureReplacementLoaders.cpp`.
   `LoadComposite` builds a composite all-ASTC or all-PNG and fails on a mix (the texture stays
-  native, `Failed to cut disc atlas crop a2at:c:N`), so a composite-heavy game with many PNG
-  fallbacks is built `--format png` (Tales of Rebirth). A mixed composite should degrade piece by
-  piece instead of failing whole - not done yet.
+  native, `Failed to cut disc atlas crop a2at:c:N`); with the repair, mixes should not happen any
+  more. A mixed composite should still degrade piece by piece instead of failing whole - not done.
 - Composites: a texture no crop matches is split into disc images by block votes
   (`GSDiscAtlas::MatchComposite`); a placement counts where its texels equal the texture - up to
   1/256 may differ and stay native (bytes a game parks inside a texture: Tales of Destiny's deck
