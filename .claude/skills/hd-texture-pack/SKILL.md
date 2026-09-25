@@ -168,6 +168,13 @@ Measure fps at the resolution the user plays (3x on the 8 Gen 2 Thor) and at 2x 
   image size; before that, the whole field art was missing and nothing said so. Compare the
   extract's image count and sizes with what the scenes draw.
 - A big index (1 GB+) is fine: the emulator maps it. The size to watch is the 4x pack.
+- A composite is assembled all-ASTC or all-PNG. One that mixes the two - an ASTC pack whose
+  exact-alpha check kept some images as PNG - fails to load and the whole texture stays native
+  (`Failed to cut disc atlas crop a2at:c:N` in the replay log; the match counters still look
+  fine). Tales of Rebirth kept 65% as PNG and draws its split map sheets and sprites as
+  composites, so the field stayed native at 4x; it is built with `--format png` (about the same
+  size). Count `Failed to cut` lines in every 4x replay, and check a game's alpha tests first
+  (`TEST` in a GS dump: Rebirth uses `GEQUAL 0x80`, River King `EQUAL 0x80` - both need exact alpha).
 - Count palettes before upscaling. An image yields one HD image per palette, and map sheets with
   several palettes multiply the pack: Tales of Rebirth's 604 sheets carry 3.4 palettes each (39 GB
   at 4x). Check what the palettes are first - junk from a misread CLUT extent (Rebirth's bigger

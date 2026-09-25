@@ -533,6 +533,10 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   png` for the 1x exactness test and 2x packs. Okage ASTC vs PNG: same matches, 47-55 dB frames.
   Alpha must come back exact (games alpha-test `EQUAL 0x80`; River King speckled): astcenc weights
   alpha 1000:1 and an image whose opaque texels do not all decode to 0x80 is kept as PNG.
+  `LoadComposite` builds a composite all-ASTC or all-PNG and fails on a mix (the texture stays
+  native, `Failed to cut disc atlas crop a2at:c:N`), so a composite-heavy game with many PNG
+  fallbacks is built `--format png` (Tales of Rebirth). A mixed composite should degrade piece by
+  piece instead of failing whole - not done yet.
 - Composites: a texture no crop matches is split into disc images by block votes
   (`GSDiscAtlas::MatchComposite`); a placement counts where its texels equal the texture - up to
   1/256 may differ and stay native (bytes a game parks inside a texture: Tales of Destiny's deck

@@ -25,10 +25,29 @@ python tools/disc_textures/make_pack.py hd-packs/SLPS-25450-tales-of-rebirth \
 
 Read the size estimate `make_pack.py` prints after the extract step before letting it upscale.
 
+Install: unzip `work/SLPS-25450-disc-hd4x.zip` into `<DataRoot>/textures/` - on the PC. The pack
+has 154,598 images, and Android's `unzip` stops at 65,534 entries, so copy the unpacked folder (or
+stream a tar: `adb exec-in sh -c 'cd <folder> && tar -xf -'`) rather than unzipping on the device.
+
 ### Measured
 
-Extract: 7 min 19 s on a Core i7-11700 (45,281 images once the fixes below are in; the first run
-wrote 436,329 PNGs, most of them junk palettes).
+One `make_pack.py` run into a fresh work folder from the ISO, 2026-09-24, Core i7-11700, 32 GB RAM,
+RTX 3060 12 GB, nothing else heavy running:
+
+| Step | Time | Output |
+| --- | --- | --- |
+| extract | 6.5 min | `native/`: 168,219 PNGs, 0.9 GB, 1,454 M texels (map sheets split per palette) |
+| upscale 4x | 7 h 41 min | `hd4x/`: 25.3 GB |
+| build | 74 min | `pack_hd4x/replacements/`: 24.7 GB - 154,598 images (54,213 ASTC, 100,286 kept as PNG because ASTC could not keep their alpha exact), a 1.3 GB index; 13,082 duplicates and 539 blank images left out |
+| zip | 14.6 min | `SLPS-25450-disc-hd4x.zip`, 21.1 GB |
+| **total** | **9 h 16 min** | |
+
+Free disk needed for the work folder: about 72 GB, plus the 4.5 GB disc image.
+
+Why so many images: Rebirth is a 2D sprite game. 37,689 small pictures (animation frames, icons)
+come with 2-9 palettes each (colour-swapped enemies and variants) - 110,000 files but only 11% of
+the upscale. The time is the map sheets: 375 sheets with about 3 palettes each, 908 M texels (62%)
+even split per palette.
 
 ### Size
 
@@ -128,7 +147,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `75d36646266334e7091268e24fe2fc4abd4a3331` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | not built yet |
+| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `0187bf229d476ad1fa027e09a104cdabc0e4213d6dd96c65ef567b3c1ba2907d` |
 
 ## Playing with it
 
