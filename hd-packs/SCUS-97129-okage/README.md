@@ -51,9 +51,9 @@ A clean run from the `.chd`, 2026-09-22 (Core i7-11700, 32 GB RAM, RTX 3060 12 G
 | disc (chdman + sector strip) | 23 s | `disc.iso`, 436 MB |
 | extract | 15-28 s | `native/`: 2,810 PNGs, 39 MB (3 palette-free font sheets, 174 true-colour) |
 | upscale 4x | about 12 min 45 s (3.7 textures/s) | `hd4x/`: 597 MB |
-| build | 1.5-2 min | `pack_hd4x/replacements/`: 467 MB (2,797 ASTC images, 3 palette-free PNGs, a 38.1 MB index; 5 duplicate and 7 blank disc images left out) |
-| zip | 15-40 s | `SCUS-97129-disc-hd4x.zip`, 334 MB |
-| **total** | **about 16 min** | |
+| build | 2.8 min | `pack_hd4x/replacements/`: 310 MB - 2,791 ASTC images (zstd), 6 kept as PNG, 3 palette-free PNGs, a 38.1 MB index; 5 duplicate and 7 blank disc images left out (rebuilt 2026-09-25: ASTC with repaired alpha blocks, zstd) |
+| zip | 17 s | `SCUS-97129-disc-hd4x.zip`, 295 MB |
+| **total** | **about 17 min** | |
 
 The upscale is the clean run's 727 s for the palette images plus 34 s for the 173 PSMCT24 and a
 few seconds for the one PSMCT32 image, which were added afterwards and timed on their own. It was
@@ -124,7 +124,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `e25313668c682df863f0dde7c21bef0a3d8b79fa` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `b8def8a4c5636944b697b617184e37da686efd67120a73244c925eecb29a14b4` |
+| Index `disc-atlas.a2at` SHA-256 (ASTC + zstd pack) | `f0cc47e061becb75af9d73b101ef167e2d1d1daaf4a58bf8cf9f419f5c642520` |
 | Index SHA-256 with `--format png` | `6d58e7f6fc4e0aeea2b2c6523148368530e4206111e134aabe506076dfa4369f` |
 
 `make_pack.py` checks all three. The index is determined by the disc and `extractor.py`; the HD

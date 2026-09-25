@@ -41,13 +41,13 @@ these as upper bounds:
 | --- | --- | --- |
 | extract | 2 min 9 s | `native/`: 101,328 PNGs, 862 M texels |
 | upscale 4x | 2 h 15 min for 99,606 images (small textures batched, ~11 a second) + 2 h for the other 1,810, mostly the 328 1024x1024 map atlases at ~18 s each | `hd4x/` |
-| build | 36 min | `pack_hd4x/replacements/`: 14.8 GB - 97,844 images (95,831 ASTC, 2,013 palette-free font maps), a 1,066 MB index; 3,384 duplicate and 54 blank disc images left out |
-| zip | 16 min | `SLPS-25842-disc-hd4x.zip`, 8.5 GB |
-| **total** | **about 5 h 10 min** | |
+| build | 52 min | `pack_hd4x/replacements/`: 8.0 GB - 97,844 images (95,831 ASTC with zstd, none kept as PNG, 2,013 palette-free font maps), a 1,066 MB index; 3,384 duplicate and 54 blank disc images left out (rebuilt 2026-09-25: ASTC with repaired alpha blocks, zstd) |
+| zip | 7 min | `SLPS-25842-disc-hd4x.zip`, 7.3 GB |
+| **total** | **about 5 h 15 min** | |
 
 It is a big pack because the game has a lot of art: 328 field and town map atlases of 1024x1024
 are 5.5 GB of it, 256x256 and 512x512 textures another 3.8 GB; the duplicates and blanks the build
-leaves out were 0.2 GB. Free disk for the work folder: about 40 GB (HD PNGs 14.8 GB, the pack 14.8 GB, the zip 8.5 GB),
+leaves out were 0.2 GB. Free disk for the work folder: about 31 GB (HD PNGs 14.8 GB, the pack 8.0 GB, the zip 7.3 GB),
 plus the disc image.
 
 ## Coverage
@@ -74,7 +74,7 @@ title art (true colour) and the title menu text.
 - **Only two scenes are proven.** Towns, battles, menus and cut-ins have not been dumped or
   played yet. That is what stands between this recipe and "finished".
 - **No clean timings**: the build shared the PC with Android builds and ran in two parts.
-- **Size**: 14.8 GB installed, 8.5 GB zipped. The index alone is 1.1 GB; the emulator memory-maps it (about
+- **Size**: 8.0 GB installed, 7.3 GB zipped (ASTC with zstd; it was 14.8 GB as plain ASTC). The index alone is 1.1 GB; the emulator memory-maps it (about
   40 MB resident on the Thor), but it is still download and disk.
 - The first 4x pack (3.1 GB, PNG, before most of the fixes below) had wrongly coloured UI corners
   because the palette slicing changed between its extract and build steps.
@@ -109,7 +109,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `de934800cd81835a5f5335a0eab58299a16371eb` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `093691b4264eabde55405a315685fc51d366437584e8ccc3d0cd7f327ab486d0` |
+| Index `disc-atlas.a2at` SHA-256 (ASTC + zstd pack) | `b9e0f11fedbce799e2cb8370e8b53193e25245487a57266f8ad1b30a791ba144` |
 
 ## Playing with it
 

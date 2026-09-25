@@ -40,9 +40,9 @@ RTX 3060 12 GB, CUDA fp16, nothing else running):
 | disc (chdman) | 34 s | `disc.iso`, 1.25 GB |
 | extract | 22 s | `native/`: 8,034 PNGs, 117 MB (1,586 font glyphs), 125 M texels |
 | upscale 4x | 33 min | `hd4x/`: 3.3 GB |
-| build | 6.6 min | `pack_hd4x/replacements/`: 2.7 GB - 8,017 images (4,516 ASTC, 1,916 kept as PNG because ASTC could not keep their alpha exact, 1,585 font index maps), a 169 MB index |
-| zip | 2.2 min | `SLUS-21275-disc-hd4x.zip`, 2.4 GB |
-| **total** | **about 43 min** | |
+| build | 13.8 min | `pack_hd4x/replacements/`: 1.43 GB - 8,017 images (6,394 ASTC with zstd, 38 kept as PNG, 1,585 font index maps), a 169 MB index (rebuilt 2026-09-25: ASTC with repaired alpha blocks, zstd) |
+| zip | 1.1 min | `SLUS-21275-disc-hd4x.zip`, 1.33 GB |
+| **total** | **about 49 min** | |
 
 Free disk for the work folder: about 8 GB, plus the disc image. The build step is the one with
 the exact-alpha ASTC check (see below); the first build, before it, took 6 min and made a 1.5 GB
@@ -72,8 +72,9 @@ builds those caches out of the font's glyphs (the name-entry sheet is one textur
 - 831 textures have 16-bit palettes; the GS turns those into 32-bit ones with TEXA, which no
   checked scene showed, so the extractor guesses the usual values (see `extractor.py`). If those
   textures never match, that guess is why.
-- 30% of the images are PNG rather than ASTC (exact alpha, below), so the pack is 2.4 GB zipped
-  where a pure ASTC one would be 1.5 GB.
+- 38 images stay PNG: their blocks mix alpha above 0x80 with 0x80, which ASTC cannot hold exactly
+  in one block, and River King's `EQUAL 0x80` test needs 0x80 exact. The rest are ASTC with the
+  failing blocks repaired (`astc.py`), compressed with zstd.
 
 ## How the disc stores its textures
 
@@ -107,7 +108,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `eb95fbc2654099fc66567fd0e57458c41681d374` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `0a8d95893933a0029710547c91f61aef0d1e7585dd1acf31446d8ff95a45ae38` |
+| Index `disc-atlas.a2at` SHA-256 (ASTC + zstd pack) | `108aee6f22b38cf9d53eaa7d246539918f81e11d17cf4624e550bdcafc1a4b7d` |
 
 ## Playing with it
 

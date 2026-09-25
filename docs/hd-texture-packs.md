@@ -102,12 +102,16 @@ check). Mapped, it costs the app about 40 MB resident on the Thor; pages load on
 
 ## How big a pack gets
 
-At 4x an HD image is 16 ASTC bytes per native texel, so a pack is as big as the game's art:
+At 4x an HD image is 16 ASTC bytes per native texel, so a pack is as big as the game's art;
+zstd then roughly halves the ASTC on disk (`.astc.zst`, unpacked in memory at load):
 
-| Game | Disc images | Native texels | 4x ASTC pack |
+| Game | Disc images | Native texels | 4x pack, ASTC + zstd |
 | --- | --- | --- | --- |
-| Okage: Shadow King | 2,800 | 28 M | 467 MB (334 MB zipped) |
-| Tales of Destiny DC | 97,844 | 862 M | 14.8 GB (8.5 GB zipped) |
+| Okage: Shadow King | 2,800 | 28 M | 310 MB (295 MB zipped) |
+| River King | 8,017 | 125 M | 1.4 GB (1.3 GB zipped) |
+| Tales of Legendia | 20,132 | 601 M | 6.4 GB (5.9 GB zipped) |
+| Tales of Destiny DC | 97,844 | 862 M | 8.0 GB (7.3 GB zipped) |
+| Tales of Rebirth | 154,598 | 1,454 M | 12 GB (11.1 GB zipped) |
 
 Tales of Destiny is big because it is: 328 field and town map atlases of 1024x1024 are 5.5 GB of
 it, 256x256 and 512x512 textures another 3.8 GB. An audit of its 1x index found little waste -
