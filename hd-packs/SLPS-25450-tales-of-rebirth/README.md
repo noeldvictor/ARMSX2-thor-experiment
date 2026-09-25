@@ -2,7 +2,7 @@
 
 **Status:** completed. Japanese disc with the English fan translation v1.0 (the translation keeps
 the serial). The 4x pack runs on the Thor at 3x in four scenes (title, the attract-mode battle, two
-field scenes) at 59.9 fps; it is 24.8 GB installed, so it was removed from the Thor after the test.
+field scenes) at 59.9 fps; it is 12 GB installed, so it was removed from the Thor after the test.
 The rest of the game is not checked.
 
 A 4x HD pack for Tales of Rebirth, built from your own disc. No gameplay dumping: every texture is
@@ -27,42 +27,45 @@ see *Not yet*.
 ## Make it
 
 Requirements: [hd-packs/README.md](../README.md#making-a-pack-from-a-recipe). From the repository
-root - note `--format png`:
+root:
 
 ```bash
 python tools/disc_textures/make_pack.py hd-packs/SLPS-25450-tales-of-rebirth \
-    --disc "Tales of Rebirth (English v1.0).chd" --model 4x-UltraSharp.safetensors --format png
+    --disc "Tales of Rebirth (English v1.0).chd" --model 4x-UltraSharp.safetensors
 ```
 
-Why PNG and not the default ASTC: the fields alpha-test `GEQUAL 0x80`, so alpha has to come back
-exact, and ASTC could not keep it exact for 65% of the images (they were kept as PNG). The emulator
-builds a composite either all-ASTC or all-PNG and gives up on a mix, and Rebirth draws its map
-sheets and sprites as composites - with the mixed pack the fields stayed native. All-PNG is about
-the same size (24.8 GB against 24.7 GB mixed); it costs load time (PNG is decoded on the Thor, ASTC
-is copied) and memory (RGBA8 in VRAM).
+The pack is ASTC, compressed with zstd (`.astc.zst`). Alpha was the hard part: the fields
+alpha-test `GEQUAL 0x80`, and ASTC rarely stores 0x80 exactly, so the first ASTC build kept 65% of
+the images as PNG - and the emulator gives up on a composite that mixes ASTC and PNG, which left
+the fields native. `astc.py` now re-encodes the few failing blocks by hand so alpha stays on the
+right side of 0x80 (`game.json` `"astc_alpha": "threshold"`; 8 M of 1.4 billion blocks), and
+every image is ASTC. zstd halves the ASTC on disk (21.6 -> 10.7 GB). Against the earlier all-PNG
+build (24.8 GB): half the size, textures load in 2-3 s instead of 16-18 s in the replays, a quarter
+of the video memory, and frames within 43-48 dB of it.
 
 Read the size estimate `make_pack.py` prints after the extract step before letting it upscale.
 
 Install: unzip `work/SLPS-25450-disc-hd4x.zip` into `<DataRoot>/textures/` - on the PC. The pack
 has 154,598 images, and Android's `unzip` stops at 65,534 entries, so copy the unpacked folder (or
-stream a tar: `adb exec-in sh -c 'cd <folder> && tar -xf -'`, 47 min over USB - Android's storage
-layer takes each small file slowly) rather than unzipping on the device.
+stream a tar: `adb exec-in sh -c 'cd <folder> && tar -xf -'`, about 15 min into `/data/local/tmp`
+and about 45 min into `/sdcard` over USB - Android's storage layer takes each small file slowly)
+rather than unzipping on the device.
 
 ### Measured
 
 `make_pack.py` into a fresh work folder from the ISO, 2026-09-24, Core i7-11700, 32 GB RAM,
-RTX 3060 12 GB, nothing else heavy running. It was built as ASTC first, then rebuilt as PNG from the
-same upscaled images (the build and zip steps below are the PNG ones):
+RTX 3060 12 GB, nothing else heavy running. The build and zip steps were rerun from the same
+upscaled images when the ASTC repair and zstd landed (2026-09-25); those are the times below:
 
 | Step | Time | Output |
 | --- | --- | --- |
 | extract | 6.5 min | `native/`: 168,219 PNGs, 0.9 GB, 1,454 M texels (map sheets split per palette) |
 | upscale 4x | 7 h 41 min | `hd4x/`: 25.3 GB |
-| build (`--format png`) | 90 min | `pack_hd4x/replacements/`: 24.8 GB - 154,598 PNG images, a 1.3 GB index; 13,082 duplicates and 539 blank images left out |
-| zip | 17 min | `SLPS-25450-disc-hd4x.zip`, 23.9 GB |
-| **total** | **about 9 h 35 min** | |
+| build | 119 min | `pack_hd4x/replacements/`: 12.0 GB - 154,499 ASTC images (zstd), 99 font index maps (PNG), a 1.3 GB index; 8.0 M blocks repaired; 13,082 duplicates and 539 blank images left out |
+| zip | 15 min | `SLPS-25450-disc-hd4x.zip`, 11.1 GB |
+| **total** | **about 10 h** | |
 
-Free disk needed for the work folder: about 75 GB, plus the 4.5 GB disc image.
+Free disk needed for the work folder: about 50 GB, plus the 4.5 GB disc image.
 
 In the app on the Thor (8 Gen 2), 3x internal resolution, the first field: 59.9 fps (EE 38%,
 GS 11%, GPU 13%).
@@ -150,7 +153,6 @@ adds ~6,300 dumps with faded palettes made at runtime; the battle's 70 misses ar
 - The map sheets are split per palette by a guess (smoothness per 64x64 tile): in the first field
   222 of the 226 cells the game draws are kept, the other 4 stay native. Decoding the `MAP` chunks
   would make it exact.
-- PNG, not ASTC, so textures take longer to load and more video memory than in an ASTC pack.
 - `FLD.BIN` (nine files, 0.8 GB) was looked at and holds geometry (float vertex data), no
   textures; every texture seen so far comes from `DAT.BIN` or the executable.
 
@@ -177,7 +179,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `75d36646266334e7091268e24fe2fc4abd4a3331` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (PNG pack, `--format png`) | `dd12427cc8c1670586f9d704bf72869e3b26acb4ad83e4991a64468414447a4f` |
+| Index `disc-atlas.a2at` SHA-256 (ASTC + zstd pack) | `a8c3cb989887b008359a578a9d9af78667932e853dbd3b860ab28470848aac80` |
 
 ## Playing with it
 

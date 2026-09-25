@@ -4,6 +4,7 @@
  "region": "NTSC-J",
  "crc": "2E49AF5A",
  "extractor": "extractor.py",
+ "astc_alpha": "threshold",
  "disc": {
   "format": "DVD in a CD CHD (one MODE1/2048 track)",
   "iso_sha1": "de934800cd81835a5f5335a0eab58299a16371eb"

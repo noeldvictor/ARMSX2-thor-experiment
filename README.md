@@ -142,7 +142,7 @@ writing a small extractor. That is reverse-engineering work. We did it for Okage
 too. So far there are **five completed recipes**: Okage: Shadow King, Tales of Destiny: Director's
 Cut, River King: A Wonderful Journey, Tales of Legendia and Tales of Rebirth -
 **[the games list](hd-packs/GAMES.md)** has them all, with screenshots, pack sizes and build times.
-Packs are as big as the game's art: Okage's is 334 MB zipped, Tales of Rebirth's 23.9 GB.
+Packs are as big as the game's art: Okage's is 334 MB zipped, Tales of Rebirth's 11.1 GB.
 
 ![Status menu portraits and fonts, original vs Okage's disc HD pack](hd-packs/SCUS-97129-okage/media/menu-fonts.jpg)
 
