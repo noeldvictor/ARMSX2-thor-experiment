@@ -33,8 +33,10 @@ default) is for EQUAL 0x80 (River King): 0x80 stays 0x80, nothing else becomes i
 `rule="threshold"` is for GEQUAL/LESS 0x80 (Tales of Rebirth): every texel stays on its side of
 0x80 - 0x80 may come back as 0x81, which the test cannot tell apart. Under it the repair is two
 alpha levels, one each side (`block_two_level`), which also covers art whose PS2 alpha goes above
-0x80 (Rebirth's cave sheets; under "exact" those blocks cannot be repaired). Only an image that
-still fails is written as a lossless PNG instead (`fallbacks`), loaded as RGBA8.
+0x80 (Rebirth's cave sheets). Under "exact", a block that mixes transparent, exactly opaque and
+above-0x80 texels gets three alpha levels instead (`block_tri`: trit weights 0/32/64 between alpha
+endpoints 0 and 255, whose middle decodes to exactly 0x80; texels above 0x80 become 0xFF there).
+Only an image that still fails is written as a lossless PNG instead (`fallbacks`), loaded as RGBA8.
 
 The `.astc` container: 16-byte header (magic 13 AB A1 5C, block x/y/z, 24-bit width, height,
 depth), then the blocks row by row, 16 bytes each.
@@ -208,11 +210,81 @@ def block_two_level(rgba: np.ndarray) -> bytes:
     return _block(_MODE_4X4_DUAL_QUANT2, e0, e1, weights, 1, _ALPHA_PLANE)
 
 
+def _trits(T: int) -> tuple[int, ...]:
+    """Five trits from an 8-bit packed value (ASTC spec, integer sequence encoding)."""
+    bit = lambda v, i: (v >> i) & 1  # noqa: E731
+    if (T >> 2) & 7 == 7:
+        C, t4, t3 = (((T >> 5) & 7) << 2) | (T & 3), 2, 2
+    else:
+        C = T & 0x1F
+        t4, t3 = (2, bit(T, 7)) if (T >> 5) & 3 == 3 else (bit(T, 7), (T >> 5) & 3)
+    if C & 3 == 3:
+        t2, t1, t0 = 2, bit(C, 4), (bit(C, 3) << 1) | (bit(C, 2) & (1 - bit(C, 3)))
+    elif (C >> 2) & 3 == 3:
+        t2, t1, t0 = 2, 2, C & 3
+    else:
+        t2, t1, t0 = bit(C, 4), (C >> 2) & 3, (bit(C, 1) << 1) | (bit(C, 0) & (1 - bit(C, 1)))
+    return (t0, t1, t2, t3, t4)
+
+
+_TRIT_PACK: dict[tuple[int, ...], int] = {}
+for _T in range(256):
+    _TRIT_PACK.setdefault(_trits(_T), _T)
+_TRIT_PACK_PAIR: dict[tuple[int, ...], int] = {}  # a last group of two: 4 bits kept, the rest read as 0
+for _T in range(16):
+    _TRIT_PACK_PAIR.setdefault(_trits(_T)[:2], _T)
+_MODE_4X4_DUAL_QUANT3 = 0x451  # 4x4 weight grid, two planes, trit weights (0, 32, 64)
+
+
+def _v7(q: int) -> int:
+    """A QUANT_128 endpoint value (7 bits, bit-replicated) - what 52 trit-weight bits leave room for."""
+    return (q << 1) | (q >> 6)
+
+
+def block_tri(rgba: np.ndarray) -> bytes:
+    """A 4x4 block (16 x RGBA) with three alpha levels: alpha on its own plane with trit weights
+    between endpoints 0 and 255 - the middle weight decodes to exactly 0x80 (255 * 257 / 2 rounds
+    to 0x8000) - so transparent stays 0, 0x80 stays 0x80 and texels above 0x80 become 0xFF; texels
+    between 0 and 0x80 become 0. The colour is three steps along a line."""
+    a = rgba[:, 3]
+    a_trit = np.where(a == PS2_OPAQUE, 1, np.where(a > PS2_OPAQUE, 2, 0))
+    px = rgba[:, :3].astype(np.float64)
+    seen = a > 0
+    mean, axis = _axis(px[seen] if seen.any() else px)
+    t = (px - mean) @ axis
+    nearest = lambda x: min(range(128), key=lambda q: abs(_v7(q) - x))  # noqa: E731
+    q_lo = [nearest(c) for c in np.clip(mean + axis * t.min(), 0, 255)]
+    q_hi = [nearest(c) for c in np.clip(mean + axis * t.max(), 0, 255)]
+    qa_lo, qa_hi = 0, 127
+    if sum(_v7(q) for q in q_hi) < sum(_v7(q) for q in q_lo):  # keep CEM 12 from swapping
+        q_lo, q_hi, qa_lo, qa_hi, a_trit = q_hi, q_lo, qa_hi, qa_lo, 2 - a_trit
+    c0 = np.array([_v7(q) for q in q_lo], float) * 257
+    c1 = np.array([_v7(q) for q in q_hi], float) * 257
+    steps = np.stack([np.floor((c0 * (64 - w) + c1 * w + 32) / 64) for w in (0, 32, 64)])
+    c_trit = ((px[:, None, :] * 257 - steps[None]) ** 2).sum(2).argmin(1)
+    weights = [w for i in range(16) for w in (int(c_trit[i]), int(a_trit[i]))]
+    v = _MODE_4X4_DUAL_QUANT3 | (_CEM_RGBA_DIRECT << 13)
+    for i, q in enumerate((q_lo[0], q_hi[0], q_lo[1], q_hi[1], q_lo[2], q_hi[2], qa_lo, qa_hi)):
+        v |= (q & 0x7F) << (17 + 7 * i)
+    stream: list[int] = []
+    for g in range(0, 32, 5):
+        group = tuple(weights[g : g + 5])
+        packed, bits = (_TRIT_PACK[group], 8) if len(group) == 5 else (_TRIT_PACK_PAIR[group], 4)
+        stream += [(packed >> i) & 1 for i in range(bits)]
+    v |= _ALPHA_PLANE << (128 - len(stream) - 2)
+    for k, b in enumerate(stream):
+        if b:
+            v |= 1 << (127 - k)
+    return v.to_bytes(16, "little")
+
+
 def repair_block(rgba: np.ndarray, rule: str = "exact") -> bytes | None:
     """A block (16 x RGBA, PS2 alpha) re-encoded so its alpha passes `rule`, or None."""
     if (rgba[:, 3] == PS2_OPAQUE).all():
         return block_opaque(rgba[:, :3])
-    return block_two_level(rgba) if rule == "threshold" else block_mixed(rgba)
+    if rule == "threshold":
+        return block_two_level(rgba)
+    return block_mixed(rgba) or block_tri(rgba)
 
 
 class AstcBatch:

@@ -537,8 +537,9 @@ README with measured RTX 3060 timings, gaps, before/after shots, reference check
   (alpha on its own plane for mixed blocks) and checks the canvas again with astcenc's decoder:
   about 0.6% of Rebirth's blocks, at about astcenc's own colour error; 153,131 of its 154,598
   images stay ASTC. The rule follows the game's alpha test (`game.json` `astc_alpha`): "exact" for
-  EQUAL 0x80, "threshold" (each texel on its side of 0x80) for GEQUAL 0x80 - which also repairs
-  art with alpha above 0x80. Keep the decode check; never hand-write block layouts without it. Packs store ASTC as `.astc.zst` (index v6,
+  EQUAL 0x80, "threshold" (each texel on its side of 0x80) for GEQUAL 0x80. Blocks mixing 0,
+  0x80 and alpha above 0x80 get three levels (`block_tri`: endpoints 0 and 255, whose trit midpoint
+  decodes to exactly 0x80), so no pack keeps a PNG fallback any more. Keep the decode check; never hand-write block layouts without it. Packs store ASTC as `.astc.zst` (index v6,
   `--zstd`, default level 19): about half the size on disk, unpacked in memory by
   `ZstdLoader` in `GSTextureReplacementLoaders.cpp`.
   `LoadComposite` builds a composite all-ASTC or all-PNG and fails on a mix (the texture stays
