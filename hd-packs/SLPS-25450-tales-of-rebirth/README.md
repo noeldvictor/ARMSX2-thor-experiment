@@ -1,9 +1,9 @@
 # Tales of Rebirth (SLPS-25450) - disc HD texture pack recipe
 
 **Status:** in progress. Japanese disc with the English fan translation v1.0 (the translation keeps
-the serial). The extractor reads every map sheet, sprite, UI sheet and the font, and a 1x pack is
-proven exact on the Thor in four scenes; no 4x pack has been built yet, because a straight 4x pack
-would be about 39 GB; splitting the map sheets per palette brings it to about 23 GB (see *Size*).
+the serial). The 4x pack runs on the Thor at 3x in four scenes (title, the attract-mode battle, two
+field scenes) at 59.9 fps; it is 24.8 GB installed, so it was removed from the Thor after the test.
+The rest of the game is not checked.
 
 A 4x HD pack for Tales of Rebirth, built from your own disc. No gameplay dumping: every texture is
 read off the disc, upscaled with 4x-UltraSharp and matched exactly by the emulator. How that
@@ -11,38 +11,61 @@ works: [docs/hd-texture-packs.md](../../docs/hd-texture-packs.md).
 
 ## Before / after
 
-Not yet.
+The AYN Thor at 3x internal resolution, the app's own screenshots (1440x1080), original on the
+left, HD pack on the right.
+
+![The first field, original vs HD pack](media/field.jpg)
+
+![Close-up of the field floor, ice and a character, original vs HD pack](media/field-closeup.jpg)
+
+![The field after the first battle, original vs HD pack](media/field-after-battle.jpg)
+
+The floors, walls and cracks are the big change. Sprites change little (they were small pixel art
+to begin with). The translucent ice pieces come out with harder, stepped edges than the original -
+see *Not yet*.
 
 ## Make it
 
 Requirements: [hd-packs/README.md](../README.md#making-a-pack-from-a-recipe). From the repository
-root:
+root - note `--format png`:
 
 ```bash
 python tools/disc_textures/make_pack.py hd-packs/SLPS-25450-tales-of-rebirth \
-    --disc "Tales of Rebirth (English v1.0).chd" --model 4x-UltraSharp.safetensors
+    --disc "Tales of Rebirth (English v1.0).chd" --model 4x-UltraSharp.safetensors --format png
 ```
+
+Why PNG and not the default ASTC: the fields alpha-test `GEQUAL 0x80`, so alpha has to come back
+exact, and ASTC could not keep it exact for 65% of the images (they were kept as PNG). The emulator
+builds a composite either all-ASTC or all-PNG and gives up on a mix, and Rebirth draws its map
+sheets and sprites as composites - with the mixed pack the fields stayed native. All-PNG is about
+the same size (24.8 GB against 24.7 GB mixed); it costs load time (PNG is decoded on the Thor, ASTC
+is copied) and memory (RGBA8 in VRAM).
 
 Read the size estimate `make_pack.py` prints after the extract step before letting it upscale.
 
 Install: unzip `work/SLPS-25450-disc-hd4x.zip` into `<DataRoot>/textures/` - on the PC. The pack
 has 154,598 images, and Android's `unzip` stops at 65,534 entries, so copy the unpacked folder (or
-stream a tar: `adb exec-in sh -c 'cd <folder> && tar -xf -'`) rather than unzipping on the device.
+stream a tar: `adb exec-in sh -c 'cd <folder> && tar -xf -'`, 47 min over USB - Android's storage
+layer takes each small file slowly) rather than unzipping on the device.
 
 ### Measured
 
-One `make_pack.py` run into a fresh work folder from the ISO, 2026-09-24, Core i7-11700, 32 GB RAM,
-RTX 3060 12 GB, nothing else heavy running:
+`make_pack.py` into a fresh work folder from the ISO, 2026-09-24, Core i7-11700, 32 GB RAM,
+RTX 3060 12 GB, nothing else heavy running. It was built as ASTC first, then rebuilt as PNG from the
+same upscaled images (the build and zip steps below are the PNG ones):
 
 | Step | Time | Output |
 | --- | --- | --- |
 | extract | 6.5 min | `native/`: 168,219 PNGs, 0.9 GB, 1,454 M texels (map sheets split per palette) |
 | upscale 4x | 7 h 41 min | `hd4x/`: 25.3 GB |
-| build | 74 min | `pack_hd4x/replacements/`: 24.7 GB - 154,598 images (54,213 ASTC, 100,286 kept as PNG because ASTC could not keep their alpha exact), a 1.3 GB index; 13,082 duplicates and 539 blank images left out |
-| zip | 14.6 min | `SLPS-25450-disc-hd4x.zip`, 21.1 GB |
-| **total** | **9 h 16 min** | |
+| build (`--format png`) | 90 min | `pack_hd4x/replacements/`: 24.8 GB - 154,598 PNG images, a 1.3 GB index; 13,082 duplicates and 539 blank images left out |
+| zip | 17 min | `SLPS-25450-disc-hd4x.zip`, 23.9 GB |
+| **total** | **about 9 h 35 min** | |
 
-Free disk needed for the work folder: about 72 GB, plus the 4.5 GB disc image.
+Free disk needed for the work folder: about 75 GB, plus the 4.5 GB disc image.
+
+In the app on the Thor (8 Gen 2), 3x internal resolution, the first field: 59.9 fps (EE 38%,
+GS 11%, GPU 13%).
 
 Why so many images: Rebirth is a 2D sprite game. 37,689 small pictures (animation frames, icons)
 come with 2-9 palettes each (colour-swapped enemies and variants) - 110,000 files but only 11% of
@@ -96,21 +119,20 @@ the `MAP` chunks would give each palette's cells exactly (about 16 GB, no guessi
 
 ## Coverage
 
-A 1x pack (116,220 images, a 1.6 GB index) against an empty pack, `gsrunner` replays of desktop
-GS dumps on the Thor at 3x, 2026-09-24:
+A 1x pack against an empty pack, `gsrunner` replays of desktop GS dumps on the Thor at 3x,
+2026-09-24: every frame bit-identical in all four scenes, so every match is exact. The 4x pack in
+the same replays (and in the app for the first field: 55 matched, 4 missed):
 
-| Scene | Matched | Misses | 1x vs empty pack |
-| --- | --- | --- | --- |
-| Title | 41 (35 font glyphs, 1 true-colour) | 1 glyph | 3/3 frames identical |
-| Attract-mode battle | 31 (27 sprite composites) | 70 | 3/3 identical |
-| First field | 54 (26 glyphs, 6 composites) | 4 sprites | 3/3 identical |
-| Field after the first battle | 60 (26 glyphs, 6 composites) | 3 sprites | 3/3 identical |
+| Scene | Matched | Misses |
+| --- | --- | --- |
+| Title | 41 (35 font glyphs, 1 true-colour) | 1 glyph |
+| Attract-mode battle | 31 (27 sprite composites) | 70 - its 256x1024 UI sheet under palettes made at runtime |
+| First field | 54 (26 glyphs, 17 composites - the map sheet among them) | 4 sprites |
+| Field after the first battle | 60 (26 glyphs, 22 composites) | 3 sprites |
 
-So every match is exact. Sprites are drawn as composites - several frames placed in one buffer -
-and match at 55-99% of their drawn texels (the rest stays native). An earlier pack, built before
-the anp3 fixes, changed one battle frame on the floor (2 levels on average, identical with
-filtering forced to nearest); with the fixed extractor it is identical, and the cause was not
-pinned down.
+Every composite loads (none with `Failed to cut` in the log). Sprites are drawn as composites -
+several frames placed in one buffer - and match at 55-99% of their drawn texels (the rest stays
+native); the map sheets match at 76-81% of the sheet's texels, the parts each palette draws.
 
 Against the desktop texture dumps (same scenes plus the first real battle), before the anp3 fixes:
 in normal play 3,044 sprite regions have their palette on the disc and 639 do not. The title demo
@@ -119,8 +141,16 @@ adds ~6,300 dumps with faded palettes made at runtime; the battle's 70 misses ar
 
 ## Not yet
 
-- A pack. The size above needs deciding first.
-- Palettes the game makes at runtime (fades, hit flashes) never match; those draws stay native.
+- Only four scenes are checked; towns, dungeons and menus are not.
+- Translucent ice and fog pieces in the fields get harder, stepped edges than the original. The
+  upscale keeps alpha exact for the `GEQUAL 0x80` tests, and soft-edged art suffers from it; not
+  investigated yet.
+- Palettes the game makes at runtime (fades, hit flashes, the battle UI sheet) never match; those
+  draws stay native. The title demo alone has ~6,300 such textures.
+- The map sheets are split per palette by a guess (smoothness per 64x64 tile): in the first field
+  222 of the 226 cells the game draws are kept, the other 4 stay native. Decoding the `MAP` chunks
+  would make it exact.
+- PNG, not ASTC, so textures take longer to load and more video memory than in an ASTC pack.
 - `FLD.BIN` (nine files, 0.8 GB) was looked at and holds geometry (float vertex data), no
   textures; every texture seen so far comes from `DAT.BIN` or the executable.
 
@@ -147,7 +177,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `75d36646266334e7091268e24fe2fc4abd4a3331` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC pack) | `0187bf229d476ad1fa027e09a104cdabc0e4213d6dd96c65ef567b3c1ba2907d` |
+| Index `disc-atlas.a2at` SHA-256 (PNG pack, `--format png`) | `dd12427cc8c1670586f9d704bf72869e3b26acb4ad83e4991a64468414447a4f` |
 
 ## Playing with it
 

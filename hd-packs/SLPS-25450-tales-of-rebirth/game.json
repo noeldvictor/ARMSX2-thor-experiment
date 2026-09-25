@@ -16,7 +16,8 @@
   "scale": 4
  },
  "reference": {
-  "index_sha256": "0187bf229d476ad1fa027e09a104cdabc0e4213d6dd96c65ef567b3c1ba2907d",
+  "index_sha256_png": "dd12427cc8c1670586f9d704bf72869e3b26acb4ad83e4991a64468414447a4f",
+  "format": "png",
   "textures": 154598,
   "palette_free": 99,
   "true_colour": 1
