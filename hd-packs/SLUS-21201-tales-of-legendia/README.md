@@ -42,9 +42,9 @@ RTX 3060 12 GB, 2026-09-24:
 | --- | --- | --- |
 | extract | 8.5 min | `native/`: 21,240 images, 601 M texels (199 font glyphs, 365 true-colour) |
 | upscale 4x | about 2 h 5 min (first build; the rebuild only did the new images) | `hd4x/`: 12 GB |
-| build | 39 min | `pack_hd4x/replacements/`: 6.4 GB - 20,132 images (19,865 ASTC with zstd, 71 kept as PNG, 196 font index maps), an 810 MB index (rebuilt 2026-09-25: ASTC with repaired alpha blocks, zstd) |
-| zip | 2 min | `SLUS-21201-disc-hd4x.zip`, 5.9 GB |
-| **total** | **about 2 h 55 min** | |
+| build | 44 min | `pack_hd4x/replacements/`: 6.4 GB - 20,132 images (19,936 ASTC with zstd, 196 font index maps), an 810 MB index (rebuilt 2026-09-25: ASTC with repaired alpha blocks, zstd) |
+| zip | 2.7 min | `SLUS-21201-disc-hd4x.zip`, 5.9 GB |
+| **total** | **about 3 h** | |
 
 Free disk needed for the work folder: about 25 GB, plus the 3.8 GB disc image.
 
@@ -109,7 +109,7 @@ Full details in [`extractor.py`](extractor.py)'s docstring. In short:
 | --- | --- |
 | Disc ISO SHA-1 (after `disc.py`) | `9279255de74f48686c7c5084fb7b3a580d67d688` |
 | Upscale model SHA-256 (`4x-UltraSharp.safetensors`) | `36a340b5509b699d2c06cb445ddc1d3d39199ac734d889ed6d7915f60e05bcbc` |
-| Index `disc-atlas.a2at` SHA-256 (ASTC + zstd pack) | `4abe80bb2aebb6c3e0668f6a2654dd5078d0df4f3514725a2f484d5fccf7308d` |
+| Index `disc-atlas.a2at` SHA-256 (ASTC + zstd pack) | `65c78bd3530579af832f99363472643a7842a34d30c0ae90f95ce633f72e3dc3` |
 
 `make_pack.py` checks them against `game.json`. The index depends only on the disc and
 `extractor.py`; HD images can differ in the last bit between GPUs.

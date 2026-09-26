@@ -72,11 +72,16 @@ Alpha has to survive ASTC exactly, because games alpha-test against exact values
 almost everything with `ATST EQUAL, AREF 0x80`; with astcenc's default weights 41% of an opaque
 texture's texels came back at 0x7F or 0x81, failed the test, skipped their depth write, and the
 surface behind showed through as speckle - while the 1x proof was bit-identical, because a PNG
-keeps alpha exact. The encoder now weights alpha 1000:1 (`-thorough -cw 1 1 1 1000`), decodes every
-canvas again, and writes any image whose opaque texels (0x80) do not all come back as 0x80 - or
-whose other texels become 0x80 - as a lossless PNG instead. In River King that is 30% of the images
-(the rest miss by a handful of texels on cutout edges), and the pack grows from 1.5 to 2.4 GB
-zipped: correct beats small. Okage's and Tales of Destiny's packs predate the check.
+keeps alpha exact. The encoder weights alpha 1000:1 (`-thorough -cw 1 1 1 1000`), decodes every
+canvas again and finds the blocks whose alpha fails the game's rule (`game.json` `astc_alpha`:
+"exact" for `EQUAL 0x80`, "threshold" - each texel on its side of 0x80 - for `GEQUAL 0x80`). An
+ASTC endpoint holds 0x80 exactly only at 8-bit precision, which astcenc rarely picks, so `astc.py`
+re-encodes each failing block by hand: 8-bit endpoints on one plane for opaque blocks, alpha on its
+own plane for mixed ones, and for blocks mixing transparent, 0x80 and above-0x80 texels three alpha
+levels with endpoints 0 and 255, whose middle trit weight decodes to exactly 0x80. The canvas is
+decoded again with astcenc to check. Only an image that still fails would be written as a lossless
+PNG; since the three-level block, no pack has one. (River King kept 30% of its images as PNG before
+the block repair, and 38 images before the three-level block.)
 
 ## Composites (textures a game assembles in VRAM)
 
@@ -107,7 +112,7 @@ zstd then roughly halves the ASTC on disk (`.astc.zst`, unpacked in memory at lo
 
 | Game | Disc images | Native texels | 4x pack, ASTC + zstd |
 | --- | --- | --- | --- |
-| Okage: Shadow King | 2,800 | 28 M | 310 MB (295 MB zipped) |
+| Okage: Shadow King | 2,800 | 28 M | 310 MB (294 MB zipped) |
 | River King | 8,017 | 125 M | 1.4 GB (1.3 GB zipped) |
 | Tales of Legendia | 20,132 | 601 M | 6.4 GB (5.9 GB zipped) |
 | Tales of Destiny DC | 97,844 | 862 M | 8.0 GB (7.3 GB zipped) |
