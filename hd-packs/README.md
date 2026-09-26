@@ -6,7 +6,8 @@ belongs to the game's publisher and the upscale model's licence is non-commercia
 pack yourself, on your own PC, from your own disc.
 
 What a disc pack is and how the emulator matches it: [docs/hd-texture-packs.md](../docs/hd-texture-packs.md).
-Disc packs only work in this fork.
+**Disc packs only work in this fork. Stock PCSX2 and official ARMSX2 cannot load them.** Why:
+[the main README](../README.md#hd-texture-packs-from-the-game-disc-experimental).
 
 ## Games
 

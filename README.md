@@ -40,7 +40,7 @@ The Thor's Qualcomm Vulkan driver cannot read the frame it is drawing, so every 
 
 ### Texture upscaling in the emulator
 
-- **Disc HD texture packs**, experimental and per game: see [the section at the bottom](#hd-texture-packs-from-the-game-disc-experimental).
+- **Disc HD texture packs**, experimental and per game. **They only work in this fork.** See [the section at the bottom](#hd-texture-packs-from-the-game-disc-experimental).
 
 Screen upscalers (FSR, shader chains) work on the finished frame. The fork also upscales **each texture as the game uploads it**, so the game renders from sharper art.
 
@@ -144,6 +144,23 @@ Cut, River King: A Wonderful Journey, Tales of Legendia and Tales of Rebirth -
 **[the games list](hd-packs/GAMES.md)** has them all, with screenshots, pack sizes and build times.
 Packs are as big as the game's art: Okage's is 294 MB zipped, Tales of Rebirth's 11.1 GB.
 
+**Disc packs only work in this fork. Stock PCSX2, official ARMSX2 and other emulators cannot load
+them.** That follows from building packs without playing the game, not from wanting to lock anyone in:
+
+- **A standard pack is one file per texture, named by the texture as the game drew it** while
+  someone played. Many of those names cannot be known from the disc alone. A game draws a
+  rectangle cut from a larger image, assembles sprite sheets and lines of text from several
+  pieces in video memory, and colours fonts with palettes it builds at runtime. A disc pack
+  stores each disc image once, whole, with an index (`disc-atlas.a2at`). When the game draws a
+  texture, the fork's matcher (`GSDiscAtlas`) finds the piece of disc art it came from and cuts
+  the HD version out. Stock emulators have no such matcher, so the pack means nothing to them.
+- **The files are in a format the Thor reads fast and stores small.** HD images are ASTC, which
+  the Thor's GPU samples directly with no decoding, compressed again with zstd (`.astc.zst`),
+  which halves the pack on disk. Upstream ARMSX2 loads plain ASTC but not `.astc.zst`, and stock
+  PCSX2 loads neither.
+- **Why not convert them to standard packs:** only the textures someone has actually seen on
+  screen can be named, which throws away the point of reading every texture off the disc.
+
 ![Status menu portraits and fonts, original vs Okage's disc HD pack](hd-packs/SCUS-97129-okage/media/menu-fonts.jpg)
 
 | | |
@@ -169,7 +186,7 @@ Expect hours of back-and-forth, not minutes. Some games won't work: 16-bit textu
 built at runtime, and formats nobody can decode are not covered yet.
 
 Packs are never in this repository. The art is the publisher's, and the default upscale model is
-licensed for non-commercial use only. Share recipes. A pack works only in this fork.
+licensed for non-commercial use only. Share recipes.
 
 | | Standard packs (PCSX2 / ARMSX2) | Disc packs (this fork) |
 | --- | --- | --- |
